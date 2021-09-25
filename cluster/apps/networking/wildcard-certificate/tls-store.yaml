@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: TLSStore
 metadata:
-  name: tls-store
+  name: default
   namespace: networking
 spec:
   defaultCertificate:
