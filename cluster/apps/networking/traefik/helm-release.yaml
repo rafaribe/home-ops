@@ -86,11 +86,11 @@ spec:
       limits:
         memory: 500Mi
     affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchLabels:
-          - key: kubernetes.io/arch
-            operator: In
-            values:
-            - amd64
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
