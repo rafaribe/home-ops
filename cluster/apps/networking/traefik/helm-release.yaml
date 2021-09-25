@@ -89,7 +89,7 @@ spec:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
-        - matchExpressions:
+        - matchLabels:
           - key: kubernetes.io/arch
             operator: In
             values:
