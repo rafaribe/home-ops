@@ -15,3 +15,14 @@ spec:
         kind: HelmRepository
         name: mittwald-charts
         namespace: flux-system
+    values:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+        
