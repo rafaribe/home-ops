@@ -1,7 +1,7 @@
 ---
 creation_rules:
-  - path_regex: .*.yaml
-  - encrypted_regex: "^(data|stringData)$"
+  - path_regex: cluster/.*\.sops.ya?ml
+    encrypted_regex: "^(data|stringData)$"
     pgp: >-
       BB68891E153B1A8B5285A7518825ECBA2E0A2DE9,
       F1A3034AD31E4FB16DC26F05B6DDE10E6102A098
