@@ -20,6 +20,7 @@ spec:
     - name: cert-manager
       namespace: cert-manager
   values:
+    nodeSelector: 'odroid-h2'
     image:
       name: ghcr.io/k8s-at-home/traefik
     deployment:
