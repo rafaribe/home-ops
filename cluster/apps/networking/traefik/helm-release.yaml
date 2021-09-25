@@ -20,7 +20,6 @@ spec:
     - name: cert-manager
       namespace: cert-manager
   values:
-    
     image:
       name: ghcr.io/k8s-at-home/traefik
     deployment:
@@ -73,7 +72,6 @@ spec:
       default:
         minVersion: VersionTLS12
         maxVersion: VersionTLS13
-        sniStrict: true
     pilot:
       enabled: false
     experimental:
@@ -89,8 +87,8 @@ spec:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/arch
-              operator: In
-              values:
-              - amd64
+            - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                    - amd64
