@@ -20,7 +20,7 @@ spec:
     - name: cert-manager
       namespace: cert-manager
   values:
-    nodeSelector: 'odroid-h2'
+    
     image:
       name: ghcr.io/k8s-at-home/traefik
     deployment:
@@ -85,3 +85,12 @@ spec:
         cpu: 500m
       limits:
         memory: 500Mi
+    affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/arch
+            operator: In
+            values:
+            - amd64
