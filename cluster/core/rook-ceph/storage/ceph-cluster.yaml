@@ -65,8 +65,7 @@ spec:
       osdsPerDevice: "1"
     nodes:
       - name: "odroid-h2"
-        devices:
-          - name: "sda1"
+        deviceFilter: "sda{1,2}"
       - name: octoprint
         devices:
           - name: "sda"
