@@ -24,11 +24,15 @@ spec:
     service:
       type: LoadBalancer
       externalIPs:
-        - 10.45.10.15
+        - 10.0.0.201
       externalTrafficPolicy: Local
     persistence:
       enabled: true
-      existingClaim: influxdb-pvc
+      storageClass: rook-ceph-bucket
+      size: 4Gi
+      accessMode: ReadWriteOnce
+      type: pvc
+      retain: false
     resources:
       requests:
         memory: 2000Mi
