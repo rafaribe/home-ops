@@ -48,7 +48,7 @@ spec:
       main:
         type: LoadBalancer
         annotations:
-          metallb.universe.tf/allow-shared-ip: unifi
+          metallb.universe.tf/allow-shared-ip: "true"
         loadBalancerIP: ${SVC_UNIFI_ADDR}
         ports:
           stun:
