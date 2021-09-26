@@ -4,5 +4,5 @@ kind: Kustomization
 resources:
   - kube-prometheus-stack
   - grafana
-  - influxdb
+  #- influxdb
   - speedtest-prometheus
