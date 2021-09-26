@@ -6,7 +6,7 @@ metadata:
   labels:
     app: unifi
   name: unifi-udp
-  namespace: unifi
+  namespace: networking
 spec:
   loadBalancerIP: ${SVC_UNIFI_ADDR}
   ports:
