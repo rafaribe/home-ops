@@ -7,3 +7,5 @@ resources:
   - ceph-object.yaml
   - storage-class.yaml
   - volume-snapshot-class.yaml
+  - loki-ceph-object-bucket.yaml
+  - thanos-ceph-object-bucket.yaml
