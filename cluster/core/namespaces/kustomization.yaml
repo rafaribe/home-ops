@@ -9,5 +9,5 @@ resources:
   - media.yaml
   - metallb-system.yaml
   - networking.yaml
-  - observability.yaml
+  - monitoring.yaml
   - rook-ceph.yaml
