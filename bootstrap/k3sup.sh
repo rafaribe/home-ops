@@ -7,11 +7,11 @@ k3sup join \
     --server-ip=10.0.0.18 \
     --server-user=brr \
     --k3s-version=v1.21.4+k3s1 \
-    --user=pi
+    --user=ubuntu
 
 k3sup join \
     --ip=10.0.0.27 \
     --server-ip=10.0.0.18 \
     --server-user=brr \
     --k3s-version=v1.21.4+k3s1 \
-    --user=pi
+    --user=ubuntu

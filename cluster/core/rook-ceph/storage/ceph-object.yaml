@@ -17,7 +17,7 @@ spec:
   preservePoolsOnDelete: true
   gateway:
     type: s3
-    port: 80
+    port: 8080
     instances: 1
   healthCheck:
     bucket:
