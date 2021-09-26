@@ -22,7 +22,7 @@ spec:
       tag: v6.4.54
     persistence:
       data:
-        enabled: true
+        enabled: false
         existingClaim: unifi-data
     timezone: "Europe/Lisbon"
     ingress:
