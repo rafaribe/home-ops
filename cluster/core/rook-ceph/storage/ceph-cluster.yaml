@@ -66,10 +66,10 @@ spec:
     nodes:
       - name: "odroid-h2"
         devices:
-          - name: "/media/brr/nasdisk"
-      - name: "octoprint"
+          - name: "sda"
+      - name: octoprint
         devices:
-          - name: "mmcblk0p2"
+          - name: "sda"
       - name: "sala"
         devices:
           - name: "sda"
