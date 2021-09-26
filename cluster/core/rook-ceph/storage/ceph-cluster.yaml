@@ -54,9 +54,9 @@ spec:
     osd:
       requests:
         cpu: 35m
-        memory: 2048Mi
+        memory: 1024Mi
       limits:
-        memory: 4096Mi
+        memory: 2048Mi
   storage:
     useAllNodes: false
     useAllDevices: false
