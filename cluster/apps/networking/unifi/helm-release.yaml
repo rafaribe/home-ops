@@ -24,7 +24,6 @@ spec:
       data:
         enabled: true
         existingClaim: unifi-data
-        storageClassName: rook-cephfs
     timezone: "Europe/Lisbon"
     ingress:
       main:
