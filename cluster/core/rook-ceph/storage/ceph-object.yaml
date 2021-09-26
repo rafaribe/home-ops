@@ -8,7 +8,7 @@ spec:
   metadataPool:
     failureDomain: host
     replicated:
-      size: 3
+      size: 2
   dataPool:
     failureDomain: host
     erasureCoded:
@@ -17,7 +17,7 @@ spec:
   preservePoolsOnDelete: true
   gateway:
     type: s3
-    port: 8080
+    port: 80
     instances: 1
   healthCheck:
     bucket:
