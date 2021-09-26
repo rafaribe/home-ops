@@ -44,16 +44,7 @@ spec:
         type: LoadBalancer
         annotations:
           metallb.universe.tf/allow-shared-ip: unifi
-          traefik.ingress.kubernetes.io/service.serversscheme: https
         loadBalancerIP: ${SVC_UNIFI_ADDR}
-        externalTrafficPolicy: Local
-        ports:
-          stun:
-            enabled: true
-          syslog:
-            enabled: true
-          discovery:
-            enabled: true
       udp:
         type: LoadBalancer
         annotations:
