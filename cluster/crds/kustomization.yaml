@@ -5,3 +5,4 @@ resources:
   - traefik
   - rook-ceph
   - kube-prometheus-stack
+  - external-snapshotter
