@@ -39,40 +39,6 @@ spec:
           - secretName: unifi-cert
             hosts:
               - "unifi.${SECRET_DOMAIN}"
-    service:
-      main:
-        type: LoadBalancer
-        annotations:
-          metallb.universe.tf/allow-shared-ip: unifi
-          traefik.ingress.kubernetes.io/service.serversscheme: https
-        loadBalancerIP: ${SVC_UNIFI_ADDR}
-        externalTrafficPolicy: Local
-        ports:
-          stun:
-            enabled: true
-          syslog:
-            enabled: true
-          discovery:
-            enabled: true
-      udp:
-        type: LoadBalancer
-        annotations:
-          metallb.universe.tf/allow-shared-ip: unifi
-        loadBalancerIP: ${SVC_UNIFI_ADDR}
-        externalTrafficPolicy: Local
-        ports:
-          stun:
-            enabled: true
-            port: 3478
-            protocol: UDP
-          syslog:
-            enabled: true
-            port: 5514
-            protocol: UDP
-          discovery:
-            enabled: true
-            port: 10001
-            protocol: UDP
     podAnnotations:
       backup.velero.io/backup-volumes: unifi-data
     resources:
