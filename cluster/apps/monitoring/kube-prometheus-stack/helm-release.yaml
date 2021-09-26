@@ -36,17 +36,11 @@ spec:
                 text: >-
                   {{ range .Alerts -}}
                     **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
-
                   **Description:** {{ if ne .Annotations.description ""}}{{ .Annotations.description }}{{else}}N/A{{ end }}
-
                   **Details:**
                     {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
                     {{ end }}
                   {{ end }}
-          - name: "nodered"
-            webhook_configs:
-              - url: "http://node-red.home:1880/power-outage"
-                send_resolved: true
         route:
           group_by: ["alertname", "job"]
           group_wait: 30s
@@ -59,11 +53,8 @@ spec:
                 alertname: Watchdog
             - receiver: "discord"
               match_re:
+                # severity: critical|warning
                 severity: critical
-              continue: true
-            - receiver: "nodered"
-              match:
-                alertname: UPSOnBattery
               continue: true
         inhibit_rules:
           - source_match:
@@ -76,7 +67,11 @@ spec:
         pathType: Prefix
         ingressClassName: "traefik"
         annotations:
+          kubernetes.io/tls-acme: "true"
+          #cert-manager.io/cluster-issuer: letsencrypt-production
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
         hosts:
           - "alert-manager.${SECRET_DOMAIN}"
       alertmanagerSpec:
@@ -116,6 +111,8 @@ spec:
             sourceLabels:
               - node
             targetLabel: instance
+    kubeApiServer:
+      enabled: true
     # Setting this option to 0 disabled CPU limits
     prometheusOperator:
       configReloaderCpu: 0
@@ -125,14 +122,20 @@ spec:
         pathType: Prefix
         ingressClassName: "traefik"
         annotations:
+          kubernetes.io/tls-acme: "true"
+          #cert-manager.io/cluster-issuer: letsencrypt-production
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
         hosts:
-          - "prometheus.${SECRET_DOMAIN}"
+          - "prom-server.${SECRET_DOMAIN}"
       thanosService:
         enabled: true
-      thanosServiceMonitor:
-        enabled: true
       prometheusSpec:
+        # externalUrl: "prom-server.${SECRET_DOMAIN}"
+        # image:
+        #   repository: quay.io/prometheus/prometheus
+        #   tag: v2.20.0
         replicas: 1
         replicaExternalLabelName: "replica"
         ruleSelectorNilUsesHelmValues: false
@@ -145,13 +148,26 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: "rook-ceph-block"
+              storageClassName: rook-ceph-block
               resources:
                 requests:
                   storage: 10Gi
         thanos:
           image: quay.io/thanos/thanos:v0.22.0
-          version: v0.22.0
+          version: v0.21.1
           objectStorageConfig:
-            name: thanos-objstore
-            key: objstore.yml
+            name: thanos
+            key: object-store.yaml
+        additionalScrapeConfigs:
+          - job_name: "node-exporter"
+            static_configs:
+              - targets:
+                  - fw.${SECRET_DOMAIN}:9100
+          #- job_name: "home-assistant"
+          #  scrape_interval: 60s
+          #  metrics_path: "/api/prometheus"
+          #  bearer_token: "${SECRET_HASS_PROMETHEUS_TOKEN}"
+          #  scheme: http
+          #  static_configs:
+          #    - targets:
+          #        - home-assistant.home.svc:8123

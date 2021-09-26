@@ -8,3 +8,4 @@ resources:
   - service-monitors
   - snapshot-controller
   - dashboard
+  - rook-ceph-tools
