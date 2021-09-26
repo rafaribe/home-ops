@@ -130,7 +130,7 @@ spec:
         hosts:
           - "prom-server.${SECRET_DOMAIN}"
       thanosService:
-        enabled: true
+        enabled: false
       prometheusSpec:
         # externalUrl: "prom-server.${SECRET_DOMAIN}"
         # image:
