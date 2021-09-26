@@ -1,0 +1,83 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: unifi
+  namespace: network
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: unifi
+      version: 4.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: jacobalberty/unifi
+      tag: v6.4.54
+    persistence:
+      data:
+        enabled: true
+        existingClaim: unifi-data
+    timezone: "Europe/Lisbon"
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+        hosts:
+          - host: "unifi.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                type: Prefix
+        tls:
+          - secretName: unifi-cert
+            hosts:
+              - "unifi.${SECRET_DOMAIN}"
+    service:
+      main:
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/allow-shared-ip: unifi
+          traefik.ingress.kubernetes.io/service.serversscheme: https
+        loadBalancerIP: ${SVC_UNIFI_ADDR}
+        externalTrafficPolicy: Local
+        ports:
+          stun:
+            enabled: false
+          syslog:
+            enabled: false
+          discovery:
+            enabled: false
+      udp:
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/allow-shared-ip: unifi
+        loadBalancerIP: ${SVC_UNIFI_ADDR}
+        externalTrafficPolicy: Local
+        ports:
+          stun:
+            enabled: true
+            port: 3478
+            protocol: UDP
+          syslog:
+            enabled: true
+            port: 5514
+            protocol: UDP
+          discovery:
+            enabled: true
+            port: 10001
+            protocol: UDP
+    podAnnotations:
+      backup.velero.io/backup-volumes: unifi-data
+    resources:
+      requests:
+        memory: 500Mi
+        cpu: 15m
+      limits:
+        memory: 750Mi
