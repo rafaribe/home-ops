@@ -28,11 +28,6 @@ spec:
       externalTrafficPolicy: Local
     persistence:
       enabled: true
-      storageClass: rook-ceph-bucket
-      size: 4Gi
-      accessMode: ReadWriteOnce
-      type: pvc
-      retain: false
     resources:
       requests:
         memory: 2000Mi
