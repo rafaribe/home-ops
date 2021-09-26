@@ -23,12 +23,12 @@ spec:
     persistence:
       data:
         enabled: true
-      #  storageClass: local-path
-      #  size: 2Gi
-      #  mountPath: /unifi
-      #  accessMode: ReadWriteOnce
-      #  type: pvc
-      #  retain: false
+        storageClass: rook-ceph-bucket
+        size: 4Gi
+        mountPath: /unifi
+        accessMode: ReadWriteOnce
+        type: pvc
+        retain: false
     timezone: "Europe/Lisbon"
     ingress:
       main:
