@@ -45,6 +45,13 @@ spec:
         annotations:
           metallb.universe.tf/allow-shared-ip: unifi
         loadBalancerIP: ${SVC_UNIFI_ADDR}
+        ports:
+          stun:
+            enabled: false
+          syslog:
+            enabled: false
+          discovery:
+            enabled: false
     podAnnotations:
       backup.velero.io/backup-volumes: unifi-data
     resources:
