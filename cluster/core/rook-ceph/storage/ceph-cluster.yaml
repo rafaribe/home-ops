@@ -66,7 +66,7 @@ spec:
     nodes:
       - name: "odroid-h2"
         devices:
-          - name: "sda"
+          - name: "sda1"
       - name: k3s-1
         devices:
           - name: "sda"
