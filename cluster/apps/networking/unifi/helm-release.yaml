@@ -40,10 +40,6 @@ spec:
             paths:
               - path: /
                 type: Prefix
-        tls:
-          - secretName: unifi-cert
-            hosts:
-              - "unifi.${SECRET_DOMAIN}"
     service:
       main:
         type: LoadBalancer
