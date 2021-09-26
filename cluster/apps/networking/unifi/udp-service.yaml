@@ -17,5 +17,6 @@ spec:
       port: 10001
       protocol: UDP
   selector:
-    app: unifi
+    app.kubernetes.io/instance: unifi
+    app.kubernetes.io/name: unifi
   type: LoadBalancer
