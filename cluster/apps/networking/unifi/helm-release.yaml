@@ -23,6 +23,9 @@ spec:
     persistence:
       data:
         enabled: true
+        stoageClass: rook-ceph
+        accessMode: ReadWriteOnce
+        size: 4Gi
     timezone: "Europe/Lisbon"
     ingress:
       main:
