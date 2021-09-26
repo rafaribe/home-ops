@@ -24,6 +24,7 @@ spec:
       data:
         enabled: true
         stoageClass: rook-ceph
+        accessMode: ReadWriteOnce
     timezone: "Europe/Lisbon"
     ingress:
       main:
