@@ -23,7 +23,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: unifi-data
+        stoageClass: rook-ceph
     timezone: "Europe/Lisbon"
     ingress:
       main:
@@ -49,11 +49,11 @@ spec:
         externalTrafficPolicy: Local
         ports:
           stun:
-            enabled: false
+            enabled: true
           syslog:
-            enabled: false
+            enabled: true
           discovery:
-            enabled: false
+            enabled: true
       udp:
         type: LoadBalancer
         annotations:
