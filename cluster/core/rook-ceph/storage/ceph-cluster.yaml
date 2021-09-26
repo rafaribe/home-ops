@@ -67,9 +67,9 @@ spec:
       - name: "odroid-h2"
         devices:
           - name: "sda"
-      - name: octoprint
-        devices:
-          - name: "sda"
-      - name: "sala"
-        devices:
-          - name: "sda"
+  #    - name: octoprint
+  #      devices:
+  #        - name: "sda"
+  #    - name: "sala"
+  #       devices:
+  #        - name: "sda"
