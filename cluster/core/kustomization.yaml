@@ -7,4 +7,3 @@ resources:
   - system-upgrade
   - local-path-provisioner
   - kubernetes-replicator
-  - rook-ceph
