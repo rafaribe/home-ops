@@ -16,6 +16,7 @@ spec:
         name: banzaicloud-charts
         namespace: flux-system
       interval: 5m
+      timeout: 10m
   values:
     sidecar:
       metrics:
