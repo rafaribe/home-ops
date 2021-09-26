@@ -23,14 +23,7 @@ spec:
     persistence:
       data:
         enabled: true
-      config:
-        enabled: true
-        type: pvc
-        mountPath: /unifi
-        stoageClass: rook-ceph
-        accessMode: ReadWriteOnce
-        size: 4Gi
-        retain: true
+        existingClaim: unifi-data
     timezone: "Europe/Lisbon"
     ingress:
       main:
