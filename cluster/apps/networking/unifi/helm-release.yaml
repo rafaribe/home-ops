@@ -22,8 +22,13 @@ spec:
       tag: v6.4.54
     persistence:
       data:
-        enabled: false
-        existingClaim: unifi-data
+        enabled: true
+        storageClass: rook-cephfs
+        size: 2Gi
+        mountPath: /unifi
+        accessMode: ReadWriteOnce
+        type: pvc
+        retain: true
     timezone: "Europe/Lisbon"
     ingress:
       main:
