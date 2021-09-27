@@ -13,7 +13,7 @@ spec:
   continueUpgradeAfterChecksEvenIfNotHealthy: false
   removeOSDsIfOutAndSafeToRemove: false
   mon:
-    count: 3
+    count: 2
     allowMultiplePerNode: false
   placement:
     all:
@@ -67,9 +67,9 @@ spec:
       - name: "odroid-h2"
         devices:
           - name: "sda1"
-      - name: k3s-1
-        devices:
-          - name: "sda"
+      #- name: k3s-1
+      #  devices:
+      #    - name: "sda"
       - name: "k3s-2"
         devices:
           - name: "sda"
