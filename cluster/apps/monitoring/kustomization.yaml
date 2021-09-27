@@ -6,3 +6,4 @@ resources:
   - grafana
   #- influxdb
   - speedtest-prometheus
+  - thanos
