@@ -8,3 +8,4 @@ kubeconfig
 # vscode-sops
 .decrypted~*.yaml
 .variables.sh
+bootstrap/.fullbootstrap.sh
