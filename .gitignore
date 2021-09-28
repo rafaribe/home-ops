@@ -9,3 +9,4 @@ kubeconfig
 .decrypted~*.yaml
 .variables.sh
 bootstrap/.fullbootstrap.sh
+bootstrap-hidden.sh
