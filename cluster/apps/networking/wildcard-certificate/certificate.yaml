@@ -9,5 +9,5 @@ spec:
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
-    name: letsencrypt-production
+    name: letsencrypt-staging
   secretName: wildcard-certificate-tls
