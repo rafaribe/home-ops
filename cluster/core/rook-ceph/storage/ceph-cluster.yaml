@@ -1,0 +1,76 @@
+---
+apiVersion: ceph.rook.io/v1
+kind: CephCluster
+metadata:
+  name: rook-ceph
+  namespace: rook-ceph
+spec:
+  cephVersion:
+    image: quay.io/ceph/ceph:v16.2.6
+    allowUnsupported: false
+  dataDirHostPath: /var/lib/rook
+  skipUpgradeChecks: false
+  continueUpgradeAfterChecksEvenIfNotHealthy: false
+  removeOSDsIfOutAndSafeToRemove: false
+  mon:
+    count: 2
+    allowMultiplePerNode: false
+  placement:
+    all:
+      tolerations:
+        - operator: "Exists"
+  monitoring:
+    enabled: true
+    rulesNamespace: rook-ceph
+  network:
+  crashCollector:
+    disable: false
+  cleanupPolicy:
+    confirmation: ""
+    sanitizeDisks:
+      method: quick
+      dataSource: zero
+      iteration: 1
+  mgr:
+    modules:
+      - name: pg_autoscaler
+        enabled: true
+  dashboard:
+    enabled: true
+    port: 7000
+    ssl: false
+  disruptionManagement:
+    managePodBudgets: false
+    osdMaintenanceTimeout: 30
+    manageMachineDisruptionBudgets: false
+    machineDisruptionBudgetNamespace: openshift-machine-api
+  resources:
+    mon:
+      requests:
+        cpu: 35m
+        memory: 800Mi
+      limits:
+        memory: 1024Mi
+    osd:
+      requests:
+        cpu: 35m
+        memory: 1024Mi
+      limits:
+        memory: 2048Mi
+  storage:
+    useAllNodes: false
+    useAllDevices: false
+    config:
+      metadataDevice:
+      osdsPerDevice: "1"
+    nodes:
+      - name: "odroid-h2"
+        devices:
+          - name: "sda1"
+      #   - name: k3s-1
+      #     devices:
+      #      - name: "sda"
+      - name: "k3s-2"
+        devices:
+          - name: "sda"
+          - name: "sdb"
