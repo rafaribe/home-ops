@@ -1,0 +1,20 @@
+---
+- name: Change keyboard layout to PT
+  hosts: all
+  tasks:
+    - name: Copy setupkeyboard.sh to the VM
+      copy:
+        src: setupkeyboard.sh
+        dest: /tmp/setupkeyboard.sh
+
+    - name: debconf settings
+      debconf:
+        name: console-data
+        question: console-data/keymap/policy
+        value: "Select keymap from full list"
+        vtype: select
+      become: true
+
+    - name: Run keyboard layout change script
+      command: "bash /tmp/setupkeyboard.sh {{keyboard_layout}}"
+      become: true

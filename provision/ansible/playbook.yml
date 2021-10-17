@@ -1,0 +1,20 @@
+#Ansible import_playbook
+# Inspiration: https://www.terasq.com/2019/03/building-kali-with-vagrant-ansible-p1/
+---
+- name: Install Dependencies
+  import_playbook: install-dependencies.yml
+  tags:
+    - dependencies
+
+- name: Quality Of Life Changes
+  import_playbook: qol.yml
+  tags:
+    - keyboard
+    - resolution
+- name: Install Docker
+  import_playbook: docker.yml
+  tags:
+    - docker
+# Uncomment after Manually installing the SDK's
+# - name: "Build the base Docker Image"
+#  import_playbook: docker-build-base.yml
