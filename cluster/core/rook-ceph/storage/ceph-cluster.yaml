@@ -64,14 +64,14 @@ spec:
       metadataDevice:
       osdsPerDevice: "1"
     nodes:
-      - name: "odroid-h2"
+      - name: "k3s-master-odroid"
         devices:
           - name: "sda"
           - name: "sda1"
-      - name: k3s-1
+      - name: "k3s-worker-1"
         devices:
           - name: "sda"
-      - name: "k3s-2"
+      - name: "k3s-worker-2"
         devices:
           - name: "sda"
           - name: "sdb"
