@@ -7,3 +7,4 @@ resources:
   - storage-class.yaml
   - volume-snapshot-class.yaml
   - default-size.yaml
+  - thanos-object-bucket.yaml
