@@ -8,7 +8,7 @@ reclaimPolicy: Delete
 parameters:
   objectStoreName: object-store
   objectStoreNamespace: rook-ceph
-  region: us-east-1
+  region: east-us-1
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
