@@ -4,3 +4,5 @@ resources:
   - dyndns-cronjob.yaml
   - dyndns-configmap.yaml
   - secret.sops.yaml
+  - cname-cronjob.yaml
+  - cname-configmap.yaml
