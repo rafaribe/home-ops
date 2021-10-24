@@ -28,7 +28,7 @@ spec:
       externalTrafficPolicy: Local
     persistence:
       enabled: true
-      existingClaim: influxdb-pvc
+      #existingClaim: influxdb-pvc
     resources:
       requests:
         memory: 1500Mi
