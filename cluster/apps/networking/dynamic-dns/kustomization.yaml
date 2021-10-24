@@ -3,6 +3,4 @@ kind: Kustomization
 resources:
   - dyndns-cronjob.yaml
   - dyndns-configmap.yaml
-  - cname-congfigmap.yaml
-  - cname-cronjob.yaml
   - secret.sops.yaml
