@@ -9,7 +9,7 @@ spec:
     image: quay.io/ceph/ceph:v16.2.6
     allowUnsupported: false
   dataDirHostPath: /var/lib/rook
-  skipUpgradeChecks: false
+  skipUpgradeChecks: true
   continueUpgradeAfterChecksEvenIfNotHealthy: false
   removeOSDsIfOutAndSafeToRemove: false
   mon:
