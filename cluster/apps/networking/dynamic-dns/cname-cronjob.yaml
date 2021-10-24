@@ -4,7 +4,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   namespace: networking
-  name: dyndns-updater
+  name: cname-updater
 spec:
   schedule: "0 */6 * * *"
   failedJobsHistoryLimit: 1
