@@ -11,18 +11,17 @@ metadata:
 data:
   dyndns-updater.sh: |
     #!/bin/bash
+    echo "Updating A Record \n"
     curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
         -H "Authorization: Bearer $AUTH_KEY" \
         -H "Content-Type: application/json" \
         --data "{\"type\":\"A\",\"name\":\"$NAME\",\"content\":\"`curl ifconfig.co`\",\"proxied\":true}"
-
-    echo \n $SUBDOMAINS \n
-
+    echo "\n $SUBDOMAINS \n"
     for i in $(echo $SUBDOMAINS | sed "s/,/ /g")
     do
       curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
             -H "Authorization: Bearer $AUTH_KEY" \
             -H "Content-Type: application/json" \
             --data "{\"type\":\"CNAME\",\"name\":\"$i\",\"content\":\"$NAME\",\"proxied\":true}"
-      echo Updated $i.$NAME \n
+      echo "Updated $i.$NAME \n"
     done
