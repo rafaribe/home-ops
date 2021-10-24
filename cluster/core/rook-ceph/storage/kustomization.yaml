@@ -6,8 +6,8 @@ resources:
   - ceph-file-system.yaml
   - ceph-block-storage-class.yaml
   - ceph-cephfs-storage-class.yaml
-  #- ceph-bucket-storage-class.yaml
   - volume-snapshot-class.yaml
   - default-size.yaml
-  #- ceph-object-bucket.yaml
-  # - thanos-object-bucket.yaml
+  - ceph-bucket-storage-class.yaml
+  - ceph-object-bucket.yaml
+  - thanos-object-bucket.yaml
