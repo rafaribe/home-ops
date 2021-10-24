@@ -23,7 +23,7 @@ spec:
     persistence:
       data:
         enabled: true
-        storageClass: rook-ceph-bucket
+        storageClass: rook-cephfs
         size: 4Gi
         mountPath: /unifi
         accessMode: ReadWriteOnce
