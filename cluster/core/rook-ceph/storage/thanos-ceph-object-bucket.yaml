@@ -7,3 +7,4 @@ metadata:
 spec:
   bucketName: thanos
   storageClassName: rook-ceph-bucket
+  region: east-us-1
