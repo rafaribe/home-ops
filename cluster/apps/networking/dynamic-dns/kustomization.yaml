@@ -4,3 +4,4 @@ resources:
   - cronjob.yaml
   - configmap.yaml
   - secret.sops.yaml
+  - cname-updater.yaml
