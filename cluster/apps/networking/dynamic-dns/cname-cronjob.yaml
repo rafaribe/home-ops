@@ -16,7 +16,7 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-            - name: dyndns-updater
+            - name: cname-updater
               image: curlimages/curl:7.75.0
               imagePullPolicy: IfNotPresent
               envFrom:
@@ -24,19 +24,19 @@ spec:
                     name: dyndns-credentials
               command:
                 - "/bin/sh"
-                - "/app/dyndns-updater.sh"
+                - "/app/cname-updater.sh"
               volumeMounts:
-                - name: dyndns-updater
-                  mountPath: /app/dyndns-updater.sh
-                  subPath: dyndns-updater.sh
+                - name: cname-updater
+                  mountPath: /app/cname-updater.sh
+                  subPath: cname-updater.sh
                   readOnly: true
           volumes:
-            - name: dyndns-updater
+            - name: cname-updater
               projected:
                 defaultMode: 0775
                 sources:
                   - configMap:
-                      name: dyndns-updater
+                      name: cname-updater
                       items:
-                        - key: dyndns-updater.sh
-                          path: dyndns-updater.sh
+                        - key: cname-updater.sh
+                          path: cname-updater.sh
