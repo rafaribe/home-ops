@@ -6,5 +6,5 @@ resources:
   - cert-manager
   - system-upgrade
   - local-path-provisioner
-  - kubernetes-replicator
+  #- kubernetes-replicator
   - rook-ceph
