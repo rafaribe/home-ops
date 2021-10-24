@@ -6,3 +6,4 @@ resources:
   - ceph-file-system.yaml
   - storage-class.yaml
   - volume-snapshot-class.yaml
+  - default-size.yaml
