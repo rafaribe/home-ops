@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cname-updater
+  namespace: networking
+  labels:
+    app.kubernetes.io/name: cname-updater
+    app.kubernetes.io/instance: cname-updater
+data:
+  cname-updater.sh: |
+    for i in $(echo $SUBDOMAINS | sed "s/,/ /g")
+    do
+      curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
+            -H "Authorization: Bearer $AUTH_KEY" \
+            -H "Content-Type: application/json" \
+            --data "{\"type\":\"CNAME\",\"name\":\"$i\",\"content\":\"$NAME\",\"proxied\":\"true\"}"
+    done
