@@ -9,10 +9,10 @@ metadata:
 spec:
   metadataPool:
     replicated:
-      size: 2
+      size: 1
   dataPools:
     - replicated:
-        size: 2
+        size: 1
   preserveFilesystemOnDelete: false
   metadataServer:
     activeCount: 1

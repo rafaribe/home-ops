@@ -63,10 +63,6 @@ spec:
     config:
       osdsPerDevice: "1"
     nodes:
-      - name: "k3s-master-odroid"
-        devices:
-          - name: "sda"
-          - name: "sda1"
       - name: "k3s-worker-1"
         devices:
           - name: "sda"
