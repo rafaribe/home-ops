@@ -19,6 +19,7 @@ spec:
   values:
     fullnameOverride: prometheus
     alertmanager:
+      enable: true
       config:
         global:
           slack_api_url: "${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}"
@@ -74,14 +75,6 @@ spec:
         tls:
           - hosts:
               - "alert-manager.${SECRET_DOMAIN}"
-      alertmanagerSpec:
-        storage:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: "local-path"
-              resources:
-                requests:
-                  storage: 1Gi
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -127,13 +120,6 @@ spec:
         retention: 6h
         enableAdminAPI: true
         walCompression: true
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: "local-path"
-              resources:
-                requests:
-                  storage: 10Gi
       # additionalScrapeConfigs:
       #   - job_name: "node-exporter"
       #     honor_timestamps: true
