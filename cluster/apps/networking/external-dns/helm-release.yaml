@@ -32,7 +32,10 @@ spec:
             name: cloudflare-creds
             key: api-key
     extraArgs:
+      - --source=ingress
       - --cloudflare-proxied
+      - --zone-id-filter=${SECRET_CLOUDFLARE_ZONE_ID}
+      - --domain-filter=${SECRET_DOMAIN}
       - --annotation-filter=external-dns/is-public in (true)
     policy: sync
     sources:

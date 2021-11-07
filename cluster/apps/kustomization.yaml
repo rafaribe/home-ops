@@ -6,4 +6,3 @@ resources:
   - networking
   - system-upgrade
   - monitoring
-  - external-dns

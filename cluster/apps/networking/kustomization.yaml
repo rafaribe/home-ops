@@ -5,3 +5,4 @@ resources:
   - dynamic-dns
   - wildcard-certificate
   - unifi
+  - external-dns
