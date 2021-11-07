@@ -43,10 +43,6 @@ spec:
                     {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
                     {{ end }}
                   {{ end }}
-          - name: "nodered"
-            webhook_configs:
-              - url: "http://node-red.home:1880/power-outage"
-                send_resolved: true
         route:
           group_by: ["alertname", "job"]
           group_wait: 30s
@@ -60,10 +56,6 @@ spec:
             - receiver: "discord"
               match_re:
                 severity: critical
-              continue: true
-            - receiver: "nodered"
-              match:
-                alertname: UPSOnBattery
               continue: true
         inhibit_rules:
           - source_match:
@@ -90,19 +82,6 @@ spec:
               resources:
                 requests:
                   storage: 1Gi
-    nodeExporter:
-      serviceMonitor:
-        relabelings:
-          - action: replace
-            regex: (.*)
-            replacement: $1
-            sourceLabels:
-              - __meta_kubernetes_pod_node_name
-            targetLabel: kubernetes_node
-    kube-state-metrics:
-      fullnameOverride: kube-state-metrics
-    prometheus-node-exporter:
-      fullnameOverride: node-exporter
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -119,31 +98,6 @@ spec:
             sourceLabels:
               - node
             targetLabel: instance
-    kubeApiServer:
-      enabled: true
-    kubeControllerManager:
-      enabled: true
-      endpoints:
-        - 10.0.0.4
-    kubeScheduler:
-      enabled: true
-      endpoints:
-        - 10.0.0.4
-        - 10.0.0.2
-    kubeProxy:
-      enabled: true
-      endpoints:
-        - 10.0.0.4
-        - 10.0.0.2
-    kubeEtcd:
-      enabled: true
-      endpoints:
-        - 10.0.0.4
-        - 10.0.0.2
-      service:
-        enabled: true
-        port: 2381
-        targetPort: 2381
     # Setting this option to 0 disabled CPU limits
     prometheusOperator:
       configReloaderCpu: 0
