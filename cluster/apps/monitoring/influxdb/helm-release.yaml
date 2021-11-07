@@ -22,10 +22,7 @@ spec:
       repository: "influxdb"
       tag: "2.0.8"
     service:
-      type: LoadBalancer
-      externalIPs:
-        - 10.0.0.201
-      externalTrafficPolicy: Local
+      type: ClusterIP
     persistence:
       enabled: true
       #existingClaim: influxdb-pvc
