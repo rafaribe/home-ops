@@ -10,3 +10,4 @@ kubeconfig
 .variables.sh
 bootstrap/.fullbootstrap.sh
 bootstrap-hidden.sh
+cluster/apps/networking/external-dns/secret.sops.yaml
