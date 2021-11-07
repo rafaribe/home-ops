@@ -1,6 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - ceph-block-storage-class.yaml
-  - ceph-bucket-storage-class.yaml
-  - ceph-cephfs-storage-class.yaml

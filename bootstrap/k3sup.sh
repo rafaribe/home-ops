@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
-
-k3sup install --ip="10.0.0.18" --user="brr" --k3s-version="v1.21.4+k3s1" --k3s-extra-args="--disable servicelb --disable traefik --disable metrics-server"
+K3S_VERSION=v1.22.3+k3s1
+k3sup install --ip="10.0.0.4" --user="rafaribe" --k3s-version="${K3S_VERSION}" --k3s-extra-args="--disable servicelb --disable traefik --disable metrics-server" --local-path=./kubeconfig
 
 k3sup join \
     --ip=10.0.0.2 \
-    --server-ip=10.0.0.18 \
-    --server-user=brr \
-    --k3s-version=v1.21.4+k3s1 \
-    --user=ubuntu
+    --server-ip=10.0.0.4 \
+    --server-user=rafaribe \
+    --k3s-version="${K3S_VERSION}" \
+    --user=rafaribe
 
-k3sup join \
-    --ip=10.0.0.27 \
-    --server-ip=10.0.0.18 \
-    --server-user=brr \
-    --k3s-version=v1.21.4+k3s1 \
-    --user=ubuntu
+cp ./kubeconfig ~/.kube/k3s
+# k3sup join \
+#     --ip=10.0.0.27 \
+#     --server-ip=10.0.0.18 \
+#     --server-user=rafaribe \
+#     --k3s-version="${K3S_VERSION}" \
+#     --user=rafaribe

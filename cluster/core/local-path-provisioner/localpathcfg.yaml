@@ -7,21 +7,25 @@ data:
           "node": "DEFAULT_PATH_FOR_NON_LISTED_NODES",
           "paths": ["/opt/local-path-provisioner"]
         },
-         {
-          "node": "sala",
-          "paths": ["/media/pi/NAS1/k3s-storage"]
+        {
+          "node": "k3s-master-odroid",
+          "paths": ["/media/rafaribe/sda-ata-TOSHIBA_MQ01UBD1"]
+        },
+        {
+          "node": "k3s-worker-1",
+          "paths": ["media/rafaribe/sda1-usb-USB_SanDisk_3.2G"]
         }
       ]
     }
   helperPod.yaml: |-
-      apiVersion: v1
-      kind: Pod
-      metadata:
-        name: helper-pod
-      spec:
-        containers:
-        - name: helper-pod
-          image: rancher/library-busybox:1.32.1
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: helper-pod
+    spec:
+      containers:
+      - name: helper-pod
+        image: rancher/library-busybox:1.32.1
   setup: |-
     #!/bin/sh
     while getopts "m:s:p:" opt
