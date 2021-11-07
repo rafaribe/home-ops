@@ -23,7 +23,6 @@ spec:
     persistence:
       data:
         enabled: true
-        storageClass: rook-cephfs
         size: 4Gi
         mountPath: /unifi
         accessMode: ReadWriteOnce
@@ -31,8 +30,7 @@ spec:
         retain: false
       cert:
         enabled: true
-        storageClass: rook-cephfs
-        size: 4Gi
+        size: 1Gi
         mountPath: /cert
         accessMode: ReadWriteOnce
         type: pvc
