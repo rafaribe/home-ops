@@ -22,9 +22,15 @@ spec:
     provider: cloudflare
     env:
       - name: CF_API_EMAIL
-        value: ${SECRET_CLOUDFLARE_EMAIL}
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-credentials
+            key: email
       - name: CF_API_KEY
-        value: ${SECRET_CLOUDFLARE_API_KEY}
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-credentials
+            key: api-key
     extraArgs:
       - --cloudflare-proxied
       - --zone-id-filter=${SECRET_CLOUDFLARE_ZONE_ID}
