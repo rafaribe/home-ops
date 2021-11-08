@@ -28,9 +28,11 @@ spec:
     persistence:
       config:
         enabled: true
+        accessMode: ReadWriteOnce
         #existingClaim: calibre-config-pvc
       data:
         enabled: true
+        accessMode: ReadWriteOnce
         #existingClaim: media-nfs-tank-share-pvc
         mountPath: /data
 
