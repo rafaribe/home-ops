@@ -22,20 +22,12 @@ spec:
     provider: cloudflare
     env:
       - name: CF_API_EMAIL
-        valueFrom:
-          secretKeyRef:
-            name: cloudflare-creds
-            key: email
+        value: ${SECRET_CLOUDFLARE_EMAIL}
       - name: CF_API_KEY
-        valueFrom:
-          secretKeyRef:
-            name: cloudflare-creds
-            key: api-key
+        value: ${SECRET_CLOUDFLARE_API_KEY}
     extraArgs:
-      - --source=ingress
       - --cloudflare-proxied
       - --zone-id-filter=${SECRET_CLOUDFLARE_ZONE_ID}
-      - --domain-filter=${SECRET_DOMAIN}
       - --annotation-filter=external-dns/is-public in (true)
     policy: sync
     sources:
