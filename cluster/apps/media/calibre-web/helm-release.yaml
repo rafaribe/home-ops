@@ -29,10 +29,10 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: calibre-web-config-pvc
+        # existingClaim: calibre-web-config-pvc
       data:
         enabled: true
-        existingClaim: media-nfs-tank-share-pvc
+        #    existingClaim: media-nfs-tank-share-pvc
         mountPath: /data
 
     ingress:

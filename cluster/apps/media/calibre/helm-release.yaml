@@ -28,10 +28,10 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: calibre-config-pvc
+        #existingClaim: calibre-config-pvc
       data:
         enabled: true
-        existingClaim: media-nfs-tank-share-pvc
+        #existingClaim: media-nfs-tank-share-pvc
         mountPath: /data
 
     service:
