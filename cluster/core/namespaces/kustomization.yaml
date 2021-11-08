@@ -10,4 +10,4 @@ resources:
   - metallb-system.yaml
   - networking.yaml
   - monitoring.yaml
-  - rook-ceph.yaml
+  - postgres.yaml
