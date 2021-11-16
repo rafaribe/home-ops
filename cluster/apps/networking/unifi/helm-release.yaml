@@ -100,5 +100,5 @@ spec:
             - hosts:
                 - app-config.domain.tld
         volumeMounts:
-          - name: unifi
+          - name: data
             mountPath: /unifi
