@@ -79,14 +79,14 @@ spec:
         image:
           repository: codercom/code-server
           tag: 3.9.0
-        workingDir: "/config"
+        workingDir: "/unifi"
         args:
           - --auth
           - "none"
           - --user-data-dir
-          - "/config/.vscode"
+          - "/unifi/.vscode"
           - --extensions-dir
-          - "/config/.vscode"
+          - "/unifi/.vscode"
         ingress:
           enabled: true
           annotations:
@@ -100,5 +100,5 @@ spec:
             - hosts:
                 - app-config.domain.tld
         volumeMounts:
-          - name: config
-            mountPath: /config
+          - name: unifi
+            mountPath: /unifi
