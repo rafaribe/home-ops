@@ -106,7 +106,7 @@ spec:
           type: LoadBalancer
           annotations:
             metallb.universe.tf/allow-shared-ip: "true"
-          loadBalancerIP: ${SVC_UNIFI_ADDR}
+          loadBalancerIP: ${SVC_UNIFI_CODESERVER_ADDR}
           ports:
             - name: codeserver
               port: 12321
