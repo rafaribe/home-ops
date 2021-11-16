@@ -73,3 +73,32 @@ spec:
         cpu: 15m
       limits:
         memory: 750Mi
+    addons:
+      codeserver:
+        enabled: true
+        image:
+          repository: codercom/code-server
+          tag: 3.9.0
+        workingDir: "/config"
+        args:
+          - --auth
+          - "none"
+          - --user-data-dir
+          - "/config/.vscode"
+          - --extensions-dir
+          - "/config/.vscode"
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: "nginx"
+          hosts:
+            - host: app-config.domain.tld
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+                - app-config.domain.tld
+        volumeMounts:
+          - name: config
+            mountPath: /config
