@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: unifi-wireguard-config-gateway-json
+    namespace: networking
+    labels:
+        app.kubernetes.io/name: unifi-wireguard
+        app.kubernetes.io/instance: unifi-wireguard
+data:
+    config.gateway.json: ENC[AES256_GCM,data:9viGrwLo8dsN+Nhz7yqw6gNblbohomIH+nsEZj8KtsBWFCz50pRLYybTFOFmwoNyx/JwmMgiCHWFNWfSoHXk0YIolastp4TN45PPJnK4o8szmGXEHEjtoQJJckY1jWSdiDAV+lGleNx0PUkcuwkFntUU481q2ZPwkWjk+Yh482WQg9uIMn88ZYwUyAPcAm807o/cDU3bl5XwC7va3u15sZeD0kuTNuY+/EUQ2Bc6tAvDk+/Wd/WakJ4zNSYSxkUaM8DLLIqUSw86sfScMhWJp6uoRc4YHmXFeleUMWoub31ShqT2lqPNeU1Nx16572oywgB2PPK7l+tgRpRqjK/4fA2hQ2aaz1HNMtPfcIgVHufzxZctdM3C1qq9QnAuftEPeZlbf4BLVQh0gYqOiJ/HnuLWosXxGoSjX56XxtqLPcc0cVlCSHJiqmnJi3NduKdvxYeGrc/d3HuFOE6zgTYgvg+JDR41lypRvIMcrkW2ZRuG3hRQeiv5D8h1k4mfNGdiIhB8rBQ+0P7orKF6PpH2Bead+5MsISUvvb7IxE7csUbuqjbfbcq54Z+not5saxYl0NtJtY6LdGMydBUg09y6iDm2GFhUNj3fGkipTUtbhTmFZkRrLRTbJWHQPtG5Jg0AoZ1j2sRH6z5P+iW51Pj77jHg4sRl+rrof6xqmrzoYqCNWh7DyzyrZojUJH6QmUtIUiSICl7Au5sW/e+XH7V1sh+ay6z+yOXTopgb2XZa8YDzGXMLni5awXOc7DcTC9xQUFaFgxRTBEoCw/1Us7mbHpeqPId6FLJaDAgKJbSCDjzhkSIAVXN8HvIS+nNIefagjSmjqT8gVMkZ8pJUYAO5J+tHdY5scuywuJUfpIlbFV+zqmEr9Auo1kN1GqHQju2zUiNUpBCzl+6801hCZo4u/LZFdNdDERFsLvKURBS6w0RXUBKXl0z50z7D7kDmrMqo9TWecMQeJDxSIv7XmZFTC6rCcs+zPEO0OI6v+HIl/Pg2z0tkuTVSCr2RGevITqtidxCDGWxCZ1nGCPjoaZeFcm4dGEdIdNN7MV+Rby+vIYZiUd9tvCIc7tDVDslJPL81iTh4kRMORVtvEzQMvVkpF+JqdDtxwYFY0GJEZEeW81k0v3fmGsxXinlA+uyExLbz9tbX4zz4ePm4BonId8nJwflOe+PtoWS4koZ5naq9MvK2rUnQDn9YcFzK3Fb9Bt1HbzzT+UfEbeJlBabLU1FZyfvU6dX/Zw7l8W/WoilmG6PPSgCDRV2j2qPafpUuThHFcz3U55oGLAqNUocQTt0UzCmHn/f6+c2CkgwJ7fex3HMZZZiuNC1iF0L6NjK/1b/Gt63aPfUQCZ8egARMcUTTASo95n5UaSqZ+I3OL7fSYD7TzUaqcUVP55ijHUGjBWBbreA38qEhDxxC43Hh6uY0aMizDa2FuDltRc4aoDA5CkOzvPrgSlIwlCuvbn04Sse9K62tofbIdDwyNgqG9Pw6MSg4atJkSvfJjFOOlvfZOoWHJtYmOWaiH1C9dq/h1zUDT7buDlNN/FNxuYSuq1c/vkMBKsM77VR/nm8/huQL2kxDdQ88u7VFhvF4/I5/IRn+VRV+mmxutrSiJNq2k+srPqoeQWB13O4gdLd+0qZh+mpTFBBRr1tKJ5MszM8FQNOT89E7BLHjBy8s4PG8bBI0EEdx8zh/qg4F+Pk9Zo7y9Lhycx0eIR3e467DgjKdZrDKLbWKP87ZYzUEpvQDzeRTtQ1j5etf9ZOJP9g8H21cwI5dmcEWnQRP11TTzg5hFQLBiuumadggAwjEt14iue4yIQiu7YkjU31WWonhWtKPtKw+GBFdlQK6oecycg==,iv:VqMPlI4xJ2GHml7K2B6j6qNjkzgIR7kGh4Iq8kI8WnY=,tag:12ZcPmM1xwbBqumwHIOvrQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-11-16T23:28:15Z"
+    mac: ENC[AES256_GCM,data:loNrlFEKdPlQn1chS3BEQZe9NPfvVV6jIIV3kCukPFOBA+A+ZUNrtUCwU1gMlqxabgfH7tOXM/HY0vchQUg1UkHiu7b4cUo05gst+16tI4KGo/b6ECY/eLO4gjd71KKT2BBdbsobB+AQo5Tk04e/cEP1B82syoMXKRqlQmdsyFQ=,iv:QRi2mIOmxf8rq1e5QDs6noPceD3byuR6iyft4ftxbEI=,tag:wgN9Bq/qe+2tEWYuzJiP1g==,type:str]
+    pgp:
+        - created_at: "2021-11-16T22:58:07Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA9vXbISsCyLcAQ//UyrpVUvA1kfHv/q+Bgwly+BbS7w/f+JYaL5jgcS4jqcW
+            qB1hT8la+xilDe3hk0a8tt0N/6RpjT5iey0wrfYLfboEJxW5LeeuNZjsAjy0I1Lh
+            yMLT5p5c8LNU8O17D63jg/4SmVxQ+oIJAxXw6sci+ET/ZbAKWya8EE22mM9gpqjX
+            cU/ZAOcVMUfvEU0tQ8//knSLmO6wVt10G2+TiGU+qeue0JdPQU6JFVLOlLVcVQIe
+            NPqv6p9ay1Vu3az5xAALbSaci4bSyui9Yp57v7xtUdeMUHkxoV4Lk1HAdNNK46rI
+            gFE5ov6ylY73UML2QAkCWpGwjQ/fAtYWKWCWND2JFJD2WI5SmY4Q1dPYUJGTlaXJ
+            meG+hdmIbaWeZUWQTbYn5a8RgHwcKh/6zlTrWe9GS0VLMuyxuK9BfZ3tzsahXUVj
+            8kBGMwYjx1ANSAtoqUhzPa12N6Q13iWJOJMLWQS588P3hZAAFqSdrmhvRuRob8Qo
+            Lk1YdbdW9cv5NeddMcYUPEehDyqIl2k5hco9MgZSIIm17iGxoWTxOeE/UcDTxruy
+            sgknhQAAVHzIMAJlxeQAPE8gtohH730vEN55SMsuiyYvXP2nTpxMsSZI4EoiQpyg
+            CbBmE2dW35QEUikYaPbZqeQwHHa6XLngnTUNz/Fa8R+2DXLX8oqNBmuc6CRmK0vU
+            aAEJAhBWgG8Ph6JqoDyed+H02VI9UFC/tciV4ldSsJjKPqLKZVmofEDinDC5Qfls
+            wpDspQ280C1I/YCwEii/IGhwFUeaG05NLuWL07n1r726RBJhnZEsoZhQhGeoxx/C
+            wzZVVVwxdCqt
+            =Kq4d
+            -----END PGP MESSAGE-----
+          fp: BB68891E153B1A8B5285A7518825ECBA2E0A2DE9
+        - created_at: "2021-11-16T22:58:07Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA8IHqVE4LTtGARAArNyYrLYv8FwgJL4iXSC7olfk5+rjdaAJI69mKB9LF7bG
+            +1yfxP3keSdH6UWG2KxnYX7mGf4xpo5HSY0yZD/RpvEXYsfIMzbtsdRhYzVSnP0l
+            tc//o6P9R+FxEoPx5F5uz1+KVr9q9J/BpjWWdp9ywilBV/w1CJxikU/8WSkBP2UF
+            BM4EIz8hkfToAJ8ApqfKdVCsjBNCu5XLIDqxV0ba/JetuOzJxBhTIj77kbR96qrf
+            tRpRhYgJxFEusGeG3vr7x/99dYiVAhxcLyknLk4yL9/mmvjWkiiCvG/1YFh/b6fY
+            RZNDTAslRQivMC4F+OcBKDD4Wq/pkJrVLAjTGUNsdHChrDx2IcGACd4fF9A5eVFR
+            wjwQl+qtssl0ORRYboGM5/LzRuYovEgx/zXcwVkV5/PQL1ciGQUE+samVyNZPvmQ
+            S2Sg8Ap1a6/4zkVmW5QCgROzjaO8DzR9yssXZkAgzgvMr0X8YlRWO8vgqK1sKa5B
+            LF+AWLKEdYbA02sBN4FoodSMP5cpdzAWkONhBSgCBEfGnekn7iyx9GE2ciNhgyw9
+            OU+cEwn80cKncsaG2JErelmfRn2Nn4l/1MUaQFXE98oIBD07NbqA51PLehzsxg90
+            DJLdTKNauckTlnyIFvbhEkJ+hJyHl9lw6J9NoQ8i8/WC8yh2MVdveFgVBXgFgMHU
+            aAEJAhCZNKG7G9ICe5EskZIH80A6s83C1PEric/DGcIxw6bVfxZQoQKcGPHFjUjc
+            XiudtBXnT2lJ3sFAtv8bHJXeHF4c8VNnBT5GEpExRLV+98ZT2imCjXJmRzhEZ5SY
+            +QOZozzBPghb
+            =1YT8
+            -----END PGP MESSAGE-----
+          fp: F1A3034AD31E4FB16DC26F05B6DDE10E6102A098
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.1
