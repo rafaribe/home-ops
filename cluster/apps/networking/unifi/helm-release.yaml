@@ -76,9 +76,6 @@ spec:
     addons:
       codeserver:
         enabled: true
-        image:
-          repository: codercom/code-server
-          tag: 3.9.0
         workingDir: "/unifi"
         args:
           - --auth
@@ -96,8 +93,3 @@ spec:
           annotations:
             metallb.universe.tf/allow-shared-ip: "true"
           loadBalancerIP: ${SVC_UNIFI_ADDR}
-          ports:
-            - name: codeserver
-              port: 12321
-              protocol: TCP
-              targetPort: codeserver
