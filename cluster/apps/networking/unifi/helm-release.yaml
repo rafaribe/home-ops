@@ -53,18 +53,12 @@ spec:
             hosts:
               - "unifi.${SECRET_DOMAIN}"
     service:
-      main:
-        type: LoadBalancer
-        annotations:
-          metallb.universe.tf/allow-shared-ip: "true"
-        loadBalancerIP: ${SVC_UNIFI_ADDR}
-        ports:
-          stun:
-            enabled: false
-          syslog:
-            enabled: false
-          discovery:
-            enabled: false
+      enabled: true
+      type: LoadBalancer
+      annotations:
+        metallb.universe.tf/allow-shared-ip: "true"
+      loadBalancerIP: ${SVC_UNIFI_ADDR}
+
     podAnnotations:
       backup.velero.io/backup-volumes: unifi-data
     resources:
