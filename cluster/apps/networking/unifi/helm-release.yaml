@@ -89,7 +89,3 @@ spec:
             mountPath: /unifi
         service:
           enable: true
-          type: LoadBalancer
-          annotations:
-            metallb.universe.tf/allow-shared-ip: "true"
-          loadBalancerIP: ${SVC_UNIFI_ADDR}
