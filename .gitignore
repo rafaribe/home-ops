@@ -12,4 +12,3 @@ bootstrap/.fullbootstrap.sh
 bootstrap-hidden.sh
 cluster/apps/networking/external-dns/secret.sops.yaml
 cluster/apps/networking/unifi/configmap.json
-wireguardconfig
