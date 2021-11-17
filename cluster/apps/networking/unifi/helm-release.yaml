@@ -87,26 +87,15 @@ spec:
           - "/unifi/.vscode"
           - --extensions-dir
           - "/unifi/.vscode"
-        ingress:
-          enabled: true
-          annotations:
-            kubernetes.io/ingress.class: "nginx"
-          hosts:
-            - host: app-config.domain.tld
-              paths:
-                - path: /
-                  pathType: Prefix
-          tls:
-            - hosts:
-                - app-config.domain.tld
         volumeMounts:
           - name: data
             mountPath: /unifi
         service:
+          enable: true
           type: LoadBalancer
           annotations:
             metallb.universe.tf/allow-shared-ip: "true"
-          loadBalancerIP: ${SVC_UNIFI_CODESERVER_ADDR}
+          loadBalancerIP: ${SVC_UNIFI_ADDR}
           ports:
             - name: codeserver
               port: 12321
