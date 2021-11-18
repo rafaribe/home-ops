@@ -6,4 +6,4 @@ resources:
   - wildcard-certificate
   - unifi
   - external-dns
-  #- wireguard
+  - wireguard
