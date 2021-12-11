@@ -35,3 +35,12 @@ spec:
     persistence:
       enabled: true
       size: 50Gi
+    securityContext:
+      runAsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+    config:
+      ingester:
+        wal:
+          enabled: true
+          dir: /loki/wal
