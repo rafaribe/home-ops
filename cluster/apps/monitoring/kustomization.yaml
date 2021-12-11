@@ -6,4 +6,3 @@ resources:
   - grafana
   - influxdb
   - speedtest-prometheus
-  - loki
