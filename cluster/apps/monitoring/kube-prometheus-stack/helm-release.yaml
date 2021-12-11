@@ -120,11 +120,10 @@ spec:
         retention: 6h
         enableAdminAPI: true
         walCompression: true
-      # additionalScrapeConfigs:
-      #   - job_name: "node-exporter"
-      #     honor_timestamps: true
-      #     static_configs:
-      #       - targets:
-      #           - "${GATEWAY_ADDR}:9100"
-      #           - "${NAS_ADDR}:9100"
-      #           - "192.168.1.28:9100"
+        enableFeatures: ['remote-write-receiver']
+        additionalScrapeConfigs:
+          - job_name: "node-exporter"
+            honor_timestamps: true
+            static_configs:
+              - targets:
+                  - "${WONDERFUL_CINNABAR_BEE_ADDR}:9100"
