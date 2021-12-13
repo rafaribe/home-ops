@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://grafana.github.io/helm-charts
       chart: loki
-      version: 2.6.0
+      version: 2.6.0z
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
@@ -46,4 +46,4 @@ spec:
       ingester:
         wal:
           enabled: true
-          dir: /loki/wal
+          dir: /var/loki/wal
