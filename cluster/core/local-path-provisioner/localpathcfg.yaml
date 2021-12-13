@@ -13,12 +13,8 @@ data:
         },
         {
           "node": "k3s-worker-1",
-          "paths": ["/media/rafaribe/sda1-usb-USB_SanDisk_3.2G"]
+          "paths": ["/media/rafaribe/sda1-usb-USB_SanDisk_3.2G", "/media/rafaribe/sdb2-disk-4tb"]
         },
-        {
-          "node": "k3s-worker-1",
-          "paths": ["/media/rafaribe/sdb2-disk-4tb"]
-        }
       ]
     }
   helperPod.yaml: |-
