@@ -13,7 +13,7 @@ data:
         },
         {
           "node": "k3s-worker-1",
-          "paths": ["media/rafaribe/sda1-usb-USB_SanDisk_3.2G"]
+          "paths": ["/media/rafaribe/sda1-usb-USB_SanDisk_3.2G"]
         },
         {
           "node": "k3s-worker-1",
