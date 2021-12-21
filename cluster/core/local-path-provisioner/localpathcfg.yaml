@@ -22,7 +22,9 @@ rules:
   - apiGroups: [ "storage.k8s.io" ]
     resources: [ "storageclasses" ]
     verbs: [ "get", "list", "watch" ]
-
+  - apiGroups: ["policy"]
+    resources: ["podsecuritypolicies"]
+    verbs: ["use"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -156,6 +158,6 @@ data:
     spec:
       containers:
       - name: helper-pod
-        image: busybox
+        image: docker.io/library/alpine:latest
         imagePullPolicy: IfNotPresent
 
