@@ -27,6 +27,7 @@ spec:
       storageClassName: 'local-path'
     ingress:
       enabled: true
+      ingressClassName: "traefik"
       annotations:
         kubernetes.io/ingress.class: "traefik"
       hosts:
