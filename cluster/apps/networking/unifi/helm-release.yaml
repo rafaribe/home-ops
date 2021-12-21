@@ -27,12 +27,14 @@ spec:
         mountPath: /unifi
         accessMode: ReadWriteOnce
         type: pvc
+        storageClass: "local-path"
         retain: false
       cert:
         enabled: true
         size: 1Gi
         mountPath: /cert
         accessMode: ReadWriteOnce
+        storageClass: "local-path"
         type: pvc
         retain: false
     timezone: "Europe/Lisbon"
