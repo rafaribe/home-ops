@@ -5,5 +5,5 @@ resources:
   - dynamic-dns
   - wildcard-certificate
   #- unifi
-  - external-dns
+  #- external-dns
   - wireguard
