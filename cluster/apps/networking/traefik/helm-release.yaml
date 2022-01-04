@@ -30,7 +30,7 @@ spec:
       type: LoadBalancer
       spec:
         loadBalancerIP: "${SVC_TRAEFIK_ADDR}"
-        externalTrafficPolicy: Cluster
+        externalTrafficPolicy: Local
       ipFamilyPolicy: PreferDualStack
     logs:
       general:
