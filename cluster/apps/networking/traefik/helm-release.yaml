@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://helm.traefik.io/traefik
       chart: traefik
-      version: 10.3.6
+      version: 10.9.1
       sourceRef:
         kind: HelmRepository
         name: traefik-charts
@@ -59,8 +59,14 @@ spec:
       traefik:
         expose: true
       web:
+        port: 10080
+        expose: true
+        exposedPort: 80
         redirectTo: websecure
       websecure:
+        port: 10443
+        expose: true
+        exposedPort: 443
         tls:
           enabled: true
           options: "default"
