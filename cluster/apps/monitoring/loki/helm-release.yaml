@@ -36,6 +36,9 @@ spec:
       runAsUser: 0
       runAsGroup: 0
     initContainers:
+    - name: create folder
+      image: alpine:latest
+      command: ["sh", "-c", "mkdir -p /tmp/mywal"]
     - name: permissions
       image: alpine:latest
       command: ["sh", "-c", "chmod 644 /tmp/mywal"]
