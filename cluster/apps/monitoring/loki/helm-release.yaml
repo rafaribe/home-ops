@@ -29,17 +29,7 @@ spec:
       size: 60Gi
       storageClassName: 'local-path'
     ingress:
-      enabled: disable
-      ingressClassName: "traefik"
-      annotations:
-        kubernetes.io/ingress.class: "traefik"
-      hosts:
-        - host: "loki.${SECRET_DOMAIN}"
-          paths:
-            - /
-      tls:
-        - hosts:
-            - "loki.${SECRET_DOMAIN}"
+      enabled: false
     serviceMonitor:
       enabled: true
     securityContext:
