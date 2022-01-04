@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prometheus
+  namespace: monitoring
+spec:
+  routes:
+  - kind: Rule
+    match: Host(`prometheus.${SECRET_DOMAIN}`)
+    middlewares:
+    - name: prometheus-basic-auth
+    services:
+    - name: prometheus-prometheus
+      port: 9090
