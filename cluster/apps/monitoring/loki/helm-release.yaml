@@ -27,10 +27,16 @@ spec:
       storageClassName: 'local-path'
     serviceMonitor:
       enabled: true
+    securityContext:
+      fsGroup: 1
+      runAsGroup: 1
+      runAsNonRoot: false
+      runAsUser: 1
     config:
       ingester:
         wal:
-          enabled: false
+          enabled: true
+          dir: /tmp/loki/wal
       table_manager:
         retention_deletes_enabled: true
         retention_period: 672h
