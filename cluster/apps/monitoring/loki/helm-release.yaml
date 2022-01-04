@@ -51,8 +51,3 @@ spec:
     - name: permissions
       image: alpine:latest
       command: ["sh", "-c", "chmod 644 /tmp/mywal"]
-      securityContext:
-        fsGroup: 0
-        runAsNonRoot: false
-        runAsUser: 0
-        runAsGroup: 0
