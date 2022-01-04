@@ -22,7 +22,7 @@ spec:
     config:
       ingester:
         wal:
-          dir: /var/loki/wal
+          enabled: false
     persistence:
       enabled: true
       accessModes:
