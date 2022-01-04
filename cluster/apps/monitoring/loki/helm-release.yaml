@@ -29,7 +29,7 @@ spec:
       size: 60Gi
       storageClassName: 'local-path'
     ingress:
-      enabled: true
+      enabled: disable
       ingressClassName: "traefik"
       annotations:
         kubernetes.io/ingress.class: "traefik"
