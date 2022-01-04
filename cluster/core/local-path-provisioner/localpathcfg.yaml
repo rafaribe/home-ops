@@ -130,8 +130,8 @@ data:
             ;;
         esac
     done
-
     mkdir -m 0777 -p ${absolutePath}
+    chmod 701 ${absolutePath}/..
   teardown: |-
     #!/bin/sh
     while getopts "m:s:p:" opt
@@ -148,7 +148,6 @@ data:
             ;;
         esac
     done
-
     rm -rf ${absolutePath}
   helperPod.yaml: |-
     apiVersion: v1
@@ -158,6 +157,5 @@ data:
     spec:
       containers:
       - name: helper-pod
-        image: docker.io/library/alpine:latest
-        imagePullPolicy: IfNotPresent
+        image: %{SYSTEM_DEFAULT_REGISTRY}%rancher/mirrored-library-busybox:1.32.1
 
