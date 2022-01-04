@@ -28,8 +28,6 @@ spec:
       - ReadWriteOnce
       size: 60Gi
       storageClassName: 'local-path'
-    ingress:
-      enabled: false
     serviceMonitor:
       enabled: true
     securityContext:
