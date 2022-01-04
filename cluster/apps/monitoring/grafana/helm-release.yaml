@@ -160,6 +160,9 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       hosts:
         - "grafana.${SECRET_DOMAIN}"
+      tls:
+        - hosts:
+          - "grafana.${SECRET_DOMAIN}"
     serviceAccount:
       create: true
       autoMount: true
