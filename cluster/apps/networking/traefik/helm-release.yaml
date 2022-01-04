@@ -31,7 +31,7 @@ spec:
       spec:
         loadBalancerIP: "${SVC_TRAEFIK_ADDR}"
         externalTrafficPolicy: Local
-      ipFamilyPolicy: PreferDualStack
+      ipFamilyPolicy: SingleStack
     logs:
       general:
         format: json
