@@ -8,7 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      # renovate: registryUrl=https://place1.github.io/wg-access-server
       chart: wireguard
       version: 1.0.1
       sourceRef:
