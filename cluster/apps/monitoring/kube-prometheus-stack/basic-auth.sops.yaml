@@ -3,17 +3,16 @@ kind: Secret
 metadata:
     name: prometheus-basic-auth
     namespace: monitoring
-stringData:
-    username: ENC[AES256_GCM,data:a3qGvx87g10=,iv:xNtGdNTsQddmOhHUsFM1v7jfhMDBzAKZS1XepM1ICEA=,tag:NJUbEKybCFd7H5y+vrX57w==,type:str]
-    password: ENC[AES256_GCM,data:TipGn01lFlKWy9lOM4Y=,iv:fxYfMY1ki8OAuqiu3iu1Naokp/yswuW8HPqABXz3lDY=,tag:9NyXFzNRewRdaAyrLZq2Gg==,type:str]
+data:
+    users: ENC[AES256_GCM,data:vq29/kESbD2izMTjNOmafuas3NMzNRZEO+6UPPS5cGXvlJXvXYVZ8LsSdZSEF4RVe4CAorWbsqNtryXsMCnJGdg=,iv:54V3x5QsVji4lvEcmQYqIYTGyulv+W5hNIESNSqC7TE=,tag:wZvJGd1CINudJxLVi/4TcQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-01-04T20:44:07Z"
-    mac: ENC[AES256_GCM,data:Y4gsHmkhMQSHKu1DM+RYBahDvD5wjK4l997WxF0Qsi1E83x2TRAblbI09zKNwDwXTB9nie1fLPtjEhDc1xoi2eP1xYMv1lKM7wN2VY0oyohPGW6TGauLWzJ4Ol0ZMi41pufGxW8pw8qoCiYePgN5OU59AmBIa0kwk6Di8HqQ+r4=,iv:W0uL49hiTsc/sQp0Rmhryq8Qwr1fTzjfvetPXmMD+bg=,tag:0DFs8zppLg/dW/PQu9vdfA==,type:str]
+    lastmodified: "2022-01-04T20:48:23Z"
+    mac: ENC[AES256_GCM,data:6UqCSgA2gIcBSUqJbNpZ8Raz1y695Mlpgi1XrKCSlmOSJJtJxjP4afF/BzXL2jMH/SlnfQBNZfC5U/4bOgN8GUr5+m06u0ZcMK6v78YsHH06R2wGfe+r0qSR9UHu5O2xhyLgedOEqXbp3sKmgOYD7211uo3jKtgyu/R6uCufNuM=,iv:+DZTsDYpKIhqSINqinr1zUOsLMQpa+2iZE9bpVXrnb0=,tag:sF+HY0TmfubAZdu8ZAM/yQ==,type:str]
     pgp:
         - created_at: "2022-01-04T20:37:12Z"
           enc: |
