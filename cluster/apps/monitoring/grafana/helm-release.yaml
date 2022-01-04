@@ -69,11 +69,13 @@ spec:
         deleteDatasources:
           - name: Loki
             orgId: 1
+          - name: Prometheus
+            orgId: 1
         datasources:
           - name: Prometheus
             type: prometheus
             access: proxy
-            url: http://thanos-query:9090/
+            url: http://prometheus-prometheus:9090/
             isDefault: true
           - name: Loki
             type: loki
