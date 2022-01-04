@@ -6,6 +6,7 @@ metadata:
   namespace: networking
 spec:
   interval: 5m
+  apiVersions: ['networking.k8s.io/v1/IngressClass']
   chart:
     spec:
       # renovate: registryUrl=https://helm.traefik.io/traefik
@@ -30,7 +31,7 @@ spec:
       type: LoadBalancer
       spec:
         loadBalancerIP: "${SVC_TRAEFIK_ADDR}"
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
     logs:
       general:
         format: json
@@ -59,13 +60,9 @@ spec:
       traefik:
         expose: true
       web:
-        port: 10080
-        expose: true
         exposedPort: 80
         redirectTo: websecure
       websecure:
-        port: 10443
-        expose: true
         exposedPort: 443
         tls:
           enabled: true
