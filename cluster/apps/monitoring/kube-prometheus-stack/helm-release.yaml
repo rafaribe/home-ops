@@ -121,9 +121,3 @@ spec:
         enableAdminAPI: true
         walCompression: true
         enableFeatures: ['remote-write-receiver']
-        additionalScrapeConfigs:
-          - job_name: "node-exporter"
-            honor_timestamps: true
-            static_configs:
-              - targets:
-                  - "${WONDERFUL_CINNABAR_BEE_ADDR}:9100"
