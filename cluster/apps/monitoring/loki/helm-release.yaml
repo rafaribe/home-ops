@@ -28,10 +28,8 @@ spec:
     serviceMonitor:
       enabled: true
     securityContext:
-      fsGroup: 1
-      runAsGroup: 1
       runAsNonRoot: false
-      runAsUser: 1
+      runAsUser: 0
     config:
       ingester:
         wal:
