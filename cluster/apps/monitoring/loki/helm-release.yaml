@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://grafana.github.io/helm-charts
       chart: loki
-      version: 2.7.0
+      version: 2.8.4
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
@@ -34,7 +34,8 @@ spec:
     config:
       ingester:
         wal:
-          enabled: false
+          enabled: true
+          dir: /data/loki/wal
       table_manager:
         retention_deletes_enabled: true
         retention_period: 672h
