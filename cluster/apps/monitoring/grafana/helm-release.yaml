@@ -169,4 +169,8 @@ spec:
       create: true
       autoMount: true
     persistence:
-      enabled: false
+      enabled: true
+      accessModes:
+      - ReadWriteOnce
+      size: 4Gi
+      storageClassName: 'local-path'
