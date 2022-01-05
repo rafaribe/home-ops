@@ -6,4 +6,5 @@ resources:
   - helm-release.yaml
   - prometheus-rule.yaml
   - basic-auth
+  - workaround.yaml
   - ingress-route.yaml
