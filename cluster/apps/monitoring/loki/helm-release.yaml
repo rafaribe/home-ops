@@ -28,6 +28,7 @@ spec:
     serviceMonitor:
       enabled: true
     securityContext:
+      runAsGroup: 0
       runAsNonRoot: false
       runAsUser: 0
     config:
