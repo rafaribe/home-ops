@@ -34,8 +34,7 @@ spec:
     config:
       ingester:
         wal:
-          enabled: true
-          dir: /loki/wal
+          enabled: false
       table_manager:
         retention_deletes_enabled: true
         retention_period: 672h
