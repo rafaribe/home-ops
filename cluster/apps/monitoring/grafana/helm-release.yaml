@@ -88,22 +88,6 @@ spec:
         #   gnetId: 12175
         #   revision: 5
         #   datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/2842
-        ceph-cluster:
-          gnetId: 2842
-          revision: 14
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/5336
-        ceph-osd:
-          gnetId: 5336
-          revision: 5
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/5342
-        ceph-pools:
-          gnetId: 5342
-          revision: 5
-          datasource: Prometheus
-        ## Ref: https://grafana.com/grafana/dashboards/13502
         #minio:
         #  gnetId: 13502
         #  revision: 10
@@ -139,6 +123,22 @@ spec:
         flux-control-plane:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
           datasource: Prometheus
+        loki-global-metrics:
+          gnetId: 13407
+          revision: 1
+          datasource: Prometheus
+        loki-promtail-metrics:
+          gnetId: 10880
+          revision: 1
+          datasource: Prometheus
+        loki-stack-monitoring:
+          gnetId: 14055
+          revision: 5
+          datasource: Loki
+        grafana-usage-insights:
+          gnetId: 15088
+          revision: 11
+          datasource: Loki
     sidecar:
       dashboards:
         enabled: true
