@@ -153,6 +153,29 @@ spec:
       - vonage-status-panel
       - grafana-worldmap-panel
       - grafana-clock-panel
+      - snuids-trafficlights-panel
+      - grafana-polystat-panel
+      - natel-plotly-panel
+      - agenty-flowcharting-panel
+      - briangann-datatable-panel
+      - pierosavi-imageit-panel
+      - flant-statusmap-panel
+      - larona-epict-panel
+      - petrslavotinek-carpetplot-panel
+      - ryantxu-ajax-panel
+      - digiapulssi-breadcrumb-panel
+      - marcusolsson-gantt-panel
+      - digiapulssi-organisations-panel
+      - volkovlabs-image-panel
+      - marcusolsson-hexmap-panel
+      # Applications
+      - grafana-k6-app
+      - grafana-simple-json-datasource
+      - marcusolsson-csv-datasource
+      - marcusolsson-json-datasource
+      - fzakaria-simple-annotations-datasource
+      - volkovlabs-rss-datasource
+      - marcusolsson-static-datasource
     serviceMonitor:
       enabled: true
     ingress:
