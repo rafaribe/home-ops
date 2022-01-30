@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       # renovate: registryUrl=https://halkeye.github.io/helm-charts/
-      chart: fireflyiii
+      chart: firefly-iii
       version: 1.0.1
       sourceRef:
         kind: HelmRepository
