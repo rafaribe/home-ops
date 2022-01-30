@@ -27,9 +27,12 @@ spec:
       enabled: true
       ingressClassName: "traefik"
       annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       hosts:
-        - "firefly.${SECRET_DOMAIN}"
+        - host: "firefly.${SECRET_DOMAIN}"
+          paths:
+            - path: /
       tls:
         - hosts:
           - "firefly.${SECRET_DOMAIN}"
