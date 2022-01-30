@@ -31,6 +31,14 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       hosts:
         - host: "firefly.${SECRET_DOMAIN}"
+          paths:
+          - backend:
+              service:
+                name: firefly-iii
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
       tls:
         - hosts:
           - "firefly.${SECRET_DOMAIN}"
