@@ -27,3 +27,5 @@ spec:
         - hosts:
             - "postgres-operator.pub.${SECRET_DOMAIN}"
             - "postgres-operator.home.${SECRET_DOMAIN}"
+    nodeSelector:
+      kubernetes.io/arch: amd64
