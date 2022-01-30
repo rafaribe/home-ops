@@ -5,9 +5,11 @@ resources:
   - apps.yaml
   - cert-manager.yaml
   - crypto.yaml
+  - firefly.yaml
   - hajimari.yaml
   - media.yaml
   - metallb-system.yaml
   - networking.yaml
   - monitoring.yaml
+  - paperless.yaml
   - postgres.yaml
