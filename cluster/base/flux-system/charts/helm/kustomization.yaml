@@ -9,6 +9,7 @@ resources:
   - external-dns-charts.yaml
   - grafana-charts.yaml
   - hajimari-charts.yaml
+  - halkeye-charts.yaml
   - influxdata-charts.yaml
   - infracloudio-charts.yaml
   - jetstack-charts.yaml
@@ -24,4 +25,5 @@ resources:
   - rook-ceph-charts.yaml
   - stakater-charts.yaml
   - traefik-charts.yaml
+  - true-charts.yaml
   - weaveworks-kured-charts.yaml
