@@ -7,3 +7,4 @@ resources:
   - system-upgrade
   - local-path-provisioner
   - kubernetes-replicator
+  - tooling
