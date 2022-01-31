@@ -39,7 +39,6 @@ spec:
                 port:
                   number: 80
             path: /
-            pathType: Prefix
       tls:
         - hosts:
           - "firefly.${SECRET_DOMAIN}"
