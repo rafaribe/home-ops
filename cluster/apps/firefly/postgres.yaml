@@ -20,7 +20,7 @@ spec:
     fullnameOverride: firefly-postgresql
     persistence:
       enabled: true
-      size: 10Gi
+      existingClaim: postgresql-ha
     metrics:
       enabled: true
       serviceMonitor:
