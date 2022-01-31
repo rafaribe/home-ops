@@ -26,6 +26,9 @@ spec:
         username: firefly
         password: ${SECRET_POSTGRESQL_PASSWORD}
         database: firefly
+    username: firefly
+    password: ${SECRET_POSTGRESQL_PASSWORD}
+    database: firefly
     metrics:
       enabled: true
       serviceMonitor:
