@@ -21,6 +21,11 @@ spec:
     persistence:
       enabled: true
       existingClaim: postgresql-ha
+    global:
+      postgresql:
+        username: firefly
+        password: ${SECRET_POSTGRESQL_PASSWORD}
+        database: firefly
     metrics:
       enabled: true
       serviceMonitor:
