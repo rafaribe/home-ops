@@ -30,11 +30,15 @@ spec:
       username: firefly
       password: ${SECRET_POSTGRESQL_PASSWORD}
       database: firefly
+      nodeSelector:
+        kubernetes.io/arch: amd64
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
         interval: 10s
         scrapeTimeout: 10s
-    nodeSelector:
-      kubernetes.io/arch: amd64
+    pgpool:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+    
