@@ -30,6 +30,13 @@ spec:
       username: firefly
       password: ${SECRET_POSTGRESQL_PASSWORD}
       database: firefly
+      ###
+      repmgrUsername: admin
+      repmgrPassword: ${SECRET_POSTGRESQL_PASSWORD}
+      repmgrDatabase: firefly
+      ###
+      adminUsername: admin
+      adminPassword: ${SECRET_POSTGRESQL_PASSWORD}
       nodeSelector:
         kubernetes.io/arch: amd64
     metrics:
