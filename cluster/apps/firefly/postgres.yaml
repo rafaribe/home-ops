@@ -35,8 +35,5 @@ spec:
         enabled: true
         interval: 10s
         scrapeTimeout: 10s
-    nodeAffinityPreset:
-      type: hard
-      key: kubernetes.io/arch
-      values:
-        - amd64
+    nodeSelector:
+      kubernetes.io/arch: amd64
