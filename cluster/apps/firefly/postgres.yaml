@@ -9,8 +9,8 @@ spec:
   chart:
     spec:
       # renovate: registryUrl=https://charts.bitnami.com/bitnami/
-      chart: postgresql-ha
-      version: 8.2.8
+      chart: postgresql
+      version: 10.16.2
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
@@ -20,23 +20,17 @@ spec:
     fullnameOverride: firefly-postgresql
     persistence:
       enabled: true
-      existingClaim: postgresql-ha
+      existingClaim: postgresql
     global:
       postgresql:
-        username: firefly
-        password: ${SECRET_POSTGRESQL_PASSWORD}
-        database: firefly
-    postgresql:
-      username: firefly
-      password: ${SECRET_POSTGRESQL_PASSWORD}
-      database: firefly
-      ###
-      repmgrUsername: admin
-      repmgrPassword: ${SECRET_POSTGRESQL_PASSWORD}
-      repmgrDatabase: firefly
-      ###
-      adminUsername: admin
-      adminPassword: ${SECRET_POSTGRESQL_PASSWORD}
+        postgresqlUsername: firefly
+        postgresqlPassword: ${SECRET_POSTGRESQL_PASSWORD}
+        postgresqlDatabase: firefly
+        replicationPassword: ${SECRET_POSTGRESQL_PASSWORD}
+    primary:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+    readReplicas:
       nodeSelector:
         kubernetes.io/arch: amd64
     metrics:
@@ -45,7 +39,3 @@ spec:
         enabled: true
         interval: 10s
         scrapeTimeout: 10s
-    pgpool:
-      nodeSelector:
-        kubernetes.io/arch: amd64
-    

@@ -5,8 +5,8 @@ metadata:
     volume.beta.kubernetes.io/storage-provisioner: rancher.io/local-path
   labels:
     app.kubernetes.io/instance: postgresql
-    app.kubernetes.io/name: postgresql-ha
-  name: postgresql-ha
+    app.kubernetes.io/name: postgresql
+  name: postgresql
   namespace: firefly
 spec:
   accessModes:
@@ -19,5 +19,5 @@ status:
   accessModes:
   - ReadWriteOnce
   capacity:
-    storage: 10Gi
+    storage: 15Gi
   phase: Bound
