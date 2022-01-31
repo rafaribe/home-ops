@@ -16,7 +16,8 @@ spec:
         name: halkeye-charts
         namespace: flux-system
       interval: 5m
-  values: 
+  values:
+    fullnameOverride: firefly
     image:
       repository: fireflyiii/core
       tag: version-5.6.12
@@ -42,3 +43,11 @@ spec:
       tls:
         - hosts:
           - "firefly.${SECRET_DOMAIN}"
+    fireflyiii:
+      database:
+        username: firefly
+        password: ${SECRET_FIREFLY_PASSWORD}
+        database: firefly
+        host: firefly-postgresql
+    nodeSelector:
+      kubernetes.io/arch: amd64
