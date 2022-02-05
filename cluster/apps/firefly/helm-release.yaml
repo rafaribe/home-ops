@@ -46,7 +46,7 @@ spec:
       appKey: ${SECRET_FIREFLY_APPKEY}
       url: https://firefly.${SECRET_DOMAIN}
       database:
-        username: firefly
+        username: postgres
         password: ${SECRET_POSTGRESQL_PASSWORD}
         database: firefly
         host: firefly-postgresql
