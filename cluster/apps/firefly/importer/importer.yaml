@@ -44,7 +44,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: firefly-secrets
-              key: access_token
+              key: personal_access_token
         - name: FIREFLY_III_URL
           value: "http://firefly:8080"
         - name: TRUSTED_PROXIES
