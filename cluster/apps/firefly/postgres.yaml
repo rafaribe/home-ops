@@ -42,3 +42,7 @@ spec:
         enabled: true
         interval: 10s
         scrapeTimeout: 10s
+    volumePermissions:
+      enabled: true
+      containerSecurityContext: 
+        runAsUser: 1001
