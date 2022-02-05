@@ -27,7 +27,6 @@ spec:
         postgresqlPassword: ${SECRET_POSTGRESQL_PASSWORD}
         postgresqlDatabase: firefly
     auth:
-      postgresPassword: ${SECRET_POSTGRESQL_PASSWORD}
       username: firefly
       password: ${SECRET_POSTGRESQL_PASSWORD}
       database: firefly
