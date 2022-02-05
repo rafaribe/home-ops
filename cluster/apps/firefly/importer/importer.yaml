@@ -49,6 +49,16 @@ spec:
           value: "http://firefly:8080"
         - name: TRUSTED_PROXIES
           value: "**"
+        - name: NORDIGEN_ID
+          valueFrom:
+            secretKeyRef:
+              name: firefly-secrets
+              key: nordigen_id
+        - name: NORDIGEN_KEY
+          valueFrom:
+            secretKeyRef:
+              name: firefly-secrets
+              key: nordigen_secret
         ports:
         - containerPort: 8080
           name: firefly
