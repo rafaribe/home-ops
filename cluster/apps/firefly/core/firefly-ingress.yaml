@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: firefly
+  annotations:
+    :INkubernetes.io/ingress.class: traefik
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  labels:
+    name: firefly-ingress
+    
+spec:
+  rules:
+  - host: firefly.${SECRET_DOMAIN}
+    http:
+      paths:
+      - backend:
+          service:
+            name: firefly
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - firefly.${SECRET_DOMAIN}
+
