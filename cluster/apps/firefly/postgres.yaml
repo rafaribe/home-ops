@@ -26,7 +26,11 @@ spec:
         postgresqlUsername: firefly
         postgresqlPassword: ${SECRET_POSTGRESQL_PASSWORD}
         postgresqlDatabase: firefly
-        replicationPassword: ${SECRET_POSTGRESQL_PASSWORD}
+    auth:
+      postgresPassword: ${SECRET_POSTGRESQL_PASSWORD}
+      username: firefly
+      password: ${SECRET_FIREFLY_PASSWORD}
+      database: firefly
     primary:
       nodeSelector:
         kubernetes.io/arch: amd64
