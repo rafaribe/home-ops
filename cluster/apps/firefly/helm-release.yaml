@@ -47,7 +47,7 @@ spec:
       url: https://firefly.${SECRET_DOMAIN}
       database:
         username: firefly
-        password: ${SECRET_POSTGRES_PASSWORD}
+        password: ${SECRET_POSTGRESQL_PASSWORD}
         database: firefly
         host: firefly-postgresql
     nodeSelector:
