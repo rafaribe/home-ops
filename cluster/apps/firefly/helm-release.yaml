@@ -52,3 +52,6 @@ spec:
         host: firefly-postgresql
     nodeSelector:
       kubernetes.io/arch: amd64
+  volumePermissions:
+    enabled: true
+    
