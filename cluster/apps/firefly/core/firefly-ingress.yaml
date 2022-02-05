@@ -4,7 +4,7 @@ metadata:
   namespace: firefly
   name: firefly-ingress
   annotations:
-    :INkubernetes.io/ingress.class: traefik
+    skubernetes.io/ingress.class: traefik
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt-prod
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
