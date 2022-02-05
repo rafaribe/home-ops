@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   namespace: firefly
+  name: firefly-ingress
   annotations:
     :INkubernetes.io/ingress.class: traefik
     kubernetes.io/tls-acme: "true"
@@ -9,7 +10,6 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
   labels:
     name: firefly-ingress
-    
 spec:
   rules:
   - host: firefly.${SECRET_DOMAIN}
