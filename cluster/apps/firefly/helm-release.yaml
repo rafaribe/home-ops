@@ -43,6 +43,7 @@ spec:
         - hosts:
           - "firefly.${SECRET_DOMAIN}"
     fireflyiii:
+      appKey: ${SECRET_FIREFLY_APPKEY}
       url: https://firefly.${SECRET_DOMAIN}
       database:
         username: firefly
