@@ -9,6 +9,7 @@ metadata:
   labels:
     name: firefly-importer-ingress
   namespace: firefly
+  name: firefly-importer-ingress
 spec:
   rules:
   - host: importer-firefly.${SECRET_DOMAIN}
