@@ -8,7 +8,6 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://kubernetes-sigs.github.io/external-dns
       chart: external-dns
       version: 1.7.1
       sourceRef:
@@ -35,7 +34,7 @@ spec:
             key: api-key
     extraArgs:
       - --cloudflare-proxied
-      - --annotation-filter=external-dns/is-public in (true)
+      - --zone-id-filter=${SECRET_CLOUDFLARE_ZONE_ID} # (optional) limit to a specific zone.
     policy: sync
     sources:
       - ingress
