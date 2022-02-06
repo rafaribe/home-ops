@@ -49,8 +49,8 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          #cert-manager.io/cluster-issuer: letsencrypt-production
-          external-dns.alpha.kubernetes.io/target: ingress.${SECRET_DOMAIN}
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          external-dns.alpha.kubernetes.io/target: calibre.${SECRET_DOMAIN}
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           #traefik.ingress.kubernetes.io/router.middlewares: "network-internal-auth@kubernetescrd"
 
