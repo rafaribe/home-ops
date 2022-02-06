@@ -21,7 +21,7 @@ spec:
       PAPERLESS_OCR_LANGUAGE: eng
       PAPERLESS_TIME_ZONE: Europe/Lisbon
       PAPERLESS_ADMIN_USER: 'rafaribe'
-      PAPERLESS_ADMIN_PASSWORD: ${}
+      PAPERLESS_ADMIN_PASSWORD: ${SECRET_PAPERLESS_PASSWORD}
     data:
       enabled: true
       storageClass: local-path
