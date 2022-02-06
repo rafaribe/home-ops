@@ -42,10 +42,16 @@ spec:
       enabled: true
       replica:
         persistence:
-          enabled: false
+          enabled: true
+          size: 8Gi
+          accessModes:
+            - ReadWriteOnce
       master:
         persistence:
-          enabled: false
+          enabled: true
+          size: 8Gi
+          accessModes:
+            - ReadWriteOnce
     ingress:
       main:
         enabled: true
