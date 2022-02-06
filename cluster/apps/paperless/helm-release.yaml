@@ -18,8 +18,8 @@ spec:
       interval: 5m
   values:
     env: 
-      PAPERLESS_OCR_LANGUAGE: "por"
-      PAPERLESS_TIME_ZONE: "Europe/Lisbon"
+      PAPERLESS_OCR_LANGUAGE: eng+por
+      PAPERLESS_TIME_ZONE: Europe/Lisbon
     persistence:
       data:
         enabled: true
@@ -38,6 +38,7 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           cert-manager.io/cluster-issuer: letsencrypt-production
