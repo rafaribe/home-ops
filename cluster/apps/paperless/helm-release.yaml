@@ -42,18 +42,10 @@ spec:
       enabled: true
       replica:
         persistence:
-          enabled: true
-          storageClass: local-path
-          size: 8Gi
-          accessModes:
-            - ReadWriteOnce
+          enabled: false
       master:
         persistence:
-          enabled: true
-          storageClass: local-path
-          size: 8Gi
-          accessModes:
-            - ReadWriteOnce
+          enabled: false
     ingress:
       main:
         enabled: true
