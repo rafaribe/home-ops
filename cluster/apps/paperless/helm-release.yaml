@@ -36,6 +36,8 @@ spec:
           - ReadWriteOnce
     postgresql:
       enabled: true
+    redis:
+      enabled: true
     ingress:
       main:
         enabled: true
