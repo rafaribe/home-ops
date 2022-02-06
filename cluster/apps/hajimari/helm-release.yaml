@@ -101,10 +101,13 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "weather-sunset"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          kubernetes.io/ingress.class: traefik
+          kubernetes.io/tls-acme: "true"
+          external-dns.alpha.kubernetes.io/hostname: hajimari.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/ttl: "120" #optional
+          external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
         hosts:
           - host: "hajimari.${SECRET_DOMAIN}"
             paths:

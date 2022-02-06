@@ -2,10 +2,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: traefik
     kubernetes.io/tls-acme: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    #external-dns.alpha.kubernetes.io/hostname: firefly-importer.${SECRET_DOMAIN}
+    #external-dns.alpha.kubernetes.io/ttl: "120" #optional
+    #external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
   labels:
     name: firefly-importer-ingress
   namespace: firefly
