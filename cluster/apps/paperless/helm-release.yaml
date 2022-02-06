@@ -35,3 +35,18 @@ spec:
             - ReadWriteOnce
     postgresql:
       enabled: true
+    ingress:
+      main:
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          kubernetes.io/ingress.class: traefik
+          kubernetes.io/tls-acme: "true"
+          external-dns.alpha.kubernetes.io/hostname: paperless.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
+        hosts:
+          - "paperless.${SECRET_DOMAIN}"
+        tls:
+          - hosts:
+            - "paperless.${SECRET_DOMAIN}"
