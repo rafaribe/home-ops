@@ -8,6 +8,8 @@ metadata:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt-prod
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/hostname: firefly.${SECRET_DOMAIN}
+    external-dns.alpha.kubernetes.io/ttl: "120"
   labels:
     name: firefly-ingress
 spec:
