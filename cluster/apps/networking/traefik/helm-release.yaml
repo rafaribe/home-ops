@@ -86,3 +86,10 @@ spec:
         cpu: 500m
       limits:
         memory: 500Mi
+    providers:
+      kubernetesIngress:
+        publishedService:
+          enabled: true
+      kubernetesCRD:
+        publishedService:
+          enabled: true
