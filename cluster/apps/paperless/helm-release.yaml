@@ -38,6 +38,9 @@ spec:
       enabled: true
     redis:
       enabled: true
+      persistence:
+        enabled: true
+        storageClass: local-path
     ingress:
       main:
         enabled: true
