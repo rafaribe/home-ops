@@ -21,19 +21,19 @@ spec:
       PAPERLESS_OCR_LANGUAGE: eng
       PAPERLESS_TIME_ZONE: Europe/Lisbon
       PAPERLESS_ADMIN_USER: 'rafaribe'
-      PAPERLESS_ADMIN_PASSWORD: ${SECRET_PAPERLESS_PASSWORD}
-      data:
+      PAPERLESS_ADMIN_PASSWORD: ${}
+    data:
+      enabled: true
+      storageClass: local-path
+      size: 10Gi
+      accessModes:
+        - ReadWriteOnce
+      media:
         enabled: true
         storageClass: local-path
         size: 10Gi
         accessModes:
           - ReadWriteOnce
-        media:
-          enabled: true
-          storageClass: local-path
-          size: 10Gi
-          accessModes:
-            - ReadWriteOnce
     postgresql:
       enabled: true
     ingress:
