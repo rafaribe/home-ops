@@ -39,10 +39,20 @@ spec:
       enabled: true
     redis:
       enabled: true
-      persistence:
-        enabled: true
-        storageClass: local-path
-        
+      replica:
+        persistence:
+          enabled: true
+          storageClass: local-path
+          size: 8Gi
+          accessModes:
+            - ReadWriteOnce
+      master:
+        persistence:
+          enabled: true
+          storageClass: local-path
+          size: 8Gi
+          accessModes:
+            - ReadWriteOnce
     ingress:
       main:
         enabled: true
