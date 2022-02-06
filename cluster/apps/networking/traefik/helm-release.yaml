@@ -88,8 +88,7 @@ spec:
         memory: 500Mi
     providers:
       kubernetesIngress:
-        publishedService:
-          enabled: true
-      kubernetesCRD:
+        ingressEndpoint:
+          hostname: ${SECRET_DOMAIN}
         publishedService:
           enabled: true

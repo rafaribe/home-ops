@@ -35,6 +35,7 @@ spec:
     extraArgs:
       - --cloudflare-proxied
       - --zone-id-filter=${SECRET_CLOUDFLARE_ZONE_ID} # (optional) limit to a specific zone.
+      - --fqdn-template={{.Name}}.${SECERT_DOMAIN}
     policy: sync
     sources:
       - ingress
