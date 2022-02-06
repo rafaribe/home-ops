@@ -23,13 +23,13 @@ spec:
     persistence:
       data:
         enabled: true
-        storageClassName: local-path
+        storageClass: local-path
         size: 10Gi
         accessModes:
           - ReadWriteOnce
         media:
           enabled: true
-          storageClassName: local-path
+          storageClass: local-path
           size: 10Gi
           accessModes:
             - ReadWriteOnce
