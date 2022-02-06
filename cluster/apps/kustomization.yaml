@@ -9,4 +9,4 @@ resources:
   - system-upgrade
   - monitoring
   - media
- # - paperless
+  - paperless
