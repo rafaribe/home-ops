@@ -46,7 +46,11 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: paperless.${SECRET_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
         hosts:
-          - "paperless.${SECRET_DOMAIN}"
+          - host: "paperless.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
         tls:
           - hosts:
-            - "paperless.${SECRET_DOMAIN}"
+              - "paperless.${SECRET_DOMAIN}"
+            secretName: "paperless-tls"
