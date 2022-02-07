@@ -40,6 +40,8 @@ spec:
       enabled: true
     redis:
       enabled: true
+      volumePermissions:
+        enable: true
       replica:
         persistence:
           enabled: true
