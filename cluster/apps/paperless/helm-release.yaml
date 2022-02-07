@@ -39,21 +39,7 @@ spec:
     postgresql:
       enabled: true
     redis:
-      enabled: true
-      volumePermissions:
-        enable: true
-      replica:
-        persistence:
-          enabled: true
-          size: 8Gi
-          accessModes:
-            - ReadWriteOnce
-      master:
-        persistence:
-          enabled: true
-          size: 8Gi
-          accessModes:
-            - ReadWriteOnce
+      enabled: false
     ingress:
       main:
         enabled: true
