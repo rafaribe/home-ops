@@ -4,7 +4,7 @@ resources:
   - namespaces
   - metallb-system
   - cert-manager
-  - system-upgrade
+  #- system-upgrade
   - local-path-provisioner
   - kubernetes-replicator
   - tooling
