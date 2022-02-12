@@ -1,4 +1,17 @@
-apiVersion: traefik.containo.us/v1alpha1
+#Workaround for external-dns https://github.com/kubernetes-sigs/external-dns/issues/1257#issuecomment-628638415
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loki
+  namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    external-dns.alpha.kubernetes.io/hostname: loki.${SECRET_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
+spec:
+  rules:
+    - host: loki.${SECRET_DOMAIN}  
+---
 kind: IngressRoute
 metadata:
   name: loki

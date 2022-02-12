@@ -39,12 +39,3 @@ spec:
       table_manager:
         retention_deletes_enabled: true
         retention_period: 672h
-    #Workaround for external-dns https://github.com/kubernetes-sigs/external-dns/issues/1257#issuecomment-628638415
-    ingress:
-      enabled: true
-      ingressClassName: traefik
-      annotations: 
-        external-dns.alpha.kubernetes.io/hostname: loki.${SECRET_DOMAIN}
-        external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
-      hosts:
-        - host: loki.${SECRET_DOMAIN}
