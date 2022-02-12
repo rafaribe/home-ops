@@ -12,6 +12,7 @@ spec:
   rules:
     - host: loki.${SECRET_DOMAIN}  
 ---
+apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: loki
