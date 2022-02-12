@@ -4,6 +4,4 @@ resources:
   - traefik
   - dynamic-dns
   - wildcard-certificate
-  - wireguard
-  #- unifi
   - external-dns
