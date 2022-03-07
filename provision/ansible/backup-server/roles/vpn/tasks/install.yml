@@ -1,0 +1,3 @@
+- name: Configure Tailscale
+  include_role:
+    name: artis3n.tailscale
