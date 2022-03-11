@@ -2,6 +2,6 @@
 all:
   hosts:
     backup-server:
-      ansible_host: 10.0.1.100
+      ansible_host: 100.74.202.75
       ansible_user: rafaribe
       ansible_become: true

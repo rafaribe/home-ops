@@ -41,49 +41,105 @@ services:
       driver: json-file
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
-  db:
-    image: mariadb:10.7.3-focal
-    container_name: seafile-mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD={{ mysql_root_password}}  # Requested, set the root's password of MySQL service.
-      - MYSQL_LOG_CONSOLE=true
-    volumes:
-      - /home/{{ ansible_user }}/seafile-mysql/db:/var/lib/mysql  # Requested, specifies the path to MySQL data persistent store.
-    networks:
-      - services
-
-  memcached:
-    image: memcached:1.6.14-alpine
-    container_name: seafile-memcached
-    entrypoint: memcached -m 256
-    networks:
-      - services
-          
   seafile:
-    image: seafileltd/seafile-mc:9.0.4
+    image: gronis/seafile
     container_name: seafile
-    ports:
-      - "80:80"
-#     - "443:443"  # If https is enabled, cancel the comment.
-    volumes:
-      - /data/seafile/data:/shared/seafile # Data
-      - /data/seafile/logs:/shared/logs # Logs
-      - /data/seafile/ssl:/shared/ssl # Data
-      - /shared/bootstrap.conf/:/shared/bootstrap.conf
-    environment:
-      - DB_HOST=db
-      - DB_ROOT_PASSWD={{ mysql_root_password}}  # Requested, the value shuold be root's password of MySQL service.
-      - TIME_ZONE=Europe/Lisbon  # Optional, default is UTC. Should be uncomment and set to your local time zone.
-      - SEAFILE_ADMIN_EMAIL={{ seafile_email }} # Specifies Seafile admin user, default is 'me@example.com'.
-      - SEAFILE_ADMIN_PASSWORD={{ seafile_password }}     # Specifies Seafile admin password, default is 'asecret'.
-      - SEAFILE_SERVER_LETSENCRYPT=false   # Whether to use https or not.
-      - SEAFILE_SERVER_HOSTNAME={{ seafile_host }} # Specifies your host name if https is enabled.
+    restart: unless-stopped
     depends_on:
-      - db
-      - memcached
+      - seafile-db
+    links:
+      - seafile-db
+    volumes:
+      - ./seafile-container-data:/seafile:rw
+    environment:
+      - VIRTUAL_HOST=seafile.{{cloudflare_zone}}
+      - VIRTUAL_PORT=8000
+      - LETSENCRYPT_HOST=seafile.{{cloudflare_zone}}
+      - LETSENCRYPT_EMAIL={{seafile_email}}
+      - SEAFILE_NAME=Seafile
+      - SEAFILE_ADDRESS={{seafile_email}}
+      - SEAFILE_ADMIN={{seafile_email}}
+      - SEAFILE_ADMIN_PW={{seafile_password}}
+      - SERVICE_URL=https://seafile.{{cloudflare_zone}}
+      - FILE_SERVER_ROOT=https://seafile.{{cloudflare_zone}}/seafhttp
+      - MYSQL_SERVER=seafile-db
+      - MYSQL_USER=seafile
+      - MYSQL_USER_PASSWORD={{ mysql_root_password}}
+      - MYSQL_ROOT_PASSWORD=EvenMoreSuperSecretDatabasePassword
+    networks:
+    - services
+
+  seafile-db:
+    image: mariadb:latest
+    container_name: seafile-db
+    restart: unless-stopped
+    volumes:
+      - ./seafile-db-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ mysql_root_password}}
+    networks:
+      - services
+  # Network traffic passes through nginx (as https) and then to seafile (as http)
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/vhost.d:/etc/nginx/vhost.d:ro
+      - ./nginx/html:/usr/share/nginx/html
+      - ./nginx/certs:/etc/nginx/certs:ro
+      - ./nginx/htpasswd:/etc/nginx/htpasswd:ro
+    networks:
+      - services
+  # This container generate the nginx configuration
+  nginx-gen:
+    image: jwilder/docker-gen:0.7.3
+    container_name: nginx-gen
+    restart: always
+    depends_on:
+      - nginx
+    volumes_from:
+      - nginx
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:rw
+    entrypoint: /usr/local/bin/docker-gen -notify-sighup nginx -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
     networks:
       - services
 
+  # This container refreshes the https certificate
+  letsencrypt-nginx-proxy-companion:
+    image: nginxproxy/acme-companion
+    container_name: letsencrypt-nginx-proxy-companion
+    restart: unless-stopped
+    depends_on:
+      - nginx
+      - nginx-gen
+    volumes_from:
+      - nginx
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./nginx/vhost.d:/etc/nginx/vhost.d:rw
+      - ./nginx/certs:/etc/nginx/certs:rw
+    environment:
+      - NGINX_DOCKER_GEN_CONTAINER=nginx-gen
+    networks:
+      - services
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns:latest
+    restart: always
+    environment:
+      - API_KEY={{cloudflare_api_key}}
+      - ZONE={{cloudflare_zone}}
+      - SUBDOMAIN=seafile
+      - PROXIED=true
+    networks:
+      - services     
 networks:
   services:
 networks:
