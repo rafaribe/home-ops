@@ -26,7 +26,7 @@ logs:
         - targets:
             - localhost
           labels:
-            miner: {{ target_hostname }}
+            server: {{ target_hostname }}
             job: containerlogs
             __path__: /host/root/var/lib/docker/containers/*/*log
         pipeline_stages:
