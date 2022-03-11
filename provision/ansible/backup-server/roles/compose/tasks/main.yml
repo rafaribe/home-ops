@@ -1,0 +1,7 @@
+- name: Grafana Agent
+  import_tasks: grafana-agent.yml
+- name: Cadvisor
+  import_tasks: cadvisor.yml
+
+- name: Compose
+  import_tasks: compose.yml

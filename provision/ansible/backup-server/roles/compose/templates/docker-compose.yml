@@ -1,0 +1,94 @@
+---
+version: "2.1"
+services:
+  grafana-agent:
+    image: grafana/agent:latest
+    container_name: grafana-agent
+    volumes:
+      - /data/var/lib/docker/containers:/containers #Promtail Docker Logs
+      - /var/log/journal:/journal #Journal logs
+      - /home/{{ansible_user}}/grafana-agent/agent.yml:/etc/agent/agent.yml # Agent Config
+      - /:/host/root:ro,rslave # rootfs / node_exporter
+      - /sys:/host/sys:ro,rslave # sys / node_exporter
+      - /proc:/host/proc:ro,rslave #processes / node_exporter
+    command: -config.file=/etc/agent/agent.yml -config.expand-env=true
+    networks:
+      - services
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+        
+  cadvisor:
+    image: unibaktr/cadvisor:0.39.0
+    container_name: cadvisor
+    volumes:
+        - /:/rootfs:ro
+        - /var/run:/var/run:ro
+        - /sys:/sys:ro
+        - /var/lib/docker/:/var/lib/docker:ro
+        - /dev/disk/:/dev/disk:ro
+        - /etc/machine-id/:/etc/machine-id:ro
+    devices:
+        - /dev/kmsg:/dev/kmsg:ro
+    networks:
+      - services
+    ports:
+        - "8080:8080"
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+  db:
+    image: mariadb:10.7.3-focal
+    container_name: seafile-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ mysql_root_password}}  # Requested, set the root's password of MySQL service.
+      - MYSQL_LOG_CONSOLE=true
+    volumes:
+      - /home/{{ ansible_user }}/seafile-mysql/db:/var/lib/mysql  # Requested, specifies the path to MySQL data persistent store.
+    networks:
+      - services
+
+  memcached:
+    image: memcached:1.6.14-alpine
+    container_name: seafile-memcached
+    entrypoint: memcached -m 256
+    networks:
+      - services
+          
+  seafile:
+    image: seafileltd/seafile-mc:9.0.4
+    container_name: seafile
+    ports:
+      - "80:80"
+#     - "443:443"  # If https is enabled, cancel the comment.
+    volumes:
+      - /data/seafile/data:/shared/seafile # Data
+      - /data/seafile/logs:/shared/logs # Logs
+      - /data/seafile/ssl:/shared/ssl # Data
+      - /shared/bootstrap.conf/:/shared/bootstrap.conf
+    environment:
+      - DB_HOST=db
+      - DB_ROOT_PASSWD={{ mysql_root_password}}  # Requested, the value shuold be root's password of MySQL service.
+      - TIME_ZONE=Europe/Lisbon  # Optional, default is UTC. Should be uncomment and set to your local time zone.
+      - SEAFILE_ADMIN_EMAIL={{ seafile_email }} # Specifies Seafile admin user, default is 'me@example.com'.
+      - SEAFILE_ADMIN_PASSWORD={{ seafile_password }}     # Specifies Seafile admin password, default is 'asecret'.
+      - SEAFILE_SERVER_LETSENCRYPT=false   # Whether to use https or not.
+      - SEAFILE_SERVER_HOSTNAME={{ seafile_host }} # Specifies your host name if https is enabled.
+    depends_on:
+      - db
+      - memcached
+    networks:
+      - services
+
+networks:
+  services:
+networks:
+  services:
+   driver: bridge
+   ipam:
+    config:
+     - subnet: 172.16.57.0/24
