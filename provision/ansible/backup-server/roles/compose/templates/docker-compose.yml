@@ -97,7 +97,7 @@ services:
       - services
   # This container generate the nginx configuration
   nginx-gen:
-    image: jwilder/docker-gen:0.7.3
+    image: jwilder/docker-gen:0.8.4
     container_name: nginx-gen
     restart: always
     depends_on:
