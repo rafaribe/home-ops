@@ -42,7 +42,7 @@ services:
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
   seafile:
-    image: gronis/seafile
+    image: seafileltd/seafile-mc:9.0.4
     container_name: seafile
     restart: unless-stopped
     depends_on:
@@ -65,7 +65,7 @@ services:
       - MYSQL_SERVER=seafile-db
       - MYSQL_USER=seafile
       - MYSQL_USER_PASSWORD={{ mysql_root_password}}
-      - MYSQL_ROOT_PASSWORD=EvenMoreSuperSecretDatabasePassword
+      - MYSQL_ROOT_PASSWORD={{ mysql_root_password}}
     networks:
     - services
 
