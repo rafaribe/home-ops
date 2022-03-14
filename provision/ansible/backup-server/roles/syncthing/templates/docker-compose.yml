@@ -1,0 +1,79 @@
+---
+version: "3.8"
+x-data-services-volume:
+  &data-services-volume
+  type: bind
+  source: /data/syncthing/files
+  target: /data/
+
+services:
+  grafana-agent:
+    image: grafana/agent:latest
+    container_name: grafana-agent
+    volumes:
+      - /data/var/lib/docker/containers:/containers #Promtail Docker Logs
+      - /var/log/journal:/journal #Journal logs
+      - /home/{{ansible_user}}/grafana-agent/agent.yml:/etc/agent/agent.yml # Agent Config
+      - /:/host/root:ro,rslave # rootfs / node_exporter
+      - /sys:/host/sys:ro,rslave # sys / node_exporter
+      - /proc:/host/proc:ro,rslave #processes / node_exporter
+    command: -config.file=/etc/agent/agent.yml -config.expand-env=true
+    networks:
+      - services
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+        
+  cadvisor:
+    image: unibaktr/cadvisor:0.39.0
+    container_name: cadvisor
+    volumes:
+        - /:/rootfs:ro
+        - /var/run:/var/run:ro
+        - /sys:/sys:ro
+        - /var/lib/docker/:/var/lib/docker:ro
+        - /dev/disk/:/dev/disk:ro
+        - /etc/machine-id/:/etc/machine-id:ro
+    devices:
+        - /dev/kmsg:/dev/kmsg:ro
+    networks:
+      - services
+    ports:
+        - "8080:8080"
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:1.19.1
+    container_name: syncthing
+    hostname: syncthing #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Lisbon
+    volumes:
+      - /data/syncthing/config:/config
+      - *data-services-volume
+    ports:
+      - 8384:8384
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    networks:
+      - services
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+networks:
+  services:
+   driver: bridge
+   ipam:
+    config:
+     - subnet: 172.16.57.0/24
+volumes:
+  syncthing: 

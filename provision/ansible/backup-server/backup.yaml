@@ -5,6 +5,6 @@
    # - rpi
    # - docker
    # - vpn
-  - compose
+  - syncthing
    # - seafile
    

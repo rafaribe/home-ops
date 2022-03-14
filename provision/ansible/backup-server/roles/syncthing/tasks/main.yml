@@ -3,5 +3,5 @@
 - name: Cadvisor
   import_tasks: cadvisor.yml
 
-- name: Compose
+- name: Syncthing Compose
   import_tasks: compose.yml
