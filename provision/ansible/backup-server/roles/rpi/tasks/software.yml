@@ -18,6 +18,8 @@
       - jq # JSON cli processor for Height Helper
       - bc # Basic Calculator for Height Helper
       - bat
+      - apparmor-utils
+      - lxc
 - name: install docker dependancies
   apt:
     name: "{{item}}"

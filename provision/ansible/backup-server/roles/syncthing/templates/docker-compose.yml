@@ -69,6 +69,28 @@ services:
       driver: json-file
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+  nfs-server:
+    image: heywoodlh/docker-nfs-server
+    container_name: nfs-server
+    hostname: nfs-server
+    environment: 
+      - NFS_EXPORT_0=/data/
+    volumes:
+      - *data-services-volume 
+      - /lib/modules:/lib/modules:ro
+    cap_add:
+      - SYS_ADMIN
+      - SYS_MODULE
+    ports:
+      - 2049:2049
+   # security_opt:
+     # - apparmor=erichough-nfs
+    privileged: true
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 networks:
   services:
    driver: bridge

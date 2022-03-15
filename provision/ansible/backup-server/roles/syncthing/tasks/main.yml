@@ -2,6 +2,7 @@
   import_tasks: grafana-agent.yml
 - name: Cadvisor
   import_tasks: cadvisor.yml
-
+- name: AppArmor
+  import_tasks: apparmor.yml
 - name: Syncthing Compose
   import_tasks: compose.yml
