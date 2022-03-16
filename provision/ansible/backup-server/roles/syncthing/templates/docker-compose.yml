@@ -27,7 +27,7 @@ services:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
         
   cadvisor:
-    image: unibaktr/cadvisor:0.39.0
+    image: unibaktr/cadvisor:0.39.1
     container_name: cadvisor
     volumes:
         - /:/rootfs:ro
