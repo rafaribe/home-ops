@@ -5,6 +5,7 @@ resources:
   - apps.yaml
   - cert-manager.yaml
   - crypto.yaml
+  - database.yaml
   - firefly.yaml
   - hajimari.yaml
   - media.yaml
