@@ -20,7 +20,8 @@ spec:
   upgrade:
     force: true
     remediation:
-      retries: 3 
+      retries: 3
+      strategy: uninstall
   values:
     image:
       repository: "influxdb"
