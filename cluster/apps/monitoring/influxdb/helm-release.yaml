@@ -17,6 +17,10 @@ spec:
         name: influxdata-charts
         namespace: flux-system
       interval: 5m
+  upgrade:
+    force: true
+    remediation:
+      retries: 3 
   values:
     image:
       repository: "influxdb"
