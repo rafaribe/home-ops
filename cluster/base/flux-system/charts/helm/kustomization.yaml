@@ -22,6 +22,7 @@ resources:
   - nfs-subdir-external-provisioner-charts.yaml
   - node-feature-discovery-charts.yaml
   - prometheus-community-charts.yaml
+  - redpanda-charts.yaml
   - rook-ceph-charts.yaml
   - stakater-charts.yaml
   - traefik-charts.yaml
