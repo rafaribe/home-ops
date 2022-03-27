@@ -10,13 +10,17 @@ spec:
     spec:
       # renovate: registryUrl=https://grafana.github.io/helm-charts
       chart: redpanda-operator
-      version: 6.24.1
+      version: 0.1.0
       sourceRef:
         kind: HelmRepository
         name: redpanda-charts
         namespace: flux-system
       interval: 5m
   values:
+    image:
+      tag: 21.11.11
+    configurator:
+      tag: 21.11.11
     monitoring:
       enabled: true
     
