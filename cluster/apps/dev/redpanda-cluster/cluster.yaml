@@ -27,5 +27,5 @@ spec:
     - port: 9644
     developerMode: true
   storage: 
-    capacity: 20Gi
+    capacity: "20Gi"
     storageClassName: "local-path"
