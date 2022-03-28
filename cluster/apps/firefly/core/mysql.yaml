@@ -63,10 +63,8 @@ spec:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
         securityContext:
-          runAsUser: 1000
-          runAsGroup: 3000
-          fsGroup: 2000
-          fsGroupChangePolicy: "OnRootMismatch"
+          allowPrivilegeEscalation: false
+          runAsUser: 0
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
