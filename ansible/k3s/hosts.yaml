@@ -1,0 +1,15 @@
+k3s_nodes:
+  hosts:
+    delta:
+      ansible_user: rafaribe
+      ansible_host: 10.0.1.200
+      ansible_python_interpreter: /usr/bin/python3
+      disk_to_wipe: 
+    theta:
+      ansible_user: rafaribe
+      ansible_host: 10.0.1.201
+      ansible_python_interpreter: /usr/bin/python3
+    omega:
+      ansible_user: rafaribe
+      ansible_host: 10.0.1.202
+      ansible_python_interpreter: /usr/bin/python3

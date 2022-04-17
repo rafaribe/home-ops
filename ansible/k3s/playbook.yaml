@@ -1,0 +1,12 @@
+- hosts: k3s_nodes
+  become: true
+  vars:
+    k3s_registration_address: 10.0.1.200  # Typically a load balancer.
+    k3s_become_for_all: true
+  pre_tasks:
+    - name: Set each node to be a control node
+      ansible.builtin.set_fact:
+        k3s_control_node: true
+  roles:
+    - role: os-bootstrap
+    - role: xanmanning.k3s

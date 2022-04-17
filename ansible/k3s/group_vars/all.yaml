@@ -1,0 +1,9 @@
+k3s_release_version: v1.23.5+k3s1
+k3s_etcd_datastore: true
+k3s_become: true
+k3s_server:
+  cluster-cidr: 172.20.0.0/16
+  flannel-backend: 'none'  # This needs to be in quotes
+  disable:
+    - traefik
+    - coredns
