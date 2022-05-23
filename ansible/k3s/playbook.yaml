@@ -3,6 +3,11 @@
   vars:
     k3s_registration_address: 10.0.1.200  # Typically a load balancer.
     k3s_become_for_all: true
+    k3s_install_hard_links: true
+    k3s_etcd_datastore: true
+    k3s_server_manifests_urls:
+      - url: https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
+        filename: kubernetes-dashboard.yaml
   pre_tasks:
     - name: Set each node to be a control node
       ansible.builtin.set_fact:

@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
-K3S_VERSION=v1.22.5+k3s1
-k3sup install --ip="10.0.0.4" --user="rafaribe" --k3s-version="${K3S_VERSION}" --k3s-extra-args="--disable servicelb --disable traefik --disable metrics-server --disable local-storage" --local-path=./kubeconfig
+
+K3S_VERSION=v1.23.5+k3s1
+K3S_SERVER_IP="10.0.1.200"
+K3S_USER="rafaribe"
+k3sup install --ip=$K3S_SERVER_IP --user=$K3S_USER --k3s-version="${K3S_VERSION}" --k3s-extra-args="--disable servicelb --disable traefik --disable local-storage --flannel-backend=none --disable-network-policy" --local-path=./kubeconfig --ssh-key=/home/rafaribe/.ssh/id_ed25519
 
 k3sup join \
-    --ip=10.0.0.2 \
-    --server-ip=10.0.0.4 \
-    --server-user=rafaribe \
+    --ip=10.0.1.201 \
+    --server-ip=$K3S_SERVER_IP \
+    --server-user=$K3S_USER \
     --k3s-version="${K3S_VERSION}" \
-    --user=rafaribe
+    --user=$K3S_USER --ssh-key=/home/rafaribe/.ssh/id_ed25519
 
-cp ./kubeconfig ~/.kube/k3s
-# k3sup join \
-#     --ip=10.0.0.27 \
-#     --server-ip=10.0.0.18 \
-#     --server-user=rafaribe \
-#     --k3s-version="${K3S_VERSION}" \
-#     --user=rafaribe
+cp ./kubeconfig ~/.kube/teivas
+k3sup join \
+    --ip=10.0.1.202 \
+    --server-ip=$K3S_SERVER_IP \
+    --server-user=$K3S_USER \
+    --k3s-version="${K3S_VERSION}" \
+    --user=$K3S_USER --ssh-key=/home/rafaribe/.ssh/id_ed25519

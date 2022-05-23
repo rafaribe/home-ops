@@ -1,5 +1,4 @@
 k3s_release_version: v1.23.5+k3s1
-k3s_etcd_datastore: true
 k3s_become: true
 k3s_server:
   cluster-cidr: 172.20.0.0/16
@@ -7,3 +6,12 @@ k3s_server:
   disable:
     - traefik
     - coredns
+    - local-storage
+  write-kubeconfig-mode: '0644'
+k3s_server_manifests_urls:
+  - url: https://projectcalico.docs.tigera.io/archive/v3.22/manifests/tigera-operator.yaml
+    filename: tigera-operator.yaml
+
+k3s_server_pod_manifests_urls:
+  - url: https://raw.githubusercontent.com/kube-vip/kube-vip/main/example/deploy/0.3.5.yaml
+    filename: kube-vip.yaml
