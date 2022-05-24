@@ -10,6 +10,10 @@ operator:
       enabled: false
 containerRuntime:
   integration: containerd
+ipam:
+  mode: "cluster-pool"
+  operator:
+    clusterPoolIPv4PodCIDR:  172.45.0.0/16
 hubble:
   enabled: true
   serviceMonitor:

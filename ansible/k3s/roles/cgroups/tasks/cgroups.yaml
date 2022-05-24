@@ -1,0 +1,31 @@
+- set_fact:
+    cmdline_txt_path: /boot/cmdline.txt
+
+- include_tasks: cmdline.yaml
+  vars:
+    key: cgroup_enable
+    value: memory
+    update: false
+    # will add the argument if the key-value-pair doesn't exist
+  register: cgroup_memory_enable_register
+
+- include_tasks: cmdline.yaml
+  vars:
+    key: cgroup_enable
+    value: cpuset
+    update: false
+  register: cgroup_cpuset_enable_register
+- include_tasks: cmdline.yaml
+  vars:
+    key: cgroup_memory
+    value: 1
+    update: true
+    # will replace the value of the first matching key, if found;
+    # will add it if it's not found
+  register: cgroup_memory_1_register
+
+- name: reboot
+  debug:
+    msg: "reboot required for {{ ansible_hostname }}"
+  #reboot:
+  when: cgroup_memory_enable_register.changed or cgroup_cpuset_enable_register.changed or cgroup_memory_1_register.changed

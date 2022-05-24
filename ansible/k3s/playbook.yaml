@@ -1,4 +1,4 @@
-- hosts: k3s_nodes
+- hosts: controlplanes
   become: true
   vars:
     k3s_registration_address: 10.0.1.200  # Typically a load balancer.
@@ -8,10 +8,27 @@
     k3s_server_manifests_urls:
       - url: https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
         filename: kubernetes-dashboard.yaml
+      - url: https://raw.githubusercontent.com/rafaribe/home-ops/major-refactor/ansible/k3s/manifests/cilium-quick-install.yaml
+        filename: cilium-quick-install.yaml
   pre_tasks:
     - name: Set each node to be a control node
       ansible.builtin.set_fact:
         k3s_control_node: true
+  roles:
+    - role: os-bootstrap
+  #  - role: cgroups
+    - role: xanmanning.k3s
+- hosts: workers
+  become: true
+  vars:
+    k3s_registration_address: 10.0.1.200  # Typically a load balancer.
+    k3s_become_for_all: true
+    k3s_install_hard_links: true
+    k3s_etcd_datastore: true
+  pre_tasks:
+    - name: Set each node to be a control node
+      ansible.builtin.set_fact:
+        k3s_control_node: false
   roles:
     - role: os-bootstrap
     - role: xanmanning.k3s
