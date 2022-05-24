@@ -1,6 +1,6 @@
 ---
 creation_rules:
-  - path_regex: cluster/.*\.sops.ya?ml
+  - path_regex: kubernetes/.*\.ya?ml
     encrypted_regex: "^(data|stringData)$"
-    pgp: >-
-      BB68891E153B1A8B5285A7518825ECBA2E0A2DE9
+    age: >-
+      age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
