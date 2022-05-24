@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.vectorized.io
       chart: redpanda-operator
-      version: 21.11.11
+      version: v21.11.16
       sourceRef:
         kind: HelmRepository
         name: redpanda-charts
