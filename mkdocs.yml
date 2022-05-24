@@ -1,0 +1,10 @@
+site_name: rafaribe homelab
+site_description: 'Homelab documentation'
+site_author: 'Bruno Rafael Ribeiro'
+docs_dir: docs/
+repo_name: 'rafaribe/home-ops'
+repo_url: 'https://github.com/rafaribe/home-ops'
+nav:
+    - Home: index.md
+theme:
+  name: 'material'
