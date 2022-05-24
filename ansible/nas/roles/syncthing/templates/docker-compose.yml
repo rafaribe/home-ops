@@ -1,7 +1,6 @@
 ---
 version: "3.8"
-x-data-services-volume:
-  &data-services-volume
+x-data-services-volume: &data-services-volume
   type: bind
   source: /data/syncthing/files
   target: /data/
@@ -25,23 +24,23 @@ services:
       driver: json-file
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
-        
+
   cadvisor:
     image: unibaktr/cadvisor:0.39.1
     container_name: cadvisor
     volumes:
-        - /:/rootfs:ro
-        - /var/run:/var/run:ro
-        - /sys:/sys:ro
-        - /var/lib/docker/:/var/lib/docker:ro
-        - /dev/disk/:/dev/disk:ro
-        - /etc/machine-id/:/etc/machine-id:ro
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+      - /etc/machine-id/:/etc/machine-id:ro
     devices:
-        - /dev/kmsg:/dev/kmsg:ro
+      - /dev/kmsg:/dev/kmsg:ro
     networks:
       - services
     ports:
-        - "8080:8080"
+      - "8080:8080"
     restart: unless-stopped
     logging:
       driver: json-file
@@ -69,33 +68,11 @@ services:
       driver: json-file
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
-  nfs-server:
-    image: heywoodlh/docker-nfs-server
-    container_name: nfs-server
-    hostname: nfs-server
-    environment: 
-      - NFS_EXPORT_0=/data/
-    volumes:
-      - *data-services-volume 
-      - /lib/modules:/lib/modules:ro
-    cap_add:
-      - SYS_ADMIN
-      - SYS_MODULE
-    ports:
-      - 2049:2049
-   # security_opt:
-     # - apparmor=erichough-nfs
-    privileged: true
-    restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 networks:
   services:
-   driver: bridge
-   ipam:
-    config:
-     - subnet: 172.16.57.0/24
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.58.0/24
 volumes:
-  syncthing: 
+  syncthing:

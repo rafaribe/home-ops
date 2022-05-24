@@ -1,0 +1,11 @@
+k3s_release_version: v1.24.0-rc1+k3s1 
+k3s_become: true
+k3s_server:
+  cluster-cidr: 172.45.0.0/16
+  flannel-backend: 'none'  # This needs to be in quotes
+  disable:
+    - traefik
+    - coredns
+    - local-storage
+  write-kubeconfig-mode: '0644'
+  

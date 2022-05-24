@@ -1,0 +1,19 @@
+---
+- name: upgrade the OS and all packages
+  apt:
+    upgrade: dist
+    update_cache: yes
+    become: true
+
+- name: install basic software environment
+  apt:
+    name: "{{ packages }}"
+    state: present
+  become: true
+  vars:
+    packages:
+      #- wireguard
+      - neovim
+      - lvm2
+      - wipe
+      - neofetch
