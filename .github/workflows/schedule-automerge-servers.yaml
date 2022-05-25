@@ -6,7 +6,6 @@ on:
 
 jobs:
   automerge:
-    #if: ${{github.event_name == 'schedule' && github.actor == 'trux-bot'}}
     runs-on: ubuntu-latest
     steps:
 
