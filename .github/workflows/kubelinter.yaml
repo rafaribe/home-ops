@@ -8,9 +8,17 @@ name: Kubesec
 on:
   push:
     branches: [ main ]
+    paths:
+      - ".github/workflows/kube-linter.yaml"
+      - ".github/linters/kubelinter.yaml"
+      - "kubernetes/clusters/**"
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ main ]
+    paths:
+      - ".github/workflows/kube-linter.yaml"
+      - ".github/linters/kubelinter.yaml"
+      - "kubernetes/clusters/**"
   schedule:
     - cron: '0 0 * * *'
 
