@@ -24,4 +24,4 @@ This allows for a interesting workflow:
 
 ---
 
-© All images are copyright to their respective owners and are protected under international copyright laws and are protected under international copyright laws.
+© All images are copyright to their respective owners and are protected under international copyright laws.
