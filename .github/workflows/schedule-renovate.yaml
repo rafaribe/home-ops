@@ -13,7 +13,8 @@ on:
         default: "debug"
         required: false
   schedule:
-    - cron: "0 * * * *"
+    # Execute every hour at minute 20
+    - cron: "20 * * * *"
   push:
     branches:
       - main
