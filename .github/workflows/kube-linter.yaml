@@ -16,7 +16,7 @@ on:
 
 jobs:
   lint:
-    name: Kubescore
+    name: Kubelinter
     runs-on: ubuntu-20.04
     permissions:
       actions: read
@@ -29,7 +29,7 @@ jobs:
       - name: Scan repo with kube-linter
         uses: stackrox/kube-linter-action@v1.0.4
         with:
-          directory: kubernetes
+          directory: kubernetes/clusters
           config: .github/linters/kubelinter.yaml
           format: sarif
           output-file: kube-linter.sarif
