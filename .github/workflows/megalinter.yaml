@@ -17,13 +17,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Generate Token
-        uses: tibdex/github-app-token@v1
-        id: generate-token
-        with:
-          app_id: ${{ secrets.TRUXNELL_APP_ID }}
-          private_key: ${{ secrets.TRUXNELL_APP_PRIVATE_KEY }}
-
       - name: MegaLinter
         uses: megalinter/megalinter/flavors/terraform@v5
         env:
