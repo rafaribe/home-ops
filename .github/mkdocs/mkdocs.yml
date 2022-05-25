@@ -64,11 +64,15 @@ extra:
   # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#social-links
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/Truxnell
+      link: https://github.com/rafaribe
     - icon: fontawesome/brands/linkedin
-      link: https://au.linkedin.com/in/nathannial-allan-60a418104
-    - icon: fontawesome/solid/sitemap
-      link: https://voltaicforge.com
+      link: https://www.linkedin.com/in/rafaribe1/
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/rafaribe10
+    - icon: fontawesome/solid/paper-plane
+      link: mailto:rafael.ntw@gmail.com
+    - icon: fontawesome/solid/blog
+      link: https://rafaribe.github.io/
   # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#remove-generator
   generator: false
 
