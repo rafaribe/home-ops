@@ -3,6 +3,9 @@
   "ignore": [
     "**/docs/**",
     "**/.git/**",
-    "**/*.svg"
+    "**/*.svg",
+    "**/bootstrap/ansible/**/main.yml",
+    "**/linux-facts.yml",
+    "**/kustomization.yaml"
   ]
 }
