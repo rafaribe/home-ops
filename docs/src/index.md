@@ -18,7 +18,7 @@ This allows for a interesting workflow:
 [<img src="images/mkdocs.png" alt="mkdocs" style=";object-fit:cover;width:200px;height:100px"/>](https://www.mkdocs.org)
 [<img src="images/flux-horizontal-color.png" alt="flux" style=";object-fit:cover;width:200px;height:100px"/>](https://fluxcd.io)
 
-[<img src="images/cilium.png" alt="flux" style=";object-fit:contain;width:200px;height:100px"/>](https://cilium.org)
+[<img src="images/cilium.png" alt="flux" style=";object-fit:contain;width:200px;height:100px"/>](https://cilium.io)
 [<img src="images/kasten-logo-stacked.svg" alt="flux" style=";object-fit:contain;width:300px;height:150px"/>](https://www.kasten.io)
 [<img src="images/crossplane-stacked-color.png" alt="crossplane" style=";width:200px;height:200px"/>](https://crossplane.io)
 
