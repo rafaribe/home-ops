@@ -14,7 +14,7 @@ on:
         required: false
   schedule:
     # Execute every hour at minute 20
-    - cron: "0 * * * *"
+    - cron: "20 * * * *"
   push:
     branches:
       - main
