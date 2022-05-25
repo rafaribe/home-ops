@@ -53,6 +53,7 @@ jobs:
           PYTHON_FLAKE8_CONFIG_FILE: .github/linters/.flake8
           YAML_YAMLLINT_CONFIG_FILE: .github/linters/.yamllint.yaml
           YAML_PRETTIER_FILTER_REGEX_EXCLUDE: "(.*\\.sops\\.ya?ml)"
+          COPYPASTE_JSCPD_CONFIG_FILE: .github/linters/.jscpd.json
 
       - name: Archive artifacts
         if: ${{ success() }} || ${{ failure() }}
