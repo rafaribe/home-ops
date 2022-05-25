@@ -28,7 +28,7 @@
 
 # Size
 - name: size/XS
-  color: "009900"
+  color: "009901"
   description: >-
     Denotes a PR that changes 0-9 lines, ignoring generated files.
 - name: size/S
