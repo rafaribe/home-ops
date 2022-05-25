@@ -73,7 +73,7 @@ extra:
   generator: false
 
 # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#copyright-notice
-copyright: Copyright &copy; 2022 Nat Allan
+copyright: Copyright &copy; 2022 Bruno Rafael Ribeiro
 
 extra_css:
   - _static/custom.css
