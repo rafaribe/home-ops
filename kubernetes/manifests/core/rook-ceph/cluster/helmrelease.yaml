@@ -150,6 +150,7 @@ spec:
         - name: "${WORKER03_HOSTNAME}"
           devices:
             - name: "${WORKER03_DRIVE}"
+            - name: "${WORKER03_DRIVE_2}"
     cephBlockPools:
       - name: ceph-blockpool
         spec:
