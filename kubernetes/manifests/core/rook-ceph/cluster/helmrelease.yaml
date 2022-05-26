@@ -43,24 +43,24 @@ spec:
         livenessProbe:
           mon:
             probe:
-              timeoutSeconds: 5
+              timeoutSeconds: 10
           mgr:
             probe:
-              timeoutSeconds: 5
+              timeoutSeconds: 15
           osd:
             probe:
-              timeoutSeconds: 5
+              timeoutSeconds: 15
 
         startupProbe:
           mon:
             probe:
-              timeoutSeconds: 5
+              timeoutSeconds: 15
           mgr:
             probe:
-              timeoutSeconds: 5
+              timeoutSeconds: 15
           osd:
             probe:
-              timeoutSeconds: 5
+              timeoutSeconds: 15
 
       resources:
         mgr:
@@ -179,11 +179,11 @@ spec:
         spec:
           metadataPool:
             replicated:
-              size: 3
+              size: 2
           dataPools:
             - failureDomain: host
               replicated:
-                size: 3
+                size: 2
           metadataServer:
             activeCount: 1
             activeStandby: true
@@ -216,7 +216,7 @@ spec:
           metadataPool:
             failureDomain: host
             replicated:
-              size: 3
+              size: 2
           dataPool:
             failureDomain: host
             erasureCoded:
