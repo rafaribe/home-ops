@@ -20,7 +20,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./kubernetes/clusters/delta/flux-system
+  path: ./kubernetes/clusters/delta/gotk
   prune: true
   sourceRef:
     kind: GitRepository
