@@ -10,7 +10,6 @@ spec:
     - name: apply-cluster-config
     - name: apply-cluster-repositories
     - name: apply-cluster-namespaces
-    - name: apply-manage-flux
   path: ./kubernetes/clusters/delta/flux/orchestration/core
   prune: true
   wait: true

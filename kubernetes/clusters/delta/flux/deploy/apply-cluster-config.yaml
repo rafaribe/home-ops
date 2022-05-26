@@ -5,8 +5,6 @@ metadata:
   name: apply-cluster-config
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: apply-manage-flux
   interval: 10m0s
   path: ./kubernetes/clusters/delta/flux/vars
   prune: true

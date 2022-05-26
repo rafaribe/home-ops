@@ -9,7 +9,6 @@ spec:
   dependsOn:
     - name: apply-cluster-config
     - name: apply-cluster-repositories
-    - name: apply-manage-flux
   path: ./kubernetes/clusters/delta/crds/
   prune: true
   wait: true
