@@ -4,16 +4,24 @@ resources:
   - authentik-charts.yaml
   - banzaicloud-charts.yaml
   - bitnami-charts.yaml
+  - cilium-charts.yaml
   - deliveryhero-charts.yaml
   - descheduler-charts.yaml
   - external-dns-charts.yaml
+  - fairwinds-charts.yaml
   - grafana-charts.yaml
   - hajimari-charts.yaml
   - halkeye-charts.yaml
   - influxdata-charts.yaml
   - infracloudio-charts.yaml
   - jetstack-charts.yaml
+  - kasten-charts.yaml
+  - kubernetes-sigs-descheduler-charts.yaml
+  - kubernetes-sigs-metrics-server-charts.yaml
+  - kubernetes-sigs-nfd-charts.yaml
   - k8s-at-home-charts.yaml
+  - kyverno-charts.yaml
+  - lwolf-charts.yaml
   - metallb-charts.yaml
   - metrics-server-charts.yaml
   - minecraft-server-charts.yaml
@@ -24,7 +32,11 @@ resources:
   - prometheus-community-charts.yaml
   - redpanda-charts.yaml
   - rook-ceph-charts.yaml
+  - sqljames-charts.yaml
   - stakater-charts.yaml
   - traefik-charts.yaml
+  - trilio-charts.yaml
   - true-charts.yaml
+  - vector-charts,yaml
+  - vmware-charts.yaml
   - weaveworks-kured-charts.yaml

@@ -1,0 +1,70 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: user-home-automation-mosquitto
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: "./kubernetes/manifests/user/home-automation/mosquitto"
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: home-cluster
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: user-home-automation-esphome
+#   namespace: flux-system
+# spec:
+#   interval: 5m
+#   path: "./kubernetes/manifests/user/home-automation/esphome"
+#   prune: true
+#   wait: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: home-cluster
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: user-home-automation-home-assistant
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: "./kubernetes/manifests/user/home-automation/home-assistant"
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: home-cluster
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: user-home-automation-node-red
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: "./kubernetes/manifests/user/home-automation/node-red"
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: home-cluster
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: user-home-automation-zigbee2mqtt
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: "./kubernetes/manifests/user/home-automation/zigbee2mqtt"
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: home-cluster

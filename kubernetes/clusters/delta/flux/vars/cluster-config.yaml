@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: flux-system
+  name: apply-cluster-config
+data:
+  CLUSTER_NAME: delta
+  CLUSTER_ID: "0"
+  CLUSTER_CERT: "letsencrypt-production"
+  TZ: Europe/Lisbon
+
+  LB_RANGE: "10.0.1.240-10.0.1.250"
+
+  # delta
+  WORKER01_HOSTNAME: 10.0.1.200
+  WORKER01_DRIVE: sda
+
+  # omega
+  WORKER02_HOSTNAME: 10.0.1.201
+  WORKER02_DRIVE: sdc
+
+  # theta
+  WORKER03_HOSTNAME: 10.0.1.202
+  WORKER03_DRIVE: sda
