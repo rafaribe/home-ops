@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
+- ../../.. # Apply kustomization on the root of the cluster
