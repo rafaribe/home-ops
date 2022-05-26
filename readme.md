@@ -32,7 +32,7 @@ _... managed with Flux, Renovate and GitHub Actions_ :robot:
 
 This is the repository that hosts the code that I use to manage my home infrastructure.
 
-I use Ubuntu 22.04 as my base OS and k3s as my Kubernetes distribution. [Ansible](https://www.ansible.com/) is used to provision the [k3s](https://k3s.io) cluster along with some basic debugging tooling on the nodes and to provision my [backup-server](bootstrap/ansible/nas/index.md).
+I use Ubuntu 22.04 as my base OS and k3s as my Kubernetes distribution. [Ansible](https://www.ansible.com/) is used to provision the [k3s](https://k3s.io) cluster along with some basic debugging tooling on the nodes and to provision my backup-server.
 After the kubernetes cluster is provisioned I use [Flux](https://fluxcd.io/) to watch this repository, and [Renovate](https://renovate.io/) to automatically update the dependencies.
 
 ## :wrench:&nbsp; Tools
