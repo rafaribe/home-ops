@@ -39,10 +39,10 @@ After the kubernetes cluster is provisioned I use [Flux](https://fluxcd.io/) to 
 
 _Below are some of the tools I find useful_
 
-| Tool                                                   | Purpose                                                                                                   |
-|--------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| [sops](https://github.com/mozilla/sops)                | Simple and flexible tool for managing secrets                                                             |
-| [pre-commit](https://github.com/pre-commit/pre-commit) | Ensure the YAML and shell script in my repo are consistent                                                |
+| Tool                                                   | Purpose                                                    |
+| ------------------------------------------------------ | ---------------------------------------------------------- |
+| [sops](https://github.com/mozilla/sops)                | Simple and flexible tool for managing secrets              |
+| [pre-commit](https://github.com/pre-commit/pre-commit) | Ensure the YAML and shell script in my repo are consistent |
 
 ## :handshake:&nbsp; Thanks
 
@@ -51,7 +51,6 @@ A lot of inspiration for my cluster came from the people that have shared their 
 - [xUnholy/k8s-gitops](https://github.com/xUnholy/k8s-gitops)
 - [billimek/k8s-gitops](https://github.com/billimek/k8s-gitops)
 - [carpenike/k8s-gitops](https://github.com/carpenike/k8s-gitops)
-- [dcplaya/k8s-gitops](https://github.com/dcplaya/k8s-gitops)
 - [rust84/k8s-gitops](https://github.com/rust84/k8s-gitops)
 - [blackjid/homelab-gitops](https://github.com/blackjid/homelab-gitops)
 - [bjw-s/k8s-gitops](https://github.com/bjw-s/k8s-gitops)
@@ -59,3 +58,4 @@ A lot of inspiration for my cluster came from the people that have shared their 
 - [nlopez/k8s_home](https://github.com/nlopez/k8s_home)
 - [ironicbadger/infra](https://github.com/IronicBadger/infra)
 - [onedr0p/home-ops](https://github.com/onedr0p/home-ops)
+- [Truxnell/home-cluster](https://github.com/Truxnell/home-cluster)
