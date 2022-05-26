@@ -1,5 +1,5 @@
 
-rke2cluster:
+k8s_cluster:
   children:
     controlplanes:
       hosts:
