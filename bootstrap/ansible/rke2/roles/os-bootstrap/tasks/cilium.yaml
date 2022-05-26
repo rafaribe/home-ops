@@ -1,0 +1,9 @@
+- name: "template out cilium.yaml"
+  delegate_to: localhost
+  template:
+    src: cilium.yaml
+    dest: /home/rafaribe/code/home-ops/bootstrap/ansible/rke2/manifests/cilium.yaml
+    owner: rafaribe
+    group: rafaribe
+    mode: 0644
+  when: "rke2_custom_manifests is defined"

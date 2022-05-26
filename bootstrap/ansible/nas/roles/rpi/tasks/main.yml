@@ -1,6 +1,6 @@
 ---
-- include: linux-facts.yml
-- include: software.yml
+- import_tasks: linux-facts.yml
+- import_tasks: software.yml
 
 - name: "set hostname"
   hostname:
@@ -25,5 +25,3 @@
 - name: "set locale"
   command: "localectl set-locale LANG={{ locale }}"
   when: "locale|default(false) and linux_locale != locale"
-
-#- include: raspi-config.yml

@@ -12,10 +12,11 @@ k3sup join \
     --k3s-version="${K3S_VERSION}" \
     --user=$K3S_USER --ssh-key=/home/rafaribe/.ssh/id_ed25519
 
-cp ./kubeconfig ~/.kube/teivas
+
 k3sup join \
     --ip=10.0.1.202 \
     --server-ip=$K3S_SERVER_IP \
     --server-user=$K3S_USER \
     --k3s-version="${K3S_VERSION}" \
     --user=$K3S_USER --ssh-key=/home/rafaribe/.ssh/id_ed25519
+cp ./kubeconfig ~/.kube/teivas

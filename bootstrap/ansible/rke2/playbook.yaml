@@ -1,0 +1,16 @@
+- name: Bootstrap Operating System
+  hosts: all
+  become: true
+  roles:
+    - role: os-bootstrap
+      
+- name: Deploy RKE2
+  hosts: all
+  become: true
+  roles:
+    - role: lablabs.rke2
+      
+- name: Kubeconfig Update
+  hosts: localhost
+  roles:
+    - role: kubeconfig-actions
