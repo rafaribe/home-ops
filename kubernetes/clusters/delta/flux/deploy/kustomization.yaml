@@ -8,4 +8,3 @@ resources:
   - ./apply-cluster-orchestration-core.yaml
   - ./apply-cluster-orchestration-user.yaml
   - ./apply-cluster-repositories.yaml
-  - ./apply-manage-flux.yaml
