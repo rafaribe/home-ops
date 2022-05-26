@@ -7,7 +7,7 @@ metadata:
 spec:
   dependsOn:
     - name: apply-cluster-repositories
-  interval: 10m0s
+  interval: 60m0s
   path: ./manifests/install
   prune: true
   wait: true
