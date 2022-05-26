@@ -37,6 +37,6 @@ resources:
   - traefik-charts.yaml
   - trilio-charts.yaml
   - true-charts.yaml
-  - vector-charts,yaml
+  - vector-charts.yaml
   - vmware-charts.yaml
   - weaveworks-kured-charts.yaml
