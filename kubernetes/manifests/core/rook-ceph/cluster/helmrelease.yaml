@@ -61,7 +61,11 @@ spec:
           osd:
             probe:
               timeoutSeconds: 15
-
+      network:
+        provider: host
+      connections:
+        compression:
+          enabled: true
       resources:
         mgr:
           requests:
@@ -115,7 +119,7 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
-
+        ssl: false
     # ingress:
     #   dashboard:
     #     annotations:
@@ -147,16 +151,12 @@ spec:
         - name: "${WORKER02_HOSTNAME}"
           devices:
             - name: "${WORKER02_DRIVE}"
-        - name: "${WORKER03_HOSTNAME}"
-          devices:
-            - name: "${WORKER03_DRIVE}"
-            - name: "${WORKER03_DRIVE_2}"
     cephBlockPools:
       - name: ceph-blockpool
         spec:
           failureDomain: host
           replicated:
-            size: 3
+            size: 2
         storageClass:
           enabled: true
           name: ceph-block
@@ -179,11 +179,11 @@ spec:
         spec:
           metadataPool:
             replicated:
-              size: 2
+              size: 1
           dataPools:
             - failureDomain: host
               replicated:
-                size: 2
+                size: 1
           metadataServer:
             activeCount: 1
             activeStandby: true
@@ -216,7 +216,7 @@ spec:
           metadataPool:
             failureDomain: host
             replicated:
-              size: 2
+              size: 1
           dataPool:
             failureDomain: host
             erasureCoded:
