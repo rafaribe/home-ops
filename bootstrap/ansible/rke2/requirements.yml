@@ -1,6 +1,8 @@
 # from galaxy
 # Tailscale Role
 - src: lablabs.rke2
+- src: githubixx.kubectl
+- src: igor_mukhin.bash_aliases
 # Community General
 #- src: ansible-collections/community.general
 

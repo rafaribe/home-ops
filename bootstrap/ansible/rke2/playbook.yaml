@@ -4,6 +4,11 @@
   roles:
     - role: os-bootstrap
       
+- name: Simple Utilities
+  hosts: all
+  roles:
+    - igor_mukhin.bash_aliases
+
 - name: Deploy RKE2
   hosts: all
   become: true

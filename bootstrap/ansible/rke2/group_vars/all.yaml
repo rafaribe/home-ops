@@ -11,6 +11,7 @@ rke2_cluster_group_name: k8s_cluster
 rke2_servers_group_name: controlplanes
 rke2_agents_group_name: workers
 rke2_ha_mode: true
+rke2_ha_mode_keepalived: false
 rke2_ha_mode_kubevip: true
 rke2_loadbalancer_ip_range: 10.0.1.224-10.0.1.239
 rke2_api_ip: 10.0.1.245
@@ -19,3 +20,18 @@ rke2_additional_sans:
   - 10.0.1.245
 rke2_custom_manifests: 
   - /home/rafaribe/code/home-ops/bootstrap/ansible/rke2/manifests/cilium.yaml
+# Users and Groups
+managed_groups:
+  - name: home_users
+    gid: 1042
+managed_users:
+  - name: rafaribe
+    password: "{{ rafaribe_passwd }}"
+    uid: 2000
+    shell: /bin/zsh
+    group: home_users
+    groups: sudo,adm
+# Aliases
+bash_aliases:
+  - { alias: 'bat', command: 'batcat' }
+  - { alias: 'k', command: 'kubectl' }

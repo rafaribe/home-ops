@@ -1,29 +1,48 @@
 ---
-- import_tasks: linux-facts.yml
-- import_tasks: software.yml
-- import_tasks: cilium.yaml
+- include: locale.yml
+  tags:
+    - locale
 
-- name: "set hostname"
-  hostname:
-    name: "{{ target_hostname }}.{{ target_domain }}"
-  when: "target_hostname | default(false) and target_domain | default(false)"
-  notify:
-    - reboot
+- include: packages.yml
+  tags:
+    - packages
 
-- name: "template out /etc/hosts"
-  template:
-    src: hosts
-    dest: /etc/hosts
-    owner: root
-    group: root
-    mode: 0644
-  when: "target_hostname | default(false) and target_domain | default(false)"
+- include: kernel.yml
+  tags:
+    - kernel
 
-- name: "set timezone"
-  command: "timedatectl set-timezone {{ timezone }}"
-  when: "timezone | default(false) and linux_tz != timezone"
+- include: network.yml
+  tags:
+    - network
 
-- name: "set locale"
-  command: "localectl set-locale LANG={{ locale }}"
-  when: "locale|default(false) and linux_locale != locale"
+- include: filesystem.yml
+  tags:
+    - filesystem
 
+- include: disks.yml
+  tags:
+    - disks
+
+- include: power.yml
+  tags:
+    - power
+
+- include: grub.yml
+  tags:
+    - grub
+
+- include: unattended-upgrades.yml
+  tags:
+    - unattended-upgrades
+
+- include: group.yml
+  tags:
+    - group
+
+# - include: user.yml
+#   tags:
+#     - user
+    
+- include: cilium.yml
+  tags:
+    - cilium

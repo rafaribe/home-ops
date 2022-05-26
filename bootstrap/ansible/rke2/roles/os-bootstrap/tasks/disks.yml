@@ -1,0 +1,13 @@
+---
+- name: disks | configure smartd
+  ansible.builtin.template:
+    src: smartd.conf.j2
+    dest: /etc/smartd.conf
+    mode: 0644
+
+- name: disks | restart smartd service
+  ansible.builtin.systemd:
+    name: smartd
+    daemon_reload: true
+    enabled: true
+    state: restarted
