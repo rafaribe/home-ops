@@ -39,7 +39,16 @@ spec:
       bdev_async_discard = true
 
     cephClusterSpec:
+      priorityClassNames:
+        all: system-node-critical
+        mgr: system-cluster-critical
+      disruptionManagement:
+        managePodBudgets: true
       healthCheck:
+        daemonHealth:
+          mon:
+            interval: 45s
+            timeout: 600s
         livenessProbe:
           mon:
             probe:
@@ -64,54 +73,54 @@ spec:
       network:
         provider: host
       resources:
-        # mgr:
-        #   requests:
-        #     cpu: "125m"
-        #     memory: "549M"
-        #   limits:
-        #     memory: "1219M"
-        # mon:
-        #   requests:
-        #     cpu: "49m"
-        #     memory: "477M"
-        #   limits:
-        #     memory: "1059M"
-        # osd:
-        #   requests:
-        #     cpu: "442m"
-        #     memory: "2678M"
-        #   limits:
-        #     memory: "5944M"
-        # prepareosd:
-        #   requests:
-        #     cpu: "250m"
-        #     memory: "50Mi"
-        #   limits:
-        #     memory: "200Mi"
-        # mgr-sidecar:
-        #   requests:
-        #     cpu: "49m"
-        #     memory: "94M"
-        #   limits:
-        #     memory: "208M"
-        # crashcollector:
-        #   requests:
-        #     cpu: "15m"
-        #     memory: "64M"
-        #   limits:
-        #     memory: "64M"
-        # logcollector:
-        #   requests:
-        #     cpu: "100m"
-        #     memory: "100M"
-        #   limits:
-        #     memory: "1G"
-        # cleanup:
-        #   requests:
-        #     cpu: "250m"
-        #     memory: "100M"
-        #   limits:
-        #     memory: "1G"
+        mgr:
+          requests:
+            cpu: "125m"
+            memory: "549M"
+          limits:
+            memory: "1219M"
+        mon:
+          requests:
+            cpu: "49m"
+            memory: "477M"
+          limits:
+            memory: "1059M"
+        osd:
+          requests:
+            cpu: "442m"
+            memory: "2678M"
+          limits:
+            memory: "5944M"
+        prepareosd:
+          requests:
+            cpu: "250m"
+            memory: "50Mi"
+          limits:
+            memory: "200Mi"
+        mgr-sidecar:
+          requests:
+            cpu: "49m"
+            memory: "94M"
+          limits:
+            memory: "208M"
+        crashcollector:
+          requests:
+            cpu: "15m"
+            memory: "64M"
+          limits:
+            memory: "64M"
+        logcollector:
+          requests:
+            cpu: "100m"
+            memory: "100M"
+          limits:
+            memory: "1G"
+        cleanup:
+          requests:
+            cpu: "250m"
+            memory: "100M"
+          limits:
+            memory: "1G"
 
       dashboard:
         enabled: true
@@ -135,7 +144,15 @@ spec:
     #       - secretName: tls.rook-ceph
     #         hosts:
     #           - *host
-
+    cephVersion:
+      image: quay.io/ceph/ceph:v17
+      allowUnsupported: true
+    mon:
+      ount: 1
+      allowMultiplePerNode: true
+    mgr:
+      count: 1
+      allowMultiplePerNode: true
     storage:
       useAllNodes: false
       useAllDevices: false
@@ -153,7 +170,8 @@ spec:
         spec:
           failureDomain: host
           replicated:
-            size: 2
+            size: 1
+            requireSafeReplicaSize: false
         storageClass:
           enabled: true
           name: ceph-block
