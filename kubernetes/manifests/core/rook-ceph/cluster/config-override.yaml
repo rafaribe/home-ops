@@ -10,3 +10,4 @@ data:
     mon_warn_on_pool_no_redundancy = false
     bdev_flock_retry = 20
     bluefs_buffered_io = false
+    
