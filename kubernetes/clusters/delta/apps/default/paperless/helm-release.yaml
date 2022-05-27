@@ -26,13 +26,11 @@ spec:
       PAPERLESS_ADMIN_PASSWORD: ${SECRET_PAPERLESS_PASSWORD}
     data:
       enabled: true
-      storageClass: local-path
       size: 10Gi
       accessModes:
         - ReadWriteOnce
       media:
         enabled: true
-        storageClass: local-path
         size: 10Gi
         accessModes:
           - ReadWriteOnce
