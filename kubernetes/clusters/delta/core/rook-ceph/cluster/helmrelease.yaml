@@ -67,6 +67,11 @@ spec:
               timeoutSeconds: 15
       network:
         provider: host
+        connections:
+          encryption: 
+            enabled: true
+          compression:
+            enabled: true
       resources:
         mgr:
           requests:
@@ -149,7 +154,7 @@ spec:
       count: 3
       allowMultiplePerNode: false
     storage:
-      useAllNodes: true
+      useAllNodes: false
       useAllDevices: false
       config:
         osdsPerDevice: "3"
@@ -177,7 +182,7 @@ spec:
         spec:
           failureDomain: host
           replicated:
-            size: 1
+            size: 3
             requireSafeReplicaSize: false
         storageClass:
           enabled: true
