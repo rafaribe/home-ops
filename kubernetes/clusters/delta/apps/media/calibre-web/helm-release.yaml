@@ -28,13 +28,13 @@ spec:
 
     persistence:
       config:
-        storageClass: "local-path"
+        
         enabled: true
         accessMode: ReadWriteOnce
         size: 512Mi
         # existingClaim: calibre-web-config-pvc
       data:
-        storageClass: "local-path"
+        
         enabled: true
         accessMode: ReadWriteOnce
         size: 30Gi

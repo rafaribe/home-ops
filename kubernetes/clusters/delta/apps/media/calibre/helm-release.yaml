@@ -30,11 +30,11 @@ spec:
         enabled: true
         size: 512Mi
         accessMode: ReadWriteOnce
-        storageClass: "local-path"
+        
         #existingClaim: calibre-config-pvc
       data:
         enabled: true
-        storageClass: "local-path"
+        
         size: 30Gi
         accessMode: ReadWriteOnce
         #existingClaim: media-nfs-tank-share-pvc
