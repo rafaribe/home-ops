@@ -3,8 +3,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   namespace: flux-system
-  name: apply-cluster-config
+  name: cluster-config
 data:
+  METAL_LB: 10.0.1.240
   CLUSTER_NAME: delta
   CLUSTER_ID: "0"
   CLUSTER_CERT: "letsencrypt-production"
