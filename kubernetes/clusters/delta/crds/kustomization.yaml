@@ -4,5 +4,5 @@ resources:
   - external-snapshotter
   - kube-prometheus-stack
   - redpanda
-  - rook-ceph
+ # - rook-ceph
   - traefik
