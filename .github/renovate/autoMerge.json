@@ -1,12 +1,17 @@
 {
   "packageRules": [
     {
-      "matchDatasources": ["docker"],
+      "matchDatasources": [
+        "docker"
+      ],
       "automerge": true,
       "automergeType": "branch",
       "requiredStatusChecks": null,
       "stabilityDays": 2,
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "matchPackageNames": [
         "ghcr.io/k8s-at-home/plex",
         "ghcr.io/k8s-at-home/radarr",
@@ -26,43 +31,91 @@
         "ghcr.io/tarampampam/error-pages",
         "k8s-at-home/tautulli"
       ],
-      "schedule": ["after 2am, before 5am"]
-
+      "schedule": [
+        "after 2am, before 5am"
+      ]
     },
     {
       "description": "Package requirements: minor updates are silent",
-      "matchFiles": ["requirements.txt"],
+      "matchFiles": [
+        "requirements.txt"
+      ],
       "automerge": true,
       "stabilityDays": 1,
       "automergeType": "branch",
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ]
     },
     {
-      "matchDatasources": ["helm"],
-      "automerge": true,
-      "automergeType": "branch",
-      "requiredStatusChecks": null,
-      "stabilityDays": 1,
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchPackageNames": ["kube-prometheus-stack"]
-    },
-    {
-      "matchManagers": ["github-actions"],
+      "matchDatasources": [
+        "helm"
+      ],
       "automerge": true,
       "automergeType": "branch",
       "requiredStatusChecks": null,
       "stabilityDays": 1,
-      "matchUpdateTypes": ["minor", "patch"],
-      "excludePackageNames": ["lycheeverse/lychee-action"]
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchPackageNames": [
+        "kube-prometheus-stack"
+      ]
     },
     {
-      "matchDatasources": ["helm", "docker"],
+      "matchDatasources": [
+        "helm"
+      ],
+      "automerge": true,
+      "automergeType": "branch",
+      "requiredStatusChecks": null,
+      "stabilityDays": 1,
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "matchPackageNames": [
+        "reloader",
+        "grafana"
+      ]
+    },
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "automerge": true,
+      "automergeType": "branch",
+      "requiredStatusChecks": null,
+      "stabilityDays": 1,
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "excludePackageNames": [
+        "lycheeverse/lychee-action"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "helm",
+        "docker"
+      ],
       "automerge": false,
       "requiredStatusChecks": null,
-      "matchUpdateTypes": ["major", "minor", "patch", "digest"],
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch",
+        "digest"
+      ],
       "groupName": "Factorio Servers",
-      "labels": ["automerge-servers"],
-      "matchPackageNames": ["factoriotools/factorio"]
+      "labels": [
+        "automerge-servers"
+      ],
+      "matchPackageNames": [
+        "factoriotools/factorio"
+      ]
     }
   ]
 }
