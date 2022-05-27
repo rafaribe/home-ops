@@ -2,13 +2,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - dev
-  - hajimari
-  - firefly
+  #- dev
+#  - hajimari
+ # - firefly
   - kube-system
-  - networking
+  - network-system
   #- system-upgrade
-  - monitoring
+  #- system-monitoring
   - media
   - databases
   #- paperless

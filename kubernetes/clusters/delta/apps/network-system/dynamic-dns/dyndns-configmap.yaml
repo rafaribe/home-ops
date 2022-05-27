@@ -1,0 +1,17 @@
+# configmap.yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dyndns-updater
+  namespace: network-system
+  labels:
+    app.kubernetes.io/name: dyndns-updater
+    app.kubernetes.io/instance: dyndns-updater
+data:
+  dyndns-updater.sh: |
+    #!/bin/bash
+    curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
+        -H "Authorization: Bearer $AUTH_KEY" \
+        -H "Content-Type: application/json" \
+        --data "{\"type\":\"A\",\"name\":\"$NAME\",\"content\":\"`curl ifconfig.co`\",\"proxied\":true}"

@@ -44,11 +44,11 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
           external-dns.alpha.kubernetes.io/hostname: calibre-web.${SECRET_DOMAIN}
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          nginx.ingress.kubernetes.io/router.entrypoints: websecure
           external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
           hajimari.io/enable: "true"
         hosts:
