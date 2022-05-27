@@ -30,7 +30,6 @@ spec:
       type: ClusterIP
     persistence:
       enabled: true
-      storageClass: "local-path"
       size: 50Gi
       #existingClaim: influxdb-pvc
     resources:
