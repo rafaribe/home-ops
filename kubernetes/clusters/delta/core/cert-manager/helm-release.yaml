@@ -25,7 +25,7 @@ spec:
     remediation:
       retries: 3
   values:
-    installCRDs: true
+    installCRDs: false
     webhook:
       enabled: true
     extraArgs:
@@ -41,4 +41,4 @@ spec:
       enabled: true
       servicemonitor:
         enabled: true
-        prometheusInstance: monitoring
+        prometheusInstance: system-monitoring
