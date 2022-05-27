@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: loki
-  namespace: monitoring
+  namespace: system-monitoring
   annotations:
     kubernetes.io/ingress.class: traefik
     external-dns.alpha.kubernetes.io/hostname: loki.${SECRET_DOMAIN}
@@ -16,7 +16,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: loki
-  namespace: monitoring
+  namespace: system-monitoring
 spec:
   routes:
   - kind: Rule

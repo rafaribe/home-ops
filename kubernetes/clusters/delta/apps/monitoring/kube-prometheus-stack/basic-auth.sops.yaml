@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
     name: prometheus-basic-auth
-    namespace: monitoring
+    namespace: system-monitoring
 data:
     users: ENC[AES256_GCM,data:EbFQ4DWo7IBAw6t10pWX3IOF1vrPo1eKhfLKwpSr8at1rNJCQQ4PzQDlnMN5bkYVFXpM5tWJnF1buqbTWPuscg==,iv:g+RPr4BoIqM9bM+JMOs6zOXBCuuqFnOA50CW++IlLlk=,tag:Kk9/ukWSOJJe/LV5xVcoEQ==,type:str]
 sops:
