@@ -1,12 +1,11 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  annotations:
   labels:
     app.kubernetes.io/instance: redpanda-operator
     app.kubernetes.io/name: redpanda-operator
   name: redpanda-operator-metrics-monitor
-  namespace: dev
+  namespace: default
 spec:
   endpoints:
   - path: /metrics

@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: redpanda-operator
-  namespace: dev
+  namespace: default
 spec:
   interval: 5m
   chart:
@@ -18,7 +18,7 @@ spec:
       interval: 5m
   values:
     monitoring:
-      enabled: false
+      enabled: true
     
     
   
