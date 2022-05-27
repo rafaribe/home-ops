@@ -1,8 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - external-snapshotter
-  - kube-prometheus-stack
-  - redpanda
-  - rook-ceph
   - traefik
+  - rook-ceph
+  - kube-prometheus-stack
+  - external-snapshotter
+  - redpanda

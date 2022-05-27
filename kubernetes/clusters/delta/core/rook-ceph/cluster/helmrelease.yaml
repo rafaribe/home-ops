@@ -1,0 +1,256 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rook-ceph-cluster
+  namespace: rook-ceph
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: rook-ceph-cluster
+      version: v1.9.3
+      sourceRef:
+        kind: HelmRepository
+        name: rook-ceph-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation: # perform remediation when helm install fails
+      retries: 5
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 5
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  dependsOn:
+    - name: rook-ceph
+      namespace: rook-ceph
+  values:
+    toolbox:
+      enabled: false
+
+    monitoring:
+      enabled: true
+
+    cephClusterSpec:
+      priorityClassNames:
+        all: system-node-critical
+        mgr: system-cluster-critical
+      disruptionManagement:
+        managePodBudgets: true
+      healthCheck:
+        daemonHealth:
+          mon:
+            interval: 45s
+            timeout: 600s
+        livenessProbe:
+          mon:
+            probe:
+              timeoutSeconds: 10
+          mgr:
+            probe:
+              timeoutSeconds: 15
+          osd:
+            probe:
+              timeoutSeconds: 15
+
+        startupProbe:
+          mon:
+            probe:
+              timeoutSeconds: 15
+          mgr:
+            probe:
+              timeoutSeconds: 15
+          osd:
+            probe:
+              timeoutSeconds: 15
+      network:
+        provider: host
+      resources:
+        mgr:
+          requests:
+            cpu: "125m"
+            memory: "549M"
+          limits:
+            memory: "1219M"
+        mon:
+          requests:
+            cpu: "49m"
+            memory: "477M"
+          limits:
+            memory: "1059M"
+        osd:
+          requests:
+            cpu: "442m"
+            memory: "2678M"
+          limits:
+            memory: "5944M"
+        prepareosd:
+          requests:
+            cpu: "250m"
+            memory: "50Mi"
+          limits:
+            memory: "200Mi"
+        mgr-sidecar:
+          requests:
+            cpu: "49m"
+            memory: "94M"
+          limits:
+            memory: "208M"
+        crashcollector:
+          requests:
+            cpu: "15m"
+            memory: "64M"
+          limits:
+            memory: "64M"
+        logcollector:
+          requests:
+            cpu: "100m"
+            memory: "100M"
+          limits:
+            memory: "1G"
+        cleanup:
+          requests:
+            cpu: "250m"
+            memory: "100M"
+          limits:
+            memory: "1G"
+
+      dashboard:
+        enabled: true
+        urlPrefix: /
+        ssl: false
+    # ingress:
+    #   dashboard:
+    #     annotations:
+    #       kubernetes.io/ingress.class: "nginx"
+    #       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    #       cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
+    #       external-dns/is-public: "false"
+    #       hajimari.io/enable: "true"
+    #       hajimari.io/icon: content-save
+    #       hajimari.io/appName: "rook-ceph"
+
+    #     host:
+    #       name: &host "rook.${EXTERNAL_DOMAIN}"
+    #       path: "/"
+    #     tls:
+    #       - secretName: tls.rook-ceph
+    #         hosts:
+    #           - *host
+    cephVersion:
+      image: quay.io/ceph/ceph:v17
+      allowUnsupported: true
+    mon:
+      ount: 3
+      allowMultiplePerNode: false
+    mgr:
+      count: 3
+      allowMultiplePerNode: false
+    storage:
+      useAllNodes: false
+      useAllDevices: false
+      config:
+        osdsPerDevice: "1"
+      nodes:
+        - name: "${WORKER01_HOSTNAME}"
+          devices:
+            - name: "${WORKER01_DRIVE}"
+        - name: "${WORKER02_HOSTNAME}"
+          devices:
+            - name: "${WORKER02_DRIVE}"
+        - name: "${WORKER02_HOSTNAME}"
+          devices:
+            - name: "${WORKER03_DRIVE_2}"
+    cephBlockPools:
+      - name: ceph-blockpool
+        spec:
+          failureDomain: host
+          replicated:
+            size: 1
+            requireSafeReplicaSize: false
+        storageClass:
+          enabled: true
+          name: ceph-block
+          isDefault: true
+          reclaimPolicy: Delete
+          allowVolumeExpansion: true
+          parameters:
+            imageFormat: "2"
+            imageFeatures: layering
+            csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+            csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+            csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+            csi.storage.k8s.io/fstype: ext4
+
+    cephFileSystems:
+      - name: ceph-filesystem
+        spec:
+          metadataPool:
+            replicated:
+              size: 3
+          dataPools:
+            - failureDomain: host
+              replicated:
+                size: 3
+          metadataServer:
+            activeCount: 3
+            activeStandby: true
+            resources:
+              limits:
+                # cpu: "500m"
+                memory: "4Gi"
+              requests:
+                # cpu: "250m"
+                memory: "4Gi"
+        storageClass:
+          enabled: true
+          isDefault: false
+          name: ceph-filesystem
+          reclaimPolicy: Delete
+          allowVolumeExpansion: true
+          mountOptions: []
+          parameters:
+            csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+            csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
+            csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+            csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+            csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+            csi.storage.k8s.io/fstype: ext4
+
+    cephObjectStores:
+      - name: ceph-objectstore
+        spec:
+          metadataPool:
+            failureDomain: host
+            replicated:
+              size: 1
+          dataPool:
+            failureDomain: host
+            erasureCoded:
+              dataChunks: 2
+              codingChunks: 1
+          preservePoolsOnDelete: true
+          gateway:
+            port: 80
+            resources:
+              requests:
+                cpu: 1000m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
+            instances: 1
+          healthCheck:
+            bucket:
+              interval: 60s
+        storageClass:
+          enabled: true
+          name: ceph-bucket
+          reclaimPolicy: Delete
+          parameters:
+            region: us-east-1
