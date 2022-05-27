@@ -144,15 +144,15 @@ spec:
       allowUnsupported: true
     mon:
       ount: 3
-      allowMultiplePerNode: false
+      allowMultiplePerNode: true
     mgr:
       count: 3
       allowMultiplePerNode: false
     storage:
-      useAllNodes: false
+      useAllNodes: true
       useAllDevices: false
       config:
-        osdsPerDevice: "1"
+        osdsPerDevice: "3"
       nodes:
         - name: "${WORKER01_HOSTNAME}"
           devices:
