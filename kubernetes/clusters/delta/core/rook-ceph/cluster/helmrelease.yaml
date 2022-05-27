@@ -162,7 +162,16 @@ spec:
             - name: "${WORKER02_DRIVE}"
         - name: "${WORKER02_HOSTNAME}"
           devices:
+            - name: "${WORKER02_DRIVE_2}"
+        - name: "${WORKER03_HOSTNAME}"
+          devices:
+            - name: "${WORKER03_DRIVE}"
+        - name: "${WORKER03_HOSTNAME}"
+          devices:
             - name: "${WORKER03_DRIVE_2}"
+        - name: "${WORKER03_HOSTNAME}"
+          devices:
+            - name: "${WORKER03_DRIVE_3}"
     cephBlockPools:
       - name: ceph-blockpool
         spec:
