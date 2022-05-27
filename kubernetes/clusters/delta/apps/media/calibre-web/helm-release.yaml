@@ -55,22 +55,6 @@ spec:
           - secretName: tls.calibre-web
             hosts:
               - *host-main
-
-      kobo:
-        enabled: true
-        ingressClassName: "nginx"
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          external-dns.alpha.kubernetes.io/target: ingress.${INGRESS_DOMAIN}
-        hosts:
-          - host: &host-kobo "calibre-kobo.${INGRESS_DOMAIN}"
-            paths:
-              - path: /kobo/
-        tls:
-          - secretName: tls.calibre-web-kobo
-            hosts:
-              - *host-kobo
-
     resources:
       requests:
         cpu: 15m
