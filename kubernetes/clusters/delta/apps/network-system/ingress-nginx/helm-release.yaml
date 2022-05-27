@@ -49,11 +49,11 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-          namespace: networking
+          namespace: network-system
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "networking/${SECRET_PUBLIC_DOMAIN/./-}-tls"
+        default-ssl-certificate: "network-system/${SECRET_PUBLIC_DOMAIN/./-}-tls"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
