@@ -202,4 +202,3 @@ spec:
       accessModes:
       - ReadWriteOnce
       size: 4Gi
-      storageClassName: 'local-path'

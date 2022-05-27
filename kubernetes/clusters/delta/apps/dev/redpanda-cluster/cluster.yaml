@@ -28,4 +28,3 @@ spec:
     developerMode: true
   storage: 
     capacity: "20Gi"
-    storageClassName: "local-path"

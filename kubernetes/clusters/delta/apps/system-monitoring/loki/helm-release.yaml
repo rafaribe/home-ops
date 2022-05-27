@@ -24,7 +24,6 @@ spec:
       accessModes:
       - ReadWriteOnce
       size: 60Gi
-      storageClassName: 'local-path'
     serviceMonitor:
       enabled: true
     securityContext:
