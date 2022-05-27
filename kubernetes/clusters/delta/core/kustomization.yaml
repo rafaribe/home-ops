@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - metallb-system
   - cert-manager
-  - rook-ceph
+ # - rook-ceph
