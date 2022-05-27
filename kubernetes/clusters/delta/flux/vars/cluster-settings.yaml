@@ -20,8 +20,10 @@ data:
   # omega
   WORKER02_HOSTNAME: omega
   WORKER02_DRIVE: /dev/sdb
+  WORKER02_DRIVE_2: /dev/sdc
 
   # theta
   WORKER03_HOSTNAME: theta
   WORKER03_DRIVE: /dev/sdb
   WORKER03_DRIVE_2: /dev/sdc
+  WORKER03_DRIVE_3: /dev/sdd
