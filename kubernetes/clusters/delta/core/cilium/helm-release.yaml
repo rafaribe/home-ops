@@ -5,7 +5,7 @@ metadata:
   name: cilium
   namespace: kube-system
   annotations:
-    meta.helm.sh/release-name: cilium
+    meta.helm.sh/release-name: rke2-cilium
     meta.helm.sh/release-namespace: kube-system
   labels:
     app.kubernetes.io/managed-by: Helm
@@ -52,7 +52,7 @@ spec:
     tunnel: "disabled"
 
     autoDirectNodeRoutes: true
-    
+
     ipam:
       mode: "kubernetes"
 
