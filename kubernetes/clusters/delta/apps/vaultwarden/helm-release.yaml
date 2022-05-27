@@ -23,7 +23,7 @@ spec:
       pullPolicy: IfNotPresent
 
     env:
-      DOMAIN: "https://vaultwarden.${SECRET_DOMAIN}"
+      DOMAIN: "https://vaultwarden.${EXTERNAL_DOMAIN}"
       ADMIN_TOKEN: ${SECRET_VAULTWARDEN_ADMIN_TOKEN}
       DATABASE_URL: ${SECRET_VAULTWARDEN_DB_URL}
       TZ: "Europe/Paris"
@@ -55,7 +55,7 @@ spec:
         # annotations:
           # nginx.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - host: "vaultwarden.${SECRET_DOMAIN}"
+          - host: "vaultwarden.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -66,4 +66,4 @@ spec:
                 servicePort: 3012
         tls:
           - hosts:
-              - "vaultwarden.${SECRET_DOMAIN}"
+              - "vaultwarden.${EXTERNAL_DOMAIN}"

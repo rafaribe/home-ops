@@ -6,11 +6,11 @@ metadata:
   namespace: system-monitoring
   annotations:
     kubernetes.io/ingress.class: nginx
-    external-dns.alpha.kubernetes.io/hostname: loki.${SECRET_DOMAIN}
-    external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
+    external-dns.alpha.kubernetes.io/hostname: loki.${EXTERNAL_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
 spec:
   rules:
-    - host: loki.${SECRET_DOMAIN}  
+    - host: loki.${EXTERNAL_DOMAIN}  
 ---
 apiVersion: nginx.containo.us/v1alpha1
 kind: IngressRoute
@@ -20,7 +20,7 @@ metadata:
 spec:
   routes:
   - kind: Rule
-    match: Host(`loki.${SECRET_DOMAIN}`)
+    match: Host(`loki.${EXTERNAL_DOMAIN}`)
     middlewares:
     - name: loki-basic-auth
     services:

@@ -6,11 +6,11 @@ metadata:
   namespace: system-monitoring
   annotations:
     kubernetes.io/ingress.class: nginx
-    external-dns.alpha.kubernetes.io/hostname: prometheus.${SECRET_DOMAIN}
-    external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
+    external-dns.alpha.kubernetes.io/hostname: prometheus.${EXTERNAL_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
 spec:
   rules:
-    - host: prometheus.${SECRET_DOMAIN}
+    - host: prometheus.${EXTERNAL_DOMAIN}
 ---
 apiVersion: nginx.containo.us/v1alpha1
 kind: IngressRoute
@@ -20,7 +20,7 @@ metadata:
 spec:
   routes:
   - kind: Rule
-    match: Host(`prometheus.${SECRET_DOMAIN}`)
+    match: Host(`prometheus.${EXTERNAL_DOMAIN}`)
     middlewares:
     - name: prometheus-basic-auth
     services:

@@ -76,10 +76,10 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - "alert-manager.${SECRET_DOMAIN}"
+          - "alert-manager.${EXTERNAL_DOMAIN}"
         tls:
           - hosts:
-              - "alert-manager.${SECRET_DOMAIN}"
+              - "alert-manager.${EXTERNAL_DOMAIN}"
     grafana:
       enabled: false
       forceDeployDashboards: true

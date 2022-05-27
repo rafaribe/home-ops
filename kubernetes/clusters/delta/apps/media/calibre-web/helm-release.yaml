@@ -47,12 +47,12 @@ spec:
         ingressClassName: "nginx"
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
-          external-dns.alpha.kubernetes.io/hostname: calibre-web.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: calibre-web.${EXTERNAL_DOMAIN}
           nginx.ingress.kubernetes.io/router.entrypoints: websecure
-          external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
           hajimari.io/enable: "true"
         hosts:
-          - host: calibre-web.${SECRET_DOMAIN}
+          - host: calibre-web.${EXTERNAL_DOMAIN}
             paths:
               - path: /
 
