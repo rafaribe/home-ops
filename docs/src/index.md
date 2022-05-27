@@ -14,7 +14,7 @@ This allows for a interesting workflow:
 
 # Tech Stack
 
-[<img src="images/k3s.png" alt="k3s" style=";object-fit:cover;width:200px;height:100px"/>](https://www.k3s.io)
+[<img src="images/logo-horizontal-rke.svg" alt="k3s" style=";object-fit:cover;width:200px;height:100px"/>](https://www.k3s.io)
 [<img src="images/mkdocs.png" alt="mkdocs" style=";object-fit:cover;width:200px;height:100px"/>](https://www.mkdocs.org)
 [<img src="images/flux-horizontal-color.png" alt="flux" style=";object-fit:cover;width:200px;height:100px"/>](https://fluxcd.io)
 
