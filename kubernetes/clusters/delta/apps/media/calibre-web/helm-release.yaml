@@ -77,3 +77,16 @@ spec:
         memory: 204M
       limits:
         memory: 380M
+    probes:
+      liveness:
+        enabled: true
+        spec:
+          initialDelaySeconds: 25
+          periodSeconds: 20
+          failureThreshold: 3
+      readiness:
+        enabled: true
+        spec:
+          initialDelaySeconds: 25
+          periodSeconds: 20
+          failureThreshold: 3
