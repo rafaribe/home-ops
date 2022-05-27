@@ -40,3 +40,5 @@ resources:
   - vector-charts.yaml
   - vmware-charts.yaml
   - weaveworks-kured-charts.yaml
+  - zalando-postgres-operator.yaml
+  - zalando-postgres-ui.yaml

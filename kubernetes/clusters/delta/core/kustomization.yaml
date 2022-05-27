@@ -6,3 +6,4 @@ resources:
   - cilium
   - metallb-system
   - rook-ceph
+  - postgres
