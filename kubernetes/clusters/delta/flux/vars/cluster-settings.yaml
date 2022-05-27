@@ -5,14 +5,15 @@ metadata:
   namespace: flux-system
   name: cluster-settings
 data:
-  METAL_LB: 10.0.1.240
+  # Networking
+  LB_RANGE: "10.0.1.240-10.0.1.250"
   CLUSTER_NAME: delta
   CLUSTER_ID: "0"
-  CLUSTER_CERT: "letsencrypt-production"
+  CLUSTER_CERT: "letsencrypt-staging"
+  KUBEVIP_ADDRESS: 10.0.1.245
+  NETWORK_K8S_POD_CIDR: 10.43.0.0/16
+
   TZ: Europe/Lisbon
-
-  LB_RANGE: "10.0.1.240-10.0.1.250"
-
   # delta
   WORKER01_HOSTNAME: delta
   WORKER01_DRIVE: /dev/sda
