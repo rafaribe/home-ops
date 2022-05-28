@@ -144,6 +144,9 @@ spec:
     #       - secretName: tls.rook-ceph
     #         hosts:
     #           - *host
+    cephVersion:
+      image: quay.io/ceph/ceph:v17.2.0
+      allowUnsupported: true
     mon:
       count: 3
       allowMultiplePerNode: true
