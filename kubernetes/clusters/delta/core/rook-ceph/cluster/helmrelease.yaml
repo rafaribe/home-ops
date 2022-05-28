@@ -180,7 +180,7 @@ spec:
         spec:
           failureDomain: host
           replicated:
-            size: 3
+            size: 1
             requireSafeReplicaSize: false
         storageClass:
           enabled: true
@@ -204,13 +204,13 @@ spec:
         spec:
           metadataPool:
             replicated:
-              size: 3
+              size: 2
           dataPools:
             - failureDomain: host
               replicated:
-                size: 3
+                size: 2
           metadataServer:
-            activeCount: 3
+            activeCount: 2
             activeStandby: true
             resources:
               limits:
