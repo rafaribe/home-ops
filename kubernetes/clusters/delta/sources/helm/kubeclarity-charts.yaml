@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: kubeclarity-charts
+  namespace: flux-system
+spec:
+  interval: 15m
+  url: https://openclarity.github.io/kubeclarity
+  timeout: 3m
