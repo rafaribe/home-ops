@@ -5,15 +5,15 @@ metadata:
   namespace: default
 spec:
   image: "vectorized/redpanda"
-  version: "latest"
+  version: "v22.1.3"
   replicas: 1
   resources:
     requests:
       cpu: 1
-      memory: 1.2Gi
+      memory: 750Mi
     limits:
       cpu: 1
-      memory: 1.2Gi
+      memory: 750Mi
   configuration:
     rpcServer:
       port: 33145
@@ -27,4 +27,4 @@ spec:
     - port: 9644
     developerMode: true
   storage: 
-    capacity: "20Gi"
+    capacity: "15Gi"
