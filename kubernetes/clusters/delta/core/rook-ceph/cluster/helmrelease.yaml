@@ -163,24 +163,18 @@ spec:
       config:
         osdsPerDevice: "1"
       nodes:
-        - name: "${WORKER01_HOSTNAME}"
+        - name: delta
           devices:
-            - name: "${WORKER01_DRIVE}"
-        - name: "${WORKER02_HOSTNAME}"
+            - name: /dev/disk/by-id/scsi-SATA_HGST_HTS721075A9_JR12006QG0YW5E
+        - name: omega
           devices:
-            - name: "${WORKER02_DRIVE}"
-        - name: "${WORKER02_HOSTNAME}"
+            - name: /dev/disk/by-id/usb-WD_Elements_25A3_4341304D5032454B-0:0
+            - name: /dev/disk/by-id/scsi-1Realtek_RTL9210_NVME_1.000000000000000000
+        - name: theta
           devices:
-            - name: "${WORKER02_DRIVE_2}"
-        - name: "${WORKER03_HOSTNAME}"
-          devices:
-            - name: "${WORKER03_DRIVE}"
-        - name: "${WORKER03_HOSTNAME}"
-          devices:
-            - name: "${WORKER03_DRIVE_2}"
-        - name: "${WORKER03_HOSTNAME}"
-          devices:
-            - name: "${WORKER03_DRIVE_3}"
+            - name: /dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_050113814d21b2d49c2dd26185331253b578dae3bc3dfaf75318b050d4b4e2b07a9200000000000000000000f208d8f9ff970f1091558107322d07d3-0:0
+            - name: /dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_0501c159ad32bd49aadbd29c2d086d37684c7e904a14c9690a904736306cdc0cd9d200000000000000000000635e11360088171091558107322ce0c5-0:0
+            - name: /dev/disk/by-id/scsi-SSanDisk_Extreme_55AE_2209DN403175
     cephBlockPools:
       - name: ceph-blockpool
         spec:
