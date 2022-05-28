@@ -30,5 +30,6 @@ spec:
     enableProcessNs: true
     prometheus:
       enabled: true
+      port: 20112
       serviceMonitor:
         enabled: true
