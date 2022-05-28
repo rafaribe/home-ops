@@ -7,4 +7,3 @@ data:
   config: |
     [global]
     bluefs_buffered_io = false
-    mon clock drift allowed = 0.8
