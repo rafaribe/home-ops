@@ -28,11 +28,15 @@ spec:
       namespace: rook-ceph
   values:
     toolbox:
-      enabled: false
+      enabled: true
 
     monitoring:
       enabled: true
 
+    configOverride: |
+      [global]
+      bdev_enable_discard = true
+      bdev_async_discard = true
     cephClusterSpec:
       priorityClassNames:
         all: system-node-critical
