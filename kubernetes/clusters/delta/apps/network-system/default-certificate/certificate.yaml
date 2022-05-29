@@ -2,8 +2,8 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: wildcard
-  namespace: cert-manager
+  name: wildcard-default-certificate
+  namespace: network-system
 spec:
   privateKey:
     rotationPolicy: Always
@@ -13,7 +13,7 @@ spec:
     group: cert-manager.io
     kind: ClusterIssuer
     name: letsencrypt-production
-  secretName: ${EXTERNAL_DOMAIN}-tls
+  secretName: wildcard-default-certificate-tls
   secretTemplate:
     annotations:
       reflector.v1.k8s.emberstack.com/reflection-allowed: 'true'
