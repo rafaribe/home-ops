@@ -5,11 +5,14 @@ resources:
   - banzaicloud-charts.yaml
   - bitnami-charts.yaml
   - cilium-charts.yaml
+  - crossplane-charts.yaml
   - deliveryhero-charts.yaml
   - descheduler-charts.yaml
+  - enix-charts.yaml
   - external-dns-charts.yaml
   - emberstack-charts.yaml
   - fairwinds-charts.yaml
+  - giantswarm-charts.yaml
   - grafana-charts.yaml
   - hajimari-charts.yaml
   - halkeye-charts.yaml
