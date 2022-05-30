@@ -31,14 +31,15 @@ spec:
       tag: version-v5.43.0
 
     env:
-      TZ: "Australia/Melbourne"
+      TZ: "Europe/Lisbon"
       PUID: "568"
       PGID: "568"
 
     persistence:
       config:
         enabled: true
-        existingClaim: calibre-config-v1
+        size: 512Mi
+        accessMode: ReadWriteOnce
 
       # nfs-nas-media:
       #   enabled: true
