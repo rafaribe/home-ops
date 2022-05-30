@@ -22,6 +22,7 @@ spec:
       targetNamespace: # Show all namespaces
     ingress:
       enabled: true
+      ingressClassName: nginx
       annotations:
         nginx.ingress.kubernetes.io/configuration-snippet: |
           auth_request_set $required_groups 'admin';
