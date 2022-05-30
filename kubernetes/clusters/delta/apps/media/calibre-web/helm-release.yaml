@@ -2,75 +2,98 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: calibre-web
-  namespace: media
+  name: calibre
+  namespace: organizarrs
 spec:
   interval: 5m
   chart:
     spec:
-      chart: calibre-web
-      version: 8.3.2
+      chart: calibre
+      version: 5.3.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 5m
+  install:
+    createNamespace: true
+    remediation: # perform remediation when helm install fails
+      retries: 3
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  # Values link: https://github.com/k8s-at-home/charts/blob/master/charts/stable/calibre/values.yaml
   values:
     image:
-      repository: ghcr.io/linuxserver/calibre-web
-      tag: version-0.6.18
+      repository: ghcr.io/linuxserver/calibre
+      tag: version-v5.43.0
 
     env:
-      TZ: "${TIMEZONE}"
-      PGID: 65539
-      DOCKER_MODS: "linuxserver/calibre-web:calibre"
+      TZ: "Australia/Melbourne"
+      PUID: "568"
+      PGID: "568"
 
     persistence:
       config:
         enabled: true
-        existingClaim: calibre-web-config
-      # media:
+        existingClaim: calibre-config-v1
+
+      # nfs-nas-media:
       #   enabled: true
-      #   type: nfs
-      #   server: "${NAS_ADDRESS}"
-      #   path: /volume1/Media
-      #   mountPath: /data/nas-media
+      #   type: custom
+      #   volumeSpec:
+      #     nfs:
+      #       server: ${NAS_ADDRESS}
+      #       path: /volume1/
+      #   mountPath: /media
+      #   readOnly: false
 
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
         annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          external-dns.alpha.kubernetes.io/target: ingress.${EXTERNAL_DOMAIN}
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${INGRESS_DOMAIN}/css/base/calibreweb/nord.css"></head>';
-            sub_filter_once on;
+          kubernetes.io/ingress.class: "nginx"
+          cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
+          external-dns/is-public: "false"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "book-open-page-variant"
         hosts:
-          - host: &host-main "calibre-web.${EXTERNAL_DOMAIN}"
+          - host: &host "calibre.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
+                pathType: Prefix
         tls:
-          - secretName: tls.calibre-web
-            hosts:
-              - *host-main
+          - hosts:
+              - *host
+            secretName: tls.calibre
+      webserver:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "nginx"
+          cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
+          external-dns/is-public: "false"
+        hosts:
+          - host: &host-cs "calibre-cs.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: calibre-webserver
+                  port: 8081
+        tls:
+          - hosts:
+              - *host-cs
+            secretName: tls.calibre-cs
+
+    service:
+      webserver:
+        enabled: true
+
     resources:
       requests:
         cpu: 15m
-        memory: 204M
+        memory: 381M
       limits:
-        memory: 380M
-    probes:
-      liveness:
-        enabled: true
-        spec:
-          initialDelaySeconds: 25
-          periodSeconds: 20
-          failureThreshold: 3
-      readiness:
-        enabled: true
-        spec:
-          initialDelaySeconds: 25
-          periodSeconds: 20
-          failureThreshold: 3
+        memory: 653M
