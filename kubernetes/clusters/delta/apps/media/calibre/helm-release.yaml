@@ -55,10 +55,15 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: calibre.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
           hajimari.io/enable: "true"
+          hajimari.io/icon: "book-open-page-variant"
         hosts:
-          - host: calibre.${EXTERNAL_DOMAIN}
+          - host: &host calibre.${EXTERNAL_DOMAIN}
             paths:
               - path: /
+        tls:
+          - hosts:
+              - *host
+            secretName: calibre-tls
     resources:
       requests:
         cpu: 0.003

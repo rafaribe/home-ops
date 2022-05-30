@@ -53,6 +53,7 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: "nginx"
         annotations:
           kubernetes.io/ingress.class: "nginx"
           cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
@@ -69,11 +70,11 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: tls.calibre
+            secretName: calibre-web-tls
       webserver:
         enabled: true
+        ingressClassName: "nginx"
         annotations:
-          kubernetes.io/ingress.class: "nginx"
           cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
           external-dns/is-public: "false"
           external-dns.alpha.kubernetes.io/hostname: calibre-cs.${EXTERNAL_DOMAIN}
@@ -89,7 +90,7 @@ spec:
         tls:
           - hosts:
               - *host-cs
-            secretName: tls.calibre-cs
+            secretName: calibre-cs-tls
 
     service:
       webserver:
