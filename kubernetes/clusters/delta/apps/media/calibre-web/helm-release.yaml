@@ -59,8 +59,10 @@ spec:
           external-dns/is-public: "false"
           hajimari.io/enable: "true"
           hajimari.io/icon: "book-open-page-variant"
+          external-dns.alpha.kubernetes.io/hostname: calibre-web.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
         hosts:
-          - host: &host "calibre.${EXTERNAL_DOMAIN}"
+          - host: &host "calibre-web.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -74,6 +76,8 @@ spec:
           kubernetes.io/ingress.class: "nginx"
           cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
           external-dns/is-public: "false"
+          external-dns.alpha.kubernetes.io/hostname: calibre-cs.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
         hosts:
           - host: &host-cs "calibre-cs.${EXTERNAL_DOMAIN}"
             paths:
