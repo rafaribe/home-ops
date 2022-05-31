@@ -1,3 +1,4 @@
+---
 apiVersion: nginx.containo.us/v1alpha1
 kind: Middleware
 metadata:

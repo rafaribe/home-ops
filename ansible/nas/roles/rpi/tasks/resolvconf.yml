@@ -1,3 +1,4 @@
+---
 - name: "set resolvconf"
   command: "systemctl enable --now resolvconf.service"
 

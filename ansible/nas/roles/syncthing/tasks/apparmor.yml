@@ -1,3 +1,4 @@
+---
 - name: create apparmor-profiles directory
   file:
     path: /home/{{ ansible_user }}/apparmor-profiles

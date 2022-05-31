@@ -88,7 +88,7 @@ spec:
         #   gnetId: 12175
         #   revision: 5
         #   datasource: Prometheus
-        #minio:
+        # minio:
         #  gnetId: 13502
         #  revision: 10
         #  datasource: Prometheus

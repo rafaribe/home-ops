@@ -1,3 +1,4 @@
+---
 k3s_release_version: v1.24.0-rc1+k3s1
 k3s_become: true
 k3s_server:

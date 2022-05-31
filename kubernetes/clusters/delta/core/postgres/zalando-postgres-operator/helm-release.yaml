@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -24,11 +25,11 @@ spec:
       # "off": no upgrade, "manual": manifest triggers action, "full": minimal version violation triggers too
       major_version_upgrade_mode: full
     configKubernetes:
-      #enable_pod_antiaffinity: true
+      # enable_pod_antiaffinity: true
       enable_cross_namespace_secret: false
-      #pod_environment_configmap: "postgres-pod-config"
+      # pod_environment_configmap: "postgres-pod-config"
       watched_namespace: "*"
-      #list of labels that can be inherited from the cluster manifest
+      # list of labels that can be inherited from the cluster manifest
       inherited_labels:
         - application
         - environment

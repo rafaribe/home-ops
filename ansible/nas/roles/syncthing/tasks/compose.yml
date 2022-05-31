@@ -1,3 +1,4 @@
+---
 - name: template out docker-compose.yml
   template:
     src: docker-compose.yml

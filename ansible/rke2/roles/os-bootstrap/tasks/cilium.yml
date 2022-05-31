@@ -1,3 +1,4 @@
+---
 - name: "template out cilium.yaml"
   delegate_to: localhost
   template:
