@@ -27,11 +27,11 @@ spec:
         nginx.ingress.kubernetes.io/configuration-snippet: |
           auth_request_set $required_groups 'admin';
       hosts:
-      - host: "postgres-operator.pub.${EXTERNAL_DOMAIN}"
-        paths: [""]
-      - host: "postgres-operator.home.${EXTERNAL_DOMAIN}"
-        paths: [""]
+        - host: "postgres-operator.pub.${EXTERNAL_DOMAIN}"
+          paths: [""]
+        - host: "postgres-operator.home.${EXTERNAL_DOMAIN}"
+          paths: [""]
       tls:
-      - hosts:
-        - "postgres-operator.pub.${EXTERNAL_DOMAIN}"
-        - "postgres-operator.home.${EXTERNAL_DOMAIN}"
+        - hosts:
+            - "postgres-operator.pub.${EXTERNAL_DOMAIN}"
+            - "postgres-operator.home.${EXTERNAL_DOMAIN}"

@@ -3,7 +3,7 @@
   become: true
   roles:
     - role: os-bootstrap
-      
+
 - name: Simple Utilities
   hosts: all
   roles:
@@ -14,7 +14,7 @@
   become: true
   roles:
     - role: lablabs.rke2
-      
+
 - name: Kubeconfig Update
   hosts: localhost
   roles:

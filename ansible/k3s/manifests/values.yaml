@@ -1,4 +1,4 @@
-tunnel: 'disabled'
+tunnel: "disabled"
 enableIPv4Masquerade: false
 endpointRoutes:
   enabled: true
@@ -13,7 +13,7 @@ containerRuntime:
 ipam:
   mode: "cluster-pool"
   operator:
-    clusterPoolIPv4PodCIDR:  172.45.0.0/16
+    clusterPoolIPv4PodCIDR: 172.45.0.0/16
 hubble:
   enabled: true
   serviceMonitor:

@@ -19,7 +19,3 @@ spec:
   values:
     monitoring:
       enabled: false
-
-    
-    
-  

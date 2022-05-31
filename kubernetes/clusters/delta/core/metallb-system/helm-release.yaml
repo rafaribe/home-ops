@@ -18,11 +18,11 @@ spec:
       interval: 5m
   values:
     configInline:
-        address-pools:
+      address-pools:
         - name: default
           protocol: layer2
           addresses:
-          - ${LB_RANGE}
+            - ${LB_RANGE}
     prometheusRule:
       enabled: true
     prometheus:
@@ -33,11 +33,11 @@ spec:
         enabled: true
     controller:
       tolerations:
-      - key: "arm"
-        operator: "Exists"
+        - key: "arm"
+          operator: "Exists"
     speaker:
       tolerations:
-      - key: "arm"
-        operator: "Exists"
-      - key: "node-role.kubernetes.io/master"
-        operator: "Exists"
+        - key: "arm"
+          operator: "Exists"
+        - key: "node-role.kubernetes.io/master"
+          operator: "Exists"

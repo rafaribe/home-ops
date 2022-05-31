@@ -192,12 +192,12 @@ spec:
         - "grafana.${EXTERNAL_DOMAIN}"
       tls:
         - hosts:
-          - "grafana.${EXTERNAL_DOMAIN}"
+            - "grafana.${EXTERNAL_DOMAIN}"
     serviceAccount:
       create: true
       autoMount: true
     persistence:
       enabled: true
       accessModes:
-      - ReadWriteOnce
+        - ReadWriteOnce
       size: 4Gi

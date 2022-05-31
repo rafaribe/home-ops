@@ -18,8 +18,8 @@
   become: true
   copy:
     content: '{{ result_cmdline.content
-        | b64decode
-        | regex_replace(regex_existing, key_value_pair)
-        | regex_replace(regex_add_missing, key_value_pair + " \1")
+      | b64decode
+      | regex_replace(regex_existing, key_value_pair)
+      | regex_replace(regex_add_missing, key_value_pair + " \1")
       }}'
     dest: "{{ cmdline_txt_path }}"

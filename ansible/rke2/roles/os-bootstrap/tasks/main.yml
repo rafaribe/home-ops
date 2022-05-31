@@ -42,7 +42,7 @@
 # - include: user.yml
 #   tags:
 #     - user
-    
+
 - include: cilium.yml
   tags:
     - cilium

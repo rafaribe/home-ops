@@ -72,7 +72,7 @@ spec:
       network:
         provider: host
         connections:
-          encryption: 
+          encryption:
             enabled: true
           compression:
             enabled: true

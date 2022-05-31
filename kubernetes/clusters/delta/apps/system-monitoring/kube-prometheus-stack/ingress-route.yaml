@@ -19,10 +19,10 @@ metadata:
   namespace: system-monitoring
 spec:
   routes:
-  - kind: Rule
-    match: Host(`prometheus.${EXTERNAL_DOMAIN}`)
-    middlewares:
-    - name: prometheus-basic-auth
-    services:
-    - name: prometheus-prometheus
-      port: 9090
+    - kind: Rule
+      match: Host(`prometheus.${EXTERNAL_DOMAIN}`)
+      middlewares:
+        - name: prometheus-basic-auth
+      services:
+        - name: prometheus-prometheus
+          port: 9090

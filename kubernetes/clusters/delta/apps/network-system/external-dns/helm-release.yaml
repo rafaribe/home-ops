@@ -54,4 +54,3 @@ spec:
       enabled: true
       interval: 5m
       scapeTimeout: 10s
-    

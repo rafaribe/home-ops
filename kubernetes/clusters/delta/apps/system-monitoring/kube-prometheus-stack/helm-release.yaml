@@ -116,6 +116,6 @@ spec:
         retention: 120d
         enableAdminAPI: true
         walCompression: true
-        enableFeatures: ['remote-write-receiver']
+        enableFeatures: ["remote-write-receiver"]
       alertmanagerSpec:
         retention: 10d

@@ -10,7 +10,6 @@ jobs:
   update_draft:
     runs-on: ubuntu-latest
     steps:
-
       - name: Get Latest Release
         uses: InsonusK/get-latest-release@v1.0.1
         id: last_release

@@ -6,7 +6,7 @@ XKBOPTIONS=""
 BACKSPACE="guess"
 EOF
 sudo invoke-rc.d keyboard-setup start
-sudo udevadm trigger --subsystem-match=input --action=change 
+sudo udevadm trigger --subsystem-match=input --action=change
 
 #show some love for the virtual consoles as well
 #sudo debconf-set-selections <<< 'console-data console-data/keymap/policy select Select keymap from full list'

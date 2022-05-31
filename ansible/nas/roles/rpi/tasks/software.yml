@@ -31,7 +31,7 @@
     - gnupg
     - lsb-release
     - python3-pip
-    - resolvconf 
+    - resolvconf
 #   apt:
 #     name: "{{item}}"
 #     state: latest

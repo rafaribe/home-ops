@@ -1,5 +1,5 @@
 site_name: rafaribe homelab
-site_description: >- 
+site_description: >-
   This repo contains all the manifests that I use in my homelab using a GitOps workflow with Flux.
 site_author: Bruno Rafael Ribeiro
 repo_name: rafaribe/home-ops

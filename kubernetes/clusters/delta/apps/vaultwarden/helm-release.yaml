@@ -53,7 +53,7 @@ spec:
       main:
         enabled: true
         # annotations:
-          # nginx.ingress.kubernetes.io/router.entrypoints: "websecure"
+        # nginx.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
           - host: "vaultwarden.${EXTERNAL_DOMAIN}"
             paths:

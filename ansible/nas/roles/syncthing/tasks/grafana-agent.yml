@@ -19,4 +19,3 @@
   shell: docker restart grafana-agent
   ignore_errors: yes
   when: grafana_agent_config.changed
-

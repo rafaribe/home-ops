@@ -17,7 +17,7 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    env: 
+    env:
       PAPERLESS_OCR_LANGUAGES: por
       PAPERLESS_OCR_LANGUAGE: por
       PAPERLESS_TIME_ZONE: Europe/Lisbon

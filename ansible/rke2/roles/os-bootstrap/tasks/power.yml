@@ -5,10 +5,10 @@
     regexp: "{{ item.setting }}"
     line: "{{ item.setting }}={{ item.value }}"
   loop:
-    - {setting: HandlePowerKey, value: ignore}
-    - {setting: HandleLidSwitch, value: ignore}
-    - {setting: HandleLidSwitchDocked, value: ignore}
-    - {setting: LidSwitchIgnoreInhibited, value: no}
+    - { setting: HandlePowerKey, value: ignore }
+    - { setting: HandleLidSwitch, value: ignore }
+    - { setting: HandleLidSwitchDocked, value: ignore }
+    - { setting: LidSwitchIgnoreInhibited, value: no }
 
 - name: power | restart logind systemd service
   ansible.builtin.systemd:

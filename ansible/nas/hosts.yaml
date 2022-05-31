@@ -1,4 +1,3 @@
-
 all:
   hosts:
     backup-server:

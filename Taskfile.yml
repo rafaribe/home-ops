@@ -16,9 +16,10 @@ includes:
   ansible: .github/taskfiles/ansible.yaml
   cluster: .github/taskfiles/cluster.yaml
   precommit: .github/taskfiles/pre-commit.yaml
+  lint: .github/taskfiles/lint.yaml
+  format: .github/taskfiles/format.yaml
 
 tasks:
-
   init:
     desc: Initialize workstation dependencies with Brew
     cmds:
