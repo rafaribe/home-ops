@@ -11,9 +11,9 @@
   tags:
     - kernel
 
-- include: network.yml
-  tags:
-    - network
+# - include: network.yml
+#   tags:
+#     - network
 
 - include: filesystem.yml
   tags:

@@ -1,8 +1,8 @@
-- name: Bootstrap Operating System
-  hosts: all
-  become: true
-  roles:
-    - role: os-bootstrap
+# - name: Bootstrap Operating System
+#   hosts: all
+#   become: true
+#   roles:
+#     - role: os-bootstrap
 
 - name: Simple Utilities
   hosts: all

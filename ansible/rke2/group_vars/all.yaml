@@ -2,7 +2,7 @@ rke2_download_kubeconf_file_name: rke2.yaml
 rke2_download_kubeconf_path: /home/rafaribe/.kube
 rke2_cni: cilium
 rke2_download_kubeconf: true
-rke2_version: v1.23.6+rke2r2
+rke2_version: v1.24.1+rke2r2
 rke2_disable:
   - rke2-ingress-nginx
   - rke2-kube-proxy
@@ -18,8 +18,8 @@ rke2_api_ip: 10.0.1.245
 rke2_api_cidr: 28
 rke2_additional_sans:
   - 10.0.1.245
-rke2_custom_manifests:
-  - /home/rafaribe/code/home-ops/bootstrap/ansible/rke2/manifests/cilium.yaml
+# rke2_custom_manifests:
+#   - /home/rafaribe/code/home-ops/bootstrap/ansible/rke2/manifests/cilium.yaml
 # Users and Groups
 managed_groups:
   - name: home_users
