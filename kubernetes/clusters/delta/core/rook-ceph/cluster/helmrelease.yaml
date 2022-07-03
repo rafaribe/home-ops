@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph-cluster
-      version: v1.9.4
+      version: v1.9.6
       sourceRef:
         kind: HelmRepository
         name: rook-ceph-charts
@@ -37,6 +37,7 @@ spec:
       [global]
       bdev_enable_discard = true
       bdev_async_discard = true
+      bluefs_buffered_io = false
     cephClusterSpec:
       priorityClassNames:
         all: system-node-critical
@@ -169,12 +170,16 @@ spec:
         - name: omega
           devices:
             - name: /dev/disk/by-id/usb-WD_Elements_25A3_4341304D5032454B-0:0
-            - name: /dev/disk/by-id/scsi-1Realtek_RTL9210_NVME_1.000000000000000000
+            - name: /dev/disk/by-id/scsi-33001237923792379
+
         - name: theta
           devices:
             - name: /dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_050113814d21b2d49c2dd26185331253b578dae3bc3dfaf75318b050d4b4e2b07a9200000000000000000000f208d8f9ff970f1091558107322d07d3-0:0
             - name: /dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_0501c159ad32bd49aadbd29c2d086d37684c7e904a14c9690a904736306cdc0cd9d200000000000000000000635e11360088171091558107322ce0c5-0:0
-            - name: /dev/disk/by-id/scsi-SSanDisk_Extreme_55AE_2209DN403175
+            - name: /dev/disk/by-id/scsi-35057440000000001
+        - name: odroid
+          devices:
+            - name: /dev/disk/by-id/ata-TOSHIBA_MQ01UBD100_34ODT9I6T
     cephBlockPools:
       - name: ceph-blockpool
         spec:
