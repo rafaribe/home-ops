@@ -162,7 +162,7 @@ spec:
       useAllNodes: false
       useAllDevices: false
       config:
-        osdsPerDevice: "1"
+        osdsPerDevice: "3"
       nodes:
         - name: delta
           devices:
