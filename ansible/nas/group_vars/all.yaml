@@ -6,7 +6,7 @@ target_hostname: backup-server
 target_domain: local
 docker_daemon_metrics_port: 8000
 #Locales
-timezone: "Europe/Lisbon"
+timezone: Europe/Lisbon
 locale: "en_US.UTF-8"
 xkblayout: "pt"
 wifi_country: "PT"
