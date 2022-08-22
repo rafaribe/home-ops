@@ -18,10 +18,3 @@ k8s_cluster:
           ansible_user: rafaribe
           ansible_become: true
           rke2_type: server
-    workers:
-      hosts:
-        odroid:
-          ansible_host: 10.0.1.14
-          ansible_user: rafaribe
-          ansible_become: true
-          rke2_type: agent

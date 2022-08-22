@@ -1,0 +1,70 @@
+---
+- name: user | adding '{{ ansible_user }}'to sudoers
+  ansible.builtin.copy:
+    content: "{{ ansible_user }} ALL=(ALL:ALL) NOPASSWD:ALL"
+    dest: "/etc/sudoers.d/{{ ansible_user }}_nopasswd"
+    mode: "0440"
+
+- name: user | add additional ssh public keys
+  ansible.posix.authorized_key:
+    user: "{{ ansible_user }}"
+    key: "{{ item }}"
+  loop: "{{ ssh_authorized_keys }}"
+  when:
+    - ssh_authorized_keys is defined
+    - ssh_authorized_keys is iterable
+    - ssh_authorized_keys | length > 0
+
+- name: user | check if hushlogin exists
+  ansible.builtin.stat:
+    path: "/home/{{ ansible_user }}/.hushlogin"
+  register: hushlogin_status
+
+- name: user | silence the login prompt
+  ansible.builtin.file:
+    dest: "/home/{{ ansible_user }}/.hushlogin"
+    state: touch
+    owner: "{{ ansible_user }}"
+    mode: "0775"
+  when:
+    - not hushlogin_status.stat.exists
+
+- name: user | create system users
+  ansible.builtin.user:
+    name: "{{ user.name | default(user) }}"
+    append: "{{ user.append | default(omit) }}"
+    authorization: "{{ user.authorization | default(omit) }}"
+    comment: "{{ user.comment | default(omit) }}"
+    create_home: "{{ user.create_home | default('yes') }}"
+    expires: "{{ user.expires | default(omit) }}"
+    force: "{{ user.force | default(omit) }}"
+    generate_ssh_key: "{{ user.generate_ssh_key | default(omit) }}"
+    group: "{{ user.group | default(omit) }}"
+    groups: "{{ user.groups | default(omit) }}"
+    hidden: "{{ user.hidden | default(omit) }}"
+    home: "{{ user.home | default(omit) }}"
+    local: "{{ user.local | default(omit) }}"
+    login_class: "{{ user.login_class | default(omit) }}"
+    move_home: "{{ user.move_home | default(omit) }}"
+    non_unique: "{{ user.non_unique | default(omit) }}"
+    password: "{{ user.password | password_hash('sha512', 'A512') }}"
+    password_lock: "{{ user.password_lock | default(omit) }}"
+    profile: "{{ user.profile | default(omit) }}"
+    remove: "{{ user.remove | default(omit) }}"
+    role: "{{ user.role | default(omit) }}"
+    seuser: "{{ user.seuser | default(omit) }}"
+    shell: "{{ user.shell | default('/bin/bash') }}"
+    skeleton: "{{ user.skeleton | default(omit) }}"
+    ssh_key_bits: "{{ user.ssh_key_bits | default(omit) }}"
+    ssh_key_comment: "{{ user.ssh_key_comment | default(omit) }}"
+    ssh_key_file: "{{ user.ssh_key_file | default(omit) }}"
+    ssh_key_passphrase: "{{ user.ssh_key_passphrase | default(omit) }}"
+    ssh_key_type: "{{ user.ssh_key_type | default(omit) }}"
+    state: "{{ user.state | default('present') }}"
+    system: "{{ user.system | default(omit) }}"
+    uid: "{{ user.uid | default(omit) }}"
+    update_password: "{{ user.update_password | default('on_create') }}"
+  loop: "{{ managed_users }}"
+  loop_control:
+    label: "{{ user.name | default(user) }}"
+    loop_var: user

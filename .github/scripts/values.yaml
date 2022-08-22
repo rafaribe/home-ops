@@ -1,0 +1,55 @@
+rollOutCiliumPods: true
+
+localRedirectPolicy: true
+
+kubeProxyReplacement: "strict"
+
+nativeRoutingCIDR: 10.43.0.0/16
+
+k8sServiceHost: 10.0.1.245
+k8sServicePort: 6443
+
+loadBalancer:
+  algorithm: "maglev"
+  mode: "dsr"
+
+tunnel: "disabled"
+
+autoDirectNodeRoutes: true
+
+ipam:
+  mode: "kubernetes"
+ipv4NativeRoutingCIDR: 10.43.0.0/16
+operator:
+  rollOutPods: true
+
+containerRuntime:
+  integration: containerd
+eni:
+  enabled: true
+hubble:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  metrics:
+    enabled:
+      - dns:query;ignoreAAAA
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+      - http
+  relay:
+    enabled: true
+    rollOutPods: true
+  ui:
+    enabled: true
+    rollOutPods: true
+bgp:
+  enabled: false
+  announce:
+    loadbalancerIP: true
+
+externalIPs:
+  enabled: false

@@ -1,12 +1,14 @@
-rke2_download_kubeconf_file_name: rke2.yaml
+rke2_download_kubeconf_file_name: home-ops
 rke2_download_kubeconf_path: /home/rafaribe/.kube
 rke2_cni: cilium
 rke2_download_kubeconf: true
-rke2_version: v1.24.1+rke2r2
+rke2_version: v1.24.3+rke2r1
 rke2_disable:
   - rke2-ingress-nginx
-  - rke2-kube-proxy
   - rke2-canal
+  - rke2-calico
+  - rke2-kube-proxy
+  - rke2-multus
 rke2_cluster_group_name: k8s_cluster
 rke2_servers_group_name: controlplanes
 rke2_agents_group_name: workers
@@ -31,7 +33,3 @@ managed_users:
     shell: /bin/zsh
     group: home_users
     groups: sudo,adm
-# Aliases
-bash_aliases:
-  - { alias: "bat", command: "batcat" }
-  - { alias: "k", command: "kubectl" }

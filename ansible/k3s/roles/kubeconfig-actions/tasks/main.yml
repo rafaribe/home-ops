@@ -1,0 +1,8 @@
+- name: "Update Context Name to rke2"
+  ansible.builtin.shell:
+    chdir: /home/rafaribe/.kube
+    cmd: kubectl --kubeconfig=rke2.yaml config rename-context default rke2
+- name: "Run Kubeconfig Update Script"
+  ansible.builtin.shell:
+    chdir: /home/rafaribe/.kube
+    cmd: ./update-kubeconfig.sh

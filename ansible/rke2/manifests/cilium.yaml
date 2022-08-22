@@ -1,7 +1,7 @@
 apiVersion: helm.cattle.io/v1
 kind: HelmChartConfig
 metadata:
-  name: rke2-cilium
+  name: cilium
   namespace: kube-system
 spec:
   valuesContent: |-

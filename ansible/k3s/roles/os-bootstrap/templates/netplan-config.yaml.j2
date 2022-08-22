@@ -1,0 +1,33 @@
+# {{ ansible_managed }}
+---
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    {% if kubevip_interface is defined %}
+    {{ kubevip_interface }}:
+      match:
+        macaddress: {{ ansible_default_ipv4.macaddress }}
+      set-name: {{ kubevip_interface }}
+    {{ kubevip_interface }}:
+      link: {{ kubevip_interface }}
+    {% else %}
+    eno0:
+      match:
+        macaddress: {{ ansible_default_ipv4.macaddress }}
+      set-name: eno0
+    eno0:
+      link: eno0
+    {% endif %}
+      addresses:
+        - {{ ansible_default_ipv4.address }}/24
+        {% if kubevip_source_ip is defined %}
+        - {{ kubevip_source_ip }}/24
+        {% endif %}
+      routes:
+        - to: default
+          via: {{ ansible_default_ipv4.gateway }}
+      nameservers:
+        addresses:
+          - {{ ansible_default_ipv4.gateway }}
+        search: []
