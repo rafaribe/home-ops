@@ -149,8 +149,6 @@ spec:
     #       - secretName: tls.rook-ceph
     #         hosts:
     #           - *host
-    cephVersion:
-      allowUnsupported: true
     mon:
       count: 3
       allowMultiplePerNode: true
