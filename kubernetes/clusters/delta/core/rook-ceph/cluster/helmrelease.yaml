@@ -72,12 +72,6 @@ spec:
           compression:
             enabled: true
       resources:
-        mgr:
-          requests:
-            cpu: "125m"
-            memory: "549M"
-          limits:
-            memory: "512Mi"
         mon:
           requests:
             cpu: "49m"
