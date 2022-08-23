@@ -53,18 +53,12 @@ spec:
           mon:
             probe:
               timeoutSeconds: 10
-          mgr:
-            probe:
-              timeoutSeconds: 15
           osd:
             probe:
               timeoutSeconds: 15
 
         startupProbe:
           mon:
-            probe:
-              timeoutSeconds: 15
-          mgr:
             probe:
               timeoutSeconds: 15
           osd:
