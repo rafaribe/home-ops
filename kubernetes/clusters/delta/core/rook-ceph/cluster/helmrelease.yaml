@@ -154,7 +154,7 @@ spec:
             - name: /dev/disk/by-id/scsi-SATA_HGST_HTS721075A9_JR12006QG0YW5E
         - name: omega
           devices:
-            - name: /dev/disk/by-id/usb-WD_Elements_25A3_4341304D5032454B-0:0
+            - name: /dev/sdc
             - name: /dev/disk/by-id/scsi-33001237923792379
 
         - name: theta
