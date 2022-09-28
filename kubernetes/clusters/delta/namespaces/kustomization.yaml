@@ -13,7 +13,7 @@ resources:
   - kube-system.yaml
   - media.yaml
   - network-system.yaml
-  - rook-ceph.yaml
+ # - rook-ceph.yaml
   - security.yaml
   - services.yaml
   - system-monitoring.yaml
