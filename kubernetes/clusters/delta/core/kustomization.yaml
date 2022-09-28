@@ -5,5 +5,4 @@ resources:
   - cert-manager
   - cilium
   - metallb-system
-  - rook-ceph
   - postgres
