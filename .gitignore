@@ -13,3 +13,4 @@ bootstrap-hidden.sh
 cluster/apps/networking/unifi/configmap.json
 wireguardconfig
 ignore
+age.agekey

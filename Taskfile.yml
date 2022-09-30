@@ -10,7 +10,7 @@ vars:
 dotenv: [".config.env"]
 
 env:
-  KUBECONFIG: "/home/rafaribe/.kube/rke2.yaml"
+  KUBECONFIG: "/home/rafaribe/.kube/home-ops"
 
 includes:
   ansible: .github/taskfiles/ansible.yaml
