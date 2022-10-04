@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: starboard-exporter
-      version: 0.4.1
+      version: 0.6.0
       sourceRef:
         kind: HelmRepository
         name: giantswarm-charts
