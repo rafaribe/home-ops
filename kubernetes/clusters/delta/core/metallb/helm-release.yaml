@@ -1,0 +1,37 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: metallb
+  namespace: network-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://metallb.github.io/metallb
+      chart: metallb
+      version: 0.13.6
+      sourceRef:
+        kind: HelmRepository
+        name: metallb-charts
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    psp:
+      create: false
+    crds:
+      enabled: false
+    prometheus:
+      namespace: monitoring
+      serviceAccount: kube-prometheus-stack-prometheus
+      podMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
