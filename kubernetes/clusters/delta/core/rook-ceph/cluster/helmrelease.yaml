@@ -71,6 +71,51 @@ spec:
             enabled: true
           compression:
             enabled: true
+      resources:
+        mon:
+          requests:
+            cpu: "49m"
+            memory: "477M"
+          limits:
+            memory: "512Mi"
+        osd:
+          requests:
+            cpu: "442m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+        prepareosd:
+          requests:
+            cpu: "250m"
+            memory: "500Mi"
+          limits:
+            memory: "700Mi"
+        mgr-sidecar:
+          requests:
+            cpu: "49m"
+            memory: "94M"
+          limits:
+            memory: "208M"
+        crashcollector:
+          requests:
+            cpu: "15m"
+            memory: "64M"
+          limits:
+            memory: "64M"
+        logcollector:
+          requests:
+            cpu: "100m"
+            memory: "100M"
+          limits:
+            memory: "1G"
+        cleanup:
+          requests:
+            cpu: "250m"
+            memory: "100M"
+          limits:
+            memory: "1G"
+
       dashboard:
         enabled: true
         urlPrefix: /
