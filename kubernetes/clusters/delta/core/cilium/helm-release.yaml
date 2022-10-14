@@ -62,7 +62,7 @@ spec:
     containerRuntime:
       integration: containerd
     eni:
-      enabled: true
+      enabled: false
     hubble:
       enabled: true
       serviceMonitor:
