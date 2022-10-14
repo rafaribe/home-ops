@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://metallb.github.io/metallb
       chart: metallb
-      version: 0.12.1
+      version: 0.13.6
       sourceRef:
         kind: HelmRepository
         name: metallb-charts
@@ -31,13 +31,7 @@ spec:
         enabled: true
       prometheusRule:
         enabled: true
-    controller:
-      tolerations:
-        - key: "arm"
-          operator: "Exists"
     speaker:
       tolerations:
-        - key: "arm"
-          operator: "Exists"
         - key: "node-role.kubernetes.io/master"
           operator: "Exists"

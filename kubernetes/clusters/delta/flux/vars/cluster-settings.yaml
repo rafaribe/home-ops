@@ -6,7 +6,7 @@ metadata:
   name: cluster-settings
 data:
   # Networking
-  LB_RANGE: "10.0.1.240-10.0.1.250"
+  LB_RANGE: "10.0.1.239-10.0.1.250"
   CLUSTER_NAME: delta
   CLUSTER_ID: "0"
   CLUSTER_CERT: "letsencrypt-production"
