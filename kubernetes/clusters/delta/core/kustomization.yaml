@@ -4,6 +4,6 @@ kind: Kustomization
 resources:
   - cert-manager
   - cilium
-  - metallb-system
+  - metallb
   - rook-ceph
   - postgres
