@@ -39,7 +39,7 @@ spec:
     localRedirectPolicy: true
 
     kubeProxyReplacement: "strict"
-
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     nativeRoutingCIDR: ${NETWORK_K8S_POD_CIDR}
     ipv4NativeRoutingCIDR: ${NETWORK_K8S_POD_CIDR}
     k8sServiceHost: "${KUBEVIP_ADDRESS}"
@@ -58,15 +58,17 @@ spec:
 
     operator:
       rollOutPods: true
+    securityContext:
+      privileged: true
 
     containerRuntime:
       integration: containerd
     eni:
       enabled: false
+    endpointRoutes:
+      enabled: true
     hubble:
       enabled: true
-      serviceMonitor:
-        enabled: true
       metrics:
         enabled:
           - dns:query;ignoreAAAA
@@ -79,25 +81,10 @@ spec:
       relay:
         enabled: true
         rollOutPods: true
-      ui:
+      serviceMonitor:
         enabled: true
-        rollOutPods: true
-        ingress:
-          enabled: true
-          className: nginx
-          annotations:
-            cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
-            external-dns/is-public: "false"
-            hajimari.io/enable: "true"
-            hajimari.io/appName: hubble
-            hajimari.io/icon: lan
-          hosts:
-            - "hubble.${EXTERNAL_DOMAIN}"
-          tls:
-            - secretName: tls.hubble
-              hosts:
-                - "hubble.${EXTERNAL_DOMAIN}"
-
+      ui:
+        enabled: false
     bgp:
       enabled: false
       announce:
