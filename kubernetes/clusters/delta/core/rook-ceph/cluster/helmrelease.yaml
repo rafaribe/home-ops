@@ -86,7 +86,9 @@ spec:
             cpu: "250m"
             memory: "500Mi"
         prepareosd:
-          requests: {}
+          requests:
+            cpu: "50m"
+            memory: "50Mi"
           limits: {}
         mgr-sidecar:
           requests:
