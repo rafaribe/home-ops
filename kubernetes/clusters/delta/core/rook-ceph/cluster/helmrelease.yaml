@@ -81,10 +81,10 @@ spec:
         osd:
           requests:
             cpu: "442m"
-            memory: "512Mi"
+            memory: "440Mi"
           limits:
-            cpu: "500m"
-            memory: "1Gi"
+            cpu: "250m"
+            memory: "500Mi"
         prepareosd:
           requests:
             cpu: "50m"
