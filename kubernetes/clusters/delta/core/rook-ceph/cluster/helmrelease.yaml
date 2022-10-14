@@ -141,9 +141,9 @@ spec:
     #           - *host
     mon:
       count: 3
-      allowMultiplePerNode: true
+      allowMultiplePerNode: false
     mgr:
-      count: 3
+      count: 1
       allowMultiplePerNode: false
     storage:
       useAllNodes: false
