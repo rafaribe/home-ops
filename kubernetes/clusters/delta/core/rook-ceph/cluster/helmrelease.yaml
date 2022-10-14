@@ -78,13 +78,6 @@ spec:
             memory: "477M"
           limits:
             memory: "512Mi"
-        osd:
-          requests:
-            cpu: "442m"
-            memory: "440Mi"
-          limits:
-            cpu: "550m"
-            memory: "700Mi"
         prepareosd:
           requests:
             cpu: "50m"
