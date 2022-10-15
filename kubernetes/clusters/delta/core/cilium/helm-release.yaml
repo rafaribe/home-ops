@@ -71,12 +71,8 @@ spec:
     securityContext:
       privileged: true
     bgp:
-      enabled: true
-      announce:
-        loadbalancerIP: true
-        podCIDR: true
+      enabled: false
     bpf:
       masquerade: true
     annotateK8sNode: true
     installIptablesRules: true
-    policyAuditMode: true
