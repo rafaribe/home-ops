@@ -31,7 +31,7 @@ spec:
     persistence:
       enabled: true
       size: 40Gi
-      storageClass: ceph-filesystem
+      storageClass: ceph-block
     resources:
       requests:
         memory: 1500Mi
