@@ -32,9 +32,7 @@ spec:
   values:
     autoDirectNodeRoutes: true
     bgp:
-      announce:
-        loadbalancerIP: true
-      enabled: true
+      enabled: false
     cluster:
       id: ${CLUSTER_ID}
       name: ${CLUSTER_NAME}
