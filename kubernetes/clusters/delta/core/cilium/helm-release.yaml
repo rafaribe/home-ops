@@ -88,6 +88,6 @@ spec:
     policyEnforcementMode: "never"
     policyAuditMode: true
     nodeinit:
-      enabled: true
+      enabled: false
     ipMasqAgent:
       enabled: true
