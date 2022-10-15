@@ -66,7 +66,7 @@ spec:
     k8sServiceHost: ${KUBERNETES_API_ADDRESS}
     k8sServicePort: 6443
     kubeProxyReplacement: strict
-    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10356
     loadBalancer:
       algorithm: maglev
       mode: dsr
