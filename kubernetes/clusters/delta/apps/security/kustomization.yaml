@@ -5,4 +5,4 @@ resources:
   - tetragon
   - kubeclarity
   - starboard
-  - vaultwarden
+ # - vaultwarden
