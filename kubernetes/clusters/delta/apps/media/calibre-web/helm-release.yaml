@@ -1,0 +1,104 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: calibre-web
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: calibre
+      version: 5.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    remediation: # perform remediation when helm install fails
+      retries: 3
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  # Values link: https://github.com/k8s-at-home/charts/blob/master/charts/stable/calibre/values.yaml
+  values:
+    image:
+      repository: ghcr.io/linuxserver/calibre
+      tag: version-v5.43.0
+
+    env:
+      TZ: "Europe/Lisbon"
+      PUID: "568"
+      PGID: "568"
+
+    persistence:
+      config:
+        enabled: true
+        size: 512Mi
+        accessMode: ReadWriteOnce
+
+      # nfs-nas-media:
+      #   enabled: true
+      #   type: custom
+      #   volumeSpec:
+      #     nfs:
+      #       server: ${NAS_ADDRESS}
+      #       path: /volume1/
+      #   mountPath: /media
+      #   readOnly: false
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
+          external-dns/is-public: "false"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "book-open-page-variant"
+          external-dns.alpha.kubernetes.io/hostname: calibre-web.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+        hosts:
+          - host: &host "calibre-web.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: calibre-web-tls
+      webserver:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
+          external-dns/is-public: "false"
+          external-dns.alpha.kubernetes.io/hostname: calibre-cs.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+        hosts:
+          - host: &host-cs "calibre-cs.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: calibre-webserver
+                  port: 8081
+        tls:
+          - hosts:
+              - *host-cs
+            secretName: calibre-cs-tls
+
+    service:
+      webserver:
+        enabled: true
+
+    resources:
+      requests:
+        cpu: 15m
+        memory: 381M
+      limits:
+        memory: 653M
