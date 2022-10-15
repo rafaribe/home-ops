@@ -31,8 +31,6 @@ spec:
     cleanupOnFail: true
   values:
     autoDirectNodeRoutes: true
-    bgp:
-      enabled: false
     cluster:
       id: ${CLUSTER_ID}
       name: ${CLUSTER_NAME}
@@ -75,6 +73,14 @@ spec:
     rollOutCiliumPods: true
     securityContext:
       privileged: true
+    bgp:
+      enabled: true
+      announce:
+        loadbalancerIP: true
+        podCIDR: true
+    bpf:
+      hostRouting: false
+      masquerade: true
     tunnel: disabled
     annotateK8sNode: true
     installIptablesRules: true
