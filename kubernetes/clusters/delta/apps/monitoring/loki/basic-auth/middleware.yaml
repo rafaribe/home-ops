@@ -1,9 +1,0 @@
----
-apiVersion: nginx.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: loki-basic-auth
-  namespace: monitoring
-spec:
-  basicAuth:
-    secret: loki-basic-auth
