@@ -1,0 +1,17 @@
+#useful to debug stuff
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu
+  labels:
+    app: ubuntu
+spec:
+  containers:
+  - image: ubuntu:22.04
+    command:
+      - 'tail'
+      - '-f'
+      - '/dev/null'
+    imagePullPolicy: IfNotPresent
+    name: supa-dupa-debug-pod
+  restartPolicy: Always
