@@ -11,10 +11,8 @@ hubble:
   enabled: false
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: 10.42.0.0/16
 k8sServiceHost: 10.0.1.200
 k8sServicePort: 6443
-kubeProxyReplacement: strict
 loadBalancer:
   algorithm: maglev
   mode: dsr
