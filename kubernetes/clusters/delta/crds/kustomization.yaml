@@ -8,4 +8,5 @@ resources:
   - metallb
   - redpanda
   - rook-ceph
+  - system-upgrade-controller
   - trivy-operator
