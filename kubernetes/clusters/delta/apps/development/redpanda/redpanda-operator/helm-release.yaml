@@ -18,4 +18,4 @@ spec:
       interval: 5m
   values:
     monitoring:
-      enabled: false
+      enabled: true
