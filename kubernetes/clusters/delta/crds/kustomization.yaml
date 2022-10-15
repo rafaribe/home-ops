@@ -8,4 +8,4 @@ resources:
   - metallb
   - redpanda
   - rook-ceph
-  - starboard-operator
+  - trivy-operator

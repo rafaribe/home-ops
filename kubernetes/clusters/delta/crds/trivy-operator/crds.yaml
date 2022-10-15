@@ -2,14 +2,14 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
-  name: starboard-operator-crd-source
+  name: trivy-operator-crd-source
   namespace: flux-system
 spec:
   interval: 30m
-  url: https://github.com/aquasecurity/starboard.git
+  url: https://github.com/aquasecurity/trivy-operator.git
   ref:
-    # renovate: registryUrl=https://https://github.com/aquasecurity/starboard
-    tag: v0.15.4
+    # renovate: registryUrl=https://https://github.com/aquasecurity/trivy-operator
+    tag: v0.3.0
   ignore: |
     # exclude all
     /*
@@ -19,7 +19,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: starboard-operator-crds
+  name: trivy-operator-crds
   namespace: flux-system
 spec:
   interval: 15m
@@ -27,4 +27,4 @@ spec:
   wait: true
   sourceRef:
     kind: GitRepository
-    name: starboard-operator-crd-source
+    name: trivy-operator-crd-source
