@@ -20,6 +20,6 @@ k3sup join \
     --user=$K3S_USER --ssh-key=/home/rafaribe/.ssh/id_ed25519
 cp ./kubeconfig ~/.kube/home-ops
 cd ~/.kube && ./update-kubeconfig.sh
-kubectx default
+kubectx home-ops
 
 helm install cilium cilium/cilium --values values.yaml

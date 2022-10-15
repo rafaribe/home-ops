@@ -156,8 +156,6 @@ spec:
 
         - name: theta
           devices:
-            - name: /dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_050113814d21b2d49c2dd26185331253b578dae3bc3dfaf75318b050d4b4e2b07a9200000000000000000000f208d8f9ff970f1091558107322d07d3-0:0
-            - name: /dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_0501c159ad32bd49aadbd29c2d086d37684c7e904a14c9690a904736306cdc0cd9d200000000000000000000635e11360088171091558107322ce0c5-0:0
             - name: /dev/sdb
         - name: odroid
           devices:
