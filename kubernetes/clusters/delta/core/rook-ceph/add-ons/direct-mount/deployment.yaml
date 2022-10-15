@@ -48,8 +48,9 @@ spec:
               mountPath: /etc/rook
             - name: direct-mount-scripts
               mountPath: /scripts
-            - name: nas-backup
-              mountPath: /mnt/nas-backup
+            #! will add back when error is sorted out!
+            # - name: nas-backup
+            #   mountPath: /mnt/nas-backup
           resources:
             requests:
               cpu: 15m
