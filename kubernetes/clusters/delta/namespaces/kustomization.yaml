@@ -19,3 +19,4 @@ resources:
   - services.yaml
   - monitoring.yaml
   - testing.yaml
+  - system-upgrade.yaml
