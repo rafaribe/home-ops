@@ -5,6 +5,9 @@ resources:
   - databases
   - default
   - kube-system
+  - development
+  - selfhosted
+  - development
   - media
   - network-system
   - security

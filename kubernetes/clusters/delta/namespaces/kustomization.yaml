@@ -15,6 +15,7 @@ resources:
   - network-system.yaml
   - rook-ceph.yaml
   - security.yaml
+  - selfhosted.yaml
   - services.yaml
   - system-monitoring.yaml
   - testing.yaml

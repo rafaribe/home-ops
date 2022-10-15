@@ -2,7 +2,7 @@ apiVersion: redpanda.vectorized.io/v1alpha1
 kind: Cluster
 metadata:
   name: one-node-cluster
-  namespace: default
+  namespace:  selfhosted
 spec:
   image: "vectorized/redpanda"
   version: "latest"
