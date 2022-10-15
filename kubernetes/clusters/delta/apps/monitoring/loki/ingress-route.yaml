@@ -11,18 +11,3 @@ metadata:
 spec:
   rules:
     - host: loki.${EXTERNAL_DOMAIN}
----
-apiVersion: nginx.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: loki
-  namespace: monitoring
-spec:
-  routes:
-    - kind: Rule
-      match: Host(`loki.${EXTERNAL_DOMAIN}`)
-      middlewares:
-        - name: loki-basic-auth
-      services:
-        - name: loki
-          port: 3100
