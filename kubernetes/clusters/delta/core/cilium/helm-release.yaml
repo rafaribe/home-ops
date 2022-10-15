@@ -70,7 +70,6 @@ spec:
     loadBalancer:
       algorithm: maglev
       mode: dsr
-    localRedirectPolicy: true
     operator:
       rollOutPods: true
     rollOutCiliumPods: true
@@ -78,3 +77,11 @@ spec:
       privileged: true
     tunnel: disabled
     annotateK8sNode: true
+    installIptablesRules: true
+    localRedirectPolicy: false
+    policyEnforcementMode: "never"
+    policyAuditMode: true
+    nodeinit:
+      enabled: true
+    ipMasqAgent:
+      enabled: true
