@@ -41,4 +41,4 @@ spec:
       enabled: true
       servicemonitor:
         enabled: true
-        prometheusInstance: system-monitoring
+        prometheusInstance: monitoring

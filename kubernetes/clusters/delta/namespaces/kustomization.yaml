@@ -17,5 +17,5 @@ resources:
   - security.yaml
   - selfhosted.yaml
   - services.yaml
-  - system-monitoring.yaml
+  - monitoring.yaml
   - testing.yaml

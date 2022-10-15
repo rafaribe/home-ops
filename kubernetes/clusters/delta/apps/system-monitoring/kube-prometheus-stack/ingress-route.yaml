@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: prometheus
-  namespace: system-monitoring
+  namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: nginx
     external-dns.alpha.kubernetes.io/hostname: prometheus.${EXTERNAL_DOMAIN}
@@ -11,18 +11,3 @@ metadata:
 spec:
   rules:
     - host: prometheus.${EXTERNAL_DOMAIN}
----
-apiVersion: nginx.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: prometheus
-  namespace: system-monitoring
-spec:
-  routes:
-    - kind: Rule
-      match: Host(`prometheus.${EXTERNAL_DOMAIN}`)
-      middlewares:
-        - name: prometheus-basic-auth
-      services:
-        - name: prometheus-prometheus
-          port: 9090

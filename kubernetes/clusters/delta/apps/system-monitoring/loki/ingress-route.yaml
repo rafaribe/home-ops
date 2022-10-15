@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: loki
-  namespace: system-monitoring
+  namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: nginx
     external-dns.alpha.kubernetes.io/hostname: loki.${EXTERNAL_DOMAIN}
@@ -16,7 +16,7 @@ apiVersion: nginx.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: loki
-  namespace: system-monitoring
+  namespace: monitoring
 spec:
   routes:
     - kind: Rule

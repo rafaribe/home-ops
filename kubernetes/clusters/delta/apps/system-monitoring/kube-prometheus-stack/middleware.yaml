@@ -2,7 +2,7 @@ apiVersion: nginx.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: prometheus-basic-auth
-  namespace: system-monitoring
+  namespace: monitoring
 spec:
   basicAuth:
     secret: prometheus-basic-auth
