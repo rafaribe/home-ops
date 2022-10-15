@@ -14,3 +14,4 @@ cluster/apps/networking/unifi/configmap.json
 wireguardconfig
 ignore
 age.agekey
+.github/scripts/values2.yaml
