@@ -9,5 +9,5 @@ resources:
   - network-system
   - selfhosted
   - security
-  #- system-upgrade
-  #- monitoring
+  - system-upgrade
+  - monitoring
