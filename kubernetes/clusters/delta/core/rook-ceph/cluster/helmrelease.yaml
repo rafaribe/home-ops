@@ -213,7 +213,7 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
-
+            mapOptions: ms_mode=secure
     cephObjectStores:
       - name: ceph-objectstore
         spec:
@@ -245,3 +245,4 @@ spec:
           reclaimPolicy: Delete
           parameters:
             region: us-east-1
+            mapOptions: ms_mode=secure
