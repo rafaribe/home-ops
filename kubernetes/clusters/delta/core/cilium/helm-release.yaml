@@ -80,7 +80,7 @@ spec:
         podCIDR: true
     bpf:
       hostRouting: false
-      masquerade: true
+      masquerade: false
     tunnel: disabled
     annotateK8sNode: true
     installIptablesRules: true
