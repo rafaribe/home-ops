@@ -4,12 +4,11 @@ kind: Kustomization
 resources:
   - databases
   - default
+  - development
   - kube-system
-  - development
-  - selfhosted
-  - development
   - media
   - network-system
+  - selfhosted
   - security
   #- system-upgrade
   #- system-monitoring
