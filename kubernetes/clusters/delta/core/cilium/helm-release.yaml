@@ -83,7 +83,7 @@ spec:
       serviceMonitor:
         enabled: true
       ui:
-        enabled: false
+        enabled: true
     bgp:
       enabled: false
       announce:
