@@ -11,4 +11,4 @@ spec:
   wait: true
   sourceRef:
     kind: GitRepository
-    name: home-cluster
+    name: flux-system
