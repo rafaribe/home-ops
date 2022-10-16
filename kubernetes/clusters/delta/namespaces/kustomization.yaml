@@ -6,6 +6,7 @@ resources:
   - crossplane-system.yaml
   - databases.yaml
   - downloads.yaml
+  - development.yaml
   - flux-system.yaml
   - games.yaml
   - home-automation.yaml
