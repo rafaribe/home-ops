@@ -15,3 +15,8 @@ data:
   NETWORK_BGP_SVC_RANGE: 10.43.0.0/16
   GATEWAY_MANAGEMENT: 10.0.1.1
   TZ: Europe/Lisbon
+
+  CLUSTER_DB_NODE_0: delta
+  CLUSTER_DB_NODE_1: omega
+  CLUSTER_DB_NODE_2: theta
+  CLUSTER_DB_BACKUP_PREFIX: "backup/db"

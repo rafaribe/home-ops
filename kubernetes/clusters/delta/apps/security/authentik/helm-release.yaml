@@ -42,9 +42,9 @@ spec:
       #secret_key: #in cret
       log_level: debug
 
-      email:
-        host: ${CLUSTER_MAIL_SERVER}
-        port: ${CLUSTER_MAIL_SERVER_PORT}
+      #email:
+        #host: ${CLUSTER_MAIL_SERVER}
+        #port: ${CLUSTER_MAIL_SERVER_PORT}
         #host: smtp.gmail.com
         #use_tls: true
 
