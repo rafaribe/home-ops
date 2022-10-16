@@ -65,7 +65,7 @@ spec:
             cert-manager.io/cluster-issuer: letsencrypt-production
           enabled: true
           hosts:
-            - &host hubble.${SECRET_DOMAIN}
+            - &host hubble.${EXTERNAL_DOMAIN}
           tls:
             - hosts:
                 - *host
