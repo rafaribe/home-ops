@@ -71,3 +71,28 @@ spec:
           - hosts:
               - "paperless.${EXTERNAL_DOMAIN}"
             secretName: "paperless-tls"
+    persistence:
+      data:
+        enabled: true
+        mountPath: /usr/src/paperless/data
+        type: nfs
+        server: "${NAS_ADDRESS}"
+        path: ${NAS_DIR}/paperless/data
+      media:
+        enabled: true
+        mountPath: /usr/src/paperless/media
+        type: nfs
+        server: "${NAS_ADDRESS}"
+        path: ${NAS_DIR}/paperless/media
+      consume:
+        enabled: true
+        mountPath: ${NAS_DIR}/paperless/consume
+        type: nfs
+        server: "${NAS_ADDRESS}"
+        path: ${NAS_DIR}/paperless/incoming
+      export:
+        enabled: true
+        mountPath: /usr/src/paperless/export
+        type: nfs
+        server: "${NAS_ADDRESS}"
+        path: ${NAS_DIR}/paperless/export
