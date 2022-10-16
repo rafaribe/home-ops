@@ -11,6 +11,6 @@ data:
   CLUSTER_ID: "0"
   CLUSTER_CERT: "letsencrypt-production"
   KUBERNETES_API_ADDRESS: 10.0.1.200
-  NETWORK_K8S_POD_CIDR: 10.200.0.0/16
+  NETWORK_K8S_POD_CIDR: 10.42.0.0/16
 
   TZ: Europe/Lisbon

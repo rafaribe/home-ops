@@ -31,6 +31,10 @@ spec:
     cleanupOnFail: true
   values:
     autoDirectNodeRoutes: true
+    bgp:
+      announce:
+        loadbalancerIP: true
+      enabled: true
     cluster:
       id: ${CLUSTER_ID}
       name: ${CLUSTER_NAME}
@@ -57,7 +61,15 @@ spec:
       ui:
         enabled: true
         ingress:
-          enabled: false
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-production
+          enabled: true
+          hosts:
+            - &host hubble.${SECRET_DOMAIN}
+          tls:
+            - hosts:
+                - *host
+        rollOutPods: true
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: ${NETWORK_K8S_POD_CIDR}
@@ -68,24 +80,10 @@ spec:
     loadBalancer:
       algorithm: maglev
       mode: dsr
+    localRedirectPolicy: true
     operator:
       rollOutPods: true
     rollOutCiliumPods: true
     securityContext:
       privileged: true
-    bgp:
-      enabled: true
-      announce:
-        loadbalancerIP: true
-        podCIDR: true
-    bpf:
-      hostRouting: false
-      masquerade: false
     tunnel: disabled
-    annotateK8sNode: true
-    installIptablesRules: true
-    localRedirectPolicy: false
-    policyEnforcementMode: "never"
-    policyAuditMode: true
-    nodeinit:
-      enabled: false
