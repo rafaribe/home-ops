@@ -6,5 +6,5 @@ metadata:
   namespace: flux-system
 spec:
   interval: 15m
-  url: https://charts.vectorized.io
+  url: https://charts.redpanda.com
   timeout: 3m
