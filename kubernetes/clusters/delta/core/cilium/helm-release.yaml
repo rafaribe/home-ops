@@ -60,8 +60,11 @@ spec:
           enabled: false
     ipam:
       mode: kubernetes
+    ipv4NativeRoutingCIDR: ${NETWORK_K8S_POD_CIDR}
     k8sServiceHost: ${KUBERNETES_API_ADDRESS}
     k8sServicePort: 6443
+    kubeProxyReplacement: strict
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     loadBalancer:
       algorithm: maglev
       mode: dsr
@@ -71,8 +74,18 @@ spec:
     securityContext:
       privileged: true
     bgp:
-      enabled: false
+      enabled: true
+      announce:
+        loadbalancerIP: true
+        podCIDR: true
     bpf:
-      masquerade: true
+      hostRouting: false
+      masquerade: false
+    tunnel: disabled
     annotateK8sNode: true
     installIptablesRules: true
+    localRedirectPolicy: false
+    policyEnforcementMode: "never"
+    policyAuditMode: true
+    nodeinit:
+      enabled: false
