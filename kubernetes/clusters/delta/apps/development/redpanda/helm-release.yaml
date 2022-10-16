@@ -17,10 +17,5 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    resources:
-      memory:
-        container:
-          min: 2001Mi
-          max: 2002Mi 
     serviceAccount:
       create: true
