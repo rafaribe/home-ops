@@ -20,7 +20,7 @@ spec:
     resources:
       memory:
         container:
-          min: 100Mi
-          max: 1Gi 
+          min: 2001Mi
+          max: 2002Mi 
     serviceAccount:
       create: true
