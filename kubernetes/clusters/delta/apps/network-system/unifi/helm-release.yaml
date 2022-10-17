@@ -43,8 +43,8 @@ spec:
           kubernetes.io/tls-acme: "true"
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           cert-manager.io/cluster-issuer: letsencrypt-prod
-          external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: "ipv4.${EXTERNAL_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
           hajimari.io/enable: "true"
           hajimari.io/icon: wifi
           hajimari.io/appName: unifi
