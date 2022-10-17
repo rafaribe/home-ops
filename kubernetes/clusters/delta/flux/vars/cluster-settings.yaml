@@ -21,7 +21,7 @@ data:
   CLUSTER_DB_NODE_2: theta
   CLUSTER_DB_BACKUP_PREFIX: "backup/db"
 
-  # Ingress
-  SVC_NGINX_ADDR: 10.42.0.240
+  # Ingress IP
+  METALLB_INGRESS_ADDR: 10.42.0.240
   # Network
   NAS_ADDRESS: 10.0.1.100
