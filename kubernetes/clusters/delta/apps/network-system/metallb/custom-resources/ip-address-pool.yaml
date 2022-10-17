@@ -8,3 +8,4 @@ spec:
   addresses:
     - ${NETWORK_LB_RANGE}
   autoAssign: true
+  avoidBuggyIPs: true
