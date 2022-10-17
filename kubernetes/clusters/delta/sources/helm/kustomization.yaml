@@ -8,6 +8,7 @@ resources:
   - crossplane-charts.yaml
   - deliveryhero-charts.yaml
   - descheduler-charts.yaml
+  - bjw-s.yaml
   - enix-charts.yaml
   - external-dns-charts.yaml
   - emberstack-charts.yaml
