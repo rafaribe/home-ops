@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       # renovate: registryUrl=https://grafana.github.io/helm-charts
-      chart: loki
+      chart: loki-distributed
       version: 3.2.1
       sourceRef:
         kind: HelmRepository
@@ -38,3 +38,4 @@ spec:
       table_manager:
         retention_deletes_enabled: true
         retention_period: 672h
+    

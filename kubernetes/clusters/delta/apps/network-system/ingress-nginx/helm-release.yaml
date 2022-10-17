@@ -24,7 +24,9 @@ spec:
         - name: TZ
           value: "${TIMEZONE}"
       service:
-        loadBalancerIP: "${SVC_NGINX_ADDR}"
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: |-
+            ${METALLB_INGRESS_ADDR}
         externalTrafficPolicy: Local
       publishService:
         enabled: true

@@ -1,0 +1,12 @@
+---
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: unifi
+  namespace: network-system
+spec:
+  peerAddress: ${GATEWAY_MANAGEMENT}
+  peerASN: 64512
+  peerPort: 179
+  myASN: 64512
+  holdTime: 1m30s
