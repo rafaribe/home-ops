@@ -83,7 +83,6 @@ spec:
       acceleration: native
       algorithm: maglev
       mode: dsr
-    localRedirectPolicy: true
     operator:
       rollOutPods: true
       replicas: 1
