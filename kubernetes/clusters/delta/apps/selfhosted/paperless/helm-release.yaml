@@ -65,6 +65,12 @@ spec:
           - host: &host "paperless.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: paperless
+                    port:
+                      number: 8000
         tls:
           - hosts:
               - *host
