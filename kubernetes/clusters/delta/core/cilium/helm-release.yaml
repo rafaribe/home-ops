@@ -79,7 +79,6 @@ spec:
     kubeProxyReplacement: strict
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10356
     loadBalancer:
-      standalone: false
       acceleration: disabled # Interface doesn't support XDP 
       algorithm: maglev
       mode: dsr
