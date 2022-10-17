@@ -56,21 +56,18 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: "nginx"
         annotations:
-          nginx.ingress.kubernetes.io/router.entrypoints: websecure
           cert-manager.io/cluster-issuer: letsencrypt-production
-          kubernetes.io/tls-acme: "true"
           external-dns.alpha.kubernetes.io/hostname: paperless.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
         hosts:
-          - host: "paperless.${EXTERNAL_DOMAIN}"
+          - host: &host "paperless.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
         tls:
           - hosts:
-              - "paperless.${EXTERNAL_DOMAIN}"
+              - *host
             secretName: "paperless-tls"
     persistence:
       data:
