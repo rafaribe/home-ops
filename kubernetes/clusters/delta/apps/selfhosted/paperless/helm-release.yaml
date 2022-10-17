@@ -46,6 +46,11 @@ spec:
           - ReadWriteOnce
     postgresql:
       enabled: false
+    service:
+      main:
+        ports:
+          http:
+            port: 8000
     ingress:
       main:
         enabled: true
