@@ -2,7 +2,7 @@
 apiVersion: metallb.io/v1beta2
 kind: BGPPeer
 metadata:
-  name: unifi
+  name: gateway
   namespace: network-system
 spec:
   peerAddress: ${GATEWAY_MANAGEMENT}
