@@ -8,3 +8,13 @@ spec:
   addresses:
     - ${K8S_LB_CIDR}
   autoAssign: true
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default-pool
+  namespace: network-system
+spec:
+  addresses:
+  - ${K8S_LB_L2_CIDR}
+  autoAssign: true
