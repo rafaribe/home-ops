@@ -26,7 +26,7 @@ spec:
       PAPERLESS_CONSUMER_RECURSIVE: "true"
       PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
       PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
-      PAPERLESS_OCR_LANGUAGES: por
+      PAPERLESS_OCR_LANGUAGES: por eng
       PAPERLESS_OCR_LANGUAGE: por
       PAPERLESS_TIME_ZONE: Europe/Lisbon
       PAPERLESS_REDIS: redis://paperless-redis.selfhosted.svc.cluster.local:6379
