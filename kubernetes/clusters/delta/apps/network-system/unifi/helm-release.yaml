@@ -106,8 +106,13 @@ spec:
         accessMode: ReadWriteOnce
       gateway:
         enabled: true
-        type: configMap
-        name: config-gateway
+        type: custom
+        volumeSpec:
+          configMap:
+            name: gateway
+        subPath:
+          path: config.gateway.json
+          mountPath: /unifi/data/sites/default/config.gateway.json
 
     resources:
       requests:
