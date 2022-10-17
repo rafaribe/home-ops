@@ -32,8 +32,8 @@ spec:
       PAPERLESS_REDIS: redis://paperless-redis.selfhosted.svc.cluster.local:6379
       PAPERLESS_ADMIN_USER: ${SECRET_PAPERLESS_USERNAME}
       PAPERLESS_ADMIN_PASSWORD: ${SECRET_PAPERLESS_PASSWORD}
-      USERMAP_UID: 1001
-      USERMAP_GID: 1001
+      USERMAP_UID: 1000
+      USERMAP_GID: 1000
     data:
       enabled: true
       size: 10Gi
