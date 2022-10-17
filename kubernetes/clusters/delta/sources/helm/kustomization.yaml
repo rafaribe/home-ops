@@ -5,6 +5,7 @@ resources:
   - banzaicloud-charts.yaml
   - bitnami-charts.yaml
   - cilium-charts.yaml
+  - cloudnative-pg-charts.yaml
   - crossplane-charts.yaml
   - deliveryhero-charts.yaml
   - descheduler-charts.yaml
