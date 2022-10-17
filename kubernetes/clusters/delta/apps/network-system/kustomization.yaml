@@ -5,4 +5,4 @@ resources:
   - external-dns
   - ingress-nginx
   - default-certificate
-  - metallb
+#  - metallb
