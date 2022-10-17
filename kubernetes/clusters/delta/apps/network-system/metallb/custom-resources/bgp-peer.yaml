@@ -7,6 +7,4 @@ metadata:
 spec:
   peerAddress: ${GATEWAY_MANAGEMENT}
   peerASN: 64512
-  peerPort: 179
   myASN: 64512
-  holdTime: 1m30s

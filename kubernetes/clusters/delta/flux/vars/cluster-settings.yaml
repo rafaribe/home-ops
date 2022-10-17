@@ -6,7 +6,7 @@ metadata:
   name: cluster-settings
 data:
   # Networking
-  LB_RANGE: "10.0.1.239-10.0.1.250"
+  LB_RANGE: "10.43.0.240-10.43.0.254"
   CLUSTER_NAME: delta
   CLUSTER_ID: "0"
   CLUSTER_CERT: "letsencrypt-production"
@@ -22,6 +22,6 @@ data:
   CLUSTER_DB_BACKUP_PREFIX: "backup/db"
 
   # Ingress
-  METALLB_INGRESS_ADDR: 10.0.1.240
+  SVC_NGINX_ADDR: 10.0.1.240
   # Network
   NAS_ADDRESS: 10.0.1.100
