@@ -18,6 +18,8 @@ spec:
       interval: 5m
   values:
     env:
+      USERMAP_UID: 1000
+      USERMAP_GID: 1000
       PAPERLESS_OCR_LANGUAGES: por
       PAPERLESS_OCR_LANGUAGE: por
       PAPERLESS_TIME_ZONE: Europe/Lisbon
