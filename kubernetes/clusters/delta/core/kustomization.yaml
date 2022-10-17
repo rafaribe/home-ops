@@ -6,4 +6,4 @@ resources:
   - cilium
   #- metallb
   - rook-ceph
-  - postgres
+ # - postgres
