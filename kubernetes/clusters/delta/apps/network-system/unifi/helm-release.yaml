@@ -104,6 +104,7 @@ spec:
         size: 5Gi
         storageClass: ceph-block
         accessMode: ReadWriteOnce
+        mountPath: /unifi/data
       gateway:
         enabled: true
         type: custom
