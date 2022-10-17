@@ -5,27 +5,35 @@ metadata:
   name: paperless
   namespace: selfhosted
 spec:
-  interval: 5m
+  interval: 30m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: paperless
-      version: 9.1.3
+      chart: app-template
+      version: 0.2.2
+      interval: 30m
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s
         namespace: flux-system
-      interval: 5m
+
   values:
+    image:
+      repository: ghcr.io/paperless-ngx/paperless-ngx
+      tag: 1.9.2
     env:
-      USERMAP_UID: 1001
-      USERMAP_GID: 1001
+      COMPOSE_PROJECT_NAME: paperless
+      PAPERLESS_CONSUMER_POLLING: "60"
+      PAPERLESS_CONSUMER_RECURSIVE: "true"
+      PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
+      PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
       PAPERLESS_OCR_LANGUAGES: por
       PAPERLESS_OCR_LANGUAGE: por
       PAPERLESS_TIME_ZONE: Europe/Lisbon
       PAPERLESS_REDIS: redis://paperless-redis.selfhosted.svc.cluster.local:6379
       PAPERLESS_ADMIN_USER: ${SECRET_PAPERLESS_USERNAME}
       PAPERLESS_ADMIN_PASSWORD: ${SECRET_PAPERLESS_PASSWORD}
+      USERMAP_UID: 1001
+      USERMAP_GID: 1001
     data:
       enabled: true
       size: 10Gi
@@ -82,3 +90,9 @@ spec:
         type: nfs
         server: "${NAS_ADDRESS}"
         path: ${NAS_DIR}/paperless/export
+    resources:
+      requests:
+        cpu: 23m
+        memory: 2975M
+      limits:
+        memory: 6572M
