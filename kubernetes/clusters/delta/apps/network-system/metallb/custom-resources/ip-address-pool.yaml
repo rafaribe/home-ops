@@ -6,6 +6,5 @@ metadata:
   namespace: network-system
 spec:
   addresses:
-    - ${NETWORK_LB_RANGE}
+    - ${K8S_LB_CIDR}
   autoAssign: true
-  avoidBuggyIPs: true
