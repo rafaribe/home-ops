@@ -101,8 +101,8 @@ spec:
     persistence:
       data:
         enabled: true
-        size: 20Gi
-        storageClass: rook-ceph-block
+        size: 5Gi
+        storageClass: ceph-block
         accessMode: ReadWriteOnce
       gateway:
         enabled: true
