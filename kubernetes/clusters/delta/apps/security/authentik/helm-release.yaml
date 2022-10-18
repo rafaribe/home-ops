@@ -27,12 +27,12 @@ spec:
       enabled: true
       annotations:
       hosts:
-      - host: authentik.${SECRET_DOMAIN}
+      - host: authentik.${EXTERNAL_DOMAIN}
         paths:
         - path: /
       tls:
       - hosts:
-        - authentik.${SECRET_DOMAIN}
+        - authentik.${EXTERNAL_DOMAIN}
     
     worker:
       replicas: 2
