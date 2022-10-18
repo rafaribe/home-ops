@@ -80,13 +80,17 @@ spec:
                 pathType: Prefix
                 service:
                   port: *port-console
-          - host: "s3.${EXTERNAL_DOMAIN}"
+          - host: &host-api "s3.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  port: *port-api
         tls:
           - hosts:
-              - "s3.${EXTERNAL_DOMAIN}"
+              - *host-console
+              - *host-api
+            secretName: tls.minio
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
