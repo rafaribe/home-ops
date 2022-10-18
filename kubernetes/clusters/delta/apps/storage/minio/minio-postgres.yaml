@@ -1,0 +1,52 @@
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA1VGpieVhSZ1BQNjBxNnc4
+            SnZscmpmUXpGeWNldDNnRmt2RjZOaGpNK1hZCkdZZGVLZHVCUkpOeWlCbW5sTVJR
+            Z1ZVMjY3L3NyL2V5K0Y4eU52U2piYVkKLS0tIHRsODc5ajRoZTVhY1R0V1JranJy
+            OTYvMGRsQmdabG1RVk5tZ1d0aERZcDAKxysm6wghzpm+0ePHNzL1SBeZkWZUwM9v
+            cqE52NbhRzWi32eiFJ2eUNLhRa4V4fbMPF0t/xFFoBtNPqKMAad91g==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-10-18T23:09:09Z"
+    mac: ENC[AES256_GCM,data:MMQeKvbIckJE9RqqjRBP55WMUoL1piZdKf3FSJvD1HBU15HVFTKpaQ/LTQMHfE0ssC+RQEmrGx9xz601lnT8qmDTqnSvn8vCvTp8Rf3p6CPwj0Oefhyenz2ojaKnfHbXTBi6jh17wGK+DJJoFQbqnqmEb70Ri5JfeskFFbcPBrg=,iv:LYVq17NYhtI+ZSgpdxGa0VSFOidqshO2bTvuHU7YGbg=,tag:zUjHmsw/0au98gK+q7N4eg==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
+---
+kind: Secret
+apiVersion: v1
+type: Opaque
+metadata:
+    name: postgres-minio
+    namespace: storage
+    labels:
+        k8s.enterprisedb.io/reload: "true"
+stringData:
+    MINIO_ACCESS_KEY: ENC[AES256_GCM,data:UERtmRfZ8xRGOoHvk/lYgA==,iv:Ft4jAmqLVOs1GslzbqwsYut0ihgDwR3M7v1AdS5mZGc=,tag:6jtlAE96Xto2L85uLj2J+A==,type:str]
+    MINIO_SECRET_KEY: ENC[AES256_GCM,data:sTjkoBDD4012+GKyJwDz/djvOEGpnJL5mY09BiZvn1w=,iv:KbVXvf8lmPAFgmuQynqADdpBJn5DtvoH1ynNUUYObU8=,tag:rQmNC/+hz8hz0ap7fcLEOw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA1VGpieVhSZ1BQNjBxNnc4
+            SnZscmpmUXpGeWNldDNnRmt2RjZOaGpNK1hZCkdZZGVLZHVCUkpOeWlCbW5sTVJR
+            Z1ZVMjY3L3NyL2V5K0Y4eU52U2piYVkKLS0tIHRsODc5ajRoZTVhY1R0V1JranJy
+            OTYvMGRsQmdabG1RVk5tZ1d0aERZcDAKxysm6wghzpm+0ePHNzL1SBeZkWZUwM9v
+            cqE52NbhRzWi32eiFJ2eUNLhRa4V4fbMPF0t/xFFoBtNPqKMAad91g==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-10-18T23:09:09Z"
+    mac: ENC[AES256_GCM,data:MMQeKvbIckJE9RqqjRBP55WMUoL1piZdKf3FSJvD1HBU15HVFTKpaQ/LTQMHfE0ssC+RQEmrGx9xz601lnT8qmDTqnSvn8vCvTp8Rf3p6CPwj0Oefhyenz2ojaKnfHbXTBi6jh17wGK+DJJoFQbqnqmEb70Ri5JfeskFFbcPBrg=,iv:LYVq17NYhtI+ZSgpdxGa0VSFOidqshO2bTvuHU7YGbg=,tag:zUjHmsw/0au98gK+q7N4eg==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

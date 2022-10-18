@@ -1,0 +1,28 @@
+kind: Secret
+apiVersion: v1
+type: Opaque
+metadata:
+    name: minio-prometheus
+    namespace: storage
+stringData:
+    token: ENC[AES256_GCM,data:UAVyp+lpjuIsEIcDZMfihuJ8Ze5ls7VekVGwS7khuD5WosfcvPP144x5rP613U6RloxzpQo1ojMsk7cI491YEzwpZtWmwTX8sVw+PSV+8x4lVT3LhMuY0SDZlpEdJmhVQOIYHxfXnphDh009esgbLKfuqXSN3Yhys8Cl2p8354ssShHH1KK0+EgfzyeV7PgEZIGF5YwohslvWdQU7PLjei4ZKMMwhSZXyLCCdbxyfafg/J8DLIcR87ISbC16sRBiPAJ7HZuS9BziJdax33lu,iv:UXW2TErSXDbmM26t6aYPlHLuo++u/hH19fKdaRFXU4Y=,tag:Khe6G0aqaHzQ43cSFZllMg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBFRWRJVk81Q0kxcjljV1gz
+            Ukp6S0huUzJMVEZtdE5sMkFVSTlGU1RZQ0FrCk9IbGdtMXhzZ3pSdDB3N043dWxF
+            TFdlV3puL3BOdndIOWprM1AyLzA0VFkKLS0tIE5BejZNeHdtSFh6VGhQaU03SHho
+            dXY4SkNLSzVnWmI1ZzNVY3NiTHZmQ00K/rPFsDVDBOCL6Icwi87xorl0EXPi0Fba
+            2yNDwf3xeJJqFWxQtHDBz9sUu8QrTdmQEAPIhZoMSucT7JRi0I/xWA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-10-18T23:08:36Z"
+    mac: ENC[AES256_GCM,data:389bl739NEYbZN/6rkrTMZbqjUztYYhx5OdWHFRl5/4dPFGr/+1DRwjMnSA+NeZpCdQW8Ld7xhzNVd59WmqZqEMI6Y7nv7ZRzI6IvENS63CGtmYX7MM0wvOBUYQWKds9IQXzMo8TQm0KR4+QP4c4tj5TJ+SFeqT35QntsMPer3c=,iv:ovjBJwR2wNJITrTtf11h/gqxkw0AOSIIhiAHkpNxD+I=,tag:yrjfONRkXLdnEAFLdcijww==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
