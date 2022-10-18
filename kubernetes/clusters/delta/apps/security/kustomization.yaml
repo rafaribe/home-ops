@@ -4,6 +4,6 @@ kind: Kustomization
 resources:
   - tetragon
  # - kubeclarity
-  #- authentik
+  - authentik
   #- trivy
  # - vaultwarden
