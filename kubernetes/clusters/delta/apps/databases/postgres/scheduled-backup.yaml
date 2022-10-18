@@ -4,7 +4,7 @@ metadata:
   name: postgres
   namespace: database
 spec:
-  schedule: "01 11 * * *"
+  schedule: "*/2 * * * *"
   immediate: true
   backupOwnerReference: self
   cluster:
