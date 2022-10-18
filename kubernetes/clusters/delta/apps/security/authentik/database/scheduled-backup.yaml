@@ -2,7 +2,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
   name: authentik-db-backup
-  namespace: database
+  namespace: security
 spec:
   schedule: "@daily"
   immediate: true
