@@ -2,8 +2,8 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres
-  namespace: database
+  name: authentik
+  namespace: security
   annotations:
     kyverno.io/ignore: "true"
 spec:

@@ -5,8 +5,6 @@ namespace: databases
 resources:
   - secret.sops.yaml
   - helm-release.yaml
-  - cluster.yaml
-  - scheduled-backup.yaml
 configMapGenerator:
   - name: cloudnative-pg-dashboard
     files:
