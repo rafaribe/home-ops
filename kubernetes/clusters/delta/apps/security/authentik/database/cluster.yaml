@@ -25,7 +25,7 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://postgresql/
+      destinationPath: s3://db/authentik
       endpointURL: http://minio.storage.svc.cluster.local:9000
       serverName: postgres-v1
       s3Credentials:
