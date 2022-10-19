@@ -81,19 +81,20 @@
       ]
     },
     {
-      "matchManagers": [
-        "github-actions"
+      "description": "Auto merge GitHub Actions",
+      "matchDatasources": [
+        "github-tags"
       ],
       "automerge": true,
       "automergeType": "branch",
       "requiredStatusChecks": null,
-      "stabilityDays": 1,
       "matchUpdateTypes": [
         "minor",
         "patch"
       ],
-      "excludePackageNames": [
-        "lycheeverse/lychee-action"
+      "matchPackageNames": [
+        "lycheeverse/lychee-action",
+        "renovatebot/github-action"
       ]
     },
     {
