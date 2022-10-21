@@ -46,7 +46,7 @@ spec:
       secret_key: ${AUTHENTIK_SECRET}
       log_level: debug
       error_reporting:
-        enabled: false
+        enabled: true
       postgresql:
         # Should be present on the secret created by the postgres operator
         host: authentik-rw.security.svc.cluster.local
