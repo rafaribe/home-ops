@@ -27,8 +27,11 @@ spec:
       enabled: true
       annotations:
           nginx.ingress.kubernetes.io/router.entrypoints: websecure
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+          nginx.org/websocket-services: authentik
+          nginx.ingress.kubernetes.io/enable-global-auth: "false"
           cert-manager.io/cluster-issuer: letsencrypt-production
-          kubernetes.io/tls-acme: "true"
           external-dns.alpha.kubernetes.io/hostname: authentik.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
       hosts:
