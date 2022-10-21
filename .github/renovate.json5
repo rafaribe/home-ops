@@ -9,7 +9,7 @@
     ":enablePreCommit",
     ":automergeDigest",
     ":automergeBranchPush",
-    ":enablePreCommit",
+  //  ":enablePreCommit",
     "github>rafaribe/home-ops//.github/renovate/commitMessage",
     "github>rafaribe/home-ops//.github/renovate/labels",
     "github>rafaribe/home-ops//.github/renovate/semanticCommits",
