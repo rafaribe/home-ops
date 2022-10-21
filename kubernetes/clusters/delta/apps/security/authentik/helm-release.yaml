@@ -41,9 +41,6 @@ spec:
       tls:
       - hosts:
         - authentik.${EXTERNAL_DOMAIN}
-    
-    worker:
-      replicas: 2
     # Password in clear text because this is a random test instance
     authentik:
       secret_key: ${AUTHENTIK_SECRET}
