@@ -47,6 +47,8 @@ spec:
       log_level: debug
       error_reporting:
         enabled: true
+      outposts:
+        docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
       postgresql:
         # Should be present on the secret created by the postgres operator
         host: authentik-rw.security.svc.cluster.local
