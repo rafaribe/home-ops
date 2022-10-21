@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - database
   - helm-release.yaml
+  - outpost-ingress.yaml
