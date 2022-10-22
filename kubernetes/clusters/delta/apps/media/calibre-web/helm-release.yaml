@@ -50,7 +50,7 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: calibre-web.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
         hosts:
-          - host: &host calibre-web.scr1.rabbito.tech
+          - host: &host calibre.${EXTERNAL_DOMAIN}
             paths:
               - path: /
         tls:
