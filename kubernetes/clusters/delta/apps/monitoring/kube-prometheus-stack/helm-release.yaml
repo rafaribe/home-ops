@@ -74,7 +74,9 @@ spec:
         pathType: Prefix
         ingressClassName: "nginx"
         annotations:
-          #outpost.goauthentik.io/callback?X-authentik-auth-callback=true&code=3b7bab2898b94cf8a6a3d30573f6cf9e&state=vg-L0DVDQ4_zKxPfK33QDuy_8z0u5ffMa0FJ17sZ1zA
+          nginx.ingress.kubernetes.io/auth-type: basic
+          nginx.ingress.kubernetes.io/auth-secret: prometheus-basic-auth
+          nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - AlertManager'
           nginx.ingress.kubernetes.io/router.entrypoints: "websecure"
           external-dns.alpha.kubernetes.io/hostname: alertmanager.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
@@ -108,9 +110,12 @@ spec:
         pathType: Prefix
         ingressClassName: "nginx"
         annotations:
+          nginx.ingress.kubernetes.io/auth-type: basic
+          nginx.ingress.kubernetes.io/auth-secret: prometheus-basic-auth
+          nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - Prometheus'
+          nginx.ingress.kubernetes.io/router.entrypoints: "websecure"
           external-dns.alpha.kubernetes.io/hostname: prometheus.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
-          nginx.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
           - "prometheus.${EXTERNAL_DOMAIN}"
         tls:

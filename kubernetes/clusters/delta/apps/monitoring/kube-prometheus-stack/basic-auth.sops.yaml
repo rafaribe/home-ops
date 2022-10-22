@@ -1,7 +1,6 @@
 apiVersion: v1
 stringData:
-    password: ENC[AES256_GCM,data:Y9jixetMKc8SIAWEFm0=,iv:5nsHt2ACRX68RbLfZgnaIxB8eOUcIR7aOleR/XV5e4g=,tag:L5VmDKy2B1lI5zlVg2MBWA==,type:str]
-    username: ENC[AES256_GCM,data:xQa/vEyLoW0=,iv:DDaCm2V1doCKZDhjiPGGECAcKbqZs06f605UU4JzP3g=,tag:w+wsyp5QjJtXxFne+OcL7w==,type:str]
+    auth: ENC[AES256_GCM,data:ARZCM37Vx2uyZF2hFTRfKeg+U3q9t7dDewWCTs+mkl3a3SNOnEYINlc5WnoQpA==,iv:ceII4JO5WF5KA2eStG1pa5RLU6nugCjhlt1uUZKljFQ=,tag:auAIGc11TFvwyJmQp9L7/g==,type:str]
 kind: Secret
 metadata:
     name: prometheus-basic-auth
@@ -22,8 +21,8 @@ sops:
             eGZRWnlDVHdLYWtxcExmM0ZCdXloVmsK70gLubTYtvidtAA3IHKiUgh2O+K4zUSJ
             9tUmzWgVitRyKOC7wtKZ3m+JPk23AgsWZcgh+BLyAP7I4zr9eOzZ7Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-10-15T18:54:41Z"
-    mac: ENC[AES256_GCM,data:YAXIrbKEyvRbuNmm/yNtbi9F8zTmq4k0EAVRJBmMNy6Tpgd676UsDJkygqDu9kwvv8drqwRqrKfxmLOiGE/X7nbXFbJYU+XpPz/OdAhRYr5XqUr2Qeik3t/0KoytzP4C1KQVsi+OJmQS7BgbefoLLMnZYZRyh5iC/LkZ0ZxZ5F8=,iv:ZSaCIjCQsDMzHbcCmiRkR1WQD+uR6Razsx/z3GVkiBs=,tag:Qy4kvGFyXEB80CXjdb/EqA==,type:str]
+    lastmodified: "2022-10-22T00:00:03Z"
+    mac: ENC[AES256_GCM,data:VuwjpWCzxQwKAvhqBf81z9bNroDD8IqNr4oOtF6AXcUrnCE58cSLisCcbcKbsVe5gDU+RC9QSqh/P+1uOEH4t23G1aFKt6qjpy1KWBBDgMCBAcvbE5EVAT+oWwlbYSWnQw9m945ZLYsz5H9T2wHWTKoqqiJTGQbwTsOiM9e4a9s=,iv:NpG3TtA5BL8+wCd5zRa2ugRe1Olkvif0WPqNhG6stnU=,tag:z8z6zvjcxmlghaIsAKBeWw==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData)$
     version: 3.7.3
