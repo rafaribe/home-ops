@@ -28,7 +28,7 @@ spec:
           runAsUser: 0
     image:
       repository: ghcr.io/linuxserver/calibre-web
-      tag: version-0.6.19
+      tag: 0.6.19
     env:
       DOCKER_MODS: ghcr.io/linuxserver/mods:universal-calibre
       PGID: "1000"
@@ -71,3 +71,4 @@ spec:
         memory: 249M
       limits:
         memory: 299M
+        #GYsKDij4q@!5*76F!uN74dMH
