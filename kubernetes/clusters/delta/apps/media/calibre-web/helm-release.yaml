@@ -1,3 +1,4 @@
+
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -5,56 +6,42 @@ metadata:
   name: calibre-web
   namespace: media
 spec:
-  interval: 5m
   chart:
     spec:
-      chart: calibre
-      version: 5.4.2
+      chart: app-template
+      version: 0.2.2
+      interval: 15m
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s
         namespace: flux-system
-      interval: 5m
-  install:
-    createNamespace: true
-    remediation: # perform remediation when helm install fails
-      retries: 3
-  upgrade:
-    remediation: # perform remediation when helm upgrade fails
-      retries: 3
-      remediateLastFailure: true # remediate the last failure, when no retries remain
-    cleanupOnFail: true
-  # Values link: https://github.com/k8s-at-home/charts/blob/master/charts/stable/calibre/values.yaml
+  interval: 15m
   values:
+    initContainers:
+      update-volume-permission:
+        image: busybox@sha256:ad9bd57a3a57cc95515c537b89aaa69d83a6df54c4050fcf2b41ad367bec0cd5
+        command: ["sh", "-c", "chown -R 1000:1000 /config"]
+        volumeMounts:
+          - name: config
+            mountPath: /config
+        securityContext:
+          runAsUser: 0
     image:
-      repository: ghcr.io/linuxserver/calibre
-      tag: version-v5.43.0
-
+      repository: ghcr.io/linuxserver/calibre-web
+      tag: version-0.6.19
     env:
-      TZ: "Europe/Lisbon"
-      PUID: "568"
-      PGID: "568"
-
-    persistence:
-      config:
-        enabled: true
-        size: 512Mi
-        accessMode: ReadWriteOnce
-
-      # nfs-nas-media:
-      #   enabled: true
-      #   type: custom
-      #   volumeSpec:
-      #     nfs:
-      #       server: ${NAS_ADDRESS}
-      #       path: /volume1/
-      #   mountPath: /media
-      #   readOnly: false
-
+      DOCKER_MODS: ghcr.io/linuxserver/mods:universal-calibre
+      PGID: "1000"
+      PUID: "1000"
+    service:
+      main:
+        ports:
+          http:
+            port: 8083
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: nginx
         annotations:
           cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
           external-dns/is-public: "false"
@@ -63,42 +50,24 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: calibre-web.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
         hosts:
-          - host: &host "calibre-web.${EXTERNAL_DOMAIN}"
+          - host: &host calibre-web.scr1.rabbito.tech
             paths:
               - path: /
-                pathType: Prefix
         tls:
-          - hosts:
+          -  secretName: calibre-web-tls
+             hosts:
               - *host
-            secretName: calibre-web-tls
-      webserver:
+    persistence:
+      config:
         enabled: true
-        ingressClassName: "nginx"
-        annotations:
-          cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
-          external-dns/is-public: "false"
-          external-dns.alpha.kubernetes.io/hostname: calibre-cs.${EXTERNAL_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
-        hosts:
-          - host: &host-cs "calibre-cs.${EXTERNAL_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: calibre-webserver
-                  port: 8081
-        tls:
-          - hosts:
-              - *host-cs
-            secretName: calibre-cs-tls
-
-    service:
-      webserver:
+        existingClaim: calibre-web-config-v1
+      media:
         enabled: true
-
+        existingClaim: media
+        mountPath: /media
     resources:
       requests:
         cpu: 15m
-        memory: 381M
+        memory: 249M
       limits:
-        memory: 653M
+        memory: 299M
