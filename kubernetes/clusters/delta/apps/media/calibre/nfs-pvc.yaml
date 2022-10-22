@@ -23,7 +23,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: calibre-pvc
-  namespace: calibre
+  namespace: media
 spec:
   accessModes:
     - ReadWriteMany
