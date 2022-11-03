@@ -80,3 +80,8 @@ spec:
         memory: 298M
       limits:
         memory: 357M
+    probes:
+      startup:
+        spec:
+          initialDelaySeconds: 160
+          failureThreshold: 160
