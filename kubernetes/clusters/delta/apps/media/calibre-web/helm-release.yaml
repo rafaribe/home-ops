@@ -31,8 +31,9 @@ spec:
       tag: 0.6.19
     env:
       DOCKER_MODS: ghcr.io/linuxserver/mods:universal-calibre
-      PGID: "1000"
+      PGID: "65539"
       PUID: "1000"
+      PASSWORD: ${SECRET_CALIBRE}
     service:
       main:
         ports:
