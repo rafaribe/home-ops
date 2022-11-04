@@ -22,7 +22,7 @@ data:
   CLUSTER_DB_NFS_PREFIX: "nfs"
   # Network
   NAS_ADDRESS: 10.0.1.100
-
+  
   GATEWAY_IP: 10.10.0.1
   MANAGEMENT_CIDR: 10.0.1.0/24
   #
