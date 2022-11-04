@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: "${NAS_ADDRESS}"
-    path: ${NAS_DIR}/${CLUSTER_DB_NFS_PREFIX}/minio
+    path: ${NAS_DIR}/minio
   mountOptions:
     - nfsvers=4.2
     - nconnect=8
