@@ -5,6 +5,7 @@ resources:
   - databases
   - development
   - kube-system
+  - home-automation
   - media
   - network-system
   - selfhosted
