@@ -19,7 +19,7 @@ spec:
     createNamespace: true
   values:
     controller:
-      replicaCount: 3
+      replicaCount: 2
       extraEnvs:
         - name: TZ
           value: "${TIMEZONE}"
@@ -80,7 +80,7 @@ spec:
       image:
         repository: ghcr.io/tarampampam/error-pages
         tag: 2.18.0
-      replicaCount: 3
+      replicaCount: 2
       extraEnvs:
         - name: TEMPLATE_NAME
           value: ghost
