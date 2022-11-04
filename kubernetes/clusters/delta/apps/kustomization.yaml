@@ -5,7 +5,7 @@ resources:
   - databases
   - development
   - kube-system
-  #- media
+  - media
   - network-system
   - selfhosted
   - security
