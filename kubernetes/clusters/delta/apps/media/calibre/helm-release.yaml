@@ -73,11 +73,9 @@ spec:
         accessMode: ReadWriteOnce
       media:
         enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "${NAS_ADDR}"
-            path: ${NAS_DIR}/media/calibre
+        type: nfs
+        server: "${NAS_ADDR}"
+        path: ${NAS_DIR}/media/calibre
         mountPath: /media
     resources:
       requests:
