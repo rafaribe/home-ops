@@ -8,3 +8,4 @@ resources:
   #- ingress-route.yaml
   - prometheus-rule.yaml
   - workaround.yaml
+  - object-bucket-claim.yaml
