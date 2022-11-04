@@ -73,8 +73,12 @@ spec:
         accessMode: ReadWriteOnce
       media:
         enabled: true
-        existingClaim: calibre-pvc
-        mountPath: /data
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${NAS_ADDR}"
+            path: ${NAS_DIR}/media/calibre
+        mountPath: /media
     resources:
       requests:
         cpu: 15m

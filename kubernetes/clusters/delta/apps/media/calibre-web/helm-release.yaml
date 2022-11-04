@@ -33,7 +33,6 @@ spec:
       DOCKER_MODS: ghcr.io/linuxserver/mods:universal-calibre
       PGID: "65539"
       PUID: "1000"
-      PASSWORD: ${SECRET_CALIBRE}
     service:
       main:
         ports:
@@ -64,7 +63,11 @@ spec:
         existingClaim: calibre-web-config-v1
       media:
         enabled: true
-        existingClaim: media
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${NAS_ADDR}"
+            path: ${NAS_DIR}/media/calibre
         mountPath: /media
     resources:
       requests:
@@ -72,4 +75,3 @@ spec:
         memory: 249M
       limits:
         memory: 299M
-        #GYsKDij4q@!5*76F!uN74dMH
