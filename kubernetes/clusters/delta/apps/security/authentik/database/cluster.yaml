@@ -12,13 +12,10 @@ spec:
   storage:
     size: 20Gi
     storageClass: ceph-block
-
   superuserSecret:
     name: postgres-superuser
-
   monitoring:
     enablePodMonitor: true
-
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
