@@ -18,7 +18,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: rook-direct-mount
-          image: rook/ceph:v1.10.3@sha256:6acc12dbb59ae865ae632b6b4023ff9ba883546a4e7d48187e71381ee96af6ee
+          image: rook/ceph:v1.10.0
           command: ["/bin/bash"]
           args: ["-m", "-c", "/usr/local/bin/toolbox.sh"]
           imagePullPolicy: IfNotPresent
@@ -52,11 +52,8 @@ spec:
             # - name: nas-backup
             #   mountPath: /mnt/nas-backup
           resources:
-            requests:
-              cpu: 15m
-              memory: 64M
-            limits:
-              memory: 64M
+            requests: {}
+            limits: {}
       # if hostNetwork: false, the "rbd map" command hangs, see https://github.com/rook/rook/issues/2021
       hostNetwork: true
       volumes:

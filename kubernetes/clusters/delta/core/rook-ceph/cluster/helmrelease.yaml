@@ -216,6 +216,7 @@ spec:
             mapOptions: ms_mode=secure
     cephObjectStores:
       - name: ceph-objectstore
+        # see https://github.com/rook/rook/blob/master/Documentation/ceph-object-store-crd.md#object-store-settings for available configuration
         spec:
           metadataPool:
             failureDomain: host
@@ -240,6 +241,8 @@ spec:
           enabled: true
           name: ceph-bucket
           reclaimPolicy: Delete
+          # see https://github.com/rook/rook/blob/master/Documentation/ceph-object-bucket-claim.md#storageclass for available configuration
           parameters:
-            region: eu-west-1
+            # note: objectStoreNamespace and objectStoreName are configured by the chart
+            region: us-east-1
             mapOptions: ms_mode=secure
