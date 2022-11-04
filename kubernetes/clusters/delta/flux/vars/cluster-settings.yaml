@@ -19,10 +19,10 @@ data:
   CLUSTER_DB_NODE_1: omega
   CLUSTER_DB_NODE_2: theta
   CLUSTER_DB_BACKUP_PREFIX: "backup/db"
-  CLUSTER_DB_NFS_PREFIX: "nfs"
   # Network
   NAS_ADDRESS: 10.0.1.100
-  
+  NAS_DIR: /data/share/nfs
+  #
   GATEWAY_IP: 10.10.0.1
   MANAGEMENT_CIDR: 10.0.1.0/24
   #

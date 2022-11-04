@@ -6,7 +6,7 @@ metadata:
 provisioner: nfs.csi.k8s.io
 parameters:
   server: "${NAS_ADDRESS}"
-  share: ${NAS_DIR}/${CLUSTER_DB_NFS_PREFIX}
+  share: ${NAS_DIR}
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 mountOptions:
