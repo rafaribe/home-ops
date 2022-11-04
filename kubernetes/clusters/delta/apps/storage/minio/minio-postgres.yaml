@@ -6,6 +6,8 @@ metadata:
     namespace: storage
     labels:
         k8s.enterprisedb.io/reload: "true"
+        reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+        reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
 stringData:
     MINIO_ACCESS_KEY: ENC[AES256_GCM,data:UERtmRfZ8xRGOoHvk/lYgA==,iv:Ft4jAmqLVOs1GslzbqwsYut0ihgDwR3M7v1AdS5mZGc=,tag:6jtlAE96Xto2L85uLj2J+A==,type:str]
     MINIO_SECRET_KEY: ENC[AES256_GCM,data:sTjkoBDD4012+GKyJwDz/djvOEGpnJL5mY09BiZvn1w=,iv:KbVXvf8lmPAFgmuQynqADdpBJn5DtvoH1ynNUUYObU8=,tag:rQmNC/+hz8hz0ap7fcLEOw==,type:str]
@@ -24,8 +26,8 @@ sops:
             OTYvMGRsQmdabG1RVk5tZ1d0aERZcDAKxysm6wghzpm+0ePHNzL1SBeZkWZUwM9v
             cqE52NbhRzWi32eiFJ2eUNLhRa4V4fbMPF0t/xFFoBtNPqKMAad91g==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-10-18T23:12:27Z"
-    mac: ENC[AES256_GCM,data:aHO3V0JPt4MHcqZJZV3yVIKgqwFfotUU0inH9+GQCDEnYTdgRbFL3XbdAxqvSOrT3ewYG1bkpv9Jm8cQdMq098pOUhpyz7g7WMJK2rfk166y+s1BTFpaLSSWtixnGDTA2eu5u7h0nqWewPFjyV4BTbbamvcln20JHw4qFopnkFk=,iv:xUkyF2mD5Yqu4ILxxrOdgmuyFng+KFuInldeRccJXwA=,tag:Q5cgBk/0v9Jag4CbjE2ypg==,type:str]
+    lastmodified: "2022-11-04T21:53:40Z"
+    mac: ENC[AES256_GCM,data:6dVlZwl93UeKlUjNmoQR6gYBrR/reUYLu2WsNIRkNuGDA2S6IRksdLTGjynz/4lhDoRH0ltH9XiHvdYLZiAZoPwOX86/3Cumc0W9+jM9qcOw2PsfYcuD0ea/CV4yvthZOq2vPL4I3BmBpkCqUBvTaKOxvg0niU3Mfz2d2yQYSn8=,iv:1X9eTk9926bY+8qDL53U3fRMsxHbiQoO+HuyPASkQNk=,tag:H6GF/6deGLLfEnes+7d1Og==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData)$
     version: 3.7.3
