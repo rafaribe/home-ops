@@ -4,8 +4,8 @@ kind: Kustomization
 resources:
   - basic-auth
   - dashboard
-  - helm-release.yaml
+  #- helm-release.yaml
   #- ingress-route.yaml
   - prometheus-rule.yaml
-  - workaround.yaml
+ # - workaround.yaml
   - object-bucket-claim.yaml
