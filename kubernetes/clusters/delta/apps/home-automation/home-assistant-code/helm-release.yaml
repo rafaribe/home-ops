@@ -23,7 +23,7 @@ spec:
       retries: 5
   dependsOn:
     - name: home-assistant
-      namespace: default
+      namespace: home-automation
   values:
     image:
       repository: ghcr.io/coder/code-server
