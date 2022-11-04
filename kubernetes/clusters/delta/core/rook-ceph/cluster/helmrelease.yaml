@@ -186,63 +186,65 @@ spec:
             mapOptions: ms_mode=secure
 
     cephFileSystems:
-      - name: ceph-filesystem
-        spec:
-          metadataPool:
-            replicated:
-              size: 3
-          dataPools:
-            - failureDomain: host
-              replicated:
-                size: 3
-          metadataServer:
-            activeCount: 3
-            activeStandby: true
-        storageClass:
-          enabled: true
-          isDefault: false
-          name: ceph-filesystem
-          reclaimPolicy: Delete
-          allowVolumeExpansion: true
-          mountOptions: []
-          parameters:
-            csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
-            csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
-            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
-            csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
-            csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
-            csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
-            csi.storage.k8s.io/fstype: ext4
-            mapOptions: ms_mode=secure
+      []
+      # - name: ceph-filesystem
+      #   spec:
+      #     metadataPool:
+      #       replicated:
+      #         size: 3
+      #     dataPools:
+      #       - failureDomain: host
+      #         replicated:
+      #           size: 3
+      #     metadataServer:
+      #       activeCount: 3
+      #       activeStandby: true
+      #   storageClass:
+      #     enabled: true
+      #     isDefault: false
+      #     name: ceph-filesystem
+      #     reclaimPolicy: Delete
+      #     allowVolumeExpansion: true
+      #     mountOptions: []
+      #     parameters:
+      #       csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+      #       csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+      #       csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
+      #       csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+      #       csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+      #       csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+      #       csi.storage.k8s.io/fstype: ext4
+      #       mapOptions: ms_mode=secure
     cephObjectStores:
-      - name: ceph-objectstore
-        spec:
-          metadataPool:
-            failureDomain: host
-            replicated:
-              size: 3
-          dataPool:
-            failureDomain: host
-            erasureCoded:
-              dataChunks: 2
-              codingChunks: 1
-          preservePoolsOnDelete: true
-          gateway:
-            port: 80
-            resources:
-              requests:
-                cpu: 1000m
-                memory: 1Gi
-              limits:
-                memory: 2Gi
-            instances: 1
-          healthCheck:
-            bucket:
-              interval: 60s
-        storageClass:
-          enabled: true
-          name: ceph-bucket
-          reclaimPolicy: Delete
-          parameters:
-            region: us-east-1
-            mapOptions: ms_mode=secure
+      []
+      # - name: ceph-objectstore
+      #   spec:
+      #     metadataPool:
+      #       failureDomain: host
+      #       replicated:
+      #         size: 3
+      #     dataPool:
+      #       failureDomain: host
+      #       erasureCoded:
+      #         dataChunks: 2
+      #         codingChunks: 1
+      #     preservePoolsOnDelete: true
+      #     gateway:
+      #       port: 80
+      #       resources:
+      #         requests:
+      #           cpu: 1000m
+      #           memory: 1Gi
+      #         limits:
+      #           memory: 2Gi
+      #       instances: 1
+      #     healthCheck:
+      #       bucket:
+      #         interval: 60s
+      #   storageClass:
+      #     enabled: true
+      #     name: ceph-bucket
+      #     reclaimPolicy: Delete
+      #     parameters:
+      #       region: us-east-1
+      #       mapOptions: ms_mode=secure
