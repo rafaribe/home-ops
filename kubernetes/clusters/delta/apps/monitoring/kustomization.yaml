@@ -5,4 +5,4 @@ resources:
   - kube-prometheus-stack
   - grafana
   - speedtest-prometheus
-  - loki
+ # - loki
