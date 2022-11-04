@@ -236,7 +236,7 @@ spec:
             instances: 1
           healthCheck:
             bucket:
-              interval: 60s
+              interval: 180s
         storageClass:
           enabled: true
           name: ceph-bucket
