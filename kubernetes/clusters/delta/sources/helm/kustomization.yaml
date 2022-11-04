@@ -8,6 +8,7 @@ resources:
   - cilium-charts.yaml
   - cloudnative-pg-charts.yaml
   - crossplane-charts.yaml
+  - csi-driver-nfs-charts.yaml
   - deliveryhero-charts.yaml
   - descheduler-charts.yaml
   - bjw-s.yaml
