@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - minio-postgres.yaml
+  - minio-loki.yaml
   - minio-prometheus.yaml
   - minio-users.yaml
   - nfs-pvc.yaml
