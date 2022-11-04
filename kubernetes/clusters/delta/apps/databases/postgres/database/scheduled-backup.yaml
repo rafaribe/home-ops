@@ -2,7 +2,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
   name: postgres-cluster-backup
-  namespace: database
+  namespace: databases
 spec:
   schedule: "@daily"
   immediate: true
