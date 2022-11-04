@@ -27,7 +27,7 @@ spec:
       tag: 2022.11.1@sha256:8a3b44e1ce7b90f196a9c76a3b743d74971ebe23c448c1ccda9abe3cf8a626d8
     env:
       TZ: "${TZ}"
-      POSTGRES_HOST: postgres-rw.databases.svc.cluster.local
+      POSTGRES_HOST: postgres-cluster-rw.databases.svc.cluster.local
       POSTGRES_DB: home_assistant
     envFrom:
       - secretRef:
