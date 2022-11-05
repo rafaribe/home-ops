@@ -86,7 +86,7 @@ spec:
             MODE=netserver
           ups.conf: |-
             [kubernetes]
-              driver = "blazer_usb"
+              driver = "usbhid-ups"
               port = "auto"
               vendorid = "0764"
               productid = "0601"
