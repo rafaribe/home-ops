@@ -28,6 +28,9 @@ spec:
       strategy: RollingUpdate
     env:
       TZ: "${TZ}"
+    args:
+      # the first time I set this, the first and last entries were ignored, so I have doubled them.
+      - --nut.vars_enable="battery.charge,battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,ups.load,ups.status,ups.status"
     service:
       main:
         ports:
@@ -39,30 +42,30 @@ spec:
           metallb.universe.tf/loadBalancerIPs: ${LB_NUT}
         externalTrafficPolicy: Cluster
       metrics:
-        enabled: false
+        enabled: true
         ports:
           metrics:
             enabled: true
             port: 9199
             protocol: TCP
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "nginx"
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: "nut.${EXTERNAL_DOMAIN}"
-          external-dns.alpha.kubernetes.io/target: ${SECREEXTERNAL_DOMAINT_DOMAIN}
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "power"
-          hajimari.io/group: "monitoring"
-        hosts:
-          - host: &host "nut.${EXTERNAL_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
+    # ingress:
+    #   main:
+    #     enabled: true
+    #     ingressClassName: "nginx"
+    #     annotations:
+    #       external-dns.alpha.kubernetes.io/hostname: "nut.${EXTERNAL_DOMAIN}"
+    #       external-dns.alpha.kubernetes.io/target: ${SECREEXTERNAL_DOMAINT_DOMAIN}
+    #       hajimari.io/enable: "true"
+    #       hajimari.io/icon: "power"
+    #       hajimari.io/group: "monitoring"
+    #     hosts:
+    #       - host: &host "nut.${EXTERNAL_DOMAIN}"
+    #         paths:
+    #           - path: /
+    #             pathType: Prefix
+    #     tls:
+    #       - hosts:
+    #           - *host
     securityContext:
       privileged: true
     persistence:

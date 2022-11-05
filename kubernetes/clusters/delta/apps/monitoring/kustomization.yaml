@@ -7,3 +7,4 @@ resources:
   - speedtest-prometheus
  # - loki
   - network-ups-tools
+  - prometheus-nut-exporter
