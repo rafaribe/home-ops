@@ -45,24 +45,24 @@ spec:
             enabled: true
             port: 9199
             protocol: TCP
-    # ingress:
-    #   main:
-    #     enabled: true
-    #     ingressClassName: "nginx"
-    #     annotations:
-    #       external-dns.alpha.kubernetes.io/hostname: "nut.${EXTERNAL_DOMAIN}"
-    #       external-dns.alpha.kubernetes.io/target: ${SECREEXTERNAL_DOMAINT_DOMAIN}
-    #       hajimari.io/enable: "true"
-    #       hajimari.io/icon: "power"
-    #       hajimari.io/group: "monitoring"
-    #     hosts:
-    #       - host: &host "nut.${EXTERNAL_DOMAIN}"
-    #         paths:
-    #           - path: /
-    #             pathType: Prefix
-    #     tls:
-    #       - hosts:
-    #           - *host
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "nut.${EXTERNAL_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: ${SECREEXTERNAL_DOMAINT_DOMAIN}
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "power"
+          hajimari.io/group: "monitoring"
+        hosts:
+          - host: &host "nut.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
     securityContext:
       privileged: true
     persistence:
@@ -85,7 +85,7 @@ spec:
           nut.conf: |-
             MODE=netserver
           ups.conf: |-
-            [kubernetes]
+            [powerwalker]
               driver = "usbhid-ups"
               port = "auto"
               vendorid = "0764"
@@ -103,7 +103,7 @@ spec:
               instcmds = ALL
               upsmon primary
           upsmon.conf: |-
-            MONITOR kubernetes@localhost:3493 1 upsmon "${NUT_PASSWORD}" primary
+            MONITOR powerwalker@localhost:3493 1 upsmon "${NUT_PASSWORD}" primary
             SHUTDOWNCMD "/sbin/shutdown -h +0"
             POWERDOWNFLAG /etc/killpower
             POLLFREQ 15

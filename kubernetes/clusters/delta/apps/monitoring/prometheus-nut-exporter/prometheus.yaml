@@ -61,7 +61,7 @@ kind: ServiceMonitor
 metadata:
   labels:
     app.kubernetes.io/component: metrics
-    app.kubernetes.io/instance: kubernetes
+    app.kubernetes.io/instance: powerwalker
     app.kubernetes.io/name: prometheus-nut-exporter
     prometheus: kube-prometheus
   name: prometheus-nut-exporter-kubernetes
@@ -71,12 +71,12 @@ spec:
     - interval: 30s
       metricRelabelings:
         - action: replace
-          replacement: kubernetes
+          replacement: powerwalker
           sourceLabels:
             - instance
           targetLabel: instance
         - action: replace
-          replacement: kubernetes
+          replacement: powerwalker
           sourceLabels:
             - server
           targetLabel: server
