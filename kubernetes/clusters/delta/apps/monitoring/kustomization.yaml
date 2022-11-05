@@ -6,3 +6,4 @@ resources:
   - grafana
   - speedtest-prometheus
  # - loki
+  - network-ups-tools

@@ -1,0 +1,110 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app network-ups-tools
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    image:
+      repository: ghcr.io/jr0dd/network-ups-tools
+      tag: v2.8.0@sha256:77f93d419b26c2a9eec6db212a70e38b1bd922ab7d5e80cca75ebfd1268e37ba
+    controller:
+      strategy: RollingUpdate
+    env:
+      TZ: "${TZ}"
+    service:
+      main:
+        ports:
+          http:
+            port: 3493
+            protocol: TCP
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: ${LB_NUT}
+        externalTrafficPolicy: Cluster
+      metrics:
+        enabled: false
+        ports:
+          metrics:
+            enabled: true
+            port: 9199
+            protocol: TCP
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "nut.${EXTERNAL_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "power"
+          hajimari.io/group: "monitoring"
+        hosts:
+          - host: &host "nut.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    securityContext:
+      privileged: true
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: &config network-ups-tools-config
+        mountPath: /etc/nut
+        defaultMode: 256
+      ups:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/bus/usb/001/001
+        mountPath: /dev/bus/usb/001/001
+        readOnly: false
+    configMaps:
+      config:
+        enabled: true
+        data:
+          nut.conf: |-
+            MODE=netserver
+          ups.conf: |-
+            [nutdev1]
+              driver = "usbhid-ups"
+              port = "auto"
+              vendorid = "0764"
+              productid = "0601"
+              bus = "001"
+              desc = "Powerwalker Basic VI 1000 STL"
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: *config
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - "omega"
+    tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+      - key: node-role.kubernetes.io/master
+        operator: Exists
