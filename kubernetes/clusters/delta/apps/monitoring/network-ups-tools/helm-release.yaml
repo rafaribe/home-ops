@@ -88,6 +88,7 @@ spec:
             [nutdev1]
               driver = "blazer_usb"
               port = "auto"
+              vendorid = "0764"
               productid = "0601"
               bus = "001"
               desc = "Powerwalker Basic VI 1000 STL"
