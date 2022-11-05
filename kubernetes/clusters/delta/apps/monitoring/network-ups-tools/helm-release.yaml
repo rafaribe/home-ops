@@ -75,7 +75,7 @@ spec:
       ups:
         enabled: true
         type: hostPath
-        hostPath: /dev/bus/usb/001/001
+        hostPath: /dev/bus/usb/001/002
         mountPath: /dev/bus/usb/001/001
         readOnly: false
     configMaps:
