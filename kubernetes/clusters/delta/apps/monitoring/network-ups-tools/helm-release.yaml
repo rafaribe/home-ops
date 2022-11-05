@@ -39,7 +39,7 @@ spec:
           metallb.universe.tf/loadBalancerIPs: ${LB_NUT}
         externalTrafficPolicy: Cluster
       metrics:
-        enabled: true
+        enabled: false
         ports:
           metrics:
             enabled: true
