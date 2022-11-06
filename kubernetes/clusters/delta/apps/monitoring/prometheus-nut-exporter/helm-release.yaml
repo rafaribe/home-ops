@@ -42,7 +42,7 @@ spec:
             enabled: true
             protocol: TCP
             port: 9199
-        type: LoadBalancer
+        type: ClusterIP
         externalTrafficPolicy: Cluster
         ipFamilyPolicy: PreferDualStack
     resources:
