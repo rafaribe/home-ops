@@ -58,7 +58,7 @@ spec:
       type: LoadBalancer
       annotations:
         metallb.universe.tf/loadBalancerIPs: |-
-          "${LB_EQMX}"
+          ${LB_EQMX}
       externalTrafficPolicy: Local
 
     ingress:
