@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - home-assistant
   - home-assistant-code
+  - eqmx
