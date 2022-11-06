@@ -56,7 +56,9 @@ spec:
 
     service:
       type: LoadBalancer
-      loadBalancerIP: "${LB_EMQX}"
+      annotations:
+        metallb.universe.tf/loadBalancerIPs: |-
+          "${LB_EMQX}"
       externalTrafficPolicy: Local
 
     ingress:
