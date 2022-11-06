@@ -63,6 +63,11 @@ spec:
 
     ingress:
       dashboard:
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "radio-tower"
+          external-dns.alpha.kubernetes.io/hostname: "eqmx.${EXTERNAL_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
         enabled: true
         ingressClassName: nginx
         path: /
