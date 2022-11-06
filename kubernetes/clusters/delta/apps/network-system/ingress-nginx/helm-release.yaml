@@ -61,34 +61,6 @@ spec:
         location-snippet: |
           auth_request_set $authentik_username $upstream_http_X_authentik_username;
           auth_request_set $authentik_groups $upstream_http_X_authentik_groups;
-        server-snippet: |
-          access_by_lua_block {
-            local username = ngx.var.authentik_username
-            local groups    = ngx.var.authentik_groups
-            local required_usernames = ngx.var['required_usernames']
-            local required_groups    = ngx.var['required_groups']
-              local sep = '|'
-            if (required_usernames ~= nil) then
-              for required_username in string.gmatch(required_usernames, "([^"..sep.."]+)") doauthentik
-                if string.match(username, required_username) then
-                  return;
-                end
-              end
-            end
-            if (required_groups ~= nil) then
-              for group in string.gmatch(groups, "([^"..sep.."]+)") do
-                for required_group in string.gmatch(required_groups, "([^"..sep.."]+)") do
-                  if string.match(group, required_group) then
-                    return;
-                  end
-                end
-              end
-            end
-            if (required_usernames ~= nil) or (required_groups ~= nil)  then
-              ngx.exit(ngx.HTTP_FORBIDDEN);
-            end
-          }
-        
       metrics:
         enabled: true
         serviceMonitor:
