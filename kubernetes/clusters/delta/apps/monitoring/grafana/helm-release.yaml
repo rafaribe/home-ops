@@ -52,9 +52,9 @@ spec:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
-          - name: "default"
+          - name: 'default'
             orgId: 1
-            folder: ""
+            folder: ''
             type: file
             disableDeletion: false
             editable: true
@@ -86,11 +86,11 @@ spec:
         #   gnetId: 12175
         #   revision: 5
         #   datasource: Prometheus
-        # minio:
-        #  gnetId: 13502
-        #  revision: 10
-        #  datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/11315
+        minio:
+          gnetId: 13502
+          revision: 10
+          datasource: Prometheus
+         #Ref: https://grafana.com/grafana/dashboards/11315
         unifi-client-insights:
           gnetId: 11315
           revision: 8
@@ -140,10 +140,19 @@ spec:
     sidecar:
       dashboards:
         enabled: true
+        logLevel: INFO
         searchNamespace: ALL
+        label: grafana_dashboard
+        labelValue: "true" # Create configmaps in JSON and provide the label "grafana_dashboard to import it via the sidecar"
+        folderAnnotation: grafana_folder # Can also specify the folder to segment the dashboards per folder
+        provider:
+          foldersFromFilesStructure: true
+          allowUiUpdates: true
       datasources:
         enabled: true
         searchNamespace: ALL
+        label: grafana_datasource
+        labelValue: "true"
     plugins:
       - natel-discrete-panel
       - pr0ps-trackmap-panel
@@ -174,6 +183,8 @@ spec:
       - fzakaria-simple-annotations-datasource
       - volkovlabs-rss-datasource
       - marcusolsson-static-datasource
+      # Data Sources
+      - camptocamp-prometheus-alertmanager-datasource
     serviceMonitor:
       enabled: true
     ingress:
