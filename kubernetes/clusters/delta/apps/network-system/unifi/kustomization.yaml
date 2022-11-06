@@ -3,9 +3,9 @@ kind: Kustomization
 namespace: network-system
 resources:
   - helm-release.yaml
-configMapGenerator:
-  - name: config-gateway
-    files:
-      - config.gateway.json
-generatorOptions:
-  disableNameSuffixHash: true
+# configMapGenerator:
+#   - name: config-gateway
+#     files:
+#       - config.gateway.json
+# generatorOptions:
+#   disableNameSuffixHash: true
