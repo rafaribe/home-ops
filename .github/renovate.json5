@@ -9,12 +9,12 @@
     ":enablePreCommit",
     ":automergeDigest",
     ":automergeBranchPush",
-  //  ":enablePreCommit",
+    ":enablePreCommit",
     "github>rafaribe/home-ops//.github/renovate/commitMessage",
     "github>rafaribe/home-ops//.github/renovate/labels",
     "github>rafaribe/home-ops//.github/renovate/semanticCommits",
     // "github>rafaribe/home-ops//.github/renovate/allowedVersions",
-    "github>rafaribe/home-ops//.github/renovate/groups",
+    //"github>rafaribe/home-ops//.github/renovate/groups",
     "github>rafaribe/home-ops//.github/renovate/disabledDatasources",
     "github>rafaribe/home-ops//.github/renovate/autoMerge",
     // "github>rafaribe/home-ops//.github/renovate/updateSchedule",
@@ -98,29 +98,18 @@
       ignoreDeprecated: true,
     },
     {
-      matchDatasources: ["docker"],
-      commitMessageExtra: "to {{newVersion}}",
+      description: "Use loose versioning for certain dependencies",
+      matchDatasources: ["docker", "github-releases"],
+      versioning: "loose",
+      matchPackageNames: [
+        "ghcr.io/onedr0p/plex",
+        "ghcr.io/onedr0p/qbittorrent",
+      ],
     },
-    // Custom version schemes
     {
       matchDatasources: ["docker"],
       matchPackageNames: ["blakeblackshear/frigate"],
       versioning: "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>.*)$",
-    },
-    {
-      matchDatasources: ["docker"],
-      matchPackageNames: ["xirixiz/dsmr-reader-docker"],
-      versioning: "regex:^(?<compatibility>.*)-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
-    },
-    {
-      matchDatasources: ["docker"],
-      matchPackageNames: ["quay.io/minio/minio"],
-      versioning: "regex:^RELEASE\\.(?<major>\\d{4})-(?<minor>\\d{2})-(?<patch>\\d{2})",
-    },
-    {
-      matchDatasources: ["docker"],
-      matchPackageNames: ["ghcr.io/airsonic-advanced/airsonic-advanced"],
-      versioning: "regex:^edge-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-SNAPSHOT\\.(?<build>\\d+)$",
     },
     // Version strategies
     {
@@ -147,9 +136,9 @@
     {
       matchDatasources: ["docker"],
       matchPackageNames: [
-        "kubernetes.gcr.io/kube-apiserver",
-        "kubernetes.gcr.io/kube-controller-manager",
-        "kubernetes.gcr.io/kube-scheduler",
+        "k8s.gcr.io/kube-apiserver",
+        "k8s.gcr.io/kube-controller-manager",
+        "k8s.gcr.io/kube-scheduler",
         "ghcr.io/siderolabs/kubelet",
       ],
       groupName: "kubernetes",
@@ -174,6 +163,36 @@
         "ghcr.io/linuxserver/calibre-web",
       ],
       versioning: "regex:^version-v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
+    },
+    {
+      matchDatasources: ["docker"],
+      matchPackageNames: ["blakeblackshear/frigate"],
+      versioning: "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>.*)$",
+    },
+    {
+      matchDatasources: ["docker"],
+      matchPackageNames: ["docker.io/timberio/vector"],
+      versioning: "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>.*)$",
+    },
+    {
+      description: "Use custom versioning for Minio",
+      matchDatasources: ["docker"],
+      versioning: "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z(-(?<compatibility>.*))?$",
+      matchPackageNames: ["quay.io/minio/minio"],
+    },
+    {
+      matchDatasources: ["docker"],
+      matchPackageNames: ["tomsquest/docker-radicale"],
+      versioning: "pep440",
+    },
+    {
+      description: "Use loose versioning for certain dependencies",
+      matchDatasources: ["docker", "github-releases"],
+      versioning: "loose",
+      matchPackageNames: [
+        "ghcr.io/onedr0p/plex",
+        "ghcr.io/onedr0p/qbittorrent",
+      ],
     },
   ],
 }
