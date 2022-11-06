@@ -18,7 +18,6 @@ spec:
   values:
     image:
       repository: ghcr.io/goauthentik/server
-      tag: 2022.9.0
       pullPolicy: IfNotPresent
     serviceAccount:
       create: false

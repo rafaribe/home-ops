@@ -7,15 +7,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: "*.${EXTERNAL_DOMAIN}"
+    - host: "ak-outpost.${EXTERNAL_DOMAIN}"
       http:
         paths:
-          - path: /akprox
+          - backend:
+                # Or, to use an external Outpost, create an ExternalName service and reference that here.
+                # See https://kubernetes.io/docs/concepts/services-networking/service/#externalname
+                serviceName: ak-outpost-authentik-embedded-outpost
+                servicePort: 9000
+            path: /outpost.goauthentik.io
             pathType: Prefix
-            backend:
-              # Or, to use an external Outpost, create an ExternalName service and reference that here.
-              # See https://kubernetes.io/docs/concepts/services-networking/service/#externalname
-              service:
-                name: ak-outpost-authentik-embedded-outpost
-                port:
-                  number: 9000
