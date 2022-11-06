@@ -32,6 +32,8 @@ spec:
     envFrom:
       - secretRef:
           name: *app
+    hostNetwork: true
+    dnsPolicy: ClusterFirstWithHostNet
     service:
       main:
         annotations:
