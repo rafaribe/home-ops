@@ -17,6 +17,13 @@ spec:
       interval: 15m
   install:
     createNamespace: true
+  valuesFrom:
+    # Cloudflare Networks
+    # https://www.cloudflare.com/ips/
+    - targetPath: controller.config.proxy-real-ip-cidr
+      kind: ConfigMap
+      name: &proxiednetworks cloudflare-proxied-networks
+      valuesKey: cloudflare-proxied-networks.txt
   values:
     controller:
       replicaCount: 2
@@ -99,10 +106,4 @@ spec:
                       operator: In
                       values: ["default-backend"]
                 topologyKey: kubernetes.io/hostname
-  valuesFrom:
-    # Cloudflare Networks
-    # https://www.cloudflare.com/ips/
-    - targetPath: controller.config.proxy-real-ip-cidr
-      kind: ConfigMap
-      name: &proxiednetworks cloudflare-proxied-networks
-      valuesKey: cloudflare-proxied-networks.txt
+
