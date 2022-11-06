@@ -44,7 +44,8 @@ spec:
       main:
         type: LoadBalancer
         nnotations:
-          metallb.universe.tf/loadBalancerIPs: ${LB_HASS_CODE_SERVER}
+          metallb.universe.tf/loadBalancerIPs: |-
+            ${LB_HASS_CODE_SERVER}
         ports:
           http:
             port: 80
