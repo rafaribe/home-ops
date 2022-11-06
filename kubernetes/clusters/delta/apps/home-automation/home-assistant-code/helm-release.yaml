@@ -43,7 +43,7 @@ spec:
     service:
       main:
         type: LoadBalancer
-        nnotations:
+        annotations:
           metallb.universe.tf/loadBalancerIPs: |-
             ${LB_HASS_CODE_SERVER}
         ports:
