@@ -7,3 +7,4 @@ metadata:
 spec:
   ipAddressPools:
   - default-pool
+  - home-network-pool
