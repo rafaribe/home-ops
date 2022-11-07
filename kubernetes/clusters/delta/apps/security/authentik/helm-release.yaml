@@ -19,8 +19,6 @@ spec:
     image:
       repository: ghcr.io/goauthentik/server
       pullPolicy: IfNotPresent
-    env:
-      AUTHENTIK_INSECURE: "true"
     serviceAccount:
       create: false
     
