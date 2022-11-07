@@ -81,6 +81,7 @@ spec:
               url: 'https://theverge.com/'
             - name: MIT Technology Review
               url: 'https://www.technologyreview.com/'
+    service:
     ingress:
       main:
         enabled: true
@@ -100,7 +101,7 @@ spec:
               http://ak-outpost-authentik-embedded-outpost.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
           # If you're using domain-level auth, use the authentication URL instead of the application URL
           nginx.ingress.kubernetes.io/auth-signin: |-
-              https://hajimari.rafaribe.com//outpost.goauthentik.io/start?rd=$escaped_request_uri
+              https://authentik.rafaribe.com//outpost.goauthentik.io/start?rd=$escaped_request_uri
           nginx.ingress.kubernetes.io/auth-response-headers: |-
               Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
           nginx.ingress.kubernetes.io/auth-snippet: |
