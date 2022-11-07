@@ -79,13 +79,17 @@ spec:
               - *host
 
     metrics:
-      enabled: false
+      enabled: true
 
     persistence:
       enabled: true
       storageClass: ceph-block
       size: 100Mi
-
+    ssl:
+      enabled: true
+      issuer:
+        name: letsencrypt-production
+        kind: ClusterIssuer
     # affinity:
     #   podAntiAffinity:
     #     preferredDuringSchedulingIgnoredDuringExecution:
