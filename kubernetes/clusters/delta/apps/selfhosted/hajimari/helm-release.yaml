@@ -117,9 +117,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: hajimari-config
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: "hajimari-settings"
+        existingClaim: hajimari-config 
     resources:
       requests:
         cpu: 100m
