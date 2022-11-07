@@ -45,7 +45,7 @@ spec:
         type: LoadBalancer
         annotations:
           metallb.universe.tf/loadBalancerIPs: |-
-            ${LB_HASS_CODE_SERVER}
+            ${LB_INFLUXDB}
         ports:
           http:
             port: 80
