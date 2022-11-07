@@ -19,8 +19,19 @@ spec:
   values:
     image:
       repository: ghcr.io/toboshii/hajimari
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
     hajimari:
+      title: rafaribe's home
+      name: You
       defaultEnable: true
+      namespaceSelector:
+        any: true
+      alwaysTargetBlank: true
+      showAppGroups: true
+      showAppUrls: false
+      showAppInfo: true
+      showGlobalBookmarks: true
       globalBookmarks:
         - group: Communicate
           bookmarks:
