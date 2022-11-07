@@ -81,7 +81,6 @@ spec:
               url: 'https://theverge.com/'
             - name: MIT Technology Review
               url: 'https://www.technologyreview.com/'
-    service:
     ingress:
       main:
         enabled: true
