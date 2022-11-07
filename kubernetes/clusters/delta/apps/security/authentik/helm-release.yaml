@@ -21,6 +21,7 @@ spec:
       pullPolicy: IfNotPresent
     env:
       AUTHENTIK_INSECURE: true
+      AUTHENTIK_DEBUG: true
     serviceAccount:
       create: false
     
