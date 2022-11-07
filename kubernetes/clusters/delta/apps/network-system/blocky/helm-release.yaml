@@ -3,120 +3,145 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: blocky
-  namespace: network-system
+  namespace: network
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: blocky
-      version: 10.5.2
+      chart: app-template
+      version: 1.0.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
   values:
     image:
-      repository: ghcr.io/0xerr0r/blocky
+      repository: spx01/blocky
       tag: v0.19
+
     controller:
-      replicas: 4
+      enabled: true
+      type: deployment
       strategy: RollingUpdate
+      replicas: 3
+
     env:
-      TZ: "Europe/Lisbon"
+      TZ: "${TZ}"
+
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: &config blocky-config
+        subPath: config.yml
+        mountPath: /app/config.yml
+        readOnly: true
+
+    configMaps:
+      config:
+        enabled: true
+        data:
+          config.yml: |-
+            upstream:
+              default:
+                - tcp+udp:10.0.1.1
+            conditional:
+              mapping:
+                microserver.space: tcp+udp:10.0.1.1
+            blocking:
+              blackLists:
+                ads:
+                - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+                - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+                - http://sysctl.org/cameleon/hosts
+                - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
+                cookies:
+                - https://www.fanboy.co.nz/fanboy-cookiemonster.txt
+              whiteLists:
+                ads:
+                - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
+                - https://raw.githubusercontent.com/rust84/k8s-gitops/main/k8s/clusters/cluster-0/manifests/network/blocky/whitelist.txt
+              clientGroupsBlock:
+                default:
+                - ads
+                  # - special
+            clientLookup:
+              upstream: tcp+udp:10.0.1.1
+            prometheus:
+              enable: true
+              path: /metrics
+            httpPort: 4000
+            logLevel: info
+
     service:
       main:
         enabled: true
         ports:
           http:
             port: 4000
-      dns-tcp:
+      dns:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: ${LB_BLOCKY}
+        loadBalancerIP: "${SVC_BLOCKY_ADDRESS}"
+        externalTrafficPolicy: Local
         ports:
           dns-tcp:
             enabled: true
             port: 53
             protocol: TCP
             targetPort: 53
-        externalTrafficPolicy: Local
-        annotations:
-          metallb.universe.tf/allow-shared-ip: blocky
-      dns-udp:
-        enabled: true
-        type: LoadBalancer
-        loadBalancerIP: ${LB_BLOCKY}
-        ports:
           dns-udp:
             enabled: true
             port: 53
             protocol: UDP
             targetPort: 53
-        externalTrafficPolicy: Local
-        annotations:
-          metallb.universe.tf/allow-shared-ip: blocky
-    metrics:
-      enabled: true
-      serviceMonitor:
-        interval: 30s
-        scrapeTimeout: 10s
-      prometheusRule:
+          dns-dot:
+            enabled: true
+            port: 853
+            protocol: TCP
+            targetPort: 853
+          dns-https:
+            enabled: true
+            port: 443
+            protocol: TCP
+            targetPort: 443
+
+    serviceMonitor:
+      main:
         enabled: true
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 30s
+
     podAnnotations:
-      configmap.reloader.stakater.com/reload: "blocky-config"
+      configmap.reloader.stakater.com/reload: *config
+
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - blocky
+              topologyKey: kubernetes.io/hostname
+
     resources:
       requests:
-        memory: 280Mi
-        cpu: 50m
+        memory: 100Mi
+        cpu: 100m
       limits:
-        memory: 1000Mi
-    config: |
-      upstream:
-        default:
-        #- tcp+udp:10.0.7.1
-          - tcp+udp:1.1.1.1
-          - tcp+udp:8.8.8.8
-          - tcp+udp:8.8.4.4
-          #- tcp-tls:1.0.0.1:853
-          - https://cloudflare-dns.com/dns-query
-      conditional:
-        mapping:
-          # local: tcp+udp:10.0.7.1
-          # home: tcp+udp:10.0.7.1
-      blocking:
-        blackLists:
-          ads:
-            - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-            - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
-            - http://sysctl.org/cameleon/hosts
-            - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
-            - https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt
-          kids:
-          - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
-          none:
-        whiteLists:
-          ads:
-            - https://raw.githubusercontent.com/billimek/k8s-gitops/master/default/blocky/whitelist.txt
-        clientGroupsBlock:
-          default:
-            - ads
-          10.0.2.1/24:
-            - ads
-          "*nsley*":
-            - ads
-            - kids
-          "*rinley*":
-            - ads
-            - kids
-          "*Jens-Air*":
-            - none
-        blockType: zeroIp
-      clientLookup:
-        upstream: tcp+udp:10.0.7.1
-      prometheus:
-        enable: true
-        path: /metrics
-      httpPort: 4000
-      logLevel: info
+        memory: 750Mi
