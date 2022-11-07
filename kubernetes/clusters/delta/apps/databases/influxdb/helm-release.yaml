@@ -58,5 +58,9 @@ spec:
       enabled: false
       className: "nginx"
       hostname: influx.${EXTERNAL_DOMAIN}
+      annotations:
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "database"
+        external-dns.alpha.kubernetes.io/hostname: "influx.${EXTERNAL_DOMAIN}"
       path: /
       tls: true
