@@ -19,3 +19,16 @@ spec:
   values:
     serviceAccount:
       create: true
+    auth:
+      enabled: true
+      users:
+        - name: admin
+          password: ${REDPANDA_ADMIN_PASSWORD}
+    resources:
+      memory:
+        max: 2.5Gi
+    storage:
+      persistentVolume:
+        enabled: true
+        size: 20Gi
+        storageClass: "rook-ceph"
