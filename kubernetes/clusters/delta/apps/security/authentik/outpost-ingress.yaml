@@ -5,6 +5,9 @@ metadata:
   name: authentik-outpost
   namespace: security
 spec:
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: ak-outpost.${EXTERNAL_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
   ingressClassName: nginx
   rules:
     - host: "ak-outpost.${EXTERNAL_DOMAIN}"
