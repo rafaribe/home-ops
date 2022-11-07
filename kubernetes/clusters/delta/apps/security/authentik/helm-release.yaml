@@ -20,8 +20,8 @@ spec:
       repository: ghcr.io/goauthentik/server
       pullPolicy: IfNotPresent
     env:
-      AUTHENTIK_INSECURE: true
-      AUTHENTIK_DEBUG: true
+      AUTHENTIK_INSECURE: "true"
+      AUTHENTIK_DEBUG: "true"
     serviceAccount:
       create: false
     
