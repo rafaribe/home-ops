@@ -197,8 +197,7 @@ spec:
                 synchronize: true
                 apiVersion: batch/v1
                 kind: CronJob
-                name: "{{ appName }}-snapshot"
-                #name: "{{ appName }}-{{ claimName }}-snapshot"
+                name: "{{ appName }}-{{ claimName }}-snapshot"
                 namespace: "{{ request.object.metadata.namespace }}"
                 data:
                   metadata:
