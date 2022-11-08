@@ -86,7 +86,7 @@ spec:
         enabled: true
         type: nfs
         server: "${NAS_ADDRESS}"
-        path: ${NAS_DIR}/kopia
+        path: ${NAS_BACKUP_DIR}
         mountPath: /snapshots
     podAnnotations:
       configmap.reloader.stakater.com/reload: *app
