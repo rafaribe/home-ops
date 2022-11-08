@@ -210,7 +210,7 @@ spec:
                         name: "{{ request.object.metadata.name }}"
                         uid: "{{ request.object.metadata.uid }}"
                   spec:
-                    schedule: "25 * * * *"
+                    schedule: "29 * * * *"
                     suspend: false
                     concurrencyPolicy: Forbid
                     successfulJobsHistoryLimit: 1
@@ -229,12 +229,15 @@ spec:
                                 image: ghcr.io/onedr0p/kopia:0.12.1@sha256:e333295b519ce586e7c050c970b2255d87bdb2979298ff87ebdb1113e381ba3b
                                 command: ["/scripts/sleep.sh"]
                                 args: ["1", "30"]
+                              - name: create-directories
+                                image: busybox:latest
+                                command: ["mkdir","-p","/snapshots/cache/", "&&", "mkdir", "-p", "/snapshots/logs"]
                             containers:
                               - name: snapshot
                                 image: ghcr.io/onedr0p/kopia:0.12.1@sha256:e333295b519ce586e7c050c970b2255d87bdb2979298ff87ebdb1113e381ba3b
                                 env:
                                   - name: KOPIA_CACHE_DIRECTORY
-                                    value: /snapshots/cache/cache
+                                    value: /snapshots/cache/
                                   - name: KOPIA_LOG_DIR
                                     value: /snapshots/logs
                                   - name: KOPIA_PASSWORD
