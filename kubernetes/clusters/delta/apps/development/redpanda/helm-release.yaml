@@ -25,8 +25,7 @@ spec:
         - name: admin
           password: ${REDPANDA_ADMIN_PASSWORD}
     resources:
-      memory:
-        max: 1Gi
+      memory: {}
     storage:
       persistentVolume:
         enabled: true
