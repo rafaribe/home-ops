@@ -9,7 +9,7 @@ resources:
   - development.yaml
   - flux-system.yaml
   - games.yaml
-  - home.yaml
+  - home-automation.yaml
   - kasten-io.yaml
   - kube-system.yaml
   - media.yaml
