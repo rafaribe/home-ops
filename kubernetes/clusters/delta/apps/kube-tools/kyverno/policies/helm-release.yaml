@@ -210,7 +210,7 @@ spec:
                         name: "{{ request.object.metadata.name }}"
                         uid: "{{ request.object.metadata.uid }}"
                   spec:
-                    schedule: "32 * * * *"
+                    schedule: "36 * * * *"
                     suspend: false
                     concurrencyPolicy: Forbid
                     successfulJobsHistoryLimit: 1
@@ -247,16 +247,15 @@ spec:
                                   - -c
                                   - |-
                                     printf "\e[1;32m%-6s\e[m\n" "[01/10] Create repo ..."              && [[ ! -f /snapshots/kopia.repository.f ]] && kopia repository create filesystem --path=/snapshots
-                                    printf "\e[1;32m%-6s\e[m\n" "[02/04] Set maintenance owner ..."    && kopia maintenance set --owner=root@cluster
-                                    printf "\e[1;32m%-6s\e[m\n" "[03/10] Connect to repo ..."          && kopia repo connect filesystem --path=/snapshots --override-hostname=cluster --override-username=root
-                                    printf "\e[1;32m%-6s\e[m\n" "[04/10] Set policies ..."             && kopia policy set /data/{{ namespace }}/{{ appName }}/{{ claimName }} --compression=zstd --keep-latest 14 --keep-hourly 0 --keep-daily 7 --keep-weekly 2 --keep-monthly 0 --keep-annual 0
-                                    printf "\e[1;32m%-6s\e[m\n" "[05/10] Freeze {{ claimName }} ..."   && fsfreeze -f /data/{{ namespace }}/{{ appName }}/{{ claimName }}
-                                    printf "\e[1;32m%-6s\e[m\n" "[06/10] Snapshot {{ claimName }} ..." && kopia snap create /data/{{ namespace }}/{{ appName }}/{{ claimName }}
-                                    printf "\e[1;32m%-6s\e[m\n" "[07/10] Unfreeze {{ claimName }} ..." && fsfreeze -u /data/{{ namespace }}/{{ appName }}/{{ claimName }}
-                                    printf "\e[1;32m%-6s\e[m\n" "[08/10] List snapshots ..."           && kopia snap list /data/{{ namespace }}/{{ appName }}/{{ claimName }}
-                                    printf "\e[1;32m%-6s\e[m\n" "[09/10] Show stats ..."               && kopia content stats
-                                    printf "\e[1;32m%-6s\e[m\n" "[10/10] Show maintenance info ..."    && kopia maintenance info
-                                    printf "\e[1;32m%-6s\e[m\n" "[11/10] Disconnect from repo ..."     && kopia repo disconnect
+                                    printf "\e[1;32m%-6s\e[m\n" "[02/10] Connect to repo ..."          && kopia repo connect filesystem --path=/snapshots --override-hostname=cluster --override-username=root
+                                    printf "\e[1;32m%-6s\e[m\n" "[03/10] Set policies ..."             && kopia policy set /data/{{ namespace }}/{{ appName }}/{{ claimName }} --compression=zstd --keep-latest 14 --keep-hourly 0 --keep-daily 7 --keep-weekly 2 --keep-monthly 0 --keep-annual 0
+                                    printf "\e[1;32m%-6s\e[m\n" "[04/10] Freeze {{ claimName }} ..."   && fsfreeze -f /data/{{ namespace }}/{{ appName }}/{{ claimName }}
+                                    printf "\e[1;32m%-6s\e[m\n" "[05/10] Snapshot {{ claimName }} ..." && kopia snap create /data/{{ namespace }}/{{ appName }}/{{ claimName }}
+                                    printf "\e[1;32m%-6s\e[m\n" "[06/10] Unfreeze {{ claimName }} ..." && fsfreeze -u /data/{{ namespace }}/{{ appName }}/{{ claimName }}
+                                    printf "\e[1;32m%-6s\e[m\n" "[07/10] List snapshots ..."           && kopia snap list /data/{{ namespace }}/{{ appName }}/{{ claimName }}
+                                    printf "\e[1;32m%-6s\e[m\n" "[08/10] Show stats ..."               && kopia content stats
+                                    printf "\e[1;32m%-6s\e[m\n" "[09/10] Show maintenance info ..."    && kopia maintenance info
+                                    printf "\e[1;32m%-6s\e[m\n" "[10/10] Disconnect from repo ..."     && kopia repo disconnect
                                 volumeMounts:
                                   - name: data
                                     mountPath: "/data/{{ namespace }}/{{ appName }}/{{ claimName }}"
