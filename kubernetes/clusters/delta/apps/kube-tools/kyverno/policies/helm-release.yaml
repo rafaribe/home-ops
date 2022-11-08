@@ -270,7 +270,7 @@ spec:
                               - name: snapshots
                                 nfs:
                                   server: "${NAS_ADDRESS}"
-                                  path: ${NAS_BACKUP_DIR}
+                                  path: /data/backups
                             affinity:
                               podAffinity:
                                 requiredDuringSchedulingIgnoredDuringExecution:
