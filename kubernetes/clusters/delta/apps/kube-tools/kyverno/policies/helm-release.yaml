@@ -210,11 +210,11 @@ spec:
                         name: "{{ request.object.metadata.name }}"
                         uid: "{{ request.object.metadata.uid }}"
                   spec:
-                    schedule: "59 * * * *"
+                    schedule: "48 * * * *"
                     suspend: false
                     concurrencyPolicy: Forbid
                     successfulJobsHistoryLimit: 1
-                    failedJobsHistoryLimit: 2
+                    failedJobsHistoryLimit: 100
                     jobTemplate:
                       spec:
                         # Keep at least one job in completed state in accordance to the schedule
