@@ -5,6 +5,7 @@ resources:
   - databases
   - development
   - kube-system
+  - kube-tools
   - home
   - media
   - network-system
