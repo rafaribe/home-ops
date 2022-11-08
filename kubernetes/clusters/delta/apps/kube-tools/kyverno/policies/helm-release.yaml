@@ -210,7 +210,7 @@ spec:
                         name: "{{ request.object.metadata.name }}"
                         uid: "{{ request.object.metadata.uid }}"
                   spec:
-                    schedule: "0 3 * * *"
+                    schedule: "20 * * * *"
                     suspend: false
                     concurrencyPolicy: Forbid
                     successfulJobsHistoryLimit: 1
@@ -267,7 +267,7 @@ spec:
                               - name: snapshots
                                 nfs:
                                   server: "${NAS_ADDRESS}"
-                                  path: /data/backups
+                                  path: ${NAS_BACKUP_DIR}
                             affinity:
                               podAffinity:
                                 requiredDuringSchedulingIgnoredDuringExecution:
