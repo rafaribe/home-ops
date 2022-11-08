@@ -3,7 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - helm-release.yaml
-namespace: default
+namespace: storage
 configMapGenerator:
   - name: kopia
     files:
