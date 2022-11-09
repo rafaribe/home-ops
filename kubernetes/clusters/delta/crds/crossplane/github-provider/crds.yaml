@@ -1,0 +1,37 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: crossplane-github-provider-source
+  namespace: flux-system
+spec:
+  interval: 30m
+  # renovate: datasource=github-releases
+  url: https://github.com/crossplane-contrib/provider-github.git
+  ignore: |
+    # exclude all
+    /*
+    # include deploy crds dir
+    !/package/crds
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: crossplane-github-provider-crds
+  namespace: flux-system
+spec:
+  interval: 15m
+  prune: false
+  sourceRef:
+    kind: GitRepository
+    name: crossplane-github-provider-source
+  healthChecks:
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: providerconfigs.github.crossplane.io
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: providerconfigusages.github.crossplane.io
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: memberships.organizations.github.crossplane.io
