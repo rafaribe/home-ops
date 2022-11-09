@@ -11,4 +11,5 @@ resources:
   - redpanda
   - rook-ceph
   - system-upgrade-controller
+  - tf-controller
   - trivy-operator
