@@ -46,6 +46,7 @@ resources:
   - rook-ceph-charts.yaml
   - sqljames-charts.yaml
   - stakater-charts.yaml
+  - tf-controller-charts.yaml
   - traefik-charts.yaml
   - trilio-charts.yaml
   - true-charts.yaml
