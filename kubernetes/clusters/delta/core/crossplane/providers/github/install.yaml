@@ -1,8 +1,19 @@
 ---
-apiVersion: meta.pkg.crossplane.io/v1alpha1
+apiVersion: pkg.crossplane.io/v1alpha1
+kind: ControllerConfig
+metadata:
+  name: jet-github-config
+  labels:
+    app: crossplane-provider-jet-github
+spec:
+  image: hotthoughts/provider-jet-github-controller:v0.0.1
+  args: ["-d"]
+---
+apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: provider-github
+  name: crossplane-provider-jet-github
 spec:
-  controller:
-    image: crossplane/provider-github-controller
+  package: hotthoughts/provider-jet-github:v0.0.1
+  controllerConfigRef:
+    name: jet-github-config

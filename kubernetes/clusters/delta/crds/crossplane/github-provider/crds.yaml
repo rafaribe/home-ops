@@ -7,9 +7,9 @@ metadata:
 spec:
   interval: 30m
   # renovate: datasource=github-releases
-  url: https://github.com/crossplane-contrib/provider-github.git
+  url: https://github.com/HotThoughts/provider-jet-github/.git
   ref:
-    branch: main
+    tag: v0.0.2
   ignore: |
     # exclude all
     /*
@@ -28,12 +28,21 @@ spec:
     kind: GitRepository
     name: crossplane-github-provider-source
   healthChecks:
-    - apiVersion: apiextensions.k8s.io/v1beta1
+    - apiVersion: apiextensions.k8s.io/v1
       kind: CustomResourceDefinition
-      name: providerconfigs.github.crossplane.io
-    - apiVersion: apiextensions.k8s.io/v1beta1
+      name: branches.branch.github.jet.crossplane.io
+    - apiVersion: apiextensions.k8s.io/v1
       kind: CustomResourceDefinition
-      name: providerconfigusages.github.crossplane.io
-    - apiVersion: apiextensions.k8s.io/v1beta1
+      name: providerconfigs.github.jet.crossplane.io
+    - apiVersion: apiextensions.k8s.io/v1
       kind: CustomResourceDefinition
-      name: memberships.organizations.github.crossplane.io
+      name: providerconfigusages.github.jet.crossplane.io
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: storeconfigs.github.jet.crossplane.io
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: repositories.repository.github.jet.crossplane.io
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: team.github.jet.crossplane.io
