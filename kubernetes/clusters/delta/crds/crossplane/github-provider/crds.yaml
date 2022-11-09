@@ -8,6 +8,8 @@ spec:
   interval: 30m
   # renovate: datasource=github-releases
   url: https://github.com/crossplane-contrib/provider-github.git
+  ref:
+    branch: main
   ignore: |
     # exclude all
     /*
