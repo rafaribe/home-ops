@@ -23,7 +23,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 15m
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: crossplane-github-provider-source
