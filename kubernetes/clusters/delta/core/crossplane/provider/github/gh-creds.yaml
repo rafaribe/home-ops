@@ -1,0 +1,28 @@
+# yamllint disable
+apiVersion: v1
+kind: Secret
+metadata:
+    name: crossplane
+    namespace: crossplane-system
+stringData:
+    token: ENC[AES256_GCM,data:rgnvldazZENaJuerk0U5rcGcK/704rJENaotqxHRH6IR8F/i4cf8eBv0/YdgnanLnmSZiXGm3hL5AdStDJ0eNd0azlhTsKIjPH1L1zaTNx45Mx7XjNMO2c+kNXN0,iv:mRDka3y5hqqV+X9WLcCC5fyN6hVQ72j4432XNpOoIAw=,tag:UL4mitiObsWDOI0RFUJuog==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBHUTNYbVE4VEJaTVlYcU0r
+            RjFJKzlvemxyOFBSVXJ1ZFlmMk9vQUNoZEZVCmNXT3k0dURzUlI0TmxjaGE2bXR6
+            eExpcDN3WHRucXUzM2pIZVBVL2lwRVEKLS0tIFdXekFBcEZKYnhtRXVnNU5ORkRK
+            MkxXSy9RRUVFZXlxUUlvNFpCUXQ3TnMKgsqoagMg6SWbKBfy4aLHgaJa9AlSEXeV
+            T0nDd4lqBCT9sFVV+J3P0GcPHWDunJYQdF3NXZDLx34JvHtslNCFug==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-11-09T20:09:20Z"
+    mac: ENC[AES256_GCM,data:INRy3X+pCdfMbqlGpFZvEIV448H4h6J5RwFD7GIxldMZr4dTWPEhXvi6PDt2qIPS8eamv5nvnLl1O0qP42mOfHEfEnWjwZwrumSSyOiWN+x6HFhN5qwyKVL+nR1OGk6Z4iK3tsA2JwelsmX+PF9XxljN4M8szj/sEkfi+jHrkbI=,iv:yCA0Pk7AiTDZWzNViw54iLKwTafNJ3syNJJCUxaKGjo=,tag:1hm4ORcnz6hQPA95Fj4vyQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

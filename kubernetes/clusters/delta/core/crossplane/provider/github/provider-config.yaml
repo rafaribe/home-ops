@@ -1,0 +1,11 @@
+apiVersion: github.crossplane.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: github
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: crossplane-system
+      name: gh-creds
+      key: token
