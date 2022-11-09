@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 30m
   # renovate: datasource=github-releases
-  url: https://github.com/HotThoughts/provider-jet-github/.git
+  url: https://github.com/HotThoughts/provider-jet-github.git
   ref:
     tag: v0.0.2
   ignore: |
