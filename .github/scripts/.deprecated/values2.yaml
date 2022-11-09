@@ -1,0 +1,57 @@
+autoDirectNodeRoutes: true
+bgp:
+  enabled: false
+bgpControlPlane:
+  enabled: false
+cluster:
+  id: "0"
+  name: delta
+containerRuntime:
+  integration: containerd
+endpointRoutes:
+  enabled: true
+hubble:
+  enabled: true
+  metrics:
+    enabled:
+      - dns:query;ignoreAAAA
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+      - http
+  relay:
+    enabled: true
+    rollOutPods: true
+  serviceMonitor:
+    enabled: true
+  ui:
+    enabled: true
+    ingress:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      enabled: true
+      hosts:
+        - &host hubble.rafaribe.com
+      tls:
+        - hosts:
+            - *host
+    rollOutPods: true
+ipam:
+  mode: kubernetes
+ipv4NativeRoutingCIDR: 10.42.0.0/16
+k8sServiceHost: 10.0.1.200
+k8sServicePort: 6443
+kubeProxyReplacement: strict
+kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10356
+loadBalancer:
+  algorithm: maglev
+  mode: dsr
+localRedirectPolicy: true
+operator:
+  rollOutPods: true
+rollOutCiliumPods: true
+securityContext:
+  privileged: true
+tunnel: disabled

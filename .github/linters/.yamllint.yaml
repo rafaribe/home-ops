@@ -3,7 +3,8 @@ ignore: |
   .vscode/
   **/gotk-components.yaml
   ansible/
-
+  *.sops.*
+  gotk-components.yaml
 extends: default
 
 rules:
