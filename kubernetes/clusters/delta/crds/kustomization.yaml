@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - cert-manager
   - cloudnative-pg
-  - crossplane
+  #- crossplane
   - external-snapshotter
   - kube-prometheus-stack
   - metallb
