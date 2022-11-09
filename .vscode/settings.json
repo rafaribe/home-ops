@@ -10,7 +10,7 @@
         "**/cluster/**/*.sops.toml": "plaintext"
     },
     "material-icon-theme.folders.associations": {
-        "pulumi": "server",
+        "infrastructure": "server",
         ".taskfiles": "utils",
         "authentication": "keys",
         "bootstrap": "import",

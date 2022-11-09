@@ -6,6 +6,7 @@ resources:
   - development
   - kube-system
   - kube-tools
+  - infrastructure
   - home
   - media
   - network-system
