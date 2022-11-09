@@ -22,7 +22,7 @@
   platform: "github",
   username: "naoki-bot[bot]",
   repositories: ["rafaribe/home-ops"],
-  gitAuthor: "naoki-bot <111944664+rafaribe[bot]@users.noreply.github.com",
+  gitAuthor: "naoki-bot <260101+naoki-bot[bot]@users.noreply.github.com",
   semanticCommits: "enabled",
   onboarding: false,
   dependencyDashboard: true,
