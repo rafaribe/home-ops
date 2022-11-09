@@ -1,11 +1,11 @@
-apiVersion: github.crossplane.io/v1beta1
+apiVersion: github.jet.crossplane.io/v1alpha1
 kind: ProviderConfig
 metadata:
-  name: github
+  name: jet-github-config
 spec:
   credentials:
     source: Secret
     secretRef:
+      name: github-creds
       namespace: crossplane-system
-      name: gh-creds
       key: token
