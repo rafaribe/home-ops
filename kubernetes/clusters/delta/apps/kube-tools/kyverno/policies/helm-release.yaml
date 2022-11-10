@@ -65,7 +65,6 @@ spec:
                 patchStrategicMerge:
                   metadata:
                     annotations:
-                      +(nginx.ingress.kubernetes.io/auth-method): GET
                       +(nginx.ingress.kubernetes.io/auth-url): |-
                         http://ak-outpost-authentik-embedded-outpost.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
                       +(nginx.ingress.kubernetes.io/auth-signin): |-

@@ -92,12 +92,7 @@ spec:
           cert-manager.io/cluster-issuer: letsencrypt-production
           external-dns.alpha.kubernetes.io/hostname: hajimari.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
-          # This should be the in-cluster DNS name for the authentik outpost service
-          # as when the external URL is specified here, nginx will overwrite some crucial headers
-          # This should be the in-cluster DNS name for the authentik outpost service
-          # as when the external URL is specified here, nginx will overwrite some crucial headers
-          nginx.ingress.kubernetes.io/auth-url: |-
-              http://ak-outpost-authentik-embedded-outpost.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+          auth.home.arpa/enabled: "true"
           # If you're using domain-level auth, use the authentication URL instead of the application URL
           nginx.ingress.kubernetes.io/auth-signin: |-
               https://akoutpost.${EXTERNAL_DOMAIN}//outpost.goauthentik.io/start?rd=$escaped_request_uri
