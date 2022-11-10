@@ -75,7 +75,14 @@ extra:
       link: https://rafaribe.github.io/
   # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#remove-generator
   generator: false
-
+  # Cookie consent
+  consent:
+    title: Cookie consent
+    description: >- 
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
 # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#copyright-notice
 copyright: Copyright &copy; 2022 Bruno Rafael Ribeiro
 
@@ -97,37 +104,38 @@ plugins:
 
 # https://www.mkdocs.org/user-guide/configuration/#markdown_extensions
 markdown_extensions:
-  - admonition
   - abbr
-  - meta
-  - md_in_html
+  - admonition
   - attr_list
   - codehilite:
       guess_lang: false
-  - toc:
-      permalink: true
-  - pymdownx.tabbed
-  - pymdownx.tilde
-  - pymdownx.progressbar
-  - pymdownx.tasklist
-  - pymdownx.snippets:
-      base_path:
-        - ../../docs/src/
-        - ../../docs/_includes/
-        - docs/_includes/
-      auto_append:
-        - abbreviations.md
-      check_paths: true
+  - md_in_html
+  - meta
+  - pymdownx.betterem
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:materialx.emoji.twemoji
   - pymdownx.highlight:
       anchor_linenums: true
-  # - pymdownx.emoji:
-  #     emoji_index: !!python/name:materialx.emoji.twemoji
-  #     emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.progressbar
+  - pymdownx.snippets:
+      auto_append:
+        - abbreviations.md
+      base_path:
+        - ../../docs/_includes/
+        - ../../docs/src/
+        - docs/_includes/
+      check_paths: true
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed
+  - pymdownx.tasklist
+  - pymdownx.tilde
+  - toc:
+      permalink: true
 
 nav:
   - Introduction: index.md
