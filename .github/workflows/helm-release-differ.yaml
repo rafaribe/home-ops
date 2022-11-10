@@ -6,7 +6,7 @@ on: # yamllint disable-line rule:truthy
     branches:
       - main
     paths:
-      - "cluster/**.yaml"
+      - "kubernetes/**/**.yaml"
 
 env:
   # Currently no way to detect automatically

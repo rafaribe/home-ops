@@ -1,6 +1,6 @@
 ---
 maintainers:
-  - rafaribe
+    - rafaribe
 # Allows for the /label and /remove-label commands
 # usage: /label enhancement
 # usage: /remove-label enhancement
@@ -10,17 +10,17 @@ labels: true
 # Settings for branch destroyer
 # branch destroyer will not delete your default branch
 branch_destroyer:
-  enabled: true
+    enabled: true
   # set other "protected" branches here
-  protected_branches:
-    - main
-    - master
-    - major-refactor
+    protected_branches:
+        - main
+        - master
+        - major-refactor
 pull_requests:
   # The Setting to enable automated merges
-  automated_merge: false
+    automated_merge: false
   # The time in days after a PR should be labeled inactive
-  stale_time: 15
+    stale_time: 15
   # This will limit the amount of PR's a single contributer can have
   # Limits work in progress
   # limit_pull_requests:
@@ -29,9 +29,9 @@ pull_requests:
   # open_message: |
   #   Greetings! Thanks for opening a PR
   # Enables the /cat command
-  cats_enabled: true
+    cats_enabled: true
   # enables the /dog command
-  dogs_enabled: true
+    dogs_enabled: true
   # Allows any maintainer in the list to run /approve
   # Paul will approve the PR (Does not merge it)
-  allow_approval: true
+    allow_approval: true

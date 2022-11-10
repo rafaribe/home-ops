@@ -6,5 +6,5 @@ metadata:
   namespace: network-system
 spec:
   ipAddressPools:
-  - default-pool
-  - home-network-pool
+    - default-pool
+    - home-network-pool

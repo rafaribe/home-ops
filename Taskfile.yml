@@ -1,62 +1,62 @@
 ---
-version: "3"
+version: '3'
 
 vars:
-  PROJECT_DIR:
-    sh: "git rev-parse --show-toplevel"
-  CLUSTER_DIR: "{{.PROJECT_DIR}}/kubernetes/clusters/delta"
-  ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible/rke2"
+    PROJECT_DIR:
+        sh: git rev-parse --show-toplevel
+    CLUSTER_DIR: '{{.PROJECT_DIR}}/kubernetes/clusters/delta'
+    ANSIBLE_DIR: '{{.PROJECT_DIR}}/ansible/rke2'
 
-dotenv: [".config.env"]
+dotenv: [.config.env]
 
 env:
-  KUBECONFIG: "/home/rafaribe/.kube/home-ops"
+    KUBECONFIG: /home/rafaribe/.kube/home-ops
 
 includes:
-  ansible: .github/taskfiles/ansible.yaml
-  cluster: .github/taskfiles/cluster.yaml
-  precommit: .github/taskfiles/pre-commit.yaml
-  lint: .github/taskfiles/lint.yaml
-  format: .github/taskfiles/format.yaml
-  snapshot: .github/taskfiles/snapshot-tasks.yaml
+    ansible: .github/taskfiles/ansible.yaml
+    cluster: .github/taskfiles/cluster.yaml
+    precommit: .github/taskfiles/pre-commit.yaml
+    lint: .github/taskfiles/lint.yaml
+    format: .github/taskfiles/format.yaml
+    snapshot: .github/taskfiles/snapshot-tasks.yaml
 
 tasks:
-  init:
-    desc: Initialize workstation dependencies with Brew
-    cmds:
-      - brew install {{.DEPS}} {{.CLI_ARGS}}
-    preconditions:
-      - sh: command -v brew
-        msg: |
-          Homebrew is not installed. Using MacOS, Linux or WSL?
-          Head over to https://brew.sh to get up and running.
-    vars:
-      DEPS: >-
-        age
-        ansible
-        direnv
-        fluxcd/tap/flux
-        gitleaks
-        go-task/tap/go-task
-        helm
-        ipcalc
-        jq
-        kubernetes-cli
-        kustomize
-        pre-commit
-        prettier
-        sops
-        stern
-        terraform
-        yamllint
-        yq
+    init:
+        desc: Initialize workstation dependencies with Brew
+        cmds:
+            - brew install {{.DEPS}} {{.CLI_ARGS}}
+        preconditions:
+            - sh: command -v brew
+              msg: |
+                  Homebrew is not installed. Using MacOS, Linux or WSL?
+                  Head over to https://brew.sh to get up and running.
+        vars:
+            DEPS: >-
+                age
+                ansible
+                direnv
+                fluxcd/tap/flux
+                gitleaks
+                go-task/tap/go-task
+                helm
+                ipcalc
+                jq
+                kubernetes-cli
+                kustomize
+                pre-commit
+                prettier
+                sops
+                stern
+                terraform
+                yamllint
+                yq
 
-  verify:
-    desc: Verify env settings
-    cmds:
-      - ./configure --verify
+    verify:
+        desc: Verify env settings
+        cmds:
+            - ./configure --verify
 
-  configure:
-    desc: Configure repository from env settings
-    cmds:
-      - ./configure
+    configure:
+        desc: Configure repository from env settings
+        cmds:
+            - ./configure

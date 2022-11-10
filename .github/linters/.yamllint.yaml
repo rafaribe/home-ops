@@ -5,6 +5,7 @@ ignore: |
   ansible/
   *.sops.*
   gotk-components.yaml
+  .github/scripts/.deprecated/
 extends: default
 
 rules:

@@ -22,7 +22,7 @@ spec:
     remediation:
       retries: 5
   values:
-    
+
     image:
       repository: jacobalberty/unifi
       tag: v7.2.94
