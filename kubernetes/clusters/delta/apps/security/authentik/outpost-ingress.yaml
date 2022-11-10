@@ -18,7 +18,7 @@ spec:
                 # See https://kubernetes.io/docs/concepts/services-networking/service/#externalname
               service:
                 name: ak-outpost-authentik-embedded-outpost
-                port: 
+                port:
                   name: http
             path: /outpost.goauthentik.io
             pathType: Prefix

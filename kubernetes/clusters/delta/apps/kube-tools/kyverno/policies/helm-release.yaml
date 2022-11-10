@@ -231,7 +231,7 @@ spec:
                                 args: ["1", "30"]
                               - name: create-directories
                                 image: busybox:latest
-                                command: ["mkdir","-p","/snapshots/cache/", "&&", "mkdir", "-p", "/snapshots/logs"]
+                                command: ["mkdir", "-p", "/snapshots/cache/", "&&", "mkdir", "-p", "/snapshots/logs"]
                             containers:
                               - name: snapshot
                                 image: ghcr.io/onedr0p/kopia:0.12.1@sha256:e333295b519ce586e7c050c970b2255d87bdb2979298ff87ebdb1113e381ba3b
