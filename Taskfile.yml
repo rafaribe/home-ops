@@ -18,6 +18,7 @@ includes:
   precommit: .github/taskfiles/pre-commit.yaml
   lint: .github/taskfiles/lint.yaml
   format: .github/taskfiles/format.yaml
+  snapshot: .github/taskfiles/snapshot-tasks.yaml
 
 tasks:
   init:
