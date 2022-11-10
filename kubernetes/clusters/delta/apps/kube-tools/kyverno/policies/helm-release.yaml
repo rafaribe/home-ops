@@ -88,15 +88,10 @@ spec:
               it applies the external-dns annotations for use with external
               application access.
         spec:
-        
           mutateExistingOnPolicyUpdate: true
           generateExistingOnPolicyUpdate: true
           rules:
             - name: external-dns
-              context:
-                - name: appName
-                  variable:
-                    jmesPath: "request.object.metadata.labels.\"app.kubernetes.io/name\""
               match:
                 any:
                   - resources:
@@ -109,8 +104,6 @@ spec:
                     annotations:
                       +(external-dns.alpha.kubernetes.io/target): |-
                         ${EXTERNAL_DOMAIN}
-                      +(external-dns.alpha.kubernetes.io/hostname: |-
-                        {{ appName }}.${EXTERNAL_DOMAIN}
 
       - apiVersion: kyverno.io/v1
         kind: ClusterPolicy
