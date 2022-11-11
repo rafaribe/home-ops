@@ -90,7 +90,7 @@ spec:
           kubernetes.io/ingress.allow-http: "false"
           nginx.ingress.kubernetes.io/router.entrypoints: websecure
           cert-manager.io/cluster-issuer: letsencrypt-production
-          external-dns.home.arpa/enabled: "true"
+          auth.home.arpa/enabled: "true"
         hosts:
           - host: "hajimari.${EXTERNAL_DOMAIN}"
             paths:
