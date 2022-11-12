@@ -116,25 +116,25 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
-    ingress:
-      dashboard:
-        ingressClassName: nginx
-        annotations:
-          cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
-          kubernetes.io/ingress.class: "nginx"
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          external-dns.alpha.kubernetes.io/hostname: rook.{EXTERNAL_DOMAIN}
-          external-dns.home.arpa/enabled: "true"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: content-save
-          hajimari.io/appName: "rook-ceph"
-        host:
-          name: &host "rook.${EXTERNAL_DOMAIN}"
-          path: "/"
-        tls:
-          - secretName: tls.rook-ceph
-            hosts:
-              - *host
+    # ingress:
+    #   dashboard:
+    #     ingressClassName: nginx
+    #     annotations:
+    #       cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
+    #       kubernetes.io/ingress.class: "nginx"
+    #       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    #       external-dns.alpha.kubernetes.io/hostname: rook.{EXTERNAL_DOMAIN}
+    #       external-dns.home.arpa/enabled: "true"
+    #       hajimari.io/enable: "true"
+    #       hajimari.io/icon: content-save
+    #       hajimari.io/appName: "rook-ceph"
+    #     host:
+    #       name: &host "rook.${EXTERNAL_DOMAIN}"
+    #       path: "/"
+    #     tls:
+    #       - secretName: tls.rook-ceph
+    #         hosts:
+    #           - *host
     mon:
       count: 3
       allowMultiplePerNode: false
