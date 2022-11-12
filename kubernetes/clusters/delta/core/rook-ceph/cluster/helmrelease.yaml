@@ -156,7 +156,7 @@ spec:
             - name: /dev/disk/by-id/scsi-33001237923792379
         - name: theta
           devices:
-            - name: /dev/sdb
+            - name: /dev/disk/by-id/scsi-SSanDisk_Extreme_55AE_2209DN403175
         - name: odroid
           devices:
             - name: /dev/disk/by-id/ata-TOSHIBA_MQ01UBD100_34ODT9I6T
