@@ -118,6 +118,7 @@ spec:
         ssl: false
     ingress:
       dashboard:
+        ingressClassName: nginx
         annotations:
           kubernetes.io/ingress.class: "nginx"
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
