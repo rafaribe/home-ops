@@ -125,7 +125,7 @@ spec:
           external-dns/is-public: "false"
           hajimari.io/enable: "true"
           hajimari.io/icon: content-save
-          hajimari.io/appName: "rook-ceph
+          hajimari.io/appName: "rook-ceph"
         host:
           name: &host "rook.${EXTERNAL_DOMAIN}"
           path: "/"
@@ -152,7 +152,6 @@ spec:
           devices:
             - name: /dev/sdc
             - name: /dev/disk/by-id/scsi-33001237923792379
-
         - name: theta
           devices:
             - name: /dev/sdb
