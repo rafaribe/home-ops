@@ -88,10 +88,6 @@ spec:
         spec:
           mutateExistingOnPolicyUpdate: true
           generateExistingOnPolicyUpdate: true
-          context:
-          - name: dnsHost
-            variable:
-              jmesPath: "spec.rules[0].host"
           rules:
             - name: external-dns
               match:
@@ -104,8 +100,6 @@ spec:
                 patchStrategicMerge:
                   metadata:
                     annotations:
-                      +(external-dns.alpha.kubernetes.io/target): |-
-                        {{ dnsHost }}
                       +(external-dns.alpha.kubernetes.io/hostname): |-
                         ${EXTERNAL_DOMAIN}
       - apiVersion: kyverno.io/v1
