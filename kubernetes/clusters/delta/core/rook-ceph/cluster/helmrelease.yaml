@@ -111,11 +111,10 @@ spec:
             memory: "100M"
           limits:
             memory: "1G"
-
       dashboard:
         enabled: true
         urlPrefix: /
-        ssl: false
+        ssl: true
     ingress:
       dashboard:
         ingressClassName: nginx
@@ -137,7 +136,7 @@ spec:
       count: 3
       allowMultiplePerNode: false
     mgr:
-      count: 1
+      count: 2
       allowMultiplePerNode: false
     storage:
       useAllNodes: false
