@@ -17,6 +17,12 @@ jobs:
         uses: azure/setup-helm@v3
         with:
           version: v3.6.3
+      - name: Generate Token
+        uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.BOT_APP_ID }}
+          private_key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
       - name: Add library chart
         run: helm repo add k8s-at-home-library https://library-charts.k8s-at-home.com
       - name: Update helm repositories
@@ -27,7 +33,7 @@ jobs:
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: "${{ steps.generate-token.outputs.token }}"
           branch: github-action/renovate-kah-library-chart
           delete-branch: true
           title: "chore(github-action): update kah library chart"
