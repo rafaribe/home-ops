@@ -138,6 +138,9 @@ spec:
     mgr:
       count: 2
       allowMultiplePerNode: false
+      modules:
+      - name: rook
+        enabled: true
     storage:
       useAllNodes: false
       useAllDevices: false
