@@ -29,7 +29,7 @@ spec:
     crds:
       enabled: false
     toolbox:
-      enabled: false
+      enabled: true
     csi:
       kubeletDirPath: /var/lib/kubelet
       enableCSIHostNetwork: true
