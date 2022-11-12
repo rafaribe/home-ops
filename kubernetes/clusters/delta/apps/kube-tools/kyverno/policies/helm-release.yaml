@@ -88,6 +88,10 @@ spec:
         spec:
           mutateExistingOnPolicyUpdate: true
           generateExistingOnPolicyUpdate: true
+          context:
+          - name: appName
+            variable:
+              jmesPath: "request.object.metadata.labels.\"app.kubernetes.io/name\""
           rules:
             - name: external-dns
               match:
@@ -101,8 +105,9 @@ spec:
                   metadata:
                     annotations:
                       +(external-dns.alpha.kubernetes.io/target): |-
+                        {{ appName }}.${EXTERNAL_DOMAIN}
+                      +(external-dns.alpha.kubernetes.io/hostname): |-
                         ${EXTERNAL_DOMAIN}
-
       - apiVersion: kyverno.io/v1
         kind: ClusterPolicy
         metadata:
