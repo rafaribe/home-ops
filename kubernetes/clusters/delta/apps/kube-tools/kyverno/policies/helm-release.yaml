@@ -100,7 +100,7 @@ spec:
                 patchStrategicMerge:
                   metadata:
                     annotations:
-                      +(external-dns.alpha.kubernetes.io/hostname): |-
+                      +(external-dns.alpha.kubernetes.io/target): |-
                         ${EXTERNAL_DOMAIN}
       - apiVersion: kyverno.io/v1
         kind: ClusterPolicy
