@@ -120,7 +120,7 @@ spec:
         ingressClassName: nginx
         annotations:
           cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
-          external-dns.alpha.kubernetes.io/hostname: rook.{EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: rook.${EXTERNAL_DOMAIN}
           external-dns.home.arpa/enabled: "true"
           hajimari.io/enable: "true"
           hajimari.io/icon: content-save
