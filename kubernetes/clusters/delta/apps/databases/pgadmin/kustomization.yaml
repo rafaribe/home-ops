@@ -4,3 +4,4 @@ kind: Kustomization
 namespace: databases
 resources:
   - helm-release.yaml
+  - volume.yaml
