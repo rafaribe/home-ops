@@ -52,13 +52,6 @@ spec:
         enabled: true
       outposts:
         docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
-      postgresql:
-        # Should be present on the secret created by the postgres operator
-        host: authentik-rw.security.svc.cluster.local
-        name: app
-        user: app
-        password: ${AUTHENTIK_PG_PASSWORD}
-
     postgresql:
       enabled: false
 
@@ -76,3 +69,22 @@ spec:
         scrapeTimeout: 3s
       rules:
         create: true
+    envFrom:
+      - secretRef:
+          name: authentik-database-secrets
+    initContainers:
+      init-db:
+        image: ghcr.io/onedr0p/postgres-initdb:14.5
+        env:
+          - name: POSTGRES_HOST
+            value: postgres-cluster-rw.databases.svc.cluster.local
+          - name: POSTGRES_DB
+            value: authentik
+          - name: POSTGRES_SUPER_PASS
+            valueFrom:
+              secretKeyRef:
+                name: postgres-superuser
+                key: password
+        envFrom:
+          - secretRef:
+              name: authentik-database-secrets
