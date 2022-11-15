@@ -56,7 +56,7 @@ spec:
       password: ${AUTHENTIK_PG_PASSWORD}
       user: app
       host: postgres-cluster-rw.databases.svc.cluster.local
-      name: authentik
+      name: authentik-db
     postgresql:
       enabled: false
 
@@ -84,7 +84,7 @@ spec:
           - name: POSTGRES_HOST
             value: postgres-cluster-rw.databases.svc.cluster.local
           - name: POSTGRES_DB
-            value: authentik
+            value: authentik-db
           - name: POSTGRES_SUPER_PASS
             valueFrom:
               secretKeyRef:
