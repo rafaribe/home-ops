@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph-cluster
-      version: v1.10.5
+      version: v1.10.6
       sourceRef:
         kind: HelmRepository
         name: rook-ceph-charts
@@ -139,8 +139,8 @@ spec:
       count: 2
       allowMultiplePerNode: false
       modules:
-      - name: rook
-        enabled: true
+        - name: rook
+          enabled: true
     storage:
       useAllNodes: false
       useAllDevices: false
@@ -214,37 +214,37 @@ spec:
             csi.storage.k8s.io/fstype: ext4
             mapOptions: ms_mode=secure
     cephObjectStores:
-    - name: ceph-objectstore
-      # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Object-Storage/ceph-object-store-crd.md#object-store-settings for available configuration
-      spec:
-        metadataPool:
-          failureDomain: host
-          replicated:
-            size: 3
-        dataPool:
-          failureDomain: host
-          erasureCoded:
-            dataChunks: 2
-            codingChunks: 1
-        preservePoolsOnDelete: true
-        gateway:
-          port: 80
-          resources:
-            limits:
-              cpu: "2000m"
-              memory: "2Gi"
-            requests:
-              cpu: "1000m"
-              memory: "1Gi"
-          # securePort: 443
-          # sslCertificateRef:
-          instances: 1
-          priorityClassName: system-cluster-critical
-      storageClass:
-        enabled: true
-        name: ceph-bucket
-        reclaimPolicy: Delete
-        # see https://github.com/rook/rook/blob/master/Documentation/ceph-object-bucket-claim.md#storageclass for available configuration
-        parameters:
-          # note: objectStoreNamespace and objectStoreName are configured by the chart
-          region: us-east-1
+      - name: ceph-objectstore
+        # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Object-Storage/ceph-object-store-crd.md#object-store-settings for available configuration
+        spec:
+          metadataPool:
+            failureDomain: host
+            replicated:
+              size: 3
+          dataPool:
+            failureDomain: host
+            erasureCoded:
+              dataChunks: 2
+              codingChunks: 1
+          preservePoolsOnDelete: true
+          gateway:
+            port: 80
+            resources:
+              limits:
+                cpu: "2000m"
+                memory: "2Gi"
+              requests:
+                cpu: "1000m"
+                memory: "1Gi"
+            # securePort: 443
+            # sslCertificateRef:
+            instances: 1
+            priorityClassName: system-cluster-critical
+        storageClass:
+          enabled: true
+          name: ceph-bucket
+          reclaimPolicy: Delete
+          # see https://github.com/rook/rook/blob/master/Documentation/ceph-object-bucket-claim.md#storageclass for available configuration
+          parameters:
+            # note: objectStoreNamespace and objectStoreName are configured by the chart
+            region: us-east-1
