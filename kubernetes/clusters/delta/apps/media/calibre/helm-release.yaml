@@ -88,8 +88,7 @@ spec:
     persistence:
       config:
         enabled: true
-        size: 512Mi
-        accessMode: ReadWriteOnce
+        existingClaim: calibre-config-v1
       media:
         enabled: true
         type: nfs
