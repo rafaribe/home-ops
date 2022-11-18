@@ -88,10 +88,10 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: calibre-media-nfs
+        existingClaim: calibre-config-v1
       media:
         enabled: true
-        existingClaim: calibre-config-v1
+        existingClaim: calibre-media-nfs
     resources:
       requests:
         cpu: 15m
