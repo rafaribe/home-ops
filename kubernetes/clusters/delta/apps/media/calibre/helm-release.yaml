@@ -88,13 +88,10 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: calibre-config-v1
+        existingClaim: calibre-media-nfs
       media:
         enabled: true
-        type: nfs
-        server: "${NAS_ADDRESS}"
-        path: ${NAS_DIR}/media/calibre
-        mountPath: /media
+        existingClaim: calibre-config-v1
     resources:
       requests:
         cpu: 15m
