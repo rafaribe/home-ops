@@ -29,8 +29,10 @@ spec:
       repository: ghcr.io/linuxserver/calibre-web
       tag: 0.6.19
     env:
-      PGID: "65539"
-      PUID: "1000"
+      TZ: "${TZ}"
+      PUID: 1000
+      PGID: 1000
+      DOCKER_MODS: "linuxserver/mods:universal-calibre"
     service:
       main:
         ports:
