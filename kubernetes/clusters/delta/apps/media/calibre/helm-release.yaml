@@ -33,6 +33,9 @@ spec:
       PUID: "1000"
       UMASK_SET: "022"
       PASSWORD: ${SECRET_CALIBRE}
+    securityContext:
+      seccompProfile:
+        type: Unconfined
     service:
       main:
         ports:
@@ -53,7 +56,7 @@ spec:
         ingressClassName: nginx
         annotations:
           cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
-          external-dns/is-public: "false"
+          external-dns/is-public: "true"
           hajimari.io/enable: "true"
           hajimari.io/icon: "book-open-page-variant"
           external-dns.alpha.kubernetes.io/hostname: calibre.${EXTERNAL_DOMAIN}
