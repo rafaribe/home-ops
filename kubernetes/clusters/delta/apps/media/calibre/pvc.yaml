@@ -3,8 +3,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: calibre-media
   namespace: media
+  labels:
+    snapshot.home.arpa/enabled: "true"
 spec:
-  persistentVolumeReclaimPolicy: Retain
   accessModes:
     - ReadWriteMany
   storageClassName: nfs
@@ -17,9 +18,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: calibre-config-v2
   namespace: media
-
+  labels:
+    snapshot.home.arpa/enabled: "true"
 spec:
-  persistentVolumeReclaimPolicy: Retain
   accessModes:
     - ReadWriteOnce
   resources:
