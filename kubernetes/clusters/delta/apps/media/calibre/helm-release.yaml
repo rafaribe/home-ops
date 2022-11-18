@@ -41,15 +41,12 @@ spec:
         ports:
           http:
             port: 8080
-      webserver:
+      content-server:
         enabled: true
         ports:
-          webserver:
+          content-server:
             enabled: true
             port: 8081
-            protocol: TCP
-            targetPort: 8081
-        type: ClusterIP
     ingress:
       main:
         enabled: true
@@ -58,7 +55,7 @@ spec:
           cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
           external-dns/is-public: "true"
           hajimari.io/enable: "true"
-          hajimari.io/icon: "book-open-page-variant"
+          hajimari.io/icon: bookshelf
           external-dns.alpha.kubernetes.io/hostname: calibre.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
         hosts:
@@ -69,6 +66,25 @@ spec:
           - secretName: calibre-tls
             hosts:
               - *host
+      content-server:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: book-open-page-variant
+          external-dns.alpha.kubernetes.io/hostname: read.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+        hosts:
+          - host: &host2 read.${EXTERNAL_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: calibre-content-server
+                  port: 8081
+        tls:
+          - hosts:
+              - *host2
     persistence:
       config:
         enabled: true
