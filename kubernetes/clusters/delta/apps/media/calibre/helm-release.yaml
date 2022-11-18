@@ -29,7 +29,7 @@ spec:
       repository: ghcr.io/linuxserver/calibre
       tag: 6.7.1
     env:
-      PGID: "65539"
+      PGID: "1000"
       PUID: "1000"
       UMASK_SET: "022"
       PASSWORD: ${SECRET_CALIBRE}
