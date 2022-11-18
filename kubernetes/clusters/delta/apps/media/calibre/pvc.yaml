@@ -8,7 +8,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: nfs
+  storageClassName: ceph-block
   resources:
     requests:
       storage: 100Mi
