@@ -89,8 +89,8 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: "george.${INTERNAL_DOMAIN}"
-        path: /data/
+        server: ${NAS_ADDRESS}
+        path: ${NAS_DIR}
         mountPath: /media
 
     resources:
