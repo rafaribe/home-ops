@@ -7,11 +7,11 @@ metadata:
     snapshot.home.arpa/enabled: "true"
 spec:
   accessModes:
-    - ReadWriteMany
-  storageClassName: ceph-block
+    - ReadWriteOnce
+  storageClassName: nfs
   resources:
     requests:
-      storage: 100Mi
+      storage: 30Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -25,5 +25,5 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
+      storage: 1Gi
   storageClassName: ceph-block
