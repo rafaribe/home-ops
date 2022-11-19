@@ -35,6 +35,7 @@ spec:
 
     service:
       main:
+        type: LoadBalancer
         annotations:
           metallb.universe.tf/loadBalancerIPs: |-
             ${LB_QBITTORRENT_UI}
