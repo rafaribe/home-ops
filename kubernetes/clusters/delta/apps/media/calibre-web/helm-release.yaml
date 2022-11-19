@@ -44,7 +44,7 @@ spec:
         ingressClassName: nginx
         labels:
           theme-park.home/name: calibreweb
-          theme-park.home/theme: onedark
+          theme-park.home/theme: maroon
         annotations:
           cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
           external-dns/is-public: "false"
