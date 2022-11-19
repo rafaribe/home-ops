@@ -63,10 +63,7 @@ spec:
         existingClaim: calibre-web-config-v1
       media:
         enabled: true
-        type: nfs
-        server: "${NAS_ADDRESS}"
-        path: ${NAS_DIR}/media/calibre
-        mountPath: /media
+        existingClaim: calibre-media
     resources:
       requests:
         cpu: 15m
