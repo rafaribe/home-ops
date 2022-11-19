@@ -94,10 +94,10 @@ spec:
         existingClaim: calibre-media
     resources:
       requests:
-        cpu: 15m
-        memory: 298M
+        cpu: 250m
+        memory: 900M
       limits:
-        memory: 357M
+        memory: 1Gi
     probes:
       startup:
         enabled: false
