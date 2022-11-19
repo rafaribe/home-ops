@@ -41,8 +41,9 @@ spec:
       bittorrent:
         enabled: true
         type: LoadBalancer
-        externalIPs:
-          - "${LB_QBITTORRENT}"
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: |-
+            ${LB_QBITTORRENT}
         ports:
           bittorrent:
             enabled: true
@@ -56,23 +57,8 @@ spec:
 
     ingress:
       main:
-        enabled: true
-        ingressClassName: "nginx"
-        labels:
-          theme-park.home/name: qbittorrent
-          theme-park.home/theme: maroon
-        annotations:
-          theme.home.arpa/enabled: "true"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "cloud-download"
-        hosts:
-          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
+        enabled: false
+
 
     podSecurityContext:
       runAsUser: 568
