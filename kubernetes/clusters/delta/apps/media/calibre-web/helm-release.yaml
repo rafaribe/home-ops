@@ -50,7 +50,7 @@ spec:
           external-dns/is-public: "false"
           hajimari.io/enable: "true"
           hajimari.io/icon: "book-open-page-variant"
-          external-dns.alpha.kubernetes.io/target: calibre-web.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: calibre-web.${EXTERNAL_DOMAIN}
           theme.home.arpa/enabled: "true"
         hosts:
           - host: &host calibre-web.${EXTERNAL_DOMAIN}
