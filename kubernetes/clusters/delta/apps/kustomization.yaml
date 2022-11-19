@@ -4,13 +4,14 @@ kind: Kustomization
 resources:
   - databases
   - development
+  - home
   - kube-system
   - kube-tools
-  - home
   - media
+  - monitoring
   - network-system
-  - selfhosted
   - security
+  - selfhosted
   - storage
   - system-upgrade
-  - monitoring
+  - web-tools
