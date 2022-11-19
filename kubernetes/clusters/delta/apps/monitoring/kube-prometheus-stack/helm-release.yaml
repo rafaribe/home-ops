@@ -79,7 +79,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - AlertManager'
           nginx.ingress.kubernetes.io/router.entrypoints: "websecure"
           external-dns.alpha.kubernetes.io/hostname: alertmanager.${EXTERNAL_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+          
         hosts:
           - "alertmanager.${EXTERNAL_DOMAIN}"
         tls:
@@ -115,7 +115,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - Prometheus'
           nginx.ingress.kubernetes.io/router.entrypoints: "websecure"
           external-dns.alpha.kubernetes.io/hostname: prometheus.${EXTERNAL_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+          
         hosts:
           - "prometheus.${EXTERNAL_DOMAIN}"
         tls:

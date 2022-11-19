@@ -47,7 +47,6 @@ spec:
           theme-park.home/theme: maroon
         annotations:
           cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
-          external-dns/is-public: "false"
           hajimari.io/enable: "true"
           hajimari.io/icon: "book-open-page-variant"
           external-dns.alpha.kubernetes.io/hostname: calibre-web.${EXTERNAL_DOMAIN}

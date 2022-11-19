@@ -57,7 +57,7 @@ spec:
         #   hajimari.io/enable: "true"
         #   hajimari.io/icon: "microsoft-visual-studio-code"
         #   external-dns.alpha.kubernetes.io/hostname: "hass-code.${EXTERNAL_DOMAIN}"
-        #   external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+        #   
         # hosts:
         #   - host: &host "hass-code.${EXTERNAL_DOMAIN}"
         #     paths:

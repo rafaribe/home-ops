@@ -121,7 +121,7 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
           external-dns.alpha.kubernetes.io/hostname: rook.${EXTERNAL_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+          
           hajimari.io/enable: "true"
           hajimari.io/icon: content-save
           hajimari.io/appName: "rook-ceph"

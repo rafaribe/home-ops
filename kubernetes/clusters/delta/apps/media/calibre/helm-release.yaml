@@ -57,7 +57,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: bookshelf
           external-dns.alpha.kubernetes.io/hostname: calibre.${EXTERNAL_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+          
         hosts:
           - host: &host calibre.${EXTERNAL_DOMAIN}
             paths:
@@ -73,7 +73,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: book-open-page-variant
           external-dns.alpha.kubernetes.io/hostname: read.${EXTERNAL_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+          
         hosts:
           - host: &host2 read.${EXTERNAL_DOMAIN}
             paths:
