@@ -29,7 +29,8 @@ spec:
     env:
       TZ: "${TZ}"
       QBITTORRENT__PORT: &port 80
-      QBITTORRENT__BT_PORT: &port-bt 8090
+      QBITTORRENT__BT_PORT: &port-bt 8080
+      WEBUI_PORT: *port-bt
 
     hostname: qbittorrent
 
