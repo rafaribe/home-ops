@@ -21,9 +21,6 @@ spec:
   upgrade:
     remediation:
       retries: 5
-  dependsOn:
-    - name: downloads-gateway
-      namespace: vpn
   values:
     image:
       repository: ghcr.io/onedr0p/qbittorrent
@@ -32,7 +29,7 @@ spec:
     env:
       TZ: "${TZ}"
       QBITTORRENT__PORT: &port 80
-      QBITTORRENT__BT_PORT: &port-bt ${SECRET_VPN_FORWARDED_PORT_1}
+      QBITTORRENT__BT_PORT: &port-bt 8090
 
     hostname: qbittorrent
 
