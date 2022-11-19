@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - databases
   - development
+  - downloads
   - home
   - kube-system
   - kube-tools

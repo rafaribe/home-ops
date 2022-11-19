@@ -1,0 +1,104 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app qbittorrent
+  namespace: downloads
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  dependsOn:
+    - name: downloads-gateway
+      namespace: vpn
+  values:
+    image:
+      repository: ghcr.io/onedr0p/qbittorrent
+      tag: 4.4.5@sha256:51153d31dd1dca2ec67256827ace50dc38911cdbef19cc4d318e92bb84a1ea45
+
+    env:
+      TZ: "${TZ}"
+      QBITTORRENT__PORT: &port 80
+      QBITTORRENT__BT_PORT: &port-bt ${SECRET_VPN_FORWARDED_PORT_1}
+
+    hostname: qbittorrent
+
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+      bittorrent:
+        enabled: true
+        type: LoadBalancer
+        externalIPs:
+          - "${LB_QBITTORRENT}"
+        ports:
+          bittorrent:
+            enabled: true
+            port: *port-bt
+            protocol: TCP
+            targetPort: *port-bt
+        externalTrafficPolicy: Local
+
+    podAnnotations:
+      setGateway: "true"
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        labels:
+          theme-park.home/name: qbittorrent
+          theme-park.home/theme: maroon
+        annotations:
+          theme.home.arpa/enabled: "true"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "cloud-download"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 100
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: qbittorrent-config-v1
+      media:
+        enabled: true
+        type: nfs
+        server: "george.${INTERNAL_DOMAIN}"
+        path: /data/
+        mountPath: /media
+
+    resources:
+      requests:
+        cpu: 10m
+        memory: 250Mi
+      limits:
+        memory: 6000Mi
