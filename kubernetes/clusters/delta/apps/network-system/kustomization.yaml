@@ -4,7 +4,7 @@ resources:
   - blocky
   - default-certificate
   - dynamic-dns
- # - external-dns
+  - external-dns
   - ingress-nginx
   - metallb
   - unifi

@@ -34,7 +34,7 @@ spec:
         nginx.ingress.kubernetes.io/enable-global-auth: "false"
         cert-manager.io/cluster-issuer: letsencrypt-production
         external-dns.alpha.kubernetes.io/hostname: authentik.${EXTERNAL_DOMAIN}
-        
+        external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
         hajimari.io/enable: "true"
         hajimari.io/icon: "shield-account-variant"
         hajimari.io/appName: "Authentik"
