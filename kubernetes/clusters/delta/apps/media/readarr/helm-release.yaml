@@ -51,6 +51,7 @@ spec:
         ingressClassName: "nginx"
         annotations:
           theme.home.arpa/enabled: "true"
+          external-dns.home.arpa/enabled: "true"
         hosts:
           - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
             paths:

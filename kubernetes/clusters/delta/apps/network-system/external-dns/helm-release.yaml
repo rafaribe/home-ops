@@ -35,8 +35,7 @@ spec:
             key: api-key
     extraArgs:
       - --cloudflare-proxied
-      - --zone-id-filter=${SECRET_CLOUDFLARE_ZONE_ID} # (optional) limit to a specific zone.
-      - --fqdn-template={{.Name}}.${EXTERNAL_DOMAIN}
+      - --annotation-filter=external-dns.home.arpa/enabled in (true)
     policy: sync
     sources:
       - ingress
