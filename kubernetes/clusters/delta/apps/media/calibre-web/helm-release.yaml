@@ -61,9 +61,9 @@ spec:
       config:
         enabled: true
         existingClaim: calibre-web-config-v1
-      media:
-        enabled: true
-        existingClaim: calibre-media
+      # media:
+      #   enabled: true
+      #   existingClaim: calibre-media
     resources:
       requests:
         cpu: 15m
