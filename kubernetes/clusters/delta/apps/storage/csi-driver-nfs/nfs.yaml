@@ -9,6 +9,7 @@ parameters:
   share: ${NAS_DIR}
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
+allowVolumeExpansion: true
 mountOptions:
   - nfsvers=4.2
   - nconnect=8
