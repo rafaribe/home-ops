@@ -40,7 +40,7 @@ spec:
         annotations:
           external-dns.home.arpa/enabled: "true"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
+          - host: &host "themepark.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
