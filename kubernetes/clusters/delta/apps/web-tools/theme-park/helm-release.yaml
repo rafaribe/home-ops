@@ -22,8 +22,10 @@ spec:
     remediation:
       retries: 5
   values:
+    env:
+      TP_COMMUNITY_THEME: "true"
     controller:
-      replicas: 3
+      replicas: 1
       strategy: RollingUpdate
     image:
       repository: ghcr.io/onedr0p/theme-park
