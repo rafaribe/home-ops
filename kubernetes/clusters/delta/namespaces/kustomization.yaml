@@ -10,6 +10,7 @@ resources:
   - flux-system.yaml
   - games.yaml
   - home.yaml
+  - infrastructure.yaml
   - kyverno.yaml
   - kube-system.yaml
   - media.yaml
