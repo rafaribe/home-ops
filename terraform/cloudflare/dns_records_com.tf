@@ -11,17 +11,9 @@
 #   type    = "A"
 #   ttl     = 1
 # }
-resource "cloudflare_record" "cname_wildcard" {
-  name    = var.cloudflare_domain_com
-  zone_id = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
-  value   = "*"
-  proxied = true
-  type    = "CNAME"
-  ttl     = 1
-}
 
 resource "cloudflare_record" "cname_root" {
-  name    = var.cloudflare_domain_com
+  name    = "cname_root"
   zone_id = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
   value   = var.cloudflare_domain_com
   proxied = true
