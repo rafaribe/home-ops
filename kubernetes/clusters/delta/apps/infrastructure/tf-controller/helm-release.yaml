@@ -8,10 +8,10 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: ./charts/tf-controller
+      chart: tf-controller
       sourceRef:
-        kind: GitRepository
-        name: tf-controller
+        kind: HelmRepository
+        name: tf-controller-charts
         namespace: flux-system
   install:
     createNamespace: true
