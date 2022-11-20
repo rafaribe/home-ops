@@ -3,7 +3,7 @@ terraform {
 
   required_version = ">= 1.3.0"
   cloud {
-    hostname = "app.terraform.io"
+    hostname     = "app.terraform.io"
     organization = "rafaribe"
 
     workspaces {
@@ -12,11 +12,10 @@ terraform {
   }
 
   required_providers {
-    provider "authentik" {
-    url   = "https://beryjuorg-dev.my.goauthentik.io"
-    token = "foo-bar"
-    # Optionally set insecure to ignore TLS Certificates
-    # insecure = true
+    authentik = {
+      source  = "goauthentik/authentik"
+      version = "2022.10.0"
     }
   }
 }
+

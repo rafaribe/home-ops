@@ -17,3 +17,5 @@ age.agekey
 cenas/endpoint_modificado.yaml
 cenas/endpoint.yaml
 auth
+terraform/**/.env
+.terraform/
