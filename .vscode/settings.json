@@ -26,6 +26,7 @@
         "networking": "connection",
         "storage": "dump",
         "web-tools": "custom"
+        "terraforms": "terraform"
     },
     "prettier.configPath": ".github/linters/.prettierrc.yaml",
     "prettier.ignorePath": ".github/linters/.prettierignore",
