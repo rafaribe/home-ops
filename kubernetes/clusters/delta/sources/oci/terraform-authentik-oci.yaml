@@ -2,10 +2,10 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: terraform-cloudflare-oci
+  name: terraform-authentik-oci
   namespace: flux-system
 spec:
   interval: 1m
-  url: oci://ghcr.io/rafaribe/terraform-cloudflare-oci
+  url: oci://ghcr.io/rafaribe/terraform-authentik-oci
   ref:
     tag: main
