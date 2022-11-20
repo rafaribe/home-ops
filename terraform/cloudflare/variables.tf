@@ -14,7 +14,3 @@ variable "cloudflare_domain_com" {
   type        = string
   description = "My .com domain"
 }
-variable "cloudflare_public_cname_domain_com" {
-  type        = string
-  description = "Public CNAME that do not proxy thru Cloudflare"
-}

@@ -29,14 +29,6 @@ resource "cloudflare_record" "cname_www" {
   type    = "CNAME"
   ttl     = 1
 }
-resource "cloudflare_record" "cname_public" {
-  name    = var.cloudflare_public_cname_domain_com
-  zone_id = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
-  value   = "ipv4.${var.cloudflare_domain_com}"
-  proxied = false
-  type    = "CNAME"
-  ttl     = 1
-}
 
 # #
 # # UptimeRobot
