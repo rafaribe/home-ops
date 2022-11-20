@@ -10,7 +10,6 @@ terraform {
       name = "home-authentik"
     }
   }
-
   required_providers {
     authentik = {
       source  = "goauthentik/authentik"
