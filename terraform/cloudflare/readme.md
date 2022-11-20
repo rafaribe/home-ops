@@ -1,4 +1,4 @@
-Quick oneliner to run on CLI
+# Terraform - Cloudflare
 
 ```sh
 export $(xargs <.env)&& tf plan
