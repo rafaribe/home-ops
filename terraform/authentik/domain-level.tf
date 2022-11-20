@@ -3,14 +3,14 @@ data "authentik_flow" "default-authorization-flow" {
 }
 
 resource "authentik_provider_proxy" "name" {
-  name               = "test-app"
-  internal_host      = "http://foo.bar.baz"
-  external_host      = "http://internal.service"
+  name               = "forward-auth-domain"
+  mode               = "forward_domain"
   authorization_flow = data.authentik_flow.default-authorization-flow.id
+  external_host      = var.authentik_domain_proxy_external_url
 }
 
 resource "authentik_application" "name" {
-  name              = "test-app"
-  slug              = "test-app"
+  name              = "domain-auth"
+  slug              = "domain-auth"
   protocol_provider = authentik_provider_proxy.name.id
 }

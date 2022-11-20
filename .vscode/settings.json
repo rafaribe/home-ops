@@ -25,8 +25,9 @@
         "monitoring": "event",
         "networking": "connection",
         "storage": "dump",
-        "web-tools": "custom"
-        "terraforms": "terraform"
+        "web-tools": "custom",
+        "terraforms": "terraform",
+        "terraform": "terraform"
     },
     "prettier.configPath": ".github/linters/.prettierrc.yaml",
     "prettier.ignorePath": ".github/linters/.prettierignore",
