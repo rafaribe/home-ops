@@ -2,20 +2,28 @@
 # Base records
 #
 
-# Record which will be updated by DDNS
-resource "cloudflare_record" "apex_ipv4" {
-  name    = "ipv4"
+# # Record which will be updated by DDNS
+# resource "cloudflare_record" "apex_ipv4" {
+#   name    = "ipv4"
+#   zone_id = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
+#   value   = chomp(data.http.ipv4.response_body)
+#   proxied = true
+#   type    = "A"
+#   ttl     = 1
+# }
+resource "cloudflare_record" "cname_wildcard" {
+  name    = var.cloudflare_domain_com
   zone_id = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
-  value   = chomp(data.http.ipv4.response_body)
+  value   = "*"
   proxied = true
-  type    = "A"
+  type    = "CNAME"
   ttl     = 1
 }
 
 resource "cloudflare_record" "cname_root" {
   name    = var.cloudflare_domain_com
   zone_id = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
-  value   = "ipv4.${var.cloudflare_domain_com}"
+  value   = var.cloudflare_domain_com
   proxied = true
   type    = "CNAME"
   ttl     = 1
@@ -24,7 +32,7 @@ resource "cloudflare_record" "cname_root" {
 resource "cloudflare_record" "cname_www" {
   name    = "www"
   zone_id = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
-  value   = "ipv4.${var.cloudflare_domain_com}"
+  value   = var.cloudflare_domain_com
   proxied = true
   type    = "CNAME"
   ttl     = 1
