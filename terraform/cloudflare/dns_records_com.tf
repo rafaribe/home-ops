@@ -30,6 +30,16 @@ resource "cloudflare_record" "cname_www" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "cname_test" {
+  name    = "test"
+  zone_id = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
+  value   = var.cloudflare_domain_com
+  proxied = true
+  type    = "CNAME"
+  ttl     = 1
+}
+
+
 # #
 # # UptimeRobot
 # #
