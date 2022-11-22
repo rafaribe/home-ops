@@ -9,7 +9,7 @@ spec:
   url: https://github.com/redpanda-data/redpanda
   ref:
     # renovate: datasource=github-releases depName=/redpanda-data/redpanda versioning=loose
-    tag: v22.1.9
+    tag: v22.3.3
   ignore: |
     # exclude all
     /*
