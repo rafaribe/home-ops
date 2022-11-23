@@ -23,9 +23,9 @@ spec:
       retries: 5
   dependsOn:
     - name: emqx
-      namespace: default
+      namespace: home
     - name: postgres
-      namespace: default
+      namespace: databases
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
