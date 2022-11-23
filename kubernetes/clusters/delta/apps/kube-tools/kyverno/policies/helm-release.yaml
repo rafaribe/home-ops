@@ -108,7 +108,7 @@ spec:
               context:
                 - name: appName
                   variable:
-                    jmesPath: "request.object.metadata.labels.\"app.kubernetes.io/name\""
+                    jmesPath: 'request.object.metadata.labels."app.kubernetes.io/name"'
                 - name: claimName
                   variable:
                     jmesPath: "request.object.metadata.name"
@@ -118,16 +118,16 @@ spec:
                 - name: nodeAffinity
                   variable:
                     value:
-                      ignored: "{{ (request.object.metadata.labels.\"snapshot.home.arpa/ignoreAffinity\" || 'false') == 'false' }}"
+                      ignored: '{{ (request.object.metadata.labels."snapshot.home.arpa/ignoreAffinity" || ''false'') == ''false'' }}'
                       labels:
                         - key: app.kubernetes.io/name
                           operator: "In"
                           values:
-                            - "{{ request.object.metadata.labels.\"app.kubernetes.io/name\" }}"
+                            - '{{ request.object.metadata.labels."app.kubernetes.io/name" }}'
                         - key: app.kubernetes.io/instance
                           operator: "In"
                           values:
-                            - "{{ request.object.metadata.labels.\"app.kubernetes.io/instance\" }}"
+                            - '{{ request.object.metadata.labels."app.kubernetes.io/instance" }}'
               generate:
                 synchronize: true
                 apiVersion: batch/v1
@@ -137,8 +137,8 @@ spec:
                 data:
                   metadata:
                     labels:
-                      app.kubernetes.io/name: "{{ request.object.metadata.labels.\"app.kubernetes.io/name\" }}"
-                      app.kubernetes.io/instance: "{{ request.object.metadata.labels.\"app.kubernetes.io/instance\" }}"
+                      app.kubernetes.io/name: '{{ request.object.metadata.labels."app.kubernetes.io/name" }}'
+                      app.kubernetes.io/instance: '{{ request.object.metadata.labels."app.kubernetes.io/instance" }}'
                     ownerReferences:
                       - apiVersion: "{{ request.object.apiVersion }}"
                         kind: "{{ request.object.kind }}"
@@ -166,7 +166,16 @@ spec:
                                 args: ["1", "30"]
                               - name: create-directories
                                 image: busybox:latest
-                                command: ["mkdir", "-p", "/snapshots/cache/", "&&", "mkdir", "-p", "/snapshots/logs"]
+                                command:
+                                  [
+                                    "mkdir",
+                                    "-p",
+                                    "/snapshots/cache/",
+                                    "&&",
+                                    "mkdir",
+                                    "-p",
+                                    "/snapshots/logs",
+                                  ]
                             containers:
                               - name: snapshot
                                 image: ghcr.io/onedr0p/kopia:0.12.1@sha256:e333295b519ce586e7c050c970b2255d87bdb2979298ff87ebdb1113e381ba3b
@@ -222,7 +231,7 @@ spec:
             policies.kyverno.io/description: |
               This policy applies an ingress notation that will apply a theme-park theme.
               You will need two labels on the ingress:
-              - "theme-park.home/name" should match the name of the application on theme park, for example calibre-web should be calibre-web.$
+              - "theme-park.home/name" should match the name of the application on theme park, for example calibre-web should be calibreweb
               - "theme-park.home/theme": should match the theme that you want, and will default to onedark if not specified.
         spec:
           mutateExistingOnPolicyUpdate: true
@@ -230,12 +239,12 @@ spec:
           rules:
             - name: theme
               context:
-              - name: appName
-                variable:
-                  jmesPath: "request.object.metadata.labels.\"theme-park.home/name\""
-              - name: theme
-                variable:
-                  jmesPath: "request.object.metadata.labels.\"theme-park.home/theme\" || onedark"
+                - name: appName
+                  variable:
+                    jmesPath: 'request.object.metadata.labels."theme-park.home/name"'
+                - name: theme
+                  variable:
+                    jmesPath: 'request.object.metadata.labels."theme-park.home/theme" || onedark'
               match:
                 any:
                   - resources:
