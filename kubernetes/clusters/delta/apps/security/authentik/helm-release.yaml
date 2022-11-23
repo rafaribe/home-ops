@@ -53,13 +53,11 @@ spec:
         enabled: true
       outposts:
         docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
-
       postgresql:
         password: ${AUTHENTIK_PG_PASSWORD}
         user: postgres
         host: postgres-cluster-rw.databases.svc.cluster.local
         name: authentik
-
     redis:
       enabled: true
       persistence:
