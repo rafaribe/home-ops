@@ -14,4 +14,4 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: ceph-bucket
+  storageClassName: ceph-filesystem
