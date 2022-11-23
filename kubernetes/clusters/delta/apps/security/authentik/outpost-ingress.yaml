@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: "ako.${EXTERNAL_DOMAIN}"
+    - host: "${EXTERNAL_DOMAIN}"
       http:
         paths:
           - backend:
