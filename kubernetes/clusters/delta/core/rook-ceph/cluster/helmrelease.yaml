@@ -227,6 +227,9 @@ spec:
               dataChunks: 2
               codingChunks: 1
           preservePoolsOnDelete: true
+          healthCheck:
+            bucket:
+              disabled: true
           gateway:
             port: 80
             resources:
