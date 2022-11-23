@@ -28,7 +28,7 @@ spec:
     env:
       TZ: "${TZ}"
       POSTGRES_HOST: postgres-cluster-rw.databases.svc.cluster.local
-      POSTGRES_DB: home_assistant
+      POSTGRES_DB: hass
     envFrom:
       - secretRef:
           name: *app
