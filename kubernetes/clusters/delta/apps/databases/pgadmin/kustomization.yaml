@@ -5,3 +5,4 @@ namespace: databases
 resources:
   - helm-release.yaml
   - volume.yaml
+  - secret.sops.yaml

@@ -24,29 +24,48 @@ spec:
   values:
     image:
       repository: dpage/pgadmin4
-      tag: "6.15"
-    env:
-      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
+      tag: "6.16"
+    strategy:
+      type: Recreate
+
     envFrom:
       - secretRef:
-          name: *app
+          name: pgadmin-secrets
+
     service:
       main:
-        annotations:
-          metallb.universe.tf/loadBalancerIPs: |-
-            ${LB_PGADMIN_IP}
         ports:
           http:
             port: 80
-          type: LoadBalancer
+
+    podSecurityContext:
+      runAsUser: 5050
+      runAsGroup: 5050
+      fsGroup: 5050
+      fsGroupChangePolicy: "OnRootMismatch"
+
     persistence:
       config:
         enabled: true
+        mountPath: "/var/lib/pgadmin"
         existingClaim: pgadmin-config
-        mountPath: /var/lib/pgadmin
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        hosts:
+          - host: &host "pgadmin.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+
     resources:
       requests:
-        cpu: 50m
-        memory: 100Mi
+        cpu: 15m
+        memory: 164M
       limits:
-        memory: 500Mi
+        memory: 236M
