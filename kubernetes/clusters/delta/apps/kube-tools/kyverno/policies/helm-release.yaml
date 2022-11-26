@@ -278,8 +278,6 @@ spec:
                 any:
                   - resources:
                       kinds: ["Ingress"]
-                      annotations:
-                        external-dns.alpha.kubernetes.io/hostname: "*"
               mutate:
                 patchStrategicMerge:
                   metadata:
