@@ -38,7 +38,6 @@ spec:
           - kind: ServiceAccount
             name: kyverno
             namespace: kyverno
-
       - apiVersion: kyverno.io/v1
         kind: ClusterPolicy
         metadata:
@@ -259,3 +258,31 @@ spec:
                         proxy_set_header Accept-Encoding "";
                         sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://themepark.${EXTERNAL_DOMAIN}/css/base/{{ appName }}/{{ theme }}.css"></head>';
                         sub_filter_once on;
+      - apiVersion: kyverno.io/v1
+        kind: ClusterPolicy
+        metadata:
+          name: external-dns-annotation
+          annotations:
+            policies.kyverno.io/title: Apply external-dns annotation with target to the ${EXTERNAL_DOMAIN}
+            policies.kyverno.io/subject: Ingress
+            policies.kyverno.io/description: >-
+              This policy creates an external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+              when there is an external-dns.alpha.kubernetes.io/hostname present, ensuring that external-dns
+              creates a CNAME record that is proxied.
+        spec:
+          mutateExistingOnPolicyUpdate: true
+          generateExistingOnPolicyUpdate: true
+          rules:
+            - name: external-dns
+              match:
+                any:
+                  - resources:
+                      kinds: ["Ingress"]
+                      annotations:
+                        external-dns.alpha.kubernetes.io/hostname: "*"
+              mutate:
+                patchStrategicMerge:
+                  metadata:
+                    annotations:
+                      +(external-dns.alpha.kubernetes.io/target): |-
+                        ${EXTERNAL_DOMAIN}
