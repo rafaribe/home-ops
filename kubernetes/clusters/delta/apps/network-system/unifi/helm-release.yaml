@@ -45,7 +45,7 @@ spec:
           #nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.1.1/24"
           cert-manager.io/cluster-issuer: letsencrypt-prod
           external-dns.alpha.kubernetes.io/hostname: unifi.${EXTERNAL_DOMAIN}
-          
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
           hajimari.io/enable: "true"
           hajimari.io/icon: wifi
           hajimari.io/appName: unifi
