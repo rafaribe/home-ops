@@ -54,7 +54,7 @@ spec:
         annotations:
           external-dns.home.arpa/enabled: "true"
         hosts:
-          - host: &host "hass.${SECRET_PUBLIC_DOMAIN}"
+          - host: &host "hass.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
