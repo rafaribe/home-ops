@@ -45,6 +45,9 @@ spec:
     ingress:
       main:
         enabled: true
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: jellyfin.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
         ingressClassName: "nginx"
         hosts:
           - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
