@@ -40,7 +40,7 @@ spec:
       barmanObjectStore:
         destinationPath: s3://postgresql
         endpointURL: http://minio.storage.svc.cluster.local:9000
-        serverName: postgres-cluster
+        serverName: postgres-v1
         s3Credentials:
           accessKeyId:
             name: minio-postgres
