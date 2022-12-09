@@ -24,7 +24,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgresql
       endpointURL: http://minio.storage.svc.cluster.local:9000
-      serverName: postgres-cluster
+      serverName: database-postgres
       s3Credentials:
         accessKeyId:
           name: minio-postgres
@@ -32,19 +32,3 @@ spec:
         secretAccessKey:
           name: minio-postgres
           key: MINIO_SECRET_KEY
-  bootstrap:
-    recovery:
-      source: cluster-backup
-  externalClusters:
-    - name: cluster-backup
-      barmanObjectStore:
-        destinationPath: s3://postgresql
-        endpointURL: http://minio.storage.svc.cluster.local:9000
-        serverName: postgres-cluster
-        s3Credentials:
-          accessKeyId:
-            name: minio-postgres
-            key: MINIO_ACCESS_KEY
-          secretAccessKey:
-            name: minio-postgres
-            key: MINIO_SECRET_KEY
