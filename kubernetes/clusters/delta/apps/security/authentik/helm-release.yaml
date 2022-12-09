@@ -56,7 +56,7 @@ spec:
       postgresql:
         password: ${AUTHENTIK_PG_PASSWORD}
         user: postgres
-        host: postgres-cluster-rw.databases.svc.cluster.local
+        host: postgres-db-rw.databases.svc.cluster.local
         name: authentik
     redis:
       enabled: true
@@ -80,7 +80,7 @@ spec:
         image: ghcr.io/onedr0p/postgres-initdb:14.5
         env:
           - name: POSTGRES_HOST
-            value: postgres-cluster-rw.databases.svc.cluster.local
+            value: postgres-db-rw.databases.svc.cluster.local
           - name: POSTGRES_DB
             value: authentik-db
           - name: POSTGRES_SUPER_PASS
