@@ -35,8 +35,6 @@ spec:
   bootstrap:
     recovery:
       source: cluster-backup
-      recoveryTarget:
-        targetTime: "2022-12-03 13:00:00.561030+00:00"
   externalClusters:
     - name: cluster-backup
       barmanObjectStore:
