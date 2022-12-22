@@ -57,7 +57,7 @@ spec:
         password: ${AUTHENTIK_PG_PASSWORD}
         user: postgres
         host: postgres-db-rw.databases.svc.cluster.local
-        name: authentik
+        name: authentik-db
     redis:
       enabled: true
       persistence:
