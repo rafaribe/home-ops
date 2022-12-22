@@ -22,8 +22,8 @@ spec:
     remediation:
       retries: 5
   dependsOn:
-    - name: emqx
-      namespace: home
+    # - name: emqx
+    #   namespace: home
     - name: postgres
       namespace: databases
     - name: rook-ceph-cluster
