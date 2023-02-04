@@ -75,7 +75,7 @@ spec:
       nfs-nas-media:
         enabled: true
         mountPath: /storage/media
-        path: /data/media
+        path: /data/share/nfs/media/anime
         server: ${NAS_ADDRESS}
         type: nfs
       transcode:
