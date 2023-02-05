@@ -1,4 +1,3 @@
-/home/rafaribe/code/rafaribe/home-ops/.github/scripts/.deprecated/values2.yaml
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/helmrepository_v1beta2.json
 apiVersion: source.toolkit.fluxcd.io/v1beta2
