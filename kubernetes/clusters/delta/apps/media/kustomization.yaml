@@ -9,4 +9,4 @@ resources:
   - radarr
   - overserr
   - sonarr
-  - jackett
+  - prowlarr

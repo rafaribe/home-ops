@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jackett-config
+  name: prowlarr-config
   namespace: media
 spec:
   accessModes:
