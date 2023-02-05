@@ -33,7 +33,7 @@ spec:
 
     env:
       BAZARR__INSTANCE_NAME: bazarr
-      BAZARR__PORT: &port 9696
+      BAZARR__PORT: &port 6767
       BAZARR__LOG_LEVEL: info
       BAZARR__ANALYTICS_ENABLED: "False"
       BAZARR__API_KEY:
@@ -73,6 +73,12 @@ spec:
       config:
         enabled: true
         existingClaim: bazarr-config
+      media:
+        enabled: true
+        mountPath: /storage/media
+        path: /data/share/nfs/media/
+        server: ${NAS_ADDRESS}
+        type: nfs
     resources:
       requests:
         cpu: 20m
