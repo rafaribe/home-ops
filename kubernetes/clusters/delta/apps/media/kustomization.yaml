@@ -7,3 +7,5 @@ resources:
   - readarr
   - jellyfin
   - radarr
+  - overserr
+  - sonarr
