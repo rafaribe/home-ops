@@ -10,3 +10,4 @@ resources:
   - overserr
   - sonarr
   - prowlarr
+  - bazarr
