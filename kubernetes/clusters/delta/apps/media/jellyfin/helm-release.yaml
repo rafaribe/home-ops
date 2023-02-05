@@ -72,7 +72,7 @@ spec:
       config:
         enabled: true
         existingClaim: jellyfin-config
-      nfs-nas-media:
+      media:
         enabled: true
         mountPath: /storage/media
         path: /data/share/nfs/media/

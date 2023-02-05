@@ -75,10 +75,10 @@ spec:
         existingClaim: readarr-config-v1
       media:
         enabled: true
-        type: nfs
-        server: &nas ${NAS_ADDRESS}
-        path: ${NAS_DIR}
         mountPath: /media
+        path: /data/share/nfs/media/
+        server: ${NAS_ADDRESS}
+        type: nfs
       backup:
         enabled: true
         existingClaim: readarr-backup-v1
