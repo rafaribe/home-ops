@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - aqua-charts.yaml
   - authentik-charts.yaml
+  - backube-charts.yaml
   - banzaicloud-charts.yaml
   - bitnami-charts.yaml
   - bjw-s.yaml
