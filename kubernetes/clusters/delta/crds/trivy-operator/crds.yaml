@@ -9,7 +9,7 @@ spec:
   url: https://github.com/aquasecurity/trivy-operator.git
   ref:
     # renovate: registryUrl=https://https://github.com/aquasecurity/trivy-operator
-    tag: v0.10.2
+    tag: v0.11.0
   ignore: |
     # exclude all
     /*
