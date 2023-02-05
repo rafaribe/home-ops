@@ -64,7 +64,6 @@ spec:
       main:
         enabled: false
 
-
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
@@ -77,12 +76,12 @@ spec:
       config:
         enabled: true
         existingClaim: qbittorrent-config-v1
-      media:
+      nfs-nas-media:
         enabled: true
-        type: nfs
+        mountPath: /storage/media
+        path: /data/share/nfs/media/
         server: ${NAS_ADDRESS}
-        path: ${NAS_DIR}
-        mountPath: /media
+        type: nfs
 
     resources:
       requests:
