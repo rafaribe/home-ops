@@ -3,8 +3,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: overseerr
-  namespace: default
+  name: &app overseerr
+  namespace: media
 spec:
   interval: 15m
   chart:
