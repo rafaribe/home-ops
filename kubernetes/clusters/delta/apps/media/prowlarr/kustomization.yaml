@@ -5,6 +5,7 @@ namespace: media
 resources:
   - ./helm-release.yaml
   - ./config-pvc.yaml
+  - ./secret.sops.yaml
 commonLabels:
-  app.kubernetes.io/name: jackett
-  app.kubernetes.io/instance: jackett
+  app.kubernetes.io/name: prowlarr
+  app.kubernetes.io/instance: prowlarr
