@@ -57,6 +57,7 @@ spec:
         enabled: true
         ingressClassName: "nginx"
         annotations:
+          external-dns.alpha.kubernetes.io/hostname: sonarr.${EXTERNAL_DOMAIN}
           theme.home.arpa/enabled: "true"
           external-dns.home.arpa/enabled: "true"
         hosts:
