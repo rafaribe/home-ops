@@ -1,0 +1,64 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: jackett
+  namespace: media
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: jackett
+      version: 11.7.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 10m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+      # cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    recreate: true
+    # cleanupOnFail: true
+  values:
+    image:
+      repository: linuxserver/jackett
+      tag: 0.20.2916
+    env:
+      TZ: "${TZ}"
+    ingress:
+      main:
+        labels:
+          theme-park.home/name: jackett
+          theme-park.home/theme: maroon
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: jackett.${EXTERNAL_DOMAIN}
+          theme.home.arpa/enabled: "true"
+          external-dns.home.arpa/enabled: "true"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: jackett-config
+      media:
+        enabled: true
+        mountPath: /media
+        path: /data/share/nfs/media/
+        server: ${NAS_ADDRESS}
+        type: nfs

@@ -9,3 +9,4 @@ resources:
   - radarr
   - overserr
   - sonarr
+  - jackett
