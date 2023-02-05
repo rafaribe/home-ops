@@ -32,9 +32,9 @@ spec:
       READARR__PORT: &port 80
       READARR__LOG_LEVEL: info
 
-    # envFrom:
-    #   - secretRef:
-    #       name: *app
+    envFrom:
+      - secretRef:
+          name: *app
 
     service:
       main:
