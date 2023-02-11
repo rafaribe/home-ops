@@ -9,9 +9,7 @@ spec:
   path: ./kubernetes/clusters/truenas-scale/apps
   prune: true
   dependsOn:
-    - name: namespaces
     - name: sources
-    - name: core
   sourceRef:
     kind: GitRepository
     name: flux-system
