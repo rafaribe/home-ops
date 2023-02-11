@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: giantswarm-charts
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://giantswarm.github.io/giantswarm-catalog
+  timeout: 3m
