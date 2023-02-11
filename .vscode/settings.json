@@ -27,7 +27,8 @@
         "storage": "dump",
         "web-tools": "custom",
         "terraforms": "terraform",
-        "terraform": "terraform"
+        "terraform": "terraform",
+        "truenas-scale": "server"
     },
     "prettier.configPath": ".github/linters/.prettierrc.yaml",
     "prettier.ignorePath": ".github/linters/.prettierignore",
