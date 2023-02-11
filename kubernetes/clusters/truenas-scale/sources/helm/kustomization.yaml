@@ -12,7 +12,6 @@ resources:
   - crossplane-charts.yaml
   - csi-driver-nfs-charts.yaml
   - deliveryhero-charts.yaml
-  - descheduler-charts.yaml
   - dysnix-charts.yaml
   - emberstack-charts.yaml
   - emqx-charts.yaml
@@ -27,7 +26,6 @@ resources:
   - infracloudio-charts.yaml
   - ingress-nginx-charts.yaml
   - jetstack-charts.yaml
-  - k8s-at-home-charts.yaml
   - kasten-charts.yaml
   - kubeclarity-charts.yaml
   - kubernetes-sigs-descheduler-charts.yaml
