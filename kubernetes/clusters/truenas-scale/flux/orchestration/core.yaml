@@ -9,7 +9,6 @@ spec:
   path: ./kubernetes/clusters/truenas-scale/core
   prune: true
   dependsOn:
-    - name: crds
     - name: namespaces
     - name: sources
   sourceRef:
