@@ -4,6 +4,6 @@
   roles:
     - rpi
     - docker
-    - vpn
+    #  - vpn
     - syncthing
     - geerlingguy.nfs

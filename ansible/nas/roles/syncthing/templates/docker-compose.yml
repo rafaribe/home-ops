@@ -68,6 +68,63 @@ services:
       driver: json-file
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+  kopia:
+    image: ghcr.io/onedr0p/kopia:0.12.1
+    container_name: kopia
+    restart: unless-stopped
+    network_mode: bridge
+    environment:
+      KOPIA_PASSWORD: Kogmaw20#
+      TZ: Europe/Lisbon
+    command:
+      - server
+      - --insecure
+      - --address
+      - 0.0.0.0:51515
+      - --override-username
+      - rafaribe
+      - --without-password
+    ports:
+      - 51515:51515
+    volumes:
+      - "./kopia/config:/app/config"
+      - "./kopia/cache:/app/cache"
+      - "./kopia/logs:/app/logs"
+      - "/:/tycho:ro"
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - WEBUI_PORT=9090
+    volumes:
+      - "./qbitorrent/config:/config"
+      - /data/share/nfs/downloads:/downloads
+    ports:
+      - 9090:9090
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+  minio:
+    image: minio/minio
+    container_name: minio
+    environment:
+      MINIO_ACCESS_KEY: myaccesskey
+      MINIO_SECRET_KEY: mysecretkey
+    volumes:
+      - /data/minio/data:/data
+      - /data/minio/config:/root/.minio
+    ports:
+      - "9000:9000"
+    restart: unless-stopped
+    networks:
+      - services
+    logging:
+      driver: json-file
+      options:
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
 networks:
   services:
     driver: bridge
