@@ -87,13 +87,13 @@ spec:
           nginx.ingress.kubernetes.io/auth-secret: prometheus-basic-auth
           nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - AlertManager"
           nginx.ingress.kubernetes.io/router.entrypoints: "websecure"
-          external-dns.alpha.kubernetes.io/hostname: alertmanager.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: alertmanager.rafaribe.com
 
         hosts:
-          - "alertmanager.${EXTERNAL_DOMAIN}"
+          - "alertmanager.rafaribe.com"
         tls:
           - hosts:
-              - "alertmanager.${EXTERNAL_DOMAIN}"
+              - "alertmanager.rafaribe.com"
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -123,13 +123,13 @@ spec:
           nginx.ingress.kubernetes.io/auth-secret: prometheus-basic-auth
           nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - Prometheus"
           nginx.ingress.kubernetes.io/router.entrypoints: "websecure"
-          external-dns.alpha.kubernetes.io/hostname: prometheus.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: prometheus.rafaribe.com
 
         hosts:
-          - "prometheus.${EXTERNAL_DOMAIN}"
+          - "prometheus.rafaribe.com"
         tls:
           - hosts:
-              - "prometheus.${EXTERNAL_DOMAIN}"
+              - "prometheus.rafaribe.com"
       thanosService:
         enabled: false
       thanosServiceMonitor:
