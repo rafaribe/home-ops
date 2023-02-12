@@ -28,7 +28,7 @@ spec:
     keepHistory: false
   values:
     env:
-      TZ: America/New_York
+      TZ: ${TZ}
     extraArgs:
       - --enable-skip-login
       - --disable-settings-authorizer
@@ -42,7 +42,7 @@ spec:
           10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
         hajimari.io/icon: mdi:kubernetes
       hosts:
-        - &host kubernetes.devbu.io
+        - &host kubernetes.${EXTERNAL_DOMAIN}
       tls:
         - hosts:
             - *host
