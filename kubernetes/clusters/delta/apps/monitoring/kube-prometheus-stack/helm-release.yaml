@@ -81,10 +81,10 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: alertmanager.${EXTERNAL_DOMAIN}
 
         hosts:
-          - "alertmanager.${EXTERNAL_DOMAIN}"
+          - "alertmanager.rafaribe.com"
         tls:
           - hosts:
-              - "alertmanager.${EXTERNAL_DOMAIN}"
+              - "alertmanager.rafaribe.com"
     grafana:
       enabled: false
       forceDeployDashboards: true
