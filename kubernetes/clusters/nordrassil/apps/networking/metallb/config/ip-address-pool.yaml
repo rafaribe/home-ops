@@ -3,7 +3,7 @@ apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
   name: default-pool
-  namespace: network-system
+  namespace: networking
 spec:
   addresses:
     - ${K8S_LB_L2_CIDR}
@@ -13,7 +13,7 @@ apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
   name: home-network-pool
-  namespace: network-system
+  namespace: networking
 spec:
   addresses:
     - ${HOME_NETWORK_L2_CIDR}

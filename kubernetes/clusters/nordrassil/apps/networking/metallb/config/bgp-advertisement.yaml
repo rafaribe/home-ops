@@ -3,7 +3,7 @@ apiVersion: metallb.io/v1beta1
 kind: BGPAdvertisement
 metadata:
   name: bgp-lb
-  namespace: network-system
+  namespace: networking
 spec:
   aggregationLength: 32
   ipAddressPools:
