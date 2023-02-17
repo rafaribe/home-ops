@@ -23,11 +23,15 @@ spec:
   upgrade:
     remediation:
       retries: 5
+  rollback:
+    timeout: 10m
+    recreate: true
+    cleanupOnFail: true
   values:
+    crds:
+      enabled: true
     psp:
       create: false
-    crds:
-      enabled: false
     prometheus:
       namespace: monitoring
       serviceAccount: kube-prometheus-stack-prometheus
