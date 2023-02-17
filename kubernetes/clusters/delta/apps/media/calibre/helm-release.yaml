@@ -73,7 +73,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: book-open-page-variant
           external-dns.alpha.kubernetes.io/hostname: read.${EXTERNAL_DOMAIN}
-          
+
         hosts:
           - host: &host2 read.${EXTERNAL_DOMAIN}
             paths:

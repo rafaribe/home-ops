@@ -1,0 +1,12 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  name: bgp-lb
+  namespace: network-system
+spec:
+  aggregationLength: 32
+  ipAddressPools:
+    - bgp-pool
+  peers:
+    - gateway
