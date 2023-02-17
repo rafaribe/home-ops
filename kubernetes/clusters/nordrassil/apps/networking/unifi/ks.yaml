@@ -30,6 +30,6 @@ spec:
   retryInterval: 1m
   timeout: 3m
   healthChecks:
-    - apiVersion: storage.k8s.io/v1
-      kind: StorageClass
-      name: unifi-sc
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: unifi-config-v1
