@@ -20,3 +20,4 @@ auth
 terraform/**/.env
 .terraform/
 docs/**/*.bkp
+kubernetes/clusters/nordrassil/flux/vars/secrets.yaml
