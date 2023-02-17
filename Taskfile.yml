@@ -1,16 +1,13 @@
 ---
-version: '3'
+version: "3"
 
 vars:
     PROJECT_DIR:
         sh: git rev-parse --show-toplevel
-    CLUSTER_DIR: '{{.PROJECT_DIR}}/kubernetes/clusters/delta'
-    ANSIBLE_DIR: '{{.PROJECT_DIR}}/ansible/rke2'
+    CLUSTER_DIR: "{{.PROJECT_DIR}}/kubernetes/clusters/delta"
+    ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible/rke2"
 
 dotenv: [.config.env]
-
-env:
-    KUBECONFIG: /home/rafaribe/.kube/home-ops
 
 includes:
     ansible: .github/taskfiles/ansible.yaml
