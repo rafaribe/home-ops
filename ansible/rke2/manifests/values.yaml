@@ -1,62 +1,62 @@
-    cluster:
-      name: home-ops
-      id: "0"
+cluster:
+  name: flux-system
+  id: "0"
 
-    rollOutCiliumPods: true
+rollOutCiliumPods: true
 
-    localRedirectPolicy: true
+localRedirectPolicy: true
 
-    kubeProxyReplacement: "strict"
+kubeProxyReplacement: "strict"
 
-    nativeRoutingCIDR: 10.43.0.0/16
-    ipv4NativeRoutingCIDR: 10.43.0.0/16
-    k8sServiceHost: 10.0.1.200
-    k8sServicePort: 6443
+nativeRoutingCIDR: 10.43.0.0/16
+ipv4NativeRoutingCIDR: 10.43.0.0/16
+k8sServiceHost: 10.0.1.200
+k8sServicePort: 6443
 
-    loadBalancer:
-      algorithm: "maglev"
-      mode: "dsr"
+loadBalancer:
+  algorithm: "maglev"
+  mode: "dsr"
 
-    tunnel: "disabled"
+tunnel: "disabled"
 
-    autoDirectNodeRoutes: true
+autoDirectNodeRoutes: true
 
-    ipam:
-      mode: "kubernetes"
+ipam:
+  mode: "kubernetes"
 
-    operator:
-      rollOutPods: true
+operator:
+  rollOutPods: true
 
-    containerRuntime:
-      integration: containerd
-    eni:
-      enabled: true
-    hubble:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-      metrics:
-        enabled:
-          - dns:query;ignoreAAAA
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-      relay:
-        enabled: true
-        rollOutPods: true
-      ui:
-        enabled: true
-        rollOutPods: true
-        ingress:
-          enabled: false
-
-    bgp:
+containerRuntime:
+  integration: containerd
+eni:
+  enabled: true
+hubble:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  metrics:
+    enabled:
+      - dns:query;ignoreAAAA
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+      - http
+  relay:
+    enabled: true
+    rollOutPods: true
+  ui:
+    enabled: true
+    rollOutPods: true
+    ingress:
       enabled: false
-      announce:
-        loadbalancerIP: true
 
-    externalIPs:
-      enabled: false
+bgp:
+  enabled: false
+  announce:
+    loadbalancerIP: true
+
+externalIPs:
+  enabled: false

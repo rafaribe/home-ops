@@ -1,4 +1,4 @@
-rke2_download_kubeconf_file_name: home-ops
+rke2_download_kubeconf_file_name: flux-system
 rke2_download_kubeconf_path: /home/rafaribe/.kube
 rke2_cni: cilium
 rke2_download_kubeconf: true

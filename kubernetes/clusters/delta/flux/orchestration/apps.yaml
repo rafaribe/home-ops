@@ -15,7 +15,7 @@ spec:
     - name: core
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   decryption:
     provider: sops
     secretRef:
