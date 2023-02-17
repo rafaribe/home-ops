@@ -133,7 +133,7 @@ spec:
     #         hosts:
     #           - *host
     mon:
-      count: 3
+      count: 1
       allowMultiplePerNode: false
     mgr:
       count: 2
