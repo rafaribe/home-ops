@@ -2,10 +2,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-unifi-controller
+  name: cluster-apps-unifi-controller-storage
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/nordrassil/apps/networking/unifi
+  path: ./kubernetes/clusters/nordrassil/apps/networking/unifi/storage
   prune: true
   sourceRef:
     kind: GitRepository
@@ -13,3 +13,23 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-unifi-controller-app
+  namespace: flux-system
+spec:
+  path: ./kubernetes/clusters/nordrassil/apps/networking/unifi/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  healthChecks:
+    - apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      name: unifi-sc

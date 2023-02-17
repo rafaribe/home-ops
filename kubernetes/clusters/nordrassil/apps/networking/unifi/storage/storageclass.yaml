@@ -1,0 +1,13 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: unifi-sc
+allowVolumeExpansion: true
+parameters:
+  fstype: zfs
+  poolname: storage-0/kubernetes/unifi/volumes
+  shared: "yes"
+provisioner: zfs.csi.openebs.io
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
