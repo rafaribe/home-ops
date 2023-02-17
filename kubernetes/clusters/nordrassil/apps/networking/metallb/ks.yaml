@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/truenas-scale/apps/networking/metallb/app/"
+  path: "./kubernetes/clusters/nordrassil/apps/networking/metallb/app/"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -31,7 +31,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/truenas-scale/apps/networking/metallb/config/"
+  path: "./kubernetes/clusters/nordrassil/apps/networking/metallb/config/"
   prune: true
   sourceRef:
     kind: GitRepository
