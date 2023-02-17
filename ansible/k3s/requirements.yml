@@ -1,4 +1,4 @@
 ---
 # from galaxy
-#- src: xanmanning.k3s
-#- src: vandot.k3sup
+- src: xanmanning.k3s
+- src: igor_mukhin.bash_aliases
