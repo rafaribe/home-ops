@@ -1,11 +1,9 @@
 - hosts: controlplanes
   roles:
   - role: os-bootstrap
-  - role: k3sup
 - hosts: workers
   roles:
   - role: os-bootstrap
-  - role: k3sup
 - name: Kubeconfig Update
   hosts: localhost
   roles:
