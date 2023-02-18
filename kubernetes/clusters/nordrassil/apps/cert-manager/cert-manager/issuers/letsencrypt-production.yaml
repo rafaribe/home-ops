@@ -15,7 +15,7 @@ spec:
             email: "${SECRET_CLOUDFLARE_EMAIL}"
             apiTokenSecretRef:
               name: cloudflare-token-secret
-              key: cloudflare-token
+              key: cloudflare-api-token
         selector:
           dnsZones:
             - rafaribe.com
