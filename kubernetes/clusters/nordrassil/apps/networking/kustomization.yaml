@@ -8,4 +8,5 @@ resources:
   # Flux-Kustomizations
   - ./unifi/ks.yaml
   - ./metallb/ks.yaml
+  - ./blocky/ks.yaml
   # - ./static-routes/ks.yaml
