@@ -29,6 +29,9 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  dependsOn:
+    - name: cluster-apps-unifi-controller-storage
+    - name: cluster-apps-ingress-nginx-app
   healthChecks:
     - apiVersion: v1
       kind: PersistentVolumeClaim
