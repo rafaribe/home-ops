@@ -6,7 +6,7 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./extenal-secrets/ks.yaml
+  - ./external-secrets/ks.yaml
   #- ./addons/ks.yaml
   - ./tf-controller/ks.yaml
   # - ./weave-gitops/ks.yaml
