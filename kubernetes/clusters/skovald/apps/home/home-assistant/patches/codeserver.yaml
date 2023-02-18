@@ -13,7 +13,7 @@ spec:
           repository: ghcr.io/coder/code-server
           tag: 4.8.3
         env:
-          TZ: "${TIMEZONE}"
+          TZ: "${TZ}"
         workingDir: /config
         args:
           - --auth

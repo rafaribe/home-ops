@@ -36,7 +36,7 @@ spec:
               image: ghcr.io/onedr0p/kopia:0.12.1@sha256:e333295b519ce586e7c050c970b2255d87bdb2979298ff87ebdb1113e381ba3b
               env:
                 - name: TZ
-                  value: "${TIMEZONE}"
+                  value: "${TZ}"
                 - name: KOPIA_CACHE_DIRECTORY
                   value: /snapshots/cache
                 - name: KOPIA_LOG_DIR
@@ -99,7 +99,7 @@ spec:
               image: ghcr.io/onedr0p/kopia:0.12.1@sha256:e333295b519ce586e7c050c970b2255d87bdb2979298ff87ebdb1113e381ba3b
               env:
                 - name: TZ
-                  value: "${TIMEZONE}"
+                  value: "${TZ}"
                 - name: KOPIA_CACHE_DIRECTORY
                   value: /snapshots/cache
                 - name: KOPIA_LOG_DIR

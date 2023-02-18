@@ -33,7 +33,7 @@ spec:
           ${LB_HASS_CODE_SERVER}
     env:
       - name: TZ
-        value: "${TIMEZONE}"
+        value: "${TZ}"
 
     resources:
       limits:

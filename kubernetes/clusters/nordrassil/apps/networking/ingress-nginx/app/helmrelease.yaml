@@ -29,11 +29,11 @@ spec:
       replicaCount: 2
       extraEnvs:
         - name: TZ
-          value: "${TIMEZONE}"
+          value: "${TZ}"
       service:
         annotations:
           metallb.universe.tf/loadBalancerIPs: |-
-            ${LB_NGINX}
+            ${LB_NGINX_NORDRASSIL}
         externalTrafficPolicy: Local
       publishService:
         enabled: true
