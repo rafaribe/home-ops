@@ -24,6 +24,11 @@ spec:
         kind: Kustomization
         metadata:
           name: not-used
+        spec:
+          decryption:
+            provider: sops
+            secretRef:
+              name: sops-age
           postBuild:
             substituteFrom:
               - kind: ConfigMap
@@ -35,17 +40,3 @@ spec:
         version: v1beta2
         kind: Kustomization
         labelSelector: substitution.flux.home.arpa/disabled notin (true)
-    - patch: |-
-        apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-        kind: Kustomization
-        metadata:
-          name: not-used
-          decryption:
-            provider: sops
-            secretRef:
-              name: sops-age
-      target:
-        group: kustomize.toolkit.fluxcd.io
-        version: v1beta2
-        kind: Kustomization
-        labelSelector: decryption.flux.home.arpa/disabled notin (true)
