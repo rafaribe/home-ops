@@ -7,9 +7,9 @@ metadata:
 spec:
   privateKey:
     rotationPolicy: Always
-  commonName: "${EXTERNAL_DOMAIN}"
+
   dnsNames:
-    #   - "${EXTERNAL_DOMAIN}"
+    - "${EXTERNAL_DOMAIN}"
     - "*.${EXTERNAL_DOMAIN}"
   issuerRef:
     group: cert-manager.io
