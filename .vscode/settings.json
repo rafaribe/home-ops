@@ -28,7 +28,9 @@
         "web-tools": "custom",
         "terraforms": "terraform",
         "terraform": "terraform",
-        "truenas-scale": "server"
+        "truenas-scale": "server",
+        "nordrassil": "supabase",
+        "skovald": "gulp"
     },
     "prettier.configPath": ".github/linters/.prettierrc.yaml",
     "prettier.ignorePath": ".github/linters/.prettierignore",
