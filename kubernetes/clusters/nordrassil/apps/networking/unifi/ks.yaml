@@ -13,25 +13,26 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-# kind: Kustomization
-# metadata:
-#   name: cluster-apps-unifi-controller-app
-#   namespace: flux-system
-# spec:
-#   path: ./kubernetes/clusters/nordrassil/apps/networking/unifi/app
-#   prune: true
-#   sourceRef:
-#     kind: GitRepository
-#     name: home-ops-kubernetes
-#   interval: 30m
-#   retryInterval: 1m
-#   timeout: 3m
-#   dependsOn:
-#     - name: cluster-apps-unifi-controller-storage
-#     - name: cluster-apps-ingress-nginx-app
-#   healthChecks:
-#     - apiVersion: v1
-#       kind: PersistentVolumeClaim
-#       name: unifi-config-v1
-#       namespace: networking
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-unifi-controller-app
+  namespace: flux-system
+spec:
+  path: ./kubernetes/clusters/nordrassil/apps/networking/unifi/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  dependsOn:
+    - name: cluster-apps-unifi-controller-storage
+    - name: cluster-apps-ingress-nginx-app
+  healthChecks:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: unifi-config-v1
+      namespace: networking
