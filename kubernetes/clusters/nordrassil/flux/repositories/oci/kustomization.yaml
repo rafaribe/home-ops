@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - terraform-cloudflare-oci.yaml
   - terraform-authentik-oci.yaml
+  - terraform-doppler-oci.yaml
