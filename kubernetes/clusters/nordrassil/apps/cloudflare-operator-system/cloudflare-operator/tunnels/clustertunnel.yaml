@@ -10,6 +10,6 @@ spec:
   size: 2
   cloudflare:
     email: rafael.ntw@gmail.com
-    domain: ${INTERNAL_DOMAIN}
+    domain: ${EXTERNAL_DOMAIN}
     secret: cloudflare-operator-secret
     accountId: 79647b893f74d76d213bc409fd9fafff
