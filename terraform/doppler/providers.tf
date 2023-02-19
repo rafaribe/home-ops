@@ -1,3 +1,3 @@
 provider "doppler" {
-  doppler_token = var.doppler_token
+  doppler_token = var.dopplerToken
 }

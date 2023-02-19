@@ -1,4 +1,4 @@
-variable "doppler_token" {
+variable "dopplerToken" {
   type        = string
   description = "Doppler API Token"
 }
