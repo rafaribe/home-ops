@@ -5,4 +5,4 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ./cloudflare
-  # - ./storage
+  - ./doppler
