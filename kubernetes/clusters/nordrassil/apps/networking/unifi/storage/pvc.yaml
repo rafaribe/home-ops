@@ -14,4 +14,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: openebs-zfspv-default
+  storageClassName: unifi-zfs
