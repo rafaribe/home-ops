@@ -1,5 +1,5 @@
 # Terraform - Cloudflare
 
 ```sh
-export $(xargs <.env)&& tf plan
+export $(sops -d .env) && tf plan
 ```

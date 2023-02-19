@@ -17,7 +17,9 @@ age.agekey
 cenas/endpoint_modificado.yaml
 cenas/endpoint.yaml
 auth
-terraform/**/.env
+#terraform/**/.env
 .terraform/
 docs/**/*.bkp
 kubernetes/clusters/nordrassil/flux/vars/secrets.yaml
+terraform/**/*.backup
+terraform/**/.decrypted~.env

@@ -1,2 +1,4 @@
 *.sops.* diff=sopsdiffer
 *.sops.toml linguist-language=JSON
+*-secrets.{yaml,json,ini,env} diff=sopsdiffer
+.sops.*.{yaml,json,ini,env} diff=sopsdiffer

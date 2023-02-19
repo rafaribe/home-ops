@@ -1,1 +1,31 @@
-<mxfile host="Electron" modified="2023-02-17T21:35:35.887Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/20.6.2 Chrome/106.0.5249.199 Electron/21.3.3 Safari/537.36" version="20.6.2" etag="_mpGsA6GGTkZGhjwUc43" type="device"><diagram id="AlViBbgpn-ljOetnpS3-" name="Page-1">7ZfbbqMwEIafJpeLMOTUyyak3dW2aqVsm8vKAQdGMZi1nUP36XcMJiGQZFttqt5UkQL8Htvj+Waw6fjjdHsraZ7ci4jxjudG244fdDyPDFyCF6O8WgV/pRJLiKy2F6bwh1nRteoKIqYODLUQXEN+KIYiy1ioDzQqpdgcmi0EP5w1pzFrCdOQ8rY6g0gnpTr0Bnv9O4M4qWYm/auyJaWVsV2JSmgkNjXJn3T8sRRCl3fpdsy4iV4Vl7LfzYnWnWOSZfotHRL6HIwfoolkLI2zNP75eya/+eUoa8pXdsFPGSwApafpLTb2OY49mku8i80dcR3XIQ5OfuN17br0axUstWQ6NKt20ZSqvASygC1DH0a5gEwzOVmjw4YKQW0XFNMjoioxlsVDolNeGWkplmwsuJCoZCLD6Uaczhl/FAo0iAzlkJnBsWHNpAYEeNcwmAutRVozuOYQmwYtcuOufdqNswDOqzk7nu+6ZDgMSpdzs950G5ucd1IVUuYUvXIJijlSrMwIZWBxLrY9SYzs8gAriImUafmKJrZDH0NtAdny2SXTppaLV87AokhqmTiwltQWQLwbfp8jeGPT5B0p02+lzA+z9ozpVj5gIDhkSK6qzRblS8GqZ0uDD90o3wHr4ovXJht4gR/4qKN9BDhiI9MuQLLrHmJsUyS+22Y4/CiGgxbDh8UCQobadAOmhpso29XMJKAzJvoBzojvY/a4l+pAWrBOF73KaQhZ/MtALpBAWryfq2sAaYwL5jDHfxpqWLOXCCR6JkxUblThvKPW8YW4ke4/629wBNyHFd+wBe6WShOaL3BnwfVI73PBXbXAXWt8sX1xO89t+NkFV51Da+BmQi5RuaO52Yya3A7Ce3QDPEfq0qea5ma4YXMuYqEcmufG4+ZeSEZkTMbHz1z/T3fQ2Ad3m16Nbu8I3V7f8T6Kr9fiGzC1PEb2/Om2RrU46BaO9kadXnCMc1VmC5Fp+9FDvBNlVxww8foMUq8ov6dhgjk1gwxrWl2u9Jpw8Pj5Jjjd/rvR4OP+u6doq30++pO/</diagram></mxfile>
+<mxfile host="65bd71144e">
+    <diagram id="AlViBbgpn-ljOetnpS3-" name="Page-1">
+        <mxGraphModel dx="1094" dy="907" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="haVDCOdEreemgnmgKqWr-3" value="Unifi USG3&lt;br&gt;10.0.1.1/24" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#00188D;shape=mxgraph.mscae.enterprise.router" parent="1" vertex="1">
+                    <mxGeometry x="60.13" y="220" width="89.74" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="haVDCOdEreemgnmgKqWr-6" value="Internet" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.internet_2;fillColor=#D2D3D3;gradientColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="130" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="haVDCOdEreemgnmgKqWr-7" value="Office Switch" style="aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/lib/active_directory/switch.svg;" parent="1" vertex="1">
+                    <mxGeometry x="414" y="220" width="70" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="haVDCOdEreemgnmgKqWr-8" value="Garage Switch" style="aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/lib/active_directory/switch.svg;" parent="1" vertex="1">
+                    <mxGeometry x="414" y="515" width="70" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="haVDCOdEreemgnmgKqWr-9" value="Attic Switch" style="aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/lib/active_directory/switch.svg;" parent="1" vertex="1">
+                    <mxGeometry x="414" y="820" width="70" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="haVDCOdEreemgnmgKqWr-10" value="Work Laptop" style="dashed=0;outlineConnect=0;html=1;align=center;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.weblogos.apple;fillColor=#1B1C1C;strokeColor=none" parent="1" vertex="1">
+                    <mxGeometry x="740" y="130" width="50" height="56.2" as="geometry"/>
+                </mxCell>
+                <mxCell id="haVDCOdEreemgnmgKqWr-12" value="Desktop" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/VirtualMachineWindows.svg;" parent="1" vertex="1">
+                    <mxGeometry x="740" y="260" width="50" height="46" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
