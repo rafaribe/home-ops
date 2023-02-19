@@ -11,5 +11,4 @@ resources:
   - ./blocky/ks.yaml
   - ./ingress-nginx/ks.yaml
   - ./k8s-gateway/ks.yaml
-  - ./cloudflare-operator/ks.yaml
   # - ./static-routes/ks.yaml
