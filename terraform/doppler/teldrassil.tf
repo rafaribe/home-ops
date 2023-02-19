@@ -17,6 +17,6 @@ module "cloudflare" {
 module "authentik" {
   source        = "./project"
   doppler_token = var.dopplerToken
-  project-name  = "cloudflare"
+  project-name  = "authentik"
   environments  = ["prod"]
 }
