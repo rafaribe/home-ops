@@ -36,3 +36,4 @@ resources:
   - ./enix-charts.yaml
   - ./weave-gitops.yaml
   - ./tf-controller-charts.yaml
+  - ./k8s-gateway.yaml
