@@ -30,7 +30,8 @@
         "terraform": "terraform",
         "truenas-scale": "server",
         "nordrassil": "supabase",
-        "skovald": "gulp"
+        "skovald": "gulp",
+        "k8s-gateway": "kubernetes"
     },
     "prettier.configPath": ".github/linters/.prettierrc.yaml",
     "prettier.ignorePath": ".github/linters/.prettierignore",
