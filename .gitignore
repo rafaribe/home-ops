@@ -23,3 +23,4 @@ docs/**/*.bkp
 kubernetes/clusters/nordrassil/flux/vars/secrets.yaml
 terraform/**/*.backup
 terraform/**/.decrypted~.env
+*tmp
