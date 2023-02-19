@@ -1,14 +1,10 @@
-resource "doppler_project" "home-ops" {
-  name        = "home-ops"
+resource "doppler_project" "project" {
+  name        = var.project-name
   description = "Home infrastructure repository"
 }
-
-resource "doppler_environment" "dev" {
-  project = doppler_project.home-ops.name
-  slug    = "dev"
-  name    = "dev"
-  depends_on = [
-    doppler_project.home-ops
-  ]
+resource "doppler_environment" "environment" {
+  for_each = toset(var.environments)
+  project  = doppler_project.project.name
+  slug     = each.value
+  name     = each.value
 }
-
