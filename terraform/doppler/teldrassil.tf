@@ -3,7 +3,7 @@ module "cert-manager" {
   source        = "./project"
   doppler_token = var.dopplerToken
   project-name  = "cert-manager"
-  environments  = ["prod"]
+  environments  = ["dev", "prod"]
 }
 
 module "cloudflare" {
@@ -11,7 +11,7 @@ module "cloudflare" {
   source        = "./project"
   doppler_token = var.dopplerToken
   project-name  = "cloudflare"
-  environments  = ["prod"]
+  environments  = ["dev", "prod"]
 }
 
 module "authentik" {
