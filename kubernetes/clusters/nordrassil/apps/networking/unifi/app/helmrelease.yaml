@@ -28,8 +28,8 @@ spec:
 
     env:
       RUNAS_UID0: "false"
-      UNIFI_UID: "999"
-      UNIFI_GID: "999"
+      UNIFI_UID: "0"
+      UNIFI_GID: "0"
       UNIFI_STDOUT: "true"
       JVM_INIT_HEAP_SIZE:
       JVM_MAX_HEAP_SIZE: 1024M
