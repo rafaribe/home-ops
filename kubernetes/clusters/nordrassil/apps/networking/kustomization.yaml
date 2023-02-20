@@ -10,5 +10,5 @@ resources:
   - ./metallb/ks.yaml
   - ./blocky/ks.yaml
   - ./ingress-nginx/ks.yaml
-  - ./k8s-gateway/ks.yaml
+  #- ./k8s-gateway/ks.yaml
   # - ./static-routes/ks.yaml
