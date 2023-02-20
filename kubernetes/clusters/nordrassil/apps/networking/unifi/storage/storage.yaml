@@ -7,11 +7,20 @@ metadata:
   labels:
     app.kubernetes.io/name: &name unifi
     app.kubernetes.io/instance: *name
-    snapshot.home.arpa/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
-  storageClassName: unifi-zfs
+  storageClassName: zfs-kubernetes
+---
+apiVersion: snapshot.storage.k8s.io/v1beta1
+kind: VolumeSnapshot
+metadata:
+  name: unifi-snapshot
+  namespace: networking
+spec:
+  volumeSnapshotClassName: zfspv-kubernetes-snapclass
+  source:
+    persistentVolumeClaimName: unifi-config-v1

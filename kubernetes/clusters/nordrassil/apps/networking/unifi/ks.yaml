@@ -31,6 +31,7 @@ spec:
   dependsOn:
     - name: cluster-apps-unifi-controller-storage
     - name: cluster-apps-ingress-nginx-app
+    - name: cluster-apps-storage-openebs-config
   healthChecks:
     - apiVersion: v1
       kind: PersistentVolumeClaim
