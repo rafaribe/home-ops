@@ -102,6 +102,7 @@ spec:
       data:
         enabled: true
         existingClaim: unifi-config-v1
+        mountPath: /unifi
       # gateway:
       #   enabled: true
       #   type: custom
