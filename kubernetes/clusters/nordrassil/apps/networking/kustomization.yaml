@@ -6,7 +6,7 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  #- ./unifi/ks.yaml
+  - ./unifi/ks.yaml
   - ./metallb/ks.yaml
   - ./blocky/ks.yaml
   - ./ingress-nginx/ks.yaml
