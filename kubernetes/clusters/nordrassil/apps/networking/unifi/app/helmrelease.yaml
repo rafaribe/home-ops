@@ -113,7 +113,13 @@ spec:
       #     - path: config.gateway.json
       #       mountPath: /unifi/data/sites/default/config.gateway.json
       #       readOnly: false
-
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
     resources:
       requests:
         cpu: 23m
