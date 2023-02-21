@@ -112,7 +112,7 @@ spec:
         subPath:
           - path: config.gateway.json
             mountPath: /unifi/data/sites/default/config.gateway.json
-            readOnly: true
+            readOnly: false
 
     resources:
       requests:
