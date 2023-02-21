@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./storage.yaml
 metadata:
-  namespace: networking
+  namespace: unifi

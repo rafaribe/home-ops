@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: unifi
-  namespace: networking
+  namespace: unifi
 spec:
   interval: 15m
   chart:
@@ -101,7 +101,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: unifi-config-v1
+        existingClaim: unifi-config-v2
         mountPath: /unifi
       gateway:
         enabled: true
