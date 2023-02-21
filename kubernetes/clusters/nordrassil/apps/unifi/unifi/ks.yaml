@@ -54,5 +54,5 @@ spec:
   healthChecks:
     - apiVersion: v1
       kind: PersistentVolumeClaim
-      name: unifi-config-v1
+      name: unifi-config-v2
       namespace: unifi
