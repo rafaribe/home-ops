@@ -5,3 +5,4 @@ resources:
   - terraform-cloudflare-oci.yaml
   - terraform-authentik-oci.yaml
   - terraform-doppler-oci.yaml
+  - terraform-unifi-oci.yaml
