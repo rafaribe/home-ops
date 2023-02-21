@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-unifi-controller-storage
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/nordrassil/apps/networking/unifi/storage
+  path: ./kubernetes/clusters/nordrassil/apps/unifi/unifi/storage
   prune: true
   sourceRef:
     kind: GitRepository
@@ -22,7 +22,7 @@ metadata:
   name: cluster-apps-unifi-controller-config
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/nordrassil/apps/networking/unifi/config
+  path: ./kubernetes/clusters/nordrassil/apps/unifi/unifi/config
   prune: false
   sourceRef:
     kind: GitRepository
@@ -41,7 +41,7 @@ metadata:
   name: cluster-apps-unifi-controller-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/nordrassil/apps/networking/unifi/app
+  path: ./kubernetes/clusters/nordrassil/apps/unifi/unifi/app
   prune: true
   sourceRef:
     kind: GitRepository
