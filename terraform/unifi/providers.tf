@@ -11,5 +11,5 @@ provider "unifi" {
   username       = nonsensitive(data.doppler_secrets.this.map.UNIFI_USERNAME)
   password       = nonsensitive(data.doppler_secrets.this.map.UNIFI_PASSWORD)
   api_url        = "https://unifi.networking.svc.cluster.local:8443"
-  allow_insecure = false
+  allow_insecure = true
 }
