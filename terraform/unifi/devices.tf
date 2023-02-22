@@ -7,6 +7,10 @@ locals {
     {
       name = "Yeelight"
       mac  = "78:11:dc:6a:c3:e4"
+    },
+    {
+      name = "Light - Office"
+      mac  = "78:11:dc:6a:c3:e4"
     }
   ]
   servers = [
