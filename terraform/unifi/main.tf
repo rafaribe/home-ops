@@ -6,8 +6,7 @@ terraform {
     organization = "rafaribe"
 
     workspaces {
-      name           = "home-unifi"
-      execution_mode = local
+      name = "home-unifi"
     }
   }
   required_providers {
