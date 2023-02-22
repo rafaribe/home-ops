@@ -27,7 +27,7 @@ spec:
       tag: v7.3
 
     env:
-      RUNAS_UID0: "false"
+      RUNAS_UID0: "true"
       UNIFI_UID: "0"
       UNIFI_GID: "0"
       UNIFI_STDOUT: "true"
