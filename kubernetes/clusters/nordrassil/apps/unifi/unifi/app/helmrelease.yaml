@@ -116,7 +116,16 @@ spec:
 
     resources:
       requests:
-        cpu: 23m
-        memory: 1390M
+        cpu: {}
+        memory: {}
       limits:
-        memory: 1390M
+        cpu: {}
+        memory: {}
+
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
