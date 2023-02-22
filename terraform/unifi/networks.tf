@@ -22,7 +22,7 @@ resource "unifi_network" "default" {
 
 resource "unifi_network" "iot" {
   name         = "iot"
-  purpose      = "vlan-only"
+  purpose      = local.purpose
   subnet       = "10.0.4.0/24"
   vlan_id      = local.iot_vlan
   dhcp_start   = "10.0.4.2"
@@ -49,7 +49,7 @@ resource "unifi_network" "guest" {
   subnet       = "10.0.3.0/24"
   vlan_id      = local.guest_vlan
   dhcp_start   = "10.0.3.2"
-  dhcp_stop = "10.0.3.254"
+  dhcp_stop    = "10.0.3.254"
   dhcp_enabled = local.dhcp_enabled
   domain_name  = local.domain_name
   dhcp_dns     = local.dhcp_dns
