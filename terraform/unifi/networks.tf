@@ -31,18 +31,6 @@ resource "unifi_network" "iot" {
   domain_name  = local.domain_name
   dhcp_dns     = local.dhcp_dns
 }
-resource "unifi_network" "servers" {
-  name         = "servers"
-  purpose      = "corporate"
-  subnet       = "10.0.2.0/24"
-  vlan_id      = local.servers_vlan
-  dhcp_start   = "10.0.2.2"
-  dhcp_stop    = "10.0.2.254"
-  dhcp_enabled = true
-  domain_name  = "home"
-  dhcp_dns     = ["10.0.1.250", "1.1.1.1", "9.9.9.9", "8.8.8.8"]
-}
-
 resource "unifi_network" "guest" {
   name         = "guest"
   purpose      = "corporate"
