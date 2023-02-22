@@ -6,7 +6,7 @@ metadata:
   namespace: networking
 spec:
   addresses:
-    - ${K8S_LB_L2_CIDR}
+    - ${K8S_SERVICE_CIDR}
   autoAssign: true
 ---
 apiVersion: metallb.io/v1beta1
@@ -16,5 +16,5 @@ metadata:
   namespace: networking
 spec:
   addresses:
-    - ${HOME_NETWORK_L2_CIDR}
+    - ${LB_HOME_NETWORK_ADDRESS_POOL_ADVERTISE}
   autoAssign: true

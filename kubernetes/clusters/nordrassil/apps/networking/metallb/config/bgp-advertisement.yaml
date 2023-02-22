@@ -7,6 +7,6 @@ metadata:
 spec:
   aggregationLength: 32
   ipAddressPools:
-    - bgp-pool
+    - home-network-pool
   peers:
     - gateway
