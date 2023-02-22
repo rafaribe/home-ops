@@ -21,21 +21,33 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Setup Tools
+        run: |
+          brew install jo
+
       - name: Get changed files
-        id: generate-build-matrix
-        uses: tj-actions/changed-files@v35
+        id: changed-files
+        uses: tj-actions/changed-files@v35.5.6
         with:
           dir_names: true
+          dir_names_max_depth: 3
           json: true
           files: |
             terraform/**
-
       - name: List all changed files
         run: |
-          echo '${{ steps.generate-build-matrix.outputs.all_changed_files }}'
-
-      - id: set-matrix
-        run: echo "matrix={\"project\":${{ steps.generate-build-matrix.outputs.all_changed_files }}}" >> "${GITHUB_OUTPUT}"
+          echo '${{ steps.changed-files.outputs.all_changed_files }}'
+      - name: Store changed projects
+        id: set-matrix
+        run: |
+          if [[ "${{ steps.changed-files.outputs.all_changed_files }}" == "[]" ]]; then
+            echo "matrix={\"project\":$(find terraform -type d -mindepth 1 -maxdepth 1 | jo -a)}" >> "${GITHUB_OUTPUT}"
+          else
+            echo "matrix={\"project\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "${GITHUB_OUTPUT}"
+          fi
 
   publish:
     name: Publish OCI
@@ -47,15 +59,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Setup Tools
+        run: |
+          brew install fluxcd/tap/flux
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Flux
-        uses: fluxcd/flux2/action@main
 
       - name: Publish OCI
         run: |
