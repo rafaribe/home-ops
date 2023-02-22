@@ -31,8 +31,8 @@ spec:
       UNIFI_UID: "0"
       UNIFI_GID: "0"
       UNIFI_STDOUT: "true"
-      JVM_INIT_HEAP_SIZE: 2048M
-      JVM_MAX_HEAP_SIZE: 2048M
+      JVM_INIT_HEAP_SIZE:
+      JVM_MAX_HEAP_SIZE: 1024M
 
     ingress:
       main:
@@ -113,14 +113,6 @@ spec:
           - path: config.gateway.json
             mountPath: /unifi/data/sites/default/config.gateway.json
             readOnly: false
-
-    resources:
-      requests:
-        cpu: {}
-        memory: {}
-      limits:
-        cpu: {}
-        memory: {}
 
     probes:
       liveness:
