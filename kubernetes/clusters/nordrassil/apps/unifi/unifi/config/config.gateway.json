@@ -1,1 +1,16 @@
-{}
+{
+    "protocols": {
+        "bgp": {
+            "64512": {
+                "neighbor": {
+                    "10.0.1.6": {
+                        "remote-as": "64512"
+                    }
+                },
+                "parameters": {
+                    "router-id": "10.0.1.1"
+                }
+            }
+        }
+    }
+}
