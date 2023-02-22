@@ -27,10 +27,10 @@ module "unifi" {
   environments  = ["prod"]
 }
 
-module "test" {
+module "flux" {
   source        = "./project"
   doppler_token = var.dopplerToken
-  project_name  = "test"
+  project_name  = "flux"
   environments  = ["prod"]
 }
 
