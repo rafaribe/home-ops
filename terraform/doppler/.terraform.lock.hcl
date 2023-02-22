@@ -5,6 +5,7 @@ provider "registry.terraform.io/dopplerhq/doppler" {
   version     = "1.1.6"
   constraints = "1.1.6"
   hashes = [
+    "h1:2wMBMHmJsxRLpA1LtstaA/8TVHQwLK34I9TF0faDSCQ=",
     "h1:pXFIgNEoe1rTd5WJb05Uxj/zx0lU9N5w0vasMVyi9v4=",
     "zh:05846496dcff8ab9cb687162b4a414a6faf65d46e8ed3875b91c7faba611103a",
     "zh:06c233bb86044d93b6b67f9059ca15795ed6be5bf6d011afb0203119e970e547",
@@ -27,6 +28,7 @@ provider "registry.terraform.io/hashicorp/random" {
   version     = "3.4.3"
   constraints = "3.4.3"
   hashes = [
+    "h1:tL3katm68lX+4lAncjQA9AXL4GR/VM+RPwqYf4D2X8Q=",
     "h1:xZGZf18JjMS06pFa4NErzANI98qi59SEcBsOcS2P2yQ=",
     "zh:41c53ba47085d8261590990f8633c8906696fa0a3c4b384ff6a7ecbf84339752",
     "zh:59d98081c4475f2ad77d881c4412c5129c56214892f490adf11c7e7a5a47de9b",
