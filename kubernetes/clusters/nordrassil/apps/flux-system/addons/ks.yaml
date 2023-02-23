@@ -5,8 +5,6 @@ metadata:
   name: cluster-apps-flux-webhooks
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/clusters/nordrassil/apps/flux-system/addons/webhooks/
   prune: true
   sourceRef:
