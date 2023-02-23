@@ -7,11 +7,11 @@ metadata:
     app: ubuntu
 spec:
   containers:
-    - image: ubuntu:22.04
+    - image: ubuntu:latest
       command:
-        - 'tail'
-        - '-f'
-        - '/dev/null'
+        - "tail"
+        - "-f"
+        - "/dev/null"
       imagePullPolicy: IfNotPresent
       name: supa-dupa-debug-pod
   restartPolicy: Always
