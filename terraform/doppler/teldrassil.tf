@@ -1,36 +1,46 @@
 module "cert-manager" {
 
-  source        = "./project"
-  doppler_token = var.dopplerToken
-  project_name  = "cert-manager"
-  environments  = ["dev", "prod"]
+  source       = "./project"
+  project_name = "cert-manager"
+  environments = ["dev", "prod"]
+  providers = {
+    doppler = doppler
+  }
 }
 
 module "cloudflare" {
 
-  source        = "./project"
-  doppler_token = var.dopplerToken
-  project_name  = "cloudflare"
-  environments  = ["dev", "prod"]
+  source       = "./project"
+  project_name = "cloudflare"
+  environments = ["dev", "prod"]
+  providers = {
+    doppler = doppler
+  }
 }
 
 module "authentik" {
-  source        = "./project"
-  doppler_token = var.dopplerToken
-  project_name  = "authentik"
-  environments  = ["prod"]
+  source       = "./project"
+  project_name = "authentik"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
 }
 module "unifi" {
-  source        = "./project"
-  doppler_token = var.dopplerToken
-  project_name  = "unifi"
-  environments  = ["prod"]
+  source       = "./project"
+  project_name = "unifi"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
 }
 
 module "flux" {
-  source        = "./project"
-  doppler_token = var.dopplerToken
-  project_name  = "flux"
-  environments  = ["prod"]
+  source       = "./project"
+  project_name = "flux"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
 }
 
