@@ -5,10 +5,6 @@ locals {
       mac  = "70:88:6b:14:8a:69"
     },
     {
-      name = "Yeelight"
-      mac  = "78:11:dc:6a:c3:e4"
-    },
-    {
       name = "Light - Office"
       mac  = "78:11:dc:6a:c3:e4"
     }
