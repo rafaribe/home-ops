@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - letsencrypt-production.yaml
   - letsencrypt-staging.yaml
-  - cloudflare-token.yaml
+  #- cloudflare-token.yaml
+  - externalsecrets.yaml
