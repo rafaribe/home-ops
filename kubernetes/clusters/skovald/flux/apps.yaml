@@ -7,7 +7,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./kubernetes/clusters/nordrassil/apps
+  path: ./kubernetes/clusters/skovald/apps
   prune: true
   sourceRef:
     kind: GitRepository
