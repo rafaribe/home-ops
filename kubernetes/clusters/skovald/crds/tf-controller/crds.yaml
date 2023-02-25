@@ -8,7 +8,7 @@ spec:
   url: https://github.com/weaveworks/tf-controller.git
   ref:
     # renovate: datasource=github-releases depName=weaveworks/tf-controller
-    tag: v0.13.1
+    tag: v0.14.0
   ignore: |
     # exclude all
     /*
