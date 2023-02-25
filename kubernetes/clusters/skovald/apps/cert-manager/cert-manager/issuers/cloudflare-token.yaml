@@ -1,0 +1,29 @@
+# yamllint disable
+apiVersion: v1
+kind: Secret
+metadata:
+    name: cloudflare-token-secret
+    namespace: cert-manager
+type: Opaque
+stringData:
+    cloudflare-api-token: ENC[AES256_GCM,data:3Cow0Q36ymvH8pclgAFvUE6BOaq+w5AQHxAc/bBg1YYF7DJQAvMkVA==,iv:NN2bEsXaFe+lhYz0mVIghUj0e5gcpWx0egE3YgddIWo=,tag:uriD4ljfm1ih0XwviLFiFA==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB1bVpDVnlDWkJxWjBkb0t2
+            Sm42QzNEN0NpRm1rYitpb3IvTFNEWVNoczBBCldSZGttOHhhcEVSOEhLVk1mK2xX
+            M1paSlZXN0w2YS9aZEJ5QlhsZEZFU00KLS0tIGtYQ28vM28rTjM0azF6UE41M0Nt
+            NWNUWmtrSDlvR29uVlJ1YTZZbFZWUFEK4yfcGwt8WcvO6DzbewVkKc6K5piwxAi/
+            HC53/HnezaGsyEoVhPY2Wrj8Bo+czz1gYNzJG+2IcU7BF37v/r33nA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-02-18T03:10:01Z"
+    mac: ENC[AES256_GCM,data:g3WbTBopXz/r1Fqjrz/OMLfVjJh/nNPvBbqRJWYi2QXtAFUqUW2IW4x+193SbO0dqcUJtNbvQFk1uXL6uHsc/sPmYP4pMjmszxXklsrfoVf/+gdzZ7IgSM4ZF9bAQ4wIFXj7axTD/BC9O2xuitcEdqA46K08z1lCvyGje0lEKSo=,iv:68rRX30qEV4x19wtcZkiZE0l3CnY4PYp5MY2LAQjyQs=,tag:cQFrFfL5les0I+Nhqhd6SA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
