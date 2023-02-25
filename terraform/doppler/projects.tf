@@ -38,7 +38,7 @@ module "unifi" {
 module "flux" {
   source       = "./project"
   project_name = "flux"
-  environments = ["prod"]
+  environments = ["webhook", "nordrassil", "skovald"]
   providers = {
     doppler = doppler
   }
