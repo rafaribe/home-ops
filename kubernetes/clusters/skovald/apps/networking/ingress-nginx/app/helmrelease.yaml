@@ -33,7 +33,7 @@ spec:
       service:
         annotations:
           metallb.universe.tf/loadBalancerIPs: |-
-            ${LB_NGINX_SKOVALD}
+            ${LB_NGINX_NORDRASSIL}
         externalTrafficPolicy: Local
       publishService:
         enabled: true
