@@ -1,6 +1,5 @@
 ---
 - name: "template out cilium.yaml"
-  delegate_to: localhost
   template:
     src: cilium.yaml
     dest: /home/rafaribe/code/rafaribe/home-ops/ansible/rke2/roles/os-bootstrap/templates/cilium.yaml
