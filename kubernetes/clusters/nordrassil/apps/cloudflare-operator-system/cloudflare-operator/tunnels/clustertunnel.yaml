@@ -2,7 +2,7 @@
 apiVersion: networking.cfargotunnel.com/v1alpha1
 kind: ClusterTunnel
 metadata:
-  name: cluster-tunnel
+  name: nordrassil-tunnel
   namespace: cloudflare-operator-system
 spec:
   newTunnel:
