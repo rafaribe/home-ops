@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/nordrassil/apps/networking/cloudflare-zero-trust/operator"
+  path: "./kubernetes/clusters/nordrassil/apps/networking/cloudflare-zero-trust-operator/app"
   prune: true
   sourceRef:
     kind: GitRepository
