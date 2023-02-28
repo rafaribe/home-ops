@@ -23,5 +23,6 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
+  postRenderers: []
   values:
     secretRef: cloudflare-operator-secret
