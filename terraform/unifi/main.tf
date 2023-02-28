@@ -16,7 +16,7 @@ terraform {
     }
     unifi = {
       source  = "paultyng/unifi"
-      version = "0.39.0"
+      version = "0.40.0"
     }
   }
 }
