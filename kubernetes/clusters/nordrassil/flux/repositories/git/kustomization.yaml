@@ -5,3 +5,4 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ./cloudflare-operator.yaml
+  - ./temp-source.yaml

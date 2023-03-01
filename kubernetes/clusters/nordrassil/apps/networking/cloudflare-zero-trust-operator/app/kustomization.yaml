@@ -5,4 +5,3 @@ namespace: networking
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-  - ./temp-source.yaml
