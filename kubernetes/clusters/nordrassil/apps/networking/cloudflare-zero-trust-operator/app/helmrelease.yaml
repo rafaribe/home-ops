@@ -9,10 +9,10 @@ spec:
   chart:
     spec:
       chart: cloudflare-zero-trust-operator
-      version: 0.2.0
+      version: 0.2.1
       sourceRef:
-        kind: GitRepository
-        name: cloudflare-zero-trust-operator-fork
+        kind: HelmRepository
+        name: zelic-io-charts
         namespace: flux-system
   install:
     createNamespace: true

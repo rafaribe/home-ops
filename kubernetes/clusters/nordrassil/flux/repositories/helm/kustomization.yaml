@@ -37,4 +37,4 @@ resources:
   - ./weave-gitops.yaml
   - ./tf-controller-charts.yaml
   - ./k8s-gateway.yaml
-  - ./zelic-charts.yaml
+  - ./zelic-io-charts.yaml
