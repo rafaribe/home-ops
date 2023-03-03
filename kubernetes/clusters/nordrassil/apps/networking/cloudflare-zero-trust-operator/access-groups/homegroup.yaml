@@ -1,1 +1,10 @@
-homegroup.yaml
+apiVersion: cloudflare.zelic.io/v1alpha1
+kind: CloudflareAccessGroup
+metadata:
+  name: default-cloudflare-accessgroup
+  namespace: zero-trust-system
+spec:
+  name: Rafaribe Home
+  include:
+    - emails:
+        - rafael.ntw@gmail.com
