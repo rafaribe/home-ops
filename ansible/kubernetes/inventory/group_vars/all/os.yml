@@ -35,6 +35,7 @@ packages_install:
   - exa
   - bat
   - ripgrep
+  - uidmap
 packages_remove:
   - apparmor
   - ufw
