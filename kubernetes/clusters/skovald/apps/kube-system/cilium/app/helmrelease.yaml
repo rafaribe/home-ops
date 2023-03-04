@@ -32,8 +32,8 @@ spec:
   values:
     autoDirectNodeRoutes: true
     localRedirectPolicy: true
-    # bgpControlPlane:
-    #   enabled: false
+    bgpControlPlane:
+      enabled: false
     # bgp:
     #   enabled: false
     #   announce:
