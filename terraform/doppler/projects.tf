@@ -44,3 +44,11 @@ module "flux" {
   }
 }
 
+module "tfcontroller" {
+  source       = "./project"
+  project_name = "flux"
+  environments = ["nordrassil", "skovald"]
+  providers = {
+    doppler = doppler
+  }
+}
