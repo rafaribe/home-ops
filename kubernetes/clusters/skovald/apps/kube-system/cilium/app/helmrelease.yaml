@@ -47,7 +47,7 @@ spec:
     endpointRoutes:
       enabled: true
     hubble:
-      enabled: false
+      enabled: true
       metrics:
         enabled:
           - dns:query;ignoreAAAA
@@ -58,17 +58,17 @@ spec:
           - icmp
           - http
       relay:
-        enabled: false
+        enabled: true
         rollOutPods: true
       serviceMonitor:
         enabled: true
       ui:
-        enabled: false
+        enabled: true
         ingress:
           annotations:
             external-dns.alpha.kubernetes.io/hostname: &host hubble.${EXTERNAL_DOMAIN}
             cert-manager.io/cluster-issuer: letsencrypt-production
-          enabled: false
+          enabled: true
           hosts:
             - *host
           tls:

@@ -22,6 +22,9 @@ spec:
                   number: 443
             path: /
             pathType: Prefix
+      tls:
+        hosts:
+          - "*.${INTERNAL_DOMAIN}"
 ---
 apiVersion: v1
 kind: Service
