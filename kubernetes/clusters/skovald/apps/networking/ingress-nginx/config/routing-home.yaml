@@ -46,4 +46,6 @@ subsets:
       - ip: "10.0.1.251"
     ports:
       - port: 80
+        name: http
       - port: 443
+        name: https
