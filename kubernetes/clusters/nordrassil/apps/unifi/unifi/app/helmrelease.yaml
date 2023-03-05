@@ -42,13 +42,13 @@ spec:
           kubernetes.io/tls-acme: "true"
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           cert-manager.io/cluster-issuer: letsencrypt-prod
-          external-dns.alpha.kubernetes.io/hostname: unifi.${INTERNAL_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: ${INTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: unifi.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
           hajimari.io/enable: "true"
           hajimari.io/icon: wifi
           hajimari.io/appName: unifi
         hosts:
-          - host: &host "{{ .Release.Name }}.${INTERNAL_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
