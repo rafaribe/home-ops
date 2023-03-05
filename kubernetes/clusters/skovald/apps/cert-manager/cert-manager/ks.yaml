@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-cert-manager
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/nordrassil/apps/cert-manager/cert-manager/app
+  path: ./kubernetes/clusters/skovald/apps/cert-manager/cert-manager/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -27,7 +27,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-cert-manager
-  path: ./kubernetes/clusters/nordrassil/apps/cert-manager/cert-manager/issuers
+  path: ./kubernetes/clusters/skovald/apps/cert-manager/cert-manager/issuers
   prune: true
   sourceRef:
     kind: GitRepository
@@ -44,7 +44,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-cert-manager
-  path: ./kubernetes/clusters/nordrassil/apps/cert-manager/cert-manager/dashboard
+  path: ./kubernetes/clusters/skovald/apps/cert-manager/cert-manager/dashboard
   prune: true
   sourceRef:
     kind: GitRepository

@@ -8,7 +8,7 @@ metadata:
 spec:
   # dependsOn:
   #  - name: cluster-apps-external-secrets-stores
-  path: ./kubernetes/clusters/nordrassil/apps/flux-system/tf-controller/app
+  path: ./kubernetes/clusters/skovald/apps/flux-system/tf-controller/app
   prune: true
   sourceRef:
     kind: GitRepository
