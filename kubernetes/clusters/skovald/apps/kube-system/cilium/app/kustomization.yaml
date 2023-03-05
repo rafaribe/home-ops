@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - helmrelease.yaml
   - ip-pools.yaml
-  #- bgp.yaml
-  #- bgppeeringpolicy.yaml
+  - bgppeeringpolicy.yaml
