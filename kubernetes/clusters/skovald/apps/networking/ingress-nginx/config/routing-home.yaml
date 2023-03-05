@@ -1,0 +1,49 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: home
+  namespace: networking
+  annotations:
+    external-dns.alpha.kubernetes.io/target: "${INTERNAL_DOMAIN}"
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    kubernetes.io/ingress.class: traefik
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: "${INTERNAL_DOMAIN}"
+      http:
+        paths:
+          - backend:
+              service:
+                name: home
+                port:
+                  number: 443
+            path: /
+            pathType: Prefix
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: home
+  namespace: networking
+spec:
+  ports:
+    - name: https
+      protocol: TCP
+      port: 443
+    - name: http
+      protocol: TCP
+      port: 80
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: home
+  namespace: networking
+subsets:
+  - addresses:
+      - ip: "${LB_NGINX_NORDRASSIL}"
+    ports:
+      - port: 80
+      - port: 443
