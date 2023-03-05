@@ -33,9 +33,6 @@ spec:
     - name: https
       protocol: TCP
       port: 443
-    - name: http
-      protocol: TCP
-      port: 80
 ---
 apiVersion: v1
 kind: Endpoints
@@ -46,7 +43,5 @@ subsets:
   - addresses:
       - ip: "10.0.1.251"
     ports:
-      - port: 80
-        name: http
       - port: 443
         name: https
