@@ -124,12 +124,25 @@ services:
     logging:
       driver: json-file
       options:
-        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+
+  nginx:
+    image: nginx:1.23.3-alpine
+    container_name: nginx
+    volumes:
+      - /home/rafaribe/nginx:/etc/nginx/conf.d/
+    ports:
+      - "443:443"
+      - "80:80"
+    restart: unless-stopped
+    networks:
+      - services
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+
 networks:
   services:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.16.58.0/24
 volumes:
   syncthing:
