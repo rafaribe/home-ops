@@ -34,11 +34,6 @@ spec:
     localRedirectPolicy: true
     bgpControlPlane:
       enabled: true
-    bgp:
-      enabled: true
-      announce:
-        loadbalancerIP: true
-        podCIDR: true
     cluster:
       id: ${CLUSTER_ID}
       name: ${CLUSTER_NAME}
