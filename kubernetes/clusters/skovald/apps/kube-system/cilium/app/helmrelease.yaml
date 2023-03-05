@@ -47,7 +47,7 @@ spec:
     endpointRoutes:
       enabled: true
     hubble:
-      enabled: true
+      enabled: false
       metrics:
         enabled:
           - dns:query;ignoreAAAA
@@ -58,12 +58,12 @@ spec:
           - icmp
           - http
       relay:
-        enabled: true
+        enabled: false
         rollOutPods: true
       serviceMonitor:
         enabled: true
       ui:
-        enabled: true
+        enabled: false
         ingress:
           annotations:
             external-dns.alpha.kubernetes.io/hostname: &host hubble.${EXTERNAL_DOMAIN}
