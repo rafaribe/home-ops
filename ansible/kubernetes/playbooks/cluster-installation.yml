@@ -67,7 +67,7 @@
       become: false
       run_once: true
       ansible.builtin.replace:
-        path: "{{ playbook_dir }}/../../../ansible/kubernetes/kubeconfig"
+        path: "~/.kube/home-ops.yaml"
         regexp: "default"
         replace: "skovald"
     - name: Resource Readiness Check
@@ -125,3 +125,27 @@
         path: "{{ k3s_server_manifests_dir }}/{{ item.filename }}"
         state: absent
       loop: "{{ k3s_server_manifests_urls | default([]) }}"
+    - name:  Install Cilium with Helm 
+      block:
+      # From repository
+        - name: Add cilium repo
+          kubernetes.core.helm_repository:
+            name: cilium
+            repo_url: "https://helm.cilium.io/"
+        - name: Template a file to  /tmp/cilium.yaml
+          ansible.builtin.template:
+            src: cilium.yaml.j2
+            dest: /tmp/cilium.yaml
+            owner: "{{ansible_user}}"
+            group: "{{ansible_user}}"
+            mode: '0644'
+        - name: Install Ciliumt
+          kubernetes.core.helm:
+            name: cilium
+            chart_ref: cilium/cilium
+            chart_version: 1.13.0
+            release_namespace: kube-system
+            values_files:
+              - /tmp/cilium.yaml
+            kubeconfig: /etc/rancher/k3s/k3s.yaml
+      when: ansible_hostname == hostvars[groups['master'][0]]['ansible_hostname']

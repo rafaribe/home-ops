@@ -11,6 +11,8 @@
       ansible.builtin.pause:
         seconds: 2
   tasks:
+    - name: Uninstall Cilium
+      ansible.builtin.shell: cilium uninstall
     - name: Uninstall k3s
       ansible.builtin.include_role:
         name: xanmanning.k3s

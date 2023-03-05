@@ -202,42 +202,9 @@
             daemon_reload: true
             enabled: true
             state: restarted
-    - name: KubeVip
-      block:
-        - name: Create manifests directory on first master
-          file:
-            path: /var/lib/rancher/k3s/server/manifests
-            state: directory
-            owner: root
-            group: root
-            mode: 0644
-          when: ansible_hostname == hostvars[groups['master'][0]]['ansible_hostname']
-    - name: Cilium
-      block:
-        - name: Create manifests directory on first master
-          file:
-            path: /var/lib/rancher/k3s/server/manifests
-            state: directory
-            owner: root
-            group: root
-            mode: 0644
-          when: ansible_hostname == hostvars[groups['master'][0]]['ansible_hostname']
-        - name: Template a file to  /tmp/cilium.yaml
-          ansible.builtin.template:
-            src: cilium.yaml.j2
-            dest: /tmp/cilium.yaml
-            owner: "{{ansible_user}}"
-            group: "{{ansible_user}}"
-            mode: '0644'
-        - name: Add Cilium repo
-          ansible.builtin.shell: helm repo add cilium https://helm.cilium.io/
-        - name: Template Cilium 
-          ansible.builtin.shell: helm template cilium  cilium/cilium --version 1.13.0 --namespace kube-system --values /tmp/cilium.yaml > /var/lib/rancher/k3s/server/manifests/cilium.yaml 
-        - name: Remove temporary cilium values file
-          ansible.builtin.file:
-            path: /tmp/cilium
-            state: absent
-      when: ansible_hostname == hostvars[groups['master'][0]]['ansible_hostname']
+        - name: Cilium CLI
+          ansible.builtin.include_role:
+            name: githubixx.cilium_cli
       
   handlers:
     - name: Reboot

@@ -21,3 +21,5 @@ roles:
     src: https://github.com/githubixx/ansible-role-cilium-kubernetes.git
   - name: gantsign.helm
     src: https://github.com/gantsign/ansible-role-keyboard.git
+  - name: githubixx.cilium_cli
+    src: https://github.com/githubixx/ansible-role-cilium-cli
