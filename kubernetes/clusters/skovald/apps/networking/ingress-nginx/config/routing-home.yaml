@@ -43,7 +43,7 @@ metadata:
   namespace: networking
 subsets:
   - addresses:
-      - ip: "${LB_NGINX_NORDRASSIL}"
+      - ip: "10.0.1.251"
     ports:
       - port: 80
       - port: 443
