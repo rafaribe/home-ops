@@ -33,6 +33,8 @@ spec:
       service:
         labels:
           pool: static
+        annotations:
+          "io.cilium/lb-ipam-ips": ${LB_NGINX_SKOVALD}
         externalTrafficPolicy: Local
       publishService:
         enabled: true
