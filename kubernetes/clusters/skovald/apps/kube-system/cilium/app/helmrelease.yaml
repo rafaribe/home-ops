@@ -33,12 +33,12 @@ spec:
     autoDirectNodeRoutes: true
     localRedirectPolicy: true
     bgpControlPlane:
-      enabled: false
-    # bgp:
-    #   enabled: false
-    #   announce:
-    #     loadbalancerIP: true
-    #     podCIDR: true
+      enabled: true
+    bgp:
+      enabled: true
+      announce:
+        loadbalancerIP: true
+        podCIDR: true
     cluster:
       id: ${CLUSTER_ID}
       name: ${CLUSTER_NAME}
