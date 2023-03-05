@@ -10,7 +10,7 @@ spec:
   dependsOn:
     - name: cluster-apps-metallb
     - name: cluster-apps-metallb-config
-  path: ./kubernetes/clusters/nordrassil/apps/networking/k8s-gateway
+  path: ./kubernetes/clusters/skovald/apps/networking/k8s-gateway
   prune: true
   sourceRef:
     kind: GitRepository

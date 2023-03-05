@@ -33,7 +33,7 @@ spec:
 #   dependsOn:
 #     #   - name: cluster-apps-external-secrets-stores
 #     - name: cluster-apps-tf-controller
-#   path: ./kubernetes/clusters/nordrassil/apps/flux-system/tf-controller/terraforms
+#   path: ./kubernetes/clusters/skovald/apps/flux-system/tf-controller/terraforms
 #   prune: true
 #   sourceRef:
 #     kind: GitRepository
