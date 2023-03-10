@@ -1,0 +1,42 @@
+
+stream {
+    upstream nordrassil {
+      server 10.0.1.251:443;
+    }
+
+    upstream skovald {
+      server 10.0.1.245:443;
+    }
+
+    map $ssl_preread_server_name $backend {
+      unifi.rafaribe.com nordrassil;
+      default skovald;
+    }
+
+    server {
+      listen 443;
+      proxy_pass $backend;
+      ssl_preread on;
+    }
+  }
+http {
+    client_body_buffer_size 100M;
+    client_body_timeout 120s;
+    client_header_timeout 120s;
+    keepalive_requests 10000;
+    keepalive_timeout 120s;
+    log_format json_format '{"time": "$time_iso8601", "remote_addr": "$proxy_protocol_addr", "x_forwarded_for": "$proxy_add_x_forwarded_for", "request_id": "$req_id",
+          "remote_user": "$remote_user", "bytes_sent": $bytes_sent, "request_time": $request_time, "status": $status, "vhost": "$host", "request_proto": "$server_protocol",
+          "path": "$uri", "request_query": "$args", "request_length": $request_length, "duration": $request_time,"method": "$request_method", "http_referrer": "$http_referer",
+          "http_user_agent": "$http_user_agent" }';
+    proxy_connect_timeout 90s;
+    proxy_headers_hash_bucket_size 256;
+    proxy_headers_hash_max_size 512;
+    proxy_http_version 1.1;
+    proxy_read_timeout 90s;
+    proxy_send_timeout 90s;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Real-IP $remote_addr;
+
+}

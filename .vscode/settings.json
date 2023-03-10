@@ -31,7 +31,8 @@
         "truenas-scale": "server",
         "nordrassil": "supabase",
         "skovald": "gulp",
-        "k8s-gateway": "kubernetes"
+        "k8s-gateway": "kubernetes",
+        "talos": "cluster",
     },
     "prettier.configPath": ".github/linters/.prettierrc.yaml",
     "prettier.ignorePath": ".github/linters/.prettierignore",
@@ -43,5 +44,8 @@
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs":"active",
     "editor.hover.delay": 1500,
-    "explorer.autoReveal": false
+    "explorer.autoReveal": false,
+    "conventionalCommits.scopes": [
+        "infrastructure"
+    ]
 }

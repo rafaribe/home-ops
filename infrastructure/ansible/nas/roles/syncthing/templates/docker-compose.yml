@@ -17,8 +17,7 @@ services:
       - /sys:/host/sys:ro,rslave # sys / node_exporter
       - /proc:/host/proc:ro,rslave #processes / node_exporter
     command: -config.file=/etc/agent/agent.yml -config.expand-env=true
-    networks:
-      - services
+
     restart: unless-stopped
     logging:
       driver: json-file
@@ -37,8 +36,7 @@ services:
       - /etc/machine-id/:/etc/machine-id:ro
     devices:
       - /dev/kmsg:/dev/kmsg:ro
-    networks:
-      - services
+
     ports:
       - "8080:8080"
     restart: unless-stopped
@@ -62,35 +60,34 @@ services:
       - 22000:22000/tcp
       - 22000:22000/udp
       - 21027:21027/udp
-    networks:
-      - services
+
     logging:
       driver: json-file
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
-  kopia:
-    image: ghcr.io/onedr0p/kopia:0.12.1
-    container_name: kopia
-    restart: unless-stopped
-    network_mode: bridge
-    environment:
-      KOPIA_PASSWORD: Kogmaw20#
-      TZ: Europe/Lisbon
-    command:
-      - server
-      - --insecure
-      - --address
-      - 0.0.0.0:51515
-      - --override-username
-      - rafaribe
-      - --without-password
-    ports:
-      - 51515:51515
-    volumes:
-      - "./kopia/config:/app/config"
-      - "./kopia/cache:/app/cache"
-      - "./kopia/logs:/app/logs"
-      - "/:/tycho:ro"
+  # kopia:
+  #   image: ghcr.io/onedr0p/kopia:0.12.1
+  #   container_name: kopia
+  #   restart: unless-stopped
+  #   network_mode: bridge
+  #   environment:
+  #     KOPIA_PASSWORD: Kogmaw20#
+  #     TZ: Europe/Lisbon
+  #   command:
+  #     - server
+  #     - --insecure
+  #     - --address
+  #     - 0.0.0.0:51515
+  #     - --override-username
+  #     - rafaribe
+  #     - --without-password
+  #   ports:
+  #     - 51515:51515
+  #   volumes:
+  #     - "./kopia/config:/app/config"
+  #     - "./kopia/cache:/app/cache"
+  #     - "./kopia/logs:/app/logs"
+  #     - "/:/tycho:ro"
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
@@ -119,30 +116,27 @@ services:
     ports:
       - "9000:9000"
     restart: unless-stopped
-    networks:
-      - services
+
     logging:
       driver: json-file
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 
-  nginx:
-    image: nginx:1.23.3-alpine
-    container_name: nginx
-    volumes:
-      - /home/rafaribe/nginx:/etc/nginx/conf.d/
-    ports:
-      - "443:443"
-      - "80:80"
-    restart: unless-stopped
-    networks:
-      - services
-    logging:
-      driver: json-file
-      options:
-        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+  # nginx:
+  #   image: nginx:1.23.3-alpine
+  #   container_name: nginx
+  #   volumes:
+  #     - /home/rafaribe/nginx/server.conf:/etc/nginx/nginx.conf
+  #   ports:
+  #     - "443:443"
+  #     - "80:80"
+  #   restart: unless-stopped
 
-networks:
-  services:
+  #   logging:
+  #     driver: json-file
+  #     options:
+  #       tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+
+
 volumes:
   syncthing:

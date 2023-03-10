@@ -7,7 +7,7 @@ on: # yamllint disable-line rule:truthy
     branches:
       - main
     paths:
-      - "terraform/**"
+      - "infrastructure/terraform/**"
 
 jobs:
   generate-build-matrix:
@@ -36,7 +36,7 @@ jobs:
           dir_names_max_depth: 3
           json: true
           files: |
-            terraform/**
+            infrastructure/terraform/**
       - name: List all changed files
         run: |
           echo '${{ steps.changed-files.outputs.all_changed_files }}'
@@ -44,7 +44,7 @@ jobs:
         id: set-matrix
         run: |
           if [[ "${{ steps.changed-files.outputs.all_changed_files }}" == "[]" ]]; then
-            echo "matrix={\"project\":$(find terraform -type d -mindepth 1 -maxdepth 1 | jo -a)}" >> "${GITHUB_OUTPUT}"
+            echo "matrix={\"project\":$(find infrastructure/terraform -type d -mindepth 1 -maxdepth 1 | jo -a)}" >> "${GITHUB_OUTPUT}"
           else
             echo "matrix={\"project\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "${GITHUB_OUTPUT}"
           fi
