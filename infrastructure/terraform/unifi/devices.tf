@@ -16,11 +16,6 @@ locals {
     },
   ]
   access_points = [
-    # {
-    #   name = "AP - Attic"
-    #   mac  = "70:88:6b:14:8a:69"
-    # },
-
     {
       name = "AP - Garage"
       mac  = "18:e8:29:e0:f0:da"
@@ -31,6 +26,10 @@ locals {
     },
     {
       name = "AP - Living Room"
+      mac  = "18:e8:29:a0:5f:12"
+    },
+    {
+      name = "AP - Attic"
       mac  = "60:22:32:45:89:4c"
     },
   ]
@@ -40,6 +39,9 @@ resource "unifi_device" "access_point" {
   for_each = { for i, device in local.access_points : i => device }
   mac      = each.value.mac
   name     = each.value.name
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 resource "unifi_user" "iot" {
   for_each   = { for i, device in local.iot_devices : i => device }
