@@ -13,11 +13,14 @@ resource "unifi_network" "default" {
   purpose = local.purpose
   subnet  = "10.0.1.0/24"
   # vlan_id      = local.trusted_vlan_id
-  dhcp_start   = "10.0.1.15"
-  dhcp_stop    = "10.0.1.239"
-  dhcp_enabled = local.dhcp_enabled
-  domain_name  = local.domain_name
-  dhcp_dns     = local.dhcp_dns
+  dhcp_start          = "10.0.1.15"
+  dhcp_stop           = "10.0.1.239"
+  dhcp_enabled        = local.dhcp_enabled
+  domain_name         = local.domain_name
+  dhcp_dns            = local.dhcp_dns
+  dhcpd_boot_enabled  = true
+  dhcpd_boot_filename = "ipxe.efi"
+  dhcpd_boot_server   = "10.0.1.6"
 }
 
 resource "unifi_network" "iot" {
