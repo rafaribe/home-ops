@@ -18,9 +18,16 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3
 
+      - name: Generate Token
+        uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.BOT_APP_ID }}
+          private_key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ steps.generate-token.outputs.token }}"
           CONFIG_FILE: .github/mkdocs/mkdocs.yml
           REQUIREMENTS: .github/mkdocs/requirements.txt
