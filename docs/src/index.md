@@ -14,14 +14,48 @@ This allows for a interesting workflow:
 
 # Tech Stack
 
-[<img src="images/logo-horizontal-rke.svg" alt="k3s" style=";object-fit:cover;width:200px;height:100px"/>](https://www.k3s.io)
-[<img src="images/mkdocs.png" alt="mkdocs" style=";object-fit:cover;width:200px;height:100px"/>](https://www.mkdocs.org)
-[<img src="images/flux-horizontal-color.png" alt="flux" style=";object-fit:cover;width:200px;height:100px"/>](https://fluxcd.io)
-
-[<img src="images/cilium.png" alt="flux" style=";object-fit:contain;width:200px;height:100px"/>](https://cilium.io)
-[<img src="images/kasten-logo-stacked.svg" alt="flux" style=";object-fit:contain;width:300px;height:150px"/>](https://www.kasten.io)
-[<img src="images/crossplane-stacked-color.png" alt="crossplane" style=";width:200px;height:200px"/>](https://crossplane.io)
-
----
+<table>
+    <tr>
+        <td>Logo</td>
+        <td>Name</td>
+        <td>Description</td>
+    </tr>
+    <tr>
+        <td> <img src="https://simpleicons.org/icons/ansible.svg" alt= “ansible” width="15%" height="15%"></td>
+        <td>Ansible</td>
+        <td>Automation tool for configuration management and deployment.</td>
+    </tr>
+    <tr>
+        <td><img src="https://www.svgrepo.com/show/331552/proxmox.svg" alt="proxmox" width="15%" height="15%"></td>
+        <td>Proxmox</td>
+        <td>Virtualization management platform for multiple VMs and containers.</td>
+    </tr>
+    <tr>
+        <td>
+        <img src="https://www.svgrepo.com/show/349542/ubiquiti.svg" alt="proxmox" width="15%" height="15%"></td>
+        <td>Unifi OS</td>
+        <td>Network management and monitoring software for Ubiquiti devices.</td>
+    </tr>
+    <tr>
+        <td><img src="https://www.svgrepo.com/show/376353/terraform.svg" alt="terraform" width="20%" height="20%"></td>
+        <td>Terraform</td>
+        <td> Infrastructure as code tool used to automate the provisioning and management of infrastructure resources.</td>
+    </tr>
+    <tr>
+        <td><img src="https://www.svgrepo.com/show/448233/kubernetes.svg" alt="kubernetes" width="15%" height="15%"></td>
+        <td>Kubernetes</td>
+        <td>Container orchestration platform for automating deployment, scaling, and management of containerized applications.</td>
+    </tr>
+    <tr>
+        <td><img src="https://www.svgrepo.com/show/373924/nginx.svg" alt="nginx" width="15%" height="15%"></td>
+        <td>NGINX</td>
+        <td>Nginx-based Kubernetes Ingress controller used to manage external access to Kubernetes cluster services.</td>
+    </tr>
+    <tr>
+         <td><img src="https://cncf-branding.netlify.app/img/projects/flux/icon/color/flux-icon-color.svg" alt="nginx" width="10%" height="10%"></td>
+        <td>Flux</td>
+        <td>GitOps continuous delivery tool used to automate application deployments to Kubernetes clusters by managing changes in a Git repository.</td>
+    </tr>
+</table>
 
 © All images are copyright to their respective owners and are protected under international copyright laws.
