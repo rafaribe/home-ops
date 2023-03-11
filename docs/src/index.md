@@ -44,7 +44,12 @@ This allows for a interesting workflow:
     <tr>
         <td><img src="https://www.svgrepo.com/show/448233/kubernetes.svg" alt="kubernetes" ></td>
         <td><b>Kubernetes</b></td>
-        <td>Container orchestration platform for automating deployment, scaling, and management of containerized applications.</td>
+        <td>Container orchestration platform for automating deployment, scaling, and management of containerized applications. T</td>
+    </tr>
+        <tr>
+         <td><img src="https://cncf-branding.netlify.app/img/projects/helm/icon/color/helm-icon-color.svg" alt="helm"></td>
+        <td><b>Helm</b></td>
+        <td>The package manager for Kubernetes</td>
     </tr>
     <tr>
         <td><img src="https://www.svgrepo.com/show/373924/nginx.svg" alt="nginx"></td>
@@ -52,19 +57,41 @@ This allows for a interesting workflow:
         <td>Nginx-based Kubernetes Ingress controller used to manage external access to Kubernetes cluster services.</td>
     </tr>
     <tr>
-         <td><img src="https://cncf-branding.netlify.app/img/projects/flux/icon/color/flux-icon-color.svg" alt="nginx"></td>
+         <td><img src="https://cncf-branding.netlify.app/img/projects/flux/icon/color/flux-icon-color.svg" alt="flux"></td>
         <td><b>Flux</b></td>
         <td>GitOps continuous delivery tool used to automate application deployments to Kubernetes clusters by managing changes in a Git repository.</td>
     </tr>
     <tr>
-         <td><img src="https://cert-manager.io/images/cert-manager-logo-icon.svg" alt="nginx"></td>
+         <td><img src="https://cert-manager.io/images/cert-manager-logo-icon.svg" alt="certmanager"></td>
         <td><b>Cert Manager</b></td>
         <td>Kubernetes add-on that automates the management and issuance of TLS certificates from Cloudflare.</td>
     </tr>
+        <tr>
+         <td><img src="https://www.svgrepo.com/show/331337/cloudflare.svg" alt="cloudflare"></td>
+        <td><b>Cloudflare</b></td>
+        <td>DNS Provider</td>
+    </tr>
     <tr>
-         <td><img src="https://www.svgrepo.com/download/354219/prometheus.svg" alt="nginx"></td>
+         <td><img src="https://www.svgrepo.com/download/354219/prometheus.svg" alt="prometheus"></td>
         <td><b>Prometheus</b></td>
         <td>Monitoring and alerting system used to collect and analyze metrics from various sources in a distributed environment.</td>
+    </tr>
+        <tr>
+         <td><img src="https://github.com/grafana/loki/blob/main/docs/sources/logo.png?raw=true" alt="loki"></td>
+        <td><b>Loki</b></td>
+        <td>Log aggregation backend</td>
+    </tr>
+    </tr>
+        <tr>
+         <td><img src="https://cncf-branding.netlify.app/img/projects/thanos/icon/color/thanos-icon-color.svg" alt="loki"></td>
+        <td><b>Thanos</b></td>
+        <td>Metric efficent backend using S3-storage for Prometheus</td>
+    </tr>
+    </tr>
+        <tr>
+         <td><img src="https://grafana.com/static/img/menu/grafana2.svg" alt="loki"></td>
+        <td><b>Grafana</b></td>
+        <td>Dashboard platform</td>
     </tr>
 
 </table>
