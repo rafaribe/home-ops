@@ -31,3 +31,4 @@ jobs:
           GITHUB_TOKEN: "${{ steps.generate-token.outputs.token }}"
           CONFIG_FILE: .github/mkdocs/mkdocs.yml
           REQUIREMENTS: .github/mkdocs/requirements.txt
+          EXTRA_PACKAGES: gcc
