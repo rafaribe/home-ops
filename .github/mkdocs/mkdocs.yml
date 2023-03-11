@@ -1,7 +1,7 @@
 site_name: rafaribe homelab
 site_description: >-
   This repo contains all the manifests that I use in my homelab using a GitOps workflow with Flux.
-site_author: Bruno Rafael Ribeiro
+site_author: Rafael Ribeiro
 repo_name: rafaribe/home-ops
 repo_url: https://github.com/rafaribe/home-ops
 # https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#edit-button
@@ -104,20 +104,19 @@ plugins:
 
 # https://www.mkdocs.org/user-guide/configuration/#markdown_extensions
 markdown_extensions:
-  - abbr
   - admonition
+  - abbr
+  - meta
+  - md_in_html
   - attr_list
   - codehilite:
       guess_lang: false
-  - md_in_html
-  - meta
-  - pymdownx.betterem
-  - pymdownx.emoji:
-      emoji_generator: !!python/name:materialx.emoji.to_svg
-      emoji_index: !!python/name:materialx.emoji.twemoji
-  - pymdownx.highlight:
-      anchor_linenums: true
+  - toc:
+      permalink: true
+  - pymdownx.tabbed
+  - pymdownx.tilde
   - pymdownx.progressbar
+  - pymdownx.tasklist
   - pymdownx.snippets:
       auto_append:
         - abbreviations.md
@@ -126,17 +125,13 @@ markdown_extensions:
         - ../../docs/src/
         - docs/_includes/
       check_paths: true
+  - pymdownx.highlight:
+      anchor_linenums: true
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tabbed
-  - pymdownx.tasklist
-  - pymdownx.tilde
-  - toc:
-      permalink: true
-
 nav:
   - Introduction: index.md
   - General:
