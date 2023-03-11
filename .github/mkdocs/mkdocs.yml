@@ -84,7 +84,7 @@ extra:
       find what they're searching for. With your consent, you're helping us to
       make our documentation better.
 # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#copyright-notice
-copyright: Copyright &copy; 2022 Bruno Rafael Ribeiro
+copyright: Copyright &copy; 2023 rafaribe
 
 extra_css:
   - _static/custom.css
@@ -139,3 +139,7 @@ markdown_extensions:
 
 nav:
   - Introduction: index.md
+  - General:
+      - Hardware: general/hardware.md
+      - Proxmox: general/proxmox.md
+      - Virtual Machines: general/virtualmachines.md
