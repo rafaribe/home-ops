@@ -1,5 +1,7 @@
 # Proxmox
-[<img src="../images/proxmox_logo.svg" alt="proxmox logo" style=";object-fit:cover;width:200px;height:200px"/>](https://www.proxmox.com/en/)
+
+[<img src="../images/proxmox_logo.svg" alt="proxmox" style=";object-fit:cover;width:150px;height:150px"/>](https://www.proxmox.com/en/)
+
 Proxmox is like a Swiss Army Knife for computer nerds. It's a free, open-source software that lets you create and manage virtual machines (VMs) and containers on your own hardware. So instead of having to buy separate computers for each project or experiment, you can create multiple virtual machines on one physical computer.
 
 This means you can experiment with different operating systems, software configurations, and network setups without worrying about messing up your main computer or having to buy new hardware every time. It's like having a playground for your computer, where you can try out different things and see what works best for you.
