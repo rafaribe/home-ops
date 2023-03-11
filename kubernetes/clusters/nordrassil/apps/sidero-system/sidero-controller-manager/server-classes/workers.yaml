@@ -1,0 +1,16 @@
+---
+apiVersion: metal.sidero.dev/v1alpha1
+kind: ServerClass
+metadata:
+  name: workers
+spec:
+  selector:
+    matchExpressions:
+      - key: master
+        operator: NotIn
+        values:
+          - "true"
+      - key: pi-master
+        operator: NotIn
+        values:
+          - "true"
