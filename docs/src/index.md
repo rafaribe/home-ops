@@ -16,46 +16,57 @@ This allows for a interesting workflow:
 
 <table>
     <tr>
-        <td>Logo</td>
-        <td>Name</td>
-        <td>Description</td>
+        <th style="width: 15px;"">Logo</th>
+        <th><b>Name</b></th>
+        <th>Description</th>
     </tr>
     <tr>
-        <td> <img src="https://simpleicons.org/icons/ansible.svg" alt= “ansible” width="15%" height="15%"></td>
-        <td>Ansible</td>
+        <td><img src="https://simpleicons.org/icons/ansible.svg" alt= “ansible”/></td>
+        <td><b>Ansible</b></td>
         <td>Automation tool for configuration management and deployment.</td>
     </tr>
     <tr>
-        <td><img src="https://www.svgrepo.com/show/331552/proxmox.svg" alt="proxmox" width="15%" height="15%"></td>
-        <td>Proxmox</td>
+        <td><img src="https://www.svgrepo.com/show/331552/proxmox.svg" alt="proxmox"></td>
+        <td><b>Proxmox</b></td>
         <td>Virtualization management platform for multiple VMs and containers.</td>
     </tr>
     <tr>
         <td>
-        <img src="https://www.svgrepo.com/show/349542/ubiquiti.svg" alt="proxmox" width="15%" height="15%"></td>
-        <td>Unifi OS</td>
+        <img src="https://www.svgrepo.com/show/349542/ubiquiti.svg" alt="proxmox"></td>
+        <td><b>Unifi OS</b></td>
         <td>Network management and monitoring software for Ubiquiti devices.</td>
     </tr>
     <tr>
-        <td><img src="https://www.svgrepo.com/show/376353/terraform.svg" alt="terraform" width="20%" height="20%"></td>
-        <td>Terraform</td>
+        <td><img src="https://www.svgrepo.com/show/376353/terraform.svg" alt="terraform" ></td>
+        <td><b>Terraform</b></td>
         <td> Infrastructure as code tool used to automate the provisioning and management of infrastructure resources.</td>
     </tr>
     <tr>
-        <td><img src="https://www.svgrepo.com/show/448233/kubernetes.svg" alt="kubernetes" width="15%" height="15%"></td>
-        <td>Kubernetes</td>
+        <td><img src="https://www.svgrepo.com/show/448233/kubernetes.svg" alt="kubernetes" ></td>
+        <td><b>Kubernetes</b></td>
         <td>Container orchestration platform for automating deployment, scaling, and management of containerized applications.</td>
     </tr>
     <tr>
-        <td><img src="https://www.svgrepo.com/show/373924/nginx.svg" alt="nginx" width="15%" height="15%"></td>
-        <td>NGINX</td>
+        <td><img src="https://www.svgrepo.com/show/373924/nginx.svg" alt="nginx"></td>
+        <td><b>NGINX</b></td>
         <td>Nginx-based Kubernetes Ingress controller used to manage external access to Kubernetes cluster services.</td>
     </tr>
     <tr>
-         <td><img src="https://cncf-branding.netlify.app/img/projects/flux/icon/color/flux-icon-color.svg" alt="nginx" width="10%" height="10%"></td>
-        <td>Flux</td>
+         <td><img src="https://cncf-branding.netlify.app/img/projects/flux/icon/color/flux-icon-color.svg" alt="nginx"></td>
+        <td><b>Flux</b></td>
         <td>GitOps continuous delivery tool used to automate application deployments to Kubernetes clusters by managing changes in a Git repository.</td>
     </tr>
+    <tr>
+         <td><img src="https://cert-manager.io/images/cert-manager-logo-icon.svg" alt="nginx"></td>
+        <td><b>Cert Manager</b></td>
+        <td>Kubernetes add-on that automates the management and issuance of TLS certificates from Cloudflare.</td>
+    </tr>
+    <tr>
+         <td><img src="https://www.svgrepo.com/download/354219/prometheus.svg" alt="nginx"></td>
+        <td><b>Prometheus</b></td>
+        <td>Monitoring and alerting system used to collect and analyze metrics from various sources in a distributed environment.</td>
+    </tr>
+
 </table>
 
 © All images are copyright to their respective owners and are protected under international copyright laws.
