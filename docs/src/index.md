@@ -93,7 +93,12 @@ This allows for a interesting workflow:
         <td><b>Grafana</b></td>
         <td>Dashboard platform</td>
     </tr>
-
+    </tr>
+        <tr>
+         <td><img src="https://images.g2crowd.com/uploads/product/hd_favicon/72560d7bf99d51bc45794936cc945ba7/doppler-secretops-platform.svg" alt="loki"></td>
+        <td><b>Doppler</b></td>
+        <td>External Secrets Provider</td>
+    </tr>
 </table>
 
 © All images are copyright to their respective owners and are protected under international copyright laws.
