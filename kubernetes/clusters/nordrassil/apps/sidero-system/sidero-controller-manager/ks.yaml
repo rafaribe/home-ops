@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/nordrassil/apps/sidero-system/sidero-controller-manager/app"
+  path: "./kubernetes/clusters/nordrassil/apps/sidero-system/sidero-controller-manager/servers"
   prune: true
   sourceRef:
     kind: GitRepository

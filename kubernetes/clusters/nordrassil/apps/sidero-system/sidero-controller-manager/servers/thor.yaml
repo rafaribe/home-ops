@@ -1,0 +1,18 @@
+apiVersion: metal.sidero.dev/v1alpha1
+kind: Server
+metadata:
+  generation: 1
+  name: 4c4c4544-0057-3710-8051-b5c04f4a4732
+spec:
+  accepted: true
+  cpu:
+    manufacturer: Intel(R) Corporation
+    version: Intel(R) Core(TM) i5-6500T CPU @ 2.50GHz
+  hostname: 10.0.1.10
+  system:
+    family: Unknown
+    manufacturer: Dell Inc.
+    productName: OptiPlex 3040
+    serialNumber: 5W7QJG2
+    skuNumber: Unknown
+    version: 06BB
