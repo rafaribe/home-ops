@@ -52,3 +52,12 @@ module "tfcontroller" {
     doppler = doppler
   }
 }
+
+module "proxmox" {
+  source       = "./project"
+  project_name = "proxmox"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
