@@ -11,9 +11,44 @@ locals {
   ]
   servers = [
     {
-      name = "Truenas"
-      mac  = "0c:c4:7a:c0:df:0a"
+      name     = "truenas"
+      mac      = "0c:c4:7a:c0:df:0a"
+      fixed_ip = "10.0.1.6"
+      note     = "stable server running truenas scale "
     },
+    {
+      name     = "odin"
+      mac      = "10:c3:7b:1d:d6:f4"
+      fixed_ip = "10.0.1.7"
+      note     = "Asus Laptop"
+    },
+    {
+      name     = "loki"
+      mac      = "18:66:da:3c:a4:86"
+      fixed_ip = "10.0.1.8"
+      note     = "Dell from the left"
+    },
+
+    {
+      name     = "freya"
+      mac      = "00:1e:06:45:43:3e"
+      fixed_ip = "10.0.1.9"
+      note     = "Odroid H2+"
+    },
+
+    {
+      name     = "thor"
+      mac      = "e4:a7:a0:7c:81:20"
+      fixed_ip = "10.0.1.10"
+      note     = "Dell from the right"
+    },
+    {
+      name     = "backup-server"
+      mac      = "dc:a6:32:06:d6:0e"
+      fixed_ip = "10.0.1.11"
+      note     = "Raspberry Pi with 2 External HDD"
+    },
+
   ]
   access_points = [
     {
@@ -48,4 +83,13 @@ resource "unifi_user" "iot" {
   mac        = each.value.mac
   name       = each.value.name
   network_id = unifi_network.iot.id
+}
+
+resource "unifi_user" "server" {
+  for_each   = { for i, device in local.servers : i => device }
+  mac        = each.value.mac
+  name       = each.value.name
+  network_id = unifi_network.default.id
+  fixed_ip   = each.value.fixed_ip
+  note       = each.value.note
 }
