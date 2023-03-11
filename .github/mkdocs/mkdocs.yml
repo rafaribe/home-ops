@@ -96,6 +96,7 @@ plugins:
   - git-revision-date-localized
   - autolinks
   - diagrams
+  - glightbox
 
 # https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-analytics/#google-analytics
 # google_analytics:

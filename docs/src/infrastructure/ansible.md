@@ -4,7 +4,7 @@ hide:
 ---
 # Ansible
 
-<img src="../images/ansible-diagram.png" alt="ansible-diagram"/>
+![ansible-diagram](../images/ansible-diagram.png)
 
 Ansible is my go-to solution for provisioning hosts on both virtual machines and bare-metal machines. With Ansible, I can easily automate the installation of software, set up my preferred environment, and streamline the management of my applications.
 

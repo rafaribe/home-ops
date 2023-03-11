@@ -24,7 +24,10 @@ My homelab consists of a variety of hardware equipment between networking and co
 Most of this stuff is placed in the garage on an old IKEA TV stand that I had in my previous home. The cabinets are filled with cables and other misc. hardware and I have a screen that I plug on every computer there. Should probably think about getting a PiKVM or similar setup.
 I prefer to have everything on the garage because it's the coldest room in the house and I avoid having to deal with the noises. 
 
-<img src="../images/homelab.jpg" alt="homelab" style=";width:500px;height:400px"/>
+<figure markdown>
+  ![homelab](../images/homelab.jpg){ width="500" }
+  <figcaption>My humble homelab</figcaption>
+</figure>
 
 ## TrueNas Scale Box
 
@@ -39,6 +42,9 @@ I prefer to have everything on the garage because it's the coldest room in the h
 
 **Power Consumption:** ~30-60W
 
-<img src="../images/truenas-garage.jpg" alt="truenas-garage" style=";width:500px;height:400px"/>
+<figure markdown>
+  ![truenas](../images/truenas-garage.jpg){ width="500" }
+  <figcaption>TrueNAS Scale Box</figcaption>
+</figure>
 
 The setup is a bit messy, case didn't fit the disks inside so they are outside, I plan to 3D print some case to put them on, but in the meantime they are on top of some cardboard boxes to keep vibration to a minimum.
