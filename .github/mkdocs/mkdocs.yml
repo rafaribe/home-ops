@@ -138,3 +138,7 @@ nav:
       - Hardware: general/hardware.md
       - Proxmox: general/proxmox.md
       - Virtual Machines: general/virtualmachines.md
+  - Infrastructure:
+      - Ansible: infrastructure/ansible.md
+      - Terraform: infrastructure/terraform.md
+      - Sidero: infrastructure/sidero.md

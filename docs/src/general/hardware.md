@@ -21,6 +21,10 @@ My homelab consists of a variety of hardware equipment between networking and co
 | Unifi AP 6 Lite      | N/A                       | N/A                                  | N/A  | <img width="32" src="https://simpleicons.org/icons/ubiquiti.svg"> | [AP - Garage](https://eu.store.ui.com/collections/unifi-network-wireless/products/unifi-ac-lite)    | Access Point for my Garage IoT Devices Office         | -                      |
 | Unifi AP 6 Lite      | N/A                       | N/A                                  | N/A  | <img width="32" src="https://simpleicons.org/icons/ubiquiti.svg"> | [AP - Attic](https://eu.store.ui.com/products/unifi-ap-6-lite)                                      | Access Point for my Attic / Upstairs Bedrooms         | -                      |
 
+Most of this stuff is placed in the garage on an old IKEA TV stand that I had in my previous home. The cabinets are filled with cables and other misc. hardware and I have a screen that I plug on every computer there. Should probably think about getting a PiKVM or similar setup.
+I prefer to have everything on the garage because it's the coldest room in the house and I avoid having to deal with the noises. 
+
+<img src="../images/homelab.jpg" alt="homelab" style=";width:500px;height:400px"/>
 
 ## TrueNas Scale Box
 
@@ -33,4 +37,8 @@ My homelab consists of a variety of hardware equipment between networking and co
 - Power Supply: [Aerocool VX 550](https://www.amazon.es/-/pt/dp/B07HBHPGXF?psc=1&ref=ppx_yo2ov_dt_b_product_details)
 - PCI-Express Raid Controller: [Dell Perc H310](https://i.dell.com/sites/doccontent/shared-content/data-sheets/Documents/dell-perc-h310-spec-sheet.pdf)
 
-Power Consumption: ~30-60W
+**Power Consumption:** ~30-60W
+
+<img src="../images/truenas-garage.jpg" alt="truenas-garage" style=";width:500px;height:400px"/>
+
+The setup is a bit messy, case didn't fit the disks inside so they are outside, I plan to 3D print some case to put them on, but in the meantime they are on top of some cardboard boxes to keep vibration to a minimum.
