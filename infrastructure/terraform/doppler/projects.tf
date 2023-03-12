@@ -46,7 +46,7 @@ module "flux" {
 
 module "tfcontroller" {
   source       = "./project"
-  project_name = "flux"
+  project_name = "tfcontroller"
   environments = ["nordrassil", "skovald"]
   providers = {
     doppler = doppler
