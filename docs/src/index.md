@@ -85,7 +85,7 @@ This allows for a interesting workflow:
         <tr>
          <td><img src="https://cncf-branding.netlify.app/img/projects/thanos/icon/color/thanos-icon-color.svg" alt="loki"></td>
         <td><b>Thanos</b></td>
-        <td>Metric efficent backend using S3-storage for Prometheus</td>
+        <td>Metrics efficent backend using S3-storage for Prometheus</td>
     </tr>
     </tr>
         <tr>
@@ -98,6 +98,12 @@ This allows for a interesting workflow:
          <td><img src="https://images.g2crowd.com/uploads/product/hd_favicon/72560d7bf99d51bc45794936cc945ba7/doppler-secretops-platform.svg" alt="loki"></td>
         <td><b>Doppler</b></td>
         <td>External Secrets Provider</td>
+    </tr>
+    </tr>
+        <tr>
+         <td><img src="https://layer5.io/static/67e20231adeb31cc1a6076aed4651e46/cilium-color.svg" alt="loki"></td>
+        <td><b>Cilium</b></td>
+        <td>CNI with eBPF-based networking, observability and security</td>
     </tr>
 </table>
 
