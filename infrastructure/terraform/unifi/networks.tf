@@ -45,4 +45,3 @@ resource "unifi_network" "guest" {
   domain_name  = local.domain_name
   dhcp_dns     = local.dhcp_dns
 }
-

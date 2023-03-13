@@ -48,7 +48,32 @@ locals {
       fixed_ip = "10.0.1.11"
       note     = "Raspberry Pi with 2 External HDD"
     },
+    //
+    {
+      name     = "talos1"
+      mac      = "42:C3:B0:6B:80:E0"
+      fixed_ip = "10.0.1.12"
+      note     = "VM on Odin"
+    },
+    {
+      name     = "talos2"
+      mac      = "42:D7:7A:D7:89:ED"
+      fixed_ip = "10.0.1.13"
+      note     = "VM on Loki"
+    },
+    {
+      name     = "talos3"
+      mac      = "86:D0:5F:F2:92:78"
+      fixed_ip = "10.0.1.14"
+      note     = "VM on Freya"
+    },
 
+    {
+      name     = "talos4"
+      mac      = "5A:EC:9A:72:75:68"
+      fixed_ip = "10.0.1.15"
+      note     = "VM on Thor"
+    },
   ]
   access_points = [
     {
