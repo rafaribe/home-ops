@@ -1,3 +1,8 @@
+
+
+// Manually ran to passthrough disk:
+// qm set 6001 -scsi2 /dev/disk/by-id/ata-HGST_HTS721075A9E630_JR12006QG0YW5E
+
 module "talos1" {
   source      = "./talos"
   name        = "talos-1"
@@ -13,7 +18,9 @@ module "talos1" {
     proxmox = proxmox
   }
 }
-
+// Manually ran to passthrough disk:
+// qm set 6002 -scsi1 /dev/disk/by-id/usb-WD_Elements_25A3_4341304D5032454B-0:0
+// qm set 6002 -scsi2 /dev/disk/by-id/usb-Realtek_RTL9210_NVME_012345678904-0:0
 module "talos2" {
   source      = "./talos"
   name        = "talos-2"
@@ -30,6 +37,9 @@ module "talos2" {
   }
 }
 
+// Manually ran to passthrough disk:
+// qm set 6003 -scsi1 /dev/disk/by-id/usb-WD_My_Passport_25E2_575836314441373641485943-0:0
+
 module "talos3" {
   source      = "./talos"
   name        = "talos-3"
@@ -45,6 +55,10 @@ module "talos3" {
     proxmox = proxmox
   }
 }
+
+
+// Manually ran to passthrough disk:
+// qm set 6004 -scsi1 /dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0
 module "talos4" {
   source      = "./talos"
   name        = "talos-4"
