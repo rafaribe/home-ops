@@ -37,7 +37,10 @@ packages_install:
   - fish
   - neofetch
   - lshw
+  - python3-pip
+  - python3-venv
 keyboard_layout: pt
 bash_aliases:
   - { alias: "ls", command: "exa" }
+  - { alias: "bat", command: "batcat" }
   - { alias: "bat", command: "batcat" }
