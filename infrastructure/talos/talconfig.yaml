@@ -5,87 +5,96 @@ endpoint: https://10.0.1.12:6443
 domain: cluster.local
 allowSchedulingOnMasters: true
 additionalMachineCertSans:
+  - ${clusterEndpointIP}
   - 10.0.1.12
 additionalApiServerCertSans:
-  - home-cluster.local
+  - ${clusterEndpointIP}
   - skovald.local
 clusterPodNets:
-  - 10.244.0.0/16
+  - 10.42.0.0/16
 clusterSvcNets:
-  - 10.96.0.0/12
+  - 10.43.0.0/12
 cniConfig:
   name: custom
   urls:
     - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/cni/install.yaml
 nodes:
-  - hostname: talos1
-    ipAddress: 10.0.1.12
-    installDiskSelector:
-      size: 4GB
-      model: WDC*
-      name: /sys/block/sda/device/name
-      busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0
-    controlPlane: true
-    nodeLabels:
-      rack: rack1a
-      zone: us-east-1a
+  - hostname: talos1.skovald
     disableSearchDomain: true
-    kernelModules:
-      - name: br_netfilter
-        parameters:
-          - nf_conntrack_max=131072
-    nameservers:
-      - 1.1.1.1
-      - 8.8.8.8
+    ipAddress: 10.1.1.12
+    controlPlane: true
+    installDisk: /dev/sda
     networkInterfaces:
       - interface: eth0
-        addresses:
-          - 192.168.200.12/24
-        mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.200.1
-        wireguard:
-          privateKey: 6NtibgkNWGSLp7ud6NgZr9k3kNhlQiaJCVW6vN+j9UY=
-          listenPort: 51111
-          peers:
-            - publicKey: kyiu4YOZqX+7tY4fdiIRNDe2lSEvlun76EWtD/jP1hU=
-              endpoint: 192.168.1.3:1111
-              allowedIPs:
-                - 192.168.1.0/24
-              persistentKeepaliveInterval: 10s
-      - interface: eth1
         dhcp: true
-        ignore: true
-  - hostname: kworker1
-    ipAddress: 192.168.200.13
-    controlPlane: false
-    installDisk: /dev/sdb
-    patches:
-      - |-
-        machine:
-          network:
-            interfaces:
-              - addresses:
-                  - 192.168.200.11/24
-                interface: eth1
-                routes:
-                  - gateway: 192.168.200.1
-                  - network: 0.0.0.0/0
+  - hostname: talos2.skovald
+    disableSearchDomain: true
+    ipAddress: 10.1.1.13
+    controlPlane: true
+    installDisk: /dev/sdc
+    networkInterfaces:
+      - interface: eth0
+        dhcp: true
+  - hostname: talos3.skovald
+    disableSearchDomain: true
+    ipAddress: 10.1.1.14
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: eth0
+        dhcp: true
+  - hostname: talos4.skovald
+    disableSearchDomain: true
+    ipAddress: 10.1.1.15
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: eth0
+        dhcp: true
+
 controlPlane:
   patches:
     - |-
-      - op: add
-        path: /machine/kubelet/extraArgs
-        value:
-          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
-          rotate-server-certificates: "true"
-    - "@./extraKernelArgs-patch.yaml"
-worker:
-  patches:
+      cluster:
+        allowSchedulingOnMasters: true
+        apiServer:
+          extraArgs:
+            feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+        controllerManager:
+          extraArgs:
+            feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+        discovery:
+          registries:
+            service:
+              disabled: true
+        proxy:
+          disabled: true
+          extraArgs:
+            feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+        scheduler:
+          extraArgs:
+            feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+      machine:
+        files:
+          - content: |
+              [plugins]
+                [plugins."io.containerd.grpc.v1.cri"]
+                  enable_unprivileged_ports = true
+                  enable_unprivileged_icmp = true
+            path: /etc/cri/conf.d/20-customization.part
+            op: create
+        kubelet:
+          extraArgs:
+            feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
+            rotate-server-certificates: "true"
+        network:
+          extraHostEntries:
+            - ip: ${clusterEndpointIP}
+              aliases:
+                - cluster-0.skovald
+        sysctls:
+          fs.inotify.max_user_watches: "1048576"
+          fs.inotify.max_user_instances: "8192"
     - |-
-      - op: add
-        path: /machine/kubelet/extraArgs
-        value:
-          feature-gates: GracefulNodeShutdown=false,MixedProtocolLBService=false
-          rotate-server-certificates: "true"
+      - op: remove
+        path: /cluster/apiServer/admissionControl
