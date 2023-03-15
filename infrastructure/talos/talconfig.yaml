@@ -20,7 +20,7 @@ cniConfig:
 nodes:
   - hostname: talos1.rafaribe.site
     disableSearchDomain: true
-    ipAddress: 10.1.1.12
+    ipAddress: 10.0.1.12
     controlPlane: true
     installDisk: /dev/sda
     networkInterfaces:
@@ -28,7 +28,7 @@ nodes:
         dhcp: true
   - hostname: talos2.rafaribe.site
     disableSearchDomain: true
-    ipAddress: 10.1.1.13
+    ipAddress: 10.0.1.13
     controlPlane: true
     installDisk: /dev/sdc
     networkInterfaces:
@@ -36,7 +36,7 @@ nodes:
         dhcp: true
   - hostname: talos3.rafaribe.site
     disableSearchDomain: true
-    ipAddress: 10.1.1.14
+    ipAddress: 10.0.1.14
     controlPlane: true
     installDisk: /dev/sda
     networkInterfaces:
@@ -44,7 +44,7 @@ nodes:
         dhcp: true
   - hostname: talos4.rafaribe.site
     disableSearchDomain: true
-    ipAddress: 10.1.1.15
+    ipAddress: 10.0.1.15
     controlPlane: true
     installDisk: /dev/sda
     networkInterfaces:
