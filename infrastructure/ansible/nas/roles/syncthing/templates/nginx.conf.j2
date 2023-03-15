@@ -14,12 +14,15 @@ stream {
 
   upstream skovald {
     #Change me to 10.0.1.245 when this cluster is up
-    server 10.0.1.252:443;
+    server skovald.rafaribe.site:443;
   }
 
   map $ssl_preread_server_name $backend {
     unifi.rafaribe.com nordrassil;
-    default skovald;
+    authentik.rafaribe.com nordrassil;
+    dns.rafaribe.com nordrassil;
+    dns.rafaribe.site nordrassil;
+    default nordrassil;
   }
 
   server {

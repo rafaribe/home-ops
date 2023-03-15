@@ -5,10 +5,10 @@ endpoint: https://skovald.rafaribe.site:6443
 domain: cluster.local
 allowSchedulingOnMasters: true
 additionalMachineCertSans:
+  - skovald.rafaribe.site
   - ${clusterEndpointIP}
 additionalApiServerCertSans:
   - ${clusterEndpointIP}
-  - skovald.rafaribe.site
 clusterPodNets:
   - 10.42.0.0/16
 clusterSvcNets:
