@@ -103,6 +103,7 @@ resource "unifi_device" "access_point" {
   #   prevent_destroy = true
   # }
 }
+
 resource "unifi_user" "iot" {
   for_each   = { for i, device in local.iot_devices : i => device }
   mac        = each.value.mac
