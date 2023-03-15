@@ -1,15 +1,14 @@
 clusterName: skovald
 talosVersion: v1.3.4
 kubernetesVersion: v1.26.2
-endpoint: https://10.0.1.12:6443
+endpoint: https://skovald.rafaribe.site:6443
 domain: cluster.local
 allowSchedulingOnMasters: true
 additionalMachineCertSans:
   - ${clusterEndpointIP}
-  - 10.0.1.12
 additionalApiServerCertSans:
   - ${clusterEndpointIP}
-  - skovald.local
+  - skovald.rafaribe.site
 clusterPodNets:
   - 10.42.0.0/16
 clusterSvcNets:
@@ -19,7 +18,7 @@ cniConfig:
   urls:
     - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/cni/install.yaml
 nodes:
-  - hostname: talos1.skovald
+  - hostname: talos1.rafaribe.site
     disableSearchDomain: true
     ipAddress: 10.1.1.12
     controlPlane: true
@@ -27,7 +26,7 @@ nodes:
     networkInterfaces:
       - interface: eth0
         dhcp: true
-  - hostname: talos2.skovald
+  - hostname: talos2.rafaribe.site
     disableSearchDomain: true
     ipAddress: 10.1.1.13
     controlPlane: true
@@ -35,7 +34,7 @@ nodes:
     networkInterfaces:
       - interface: eth0
         dhcp: true
-  - hostname: talos3.skovald
+  - hostname: talos3.rafaribe.site
     disableSearchDomain: true
     ipAddress: 10.1.1.14
     controlPlane: true
@@ -43,7 +42,7 @@ nodes:
     networkInterfaces:
       - interface: eth0
         dhcp: true
-  - hostname: talos4.skovald
+  - hostname: talos4.rafaribe.site
     disableSearchDomain: true
     ipAddress: 10.1.1.15
     controlPlane: true
@@ -91,7 +90,7 @@ controlPlane:
           extraHostEntries:
             - ip: ${clusterEndpointIP}
               aliases:
-                - cluster-0.skovald
+                - skovald.rafaribe.site
         sysctls:
           fs.inotify.max_user_watches: "1048576"
           fs.inotify.max_user_instances: "8192"
