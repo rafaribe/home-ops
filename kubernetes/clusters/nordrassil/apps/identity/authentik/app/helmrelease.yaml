@@ -83,6 +83,11 @@ spec:
             value: nordrassil-storage-rw.storage
           - name: POSTGRES_DB
             value: authentik
+          - name: POSTGRES_SUPER_USER
+            valueFrom:
+              secretKeyRef:
+                name: cloudnative-pg-superuser
+                key: username
           - name: POSTGRES_SUPER_PASS
             valueFrom:
               secretKeyRef:
