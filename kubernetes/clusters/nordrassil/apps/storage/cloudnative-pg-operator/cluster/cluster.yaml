@@ -1,28 +1,19 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres
-  namespace: postgresql
+  name: nordrassil-storage
+  namespace: storage
   annotations:
     kyverno.io/ignore: "true"
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:14.7
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 20Gi
-    storageClass: ceph-block-ec
+    size: 100Gi
+    storageClass: zfs-kubernetes
   superuserSecret:
-    name: cloudnative-pg-secret
-#  bootstrap:
-#    recovery:
-#      source: &previous-cluster postgres-v0
-  postgresql:
-    parameters:
-      max_connections: "300"
-      shared_buffers: 512MB
+    name: postgres-superuser
   monitoring:
     enablePodMonitor: true
   backup:
@@ -31,29 +22,13 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://postgresql/
-      endpointURL: "${S3_INTERNAL_ENDPOINT}"
-      serverName: postgres-v1
+      destinationPath: s3://postgresql
+      endpointURL: http://minio.storage.svc.cluster.local:9000
+      serverName: postgres-db-1
       s3Credentials:
         accessKeyId:
-          name: cloudnative-pg-secret
-          key: aws-access-key-id
+          name: cloudnative-pg
+          key: MINIO_ACCESS_KEY
         secretAccessKey:
-          name: cloudnative-pg-secret
-          key: aws-secret-access-key
-  # Note: externalClusters is needed when recovering from an existing cnpg cluster
-#  externalClusters:
-#    - name: *previous-cluster
-#      barmanObjectStore:
-#        wal:
-#          compression: bzip2
-#          maxParallel: 8
-#        destinationPath: s3://postgresql/
-#        endpointURL: "${S3_INTERNAL_ENDPOINT}"
-#        s3Credentials:
-#          accessKeyId:
-#            name: cloudnative-pg-secret
-#            key: aws-access-key-id
-#          secretAccessKey:
-#            name: cloudnative-pg-secret
-#            key: aws-secret-access-key
+          name: cloudnative-pg
+          key: MINIO_SECRET_KEY
