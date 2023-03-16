@@ -80,13 +80,13 @@ spec:
         image: ghcr.io/onedr0p/postgres-initdb:14.5
         env:
           - name: POSTGRES_HOST
-            value: postgres-db-rw.databases.svc.cluster.local
+            value: nordrassil-storage-rw.storage
           - name: POSTGRES_DB
-            value: authentik-db
+            value: authentik
           - name: POSTGRES_SUPER_PASS
             valueFrom:
               secretKeyRef:
-                name: postgres-superuser
+                name: cloudnative-pg-superuser
                 key: password
         envFrom:
           - secretRef:
