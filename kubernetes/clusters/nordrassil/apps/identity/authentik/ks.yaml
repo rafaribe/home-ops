@@ -1,0 +1,15 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-identity-authentik-app
+  namespace: flux-system
+spec:
+  path: ./kubernetes/clusters/nordrassil/apps/identity/authentik/app
+  prune: false
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m

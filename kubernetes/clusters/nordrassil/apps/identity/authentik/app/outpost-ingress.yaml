@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: authentik-outpost
-  namespace: security
+  namespace: identity
   annotations:
     external-dns.alpha.kubernetes.io/hostname: ako.${EXTERNAL_DOMAIN}
     external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
@@ -14,8 +14,8 @@ spec:
       http:
         paths:
           - backend:
-                # Or, to use an external Outpost, create an ExternalName service and reference that here.
-                # See https://kubernetes.io/docs/concepts/services-networking/service/#externalname
+              # Or, to use an external Outpost, create an ExternalName service and reference that here.
+              # See https://kubernetes.io/docs/concepts/services-networking/service/#externalname
               service:
                 name: ak-outpost-authentik-embedded-outpost
                 port:
