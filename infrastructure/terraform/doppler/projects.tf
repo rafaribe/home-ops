@@ -70,3 +70,12 @@ module "cloudnativepg" {
     doppler = doppler
   }
 }
+
+module "minio" {
+  source       = "./project"
+  project_name = "minio"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}

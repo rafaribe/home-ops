@@ -20,7 +20,7 @@ data:
   CLUSTER_DB_NODE_2: theta
   CLUSTER_DB_BACKUP_PREFIX: "backup/db"
   # Network
-  NAS_ADDRESS: 10.0.1.100
+  NAS_ADDRESS: 10.0.1.11
   NAS_DIR: /data/share/nfs
   NAS_BACKUP_DIR: /data/backups
   #
