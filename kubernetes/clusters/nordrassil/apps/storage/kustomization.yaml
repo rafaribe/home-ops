@@ -6,5 +6,6 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  #- ./unifi/ks.yaml
   - ./openebs/ks.yaml
+  - ./minio/ks.yaml
+  - ./cloudnative-pg-operator/ks.yaml
