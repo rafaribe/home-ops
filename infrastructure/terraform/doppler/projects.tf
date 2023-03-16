@@ -61,3 +61,12 @@ module "proxmox" {
     doppler = doppler
   }
 }
+
+module "cloudnativepg" {
+  source       = "./project"
+  project_name = "cloudnativepg"
+  environments = ["nordrassil", "skovald"]
+  providers = {
+    doppler = doppler
+  }
+}
