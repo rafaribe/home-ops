@@ -1,10 +1,8 @@
 ---
-# yaml-language-server: $schema=https://json.schemastore.org/kustomization
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  # Flux-Kustomizations
-  - ./authentik/ks.yaml
-  # - ./weave-gitops/ks.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: identity
+  labels:
+    goldilocks.fairwinds.com/enabled: "true"
+    kustomize.toolkit.fluxcd.io/prune: disabled
