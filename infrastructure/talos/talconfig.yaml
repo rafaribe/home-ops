@@ -1,14 +1,15 @@
 clusterName: skovald
-talosVersion: v1.3.4
+talosVersion: v1.3.6
 kubernetesVersion: v1.26.2
-endpoint: https://skovald.rafaribe.site:6443
+endpoint: https://skovald.${domainName}:6443
 domain: cluster.local
 allowSchedulingOnMasters: true
-additionalMachineCertSans:
-  - skovald.rafaribe.site
-  - ${clusterEndpointIP}
 additionalApiServerCertSans:
   - ${clusterEndpointIP}
+additionalMachineCertSans:
+  - skovald.${domainName}
+  - ${clusterEndpointIP}
+
 clusterPodNets:
   - 10.42.0.0/16
 clusterSvcNets:
@@ -18,7 +19,7 @@ cniConfig:
   urls:
     - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/cni/install.yaml
 nodes:
-  - hostname: talos1.rafaribe.site
+  - hostname: talos1.${domainName}
     disableSearchDomain: true
     ipAddress: 10.0.1.12
     controlPlane: true
@@ -26,15 +27,15 @@ nodes:
     networkInterfaces:
       - interface: eth0
         dhcp: true
-  - hostname: talos2.rafaribe.site
+  - hostname: talos2.${domainName}
     disableSearchDomain: true
     ipAddress: 10.0.1.13
     controlPlane: true
-    installDisk: /dev/sdc
+    installDisk: /dev/sda
     networkInterfaces:
       - interface: eth0
         dhcp: true
-  - hostname: talos3.rafaribe.site
+  - hostname: talos3.${domainName}
     disableSearchDomain: true
     ipAddress: 10.0.1.14
     controlPlane: true
@@ -42,58 +43,61 @@ nodes:
     networkInterfaces:
       - interface: eth0
         dhcp: true
-  - hostname: talos4.rafaribe.site
+  - hostname: talos4.${domainName}
     disableSearchDomain: true
     ipAddress: 10.0.1.15
     controlPlane: true
     installDisk: /dev/sda
-    networkInterfaces:
-      - interface: eth0
-        dhcp: true
 
 controlPlane:
-  patches:
-    - |-
-      cluster:
-        allowSchedulingOnMasters: true
-        apiServer:
-          extraArgs:
-            feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
-        controllerManager:
-          extraArgs:
-            feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
-        discovery:
-          registries:
-            service:
-              disabled: true
-        proxy:
-          disabled: true
-          extraArgs:
-            feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
-        scheduler:
-          extraArgs:
-            feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
-      machine:
-        files:
-          - content: |
-              [plugins]
-                [plugins."io.containerd.grpc.v1.cri"]
-                  enable_unprivileged_ports = true
-                  enable_unprivileged_icmp = true
-            path: /etc/cri/conf.d/20-customization.part
-            op: create
-        kubelet:
-          extraArgs:
-            feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
-            rotate-server-certificates: "true"
-        network:
-          extraHostEntries:
-            - ip: ${clusterEndpointIP}
-              aliases:
-                - skovald.rafaribe.site
-        sysctls:
-          fs.inotify.max_user_watches: "1048576"
-          fs.inotify.max_user_instances: "8192"
+  inlinePatch:
+    cluster:
+      extraManifests:
+        - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/standalone-install.yaml
+        - https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+      allowSchedulingOnMasters: true
+      apiServer:
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+      controllerManager:
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+      discovery:
+        registries:
+          service:
+            disabled: true
+      proxy:
+        disabled: true
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+      scheduler:
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+    machine:
+      files:
+        - content: |
+            [plugins]
+              [plugins."io.containerd.grpc.v1.cri"]
+                enable_unprivileged_ports = true
+                enable_unprivileged_icmp = true
+          path: /etc/cri/conf.d/20-customization.part
+          op: create
+      kubelet:
+        extraArgs:
+          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
+          rotate-server-certificates: "true"
+      network:
+        extraHostEntries:
+          - ip: ${clusterEndpointIP}
+            aliases:
+              - skovald.${domainName}
+      sysctls:
+        fs.inotify.max_user_watches: "1048576"
+        fs.inotify.max_user_instances: "8192"
+      certSANs:
+        - ${clusterEndpointIP}
+        - skovald.${domainName}
+  patch:
     - |-
       - op: remove
         path: /cluster/apiServer/admissionControl
