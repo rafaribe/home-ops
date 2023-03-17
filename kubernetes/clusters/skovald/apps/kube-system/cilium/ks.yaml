@@ -18,3 +18,25 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-cilium-bgp
+  namespace: flux-system
+spec:
+  path: ./kubernetes/clusters/skovald/apps/kube-system/cilium/bgp
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
+  dependsOn:
+    - name: cluster-apps-cilium-app
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: cert-manager
+      namespace: cert-manager
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m

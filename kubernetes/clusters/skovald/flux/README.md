@@ -17,7 +17,7 @@ _These cannot be applied with `kubectl` in the regular fashion due to some files
 ```sh
 sops --decrypt ./bootstrap/flux/age-key.sops.yaml | kubectl apply -f -
 sops --decrypt ./bootstrap/flux/github-deploy-key.sops.yaml | kubectl apply -f -
-kubectl apply -f ./flux/vars/cluster-config.yaml
+kubectl apply -f ./skovald/vars/cluster-config.yaml
 ```
 
 ### Manually apply Prom CRD'
