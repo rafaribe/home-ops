@@ -62,13 +62,14 @@ spec:
     #       osd:
     #         probe:
     #           timeoutSeconds: 15
-      network:
-        provider: host
-        connections:
-          encryption:
-            enabled: true
-          compression:
-            enabled: true
+    network:
+      provider: host
+      connections:
+        encryption:
+          enabled: true
+        compression:
+          enabled: true
+    cephClusterSpec:
       resources:
         mon:
           requests:
@@ -109,9 +110,9 @@ spec:
             memory: "100M"
           limits:
             memory: "1G"
-      dashboard:
-        enabled: true
-        urlPrefix: /
+    dashboard:
+      enabled: true
+      urlPrefix: /
     ingress:
       dashboard:
         ingressClassName: "nginx"
@@ -144,6 +145,8 @@ spec:
         - name:
           devices:
             - name: "/dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0"
+    cephBlockPoolsVolumeSnapshotClass:
+      enabled: false
     cephBlockPools:
       - name: ceph-blockpool
         spec:
