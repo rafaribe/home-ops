@@ -32,38 +32,38 @@ spec:
 
     monitoring:
       enabled: true
-
+      # bluefs_buffered_io = false
     configOverride: |
       [global]
       bdev_enable_discard = true
       bdev_async_discard = true
-      bluefs_buffered_io = false
-    cephClusterSpec:
-      priorityClassNames:
-        all: system-node-critical
-        mgr: system-cluster-critical
-      disruptionManagement:
-        managePodBudgets: true
-      healthCheck:
-        daemonHealth:
-          mon:
-            interval: 45s
-            timeout: 600s
-        livenessProbe:
-          mon:
-            probe:
-              timeoutSeconds: 10
-          osd:
-            probe:
-              timeoutSeconds: 15
 
-        startupProbe:
-          mon:
-            probe:
-              timeoutSeconds: 15
-          osd:
-            probe:
-              timeoutSeconds: 15
+    # cephClusterSpec:
+    #   priorityClassNames:
+    #     all: system-node-critical
+    #     mgr: system-cluster-critical
+    #   disruptionManagement:
+    #     managePodBudgets: true
+    #   healthCheck:
+    #     daemonHealth:
+    #       mon:
+    #         interval: 45s
+    #         timeout: 600s
+    #     livenessProbe:
+    #       mon:
+    #         probe:
+    #           timeoutSeconds: 10
+    #       osd:
+    #         probe:
+    #           timeoutSeconds: 15
+
+    #     startupProbe:
+    #       mon:
+    #         probe:
+    #           timeoutSeconds: 15
+    #       osd:
+    #         probe:
+    #           timeoutSeconds: 15
       network:
         provider: host
         connections:
@@ -112,61 +112,46 @@ spec:
           limits:
             memory: "1G"
       dashboard:
-        enabled: false
+        enabled: true
         urlPrefix: /
-        ssl: false
-    # ingress:
-    #   dashboard:
-    #     ingressClassName: nginx
-    #     annotations:
-    #       cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
-    #       external-dns.alpha.kubernetes.io/hostname: rook.${EXTERNAL_DOMAIN}
-
-    #       hajimari.io/enable: "true"
-    #       hajimari.io/icon: content-save
-    #       hajimari.io/appName: "rook-ceph"
-    #     host:
-    #       name: &host "rook.${EXTERNAL_DOMAIN}"
-    #       path: "/"
-    #     tls:
-    #       - secretName: tls.rook-ceph
-    #         hosts:
-    #           - *host
-    mon:
-      count: 1
-      allowMultiplePerNode: false
-    mgr:
-      count: 2
-      allowMultiplePerNode: false
-      modules:
-        - name: rook
-          enabled: true
+    ingress:
+      dashboard:
+        ingressClassName: "nginx"
+        annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          hajimari.io/appName: "Rook"
+          hajimari.io/icon: mdi:chess-rook
+        host:
+          name: &host "rook.${EXTERNAL_DOMAIN}"
+          path: "/"
+        tls:
+          - hosts:
+              - *host
     storage:
       useAllNodes: false
       useAllDevices: false
       config:
-        osdsPerDevice: "3"
+        osdsPerDevice: "1"
       nodes:
-        - name: delta
+        - name: "talos1"
           devices:
-            - name: /dev/disk/by-id/scsi-SATA_HGST_HTS721075A9_JR12006QG0YW5E
-        - name: omega
+            - name: "/dev/disk/by-id/scsi-SATA_HGST_HTS721075A9_JR12006QG0YW5E"
+        - name: "talos2"
           devices:
-            - name: /dev/sdc
-            - name: /dev/disk/by-id/scsi-33001237923792379
-        - name: theta
+            - name: "/dev/disk/by-id/usb-WD_Elements_25A3_4341304D5032454B-0:0"
+            - name: "/dev/disk/by-id/usb-Realtek_RTL9210_NVME_012345678904-0:0"
+        - name: "talos3"
           devices:
-            - name: /dev/disk/by-id/scsi-SSanDisk_Extreme_55AE_2209DN403175
-        - name: odroid
+            - name: "/dev/disk/by-id/usb-WD_My_Passport_25E2_575836314441373641485943-0:0"
+        - name:
           devices:
-            - name: /dev/disk/by-id/ata-TOSHIBA_MQ01UBD100_34ODT9I6T
+            - name: "/dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0"
     cephBlockPools:
       - name: ceph-blockpool
         spec:
           failureDomain: host
           replicated:
             size: 3
-            requireSafeReplicaSize: false
         storageClass:
           enabled: true
           name: ceph-block
@@ -183,7 +168,6 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
-            mapOptions: ms_mode=secure
     cephFileSystems:
       - name: ceph-filesystem
         spec:
@@ -195,8 +179,15 @@ spec:
               replicated:
                 size: 3
           metadataServer:
-            activeCount: 3
+            activeCount: 1
             activeStandby: true
+            resources:
+              limits:
+                # cpu: "500m"
+                memory: "4Gi"
+              requests:
+                cpu: "1000m"
+                memory: "4Gi"
         storageClass:
           enabled: true
           isDefault: false
@@ -212,42 +203,4 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
-            mapOptions: ms_mode=secure
-    cephObjectStores:
-      - name: ceph-objectstore
-        # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Object-Storage/ceph-object-store-crd.md#object-store-settings for available configuration
-        spec:
-          metadataPool:
-            failureDomain: host
-            replicated:
-              size: 3
-          dataPool:
-            failureDomain: host
-            erasureCoded:
-              dataChunks: 2
-              codingChunks: 1
-          preservePoolsOnDelete: true
-          healthCheck:
-            bucket:
-              disabled: true
-          gateway:
-            port: 80
-            resources:
-              limits:
-                cpu: "2000m"
-                memory: "2Gi"
-              requests:
-                cpu: "1000m"
-                memory: "1Gi"
-            # securePort: 443
-            # sslCertificateRef:
-            instances: 1
-            priorityClassName: system-cluster-critical
-        storageClass:
-          enabled: true
-          name: ceph-bucket
-          reclaimPolicy: Delete
-          # see https://github.com/rook/rook/blob/master/Documentation/ceph-object-bucket-claim.md#storageclass for available configuration
-          parameters:
-            # note: objectStoreNamespace and objectStoreName are configured by the chart
-            region: us-east-1
+    cephObjectStores: []
