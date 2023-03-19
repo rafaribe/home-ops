@@ -6,6 +6,9 @@ metadata:
 spec:
   cidrs:
     - cidr: "10.0.1.247/30"
+  serviceSelector:
+    matchLabels:
+      pool: lb
     # - cidr: "2004::0/64"
 ---
 apiVersion: "cilium.io/v2alpha1"

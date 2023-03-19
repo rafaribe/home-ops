@@ -32,7 +32,7 @@ spec:
           value: "${TZ}"
       service:
         labels:
-          pool: static
+          pool: lb
         annotations:
           "io.cilium/lb-ipam-ips": ${LB_NGINX_SKOVALD}
         externalTrafficPolicy: Local
