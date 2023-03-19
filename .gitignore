@@ -25,3 +25,4 @@ terraform/**/*.backup
 terraform/**/.decrypted~.env
 *tmp
 known_hosts
+.monokle
