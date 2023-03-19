@@ -10,15 +10,3 @@ spec:
     matchLabels:
       pool: lb
     # - cidr: "2004::0/64"
----
-apiVersion: "cilium.io/v2alpha1"
-kind: CiliumLoadBalancerIPPool
-metadata:
-  name: "static-pool"
-spec:
-  cidrs:
-    - cidr: "10.0.1.248/30"
-  serviceSelector:
-    matchLabels:
-      pool: static
-    # - cidr: "2004::1:0/64"
