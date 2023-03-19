@@ -8,5 +8,3 @@ configMapGenerator:
       - cloudflare-proxied-networks.txt
 generatorOptions:
   disableNameSuffixHash: true
-resources:
-  - routing-home.yaml
