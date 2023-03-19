@@ -5,7 +5,7 @@ metadata:
   name: "primary-pool"
 spec:
   cidrs:
-    - cidr: "10.0.1.247/30"
+    - cidr: "10.0.2.0/24"
   serviceSelector:
     matchLabels:
       pool: lb
