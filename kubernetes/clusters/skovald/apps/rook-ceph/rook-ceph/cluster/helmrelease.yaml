@@ -113,6 +113,7 @@ spec:
     dashboard:
       enabled: true
       urlPrefix: /
+      ssl: false
     ingress:
       dashboard:
         ingressClassName: "nginx"
