@@ -111,7 +111,7 @@ spec:
           limits:
             memory: "1G"
     dashboard:
-      enabled: false
+      enabled: true
       urlPrefix: /
       ssl: false
     ingress:
