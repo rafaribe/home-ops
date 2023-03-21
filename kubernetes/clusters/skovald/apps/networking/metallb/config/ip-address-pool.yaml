@@ -1,0 +1,10 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: home-network-pool
+  namespace: networking
+spec:
+  addresses:
+    - ${LB_HOME_NETWORK_ADDRESS_POOL_ADVERTISE}
+  autoAssign: true

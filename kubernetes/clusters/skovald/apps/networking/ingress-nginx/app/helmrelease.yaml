@@ -34,7 +34,8 @@ spec:
         labels:
           pool: lb
         annotations:
-          "io.cilium/lb-ipam-ips": ${LB_NGINX_SKOVALD}
+          metallb.universe.tf/loadBalancerIPs: |-
+            ${LB_NGINX_SKOVALD}
         externalTrafficPolicy: Local
       publishService:
         enabled: true
