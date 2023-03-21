@@ -4,4 +4,4 @@ resources:
   - bgp-advertisement.yaml
   - bgp-peer.yaml
   - ip-address-pool.yaml
- # - l2-advertisement.yaml
+  - l2-advertisement.yaml
