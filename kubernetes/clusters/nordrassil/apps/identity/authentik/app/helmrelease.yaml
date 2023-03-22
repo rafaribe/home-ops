@@ -76,7 +76,7 @@ spec:
           name: authentik-database-secrets
     initContainers:
       init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.5
+        image: ghcr.io/onedr0p/postgres-initdb:14.7
         env:
           - name: POSTGRES_HOST
             value: nordrassil-storage-rw.storage
@@ -92,6 +92,3 @@ spec:
               secretKeyRef:
                 name: cloudnative-pg-superuser
                 key: password
-        envFrom:
-          - secretRef:
-              name: authentik-database-secrets
