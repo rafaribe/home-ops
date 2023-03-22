@@ -8,3 +8,4 @@ spec:
   addresses:
     - 10.0.1.240/29
   autoAssign: true
+  avoidBuggyIPs: true
