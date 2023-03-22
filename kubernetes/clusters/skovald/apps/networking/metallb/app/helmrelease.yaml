@@ -13,7 +13,7 @@ spec:
       version: 0.13.9
       sourceRef:
         kind: HelmRepository
-        name: metallb
+        name: metallb-charts
         namespace: flux-system
       interval: 10m
   rollback:
