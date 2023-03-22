@@ -31,8 +31,7 @@ spec:
         - name: TZ
           value: "${TZ}"
       service:
-        annotations:
-          "metallb.universe.tf/loadBalancerIPs": ${LB_NGINX_SKOVALD}
+        loadBalancerIP: ${LB_INGRESS_SKOVALD}
         externalTrafficPolicy: Local
       publishService:
         enabled: true
