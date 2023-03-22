@@ -6,5 +6,6 @@ metadata:
   namespace: networking
 spec:
   addresses:
-    - ${LB_HOME_NETWORK_ADDRESS_POOL_ADVERTISE}
+    - 10.0.1.253/32
+    - 10.0.1.254/32
   autoAssign: true
