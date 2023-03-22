@@ -7,6 +7,6 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./ingress-nginx/ks.yaml
-  - ./metallb/ks.yaml
-  #- ./k8s-gateway/ks.yaml
-  # - ./static-routes/ks.yaml
+#  - ./metallb/ks.yaml
+#- ./k8s-gateway/ks.yaml
+# - ./static-routes/ks.yaml
