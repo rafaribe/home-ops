@@ -79,7 +79,7 @@ spec:
         image: ghcr.io/onedr0p/postgres-initdb:14.7
         env:
           - name: POSTGRES_HOST
-            value: nordrassil-storage-rw.storage
+            value: nordrassil-storage-rw.storage.svc.cluster:5432
           - name: POSTGRES_DB
             value: authentik
           - name: POSTGRES_USER
