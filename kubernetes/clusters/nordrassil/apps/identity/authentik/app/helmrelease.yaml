@@ -54,10 +54,9 @@ spec:
       outposts:
         docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
       postgresql:
-        password: ${AUTHENTIK_PG_PASSWORD}
         user: postgres
-        host: postgres-db-rw.databases.svc.cluster.local
-        name: authentik-db
+        host: nordrassil-storage-rw.storage.svc.cluster.local
+        name: authentik
     redis:
       enabled: true
       persistence:
