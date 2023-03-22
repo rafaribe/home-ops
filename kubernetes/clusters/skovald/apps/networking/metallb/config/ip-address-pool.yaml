@@ -6,6 +6,5 @@ metadata:
   namespace: networking
 spec:
   addresses:
-    - 10.0.1.253/32
-    - 10.0.1.254/32
+    - 10.0.1.240/29
   autoAssign: true
