@@ -55,6 +55,9 @@ spec:
         docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
       postgresql:
         host: nordrassil-storage-rw.storage.svc.cluster.local
+        user: authentik-admin
+        name: authentik
+        password: ${AUTHENTIK_PG_PASSWORD}
     redis:
       enabled: true
       persistence:
@@ -84,11 +87,11 @@ spec:
       name: authentik-database-secrets
       valuesKey: POSTGRES_PASS
       targetPath: authentik.postgres.password
-    - kind: Secret
-      name: authentik-database-secrets
-      valuesKey: POSTGRES_USER
-      targetPath: authentik.postgres.user
-    - kind: Secret
-      name: authentik-database-secrets
-      valuesKey: POSTGRES_HOST
-      targetPath: authentik.postgres.host
+    # - kind: Secret
+    #   name: authentik-database-secrets
+    #   valuesKey: POSTGRES_USER
+    #   targetPath: authentik.postgres.user
+    # - kind: Secret
+    #   name: authentik-database-secrets
+    #   valuesKey: POSTGRES_HOST
+    #   targetPath: authentik.postgres.host
