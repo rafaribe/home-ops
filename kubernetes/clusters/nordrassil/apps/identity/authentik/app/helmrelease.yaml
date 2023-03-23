@@ -80,12 +80,3 @@ spec:
         envFrom:
           - secretRef:
               name: authentik-database-secrets
-  valuesFrom:
-    - kind: Secret
-      name: authentik-database-secrets
-      valuesKey: POSTGRES_PASS
-      targetPath: authentik.postgres.password
-    - kind: Secret
-      name: authentik-database-secrets
-      valuesKey: POSTGRES_USER
-      targetPath: authentik.postgres.user
