@@ -88,4 +88,4 @@ spec:
     - kind: Secret
       name: authentik-database-secrets
       valuesKey: POSTGRES_USER
-      targetPath: authentik.postgres.username
+      targetPath: authentik.postgres.user
