@@ -78,16 +78,6 @@ spec:
     initContainers:
       init-db:
         image: ghcr.io/onedr0p/postgres-initdb:14.7
-        env:
-          - name: POSTGRES_HOST
-            value: postgres-db-rw.databases.svc.cluster.local
-          - name: POSTGRES_DB
-            value: authentik-db
-          - name: POSTGRES_SUPER_PASS
-            valueFrom:
-              secretKeyRef:
-                name: postgres-superuser
-                key: password
         envFrom:
           - secretRef:
               name: authentik-database-secrets
