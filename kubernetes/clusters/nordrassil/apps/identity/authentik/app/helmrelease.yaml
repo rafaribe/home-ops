@@ -54,8 +54,7 @@ spec:
       outposts:
         docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
       postgresql:
-        user: postgres
-        host: nordrassil-storage-rw.storage.svc.cluster.local
+        host: nordrassil-storage-rw
         name: authentik
     redis:
       enabled: true
@@ -86,3 +85,7 @@ spec:
       name: authentik-database-secrets
       valuesKey: POSTGRES_PASS
       targetPath: authentik.postgres.password
+    - kind: Secret
+      name: authentik-database-secrets
+      valuesKey: POSTGRES_USER
+      targetPath: authentik.postgres.username
