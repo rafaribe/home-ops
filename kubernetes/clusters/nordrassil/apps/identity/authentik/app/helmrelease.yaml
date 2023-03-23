@@ -72,9 +72,6 @@ spec:
         scrapeTimeout: 3s
       rules:
         create: true
-    envFrom:
-      - secretRef:
-          name: authentik-database-secrets
     initContainers:
       init-db:
         image: ghcr.io/haraldkoch/postgres-initdb:15.2
@@ -82,16 +79,3 @@ spec:
         envFrom:
           - secretRef:
               name: authentik-database-secrets
-  valuesFrom:
-    - kind: Secret
-      name: authentik-database-secrets
-      valuesKey: POSTGRES_PASS
-      targetPath: authentik.postgres.password
-    # - kind: Secret
-    #   name: authentik-database-secrets
-    #   valuesKey: POSTGRES_USER
-    #   targetPath: authentik.postgres.user
-    # - kind: Secret
-    #   name: authentik-database-secrets
-    #   valuesKey: POSTGRES_HOST
-    #   targetPath: authentik.postgres.host
