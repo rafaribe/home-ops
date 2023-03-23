@@ -79,3 +79,12 @@ module "minio" {
     doppler = doppler
   }
 }
+
+module "pgadmin" {
+  source       = "./project"
+  project_name = "pgadmin"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
