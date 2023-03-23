@@ -54,7 +54,7 @@ spec:
       outposts:
         docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
       postgresql:
-        host: nordrassil-storage-rw
+        host: nordrassil-storage-rw.storage.svc.cluster.local
         name: authentik
     redis:
       enabled: true
