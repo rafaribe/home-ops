@@ -11,6 +11,7 @@ output "all_service_tokens" {
       "tfcontroller"  = module.tfcontroller.service_tokens
       "proxmox"       = module.proxmox.service_tokens
       "cloudnativepg" = module.cloudnativepg.service_tokens
+      "pgadmin"       = module.pgadmin.service_tokens
     } :
     module_name => module_outputs
   }
