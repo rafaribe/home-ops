@@ -12,7 +12,7 @@ spec:
       version: 12.3.2
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: bitnami-charts
         namespace: flux-system
   maxHistory: 3
   install:
@@ -112,7 +112,8 @@ spec:
       podAntiAffinityPreset: hard
       dnsDiscovery:
         enabled: true
-      alertmanagers: ["http://kube-prometheus-stack-alertmanager.monitoring:9093"]
+      alertmanagers:
+        ["http://kube-prometheus-stack-alertmanager.monitoring:9093"]
       # Breaks any metric that has an existing "cluster" label on a metric
       # clusterName: home # must match with kube-prometheus-stack value `.prometheus.prometheusSpec.externalLabels.cluster`
       extraFlags: ["--web.prefix-header=X-Forwarded-Prefix"]
