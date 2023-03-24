@@ -49,7 +49,7 @@ spec:
         ingressClassName: nginx
         annotations:
           hajimari.io/enable: "false"
-        hostname: &host thanos-query.${CLUSTER_DOMAIN}
+        hostname: &host thanos-query.${EXTERNAL_DOMAIN}
         tls: true
         extraTls:
           - hosts:
@@ -63,7 +63,7 @@ spec:
         ingressClassName: nginx
         annotations:
           hajimari.io/enable: "false"
-        hostname: &host thanos-bucketweb.${CLUSTER_DOMAIN}
+        hostname: &host thanos-bucketweb.${EXTERNAL_DOMAIN}
         tls: true
         extraTls:
           - hosts:
@@ -79,7 +79,7 @@ spec:
         ingressClassName: nginx
         annotations:
           hajimari.io/enable: "false"
-        hostname: &host thanos-compactor.${CLUSTER_DOMAIN}
+        hostname: &host thanos-compactor.${EXTERNAL_DOMAIN}
         tls: true
         extraTls:
           - hosts:
@@ -97,7 +97,7 @@ spec:
         ingressClassName: nginx
         annotations:
           hajimari.io/enable: "false"
-        hostname: &host thanos-storegateway.${CLUSTER_DOMAIN}
+        hostname: &host thanos-storegateway.${EXTERNAL_DOMAIN}
         tls: true
         extraTls:
           - hosts:
@@ -128,7 +128,7 @@ spec:
         ingressClassName: nginx
         annotations:
           hajimari.io/enable: "false"
-        hostname: &host thanos-ruler.${CLUSTER_DOMAIN}
+        hostname: &host thanos-ruler.${EXTERNAL_DOMAIN}
         tls: true
         extraTls:
           - hosts:
