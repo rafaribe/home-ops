@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
-      version: 45.1.1
+      version: 45.7.1
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
@@ -180,7 +180,8 @@ spec:
               - __name__
     kubeControllerManager:
       enabled: true
-      endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+      endpoints:
+        ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
       serviceMonitor:
         metricRelabelings:
           - action: drop
@@ -200,7 +201,8 @@ spec:
           app.kubernetes.io/instance: coredns
     kubeScheduler:
       enabled: true
-      endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+      endpoints:
+        ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
       serviceMonitor:
         metricRelabelings:
           - action: drop
@@ -213,7 +215,8 @@ spec:
               - __name__
     kubeProxy:
       enabled: true
-      endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+      endpoints:
+        ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
       serviceMonitor:
         metricRelabelings:
           - action: drop
@@ -226,7 +229,8 @@ spec:
               - __name__
     kubeEtcd:
       enabled: true
-      endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+      endpoints:
+        ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
       service:
         enabled: true
         port: 2381
