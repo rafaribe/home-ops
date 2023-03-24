@@ -69,14 +69,14 @@ spec:
       retentionResolution1h: 14d
       persistence:
         enabled: true
-        storageClass: local-path
+        storageClass: ceph-block
         size: 20Gi
     storegateway:
       enabled: true
       replicaCount: 3
       persistence:
         enabled: true
-        storageClass: local-path
+        storageClass: ceph-block
         size: 20Gi
     ruler:
       enabled: true
