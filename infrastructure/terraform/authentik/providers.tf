@@ -23,7 +23,7 @@ data "doppler_secrets" "this" {}
 # Inject secrets from doppler into Unifi Provider
 
 provider "authentik" {
-  url      = nonsensitive(data.doppler_secrets.this.map.URL)
-  token    = nonsensitive(data.doppler_secrets.this.map.TOKEN)
+  url      = nonsensitive(data.doppler_secrets.this.map.TF_API_URL)
+  token    = nonsensitive(data.doppler_secrets.this.map.TF_API_TOKEN)
   insecure = false
 }
