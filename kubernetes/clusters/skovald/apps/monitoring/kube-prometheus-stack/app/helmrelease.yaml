@@ -279,15 +279,6 @@ spec:
             memory: 2000Mi
           # limits:
           #   memory: 7000Mi
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: ${EXTERNAL_DOMAIN}/prometheus
-                      operator: In
-                      values:
-                        - "true"
     prometheusOperator:
       resources:
         requests:
