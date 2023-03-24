@@ -154,7 +154,7 @@ spec:
       enabled: true
       endpoints:
         [
-          "talos1.${INTERNAL_DOMAIN},talos2.${INTERNAL_DOMAIN}, talos3.${INTERNAL_DOMAIN},talos4.${INTERNAL_DOMAIN}",
+          "10.0.1.12, 10.0.1.13, 10.0.1.14, 10.0.1.15",
         ]
       serviceMonitor:
         metricRelabelings:
@@ -177,7 +177,7 @@ spec:
       enabled: true
       endpoints:
         [
-          "talos1.${INTERNAL_DOMAIN},talos2.${INTERNAL_DOMAIN}, talos3.${INTERNAL_DOMAIN},talos4.${INTERNAL_DOMAIN}",
+          "10.0.1.12, 10.0.1.13, 10.0.1.14, 10.0.1.15",
         ]
       serviceMonitor:
         metricRelabelings:
@@ -193,7 +193,7 @@ spec:
       enabled: true
       endpoints:
         [
-          "talos1.${INTERNAL_DOMAIN},talos2.${INTERNAL_DOMAIN}, talos3.${INTERNAL_DOMAIN},talos4.${INTERNAL_DOMAIN}",
+          "10.0.1.12, 10.0.1.13, 10.0.1.14, 10.0.1.15",
         ]
       serviceMonitor:
         metricRelabelings:
@@ -209,7 +209,7 @@ spec:
       enabled: true
       endpoints:
         [
-          "talos1.${INTERNAL_DOMAIN},talos2.${INTERNAL_DOMAIN}, talos3.${INTERNAL_DOMAIN},talos4.${INTERNAL_DOMAIN}",
+          "10.0.1.12, 10.0.1.13, 10.0.1.14, 10.0.1.15",
         ]
       service:
         enabled: true
