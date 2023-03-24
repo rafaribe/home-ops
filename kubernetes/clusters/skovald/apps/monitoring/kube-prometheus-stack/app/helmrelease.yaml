@@ -153,9 +153,11 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints:
-        [
-          "10.0.1.12, 10.0.1.13, 10.0.1.14, 10.0.1.15",
-        ]
+        - 10.0.1.12
+        - 10.0.1.13
+        - 10.0.1.14
+        - 10.0.1.15
+
       serviceMonitor:
         metricRelabelings:
           - action: drop
@@ -176,9 +178,10 @@ spec:
     kubeScheduler:
       enabled: true
       endpoints:
-        [
-          "10.0.1.12, 10.0.1.13, 10.0.1.14, 10.0.1.15",
-        ]
+        - 10.0.1.12
+        - 10.0.1.13
+        - 10.0.1.14
+        - 10.0.1.15
       serviceMonitor:
         metricRelabelings:
           - action: drop
@@ -192,9 +195,10 @@ spec:
     kubeProxy:
       enabled: true
       endpoints:
-        [
-          "10.0.1.12, 10.0.1.13, 10.0.1.14, 10.0.1.15",
-        ]
+        - 10.0.1.12
+        - 10.0.1.13
+        - 10.0.1.14
+        - 10.0.1.15
       serviceMonitor:
         metricRelabelings:
           - action: drop
@@ -208,9 +212,10 @@ spec:
     kubeEtcd:
       enabled: true
       endpoints:
-        [
-          "10.0.1.12, 10.0.1.13, 10.0.1.14, 10.0.1.15",
-        ]
+        - 10.0.1.12
+        - 10.0.1.13
+        - 10.0.1.14
+        - 10.0.1.15
       service:
         enabled: true
         port: 2381
