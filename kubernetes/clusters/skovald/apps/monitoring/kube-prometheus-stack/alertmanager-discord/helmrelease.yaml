@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &name alertmanger-discord
+  name: &name alertmanager-discord
   namespace: monitoring
 spec:
   interval: 15m
