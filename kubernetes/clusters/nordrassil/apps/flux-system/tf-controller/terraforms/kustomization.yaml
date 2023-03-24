@@ -7,3 +7,4 @@ resources:
   - ./cloudflare
   - ./doppler
   - ./unifi
+  - ./authentik
