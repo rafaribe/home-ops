@@ -59,6 +59,8 @@ spec:
     bucketweb:
       enabled: true
       replicaCount: 3
+      ingress:
+        enabled: false
     compactor:
       enabled: true
       extraFlags:
