@@ -2,10 +2,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - basic-auth
-  - dashboard
-  - helm-release.yaml
-  #- ingress-route.yaml
-  - prometheus-rule.yaml
-  #- workaround.yaml
-  - object-bucket-claim.yaml
+  - ./helmrelease.yaml
+  - ./prometheusrule.yaml
+  - ./objectbucketclaim.yaml
