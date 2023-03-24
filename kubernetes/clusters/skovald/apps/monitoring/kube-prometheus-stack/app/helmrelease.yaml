@@ -53,16 +53,16 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       config:
-        receivers:
-          - name: heartbeat
-            webhook_configs:
-              - url: "https://hc-ping.com/${SECRET_ALERTMANAGER_HEALTHCHECKS_TOKEN}"
-                send_resolved: true
-          - name: "null" # quote
-          - name: discord
-            webhook_configs:
-              - url: "http://alertmanager-discord:9094"
-                send_resolved: true
+        # receivers:
+        #   - name: heartbeat
+        #     webhook_configs:
+        #       - url: "https://hc-ping.com/${SECRET_ALERTMANAGER_HEALTHCHECKS_TOKEN}"
+        #         send_resolved: true
+        #   - name: "null" # quote
+        #   - name: discord
+        #     webhook_configs:
+        #       - url: "http://alertmanager-discord:9094"
+        #         send_resolved: true
         route:
           group_by: ["alertname", "job"]
           group_wait: 30s
@@ -181,7 +181,9 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints:
-        ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+        [
+          "talos1.${INTERNAL_DOMAIN},talos2.${INTERNAL_DOMAIN}, talos3.${INTERNAL_DOMAIN},talos4.${INTERNAL_DOMAIN}",
+        ]
       serviceMonitor:
         metricRelabelings:
           - action: drop
@@ -202,7 +204,9 @@ spec:
     kubeScheduler:
       enabled: true
       endpoints:
-        ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+        [
+          "talos1.${INTERNAL_DOMAIN},talos2.${INTERNAL_DOMAIN}, talos3.${INTERNAL_DOMAIN},talos4.${INTERNAL_DOMAIN}",
+        ]
       serviceMonitor:
         metricRelabelings:
           - action: drop
@@ -216,7 +220,9 @@ spec:
     kubeProxy:
       enabled: true
       endpoints:
-        ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+        [
+          "talos1.${INTERNAL_DOMAIN},talos2.${INTERNAL_DOMAIN}, talos3.${INTERNAL_DOMAIN},talos4.${INTERNAL_DOMAIN}",
+        ]
       serviceMonitor:
         metricRelabelings:
           - action: drop
@@ -230,7 +236,9 @@ spec:
     kubeEtcd:
       enabled: true
       endpoints:
-        ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+        [
+          "talos1.${INTERNAL_DOMAIN},talos2.${INTERNAL_DOMAIN}, talos3.${INTERNAL_DOMAIN},talos4.${INTERNAL_DOMAIN}",
+        ]
       service:
         enabled: true
         port: 2381
