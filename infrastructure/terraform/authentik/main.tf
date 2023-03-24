@@ -15,5 +15,9 @@ terraform {
       source  = "goauthentik/authentik"
       version = "2023.3.0"
     }
+    doppler = {
+      source  = "DopplerHQ/doppler"
+      version = "1.1.7"
+    }
   }
 }
