@@ -3,7 +3,7 @@ terraform {
   required_providers {
     authentik = {
       source  = "goauthentik/authentik"
-      version = "2022.10.0"
+      version = "2022.12.0"
       configuration_aliases = [ authentik.proxy ]
     }
     random = {
