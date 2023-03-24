@@ -29,16 +29,12 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       config:
-        # receivers:
-        #   - name: heartbeat
-        #     webhook_configs:
-        #       - url: "https://hc-ping.com/${SECRET_ALERTMANAGER_HEALTHCHECKS_TOKEN}"
-        #         send_resolved: true
-        #   - name: "null" # quote
-        #   - name: discord
-        #     webhook_configs:
-        #       - url: "http://alertmanager-discord:9094"
-        #         send_resolved: true
+        receivers:
+          - name: "null" # quote
+          - name: discord
+            webhook_configs:
+              - url: "http://alertmanager-discord:9094"
+                send_resolved: true
         route:
           group_by: ["alertname", "job"]
           group_wait: 30s
