@@ -16,11 +16,11 @@ data "terraform_remote_state" "doppler_provider" {
 provider "doppler" {
   doppler_token = data.terraform_remote_state.doppler_provider.outputs.all_service_tokens.authentik.prod.key
 }
-# Use a service token that only has access to the unifi project
+# Use a service token that only has access to the Authentik project
 data "doppler_secrets" "this" {}
 
 
-# Inject secrets from doppler into Unifi Provider
+# Inject secrets from doppler into Authentik Provider
 
 provider "authentik" {
   url      = nonsensitive(data.doppler_secrets.this.map.URL)
