@@ -113,3 +113,20 @@ module "loki" {
     doppler = doppler
   }
 }
+
+module "alertmanager" {
+  source       = "./project"
+  project_name = "alertmanager"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+module "webhook_discord" {
+  source       = "./project"
+  project_name = "webhook_discord"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
