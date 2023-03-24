@@ -16,11 +16,6 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: metallb
-      namespace: networking
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/kustomization_v1beta2.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
@@ -39,4 +34,3 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  secretProvider:
