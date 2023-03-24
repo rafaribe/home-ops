@@ -12,7 +12,7 @@ spec:
       version: 4.8.0
       sourceRef:
         kind: HelmRepository
-        name: grafana
+        name: grafana-charts
         namespace: flux-system
   maxHistory: 3
   install:
