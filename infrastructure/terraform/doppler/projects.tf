@@ -88,3 +88,28 @@ module "pgadmin" {
     doppler = doppler
   }
 }
+
+module "grafana" {
+  source       = "./project"
+  project_name = "grafana"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+module "prometheus" {
+  source       = "./project"
+  project_name = "prometheus"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+module "loki" {
+  source       = "./project"
+  project_name = "loki"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
