@@ -5,11 +5,16 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ./actions-runner-controller-charts.yaml
+  - ./backube-charts.yaml
+  - ./bitnami-charts.yaml
   - ./bjw-s-charts.yaml
   - ./cilium-charts.yaml
-  - ./emqx-charts.yaml
   - ./cloudnative-pg.yaml
+  - ./dysnix-charts.yaml
+  - ./emqx-charts.yaml
+  - ./enix-charts.yaml
   - ./external-dns-charts.yaml
+  - ./external-secrets.yaml
   - ./fairwinds-charts.yaml
   - ./grafana-charts.yaml
   - ./hajimari-charts.yaml
@@ -17,23 +22,19 @@ resources:
   - ./ingress-nginx-charts.yaml
   - ./jetstack-charts.yaml
   - ./k8s-at-home-charts.yaml
+  - ./k8s-gateway.yaml
+  - ./kubernetes-dashboard.yaml
   - ./kubernetes-sigs-descheduler-charts.yaml
   - ./kubernetes-sigs-metrics-server-charts.yaml
   - ./kubernetes-sigs-nfd-charts.yaml
   - ./kyverno-charts.yaml
+  - ./lwolf-charts.yaml
   - ./metallb-charts.yaml
+  - ./piraeus.yaml
+  - ./postfinance.yaml
   - ./prometheus-community-charts.yaml
   - ./rook-ceph-charts.yaml
   - ./stakater-charts.yaml
-  - ./vector-charts.yaml
-  - ./lwolf-charts.yaml
-  - ./kubernetes-dashboard.yaml
-  - ./external-secrets.yaml
-  - ./bitnami-charts.yaml
-  - ./postfinance.yaml
-  - ./backube-charts.yaml
-  - ./piraeus.yaml
-  - ./enix-charts.yaml
-  - ./weave-gitops.yaml
   - ./tf-controller-charts.yaml
-  - ./k8s-gateway.yaml
+  - ./vector-charts.yaml
+  - ./weave-gitops.yaml
