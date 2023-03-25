@@ -74,7 +74,7 @@ spec:
             nginx.ingress.kubernetes.io/auth-signin: https://authentik.rafaribe.com//outpost.goauthentik.io/start?rd=$escaped_request_uri
             nginx.ingress.kubernetes.io/auth-snippet: |
               proxy_set_header X-Forwarded-Host $http_host;
-            nginx.ingress.kubernetes.io/auth-url: http://ak-outpost-authentik-embedded-outpost.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+            nginx.ingress.kubernetes.io/auth-url: http://ak-outpost-skovald-outpost.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
           enabled: true
           className: nginx
           hosts:
