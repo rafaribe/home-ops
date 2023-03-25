@@ -32,7 +32,7 @@ spec:
           value: "${TZ}"
       service:
         annotations:
-          io.cilium/lb-ipam-ips: "10.0.1.245"
+          io.cilium/lb-ipam-ips: ${LB_INGRESS_SKOVALD}
         labels:
           pool: lb
         loadBalancerIP: ${LB_INGRESS_SKOVALD}
@@ -90,11 +90,11 @@ spec:
       enabled: true
       image:
         repository: ghcr.io/tarampampam/error-pages
-        tag: 2.18.0
+        tag: 2.21.0
       replicaCount: 1
       extraEnvs:
         - name: TEMPLATE_NAME
-          value: ghost
+          value: lost-in-space
         - name: SHOW_DETAILS
           value: "false"
       affinity:

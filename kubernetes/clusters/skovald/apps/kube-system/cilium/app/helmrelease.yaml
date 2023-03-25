@@ -70,6 +70,7 @@ spec:
             external-dns.alpha.kubernetes.io/hostname: &host hubble.${EXTERNAL_DOMAIN}
             cert-manager.io/cluster-issuer: letsencrypt-production
           enabled: true
+          className: nginx
           hosts:
             - *host
           tls:
