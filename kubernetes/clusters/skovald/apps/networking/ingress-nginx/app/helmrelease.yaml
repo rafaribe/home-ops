@@ -90,7 +90,7 @@ spec:
       image:
         repository: ghcr.io/tarampampam/error-pages
         tag: 2.18.0
-      replicaCount: 2
+      replicaCount: 1
       extraEnvs:
         - name: TEMPLATE_NAME
           value: ghost
