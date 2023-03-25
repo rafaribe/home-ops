@@ -12,7 +12,7 @@ spec:
       version: 1.0.2
       sourceRef:
         kind: HelmRepository
-        name: grafana
+        name: grafana-charts
         namespace: flux-system
   values:
     tempo:
