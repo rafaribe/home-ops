@@ -73,6 +73,7 @@ spec:
           hajimari.io/appName: "Alert Manager"
           hajimari.io/enable: "true"
           hajimari.io/icon: mdi:alert-decagram-outline
+          auth.home.arpa/enabled: true
         hosts:
           - &host alertmanager.${EXTERNAL_DOMAIN}
         tls:
@@ -227,6 +228,7 @@ spec:
           hajimari.io/appName: Prometheus
           hajimari.io/enable: "true"
           hajimari.io/icon: simple-icons:prometheus
+          auth.home.arpa/enabled: true
         pathType: Prefix
         hosts:
           - &host prometheus.${EXTERNAL_DOMAIN}
