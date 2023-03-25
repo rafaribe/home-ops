@@ -12,12 +12,13 @@ metadata:
 spec:
   mutateExistingOnPolicyUpdate: true
   generateExistingOnPolicyUpdate: true
-  context:
-    - name: host
-      variable:
-        jmesPath: 'request.object.spec.rules[0].host'
+
   rules:
     - name: auth
+      context:
+        - name: host
+          variable:
+            jmesPath: "request.object.spec.rules[0].host"
       match:
         any:
           - resources:
