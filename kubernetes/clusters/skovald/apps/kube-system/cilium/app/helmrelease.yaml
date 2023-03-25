@@ -69,7 +69,7 @@ spec:
           annotations:
             external-dns.alpha.kubernetes.io/hostname: &host hubble.${EXTERNAL_DOMAIN}
             cert-manager.io/cluster-issuer: letsencrypt-production
-            auth.home.arpa/enabled: true
+            auth.home.arpa/enabled: "true"
           enabled: true
           className: nginx
           hosts:
