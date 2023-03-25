@@ -31,6 +31,10 @@ spec:
         - name: TZ
           value: "${TZ}"
       service:
+        annotations:
+          io.cilium/lb-ipam-ips: "10.0.1.245"
+        labels:
+          pool: lb
         loadBalancerIP: ${LB_INGRESS_SKOVALD}
         externalTrafficPolicy: Local
       publishService:
