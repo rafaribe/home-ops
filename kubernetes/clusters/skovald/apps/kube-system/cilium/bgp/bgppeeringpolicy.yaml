@@ -8,7 +8,7 @@ spec:
       kubernetes.io/os: "linux"
   virtualRouters: # []CiliumBGPVirtualRouter
     - localASN: 64513
-      exportPodCIDR: true
+      exportPodCIDR: false
       serviceSelector:
         matchExpressions:
           - { key: allservices, operator: NotIn, values: ["will-be-announced"] }
