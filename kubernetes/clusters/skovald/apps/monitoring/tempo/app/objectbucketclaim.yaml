@@ -7,5 +7,4 @@ metadata:
 spec:
   bucketName: tempo-bucket-v1
   storageClassName: ceph-bucket
----
 
