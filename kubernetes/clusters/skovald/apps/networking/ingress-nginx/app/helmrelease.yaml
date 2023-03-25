@@ -35,7 +35,7 @@ spec:
           metallb.universe.tf/loadBalancerIPs: |-
             ${LB_INGRESS_SKOVALD}
         loadBalancerIP: ${LB_INGRESS_SKOVALD}
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
       publishService:
         enabled: true
       ingressClassResource:
