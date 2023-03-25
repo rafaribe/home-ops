@@ -15,4 +15,4 @@ data:
         protocol: bgp
         avoid-buggy-ips: true
         addresses:
-          - ${NETWORK_BGP_SVC_CIDR}
+          - ${NETWORK_BGP_LB_CIDR}

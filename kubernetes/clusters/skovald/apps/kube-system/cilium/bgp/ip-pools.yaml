@@ -5,7 +5,7 @@ metadata:
   name: "primary-pool"
 spec:
   cidrs:
-    - cidr: ${NETWORK_BGP_SVC_CIDR}
+    - cidr: ${NETWORK_BGP_LB_CIDR}
   serviceSelector:
     matchLabels:
       pool: lb
