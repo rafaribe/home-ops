@@ -37,7 +37,9 @@ spec:
     bgpControlPlane:
       enabled: true
     bgp:
-      enabled: false
+      announce:
+        loadbalancerIP: true
+      enabled: true
     cluster:
       id: ${CLUSTER_ID}
       name: ${CLUSTER_NAME}
