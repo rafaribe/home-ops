@@ -58,11 +58,11 @@ spec:
       kind: ConfigMap
       name: tempo-bucket-v1
       valuesKey: BUCKET_HOST
-    - targetPath: tempo.storage.trace.s3.access_key_id
+    - targetPath: tempo.storage.trace.s3.access_key
       kind: Secret
       name: tempo-bucket-v1
       valuesKey: AWS_ACCESS_KEY_ID
-    - targetPath: tempo.storage.trace.s3.secret_access_key
+    - targetPath: tempo.storage.trace.s3.secret_key
       kind: Secret
       name: tempo-bucket-v1
       valuesKey: AWS_SECRET_ACCESS_KEY
