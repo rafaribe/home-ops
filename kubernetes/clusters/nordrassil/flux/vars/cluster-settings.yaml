@@ -5,36 +5,28 @@ metadata:
   namespace: flux-system
   name: cluster-settings
 data:
-  # Networking
+  # Cluster Specific
   CLUSTER_NAME: delta
   CLUSTER_ID: "0"
   CLUSTER_CERT: "letsencrypt-production"
 
-  NETWORK_BGP_SVC_RANGE: 10.43.0.1/24
-  NETWORK_LB_RANGE: "10.2.0.1-10.2.0.254"
-  GATEWAY_MANAGEMENT: 10.0.1.1
-  TZ: Europe/Lisbon
-
-  CLUSTER_DB_NODE_0: delta
-  CLUSTER_DB_NODE_1: omega
-  CLUSTER_DB_NODE_2: theta
-  CLUSTER_DB_BACKUP_PREFIX: "backup/db"
-  # Network
-  NAS_ADDRESS: 10.0.1.11
-  NAS_DIR: /data/share/nfs
-  NAS_BACKUP_DIR: /data/backups
-  #
-  GATEWAY_IP: 10.10.0.1
-  MANAGEMENT_CIDR: 10.0.1.0/24
-  #
+  NETWORK_BGP_LB_CIDR: 10.0.101.1/24
+  NETWORK_L2_UNIFI_CIDR: 10.0.1.254/32
+  NETWORK_L2_BLOCKY_CIDR: 10.0.1.250/32
   K8S_API_ADDRESS: 10.0.1.6
   K8S_CLUSTER_CIDR: 172.16.0.0/16
   K8S_SERVICE_CIDR: 172.17.0.0/16
-  
-  LB_HOME_NETWORK_ADDRESS_POOL_ADVERTISE: 10.0.1.250-10.0.1.254
+
+  # Common
+  GATEWAY_MANAGEMENT: 10.0.1.1
+  TZ: Europe/Lisbon
+  NAS_ADDRESS: 10.0.1.11
+  NAS_DIR: /data/share/nfs
+  NAS_BACKUP_DIR: /data/backups
+
   # Home Network IP's
   LB_BLOCKY: 10.0.1.250
-  LB_NGINX_NORDRASSIL: 10.0.1.251
+  LB_NGINX_NORDRASSIL: 10.0.101.1
   LB_NGINX_SKOVALD: 10.0.1.245
   LB_UNIFI_NORDRASSIL: 10.0.1.254
   # Other network IP's

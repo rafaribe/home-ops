@@ -10,19 +10,16 @@ data:
   CLUSTER_ID: "1"
   CLUSTER_CERT: "letsencrypt-production"
 
-  NETWORK_BGP_SVC_RANGE: 10.43.0.1/24
   NETWORK_BGP_LB_CIDR: 10.0.100.1/24
   GATEWAY_MANAGEMENT: 10.0.1.1
   TZ: Europe/Lisbon
 
-  CLUSTER_DB_BACKUP_PREFIX: "backup/db"
   # Network
   NAS_ADDRESS: 10.0.1.100
   NAS_DIR: /data/share/nfs
   NAS_BACKUP_DIR: /data/backups
   #
-  GATEWAY_IP: 10.10.0.1
-  MANAGEMENT_CIDR: 10.0.1.0/24
+
   #
   K8S_API_ADDRESS: skovald.rafaribe.site
   K8S_CLUSTER_CIDR: 172.16.0.0/16

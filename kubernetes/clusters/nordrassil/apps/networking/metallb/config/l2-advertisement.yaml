@@ -6,5 +6,5 @@ metadata:
   namespace: networking
 spec:
   ipAddressPools:
-    #- default-pool
-    - home-network-pool
+    - unifi-pool
+    - blocky-pool

@@ -7,6 +7,7 @@ metadata:
 spec:
   aggregationLength: 32
   ipAddressPools:
-    - home-network-pool
+    - cluster-pool
+    - pod-service-pool
   peers:
     - gateway
