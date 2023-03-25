@@ -45,7 +45,7 @@ spec:
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           hajimari.io/enable: "false"
           auth.home.arpa/enabled: "true"
-        hostname: &host thanos-query-frontend.${EXTERNAL_DOMAIN}
+        hostname: &host thanos.${EXTERNAL_DOMAIN}
         tls: true
         extraTls:
           - hosts:

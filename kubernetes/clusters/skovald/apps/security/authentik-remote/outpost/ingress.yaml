@@ -43,19 +43,7 @@ spec:
                   name: http
             path: /outpost.goauthentik.io
             pathType: Prefix
-    - host: "thanos-query-frontend.${EXTERNAL_DOMAIN}"
-      http:
-        paths:
-          - backend:
-              # Or, to use an external Outpost, create an ExternalName service and reference that here.
-              # See https://kubernetes.io/docs/concepts/services-networking/service/#externalname
-              service:
-                name: ak-outpost-skovald-outpost
-                port:
-                  name: http
-            path: /outpost.goauthentik.io
-            pathType: Prefix
-    - host: "*.${EXTERNAL_DOMAIN}"
+    - host: "thanos.${EXTERNAL_DOMAIN}"
       http:
         paths:
           - backend:
