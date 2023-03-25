@@ -28,7 +28,7 @@ module "skovald" {
       authentik_proxy_application_name     = "thanos"
       authentik_proxy_application_group    = "skovald"
       authentik_proxy_application_icon_url = "https://thanos.io/icon-dark.png"
-      authentik_proxy_external_host        = "https://thanos-query-frontend.rafaribe.com"
+      authentik_proxy_external_host        = "https://thanos.rafaribe.com"
     },
     {
       authentik_proxy_application_name     = "alertmanager"
