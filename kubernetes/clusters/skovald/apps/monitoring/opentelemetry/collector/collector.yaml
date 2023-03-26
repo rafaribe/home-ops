@@ -41,7 +41,7 @@ spec:
         endpoint: "http://loki-gateway/loki/api/v1/push"
         
       logging:
-        logLevel: debug
+        verbosity: normal
     service:
       telemetry:
         logs:
