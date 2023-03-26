@@ -5,7 +5,7 @@ metadata:
   name: opentelemetry-collector
   namespace: monitoring
 spec:
-  mode: deployment
+  mode: daemonset
   hostNetwork: false
   ports:
     - name: app-metrics
@@ -18,17 +18,27 @@ spec:
       otlp:
         protocols:
           grpc:
+      filelog:
+        include: [/var/log/*.log]
     processors:
       batch:
+      attributes:
+        actions:
+          - action: insert
+            key: log_file_name
+            from_attribute: log.file.name
+          - action: insert
+            key: loki.attribute.labels
+            value: log_file_name
     exporters:
       otlp:
-        endpoint: "http://tempo.monitoring.svc.cluster.local:4317"
+        endpoint: "http://tempo:4317"
         tls:
           insecure: true
       prometheus:
         endpoint: "0.0.0.0:8889"
-      logging:
-        logLevel: debug
+      loki:
+        endpoint: "http://loki-gateway/loki/api/v1/push"
     service:
       telemetry:
         logs:
@@ -42,3 +52,7 @@ spec:
           receivers: [otlp]
           processors: [batch]
           exporters: [prometheus]
+        logs:
+          receivers: [filelog]
+          processors: [attributes]
+          exporters: [logging, loki]
