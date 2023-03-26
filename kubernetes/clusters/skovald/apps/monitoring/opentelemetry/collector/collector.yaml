@@ -39,6 +39,9 @@ spec:
         endpoint: "0.0.0.0:8889"
       loki:
         endpoint: "http://loki-gateway/loki/api/v1/push"
+        
+      logging:
+        logLevel: debug
     service:
       telemetry:
         logs:
