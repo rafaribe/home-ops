@@ -1,0 +1,44 @@
+---
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: opentelemetry-collector
+  namespace: monitoring
+spec:
+  mode: deployment
+  hostNetwork: false
+  ports:
+    - name: app-metrics
+      port: 9090
+    - name: prometheus
+      port: 8889
+  config: |
+    receivers:
+      zipkin:
+      otlp:
+        protocols:
+          grpc:
+    processors:
+      batch:
+    exporters:
+      otlp:
+        endpoint: "http://tempo.monitoring.svc.cluster.local:4317"
+        tls:
+          insecure: true
+      prometheus:
+        endpoint: "0.0.0.0:8889"
+      logging:
+        logLevel: debug
+    service:
+      telemetry:
+        logs:
+          level: DEBUG
+      pipelines:
+        traces:
+          receivers: [otlp, zipkin]
+          processors: [batch]
+          exporters: [otlp]
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [prometheus]
