@@ -21,7 +21,7 @@ spec:
       filelog:
         include_file_path: true
         poll_interval: 500ms
-        include: [/var/log/**/*.log]
+        include: [/var/log/**/**/**/*.log]
     processors:
       batch:
       attributes:
