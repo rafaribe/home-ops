@@ -15,8 +15,7 @@ spec:
         - "/dev/null"
       imagePullPolicy: IfNotPresent
       name: supa-dupa-debug-pod
-
-    volumeMounts:
+      volumeMounts:
       - name: varlogpods
         mountPath: /var/log/pods
         readOnly: true
