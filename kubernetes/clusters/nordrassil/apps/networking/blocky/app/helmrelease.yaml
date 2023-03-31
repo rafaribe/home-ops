@@ -82,7 +82,7 @@ spec:
             customDNS:
               mapping:
                 talos1.rafaribe.site: 10.0.1.12
-                skovald.rafaribe.site: 10.0.1.12
+                skovald.rafaribe.site: 10.0.1.16
                 talos2.rafaribe.site: 10.0.1.13
                 talos3.rafaribe.site: 10.0.1.14
                 talos4.rafaribe.site: 10.0.1.15
