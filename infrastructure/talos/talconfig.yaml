@@ -23,36 +23,74 @@ nodes:
     ipAddress: 10.0.1.12
     controlPlane: true
     installDisk: /dev/sda
+    nameservers:
+      - 1.1.1.1
+      - 8.8.8.8
     networkInterfaces:
       - interface: eth0
-        dhcp: true
+        addresses:
+          - 10.0.1.12/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.1.1
+        vip:
+          ip: 10.0.1.16
   - hostname: talos2.${domainName}
     disableSearchDomain: true
-    ipAddress: 10.0.1.13
+    ipAddress: 10.0.1.72
     controlPlane: true
     installDisk: /dev/sda
+    nameservers:
+      - 1.1.1.1
+      - 8.8.8.8
     networkInterfaces:
       - interface: eth0
-        dhcp: true
+        addresses:
+          - 10.0.1.13/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.1.1
+        vip:
+          ip: 10.0.1.16
   - hostname: talos3.${domainName}
     disableSearchDomain: true
     ipAddress: 10.0.1.14
     controlPlane: true
     installDisk: /dev/sda
+    nameservers:
+      - 1.1.1.1
+      - 8.8.8.8
     networkInterfaces:
       - interface: eth0
-        dhcp: true
+        addresses:
+          - 10.0.1.14/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.1.1
+        vip:
+          ip: 10.0.1.16
   - hostname: talos4.${domainName}
     disableSearchDomain: true
     ipAddress: 10.0.1.15
     controlPlane: true
     installDisk: /dev/sda
-
+    nameservers:
+      - 1.1.1.1
+      - 8.8.8.8
+    networkInterfaces:
+      - interface: eth0
+        addresses:
+          - 10.0.1.15/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.1.1
+        vip:
+          ip: 10.0.1.16
 controlPlane:
   inlinePatch:
     cluster:
       extraManifests:
-        - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/standalone-install.yaml
+        - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/kubelet-csr-approver/install.yaml
         - https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
       allowSchedulingOnMasters: true
       apiServer:
@@ -61,6 +99,7 @@ controlPlane:
       controllerManager:
         extraArgs:
           feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+          bind-address: 0.0.0.0
       discovery:
         registries:
           service:
@@ -72,6 +111,7 @@ controlPlane:
       scheduler:
         extraArgs:
           feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+          bind-address: 0.0.0.0
     machine:
       files:
         - content: |
@@ -96,7 +136,23 @@ controlPlane:
       certSANs:
         - ${clusterEndpointIP}
         - skovald.${domainName}
+      time:
+        disabled: false
+        servers:
+          - time.cloudflare.com
   patch:
     - |-
       - op: remove
         path: /cluster/apiServer/admissionControl
+
+  patchStrategicMerge:
+    - op: add
+      path: /machine/install/extensions
+      value:
+        - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
+worker:
+  patchStrategicMerge:
+    - op: add
+      path: /machine/install/extensions
+      value:
+        - image: ghcr.io/siderolabs/nvidia-open-gpu-kernel-modules:515.65.01-v1.3.6
