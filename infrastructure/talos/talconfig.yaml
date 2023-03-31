@@ -37,7 +37,7 @@ nodes:
           ip: 10.0.1.16
   - hostname: talos2.${domainName}
     disableSearchDomain: true
-    ipAddress: 10.0.1.72
+    ipAddress: 10.0.1.13
     controlPlane: true
     installDisk: /dev/sda
     nameservers:
