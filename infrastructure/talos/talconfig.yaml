@@ -24,8 +24,8 @@ nodes:
     controlPlane: true
     installDisk: /dev/sda
     nameservers:
+      - 10.0.1.250
       - 1.1.1.1
-      - 8.8.8.8
     networkInterfaces:
       - interface: eth0
         addresses:
@@ -33,16 +33,14 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.1.1
-        vip:
-          ip: 10.0.1.16
   - hostname: talos2.${domainName}
     disableSearchDomain: true
     ipAddress: 10.0.1.13
-    controlPlane: true
+    controlPlane: false
     installDisk: /dev/sda
     nameservers:
+      - 10.0.1.250
       - 1.1.1.1
-      - 8.8.8.8
     networkInterfaces:
       - interface: eth0
         addresses:
@@ -50,16 +48,14 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.1.1
-        vip:
-          ip: 10.0.1.16
   - hostname: talos3.${domainName}
     disableSearchDomain: true
     ipAddress: 10.0.1.14
     controlPlane: true
     installDisk: /dev/sda
     nameservers:
+      - 10.0.1.250
       - 1.1.1.1
-      - 8.8.8.8
     networkInterfaces:
       - interface: eth0
         addresses:
@@ -67,16 +63,14 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.1.1
-        vip:
-          ip: 10.0.1.16
   - hostname: talos4.${domainName}
     disableSearchDomain: true
     ipAddress: 10.0.1.15
     controlPlane: true
     installDisk: /dev/sda
     nameservers:
+      - 10.0.1.250
       - 1.1.1.1
-      - 8.8.8.8
     networkInterfaces:
       - interface: eth0
         addresses:
@@ -84,8 +78,6 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.1.1
-        vip:
-          ip: 10.0.1.16
 controlPlane:
   inlinePatch:
     cluster:
@@ -112,6 +104,13 @@ controlPlane:
         extraArgs:
           feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
           bind-address: 0.0.0.0
+      etcd:
+        ca:
+          crt: ${etcdCert}
+          key: ${etcdCertKey}
+      ca:
+        crt: ${clusterCert}
+        key: ${clusterCertKey}
     machine:
       files:
         - content: |
@@ -133,6 +132,10 @@ controlPlane:
       sysctls:
         fs.inotify.max_user_watches: "1048576"
         fs.inotify.max_user_instances: "8192"
+      logging:
+        destinations:
+          - endpoint: "udp://vector.rafaribe.site:6051/"
+            format: json_lines
       certSANs:
         - ${clusterEndpointIP}
         - skovald.${domainName}
@@ -140,18 +143,11 @@ controlPlane:
         disabled: false
         servers:
           - time.cloudflare.com
-  patch:
-    - |-
-      - op: remove
-        path: /cluster/apiServer/admissionControl
-
   patchStrategicMerge:
     - op: add
       path: /machine/install/extensions
       value:
         - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
-worker:
-  patchStrategicMerge:
     - op: add
       path: /machine/install/extensions
       value:
