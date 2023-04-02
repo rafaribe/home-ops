@@ -50,4 +50,4 @@ spec:
   wait: true
   dependsOn:
     # - name: cluster-apps-vector-geoipupdate
-    - name: cluster-apps-vector-aggregator
+    - name: cluster-apps-monitoring-vector-aggregator
