@@ -1,0 +1,53 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-monitoring-vector-aggregator
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  interval: 10m
+  path: "./kubernetes/clusters/skovald/apps/monitoring/vector/aggregator"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
+  wait: true
+  dependsOn:
+    - name: cluster-apps-monitoring-loki-app
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: cluster-apps-monitoring-vector-geoipupdate
+#   namespace: flux-system
+#   labels:
+#     substitution.flux.home.arpa/enabled: "true"
+# spec:
+#   interval: 10m
+#   path: "./kubernetes/clusters/skovald/apps/monitoring/vector/geoipupdate"
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: home-ops-kubernetes
+#   wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-monitoring-vector-agent
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  interval: 10m
+  path: "./kubernetes/clusters/skovald/apps/monitoring/vector/agent"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
+  wait: true
+  dependsOn:
+    # - name: cluster-apps-vector-geoipupdate
+    - name: cluster-apps-vector-aggregator

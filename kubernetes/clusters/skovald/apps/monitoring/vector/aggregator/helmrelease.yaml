@@ -1,0 +1,83 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  labels:
+    app.kubernetes.io/instance: vector-aggregator
+    app.kubernetes.io/name: vector-aggregator
+  name: vector-aggregator
+  namespace: monitoring
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 1.3.2
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  interval: 30m
+  values:
+    controller:
+      replicas: 1
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+    image:
+      repository: ghcr.io/onedr0p/vector
+      tag: 0.28.1-debian
+
+    args: ["--config", "/etc/vector/vector.yaml"]
+
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: 10.45.0.2
+        annotations:
+          coredns.io/hostname: "vector.bjw-s.dev"
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: 8686
+          kubernetes-logs:
+            enabled: true
+            port: 6000
+          vyos-syslog:
+            enabled: true
+            port: 6001
+          journald-logs:
+            enabled: true
+            port: 6002
+
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: vector-aggregator-configmap
+        subPath: vector.yaml
+        mountPath: /etc/vector/vector.yaml
+        readOnly: true
+      data:
+        enabled: true
+        type: emptyDir
+        mountPath: /vector-data-dir
+      geoip:
+        enabled: false
+        #existingClaim: vector-geoipupdate-config
+
+    # resources:
+    #   requests:
+    #     cpu: 35m
+    #     memory: 381M
+    #   limits:
+    #     memory: 726M
+
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: vector-aggregator

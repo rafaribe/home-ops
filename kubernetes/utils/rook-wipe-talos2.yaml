@@ -27,7 +27,7 @@ metadata:
   namespace: kube-system
 spec:
   restartPolicy: Never
-  nodeName: talos3
+  nodeName: talos2
   containers:
     - name: disk-wipe
       image: ubuntu
