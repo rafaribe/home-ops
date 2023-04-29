@@ -143,7 +143,7 @@
           kubernetes.core.helm:
             name: cilium
             chart_ref: cilium/cilium
-            chart_version: 1.13.0
+            chart_version: 1.13.2
             release_namespace: kube-system
             values_files:
               - /tmp/cilium.yaml

@@ -1,11 +1,11 @@
 ---
 # renovate: datasource=github-releases depName=k3s-io/k3s
-k3s_release_version: "v1.26.2+k3s1"
+k3s_release_version: "v1.27.1+k3s1"
 k3s_install_hard_links: true
 k3s_become: true
 k3s_debug: false
-k3s_etcd_datastore: true
-k3s_registration_address: 10.0.1.7
+k3s_etcd_datastore: false
+k3s_registration_address: 10.0.1.12
 # k3s_registries:
 #   mirrors:
 #     "docker.io":
