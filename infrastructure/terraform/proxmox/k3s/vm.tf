@@ -1,10 +1,8 @@
-resource "tls_private_key" "ubuntu_vm_key" {
+resource "tls_private_key" "ssh_private_key" {
   algorithm = "RSA"
   rsa_bits  = 2048
 }
-
-
-resource "proxmox_virtual_environment_vm" "talos" {
+resource "proxmox_virtual_environment_vm" "k3s_vm" {
   name        = var.name
   description = "Managed by Terraform"
   tags        = ["terraform", "k3s", "kubernetes"]
@@ -14,7 +12,7 @@ resource "proxmox_virtual_environment_vm" "talos" {
   disk {
     datastore_id = "local-lvm"
     interface    = "scsi0"
-    size         = 60
+    size         = 70
     file_format  = "qcow2"
   }
   cpu {
@@ -39,22 +37,20 @@ resource "proxmox_virtual_environment_vm" "talos" {
     type = "l26"
   }
 
-  initialization {
-    ip_config {
-      ipv4 {
-        address = "dhcp"
-      }
-    }
+  # initialization {
+  #   ip_config {
+  #     ipv4 {
+  #       address = "dhcp"
+  #     }
+  #   }
 
-    user_account {
-      keys     = [trimspace(tls_private_key.ubuntu_vm_key.public_key_openssh)]
-      password = var.password
-      username = "brr"
-    }
-
-    # user_data_file_id = proxmox_virtual_environment_file.cloud_config.id
-  }
-  keyboard_layout = "pt"
+  #   user_account {
+  #     keys     = [trimspace(tls_private_key.ssh_private_key.public_key_openssh)]
+  #     password = var.password
+  #     username = "brr"
+  #   }
+  # }
+  # keyboard_layout = "pt"
 
 
   serial_device {}

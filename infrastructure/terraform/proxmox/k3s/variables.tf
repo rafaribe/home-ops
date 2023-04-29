@@ -33,7 +33,6 @@ variable "mac_address" {
   type        = string
   description = "mac address for the network interface"
 }
-
 variable "password" {
   type        = string
   description = "A password for the user"
