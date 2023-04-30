@@ -133,14 +133,17 @@ spec:
       config:
         osdsPerDevice: "1"
       nodes:
-        - name: "talos1"
+        - name: "odin"
           devices:
             - name: "/dev/sdb"
-        - name: "talos2"
+        - name: "loki"
           devices:
             - name: "/dev/sdb"
             - name: "/dev/sdc"
-        - name: "talos4"
+        - name: "freya"
+          devices:
+            - name: "/dev/sdb"
+        - name: "thor"
           devices:
             - name: "/dev/sdb"
     cephBlockPoolsVolumeSnapshotClass:
