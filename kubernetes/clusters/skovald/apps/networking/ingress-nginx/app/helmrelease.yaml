@@ -32,10 +32,10 @@ spec:
           value: "${TZ}"
       service:
         annotations:
-          io.cilium/lb-ipam-ips: ${LB_INGRESS_SKOVALD}
+          io.cilium/lb-ipam-ips: ${LB_NGINX_SKOVALD}
         labels:
           pool: lb
-        loadBalancerIP: ${LB_INGRESS_SKOVALD}
+        loadBalancerIP: ${LB_NGINX_SKOVALD}
         externalTrafficPolicy: Local
       publishService:
         enabled: true
