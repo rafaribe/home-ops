@@ -13,3 +13,4 @@ resources:
   - ./tempo/ks.yaml
   - ./thanos/ks.yaml
   - ./unifi-poller/ks.yaml
+  - ./vector/ks.yaml

@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph-cluster
-      version: v1.11.1
+      version: v1.11.4
       sourceRef:
         kind: HelmRepository
         name: rook-ceph-charts
@@ -133,19 +133,19 @@ spec:
       config:
         osdsPerDevice: "1"
       nodes:
-        - name: "talos1"
+        - name: "odin"
           devices:
-            - name: "/dev/disk/by-id/scsi-SATA_HGST_HTS721075A9_JR12006QG0YW5E"
-        - name: "talos2"
+            - name: "/dev/sdb"
+        - name: "loki"
           devices:
-            - name: "/dev/disk/by-id/usb-WD_Elements_25A3_4341304D5032454B-0:0"
-            - name: "/dev/disk/by-id/usb-Realtek_RTL9210_NVME_012345678904-0:0"
-        - name: "talos3"
+            - name: "/dev/sdb"
+            - name: "/dev/sdc"
+        - name: "freya"
           devices:
-            - name: "/dev/disk/by-id/usb-WD_My_Passport_25E2_575836314441373641485943-0:0"
-        - name:
+            - name: "/dev/sdb"
+        - name: "thor"
           devices:
-            - name: "/dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0"
+            - name: "/dev/sdb"
     cephBlockPoolsVolumeSnapshotClass:
       enabled: false
     cephBlockPools:
@@ -222,8 +222,8 @@ spec:
             port: 80
             resources:
               requests:
-                cpu: 1000m
-                memory: 1Gi
+                cpu: 100m
+                memory: 128M
               limits:
                 memory: 2Gi
             instances: 1

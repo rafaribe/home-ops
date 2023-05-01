@@ -45,7 +45,7 @@ services:
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
   syncthing:
-    image: lscr.io/linuxserver/syncthing:1.23.2
+    image: lscr.io/linuxserver/syncthing:1.23.4
     container_name: syncthing
     hostname: syncthing #optional
     environment:
@@ -123,7 +123,7 @@ services:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 
   nginx:
-    image: nginx:1.23.3-alpine
+    image: nginx:1.24.0-alpine
     container_name: nginx
     volumes:
       - /home/rafaribe/nginx/server.conf:/etc/nginx/nginx.conf
