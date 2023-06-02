@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.0
+      version: 1.5.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -108,7 +108,7 @@ spec:
     serviceAccount:
       create: true
       name: vector-agent
-
+    #
     tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
