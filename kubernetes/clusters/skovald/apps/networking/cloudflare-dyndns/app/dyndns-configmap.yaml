@@ -4,7 +4,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: dyndns-updater
-  namespace: network-system
+  namespace: networking
   labels:
     app.kubernetes.io/name: dyndns-updater
     app.kubernetes.io/instance: dyndns-updater
