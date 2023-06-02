@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-talos1
+  name: disk-wipe-odin-sdb
   namespace: kube-system
 spec:
   restartPolicy: Never
-  nodeName: talos1
+  nodeName: odin
   containers:
     - name: disk-wipe
       image: ubuntu
@@ -18,16 +18,18 @@ spec:
           "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
         ]
   nodeSelector:
-    kubernetes.io/hostname: talos1
+    kubernetes.io/hostname: odin
+---
+
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-talos2-sdb
+  name: disk-wipe-loki-sdb
   namespace: kube-system
 spec:
   restartPolicy: Never
-  nodeName: talos2
+  nodeName: loki
   containers:
     - name: disk-wipe
       image: ubuntu
@@ -39,16 +41,16 @@ spec:
           "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
         ]
   nodeSelector:
-    kubernetes.io/hostname: talos2
+    kubernetes.io/hostname: loki
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-talos2-sdc
+  name: disk-wipe-thor-sdb
   namespace: kube-system
 spec:
   restartPolicy: Never
-  nodeName: talos2
+  nodeName: thor
   containers:
     - name: disk-wipe
       image: ubuntu
@@ -60,16 +62,16 @@ spec:
           "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
         ]
   nodeSelector:
-    kubernetes.io/hostname: talos2
+    kubernetes.io/hostname: thor
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-talos3-sdb
+  name: disk-wipe-freya-sdb
   namespace: kube-system
 spec:
   restartPolicy: Never
-  nodeName: talos2
+  nodeName: freya
   containers:
     - name: disk-wipe
       image: ubuntu
@@ -81,46 +83,4 @@ spec:
           "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
         ]
   nodeSelector:
-    kubernetes.io/hostname: talos3
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: disk-wipe-talos3-sdb
-  namespace: kube-system
-spec:
-  restartPolicy: Never
-  nodeName: talos3
-  containers:
-    - name: disk-wipe
-      image: ubuntu
-      securityContext:
-        privileged: true
-      command: ["/bin/sh", "-c"]
-      args:
-        [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
-        ]
-  nodeSelector:
-    kubernetes.io/hostname: talos3
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: disk-wipe-talos4-sdb
-  namespace: kube-system
-spec:
-  restartPolicy: Never
-  nodeName: talos4
-  containers:
-    - name: disk-wipe
-      image: ubuntu
-      securityContext:
-        privileged: true
-      command: ["/bin/sh", "-c"]
-      args:
-        [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
-        ]
-  nodeSelector:
-    kubernetes.io/hostname: talos4
+    kubernetes.io/hostname: freya
