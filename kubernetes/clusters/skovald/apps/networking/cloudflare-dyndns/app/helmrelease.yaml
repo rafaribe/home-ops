@@ -22,5 +22,7 @@ spec:
         value: ifconfig.me
       - name: DOMAIN
         value: ${EXTERNAL_DOMAIN}
+      - name: NAME
+        value: "*"
     secret:
       token: ${CLOUDFLARE_API_TOKEN}
