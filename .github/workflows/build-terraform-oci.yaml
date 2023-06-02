@@ -1,7 +1,6 @@
----
 name: "Terraform: Build OCI"
 
-on: # yamllint disable-line rule:truthy
+on:
   workflow_dispatch:
   push:
     branches:
@@ -37,9 +36,11 @@ jobs:
           json: true
           files: |
             infrastructure/terraform/**
+
       - name: List all changed files
         run: |
           echo '${{ steps.changed-files.outputs.all_changed_files }}'
+
       - name: Store changed projects
         id: set-matrix
         run: |
@@ -75,12 +76,12 @@ jobs:
 
       - name: Publish OCI
         run: |
-          flux push artifact oci://ghcr.io/rafaribe/terraform-$(basename ${{ matrix.project }})-oci:$(git rev-parse --short HEAD) \
+          flux push artifact oci://ghcr.io/rafaribe/terraform-"$(basename "${{ matrix.project }}")"-oci:$(git rev-parse --short HEAD) \
               --path="./${{ matrix.project }}" \
               --source="$(git config --get remote.origin.url)" \
               --revision="$(git branch --show-current)/$(git rev-parse HEAD)"
 
       - name: Tag OCI
         run: |
-          flux tag artifact oci://ghcr.io/rafaribe/terraform-$(basename ${{ matrix.project }})-oci:$(git rev-parse --short HEAD) \
+          flux tag artifact oci://ghcr.io/rafaribe/terraform-"$(basename "${{ matrix.project }}")"-oci:$(git rev-parse --short HEAD) \
               --tag main
