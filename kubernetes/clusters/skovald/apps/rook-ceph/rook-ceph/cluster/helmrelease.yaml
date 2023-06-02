@@ -73,7 +73,7 @@ spec:
       resources:
         mgr:
           limits:
-            memory: "1Gi"
+            memory: "512Mi"
           requests:
             cpu: "100m"
             memory: "256Mi"
