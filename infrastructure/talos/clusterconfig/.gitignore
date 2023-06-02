@@ -1,9 +1,5 @@
-skovald-talos1.skovald.yaml
-skovald-talos2.skovald.yaml
-skovald-talos3.skovald.yaml
-skovald-talos4.skovald.yaml
+skovald-odin.yaml
+skovald-loki.yaml
+skovald-thor.yaml
+skovald-freya.yaml
 talosconfig
-skovald-talos1.rafaribe.site.yaml
-skovald-talos2.rafaribe.site.yaml
-skovald-talos3.rafaribe.site.yaml
-skovald-talos4.rafaribe.site.yaml

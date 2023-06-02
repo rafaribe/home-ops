@@ -10,7 +10,7 @@ metadata:
   labels:
     app.kubernetes.io/managed-by: Helm
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: cilium
@@ -19,88 +19,29 @@ spec:
         kind: HelmRepository
         name: cilium-charts
         namespace: flux-system
-      interval: 5m
+      interval: 15m
+  maxHistory: 2
   install:
-    createNamespace: true
-    remediation: # perform remediation when helm install fails
+    remediation:
       retries: 3
   upgrade:
-    remediation: # perform remediation when helm upgrade fails
-      retries: 3
-      remediateLastFailure: true # remediate the last failure, when no retries remain
     cleanupOnFail: true
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+  uninstall:
+    keepHistory: false
+
+  valuesFrom:
+    - kind: ConfigMap
+      name: cilium-values
+
   values:
-    autoDirectNodeRoutes: true
-    localRedirectPolicy: true
-    externalIPs:
-      enabled: false
-    bgpControlPlane:
-      enabled: true
-    bgp:
-      announce:
-        loadbalancerIP: true
-      enabled: false
-    cluster:
-      id: ${CLUSTER_ID}
-      name: ${CLUSTER_NAME}
-    containerRuntime:
-      integration: containerd
-    endpointRoutes:
-      enabled: true
-    hubble:
-      enabled: true
-      metrics:
-        enabled:
-          - dns:query;ignoreAAAA
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-      relay:
-        enabled: true
-        rollOutPods: true
+    prometheus:
       serviceMonitor:
         enabled: true
-      ui:
-        enabled: true
-        ingress:
-          annotations:
-            external-dns.alpha.kubernetes.io/hostname: &host hubble.${EXTERNAL_DOMAIN}
-            cert-manager.io/cluster-issuer: letsencrypt-production
-            # Authentik ForwardAuth - Kyverno couldn't apply
-            nginx.ingress.kubernetes.io/auth-response-headers: Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
-            nginx.ingress.kubernetes.io/auth-signin: https://hubble.${EXTERNAL_DOMAIN}/outpost.goauthentik.io/start?rd=$escaped_request_uri
-            nginx.ingress.kubernetes.io/auth-snippet: |
-              proxy_set_header X-Forwarded-Host $http_host;
-            nginx.ingress.kubernetes.io/auth-url: http://ak-outpost-skovald-outpost.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
-          enabled: true
-          className: nginx
-          hosts:
-            - *host
-          tls:
-            - hosts:
-                - *host
-        rollOutPods: true
-    ipam:
-      mode: kubernetes
-    ipv4NativeRoutingCIDR: ${K8S_POD_CIDR}
-    k8sServiceHost: 10.0.1.13
-    k8sServicePort: 6443
-    kubeProxyReplacement: strict
-    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10356
-    loadBalancer:
-      algorithm: maglev
-      mode: dsr
+
     operator:
-      rollOutPods: true
-      replicas: 1
       prometheus:
-        enabled: true
         serviceMonitor:
           enabled: true
-    rollOutCiliumPods: true
-    securityContext:
-      privileged: true
-    tunnel: disabled
