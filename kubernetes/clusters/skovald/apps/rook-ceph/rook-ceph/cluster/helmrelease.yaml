@@ -71,45 +71,53 @@ spec:
           enabled: true
     cephClusterSpec:
       resources:
-        mon:
-          requests:
-            cpu: "49m"
-            memory: "477M"
+        mgr:
           limits:
-            memory: "512Mi"
-        osd:
-          requests:
-            cpu: "442m"
-            memory: "440Mi"
-        prepareosd:
-          requests:
-            cpu: "50m"
-            memory: "50Mi"
-          limits: {}
-        mgr-sidecar:
-          requests:
-            cpu: "49m"
-            memory: "94M"
-          limits:
-            memory: "208M"
-        crashcollector:
-          requests:
-            cpu: "15m"
-            memory: "64M"
-          limits:
-            memory: "64M"
-        logcollector:
+            memory: "1Gi"
           requests:
             cpu: "100m"
-            memory: "100M"
+            memory: "256Mi"
+        mon:
           limits:
-            memory: "1G"
-        cleanup:
+            memory: "2Gi"
           requests:
-            cpu: "250m"
-            memory: "100M"
+            cpu: "100m"
+            memory: "500Mi"
+        osd:
           limits:
-            memory: "1G"
+            memory: "4Gi"
+          requests:
+            memory: "2Gi"
+        prepareosd:
+          limits:
+            memory: "900Mi"
+          requests:
+            cpu: "100m"
+            memory: "50Mi"
+        mgr-sidecar:
+          limits:
+            memory: "100Mi"
+          requests:
+            cpu: "100m"
+            memory: "40Mi"
+        crashcollector:
+          limits:
+            memory: "60Mi"
+          requests:
+            cpu: "100m"
+            memory: "60Mi"
+        logcollector:
+          limits:
+            memory: "1Gi"
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+        cleanup:
+          limits:
+            memory: "1Gi"
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
     dashboard:
       enabled: true
       urlPrefix: /
@@ -139,7 +147,6 @@ spec:
         - name: "loki"
           devices:
             - name: "/dev/sdb"
-            - name: "/dev/sdc"
         - name: "freya"
           devices:
             - name: "/dev/sdb"
