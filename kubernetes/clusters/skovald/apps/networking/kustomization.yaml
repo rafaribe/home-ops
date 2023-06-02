@@ -10,4 +10,4 @@ resources:
   #- ./metallb/ks.yaml
   #- ./k8s-gateway/ks.yaml
   # - ./static-routes/ks.yaml
-  - ./cloudflare-ddns/ks.yaml
+  - ./cloudflare-dyndns/ks.yaml

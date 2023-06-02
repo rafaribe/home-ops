@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-cloudflare-ddns
   namespace: flux-system
 spec:
-  path: "./kubernetes/clusters/skovald/apps/networking//cloudflare-ddns/app"
+  path: "./kubernetes/clusters/skovald/apps/networking/cloudflare-dyndns/app"
   prune: true
   sourceRef:
     kind: GitRepository
