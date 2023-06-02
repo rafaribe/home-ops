@@ -31,6 +31,7 @@ resources:
   - ./kubernetes-dashboard.yaml
   - ./external-secrets.yaml
   - ./bitnami-charts.yaml
+  - ./pascaliske.yaml
   - ./postfinance.yaml
   - ./backube-charts.yaml
   - ./piraeus.yaml
