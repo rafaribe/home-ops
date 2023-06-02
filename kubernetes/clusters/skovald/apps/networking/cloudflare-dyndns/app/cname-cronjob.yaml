@@ -1,0 +1,42 @@
+# cronjob.yaml
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: network-system
+  name: cname-updater
+spec:
+  schedule: "0 */6 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: cname-updater
+              image: curlimages/curl:8.1.1
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: dyndns-credentials
+              command:
+                - "/bin/sh"
+                - "/app/cname-updater.sh"
+              volumeMounts:
+                - name: cname-updater
+                  mountPath: /app/cname-updater.sh
+                  subPath: cname-updater.sh
+                  readOnly: true
+          volumes:
+            - name: cname-updater
+              projected:
+                defaultMode: 0775
+                sources:
+                  - configMap:
+                      name: cname-updater
+                      items:
+                        - key: cname-updater.sh
+                          path: cname-updater.sh

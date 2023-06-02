@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cname-updater
+  namespace: network-system
+  labels:
+    app.kubernetes.io/name: cname-updater
+    app.kubernetes.io/instance: cname-updater
+data:
+  cname-updater.sh: |
+    curl -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" \
+          -H "Authorization: Bearer $AUTH_KEY" \
+          -H "Content-Type: application/json" \
+          --data "{\"type\":\"CNAME\",\"name\":\"*\",\"content\":\"$DOMAIN_NAME\",\"proxied\":true}"
