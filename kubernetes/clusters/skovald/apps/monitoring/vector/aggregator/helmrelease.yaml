@@ -34,7 +34,7 @@ spec:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: ${LB_VECTOR_SKOVALD}
+        loadBalancerIP: ${LB_VECTOR}
         annotations:
           coredns.io/hostname: "vector.rafaribe.site"
         externalTrafficPolicy: Local
