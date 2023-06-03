@@ -69,7 +69,6 @@ spec:
       extraArgs:
         default-ssl-certificate: "networking/wildcard-default-certificate-tls"
         # I need this setup to forward traffic to the nordrassil cluster
-        enable-ssl-passthrough: ""
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
