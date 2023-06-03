@@ -51,3 +51,5 @@ spec:
         mountPath: /app/cloudflare-ddns.sh
         defaultMode: 0775
         readOnly: false
+      securityContext:
+        runAsUser: 0
