@@ -37,6 +37,12 @@ nodes:
     controlPlane: true
     disableSearchDomain: true
 
+  - hostname: helya
+    ipAddress: 10.0.1.16
+    installDisk: /dev/vda
+    controlPlane: false
+    disableSearchDomain: true
+
 controlPlane:
   inlinePatch:
     cluster:
