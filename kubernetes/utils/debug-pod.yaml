@@ -16,17 +16,12 @@ spec:
       imagePullPolicy: IfNotPresent
       name: supa-dupa-debug-pod
       volumeMounts:
-      - name: varlogpods
-        mountPath: /var/log/pods
-        readOnly: true
-      - name: varlibdockercontainers
-        mountPath: /var/lib/docker/containers
-        readOnly: true
+        - mountPath: /app/cloudflare-ddns.sh
+          name: config
+          subPath: cloudflare-ddns.sh
   restartPolicy: Always
   volumes:
-    - name: varlogpods
-      hostPath:
-        path: /var/log/pods
-    - name: varlibdockercontainers
-      hostPath:
-        path: /var/lib/docker/containers
+    - configMap:
+        defaultMode: 0755
+        name: cloudflare-ddns-configmap-self
+      name: config
