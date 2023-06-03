@@ -92,6 +92,8 @@ spec:
           requests:
             cpu: "100m"
             memory: "100Mi"
+      crashCollector:
+        disable: true
     dashboard:
       enabled: true
       urlPrefix: /
@@ -166,11 +168,11 @@ spec:
             activeStandby: true
             resources:
               limits:
-                cpu: "1000m"
-                memory: "1Gi"
+                cpu: "100m"
+                memory: "512Mi"
               requests:
-                cpu: "500m"
-                memory: "1Gi"
+                cpu: "100m"
+                memory: "512"
         storageClass:
           enabled: true
           isDefault: false
@@ -206,7 +208,8 @@ spec:
                 cpu: 100m
                 memory: 128M
               limits:
-                memory: 2Gi
+                cpu: 100m
+                memory: 750M
             instances: 1
           healthCheck:
             bucket:
