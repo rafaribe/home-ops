@@ -5,7 +5,7 @@ namespace: networking
 resources:
   - ./secret.sops.yaml
   - ./config-cloudflare-ddns.yaml
-  - ./helmrelease.yaml
+  - ./deployment.yaml
 # configMapGenerator:
 #   - name: cloudflare-ddns-configmap-self
 #     files:
