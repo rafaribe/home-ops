@@ -29,8 +29,11 @@ resources:
   - ./kubernetes-sigs-nfd-charts.yaml
   - ./kyverno-charts.yaml
   - ./lwolf-charts.yaml
-  - ./opentelemetry-charts.yaml
   - ./metallb-charts.yaml
+  - ./openebs-charts.yaml
+  - ./openebs-cstor-chart.yaml
+  - ./openebs-jiva-chart.yaml
+  - ./opentelemetry-charts.yaml
   - ./pascaliske.yaml
   - ./piraeus.yaml
   - ./postfinance.yaml
