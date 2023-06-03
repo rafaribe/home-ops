@@ -35,33 +35,6 @@ spec:
       [global]
       bdev_enable_discard = true
       bdev_async_discard = true
-
-    # cephClusterSpec:
-    #   priorityClassNames:
-    #     all: system-node-critical
-    #     mgr: system-cluster-critical
-    #   disruptionManagement:
-    #     managePodBudgets: true
-    #   healthCheck:
-    #     daemonHealth:
-    #       mon:
-    #         interval: 45s
-    #         timeout: 600s
-    #     livenessProbe:
-    #       mon:
-    #         probe:
-    #           timeoutSeconds: 10
-    #       osd:
-    #         probe:
-    #           timeoutSeconds: 15
-
-    #     startupProbe:
-    #       mon:
-    #         probe:
-    #           timeoutSeconds: 15
-    #       osd:
-    #         probe:
-    #           timeoutSeconds: 15
     network:
       provider: host
       connections:
@@ -102,10 +75,11 @@ spec:
             memory: "40Mi"
         crashcollector:
           limits:
+            cpu: "200m"
             memory: "60Mi"
           requests:
             cpu: "100m"
-            memory: "60Mi"
+            memory: "50Mi"
         logcollector:
           limits:
             memory: "1Gi"
