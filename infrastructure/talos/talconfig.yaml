@@ -1,6 +1,6 @@
 clusterName: skovald
 # renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: "v1.4.4"
+talosVersion: "v1.4.5"
 # renovate: datasource=github-releases depName=siderolabs/kubelet
 kubernetesVersion: "v1.27.2"
 endpoint: https://skovald.rafaribe.site:6443
@@ -39,7 +39,7 @@ nodes:
 
   - hostname: helya
     ipAddress: 10.0.1.16
-    installDisk: /dev/vda
+    installDisk: /dev/sda
     controlPlane: false
     disableSearchDomain: true
 
@@ -83,6 +83,7 @@ controlPlane:
       sysctls:
         fs.inotify.max_user_watches: "1048576"
         fs.inotify.max_user_instances: "8192"
+        vm.nr_hugepages: "1024"
       time:
         disabled: false
         servers:
@@ -102,6 +103,8 @@ controlPlane:
             dhcp: true
             vip:
               ip: ${clusterEndpointIP}
+      nodeLabels:
+        openebs.io/engine: mayastor
 worker:
   inlinePatch:
     cluster:
@@ -125,6 +128,7 @@ worker:
       sysctls:
         fs.inotify.max_user_watches: "1048576"
         fs.inotify.max_user_instances: "8192"
+        vm.nr_hugepages: "1024"
       files:
         - content: |
             [plugins]
@@ -138,7 +142,8 @@ worker:
           - interface: eth0
             mtu: 0
             dhcp: true
-
+      nodeLabels:
+        openebs.io/engine: mayastor
   patches:
     - |-
       - op: add
