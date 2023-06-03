@@ -58,9 +58,11 @@ spec:
             memory: "500Mi"
         osd:
           limits:
-            memory: "2.5Gi"
+            cpu: 500m
+            memory: "750Mi"
           requests:
-            memory: "2Gi"
+            cpu: 250m
+            memory: "512Mi"
         prepareosd:
           limits:
             memory: "900Mi"
@@ -209,7 +211,7 @@ spec:
                 memory: 128M
               limits:
                 cpu: 100m
-                memory: 750M
+                memory: 250M
             instances: 1
           healthCheck:
             bucket:
