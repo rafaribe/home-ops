@@ -33,8 +33,8 @@ spec:
         schedule: "@hourly"
     restartPolicy: OnFailure
     image:
-      repository: ghcr.io/onedr0p/kubernetes-kubectl
-      tag: 1.27.2@sha256:86255d3ed5d85686d59444f5fc042bf56bf434c3ad4efe04f532c36326791243
+      repository: curlimages/curl
+      tag: 8.1.1@sha256:a36d481f205ec7207bbd99b08f791a2c35bfde4a1650813cb654ac1cc15a7fee
     command: ["tail", "-f", "/dev/null"]
     envFrom:
       - secretRef:
