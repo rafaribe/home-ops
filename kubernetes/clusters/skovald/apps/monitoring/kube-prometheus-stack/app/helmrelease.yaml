@@ -80,7 +80,7 @@ spec:
           - hosts:
               - *host
       alertmanagerSpec:
-        replicas: 2
+        replicas: 1
         podAffinity: hard
         storage:
           volumeClaimTemplate:
@@ -271,7 +271,7 @@ spec:
             cpu: 150m
             memory: 750Mi
           limits:
-            memory: 1.5Gi
+            memory: 750Mi
             cpu: 750m
     prometheusOperator:
       resources:
