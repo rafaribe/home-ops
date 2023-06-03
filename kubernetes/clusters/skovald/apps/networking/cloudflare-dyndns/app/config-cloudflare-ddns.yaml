@@ -1,10 +1,11 @@
 apiVersion: v1
 data:
-    config.json: ENC[AES256_GCM,data:RL2znSioDE+PX4vRd4/MCWV1vMh0AVZqRKrT+d3jrtznbGUkwUjbAIFwB3Z3f2BkLkUp78FnS8n66L4XWy0QcqJKTy00PDDMnBqSabMypwRudkwWwQslO6xZNqvYtg0xi3aLaTcmMjFFQ5Ab3j5wKqODWoX8kPPHxolepnro+TZA5oPvRix8KzFOpqTBRhhu1bMCtPkgMtbsRhmC0TQMwF+jaJTQ0W0q6+MeHYQIBrglLRq0eDB04qEQB2qezRFgYiH48wPEb0FVXPO9IZExvED/D9KWiCyXftE7/JVNmt/VqVxn55QgEW9obWsQt/BLjcJP0nOJtB4H5t2O0CIFIuUjQUwX+OBjNvcx189G4CRyF02W5Ta3oNDTwz5a3E5i+KQZptGlAGCldfsNqpwnspPoQp+meROmpifeJhvWU0gdSpotw8RNdMqE/NXj+ry+xCIxAdqfrKwR97Q/IiJoZSaO0TJ0l+SrQ1lRvaMcZ/xZSwaA8yQ3j3Oglq2x2uWIx+06bm3CNP0bSro91ZBKygYuiBv9BM3AxTlcgS94YIu3G1osHS6efibBwEhh1wYVs4OPyOzU7qqUV1Tl0nDhxBJ8hl8Na3BoEIYNl42565/xWmlvaQoUxIhn0vockmvYI95PqOg3dOJW9IrNC8k2ChGm0q9AdeXtiXcet1AG/K6IkB2XXnnBq1icFtO5hb1GUXv4tZolfqSRg8Cs7otq1dEGcXFuIJoaSNZAoNk2ImzWMEXExNfb/QM+mlLyCBrCJKAI5bWVLrMm5gxe,iv:MEHNMKEFKPYObbYz7wQDbwfzE/OVnNDarmf2Od7VWGw=,tag:RVncXh50V3DukOVmp0y69A==,type:str]
+    config.json: ENC[AES256_GCM,data:48XJkTvbHD5Q8Z2usv1iuZ4JMyL16HdPcntr1PUsCT6ag3UQUlQnnqV8t59qUJX0lcD/OidorDJdccEDQwVZa0ioo64hHv0Ut6YgHZ25h2FF1HpRaM2XaZFQWf8MLaj0mislx5bumcOa9i1h7TZEawlflQspV4aZy6frPLm4AZEXN/ZyXdJTe7bsj9HHooV0e8/zYYbrLBfqjzCp5ojFgWH5cblIaniUMZmtqztBbKt6XvmHwLt+RL9qeU09Spa2WKJJCpq+EWUsw5U4Ow7gIRm3JtfLKd0fMYplADMb43fee4oDd7Bws0LGt8aWZp/d2oVLtTZupT+HBDbOH2sdMgfupBSYPsrUwrqwcJOYinkHfbuRPNjEYVD0BwnsDZOjg7Nip4ARrAkZamZ/X5y5LxZUEMm0wItDfJW5PBv4NrEZpZSl+ohfE+yfj88Tb4/u3Z6OS8mTLHlTXUVoYZlxu+T/GRKh9CH8spLH4AgY4hsTXJOAx4RC7VOcnk9U4CxXbmbldy5OWRullvwjDugAD+bLAKO2VKF1CuPEkDLdCbDrxB5mZyY5JpHkjrA8pAu+W3tUkcRkxv5ui/HR49RKseK7Iu8jbiooWrBHJbgkC6lu+Neb3/5dAwYhhsPat3kVVfZguxcOlwOyr/AkMOM4FYKOG60+hATiFOb74gD/pjMYRhPqOJJi7u+12lKavh6zUD88JFqQ6NW3JezJuo1/daUXrML8J2wM7kKeQO98QCJ6vOPiI670vkYs9iNdgUOEoZdDD9T5pPuRjgSwlHHIgK7pdDGvt4xYyb1bFA==,iv:7YL128YrvBLE690YNVQ4v42DXLzXCeAee/gmcqRkxyA=,tag:ttiGT2rOr/L51xov6X/xiQ==,type:str]
 kind: Secret
 metadata:
+    creationTimestamp: null
     name: config-cloudflare-ddns
-    namespace: networking
+    namespace: ddns
 sops:
     kms: []
     gcp_kms: []
@@ -14,14 +15,14 @@ sops:
         - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBCQ2NYZTErV1cwOEFmV1ZZ
-            TmozQXZPUFdRTlhVUTk1UXAwVTNHY2hzYlRBCk55bHhCem9jVDhTeEtyRjZ1OHFL
-            dzBoRS83N1VyOGJDUjJ4ZFgzMTdlME0KLS0tIC8yNURFK01DaFFZUm9LWEMweHp2
-            L0NhOU84LzhkRXBHR2pNMVVudklZT1EKrjmKOI+xa0xn5JRvMKXbvJPM77exX8Zf
-            Qqr6sRnWOdf/VoKmajBsIdymVCMGA3p6VHp8ZBydU4IDwvvQDBFXwA==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA1ZTViUzd4YWpzcFpsSlAy
+            eE9iS1hYYTdBdTFLc3NhcFVHamdnR1ZuZHc4ClJqUzZnN1VHTUF2VVNIR0FiYTM1
+            TW9yTGdNREdKa2xyV0VHTWpmNnh3K28KLS0tIFcvVnplcldFLzBxNXdac01Xb1JL
+            L3dTQmJNUVRNUjdNcUd0dGRJOVVWemMKQFMo4EbgEBiTyMHE8/CU2sKsbfmgslPB
+            dfjfIXv7l1f/cglKc2788rOkhMMI0FcUeXoF/SnJ96bFcT1UkaYTKg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-06-03T02:23:02Z"
-    mac: ENC[AES256_GCM,data:NfjNzEQRH88i1Juh1bIYFsZJUcov8W3m5cycpFGbnaoFGFezkYm81TzKyD0KcJE0x+CZRNp1xTK3xyFe7JYdb13rZRhIKIzuhP4EyR2qPG6bhzCn+DaKO21baCX5xIKD+cqGJoQNBTs28dQfKH7dD6Y9FdMSPyghehHANI0VH34=,iv:UdfMnKN6h2N7NvzxBsw6qXhkNZSIr+dBXyjGVqK7OdY=,tag:NOIueT08YTOqDAl82wiUZw==,type:str]
+    lastmodified: "2023-06-03T02:32:45Z"
+    mac: ENC[AES256_GCM,data:RQiyVRARrnMrpsNk/R2SF7hpoQRR933Cqyq/MumeJyLiLpYT6hIpGsD4d7EAOppiDMBk+zVI9egrgsYyHOlWyQEb/RRKTnWqeP4P9AT9VD2VuCItwxK8eb8X5RU7cwrPPymriSmYhLZfYyqYtritAyw5QWDNGwoTs/BMTT06t/4=,iv:LgeItGGfZjuDZeGnS1TT3088tnXLB4G7PK2wgtdQ0Ho=,tag:0SanG7IQLjQyHOuCFcFfoQ==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData)$
     version: 3.7.3
