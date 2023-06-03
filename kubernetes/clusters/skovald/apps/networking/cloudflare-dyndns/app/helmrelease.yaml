@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.0
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -34,7 +34,7 @@ spec:
     restartPolicy: OnFailure
     image:
       repository: ghcr.io/onedr0p/kubernetes-kubectl
-      tag: 1.27.0@sha256:bd977118655ebd961201b67102a9f3e618e8946f65c504e6b262c0e16bc4e06a
+      tag: 1.27.2@sha256:86255d3ed5d85686d59444f5fc042bf56bf434c3ad4efe04f532c36326791243
     command: ["/bin/bash", "/app/cloudflare-ddns.sh"]
     envFrom:
       - secretRef:
@@ -46,7 +46,7 @@ spec:
       config:
         enabled: true
         type: configMap
-        name: cloudflare-ddns-configmap
+        name: cloudflare-ddns-configmap-self
         subPath: cloudflare-ddns.sh
         mountPath: /app/cloudflare-ddns.sh
         defaultMode: 0775
