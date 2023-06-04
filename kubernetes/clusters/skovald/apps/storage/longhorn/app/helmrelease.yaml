@@ -32,4 +32,4 @@ spec:
       enabled: true
       ingressClassName: "nginx"
       tls: true
-      host: "longhorn.${EXTERNAL_DOMAIN}"
+      host: "longhorn.rafaribe.com"
