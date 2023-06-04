@@ -37,7 +37,6 @@ spec:
     cleanupOnFail: true
   uninstall:
     keepHistory: false
-  maxHistory: 3
   values:
     certs:
       issuer:
