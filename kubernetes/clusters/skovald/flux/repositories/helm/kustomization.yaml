@@ -29,6 +29,7 @@ resources:
   - ./kubernetes-sigs-nfd-charts.yaml
   - ./kyverno-charts.yaml
   - ./lwolf-charts.yaml
+  - ./mayastor-chart.yaml
   - ./metallb-charts.yaml
   - ./openebs-charts.yaml
   - ./openebs-cstor-chart.yaml
