@@ -22,6 +22,7 @@ resources:
   - ./ingress-nginx-charts.yaml
   - ./jaeger.yaml
   - ./jetstack-charts.yaml
+  - ./longhorn-charts.yaml
   - ./k8s-at-home-charts.yaml
   - ./k8s-gateway.yaml
   - ./kubernetes-dashboard.yaml
