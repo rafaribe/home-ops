@@ -1,0 +1,15 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-monitoring-kube-jaeger-operator-app
+  namespace: flux-system
+spec:
+  path: ./kubernetes/clusters/skovald/apps/monitoring/jaeger-operator/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
