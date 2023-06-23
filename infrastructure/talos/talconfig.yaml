@@ -28,13 +28,13 @@ nodes:
   - hostname: thor
     ipAddress: 10.0.1.9
     installDisk: /dev/sda
-    controlPlane: false
+    controlPlane: true
     disableSearchDomain: true
 
   - hostname: freya
     ipAddress: 10.0.1.10
     installDisk: /dev/sda
-    controlPlane: true
+    controlPlane: false
     disableSearchDomain: true
 
 controlPlane:
