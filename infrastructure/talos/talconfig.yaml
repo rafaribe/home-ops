@@ -15,7 +15,7 @@ cniConfig:
 nodes:
   - hostname: odin
     ipAddress: 10.0.1.7
-    installDisk: /dev/sda
+    installDisk: /dev/sdb
     controlPlane: true
     disableSearchDomain: true
 

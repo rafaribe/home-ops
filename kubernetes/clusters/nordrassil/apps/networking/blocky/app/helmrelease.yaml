@@ -81,11 +81,7 @@ spec:
             logLevel: info
             customDNS:
               mapping:
-                talos1.rafaribe.site: 10.0.1.12
-                skovald.rafaribe.site: 10.0.1.12
-                talos2.rafaribe.site: 10.0.1.13
-                talos3.rafaribe.site: 10.0.1.14
-                talos4.rafaribe.site: 10.0.1.15
+                skovald.rafaribe.site: 10.0.1.17
                 odin.rafaribe.site: 10.0.1.7
                 loki.rafaribe.site: 10.0.1.8
                 freya.rafaribe.site: 10.0.1.9
