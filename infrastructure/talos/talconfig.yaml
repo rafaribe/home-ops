@@ -14,33 +14,27 @@ cniConfig:
 
 nodes:
   - hostname: odin
-    ipAddress: 10.0.1.12
+    ipAddress: 10.0.1.7
     installDisk: /dev/sda
     controlPlane: true
     disableSearchDomain: true
 
   - hostname: loki
-    ipAddress: 10.0.1.13
+    ipAddress: 10.0.1.8
     installDisk: /dev/sda
     controlPlane: true
     disableSearchDomain: true
 
   - hostname: thor
-    ipAddress: 10.0.1.15
+    ipAddress: 10.0.1.9
     installDisk: /dev/sda
     controlPlane: false
     disableSearchDomain: true
 
   - hostname: freya
-    ipAddress: 10.0.1.14
+    ipAddress: 10.0.1.10
     installDisk: /dev/sda
     controlPlane: true
-    disableSearchDomain: true
-
-  - hostname: helya
-    ipAddress: 10.0.1.16
-    installDisk: /dev/sda
-    controlPlane: false
     disableSearchDomain: true
 
 controlPlane:
@@ -103,16 +97,9 @@ controlPlane:
             dhcp: true
             vip:
               ip: ${clusterEndpointIP}
-      nodeLabels:
-        openebs.io/engine: mayastor
       install:
         extensions:
           - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
-          - image: ghcr.io/siderolabs/drbd:9.2.2-v1.4.5
-      kernel:
-        modules:
-          - name: drbd
-          - name: drbd_transport_tcp
 worker:
   inlinePatch:
     cluster:
@@ -158,9 +145,6 @@ worker:
           - interface: eth0
             mtu: 0
             dhcp: true
-      nodeLabels:
-        openebs.io/engine: mayastor
-        kubernetes.io/role: worker
       install:
         extensions:
           - image: ghcr.io/siderolabs/iscsi-tools:v0.1.1
