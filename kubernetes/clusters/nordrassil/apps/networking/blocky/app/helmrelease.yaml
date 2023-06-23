@@ -84,8 +84,8 @@ spec:
                 skovald.rafaribe.site: 10.0.1.17
                 odin.rafaribe.site: 10.0.1.7
                 loki.rafaribe.site: 10.0.1.8
-                freya.rafaribe.site: 10.0.1.9
-                thor.rafaribe.site: 10.0.1.10
+                thor.rafaribe.site: 10.0.1.9
+                freya.rafaribe.site: 10.0.1.10
                 truenas.rafaribe.site: 10.0.1.6
                 router.rafaribe.site: 10.0.1.1
                 bs.rafaribe.site: 10.0.1.11
