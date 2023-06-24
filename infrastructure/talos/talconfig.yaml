@@ -33,7 +33,7 @@ nodes:
 
   - hostname: freya
     ipAddress: 10.0.1.10
-    installDisk: /dev/sda
+    installDisk: /dev/nvme0n1
     controlPlane: false
     disableSearchDomain: true
 
