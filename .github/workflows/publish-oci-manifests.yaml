@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/oci.yaml
+      - .github/workflows/publish-oci-manifests.yaml
       - kubernetes/**
 
 # Default GITHUB_TOKEN token permissions do NOT support cosign and must be enabled.
