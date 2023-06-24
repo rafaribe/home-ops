@@ -29,7 +29,7 @@
         "terraforms": "terraform",
         "terraform": "terraform",
         "truenas-scale": "server",
-        "nordrassil": "supabase",
+        "truenas": "supabase",
         "skovald": "gulp",
         "k8s-gateway": "kubernetes",
         "talos": "cluster",

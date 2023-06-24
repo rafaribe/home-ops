@@ -7,8 +7,8 @@ on: # yamllint disable-line rule:truthy
     - cron: "0 0 * * *"
 
 env:
-  NORDRASSIL_CLOUDFLARE_PROXIED_NETWORKS_FILE: |-
-    kubernetes/clusters/nordrassil/apps/networking/ingress-nginx/cloudflare-proxied-networks.txt
+  truenas_CLOUDFLARE_PROXIED_NETWORKS_FILE: |-
+    kubernetes/clusters/truenas/apps/networking/ingress-nginx/cloudflare-proxied-networks.txt
   SKOVALD_CLOUDFLARE_PROXIED_NETWORKS_FILE: |-
     kubernetes/clusters/skovald/apps/network-system/ingress-nginx/cloudflare-proxied-networks.txt
 
@@ -29,7 +29,7 @@ jobs:
         run: |
           cloudflare_proxied_networks_file=$(find . -name "cloudflare-proxied-networks.txt" -print -quit)
           if [[ ! -f "${cloudflare_proxied_networks_file}" ]]; then
-              bash ./.github/scripts/cloudflare-proxied-networks.sh > ${{ env.NORDRASSIL_CLOUDFLARE_PROXIED_NETWORKS_FILE }}
+              bash ./.github/scripts/cloudflare-proxied-networks.sh > ${{ env.truenas_CLOUDFLARE_PROXIED_NETWORKS_FILE }}
               bash ./.github/scripts/cloudflare-proxied-networks.sh > ${{ env.SKOVALD_CLOUDFLARE_PROXIED_NETWORKS_FILE }}
           else
               bash ./.github/scripts/cloudflare-proxied-networks.sh > "${cloudflare_proxied_networks_file}"

@@ -3,12 +3,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-sidero-controller-manager-servers
+  name: cluster-apps-storage-cloudnative-pg-operator-app
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/truenas/apps/sidero-system/sidero-controller-manager/servers"
+  path: ./kubernetes/clusters/truenas/apps/storage/cloudnative-pg-operator/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -17,16 +15,14 @@ spec:
   retryInterval: 1m
   timeout: 3m
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/kustomization_v1beta2.json
+#yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/kustomization_v1beta2.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-sidero-controller-server-classes
+  name: cluster-apps-storage-cloudnative-pg-operator-cluster
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/truenas/apps/sidero-system/sidero-controller-manager/server-classes"
+  path: ./kubernetes/clusters/truenas/apps/storage/cloudnative-pg-operator/cluster
   prune: true
   sourceRef:
     kind: GitRepository
@@ -34,18 +30,15 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/kustomization_v1beta2.json
+#yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/kustomization_v1beta2.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-sidero-controller-manager-clusters
+  name: cluster-apps-storage-cloudnative-pgadmin
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/truenas/apps/sidero-system/sidero-controller-manager/clusters"
+  path: ./kubernetes/clusters/truenas/apps/storage/cloudnative-pg-operator/pgadmin
   prune: true
   sourceRef:
     kind: GitRepository

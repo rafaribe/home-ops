@@ -8,7 +8,7 @@ events {
 }
 
 stream {
-  upstream nordrassil {
+  upstream truenas {
     server 10.0.1.252:443;
   }
 
@@ -18,11 +18,11 @@ stream {
   }
 
   map $ssl_preread_server_name $backend {
-    unifi.rafaribe.com nordrassil;
-    authentik.rafaribe.com nordrassil;
-    dns.rafaribe.com nordrassil;
-    dns.rafaribe.site nordrassil;
-    default nordrassil;
+    unifi.rafaribe.com truenas;
+    authentik.rafaribe.com truenas;
+    dns.rafaribe.com truenas;
+    dns.rafaribe.site truenas;
+    default truenas;
   }
 
   server {

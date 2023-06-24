@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/nordrassil/apps/networking/cloudflare-zero-trust-operator/app"
+  path: "./kubernetes/clusters/truenas/apps/networking/cloudflare-zero-trust-operator/app"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,7 +26,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/nordrassil/apps/networking/cloudflare-zero-trust-operator/access-groups"
+  path: "./kubernetes/clusters/truenas/apps/networking/cloudflare-zero-trust-operator/access-groups"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -44,7 +44,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/nordrassil/apps/networking/cloudflare-zero-trust-operator/applications"
+  path: "./kubernetes/clusters/truenas/apps/networking/cloudflare-zero-trust-operator/applications"
   prune: true
   sourceRef:
     kind: GitRepository

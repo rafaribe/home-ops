@@ -22,7 +22,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-cloudflare-operator
-  path: ./kubernetes/clusters/nordrassil/apps/cloudflare-operator-system/cloudflare-operator/tunnels
+  path: ./kubernetes/clusters/truenas/apps/cloudflare-operator-system/cloudflare-operator/tunnels
   prune: true
   sourceRef:
     kind: GitRepository

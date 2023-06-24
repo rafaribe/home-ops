@@ -2,11 +2,11 @@
 apiVersion: networking.cfargotunnel.com/v1alpha1
 kind: ClusterTunnel
 metadata:
-  name: nordrassil-tunnel
+  name: truenas-tunnel
   namespace: cloudflare-operator-system
 spec:
   newTunnel:
-    name: nordrassil-tunnel
+    name: truenas-tunnel
   size: 2
   cloudflare:
     email: rafael.ntw@gmail.com

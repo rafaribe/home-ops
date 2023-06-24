@@ -38,7 +38,7 @@ module "unifi" {
 module "flux" {
   source       = "./project"
   project_name = "flux"
-  environments = ["webhook", "nordrassil", "skovald"]
+  environments = ["webhook", "truenas", "skovald"]
   providers = {
     doppler = doppler
   }
@@ -47,7 +47,7 @@ module "flux" {
 module "tfcontroller" {
   source       = "./project"
   project_name = "tfcontroller"
-  environments = ["nordrassil", "skovald"]
+  environments = ["truenas", "skovald"]
   providers = {
     doppler = doppler
   }
@@ -65,7 +65,7 @@ module "proxmox" {
 module "cloudnativepg" {
   source       = "./project"
   project_name = "cloudnativepg"
-  environments = ["nordrassil", "skovald"]
+  environments = ["truenas", "skovald"]
   providers = {
     doppler = doppler
   }

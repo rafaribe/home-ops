@@ -26,16 +26,14 @@ spec:
       valuesKey: cloudflare-proxied-networks.txt
   values:
     controller:
-      replicaCount: 1
+      replicaCount: 2
       extraEnvs:
         - name: TZ
           value: "${TZ}"
       service:
         annotations:
-          io.cilium/lb-ipam-ips: ${LB_NGINX_SKOVALD}
-        labels:
-          pool: lb
-        loadBalancerIP: ${LB_NGINX_SKOVALD}
+          metallb.universe.tf/loadBalancerIPs: |-
+            ${LB_NGINX_truenas}
         externalTrafficPolicy: Local
       publishService:
         enabled: true
@@ -68,7 +66,6 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "networking/wildcard-default-certificate-tls"
-        # I need this setup to forward traffic to the truenas cluster
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -84,17 +81,16 @@ spec:
           cpu: 100m
           memory: 250Mi
         limits:
-          cpu: 200m
-          memory: 512Mi
+          memory: 1000Mi
     defaultBackend:
       enabled: true
       image:
         repository: ghcr.io/tarampampam/error-pages
-        tag: 2.21.0
-      replicaCount: 1
+        tag: 2.18.0
+      replicaCount: 2
       extraEnvs:
         - name: TEMPLATE_NAME
-          value: lost-in-space
+          value: ghost
         - name: SHOW_DETAILS
           value: "false"
       affinity:
