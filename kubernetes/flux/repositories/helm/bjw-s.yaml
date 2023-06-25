@@ -6,4 +6,4 @@ metadata:
   namespace: flux-system
 spec:
   interval: 2h
-  url:https://bjw-s.github.io/helm-charts
+  url: https://bjw-s.github.io/helm-charts
