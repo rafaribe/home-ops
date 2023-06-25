@@ -7,13 +7,13 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   dependsOn:
-  - name: metallb
-  - name: metallb-config
+    - name: metallb
+    - name: metallb-config
   path: ./kubernetes/clusters/skovald/apps/networking/k8s-gateway
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-ops
   interval: 30m
   retryInterval: 1m
   timeout: 3m

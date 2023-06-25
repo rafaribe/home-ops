@@ -8,7 +8,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-ops
   wait: true
   interval: 1m
   retryInterval: 1m

@@ -1,20 +1,15 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/gitrepository_v1beta2.json
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/source.toolkit.fluxcd.io/ocirepository_v1beta2.json
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: GitRepository
+kind: OCIRepository
 metadata:
-  name: home-ops-kubernetes
+  name: home-ops
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 1m
+  url: oci://ghcr.io/rafaribe/manifests/home-ops
   ref:
-    branch: main
-  url: https://github.com/rafaribe/home-ops
-  ignore: |
-    # exclude all
-    /*
-    # include gitops dirs
-    !/kubernetes
+    tag: main
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/kustomization_v1beta2.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
@@ -24,12 +19,12 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  path: ./kubernetes/clusters/skovald/flux
+  path: ./kubernetes/
   prune: true
   wait: false
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-ops
   postBuild:
     substituteFrom:
       - kind: ConfigMap

@@ -11,10 +11,10 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-ops
   wait: true
   dependsOn:
-  - name: monitoring-loki-app
+    - name: monitoring-loki-app
 # ---
 # apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 # kind: Kustomization
@@ -29,7 +29,7 @@ spec:
 #   prune: true
 #   sourceRef:
 #     kind: GitRepository
-#     name: home-ops-kubernetes
+#     name: home-ops
 #   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
@@ -45,8 +45,8 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-ops
   wait: true
   dependsOn:
-  # - name: vector-geoipupdate
-  - name: monitoring-vector-aggregator
+    # - name: vector-geoipupdate
+    - name: monitoring-vector-aggregator

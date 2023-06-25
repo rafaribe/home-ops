@@ -11,15 +11,15 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-ops
   interval: 30m
   retryInterval: 1m
   timeout: 3m
   healthChecks:
-  - apiVersion: v1
-    kind: ServiceAccount
-    name: authentik-remote
-    namespace: security
+    - apiVersion: v1
+      kind: ServiceAccount
+      name: authentik-remote
+      namespace: security
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/kustomization_v1beta2.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
@@ -34,12 +34,12 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-ops
   interval: 30m
   retryInterval: 1m
   timeout: 3m
   healthChecks:
-  - apiVersion: networking.k8s.io/v1
-    kind: Ingress
-    name: authentik-outpost
-    namespace: security
+    - apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      name: authentik-outpost
+      namespace: security
