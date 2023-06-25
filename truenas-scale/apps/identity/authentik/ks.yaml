@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-identity-authentik-app
   namespace: flux-system
 spec:
-  path: ./truenas-scale/apps/identity/authentik/app
+  path: ./apps/identity/authentik/app
   prune: false
   sourceRef:
     kind: OCIRepository

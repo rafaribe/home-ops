@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-flux-webhooks
   namespace: flux-system
 spec:
-  path: ./truenas-scale/apps/flux-system/addons/webhooks/
+  path: ./apps/flux-system/addons/webhooks/
   prune: true
   sourceRef:
     kind: OCIRepository

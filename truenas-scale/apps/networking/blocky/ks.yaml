@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./truenas-scale/apps/networking/blocky/app/"
+  path: "./apps/networking/blocky/app/"
   prune: true
   sourceRef:
     kind: OCIRepository

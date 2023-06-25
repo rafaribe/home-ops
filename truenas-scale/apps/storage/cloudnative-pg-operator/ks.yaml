@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-storage-cloudnative-pg-operator-app
   namespace: flux-system
 spec:
-  path: ./truenas-scale/apps/storage/cloudnative-pg-operator/app
+  path: ./apps/storage/cloudnative-pg-operator/app
   prune: true
   sourceRef:
     kind: OCIRepository
@@ -22,7 +22,7 @@ metadata:
   name: cluster-apps-storage-cloudnative-pg-operator-cluster
   namespace: flux-system
 spec:
-  path: ./truenas-scale/apps/storage/cloudnative-pg-operator/cluster
+  path: ./apps/storage/cloudnative-pg-operator/cluster
   prune: true
   sourceRef:
     kind: OCIRepository
@@ -38,7 +38,7 @@ metadata:
   name: cluster-apps-storage-cloudnative-pgadmin
   namespace: flux-system
 spec:
-  path: ./truenas-scale/apps/storage/cloudnative-pg-operator/pgadmin
+  path: ./apps/storage/cloudnative-pg-operator/pgadmin
   prune: true
   sourceRef:
     kind: OCIRepository

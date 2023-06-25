@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./truenas-scale/apps/networking/ingress-nginx/app/"
+  path: "./apps/networking/ingress-nginx/app/"
   prune: true
   sourceRef:
     kind: OCIRepository
@@ -27,7 +27,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./truenas-scale/apps/networking/ingress-nginx/certificates/"
+  path: "./apps/networking/ingress-nginx/certificates/"
   prune: true
   sourceRef:
     kind: OCIRepository
@@ -52,7 +52,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./truenas-scale/apps/networking/ingress-nginx/config/"
+  path: "./apps/networking/ingress-nginx/config/"
   prune: true
   sourceRef:
     kind: OCIRepository
@@ -69,7 +69,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./truenas-scale/apps/networking/ingress-nginx/dashboards/"
+  path: "./apps/networking/ingress-nginx/dashboards/"
   prune: true
   sourceRef:
     kind: OCIRepository

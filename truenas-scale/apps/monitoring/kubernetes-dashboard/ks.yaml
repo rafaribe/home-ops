@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-kubernetes-dashboard
   namespace: flux-system
 spec:
-  path: ./truenas-scale/apps/monitoring/kubernetes-dashboard
+  path: ./apps/monitoring/kubernetes-dashboard
   prune: true
   sourceRef:
     kind: OCIRepository

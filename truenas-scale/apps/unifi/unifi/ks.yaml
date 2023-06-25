@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-unifi-controller-storage
   namespace: flux-system
 spec:
-  path: ./truenas-scale/apps/unifi/unifi/storage
+  path: ./apps/unifi/unifi/storage
   prune: true
   sourceRef:
     kind: OCIRepository
@@ -20,7 +20,7 @@ metadata:
   name: cluster-apps-unifi-controller-config
   namespace: flux-system
 spec:
-  path: ./truenas-scale/apps/unifi/unifi/config
+  path: ./apps/unifi/unifi/config
   prune: false
   sourceRef:
     kind: OCIRepository
@@ -39,7 +39,7 @@ metadata:
   name: cluster-apps-unifi-controller-app
   namespace: flux-system
 spec:
-  path: ./truenas-scale/apps/unifi/unifi/app
+  path: ./apps/unifi/unifi/app
   prune: true
   sourceRef:
     kind: OCIRepository

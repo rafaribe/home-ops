@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./truenas-scale/apps/flux-system/external-secrets/operator"
+  path: "./apps/flux-system/external-secrets/operator"
   prune: true
   sourceRef:
     kind: OCIRepository
@@ -32,7 +32,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./truenas-scale/apps/flux-system/external-secrets/provider"
+  path: "./apps/flux-system/external-secrets/provider"
   prune: true
   sourceRef:
     kind: OCIRepository
