@@ -1,8 +1,7 @@
----
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-monitoring-loki-app
+  name: monitoring-loki-app
   namespace: flux-system
 spec:
   path: ./kubernetes/clusters/skovald/apps/monitoring/loki/app
@@ -17,7 +16,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-monitoring-loki-dashboards
+  name: monitoring-loki-dashboards
   namespace: flux-system
 spec:
   path: ./kubernetes/clusters/skovald/apps/monitoring/loki/dashboards

@@ -1,8 +1,7 @@
----
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-kube-tools-kyverno-app
+  name: kube-tools-kyverno-app
   namespace: flux-system
 spec:
   path: ./kubernetes/clusters/skovald/apps/kube-tools/kyverno/app
@@ -17,7 +16,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-kube-tools-kyverno-policies
+  name: kube-tools-kyverno-policies
   namespace: flux-system
 spec:
   path: ./kubernetes/clusters/skovald/apps/kube-tools/kyverno/policies

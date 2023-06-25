@@ -1,8 +1,7 @@
----
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-monitoring-vector-aggregator
+  name: monitoring-vector-aggregator
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -15,12 +14,12 @@ spec:
     name: home-ops-kubernetes
   wait: true
   dependsOn:
-    - name: cluster-apps-monitoring-loki-app
+  - name: monitoring-loki-app
 # ---
 # apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 # kind: Kustomization
 # metadata:
-#   name: cluster-apps-monitoring-vector-geoipupdate
+#   name: monitoring-vector-geoipupdate
 #   namespace: flux-system
 #   labels:
 #     substitution.flux.home.arpa/enabled: "true"
@@ -36,7 +35,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-monitoring-vector-agent
+  name: monitoring-vector-agent
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -49,5 +48,5 @@ spec:
     name: home-ops-kubernetes
   wait: true
   dependsOn:
-    # - name: cluster-apps-vector-geoipupdate
-    - name: cluster-apps-monitoring-vector-aggregator
+  # - name: vector-geoipupdate
+  - name: monitoring-vector-aggregator

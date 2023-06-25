@@ -1,8 +1,7 @@
----
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-cloudflare-operator
+  name: cloudflare-operator
   namespace: flux-system
 spec:
   path: ./config/default
@@ -17,11 +16,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-cloudflare-operator-tunnels
+  name: cloudflare-operator-tunnels
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-cloudflare-operator
+  - name: cloudflare-operator
   path: ./kubernetes/clusters/truenas/apps/cloudflare-operator-system/cloudflare-operator/tunnels
   prune: true
   sourceRef:

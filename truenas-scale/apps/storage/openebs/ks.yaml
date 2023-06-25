@@ -1,8 +1,7 @@
----
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-storage-openebs-config
+  name: storage-openebs-config
   namespace: flux-system
 spec:
   path: ./apps/storage/openebs/config
