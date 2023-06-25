@@ -8,8 +8,8 @@ spec:
   path: ./truenas-scale/apps/unifi/unifi/storage
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-truenas
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -23,8 +23,8 @@ spec:
   path: ./truenas-scale/apps/unifi/unifi/config
   prune: false
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-truenas
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -42,8 +42,8 @@ spec:
   path: ./truenas-scale/apps/unifi/unifi/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-truenas
   interval: 30m
   retryInterval: 1m
   timeout: 3m

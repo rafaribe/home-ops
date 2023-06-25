@@ -10,8 +10,8 @@ spec:
   path: ./kubernetes/clusters/truenas/apps
   prune: false
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-truenas
   postBuild:
     substituteFrom:
       - kind: ConfigMap

@@ -11,8 +11,8 @@ spec:
   path: ./truenas-scale/apps/flux-system/tf-controller/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-truenas
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
@@ -35,8 +35,8 @@ spec:
   path: ./truenas-scale/apps/flux-system/tf-controller/terraforms
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-truenas
   interval: 30m
   retryInterval: 1m
   timeout: 3m

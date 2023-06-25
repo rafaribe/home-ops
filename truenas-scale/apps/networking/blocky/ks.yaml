@@ -11,8 +11,8 @@ spec:
   path: "./truenas-scale/apps/networking/blocky/app/"
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-truenas
   interval: 30m
   retryInterval: 1m
   timeout: 3m

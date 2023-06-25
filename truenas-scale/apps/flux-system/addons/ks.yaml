@@ -8,8 +8,8 @@ spec:
   path: ./truenas-scale/apps/flux-system/addons/webhooks/
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-truenas
   wait: true
   interval: 30m
   retryInterval: 1m

@@ -11,8 +11,8 @@ spec:
   path: "./truenas-scale/apps/networking/ingress-nginx/app/"
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: truenas-home
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -30,8 +30,8 @@ spec:
   path: "./truenas-scale/apps/networking/ingress-nginx/certificates/"
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: truenas-home
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -55,8 +55,8 @@ spec:
   path: "./truenas-scale/apps/networking/ingress-nginx/config/"
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: truenas-home
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -72,8 +72,8 @@ spec:
   path: "./truenas-scale/apps/networking/ingress-nginx/dashboards/"
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: truenas-home
   interval: 30m
   retryInterval: 1m
   timeout: 3m

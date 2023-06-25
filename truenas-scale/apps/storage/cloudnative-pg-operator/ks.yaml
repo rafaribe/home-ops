@@ -9,8 +9,8 @@ spec:
   path: ./truenas-scale/apps/storage/cloudnative-pg-operator/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-truenas
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -25,8 +25,8 @@ spec:
   path: ./truenas-scale/apps/storage/cloudnative-pg-operator/cluster
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-truenas
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -41,8 +41,8 @@ spec:
   path: ./truenas-scale/apps/storage/cloudnative-pg-operator/pgadmin
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: home-ops-kubernetes
+    kind: OCIRepository
+    name: home-truenas
   interval: 30m
   retryInterval: 1m
   timeout: 3m
