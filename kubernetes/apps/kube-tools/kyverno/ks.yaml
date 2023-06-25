@@ -4,7 +4,7 @@ metadata:
   name: kube-tools-kyverno-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/kube-tools/kyverno/app
+  path: ./apps/kube-tools/kyverno/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,7 +19,7 @@ metadata:
   name: kube-tools-kyverno-policies
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/kube-tools/kyverno/policies
+  path: ./apps/kube-tools/kyverno/policies
   prune: true
   sourceRef:
     kind: GitRepository

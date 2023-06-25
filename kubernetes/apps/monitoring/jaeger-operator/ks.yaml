@@ -4,7 +4,7 @@ metadata:
   name: monitoring-kube-jaeger-operator-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/monitoring/jaeger-operator/app
+  path: ./apps/monitoring/jaeger-operator/app
   prune: true
   sourceRef:
     kind: GitRepository

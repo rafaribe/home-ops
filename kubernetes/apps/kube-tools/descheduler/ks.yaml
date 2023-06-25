@@ -4,7 +4,7 @@ metadata:
   name: kube-tools-descheduler-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/kube-tools/descheduler/app
+  path: ./apps/kube-tools/descheduler/app
   prune: true
   sourceRef:
     kind: GitRepository

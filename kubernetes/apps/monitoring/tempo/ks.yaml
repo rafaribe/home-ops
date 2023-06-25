@@ -4,7 +4,7 @@ metadata:
   name: monitoring-tempo-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/monitoring/tempo/app
+  path: ./apps/monitoring/tempo/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,7 +19,7 @@ spec:
 #   name: monitoring-loki-dashboards
 #   namespace: flux-system
 # spec:
-#   path: ./kubernetes/clusters/skovald/apps/monitoring/loki/dashboards
+#   path: ./apps/monitoring/loki/dashboards
 #   prune: true
 #   sourceRef:
 #     kind: GitRepository

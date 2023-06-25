@@ -4,7 +4,7 @@ metadata:
   name: monitoring-grafana-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/monitoring/grafana/app
+  path: ./apps/monitoring/grafana/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,7 +19,7 @@ metadata:
   name: monitoring-grafana-dashboards
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/monitoring/grafana/dashboards
+  path: ./apps/monitoring/grafana/dashboards
   prune: true
   sourceRef:
     kind: GitRepository

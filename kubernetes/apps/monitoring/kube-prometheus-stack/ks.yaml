@@ -4,7 +4,7 @@ metadata:
   name: monitoring-kube-prometheus-stack-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/monitoring/kube-prometheus-stack/app
+  path: ./apps/monitoring/kube-prometheus-stack/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,7 +19,7 @@ metadata:
   name: monitoring-alertmanager-discord
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/monitoring/kube-prometheus-stack/alertmanager-discord
+  path: ./apps/monitoring/kube-prometheus-stack/alertmanager-discord
   prune: true
   sourceRef:
     kind: GitRepository

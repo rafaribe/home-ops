@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: "./kubernetes/clusters/skovald/apps/kube-system/kubelet-csr-approver/app"
+  path: "./apps/kube-system/kubelet-csr-approver/app"
   prune: true
   sourceRef:
     kind: GitRepository

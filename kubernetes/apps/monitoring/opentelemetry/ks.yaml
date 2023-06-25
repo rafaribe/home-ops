@@ -4,7 +4,7 @@ metadata:
   name: monitoring-opentelemetry-operator
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/monitoring/opentelemetry/operator
+  path: ./apps/monitoring/opentelemetry/operator
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,7 +19,7 @@ metadata:
   name: monitoring-opentelemetry-collector
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/monitoring/opentelemetry/collector
+  path: ./apps/monitoring/opentelemetry/collector
   prune: true
   sourceRef:
     kind: GitRepository

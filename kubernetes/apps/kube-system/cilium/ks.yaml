@@ -4,7 +4,7 @@ metadata:
   name: cilium-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/kube-system/cilium/app
+  path: ./apps/kube-system/cilium/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -24,7 +24,7 @@ metadata:
   name: cilium-bgp
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/kube-system/cilium/bgp
+  path: ./apps/kube-system/cilium/bgp
   prune: true
   sourceRef:
     kind: GitRepository

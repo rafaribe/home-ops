@@ -4,7 +4,7 @@ metadata:
   name: monitoring-unifi-poller-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/monitoring/unifi-poller/app
+  path: ./apps/monitoring/unifi-poller/app
   prune: true
   sourceRef:
     kind: GitRepository

@@ -7,7 +7,7 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   interval: 10m
-  path: "./kubernetes/clusters/skovald/apps/monitoring/vector/aggregator"
+  path: "./apps/monitoring/vector/aggregator"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -25,7 +25,7 @@ spec:
 #     substitution.flux.home.arpa/enabled: "true"
 # spec:
 #   interval: 10m
-#   path: "./kubernetes/clusters/skovald/apps/monitoring/vector/geoipupdate"
+#   path: "./apps/monitoring/vector/geoipupdate"
 #   prune: true
 #   sourceRef:
 #     kind: GitRepository
@@ -41,7 +41,7 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   interval: 10m
-  path: "./kubernetes/clusters/skovald/apps/monitoring/vector/agent"
+  path: "./apps/monitoring/vector/agent"
   prune: true
   sourceRef:
     kind: GitRepository

@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: metallb
     - name: metallb-config
-  path: ./kubernetes/clusters/skovald/apps/networking/k8s-gateway
+  path: ./apps/networking/k8s-gateway
   prune: true
   sourceRef:
     kind: GitRepository

@@ -4,7 +4,7 @@ metadata:
   name: cert-manager
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/skovald/apps/cert-manager/cert-manager/app
+  path: ./apps/cert-manager/cert-manager/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,7 +26,7 @@ metadata:
 spec:
   dependsOn:
     - name: cert-manager
-  path: ./kubernetes/clusters/skovald/apps/cert-manager/cert-manager/issuers
+  path: ./apps/cert-manager/cert-manager/issuers
   prune: true
   sourceRef:
     kind: GitRepository
@@ -43,7 +43,7 @@ metadata:
 spec:
   dependsOn:
     - name: cert-manager
-  path: ./kubernetes/clusters/skovald/apps/cert-manager/cert-manager/dashboard
+  path: ./apps/cert-manager/cert-manager/dashboard
   prune: true
   sourceRef:
     kind: GitRepository
