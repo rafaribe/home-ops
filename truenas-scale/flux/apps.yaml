@@ -7,7 +7,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./kubernetes/clusters/truenas/apps
+  path: ./truenas-scale/apps
   prune: false
   sourceRef:
     kind: OCIRepository
