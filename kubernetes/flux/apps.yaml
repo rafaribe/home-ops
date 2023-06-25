@@ -10,7 +10,7 @@ spec:
   path: ./apps
   prune: false
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   postBuild:
     substituteFrom:

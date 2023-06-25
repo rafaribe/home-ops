@@ -8,6 +8,6 @@ spec:
   path: "./apps/kube-system/kubelet-csr-approver/app"
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   wait: true

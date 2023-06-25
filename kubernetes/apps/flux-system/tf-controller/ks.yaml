@@ -10,7 +10,7 @@ spec:
   path: ./apps/flux-system/tf-controller/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1

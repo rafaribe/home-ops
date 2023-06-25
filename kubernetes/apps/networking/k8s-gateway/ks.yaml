@@ -12,7 +12,7 @@ spec:
   path: ./apps/networking/k8s-gateway
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

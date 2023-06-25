@@ -7,7 +7,7 @@ spec:
   path: ./apps/kube-system/cilium/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -27,7 +27,7 @@ spec:
   path: ./apps/kube-system/cilium/bgp
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   dependsOn:
     - name: cilium-app

@@ -7,7 +7,7 @@ spec:
   path: ./apps/monitoring/jaeger-operator/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

@@ -10,7 +10,7 @@ spec:
   path: "./apps/networking/ingress-nginx/app/"
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -30,7 +30,7 @@ spec:
   path: "./apps/networking/ingress-nginx/certificates/"
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -55,7 +55,7 @@ spec:
   path: "./apps/networking/ingress-nginx/config/"
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -72,7 +72,7 @@ spec:
   path: "./apps/networking/ingress-nginx/dashboards/"
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

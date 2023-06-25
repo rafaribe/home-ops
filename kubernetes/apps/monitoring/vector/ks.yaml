@@ -10,7 +10,7 @@ spec:
   path: "./apps/monitoring/vector/aggregator"
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   wait: true
   dependsOn:
@@ -44,7 +44,7 @@ spec:
   path: "./apps/monitoring/vector/agent"
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   wait: true
   dependsOn:

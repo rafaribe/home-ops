@@ -8,7 +8,7 @@ spec:
   path: ./apps/flux-system/addons/webhooks/
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: home-ops
   wait: true
   interval: 30m
