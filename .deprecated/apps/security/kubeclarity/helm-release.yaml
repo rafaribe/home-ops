@@ -12,7 +12,7 @@ spec:
       version: v2.12.2
       sourceRef:
         kind: HelmRepository
-        name: kubeclarity-charts
+        name: kubeclarity
         namespace: flux-system
       interval: 5m
   install:

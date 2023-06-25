@@ -12,7 +12,7 @@ spec:
       version: 0.11.1
       sourceRef:
         kind: HelmRepository
-        name: aqua-charts
+        name: aqua
         namespace: flux-system
   install:
     createNamespace: true

@@ -8,12 +8,12 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
+      # renovate: registryUrl=https://prometheus-community.github.io/helm
       chart: kube-prometheus-stack
       version: 45.1.1
       sourceRef:
         kind: HelmRepository
-        name: prometheus-community-charts
+        name: prometheus-community
         namespace: flux-system
       interval: 5m
   upgrade:

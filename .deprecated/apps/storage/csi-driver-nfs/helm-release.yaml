@@ -12,7 +12,7 @@ spec:
       version: v4.1.0
       sourceRef:
         kind: HelmRepository
-        name: csi-driver-nfs-charts
+        name: csi-driver-nfs
         namespace: flux-system
   install:
     createNamespace: true

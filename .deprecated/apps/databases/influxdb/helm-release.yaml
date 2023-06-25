@@ -12,13 +12,13 @@ spec:
       version: 2.1.1
       sourceRef:
         kind: HelmRepository
-        name: influxdata-charts
+        name: influxdata
         namespace: flux-system
       interval: 60m
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-  # Values link: https://github.com/influxdata/helm-charts/blob/master/charts/influxdb2/values.yaml
+  # Values link: https://github.com/influxdata/helm/blob/master/charts/influxdb2/values.yaml
   values:
     image:
       repository: influxdb

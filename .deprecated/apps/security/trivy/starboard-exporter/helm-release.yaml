@@ -12,7 +12,7 @@ spec:
       version: 0.6.0
       sourceRef:
         kind: HelmRepository
-        name: giantswarm-charts
+        name: giantswarm
         namespace: flux-system
       interval: 5m
   install:

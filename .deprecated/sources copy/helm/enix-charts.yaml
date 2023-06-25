@@ -2,7 +2,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: enix-charts
+  name: enix
   namespace: flux-system
 spec:
   interval: 30m

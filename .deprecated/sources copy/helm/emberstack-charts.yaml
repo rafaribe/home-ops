@@ -2,9 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: emberstack-charts
+  name: emberstack
   namespace: flux-system
 spec:
   interval: 30m
-  url: https://emberstack.github.io/helm-charts/
+  url: https://emberstack.github.io/helm/
   timeout: 3m

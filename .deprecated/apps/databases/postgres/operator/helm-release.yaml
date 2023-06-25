@@ -12,7 +12,7 @@ spec:
       version: 0.17.0
       sourceRef:
         kind: HelmRepository
-        name: cloudnative-pg-charts
+        name: cloudnative-pg
         namespace: flux-system
   install:
     createNamespace: true

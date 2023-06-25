@@ -1,0 +1,282 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 47.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    cleanPrometheusOperatorObjectNames: true
+    alertmanager:
+      config:
+        receivers:
+          - name: "null" # quote
+          - name: discord
+            webhook_configs:
+              - url: "http://alertmanager-discord:9094"
+                send_resolved: true
+        route:
+          group_by: ["alertname", "job"]
+          group_wait: 30s
+          group_interval: 5m
+          repeat_interval: 6h
+          receiver: discord
+          routes:
+            - receiver: discord
+              group_wait: 0s
+              group_interval: 5m
+              repeat_interval: 1h
+              matchers:
+                - alertname =~ "Watchdog"
+            - receiver: "null"
+              matchers:
+                - alertname =~ "InfoInhibitor"
+            - receiver: discord
+              matchers:
+                - severity = "critical"
+              continue: true
+        inhibit_rules:
+          - source_matchers:
+              - severity = "critical"
+            target_matchers:
+              - severity = "warning"
+            equal: ["alertname", "namespace"]
+      service:
+        externalTrafficPolicy: Local
+        # not supported - I'll need to use a patch to get it in
+        # ipFamilyPolicy: PreferDualStack
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/appName: "Alert Manager"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: mdi:alert-decagram-outline
+          auth.home.arpa/enabled: "true"
+        hosts:
+          - &host alertmanager.${EXTERNAL_DOMAIN}
+        tls:
+          - hosts:
+              - *host
+      alertmanagerSpec:
+        replicas: 1
+        podAffinity: hard
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 10Mi
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 60m
+            memory: 64Mi
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+      sidecar:
+        dashboards:
+          multicluster:
+            etcd:
+              enabled: true
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels: ["node"]
+            targetLabel: instance
+          - action: drop
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
+          - action: drop
+            regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
+            sourceLabels:
+              - __name__
+    kube-state-metrics:
+      metricLabelsAllowlist: ["persistentvolumeclaims=[*]"]
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              targetLabel: kubernetes_node
+    kubeApiServer:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: drop
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
+          - action: drop
+            regex: apiserver_response_sizes_bucket
+            sourceLabels:
+              - __name__
+    kubeControllerManager:
+      enabled: true
+      endpoints:
+        - 10.0.1.12
+        - 10.0.1.13
+        - 10.0.1.14
+        - 10.0.1.15
+
+      serviceMonitor:
+        metricRelabelings:
+          - action: drop
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
+          - action: drop
+            regex: apiserver_response_sizes_bucket
+            sourceLabels:
+              - __name__
+    # the default selector is "k8s-app: kube-dns" which is [redacted].
+    coreDns:
+      enabled: true
+      service:
+        selector:
+          app.kubernetes.io/name: coredns
+          app.kubernetes.io/instance: coredns
+    kubeScheduler:
+      enabled: true
+      endpoints:
+        - 10.0.1.12
+        - 10.0.1.13
+        - 10.0.1.14
+        - 10.0.1.15
+      serviceMonitor:
+        metricRelabelings:
+          - action: drop
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
+          - action: drop
+            regex: apiserver_response_sizes_bucket
+            sourceLabels:
+              - __name__
+    kubeProxy:
+      enabled: true
+      endpoints:
+        - 10.0.1.12
+        - 10.0.1.13
+        - 10.0.1.14
+        - 10.0.1.15
+      serviceMonitor:
+        metricRelabelings:
+          - action: drop
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
+          - action: drop
+            regex: apiserver_response_sizes_bucket
+            sourceLabels:
+              - __name__
+    kubeEtcd:
+      enabled: true
+      endpoints:
+        - 10.0.1.12
+        - 10.0.1.13
+        - 10.0.1.14
+        - 10.0.1.15
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
+      serviceMonitor:
+        metricRelabelings:
+          - action: drop
+            regex: etcd_request_duration_seconds_bucket
+            sourceLabels:
+              - __name__
+    nodeExporter:
+      enabled: true
+    prometheus:
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/appName: Prometheus
+          hajimari.io/enable: "true"
+          hajimari.io/icon: simple-icons:prometheus
+          auth.home.arpa/enabled: "true"
+        pathType: Prefix
+        hosts:
+          - &host prometheus.${EXTERNAL_DOMAIN}
+        tls:
+          - hosts:
+              - *host
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
+      prometheusSpec:
+        replicas: 1
+        replicaExternalLabelName: __replica__ # must match with thanos value `.query.replicaLabel[0]`
+        # Breaks any metric that has an existing "cluster" label on a metric
+        # externalLabels:
+        #   cluster: home # must match with thanos value `.ruler.clusterName`
+        thanos:
+          image: quay.io/thanos/thanos:v0.31.0
+          objectStorageConfig:
+            name: thanos-objstore-secret
+            key: objstore.yml
+        podAntiAffinity: hard
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        retention: 2d
+        retentionSize: 6GB
+        enableAdminAPI: true
+        walCompression: true
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 20Gi
+        resources:
+          requests:
+            cpu: 150m
+            memory: 750Mi
+          limits:
+            memory: 750Mi
+            cpu: 750m
+    prometheusOperator:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          memory: 384Mi

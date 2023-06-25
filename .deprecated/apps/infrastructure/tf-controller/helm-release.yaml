@@ -11,7 +11,7 @@ spec:
       chart: tf-controller
       sourceRef:
         kind: HelmRepository
-        name: tf-controller-charts
+        name: tf-controller
         namespace: flux-system
   install:
     createNamespace: true
