@@ -127,19 +127,16 @@ spec:
         - name: "odin"
           devices:
             - name: "/dev/sdb"
-            - name: "/dev/sdc"
         - name: "loki"
-          devices:
-            - name: "/dev/sdb"
-            - name: "/dev/sdc"
-        - name: "freya"
           devices:
             - name: "/dev/sdb"
             - name: "/dev/sdc"
         - name: "thor"
           devices:
             - name: "/dev/sdb"
-            - name: "/dev/sdc"
+        - name: "freya"
+          devices:
+            - name: "/dev/sda"
     cephBlockPoolsVolumeSnapshotClass:
       enabled: false
     cephBlockPools:

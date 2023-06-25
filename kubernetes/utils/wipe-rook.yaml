@@ -15,12 +15,10 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
+          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sda; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sda; wipefs -af /dev/sda; blkdiscard /dev/sda; partprobe /dev/sda",
         ]
   nodeSelector:
     kubernetes.io/hostname: odin
----
-
 ---
 apiVersion: v1
 kind: Pod
@@ -39,6 +37,29 @@ spec:
       args:
         [
           "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
+        ]
+  nodeSelector:
+    kubernetes.io/hostname: loki
+---
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: disk-wipe-loki-sdc
+  namespace: kube-system
+spec:
+  restartPolicy: Never
+  nodeName: loki
+  containers:
+    - name: disk-wipe
+      image: ubuntu
+      securityContext:
+        privileged: true
+      command: ["/bin/sh", "-c"]
+      args:
+        [
+          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdc; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sdc; wipefs -af /dev/sdc; blkdiscard /dev/sdc; partprobe /dev/sdc",
         ]
   nodeSelector:
     kubernetes.io/hostname: loki
@@ -67,7 +88,7 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-freya-sdb
+  name: disk-wipe-freya-sda
   namespace: kube-system
 spec:
   restartPolicy: Never
@@ -80,7 +101,7 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
+          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sda; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sda; wipefs -af /dev/sda; blkdiscard /dev/sda; partprobe /dev/sda",
         ]
   nodeSelector:
     kubernetes.io/hostname: freya
