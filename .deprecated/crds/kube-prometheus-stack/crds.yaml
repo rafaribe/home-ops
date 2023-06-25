@@ -8,7 +8,7 @@ spec:
   interval: 30m
   url: https://github.com/prometheus-community/helm.git
   ref:
-    # renovate: registryUrl=https://prometheus-community.github.io/helm
+    # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
     tag: kube-prometheus-stack-45.1.1
   ignore: |
     # exclude all

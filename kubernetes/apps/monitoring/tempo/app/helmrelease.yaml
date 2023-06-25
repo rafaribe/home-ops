@@ -7,7 +7,7 @@ spec:
   interval: 1h
   chart:
     spec:
-      # registryUrl=https://grafana.github.io/helm
+      # registryUrl=https://grafana.github.io/helm-charts
       chart: tempo
       version: 1.3.1
       sourceRef:
