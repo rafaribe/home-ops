@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-unifi-controller-storage
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/truenas/apps/unifi/unifi/storage
+  path: ./truenas-scale/apps/unifi/unifi/storage
   prune: true
   sourceRef:
     kind: GitRepository
@@ -20,7 +20,7 @@ metadata:
   name: cluster-apps-unifi-controller-config
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/truenas/apps/unifi/unifi/config
+  path: ./truenas-scale/apps/unifi/unifi/config
   prune: false
   sourceRef:
     kind: GitRepository
@@ -39,7 +39,7 @@ metadata:
   name: cluster-apps-unifi-controller-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/truenas/apps/unifi/unifi/app
+  path: ./truenas-scale/apps/unifi/unifi/app
   prune: true
   sourceRef:
     kind: GitRepository

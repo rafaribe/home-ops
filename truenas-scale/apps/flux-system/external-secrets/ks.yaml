@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/truenas/apps/flux-system/external-secrets/operator"
+  path: "./truenas-scale/apps/flux-system/external-secrets/operator"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -32,7 +32,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/clusters/truenas/apps/flux-system/external-secrets/provider"
+  path: "./truenas-scale/apps/flux-system/external-secrets/provider"
   prune: true
   sourceRef:
     kind: GitRepository

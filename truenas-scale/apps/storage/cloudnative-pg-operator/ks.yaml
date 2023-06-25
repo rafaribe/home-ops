@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-storage-cloudnative-pg-operator-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/truenas/apps/storage/cloudnative-pg-operator/app
+  path: ./truenas-scale/apps/storage/cloudnative-pg-operator/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -22,7 +22,7 @@ metadata:
   name: cluster-apps-storage-cloudnative-pg-operator-cluster
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/truenas/apps/storage/cloudnative-pg-operator/cluster
+  path: ./truenas-scale/apps/storage/cloudnative-pg-operator/cluster
   prune: true
   sourceRef:
     kind: GitRepository
@@ -38,7 +38,7 @@ metadata:
   name: cluster-apps-storage-cloudnative-pgadmin
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/truenas/apps/storage/cloudnative-pg-operator/pgadmin
+  path: ./truenas-scale/apps/storage/cloudnative-pg-operator/pgadmin
   prune: true
   sourceRef:
     kind: GitRepository

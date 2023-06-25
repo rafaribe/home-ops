@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-storage-openebs-config
   namespace: flux-system
 spec:
-  path: ./kubernetes/clusters/truenas/apps/storage/openebs/config
+  path: ./truenas-scale/apps/storage/openebs/config
   prune: false
   sourceRef:
     kind: GitRepository

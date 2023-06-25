@@ -10,7 +10,7 @@ spec:
   dependsOn:
     - name: cluster-apps-metallb
     - name: cluster-apps-metallb-config
-  path: ./kubernetes/clusters/truenas/apps/networking/k8s-gateway
+  path: ./truenas-scale/apps/networking/k8s-gateway
   prune: true
   sourceRef:
     kind: GitRepository
