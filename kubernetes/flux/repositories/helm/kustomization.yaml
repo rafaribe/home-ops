@@ -33,6 +33,7 @@ resources:
   - ./lwolf.yaml
   - ./mayastor-chart.yaml
   - ./metallb.yaml
+  - ./nfs-provisioner.yaml
   - ./openebs.yaml
   - ./openebs-cstor-chart.yaml
   - ./openebs-jiva-chart.yaml
