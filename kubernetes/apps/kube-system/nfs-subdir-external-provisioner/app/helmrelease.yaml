@@ -36,8 +36,8 @@ spec:
     replicaCount: 2
     nfs:
       # Hardcoded: So PVC pattern survives
-      server: ${NAS_ADDRESS}
-      path: ${NAS_SUBPATH}
+      server: 10.0.1.6
+      path: /mnt/storage-0/talos
       mountOptions:
         - hard ##  Specify as hard mount mode
         - nfsvers=4 ##  Set NFS version, must match server
