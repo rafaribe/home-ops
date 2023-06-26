@@ -15,8 +15,8 @@ data:
   TZ: Europe/Lisbon
 
   # Network
-  NAS_ADDRESS: 10.0.1.11
-  NAS_DIR: /data/share/nfs
+  NAS_ADDRESS: 10.0.1.6
+  NAS_SUBPATH: /mnt/storage-0/talos
   NAS_BACKUP_DIR: /data/backups
   #
 

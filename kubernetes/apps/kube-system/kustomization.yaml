@@ -6,3 +6,5 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./cilium/ks.yaml
+  - ./nfs-subdir-external-provisioner/ks.yaml
+  - ./kubelet-csr-approver/ks.yaml
