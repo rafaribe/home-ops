@@ -12,5 +12,3 @@ spec:
     kind: OCIRepository
     name: home-ops
   wait: true
-  postBuild:
-    substituteFrom: []
