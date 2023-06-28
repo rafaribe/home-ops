@@ -12,6 +12,7 @@ resources:
   - ./cloudnative-pg.yaml
   - ./dysnix.yaml
   - ./emqx.yaml
+  - ./emberstack.yaml
   - ./enix.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
