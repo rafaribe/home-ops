@@ -47,24 +47,24 @@ spec:
         mgr:
           limits:
             cpu: "500m"
-            memory: "1Gi"
+            memory: "750Mi"
           requests:
             cpu: "500m"
-            memory: "1Gi"
+            memory: "512Mi"
         mon:
           limits:
             cpu: "500m"
-            memory: "1Gi"
+            memory: "512Mi"
           requests:
             cpu: "500m"
-            memory: "1Gi"
+            memory: "512Mi"
         osd:
           limits:
             cpu: "500m"
-            memory: "1Gi"
+            memory: "300Mi"
           requests:
             cpu: "500m"
-            memory: "1Gi"
+            memory: "250Mi"
         prepareosd:
           # limits: It is not recommended to set limits on the OSD prepare job since it's a one-time burst for memory
           # that must be allowed to complete without an OOM kill
