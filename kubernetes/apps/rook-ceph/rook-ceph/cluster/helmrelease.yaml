@@ -88,14 +88,14 @@ spec:
         logcollector:
           limits:
             cpu: "500m"
-            memory: "1Gi"
+            memory: "512Mi"
           requests:
             cpu: "100m"
             memory: "100Mi"
         cleanup:
           limits:
             cpu: "500m"
-            memory: "1Gi"
+            memory: "512Mi"
           requests:
             cpu: "500m"
             memory: "100Mi"
@@ -181,7 +181,7 @@ spec:
                 memory: "512Mi"
               requests:
                 cpu: "100m"
-                memory: "512"
+                memory: "256Mi"
         storageClass:
           enabled: true
           isDefault: false
@@ -218,7 +218,7 @@ spec:
                 memory: 128M
               limits:
                 cpu: 100m
-                memory: 250M
+                memory: 256Mi
             instances: 1
           healthCheck:
             bucket:
