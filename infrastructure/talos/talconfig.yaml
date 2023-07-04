@@ -1,8 +1,8 @@
 clusterName: skovald
 # renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: "v1.4.5"
+talosVersion: "v1.4.6"
 # renovate: datasource=github-releases depName=siderolabs/kubelet
-kubernetesVersion: "v1.27.2"
+kubernetesVersion: "v1.27.3"
 endpoint: https://skovald.rafaribe.site:6443
 allowSchedulingOnMasters: true
 clusterPodNets:
@@ -147,4 +147,4 @@ worker:
             dhcp: true
       install:
         extensions:
-          - image: ghcr.io/siderolabs/iscsi-tools:v0.1.1
+          - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
