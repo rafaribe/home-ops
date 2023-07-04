@@ -130,7 +130,6 @@ spec:
             - name: "/dev/sdc"
         - name: "loki"
           devices:
-            - name: "/dev/sdb"
             - name: "/dev/sdc"
         - name: "thor"
           devices:
