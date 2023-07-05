@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-odin-sdb
+  name: disk-wipe-rook-odin
   namespace: kube-system
 spec:
   restartPolicy: Never
@@ -15,7 +15,9 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sda; dd if=/dev/zero bs=100M count=1000  oflag=direct,dsync of=/dev/sda; wipefs -af /dev/sda; blkdiscard /dev/sda; partprobe /dev/sda",
+          "sh",
+          "-c",
+          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*",
         ]
   nodeSelector:
     kubernetes.io/hostname: odin
@@ -23,7 +25,7 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-loki-sdb
+  name: disk-wipewipe-rook-oki
   namespace: kube-system
 spec:
   restartPolicy: Never
@@ -36,30 +38,9 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=100M count=1000  oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
-        ]
-  nodeSelector:
-    kubernetes.io/hostname: loki
----
-
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: disk-wipe-loki-sdc
-  namespace: kube-system
-spec:
-  restartPolicy: Never
-  nodeName: loki
-  containers:
-    - name: disk-wipe
-      image: ubuntu
-      securityContext:
-        privileged: true
-      command: ["/bin/sh", "-c"]
-      args:
-        [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdc; dd if=/dev/zero bs=1000M count=1000 oflag=direct,dsync of=/dev/sdc; wipefs -af /dev/sdc; blkdiscard /dev/sdc; partprobe /dev/sdc",
+          "sh",
+          "-c",
+          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*",
         ]
   nodeSelector:
     kubernetes.io/hostname: loki
@@ -67,7 +48,7 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-thor-sdb
+  name: disk-wipe-wipe-rook-thor
   namespace: kube-system
 spec:
   restartPolicy: Never
@@ -80,7 +61,9 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=1000M count=1000 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
+          "sh",
+          "-c",
+          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*",
         ]
   nodeSelector:
     kubernetes.io/hostname: thor
@@ -88,7 +71,7 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-freya-sda
+  name: disk-wipe-wipe-rook-freya
   namespace: kube-system
 spec:
   restartPolicy: Never
@@ -101,7 +84,9 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sda; dd if=/dev/zero bs=1000M count=1000000 oflag=direct,dsync of=/dev/sda; wipefs -af /dev/sda; blkdiscard /dev/sda; partprobe /dev/sda",
+          "sh",
+          "-c",
+          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*",
         ]
   nodeSelector:
     kubernetes.io/hostname: freya
