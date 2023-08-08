@@ -17,8 +17,15 @@ spec:
         [
           "sh",
           "-c",
-          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*",
+          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
         ]
+      volumeMounts:
+        - name: rook-data-dir
+          mountPath: /var/lib/rook/
+  volumes:
+    - name: rook-data-dir
+      hostPath:
+        path: /var/lib/rook/
   nodeSelector:
     kubernetes.io/hostname: odin
 ---
@@ -40,8 +47,15 @@ spec:
         [
           "sh",
           "-c",
-          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*",
+          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
         ]
+      volumeMounts:
+        - name: rook-data-dir
+          mountPath: /var/lib/rook/
+  volumes:
+    - name: rook-data-dir
+      hostPath:
+        path: /var/lib/rook/
   nodeSelector:
     kubernetes.io/hostname: loki
 ---
@@ -63,8 +77,15 @@ spec:
         [
           "sh",
           "-c",
-          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*",
+          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
         ]
+      volumeMounts:
+        - name: rook-data-dir
+          mountPath: /var/lib/rook/
+  volumes:
+    - name: rook-data-dir
+      hostPath:
+        path: /var/lib/rook/
   nodeSelector:
     kubernetes.io/hostname: thor
 ---
@@ -86,7 +107,14 @@ spec:
         [
           "sh",
           "-c",
-          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*",
+          "ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
         ]
+      volumeMounts:
+        - name: rook-data-dir
+          mountPath: /var/lib/rook/
+  volumes:
+    - name: rook-data-dir
+      hostPath:
+        path: /var/lib/rook/
   nodeSelector:
     kubernetes.io/hostname: freya
