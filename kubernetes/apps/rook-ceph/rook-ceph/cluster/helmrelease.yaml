@@ -43,62 +43,6 @@ spec:
         compression:
           enabled: true
     cephClusterSpec:
-      resources:
-        mgr:
-          limits:
-            cpu: "500m"
-            memory: "1Gi"
-          requests:
-            cpu: "500m"
-            memory: "1Gi"
-        mon:
-          limits:
-            cpu: "500m"
-            memory: "1Gi"
-          requests:
-            cpu: "500m"
-            memory: "1Gi"
-        osd:
-          limits:
-            cpu: {}
-            memory: {}
-          requests:
-            cpu: "500m"
-            memory: "1Gi"
-        prepareosd:
-          # limits: It is not recommended to set limits on the OSD prepare job since it's a one-time burst for memory
-          # that must be allowed to complete without an OOM kill
-          requests:
-            cpu: "500m"
-            memory: "50Mi"
-        mgr-sidecar:
-          limits:
-            cpu: "500m"
-            memory: "100Mi"
-          requests:
-            cpu: "100m"
-            memory: "40Mi"
-        crashcollector:
-          limits:
-            cpu: "500m"
-            memory: "60Mi"
-          requests:
-            cpu: "100m"
-            memory: "60Mi"
-        logcollector:
-          limits:
-            cpu: "500m"
-            memory: "1Gi"
-          requests:
-            cpu: "100m"
-            memory: "100Mi"
-        cleanup:
-          limits:
-            cpu: "500m"
-            memory: "1Gi"
-          requests:
-            cpu: "500m"
-            memory: "100Mi"
       crashCollector:
         disable: true
     dashboard:
