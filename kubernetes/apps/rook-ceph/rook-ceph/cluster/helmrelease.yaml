@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph-cluster
-      version: v1.11.8
+      version: v1.12.1
       sourceRef:
         kind: HelmRepository
         name: rook-ceph
@@ -133,9 +133,9 @@ spec:
         - name: "thor"
           devices:
             - name: /dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0"
-        - name: "freya"
-          devices:
-            - name: /dev/disk/by-id/usb-SanDisk_Portable_SSD_323331373747343031363231-0:0"
+        # - name: "freya"
+        #   devices:
+        #     - name: /dev/disk/by-id/usb-SanDisk_Portable_SSD_323331373747343031363231-0:0"
     cephBlockPoolsVolumeSnapshotClass:
       enabled: false
     cephBlockPools:
