@@ -78,7 +78,7 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sde; dd if=/dev/zero bs=100M count=1000  oflag=direct,dsync of=/dev/sde; wipefs -af /dev/sde; blkdiscard /dev/sde; partprobe /dev/sde",
+          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sde; dd if=/dev/zero bs=1M count=100  oflag=direct,dsync of=/dev/sde; wipefs -af /dev/sde; blkdiscard /dev/sde; partprobe /dev/sde",
         ]
   nodeSelector:
     kubernetes.io/hostname: odin

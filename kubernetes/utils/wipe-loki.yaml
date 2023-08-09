@@ -15,7 +15,7 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=100M count=100 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
+          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sdb; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=/dev/sdb; wipefs -af /dev/sdb; blkdiscard /dev/sdb; partprobe /dev/sdb",
         ]
   nodeSelector:
     kubernetes.io/hostname: loki
