@@ -3,7 +3,7 @@
 talosctl apply --insecure -n 10.0.1.7 --file clusterconfig/skovald-odin.yaml
 talosctl apply --insecure -n 10.0.1.8 --file clusterconfig/skovald-loki.yaml
 talosctl apply --insecure -n 10.0.1.9 --file clusterconfig/skovald-thor.yaml
-talosctl apply --insecure -n 10.0.1.10 --file clusterconfig/skovald-freya.yaml
+talosctl apply --insecure -n 10.0.1.149 --file clusterconfig/skovald-freya.yaml
 echo "sleeping"
 sleep 120
 echo "done sleeping"

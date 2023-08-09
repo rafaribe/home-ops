@@ -13,11 +13,11 @@ terraform {
   required_providers {
     authentik = {
       source  = "goauthentik/authentik"
-      version = "2023.5.0"
+      version = "2023.6.0"
     }
     doppler = {
       source  = "DopplerHQ/doppler"
-      version = "1.2.2"
+      version = "1.2.3"
     }
   }
 }
