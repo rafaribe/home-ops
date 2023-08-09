@@ -1,8 +1,8 @@
 clusterName: skovald
 # renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: "v1.4.6"
+talosVersion: "v1.4.7"
 # renovate: datasource=github-releases depName=siderolabs/kubelet
-kubernetesVersion: "v1.27.3"
+kubernetesVersion: "v1.27.4"
 endpoint: https://skovald.rafaribe.site:6443
 allowSchedulingOnMasters: true
 clusterPodNets:
@@ -32,7 +32,7 @@ nodes:
     disableSearchDomain: true
 
   - hostname: freya
-    ipAddress: 10.0.1.10
+    ipAddress: 10.0.1.149
     installDisk: /dev/nvme0n1
     controlPlane: false
     disableSearchDomain: true
@@ -100,6 +100,8 @@ controlPlane:
       install:
         extensions:
           - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
+      nodeLabels:
+        openebs.io/engine: mayastor
 worker:
   inlinePatch:
     cluster:
@@ -148,3 +150,5 @@ worker:
       install:
         extensions:
           - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
+      nodeLabels:
+        openebs.io/engine: mayastor
