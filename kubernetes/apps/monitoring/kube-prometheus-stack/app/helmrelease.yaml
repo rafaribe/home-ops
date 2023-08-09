@@ -270,9 +270,7 @@ spec:
           requests:
             cpu: 150m
             memory: 750Mi
-          limits:
-            memory: 1Gi
-            cpu: 750m
+          limits: {}
     prometheusOperator:
       resources:
         requests:
