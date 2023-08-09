@@ -266,13 +266,13 @@ spec:
               resources:
                 requests:
                   storage: 20Gi
-        # resources:
-        #   requests:
-        #     cpu: 150m
-        #     memory: 750Mi
-        #   limits:
-        #     memory: 750Mi
-        #     cpu: 250m
+        resources:
+          requests:
+            cpu: 150m
+            memory: 750Mi
+          limits:
+            memory: 1Gi
+            cpu: 750m
     prometheusOperator:
       resources:
         requests:
