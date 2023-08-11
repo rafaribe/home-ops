@@ -18,12 +18,16 @@ spec:
 
   values:
     initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8@sha256:0141cf427c47f2d534711a3f9e8c5f9008bc6b585463ccd9288cf0f027e20deb
+      01-init-db:
+        image: ghcr.io/onedr0p/postgres-init:14.8
         imagePullPolicy: IfNotPresent
-        envFrom:
+        envFrom: &envFrom
           - secretRef:
-              name: *app
+              name: paperless-secret
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/paperless-ngx/paperless-ngx
       tag: 1.16.5
@@ -36,11 +40,16 @@ spec:
       PAPERLESS_OCR_LANGUAGES: por eng
       PAPERLESS_OCR_LANGUAGE: por
       PAPERLESS_TIME_ZONE: Europe/Lisbon
-      PAPERLESS_REDIS: redis://paperless-redis.selfhosted.svc.cluster.local:6379
       PAPERLESS_ADMIN_USER: ${SECRET_PAPERLESS_USERNAME}
       PAPERLESS_ADMIN_PASSWORD: ${SECRET_PAPERLESS_PASSWORD}
       PAPERLESS_URL: https://paperless.${EXTERNAL_DOMAIN}
       PAPERLESS_PORT: 8000
+      PAPERLESS_REDIS: redis://localhost:6379
+      PAPERLESS_TASK_WORKERS: 2
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
+      PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
+      PAPERLESS_TRUSTED_PROXIES: 10.42.0.0/16,10.0.1.0/24,10.0.4.0/24
       USERMAP_UID: 1000
       USERMAP_GID: 1000
     data:
@@ -55,11 +64,12 @@ spec:
           - ReadWriteOnce
     postgresql:
       enabled: false
+    envFrom: *envFrom
     service:
       main:
         ports:
           http:
-            port: 8000
+            port: *port
     ingress:
       main:
         enabled: true
