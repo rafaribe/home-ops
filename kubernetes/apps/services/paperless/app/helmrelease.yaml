@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: paperless
-  namespace: selfhosted
+  namespace: services
 spec:
   interval: 30m
   chart:
@@ -17,9 +17,16 @@ spec:
         namespace: flux-system
 
   values:
+    initContainers:
+      init-db:
+        image: ghcr.io/onedr0p/postgres-initdb:14.8@sha256:0141cf427c47f2d534711a3f9e8c5f9008bc6b585463ccd9288cf0f027e20deb
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: *app
     image:
       repository: ghcr.io/paperless-ngx/paperless-ngx
-      tag: 1.9.2
+      tag: 1.16.5
     env:
       COMPOSE_PROJECT_NAME: paperless
       PAPERLESS_CONSUMER_POLLING: "60"
@@ -101,3 +108,18 @@ spec:
         memory: 2975M
       limits:
         memory: 6572M
+    sidecars:
+      redis:
+        name: redis
+        image: public.ecr.aws/docker/library/redis:7.0.12@sha256:b0bdc1a83caf43f9eb74afca0fcfd6f09bea38bb87f6add4a858f06ef4617538
+        imagePullPolicy: IfNotPresent
+      gotenburg:
+        name: gotenburg
+        image: thecodingmachine/gotenberg:7.9.1@sha256:a4bfa7a2b6d3ee95fbc8a28050d36bfe2992b10e85ec51de86f23417c6b4fbbb
+        env:
+          - name: DISABLE_GOOGLE_CHROME
+            value: "1"
+      tika:
+        image: ghcr.io/paperless-ngx/tika:2.8.0-full@sha256:a9c9c6d5c925f4ad9660e66368801e3166f309a3a2c7514cc17c4b470f239849
+        name: tika
+        imagePullPolicy: Always
