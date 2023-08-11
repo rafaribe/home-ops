@@ -130,3 +130,12 @@ module "webhook_discord" {
     doppler = doppler
   }
 }
+
+module "paperless" {
+  source       = "./project"
+  project_name = "paperless"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
