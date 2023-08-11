@@ -5,6 +5,7 @@ metadata:
   name: hajimari-config
   namespace: services
 spec:
+  storageClassName: config-nfs
   accessModes:
     - ReadWriteOnce
   resources:
