@@ -14,12 +14,14 @@ data:
   GATEWAY_MANAGEMENT: 10.0.1.1
   TZ: Europe/Lisbon
 
-  # Network
+  # NAS NFS Settings
   NAS_ADDRESS: truenas.rafaribe.site
   NAS_MEDIA: /mnt/storage-0/media
-  #
+  NAS_DOCUMENTS: /mnt/storage-0/docs
+  NAS_CONFIG: /mnt/storage-0/config
+  NAS_MINIO: /mnt/storage-0/config
 
-  #
+  #Network
   K8S_API_ADDRESS: skovald.rafaribe.site
   K8S_CLUSTER_CIDR: 10.196.0.0/16
   K8S_SERVICE_CIDR: 10.197.0.0/16
