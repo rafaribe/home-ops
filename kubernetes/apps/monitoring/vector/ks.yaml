@@ -1,4 +1,4 @@
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: monitoring-vector-aggregator
@@ -16,7 +16,7 @@ spec:
   dependsOn:
     - name: monitoring-loki-app
 # ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
 #   name: monitoring-vector-geoipupdate
@@ -32,7 +32,7 @@ spec:
 #     name: home-ops
 #   wait: true
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: monitoring-vector-agent

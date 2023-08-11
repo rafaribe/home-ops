@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/kustomization_v1beta2.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-apps
@@ -20,7 +20,7 @@ spec:
         name: cluster-secrets
   patches:
     - patch: |-
-        apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
         kind: Kustomization
         metadata:
           name: not-used
@@ -35,6 +35,12 @@ spec:
                 name: cluster-settings
               - kind: Secret
                 name: cluster-secrets
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        version: v1
+        kind: Kustomization
+        labelSelector: substitution.flux.home.arpa/disabled notin (true)
+
     - patch: |-
         apiVersion: kustomize.toolkit.fluxcd.io/v1
         kind: Kustomization
@@ -51,7 +57,6 @@ spec:
                 name: cluster-settings
               - kind: Secret
                 name: cluster-secrets
-
       target:
         group: kustomize.toolkit.fluxcd.io
         version: v1beta2

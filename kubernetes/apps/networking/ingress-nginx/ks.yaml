@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/kustomization_v1beta2.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: ingress-nginx-app
@@ -19,7 +19,7 @@ spec:
     - name: ingress-nginx-config
     - name: cilium-app
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: ingress-nginx-app-certificates
@@ -44,7 +44,7 @@ spec:
       kind: CustomResourceDefinition
       name: certificates.cert-manager.io
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: ingress-nginx-config
@@ -61,7 +61,7 @@ spec:
   retryInterval: 1m
   timeout: 3m
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: ingress-nginx-dashboards
