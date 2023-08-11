@@ -92,26 +92,26 @@ spec:
         enabled: true
         mountPath: /usr/src/paperless/data
         type: nfs
-        server: "${NAS_ADDRESS}"
-        path: ${NAS_DIR}/paperless/data
+        server: ${NAS_ADDRESS}
+        path: ${NAS_DOCUMENTS}/paperless/data
       media:
         enabled: true
         mountPath: /usr/src/paperless/media
         type: nfs
-        server: "${NAS_ADDRESS}"
-        path: ${NAS_DIR}/paperless/media
+        server: ${NAS_ADDRESS}
+        path: ${NAS_DOCUMENTS}/paperless/media
       consume:
         enabled: true
         mountPath: ${NAS_DIR}/paperless/consume
         type: nfs
-        server: "${NAS_ADDRESS}"
-        path: ${NAS_DIR}/paperless/incoming
+        server: ${NAS_ADDRESS}
+        path: ${NAS_DOCUMENTS}/paperless/incoming
       export:
         enabled: true
         mountPath: /usr/src/paperless/export
         type: nfs
-        server: "${NAS_ADDRESS}"
-        path: ${NAS_DIR}/paperless/export
+        server: ${NAS_ADDRESS}
+        path: ${NAS_DOCUMENTS}/paperless/export
     resources:
       requests:
         cpu: 23m
