@@ -114,10 +114,10 @@ spec:
         path: ${NAS_DOCUMENTS}/paperless/export
     resources:
       requests:
-        cpu: 100m
-        memory: 1000Mi
+        cpu: 23m
+        memory: 300Mi
       limits:
-        memory: 1500Mi
+        memory: 750Mi
     sidecars:
       redis:
         name: redis
