@@ -43,8 +43,6 @@ spec:
               url: "https://slack.com/signin"
         - group: Cloud
           bookmarks:
-            - name: Box
-              url: "https://box.com"
             - name: Dropbox
               url: "https://dropbox.com"
             - name: Drive
@@ -91,8 +89,6 @@ spec:
           nginx.ingress.kubernetes.io/router.entrypoints: websecure
           cert-manager.io/cluster-issuer: letsencrypt-production
           auth.home.arpa/enabled: "true"
-          external-dns.alpha.kubernetes.io/hostname: hajimari.${EXTERNAL_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
         hosts:
           - host: "hajimari.${EXTERNAL_DOMAIN}"
             paths:
