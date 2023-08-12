@@ -197,6 +197,7 @@ spec:
         cert-manager.io/cluster-issuer: letsencrypt-production
         kubernetes.io/tls-acme: "true"
         hajimari.io/enable: "true"
+        hajimari.io/icon: simple-icons:grafana
       hosts:
         - "grafana.${EXTERNAL_DOMAIN}"
       tls:

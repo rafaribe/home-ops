@@ -37,6 +37,9 @@ spec:
         enabled: true
         pathType: Prefix
         ingressClassName: nginx
+        annotations:
+          hajimari.io/appName: alertmanager
+          hajimari.io/icon: simple-icons:prometheus
         hosts:
           - &host alertmanager.${EXTERNAL_DOMAIN}
         tls:
