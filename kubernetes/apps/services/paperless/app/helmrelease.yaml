@@ -115,9 +115,9 @@ spec:
     resources:
       requests:
         cpu: 23m
-        memory: 2Gi
+        memory: 750M
       limits:
-        memory: 3Gi
+        memory: 1Gi
     sidecars:
       redis:
         name: redis
