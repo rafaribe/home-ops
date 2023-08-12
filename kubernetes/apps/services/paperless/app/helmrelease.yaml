@@ -37,6 +37,9 @@ spec:
       PAPERLESS_CONSUMER_RECURSIVE: "true"
       PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
       PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
+      PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: HTTP_REMOTE_USER
+      PAPERLESS_ALLOWED_HOSTS: https://paperless.${EXTERNAL_DOMAIN}
+      PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
       PAPERLESS_OCR_LANGUAGES: por eng
       PAPERLESS_OCR_LANGUAGE: por
       PAPERLESS_TIME_ZONE: Europe/Lisbon
@@ -52,7 +55,7 @@ spec:
       PAPERLESS_TRUSTED_PROXIES: 10.42.0.0/16,10.0.1.0/24,10.0.4.0/24
       USERMAP_UID: 1000
       USERMAP_GID: 1000
-    data:
+
       enabled: true
       size: 10Gi
       accessModes:
