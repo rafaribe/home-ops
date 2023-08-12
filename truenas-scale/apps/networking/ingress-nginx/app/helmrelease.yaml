@@ -25,10 +25,10 @@ spec:
       name: &proxiednetworks cloudflare-proxied-networks
       valuesKey: cloudflare-proxied-networks.txt
   values:
+    ## Additional TCP services
+    tcp:
+      5432: "storage/truenas-storage-rw:5432"
     controller:
-      ## Additional TCP services
-      tcp:
-        5432: "storage/truenas-storage-rw:5432"
       replicaCount: 2
       extraEnvs:
         - name: TZ
