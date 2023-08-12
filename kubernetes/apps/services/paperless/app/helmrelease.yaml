@@ -55,7 +55,7 @@ spec:
       PAPERLESS_TRUSTED_PROXIES: 10.42.0.0/16,10.0.1.0/24,10.0.4.0/24
       USERMAP_UID: 1000
       USERMAP_GID: 1000
-
+    data:
       enabled: true
       size: 10Gi
       accessModes:
