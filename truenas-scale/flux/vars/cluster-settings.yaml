@@ -26,7 +26,7 @@ data:
 
   # Home Network IP's
   LB_BLOCKY: 10.0.1.250
-  LB_NGINX_truenas: 10.0.101.1
+  LB_NGINX: 10.0.6.1
   LB_NGINX_SKOVALD: 10.0.1.245
   LB_UNIFI_truenas: 10.0.1.254
   # Other network IP's

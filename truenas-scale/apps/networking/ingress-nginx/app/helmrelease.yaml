@@ -33,7 +33,11 @@ spec:
       service:
         annotations:
           metallb.universe.tf/loadBalancerIPs: |-
-            ${LB_NGINX_truenas}
+            ${LB_NGINX}
+        ports:
+          postgres: 5432
+        targetPorts:
+          postgres: 5432
         externalTrafficPolicy: Local
       publishService:
         enabled: true
