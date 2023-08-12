@@ -30,11 +30,12 @@ spec:
 
     monitoring:
       enabled: true
-      # bluefs_buffered_io = false
+      createPrometheusRules: true
     configOverride: |
       [global]
       bdev_enable_discard = true
       bdev_async_discard = true
+      osd_class_update_on_start = false
     network:
       provider: host
       connections:
@@ -43,12 +44,17 @@ spec:
         compression:
           enabled: true
     cephClusterSpec:
+      network:
+        provider: host
+        connections:
+          compression:
+            enabled: true
       crashCollector:
-        disable: true
-    dashboard:
-      enabled: true
-      urlPrefix: /
-      ssl: false
+        disable: false
+      dashboard:
+        enabled: true
+        urlPrefix: /
+        ssl: false
     ingress:
       dashboard:
         ingressClassName: "nginx"
@@ -77,9 +83,9 @@ spec:
         - name: "thor"
           devices:
             - name: /dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0"
-        # - name: "freya"
-        #   devices:
-        #     - name: /dev/disk/by-id/usb-SanDisk_Portable_SSD_323331373747343031363231-0:0"
+        - name: "freya"
+          devices:
+            - name: /dev/disk/by-id/usb-SanDisk_Portable_SSD_323331373747343031363231-0:0"
     cephBlockPoolsVolumeSnapshotClass:
       enabled: false
     cephBlockPools:
