@@ -23,7 +23,7 @@ spec:
         imagePullPolicy: IfNotPresent
         envFrom: &envFrom
           - secretRef:
-              name: paperless-secret
+              name: paperless
     controller:
       type: statefulset
       annotations:
