@@ -1,23 +1,23 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: postgres-cluster-noon
+  name: truenas-storage-noon
   namespace: storage
 spec:
   schedule: "0 0 13 * * *"
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: postgres-cluster
+    name: truenas-storage
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: postgres-cluster-nightly
+  name: truenas-storage-nightly
   namespace: storage
 spec:
   schedule: "0 0 3 * * *"
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: postgres-cluster
+    name: truenas-storage
