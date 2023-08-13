@@ -5,4 +5,4 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ./cloudflare-operator.yaml
-  - ./local-path-privisioner.yaml
+  - ./local-path-provisioner.yaml
