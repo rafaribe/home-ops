@@ -25,3 +25,5 @@ spec:
             annotations:
               +(external-dns.alpha.kubernetes.io/target): |-
                 ${EXTERNAL_DOMAIN}
+        targets:
+          - kind: Ingress
