@@ -139,3 +139,13 @@ module "paperless" {
     doppler = doppler
   }
 }
+
+
+module "volsync" {
+  source       = "./project"
+  project_name = "volsync"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
