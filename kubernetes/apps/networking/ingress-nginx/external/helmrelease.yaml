@@ -81,13 +81,6 @@ spec:
               app.kubernetes.io/component: controller
       podAnnotations:
         configmap.reloader.stakater.com/reload: *proxiednetworks
-      resources:
-        requests:
-          cpu: 100m
-          memory: 250Mi
-        limits:
-          cpu: 200m
-          memory: 512Mi
     defaultBackend:
       enabled: true
       image:
