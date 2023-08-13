@@ -53,7 +53,7 @@ spec:
         enabled: true
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: 192.168.42.202
+          io.cilium/lb-ipam-ips: 10.0.5.2
         ports:
           bittorrent:
             enabled: true
