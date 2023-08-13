@@ -97,7 +97,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: external-nginx
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "weather-sunset"

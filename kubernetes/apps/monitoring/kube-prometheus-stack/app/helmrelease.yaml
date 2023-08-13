@@ -36,12 +36,12 @@ spec:
       ingress:
         enabled: true
         pathType: Prefix
-        ingressClassName: nginx
+        ingressClassName: internal-nginx
         annotations:
           hajimari.io/appName: alertmanager
           hajimari.io/icon: simple-icons:prometheus
         hosts:
-          - &host alertmanager.${EXTERNAL_DOMAIN}
+          - &host alertmanager.${INTERNAL_DOMAIN}
         tls:
           - hosts:
               - *host
@@ -128,7 +128,7 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: external-nginx
         annotations:
           hajimari.io/appName: "Prometheus"
           hajimari.io/icon: simple-icons:prometheus

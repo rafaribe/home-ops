@@ -74,7 +74,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "external-nginx"
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
           external-dns.alpha.kubernetes.io/hostname: paperless.${EXTERNAL_DOMAIN}
