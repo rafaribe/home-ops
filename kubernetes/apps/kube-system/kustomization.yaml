@@ -12,4 +12,4 @@ resources:
   - ./reflector/ks.yaml
   - ./reloader/ks.yaml
   - ./snapshot-controller/ks.yaml
-  - ./local-path-privisioner/ks.yaml
+  - ./local-path-provisioner/ks.yaml
