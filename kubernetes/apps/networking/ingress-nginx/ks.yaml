@@ -2,33 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: ingress-nginx-external
+  name: ingress-nginx-app
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./apps/networking/ingress-nginx/external/"
-  prune: true
-  sourceRef:
-    kind: OCIRepository
-    name: home-ops
-  interval: 30m
-  retryInterval: 1m
-  timeout: 3m
-  dependsOn:
-    - name: ingress-nginx-config
-    - name: cilium-app
----
-# yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/kustomization_v1beta2.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: ingress-nginx-internal
-  namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
-spec:
-  path: "./apps/networking/ingress-nginx/internal/"
+  path: "./apps/networking/ingress-nginx/app/"
   prune: true
   sourceRef:
     kind: OCIRepository
@@ -57,8 +36,7 @@ spec:
   retryInterval: 1m
   timeout: 3m
   dependsOn:
-    - name: ingress-nginx-internal
-    - name: ingress-nginx-external
+    - name: ingress-nginx-app
     - name: cert-manager
     - name: cert-manager-issuers
   healthChecks:
