@@ -66,7 +66,7 @@ spec:
         enabled: true
         ingressClassName: internal
         hosts:
-          - host: &host qb.devbu.io
+          - host: &host qb.${INTERNAL_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix

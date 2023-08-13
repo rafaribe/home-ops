@@ -7,7 +7,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./apps/networking/ingress-nginx/app/"
+  path: "./apps/networking/ingress-nginx/external/"
   prune: true
   sourceRef:
     kind: OCIRepository
@@ -18,6 +18,29 @@ spec:
   dependsOn:
     - name: ingress-nginx-config
     - name: cilium-app
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/kustomization_v1beta2.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ingress-nginx-app
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  path: "./apps/networking/ingress-nginx/internal/"
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: home-ops
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  dependsOn:
+    - name: ingress-nginx-config
+    - name: cilium-app
+---
+
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

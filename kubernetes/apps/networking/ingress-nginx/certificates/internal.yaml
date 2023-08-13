@@ -2,20 +2,20 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: wildcard-default-certificate
+  name: wildcard-internal-certificate
   namespace: networking
 spec:
   privateKey:
     rotationPolicy: Always
 
   dnsNames:
-    - "${EXTERNAL_DOMAIN}"
-    - "*.${EXTERNAL_DOMAIN}"
+    - "${INTERNAL_DOMAIN}"
+    - "*.${INTERNAL_DOMAIN}"
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
     name: letsencrypt-production
-  secretName: wildcard-default-certificate-tls
+  secretName: wildcard-internal-certificate-tls
   secretTemplate:
     annotations:
       networking.v1.k8s.emberstack.com/reflection-allowed: "true"
