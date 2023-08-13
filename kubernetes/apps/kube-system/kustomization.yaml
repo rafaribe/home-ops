@@ -11,4 +11,4 @@ resources:
   - ./metrics-server/ks.yaml
   - ./reflector/ks.yaml
   - ./reloader/ks.yaml
-  - ./snapshot-conmtroller/ks.yaml
+  - ./snapshot-controller/ks.yaml
