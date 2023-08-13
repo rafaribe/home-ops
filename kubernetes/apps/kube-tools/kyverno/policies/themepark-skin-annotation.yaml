@@ -37,3 +37,5 @@ spec:
                 proxy_set_header Accept-Encoding "";
                 sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://themepark.${EXTERNAL_DOMAIN}/css/base/{{ appName }}/{{ theme }}.css"></head>';
                 sub_filter_once on;
+        targets:
+          - kind: Ingress
