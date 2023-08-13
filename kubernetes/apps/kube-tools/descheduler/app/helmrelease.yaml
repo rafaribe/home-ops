@@ -28,14 +28,12 @@ spec:
     keepHistory: false
   values:
     kind: Deployment
-    deschedulingInterval: 1m
-    cmdOptions:
-      v: 3
-    tolerations:
-      - key: "arm"
-        operator: "Exists"
+    replicas: 3
+    leaderElection:
+      enabled: true
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
     deschedulerPolicy:
-      evictLocalStoragePods: true
       strategies:
         RemoveDuplicates:
           enabled: true
@@ -55,21 +53,37 @@ spec:
           params:
             nodeFit: true
         LowNodeUtilization:
-          enabled: false
+          enabled: true
+          params:
+            nodeResourceUtilizationThresholds:
+              thresholds:
+                cpu: 40
+                memory: 40
+                pods: 15
+              targetThresholds:
+                cpu: 60
+                memory: 60
+                pods: 35
         RemoveFailedPods:
           enabled: true
           params:
             failedPods:
+              # reasons:
+              #   - OutOfcpu
+              #   - CreateContainerConfigError
               includingInitContainers: true
-              excludeOwnerKinds: ["Job"]
+              excludeOwnerKinds:
+                - Job
               minPodLifetimeSeconds: 3600
         RemovePodsHavingTooManyRestarts:
           enabled: true
           params:
             podsHavingTooManyRestarts:
-              podRestartThreshold: 40
+              podRestartThreshold: 100
               includingInitContainers: true
-    service:
-      enabled: true
-    serviceMonitor:
-      enabled: true
+    resources:
+      requests:
+        cpu: 5m
+        memory: 64M
+      limits:
+        memory: 64M
