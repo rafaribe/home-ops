@@ -64,9 +64,9 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: nginx
         hosts:
-          - host: &host qb.devbu.io
+          - host: &host qb.${EXTERNAL_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix

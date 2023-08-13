@@ -68,7 +68,6 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "networking/wildcard-default-certificate-tls"
-        # I need this setup to forward traffic to the truenas cluster
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
