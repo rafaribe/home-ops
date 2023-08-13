@@ -84,7 +84,7 @@ spec:
           enabled: false
 
       extraArgs:
-        default-ssl-certificate: "networking/${INTERNAL_DOMAIN/./-}-tls"
+        default-ssl-certificate: "networking/wildcard-default-certificate-tls"
 
       topologySpreadConstraints:
         - maxSkew: 1
