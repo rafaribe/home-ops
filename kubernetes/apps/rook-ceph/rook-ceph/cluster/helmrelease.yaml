@@ -43,11 +43,6 @@ spec:
         compression:
           enabled: true
     cephClusterSpec:
-      network:
-        provider: host
-        connections:
-          compression:
-            enabled: true
       crashCollector:
         disable: true
       dashboard:
