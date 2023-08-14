@@ -36,7 +36,7 @@ spec:
         labels:
           pool: lb
         loadBalancerIP: ${LB_NGINX}
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
       publishService:
         enabled: true
       ingressClassResource:
