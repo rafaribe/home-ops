@@ -148,7 +148,7 @@ loadBalancer:
 
   # -- mode is the operation mode of load balancing for remote backends
   # e.g. snat, dsr, hybrid
-  mode: hybrid
+  mode: dsr
 
 # -- Enable Local Redirect Policy.
 localRedirectPolicy: false
