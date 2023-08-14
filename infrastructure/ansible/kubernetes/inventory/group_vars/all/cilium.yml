@@ -1,9 +1,0 @@
-cilium_namespace: kube-system
-cilium_etcd_enabled: false
-cilium_helm_show_commands: true
-cilium_cluster_cidr: 10.42.0.0/16
-cilium_cluster_id: 1
-cilium_cluster_name: skovald
-cilium_repo_name: cilium/cilium
-cilium_chart_url: "https://helm.cilium.io/"
-cilium_delegate_to: 127.0.0.1

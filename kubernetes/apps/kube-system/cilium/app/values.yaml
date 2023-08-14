@@ -122,10 +122,8 @@ ipam:
 # direct routing and the Kubernetes CIDR is included in the native routing CIDR,
 # the user must configure the routes to reach pods, either manually or by
 # setting the auto-direct-node-routes flag.
-ipv4NativeRoutingCIDR: 10.196.0.0/16
-
-# -- (string) Kubernetes service host
-k8sServiceHost: skovald.rafaribe.site
+ipv4NativeRoutingCIDR: 10.32.0.0/16
+k8sServiceHost: 10.0.1.17
 # -- (string) Kubernetes service port
 k8sServicePort: 6443
 
