@@ -41,7 +41,7 @@ spec:
           hajimari.io/appName: alertmanager
           hajimari.io/icon: simple-icons:prometheus
         hosts:
-          - &host alertmanager.${INTERNAL_DOMAIN}
+          - &host alertmanager.${EXTERNAL_DOMAIN}
         tls:
           - hosts:
               - *host
