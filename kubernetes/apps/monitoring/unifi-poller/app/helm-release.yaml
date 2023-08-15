@@ -28,7 +28,7 @@ spec:
     env:
       TZ: "${TZ}"
       UP_UNIFI_DEFAULT_ROLE: "homelab-controller"
-      UP_UNIFI_DEFAULT_URL: "https://unifi.${EXTERNAL_DOMAIN}"
+      UP_UNIFI_DEFAULT_URL: "https://10.0.1.254"
       UP_UNIFI_DEFAULT_VERIFY_SSL: false
       UP_UNIFI_DEFAULT_USER: "unifipoller"
       UP_UNIFI_DEFAULT_PASS: "unifipoller"
