@@ -24,7 +24,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgresql
       endpointURL: http://minio.storage.svc.cluster.local:9000
-      serverName: postgres-db-1
+      serverName: truenas-storage
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-minio
