@@ -74,6 +74,8 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
+        annotations:
+          hajimari.io/icon: simple-icons:gatsby
         hosts:
           - host: &host status.${EXTERNAL_DOMAIN}
             paths:
