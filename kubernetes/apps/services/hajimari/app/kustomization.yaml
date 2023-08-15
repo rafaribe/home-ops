@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./config-pvc.yaml
+  - ./gatus.yaml

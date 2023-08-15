@@ -103,7 +103,7 @@ spec:
           hajimari.io/icon: "weather-sunset"
           hajimari.io/instance: "admin"
         hosts:
-          - host: &host hajimari.${EXTERNAL_DOMAIN}
+          - host: &host apps.${EXTERNAL_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
