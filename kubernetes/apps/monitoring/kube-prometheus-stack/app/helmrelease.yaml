@@ -180,6 +180,6 @@ spec:
             etcd:
               enabled: true
     nodeExporter:
-      enabled: true
+      enabled: false
     kubeStateMetrics:
-      enabled: true
+      enabled: false
