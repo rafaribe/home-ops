@@ -9,9 +9,9 @@ metadata:
 data:
   config.yaml: |
     endpoints:
-      - name: hajimari
-        group: guarded
-        url: apps.${EXTERNAL_DOMAIN}
+      - name: apps
+        group: external
+        url: https://apps.{EXTERNAL_DOMAIN}
         interval: 1m
         client:
           dns-resolver: tcp://1.1.1.1:53

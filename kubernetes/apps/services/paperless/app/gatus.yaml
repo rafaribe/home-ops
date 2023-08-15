@@ -9,9 +9,9 @@ metadata:
 data:
   config.yaml: |
     endpoints:
-      - name: paperless
-        group: guarded
-        url: paperless.${EXTERNAL_DOMAIN}
+      - name: grafana
+        group: external
+        url: https://paperless.{EXTERNAL_DOMAIN}
         interval: 1m
         client:
           dns-resolver: tcp://1.1.1.1:53
