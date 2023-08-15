@@ -22,11 +22,5 @@ spec:
     remediation:
       retries: 5
   values:
-    kubeletDir: /var/lib/kubelet
-    controller:
-      replicas: 3
-      runOnControlPlane: true
     externalSnapshotter:
       enabled: false
-    node:
-      tolerations: []
