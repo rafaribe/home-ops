@@ -140,6 +140,15 @@ module "paperless" {
   }
 }
 
+module "gatus" {
+  source       = "./project"
+  project_name = "gatus"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+
 
 module "volsync" {
   source       = "./project"
