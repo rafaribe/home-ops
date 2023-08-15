@@ -46,9 +46,9 @@ spec:
       crashCollector:
         disable: false
       dashboard:
-        enabled: false
-        # urlPrefix: /
-        # ssl: false
+        enabled: true
+        urlPrefix: /
+        ssl: false
     ingress:
       dashboard:
         ingressClassName: "nginx"
