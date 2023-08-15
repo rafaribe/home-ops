@@ -44,11 +44,11 @@ spec:
           enabled: true
     cephClusterSpec:
       crashCollector:
-        disable: true
+        disable: false
       dashboard:
-        enabled: true
-        urlPrefix: /
-        ssl: false
+        enabled: false
+        # urlPrefix: /
+        # ssl: false
     ingress:
       dashboard:
         ingressClassName: "nginx"
