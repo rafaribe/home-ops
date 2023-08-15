@@ -11,12 +11,11 @@ data:
     endpoints:
       - name: paperless
         group: guarded
-        url: 1.1.1.1
+        url: paperless.${EXTERNAL_DOMAIN}
         interval: 1m
         dns:
-          query-name: paperless.${EXTERNAL_DOMAIN}
-          query-type: A
+          dns-resolver: "tcp://1.1.1.1:53"
         conditions:
-          - "len([BODY]) == 0"
+          - "[STATUS] == 200"
         alerts:
           - type: pushover
