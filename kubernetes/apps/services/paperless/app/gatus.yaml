@@ -9,7 +9,7 @@ metadata:
 data:
   config.yaml: |
     endpoints:
-      - name: grafana
+      - name: paperless
         group: external
         url: https://paperless.rafaribe.com
         interval: 1m
