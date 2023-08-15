@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   values:
     env:
-      TZ: America/New_York
+      TZ: ${TZ}
     hajimari:
       title: Apps
       darkTheme: espresso
@@ -39,14 +39,14 @@ spec:
       showGlobalBookmarks: true
       showAppUrls: false
       defaultEnable: true
-      namespaceSelector:
-        matchNames:
-          - services
-          - default
-          - flux-system
-          - monitoring
-          - networking
-          - rook-ceph
+        namespaceSelector:
+          matchNames:
+            - services
+            - default
+            - flux-system
+            - monitoring
+            - networking
+            - rook-ceph
       globalBookmarks:
         - group: Communicate
           bookmarks:

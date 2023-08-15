@@ -57,7 +57,7 @@ spec:
           hajimari.io/appName: "Rook"
           hajimari.io/icon: mdi:chess-rook
         host:
-          name: &host "rook.${INTERNAL_DOMAIN}"
+          name: &host "rook.${EXTERNAL_DOMAIN}"
           path: "/"
         tls:
           - hosts:
