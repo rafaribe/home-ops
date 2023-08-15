@@ -6,12 +6,12 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./grafana/ks.yaml
-  # - ./jaeger-operator/ks.yaml
-  - ./kube-prometheus-stack/ks.yaml
-  - ./loki/ks.yaml
-  - ./opentelemetry/ks.yaml
-  - ./tempo/ks.yaml
-  - ./thanos/ks.yaml
-  - ./unifi-poller/ks.yaml
-  - ./vector/ks.yaml
+  # - ./grafana/ks.yaml
+  # # - ./jaeger-operator/ks.yaml
+  # - ./kube-prometheus-stack/ks.yaml
+  # - ./loki/ks.yaml
+  # - ./opentelemetry/ks.yaml
+  # - ./tempo/ks.yaml
+  # - ./thanos/ks.yaml
+  # - ./unifi-poller/ks.yaml
+  # - ./vector/ks.yaml

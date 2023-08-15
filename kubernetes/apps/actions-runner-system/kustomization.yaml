@@ -4,4 +4,4 @@ namespace: flux-system
 
 resources:
   - ./namespace.yaml
-  - ./actions-runner-controller/ks.yaml
+  # - ./actions-runner-controller/ks.yaml
