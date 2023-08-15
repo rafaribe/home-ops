@@ -3,7 +3,7 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ClusterSecretStore
 metadata:
-  name: &name fireflyiii-restic
+  name: &name qbittorrent-restic
   namespace: services
 spec:
   provider:
