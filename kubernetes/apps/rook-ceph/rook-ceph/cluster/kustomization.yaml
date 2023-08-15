@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./dashboards
-  - ./external-secret.yaml
+  - ./externalsecret.yaml
