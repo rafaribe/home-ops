@@ -11,7 +11,7 @@ data:
     endpoints:
       - name: apps
         group: external
-        url: https://apps.{EXTERNAL_DOMAIN}
+        url: https://apps.rafaribe.com
         interval: 1m
         client:
           dns-resolver: tcp://1.1.1.1:53
