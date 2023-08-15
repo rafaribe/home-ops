@@ -55,7 +55,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-hostpath
+              storageClassName: local-path
               resources:
                 requests:
                   storage: 50Mi
