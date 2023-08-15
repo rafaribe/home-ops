@@ -73,7 +73,7 @@ spec:
             - name: "/dev/disk/by-id/usb-SanDisk_Portable_SSD_32333231454C343030363335-0:0"
         - name: "loki"
           devices:
-            - name: "/dev/disk/by-id/usb-Realtek_RTL9210_NVME_012345678904-0:0"
+            - name: "/dev/disk/by-id/usb-Samsung_PSSD_T7_S6XDNS0W566278X-0:0"
         - name: "thor"
           devices:
             - name: /dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0"
