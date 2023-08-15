@@ -158,3 +158,13 @@ module "volsync" {
     doppler = doppler
   }
 }
+
+
+module "rook-ceph" {
+  source       = "./project"
+  project_name = "rook-ceph"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
