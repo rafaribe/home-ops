@@ -10,7 +10,7 @@ data:
   config.yaml: |
     endpoints:
       - name: paperless
-        group: external
+        group: services
         url: https://paperless.rafaribe.com
         interval: 1m
         client:

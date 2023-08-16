@@ -10,7 +10,7 @@ data:
   config.yaml: |
     endpoints:
       - name: prometheus
-        group: external
+        group: services
         url: https://prometheus.rafaribe.com
         interval: 1m
         client:
@@ -20,7 +20,7 @@ data:
         alerts:
           - type: pushover
       - name: alertmanager
-        group: external
+        group: services
         url: https://alertmanager.rafaribe.com
         interval: 1m
         client:

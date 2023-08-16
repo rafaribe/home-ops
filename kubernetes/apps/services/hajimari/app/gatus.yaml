@@ -10,7 +10,7 @@ data:
   config.yaml: |
     endpoints:
       - name: apps
-        group: external
+        group: services
         url: https://apps.rafaribe.com
         interval: 1m
         client:
