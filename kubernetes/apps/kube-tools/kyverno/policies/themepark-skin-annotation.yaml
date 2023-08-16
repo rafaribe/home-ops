@@ -38,4 +38,5 @@ spec:
                 sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://themepark.${EXTERNAL_DOMAIN}/css/base/{{ appName }}/{{ theme }}.css"></head>';
                 sub_filter_once on;
         targets:
-          - kind: Ingress
+          - apiVersion: networking.k8s.io/v1
+            kind: Ingress

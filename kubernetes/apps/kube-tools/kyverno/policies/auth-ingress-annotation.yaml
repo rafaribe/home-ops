@@ -8,7 +8,7 @@ metadata:
     policies.kyverno.io/description: >-
       This policy creates auth annotations on ingresses. When
       the `auth.home.arpa/enabled` annotation is `true` it
-      applies the nginx auth annotations for use with Authentik that sits on the other cluster
+      applies the nginx auth annotations for use with Authentik.
 spec:
   mutateExistingOnPolicyUpdate: true
   generateExistingOnPolicyUpdate: true
@@ -38,4 +38,5 @@ spec:
               +(nginx.ingress.kubernetes.io/auth-snippet): |
                 proxy_set_header X-Forwarded-Host $http_host;
         targets:
-          - kind: Ingress
+          - apiVersion: networking.k8s.io/v1
+            kind: Ingress
