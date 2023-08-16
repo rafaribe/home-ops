@@ -32,7 +32,7 @@ metadata:
   name: truenas-storage-test
   namespace: storage
 spec:
-  schedule: "0 15 22 * * *"
+  schedule: "0 22 00 * * *"
   immediate: true
   backupOwnerReference: self
   cluster:
