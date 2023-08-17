@@ -5,6 +5,7 @@ kind: Kustomization
 metadata:
   name: services-theme-park
   namespace: flux-system
+spec:
   path: ./apps/services/theme-park/app
   prune: true
   sourceRef:
