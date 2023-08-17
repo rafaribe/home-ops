@@ -5,7 +5,7 @@ kind: Kustomization
 metadata:
   name: services-theme-park
   namespace: flux-system
-  path: ./apps/web-tools/theme-park/app
+  path: ./apps/services/theme-park/app
   prune: true
   sourceRef:
     kind: OCIRepository
