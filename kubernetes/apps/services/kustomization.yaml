@@ -8,3 +8,4 @@ resources:
   # Flux-Kustomizations
   - ./hajimari/ks.yaml
   - ./paperless/ks.yaml
+  - ./theme-park/ks.yaml
