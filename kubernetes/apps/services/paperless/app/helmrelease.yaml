@@ -78,7 +78,7 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
           external-dns.alpha.kubernetes.io/hostname: paperless.${EXTERNAL_DOMAIN}
-          hajimari.io/icon: mdi:file-multiple
+          hajimari.io/icon: mdi:barcode-scan
         hosts:
           - host: &host "paperless.${EXTERNAL_DOMAIN}"
             paths:
