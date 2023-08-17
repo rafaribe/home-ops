@@ -1,0 +1,73 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app theme-park
+  namespace: web-tools
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    env:
+      TP_COMMUNITY_THEME: "true"
+    controller:
+      replicas: 1
+      strategy: RollingUpdate
+    image:
+      repository: ghcr.io/onedr0p/theme-park
+      tag: 1.13.10@sha256:018ac59777fce3c04d4d4c133a65afcfed8c8e1732c39d6c4e07595d88b50d37
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.home.arpa/enabled: "true"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "mdi:paint-outline"
+        hosts:
+          - host: &host "themepark.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
+    resources:
+      requests:
+        cpu: 5m
+        memory: 10Mi
+      limits:
+        memory: 50Mi
+    persistence:
+      catppuccin-themes:
+        enabled: true
+        type: configMap
+        name: theme-park-catppuccin-config
+        mountPath: /usr/share/nginx/html/css/theme-options/catppuccin-macchiato.css
+        subPath: catppuccin-macchiato.css
