@@ -10,7 +10,11 @@ metadata:
   sourceRef:
     kind: OCIRepository
     name: home-ops
-  wait: false
   interval: 30m
   retryInterval: 1m
-  timeout: 5m
+  timeout: 3m
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: theme-park
+      namespace: services
