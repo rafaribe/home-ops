@@ -3,13 +3,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: arc-smp
+  name: arc-home-ops
   namespace: actions-runner-system
 spec:
   interval: 30m
   chart:
     spec:
-      chart: arc-runner-set-home-ops
+      chart: gha-runner-scale-set
       version: 0.4.0
       sourceRef:
         kind: HelmRepository
@@ -27,7 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    runnerScaleSetName: arc-runner-set-smp
+    runnerScaleSetName: arc-runner-set-home-ops
     githubConfigUrl: https://github.com/rafaribe/home-ops
     minRunners: 1
     maxRunners: 3
