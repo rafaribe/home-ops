@@ -38,7 +38,31 @@ spec:
         containers:
           - name: runner
             image: ghcr.io/onedr0p/github-actions-runner:rolling@sha256:b595cf0735825bfb5f2da427da993b128b64f10cd3d8e5631a0e67546155f1eb
+            volumeMounts:
+              - mountPath: /runner/_work
+                name: work
+          - name: docker
+            volumeMounts:
+              - mountPath: /runner/_work
+                name: work
+          - name: dind
+            volumeMounts:
+              - mountPath: /runner/_work
+                name: work
+              - name: docker
+                volumeMounts:
+                  - mountPath: /runner/_work
+                    name: work
         volumes:
+          - name: work
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "ceph-block"
+                  resources:
+                    requests:
+                      storage: 25Gi
   valuesFrom:
     - kind: Secret
       name: actions-runner-controller-auth-secret
