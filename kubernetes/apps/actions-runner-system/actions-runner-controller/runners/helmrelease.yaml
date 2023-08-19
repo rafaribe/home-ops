@@ -46,6 +46,7 @@ spec:
               - mountPath: /runner/_work
                 name: work
           - name: dind
+            image: docker:dind
             volumeMounts:
               - mountPath: /runner/_work
                 name: work
