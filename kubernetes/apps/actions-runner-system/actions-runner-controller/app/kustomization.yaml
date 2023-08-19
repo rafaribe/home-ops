@@ -4,4 +4,4 @@ namespace: actions-runner-system
 
 resources:
   - ./helmrelease.yaml
-  - ./authentication-token.yaml
+  - ./externalsecret.yaml
