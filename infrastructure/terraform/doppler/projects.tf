@@ -168,3 +168,12 @@ module "rook-ceph" {
     doppler = doppler
   }
 }
+
+module "actions-runner-controller" {
+  source       = "./project"
+  project_name = "actions-runner-controller"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
