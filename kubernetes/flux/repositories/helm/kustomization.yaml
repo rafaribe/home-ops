@@ -22,6 +22,7 @@ resources:
   - ./hajimari.yaml
   - ./infracloudio.yaml
   - ./ingress-nginx.yaml
+  - ./intel.yaml
   - ./jaeger.yaml
   - ./jetstack.yaml
   - ./longhorn.yaml

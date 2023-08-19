@@ -13,3 +13,4 @@ resources:
   - ./reloader/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./local-path-provisioner/ks.yaml
+  - ./intel-device-plugin/ks.yaml
