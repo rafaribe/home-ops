@@ -14,3 +14,4 @@ resources:
   - ./snapshot-controller/ks.yaml
   - ./local-path-provisioner/ks.yaml
   - ./intel-device-plugin/ks.yaml
+  - ./node-feature-discovery/ks.yaml
