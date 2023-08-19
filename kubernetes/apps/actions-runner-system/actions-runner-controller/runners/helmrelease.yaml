@@ -41,19 +41,11 @@ spec:
             volumeMounts:
               - mountPath: /runner/_work
                 name: work
-          - name: docker
-            volumeMounts:
-              - mountPath: /runner/_work
-                name: work
           - name: dind
             image: docker:dind
             volumeMounts:
               - mountPath: /runner/_work
                 name: work
-              - name: docker
-                volumeMounts:
-                  - mountPath: /runner/_work
-                    name: work
         volumes:
           - name: work
             ephemeral:
