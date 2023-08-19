@@ -20,7 +20,7 @@ env:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: ["arc-runner-set-home-ops"]
     env:
       COSIGN_EXPERIMENTAL: "true"
       COSIGN_YES: "true"
