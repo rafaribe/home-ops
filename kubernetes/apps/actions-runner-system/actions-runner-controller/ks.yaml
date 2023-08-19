@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.raspbernetes.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -17,11 +17,8 @@ spec:
   sourceRef:
     kind: OCIRepository
     name: home-ops
-  dependsOn:
-    - name: cert-manager
-      namespace: flux-system
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.raspbernetes.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -33,7 +30,7 @@ spec:
   timeout: 3m
   path: "./apps/actions-runner-system/actions-runner-controller/runners"
   prune: true
-  wait: true
+  wait: false
   sourceRef:
     kind: OCIRepository
     name: home-ops
