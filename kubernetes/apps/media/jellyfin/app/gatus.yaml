@@ -13,12 +13,12 @@ data:
         group: services
         url: https://jellyfin.rafaribe.com
         interval: 1m
-        ui:
-          hide-hostname: true
-          hide-url: true
         client:
           dns-resolver: tcp://1.1.1.1:53
         conditions:
           - "[STATUS] == 200"
         alerts:
           - type: pushover
+        ui:
+          hide-hostname: true
+          hide-url: true
