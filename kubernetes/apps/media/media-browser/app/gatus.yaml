@@ -10,16 +10,15 @@ data:
   config.yaml: |
     endpoints:
       - name: media-browser
-        group: guarded
-        url: 1.1.1.1
+        group: services
+        url: media-browser.rafaribe.com
         interval: 1m
         ui:
           hide-hostname: true
           hide-url: true
-        dns:
-          query-name: media-browser.devbu.io
-          query-type: A
+        client:
+          dns-resolver: tcp://1.1.1.1:53
         conditions:
-          - "len([BODY]) == 0"
+          - "[STATUS] == 200"
         alerts:
           - type: pushover

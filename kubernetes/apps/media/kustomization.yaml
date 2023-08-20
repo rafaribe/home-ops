@@ -6,3 +6,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./jellyfin/ks.yaml
+  - ./media-browser.yaml
