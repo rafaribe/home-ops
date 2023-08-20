@@ -6,7 +6,7 @@ metadata:
   name: media-jellyfin
   namespace: flux-system
 spec:
-  path: ./apps/default/jellyfin/app
+  path: ./apps/media/jellyfin/app
   prune: true
   sourceRef:
     kind: OCIRepository
