@@ -7,3 +7,4 @@ resources:
   # Flux-Kustomizations
   - ./jellyfin/ks.yaml
   - ./media-browser/ks.yaml
+  - ./overseerr/ks.yaml
