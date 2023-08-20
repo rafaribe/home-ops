@@ -4,7 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: plex-auto-languages
-  namespace: default
+  namespace: media
 spec:
   interval: 30m
   chart:
@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   dependsOn:
     - name: plex
-      namespace: default
+      namespace: media
   values:
     controller:
       annotations:
