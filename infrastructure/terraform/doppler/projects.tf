@@ -177,3 +177,12 @@ module "actions-runner-controller" {
     doppler = doppler
   }
 }
+
+module "media-apps" {
+  source       = "./project"
+  project_name = "media-apps"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
