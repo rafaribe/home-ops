@@ -38,6 +38,7 @@ resources:
   - ./metallb.yaml
   - ./node-feature-discovery.yaml
   - ./nfs-provisioner.yaml
+  - ./nvidia.yaml
   - ./openebs.yaml
   - ./openebs-cstor-chart.yaml
   - ./openebs-jiva-chart.yaml
