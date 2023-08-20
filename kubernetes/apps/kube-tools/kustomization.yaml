@@ -8,4 +8,4 @@ resources:
   # Flux-Kustomizations
   - ./kyverno/ks.yaml
   - ./descheduler/ks.yaml
-  - ./k8stz/ks.yaml
+  - ./k8tz/ks.yaml
