@@ -33,6 +33,7 @@ resources:
   - ./kubernetes-sigs-metrics-server.yaml
   - ./kubernetes-sigs-nfd.yaml
   - ./kyverno.yaml
+  - ./k8stz.yaml
   - ./lwolf.yaml
   - ./mayastor-chart.yaml
   - ./metallb.yaml
