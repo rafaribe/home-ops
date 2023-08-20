@@ -3,12 +3,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: media--sonarr
+  name: media-sonarr
   namespace: flux-system
 spec:
   dependsOn:
-    - name: media--cloudnative-pg-cluster
-    - name: media--external-secrets-stores
+    - name: media-cloudnative-pg-cluster
+    - name: media-external-secrets-stores
   path: ./apps/media/sonarr/app
   prune: true
   sourceRef:

@@ -3,11 +3,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: media--plex
+  name: media-plex
   namespace: flux-system
 spec:
   dependsOn:
-    - name: media--external-secrets-stores
+    - name: media-external-secrets-stores
   path: ./apps/media/plex/app
   prune: true
   sourceRef:
@@ -22,11 +22,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: media--plex-auto-languages
+  name: media-plex-auto-languages
   namespace: flux-system
 spec:
   dependsOn:
-    - name: media--external-secrets-stores
+    - name: media-external-secrets-stores
   path: ./apps/media/plex/auto-languages
   prune: true
   sourceRef:
@@ -41,11 +41,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: media--plex-off-deck
+  name: media-plex-off-deck
   namespace: flux-system
 spec:
   dependsOn:
-    - name: media--external-secrets-stores
+    - name: media-external-secrets-stores
   path: ./apps/media/plex/off-deck
   prune: true
   sourceRef:
