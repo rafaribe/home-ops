@@ -13,6 +13,9 @@ data:
         group: services
         url: https://prometheus.rafaribe.com
         interval: 1m
+        ui:
+          hide-hostname: true
+          hide-url: true
         client:
           dns-resolver: tcp://1.1.1.1:53
         conditions:
@@ -23,6 +26,9 @@ data:
         group: services
         url: https://alertmanager.rafaribe.com
         interval: 1m
+        ui:
+          hide-hostname: true
+          hide-url: true
         client:
           dns-resolver: tcp://1.1.1.1:53
         conditions:

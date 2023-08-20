@@ -5,3 +5,4 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./jellyfin/ks.yaml

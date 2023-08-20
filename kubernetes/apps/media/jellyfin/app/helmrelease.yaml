@@ -3,8 +3,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: qbittorrent
-  namespace: downloads
+  name: jellyfin
+  namespace: default
 spec:
   interval: 30m
   chart:
@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
+    - name: intel-device-plugin-gpu
+      namespace: kube-system
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
@@ -33,42 +35,50 @@ spec:
   values:
     controller:
       type: statefulset
-      annotations:
-        configmap.reloader.stakater.com/reload: qbittorrent-scripts
     image:
-      repository: ghcr.io/onedr0p/qbittorrent
-      tag: 4.5.4@sha256:f0a74313d750bc437ba2ad34f3412de5ab9a978f3f5b74227a1bda69271fef3e
+      repository: ghcr.io/onedr0p/jellyfin
+      tag: 10.8.10@sha256:1ef614db6a4c589777eb48bc9004d573b9c09f0d6d573a509041c6060f3a956b
     env:
-      TZ: ${TZ}
-      QBITTORRENT__PORT: &port 80
-      QBITTORRENT__BT_PORT: &bittorrentPort 50413
+      DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
+      JELLYFIN_FFmpeg__probesize: 50000000
+      JELLYFIN_FFmpeg__analyzeduration: 50000000
+      JELLYFIN_PublishedServerUrl: &loadBalancerIP ${LB_JELLYFIN}
+      TZ: Europe/Lisbon
     service:
       main:
-        ports:
-          http:
-            port: *port
-          cross-seed:
-            port: 2468
-      bittorrent:
-        enabled: true
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${LB_QBITTORRENT}
+          io.cilium/lb-ipam-ips: *loadBalancerIP
         labels:
           pool: lb
+        externalTrafficPolicy: Cluster
         ports:
-          bittorrent:
-            enabled: true
-            port: *bittorrentPort
-            protocol: TCP
-            targetPort: *bittorrentPort
-        externalTrafficPolicy: Local
+          http:
+            port: &port 8096
+    # serviceMonitor:
+    #   main:
+    #     enabled: true
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /health
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
     ingress:
       main:
         enabled: true
         ingressClassName: nginx
         hosts:
-          - host: &host qb.${EXTERNAL_DOMAIN}
+          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -80,36 +90,31 @@ spec:
       runAsGroup: 1000
       fsGroup: 1000
       fsGroupChangePolicy: OnRootMismatch
-      supplementalGroups: [10000]
+      supplementalGroups: [44, 105, 10000]
     volumeClaimTemplates:
       - name: config
         mountPath: /config
         accessMode: ReadWriteOnce
-        size: 1Gi
+        size: 50Gi
         storageClass: ceph-block
-    # Note: If downloading very large torrents it might be worth using NFS for your download directory.
-    # Beware if you are downloading torrents directly to a ZFS dataset that dataset will accrue fragmentation.
     persistence:
       media:
         enabled: true
         type: nfs
-        server: ${NAS_ADDRESS}
-        path: ${NAS_MEDIA}
+        server: truenas.rafaribe.site
+        path: /mnt/storage-0/media
         mountPath: /media
-      incomplete:
+        readOnly: true
+      transcode:
         enabled: true
         type: emptyDir
-      completed-script:
-        enabled: true
-        type: configMap
-        name: qbittorrent-scripts
-        mountPath: /scripts/completed.sh
-        subPath: completed.sh
-        defaultMode: 0775
-        readOnly: true
+    nodeSelector:
+      intel.feature.node.kubernetes.io/gpu: "true"
     resources:
       requests:
-        cpu: 10m
-        memory: 250Mi
+        gpu.intel.com/i915: 1
+        cpu: 100m
+        memory: 1000Mi
       limits:
-        memory: 16Gi
+        gpu.intel.com/i915: 1
+        memory: 4000Mi
