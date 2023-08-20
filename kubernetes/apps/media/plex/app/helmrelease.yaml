@@ -49,9 +49,6 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
           - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
             paths:
@@ -85,15 +82,6 @@ spec:
         type: emptyDir
     nodeSelector:
       intel.feature.node.kubernetes.io/gpu: "true"
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app.kubernetes.io/name
-                  operator: In
-                  values: ["frigate"]
-            topologyKey: kubernetes.io/hostname
     resources:
       requests:
         gpu.intel.com/i915: 1

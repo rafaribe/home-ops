@@ -178,9 +178,52 @@ module "actions-runner-controller" {
   }
 }
 
-module "media-apps" {
+module "plex" {
   source       = "./project"
-  project_name = "media-apps"
+  project_name = "plex"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+module "prowlarr" {
+  source       = "./project"
+  project_name = "prowlarr"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+module "radarr" {
+  source       = "./project"
+  project_name = "radarr"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+
+
+module "recyclarr" {
+  source       = "./project"
+  project_name = "recyclarr"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+
+module "sonarr" {
+  source       = "./project"
+  project_name = "sonarr"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+module "unpackerr" {
+  source       = "./project"
+  project_name = "unpackerr"
   environments = ["prod"]
   providers = {
     doppler = doppler
