@@ -32,7 +32,7 @@ spec:
         imagePullPolicy: IfNotPresent
         envFrom: &envFrom
           - secretRef:
-              name: prowlarr-secret
+              name: prowlarr
     controller:
       annotations:
         reloader.stakater.com/auto: "true"
