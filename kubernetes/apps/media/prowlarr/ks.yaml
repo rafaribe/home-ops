@@ -6,8 +6,6 @@ metadata:
   name: media-prowlarr
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: media-external-secrets-stores
   path: ./apps/media/prowlarr/app
   prune: true
   sourceRef:
