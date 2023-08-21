@@ -9,3 +9,4 @@ resources:
   - ./media-browser/ks.yaml
   - ./overseerr/ks.yaml
   - ./prowlarr/ks.yaml
+  - ./radarr/ks.yaml

@@ -6,9 +6,6 @@ metadata:
   name: media-radarr
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: media-cloudnative-pg-cluster
-    - name: media-external-secrets-stores
   path: ./apps/media/radarr/app
   prune: true
   sourceRef:

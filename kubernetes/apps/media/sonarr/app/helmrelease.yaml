@@ -95,8 +95,8 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: expanse.turbo.ac
-        path: /eros/Media
+        server: truenas.rafaribe.site
+        path: /mnt/storage-0/media
         mountPath: /media
       scripts:
         enabled: true
