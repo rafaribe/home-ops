@@ -76,6 +76,8 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
+        annotations:
+          hajimari.io/icon: mdi:filmstrip
         hosts:
           - host: *host
             paths:
@@ -89,7 +91,6 @@ spec:
       runAsGroup: 1000
       fsGroup: 1000
       fsGroupChangePolicy: OnRootMismatch
-      supplementalGroups: [10000]
     persistence:
       config:
         enabled: true
