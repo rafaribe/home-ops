@@ -10,16 +10,15 @@ data:
   config.yaml: |
     endpoints:
       - name: sonarr
-        group: guarded
-        url: 1.1.1.1
+        group: services
+        url: https://sonarr.rafaribe.com
         interval: 1m
         ui:
           hide-hostname: true
           hide-url: true
-        dns:
-          query-name: sonarr.rafaribe.com
-          query-type: A
+        client:
+          dns-resolver: tcp://1.1.1.1:53
         conditions:
-          - "len([BODY]) == 0"
+          - "[STATUS] == 200"
         alerts:
           - type: pushover
