@@ -28,7 +28,6 @@ jobs:
               join(
                 fromJSON('
                   [
-                    "ACTION_ACTIONLINT",
                     "ANSIBLE_ANSIBLE_LINT",,
                     "CREDENTIALS_SECRETLINT",
                     "GIT_GIT_DIFF",
