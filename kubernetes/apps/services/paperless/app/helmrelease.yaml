@@ -53,11 +53,6 @@ spec:
       PAPERLESS_TRUSTED_PROXIES: 10.42.0.0/16,10.0.1.0/24,10.0.4.0/24
       USERMAP_UID: 1000
       USERMAP_GID: 1000
-      # podSecurityContext:
-      #   runAsUser: 0
-      #   runAsGroup: 0
-      #   fsGroup: 0
-      #   runAsRoot: true
       supplementalGroups: [1000]
     postgresql:
       enabled: false
