@@ -51,13 +51,13 @@ spec:
       PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
       PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
       PAPERLESS_TRUSTED_PROXIES: 10.42.0.0/16,10.0.1.0/24,10.0.4.0/24
-      USERMAP_UID: 1000
-      USERMAP_GID: 1000
+      USERMAP_UID: 0
+      USERMAP_GID: 0
     podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: OnRootMismatch
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
+      runAsRoot: true
       supplementalGroups: [1000]
     postgresql:
       enabled: false
