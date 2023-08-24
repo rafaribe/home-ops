@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: hajimari-gatus-ep
-  namespace: services
+  name: grafana-gatus-ep
+  namespace: monitoring
   labels:
     gatus.io/enabled: "true"
 data:
