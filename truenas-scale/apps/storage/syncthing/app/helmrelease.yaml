@@ -47,7 +47,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: nginx
         hosts:
           - host: &host "syncthing.${EXTERNAL_DOMAIN}"
             paths:
