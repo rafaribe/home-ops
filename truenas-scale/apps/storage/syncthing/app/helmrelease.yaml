@@ -61,9 +61,8 @@ spec:
     persistence:
       config:
         enabled: true
-        type: hostPath
-        hostPath: /tank/syncthing
-        mountPath: /var/syncthing
+        existingClaim: syncthing
+        mountPath: /data
     resources:
       requests:
         cpu: 15m
