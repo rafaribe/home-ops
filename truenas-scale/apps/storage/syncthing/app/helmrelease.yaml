@@ -1,0 +1,75 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app syncthing
+  namespace: storage
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    global:
+      nameOverride: *app
+    image:
+      repository: syncthing/syncthing
+      tag: 1.23.7@sha256:fbb4ad79ff0da9dbc76856aff6d1ef86eb91481f20da9a46da049699f91c22de
+    service:
+      main:
+        ports:
+          http:
+            port: 8384
+      listdisc:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          discovery:
+            enabled: true
+            port: 21027
+            protocol: UDP
+          listen:
+            enabled: true
+            port: 22000
+            protocol: TCP
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: &host "syncthing.{INTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+
+    podSecurityContext:
+      runAsUser: 0
+      privileged: true
+
+    persistence:
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /tank/syncthing
+        mountPath: /var/syncthing
+    resources:
+      requests:
+        cpu: 15m
+        memory: 249Mi
+      limits:
+        memory: 1565Mi
+    env:
+      PUID: "568"
+      PGID: "1000"

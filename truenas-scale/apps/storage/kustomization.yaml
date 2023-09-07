@@ -9,3 +9,4 @@ resources:
   - ./openebs/ks.yaml
   - ./minio/ks.yaml
   - ./cloudnative-pg-operator/ks.yaml
+  - ./syncthing/ks.yaml
