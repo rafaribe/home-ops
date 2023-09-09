@@ -6,6 +6,7 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./cyberchef/ks.yaml
   - ./hajimari/ks.yaml
   - ./paperless/ks.yaml
   - ./theme-park/ks.yaml
