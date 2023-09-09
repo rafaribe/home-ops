@@ -59,7 +59,7 @@ spec:
           forecastle.stakater.com/expose: "true"
           forecastle.stakater.com/icon: podcast
         hosts:
-          - host: &host audiobookshelf.${PUBLIC_DOMAIN}
+          - host: &host audiobookshelf.${EXTERNAL_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
