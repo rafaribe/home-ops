@@ -5,6 +5,7 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./audiobookshelf/ks.yaml
   - ./jellyfin/ks.yaml
   - ./media-browser/ks.yaml
   - ./overseerr/ks.yaml
