@@ -6,6 +6,8 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./audiobookshelf/ks.yaml
+  - ./calibre/ks.yaml
+  - ./calibre-web/ks.yaml
   - ./jellyfin/ks.yaml
   - ./media-browser/ks.yaml
   - ./overseerr/ks.yaml

@@ -1,0 +1,85 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: calibre-web
+  namespace: media
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 0.2.2
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  interval: 15m
+  values:
+    initContainers:
+      update-volume-permission:
+        image: busybox@sha256:ad9bd57a3a57cc95515c537b89aaa69d83a6df54c4050fcf2b41ad367bec0cd5
+        command: ["sh", "-c", "chown -R 1000:1000 /config"]
+        volumeMounts:
+          - name: config
+            mountPath: /config
+        securityContext:
+          runAsUser: 0
+    image:
+      repository: ghcr.io/linuxserver/calibre-web
+      tag: 0.6.19
+    env:
+      TZ: "${TZ}"
+      PUID: 1000
+      PGID: 1000
+      DOCKER_MODS: "linuxserver/mods:universal-calibre"
+    service:
+      main:
+        ports:
+          http:
+            port: 8083
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        labels:
+          theme-park.home/name: calibreweb
+          theme-park.home/theme: maroon
+        annotations:
+          cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "book-open-page-variant"
+          external-dns.alpha.kubernetes.io/hostname: calibre-web.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+          theme.home.arpa/enabled: "true"
+        hosts:
+          - host: &host calibre-web.${EXTERNAL_DOMAIN}
+            paths:
+              - path: /
+        tls:
+          - secretName: calibre-web-tls
+            hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: calibre-web-config-v1
+      media:
+        enabled: true
+        type: nfs
+        server: truenas.rafaribe.site
+        path: /mnt/storage-0/media/books
+        mountPath: /media
+    resources:
+      requests:
+        cpu: 15m
+        memory: 249M
+      limits:
+        memory: 299M
+    probes:
+      startup:
+        enabled: false
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
