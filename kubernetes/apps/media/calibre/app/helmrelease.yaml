@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.2.2
+      version: 1.5.1
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -27,7 +27,7 @@ spec:
     #       runAsUser: 0
     image:
       repository: ghcr.io/linuxserver/calibre
-      tag: 6.8.0
+      tag: version-v6.26.0
     env:
       PGID: "1000"
       PUID: "1000"
