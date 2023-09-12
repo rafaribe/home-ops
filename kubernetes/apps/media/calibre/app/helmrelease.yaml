@@ -16,15 +16,23 @@ spec:
         namespace: flux-system
   interval: 15m
   values:
-    # initContainers:
-    #   update-volume-permission:
-    #     image: busybox@sha256:ad9bd57a3a57cc95515c537b89aaa69d83a6df54c4050fcf2b41ad367bec0cd5
-    #     command: ["sh", "-c", "chown -R 1000:1000 /config"]
-    #     volumeMounts:
-    #       - name: config
-    #         mountPath: /config
-    #     securityContext:
-    #       runAsUser: 0
+    initContainers:
+      update-config-permission:
+        image: busybox@sha256:ad9bd57a3a57cc95515c537b89aaa69d83a6df54c4050fcf2b41ad367bec0cd5
+        command: ["sh", "-c", "chown -R 1000:1000 /config"]
+        volumeMounts:
+          - name: config
+            mountPath: /config
+        securityContext:
+          runAsUser: 0
+      update-media-permission:
+        image: busybox@sha256:ad9bd57a3a57cc95515c537b89aaa69d83a6df54c4050fcf2b41ad367bec0cd5
+        command: ["sh", "-c", "chown -R 1000:1000 /config"]
+        volumeMounts:
+          - name: config
+            mountPath: /config
+        securityContext:
+          runAsUser: 0
     image:
       repository: ghcr.io/linuxserver/calibre
       tag: version-v6.26.0
@@ -79,7 +87,7 @@ spec:
           - secretName: calibre-tls
             hosts:
               - *host
-      webserver:
+      content-server:
         enabled: true
         ingressClassName: "nginx"
         annotations:
