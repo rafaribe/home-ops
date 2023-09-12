@@ -16,17 +16,19 @@ spec:
         namespace: flux-system
   interval: 15m
   values:
-    securityContext:
-      seccompProfile:
-        type: Unconfined
     image:
       repository: ghcr.io/bjw-s/calibre-web
       tag: 0.6.20@sha256:94d6ce520837c9ebd2df3575cae0969cefded753f347ae9fb64966b95de9f0a8
     env:
       TZ: "${TZ}"
-      PUID: 1000
-      PGID: 1000
+      PUID: "1000"
+      PGID: "1000"
       DOCKER_MODS: "linuxserver/mods:universal-calibre"
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
     service:
       main:
         ports:
@@ -72,9 +74,7 @@ spec:
         memory: 299M
     probes:
       startup:
-        spec:
-          initialDelaySeconds: 60
-          failureThreshold: 160
+        enabled: false
       liveness:
         enabled: false
       readiness:

@@ -41,11 +41,9 @@ spec:
       PUID: "1000"
       UMASK_SET: "022"
       PASSWORD: ${SECRET_CALIBRE}
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
+    securityContext:
+      seccompProfile:
+        type: Unconfined
     service:
       main:
         ports:
@@ -89,24 +87,6 @@ spec:
           - secretName: calibre-tls
             hosts:
               - *host
-      content-server:
-        enabled: true
-        ingressClassName: "nginx"
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: book-open-page-variant
-          external-dns.alpha.kubernetes.io/hostname: read.${EXTERNAL_DOMAIN}
-        hosts:
-          - host: &host2 read.${EXTERNAL_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: calibre-webserver
-                  port: 8081
-        tls:
-          - hosts:
-              - *host2
     persistence:
       config:
         enabled: true
@@ -125,7 +105,9 @@ spec:
         memory: 1Gi
     probes:
       startup:
-        enabled: false
+        spec:
+          initialDelaySeconds: 60
+          failureThreshold: 160
       liveness:
         enabled: false
       readiness:
