@@ -21,14 +21,14 @@ spec:
       tag: 10.8.7@sha256:b809eb18bb01844cd011fe29a3021cb06c3f56c4bcca35c91691915fc368b590
 
     podSecurityContext:
-      runAsUser: 65534
-      runAsGroup: 65534
-      fsGroup: 65534
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
       supplementalGroups:
         - 44
         - 109
-        - 1000
+        - 65534
 
     # affinity:
     #   nodeAffinity:
