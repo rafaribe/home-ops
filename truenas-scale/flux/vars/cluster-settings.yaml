@@ -29,6 +29,7 @@ data:
   LB_BLOCKY: 10.0.1.250
   LB_NGINX: 10.0.6.1
   LB_SYNCTHING: 10.0.6.2
+  LB_SYNCTHING_DISCOVERY: 10.0.6.3
   # Other network IP's that are not in use
   LB_K8S_GATEWAY_ADDR: 10.0.255.1
   LB_HASS: 10.0.255.3

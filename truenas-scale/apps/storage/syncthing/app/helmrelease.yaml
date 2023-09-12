@@ -41,7 +41,7 @@ spec:
         type: LoadBalancer
         annotations:
           metallb.universe.tf/loadBalancerIPs: |-
-            ${LB_SYNCTHING}
+            ${LB_SYNCTHING_DISCOVERY}
         externalTrafficPolicy: Local
         ports:
           discovery:
