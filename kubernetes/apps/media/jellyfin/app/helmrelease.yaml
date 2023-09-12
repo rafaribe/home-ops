@@ -104,7 +104,7 @@ spec:
         server: truenas.rafaribe.site
         path: /mnt/storage-0/media
         mountPath: /media
-        readOnly: true
+        readOnly: false
       transcode:
         enabled: true
         type: emptyDir
