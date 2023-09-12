@@ -29,15 +29,18 @@ spec:
       tag: 1.24.0
     service:
       main:
-        loadBalancerIP: "${LB_SYNCTHING}"
-        externalTrafficPolicy: Local
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: |-
+            ${LB_SYNCTHING}
         ports:
           http:
             port: 8384
       listdisc:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: "${LB_SYNCTHING}"
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: |-
+            ${LB_SYNCTHING}
         externalTrafficPolicy: Local
         ports:
           discovery:
