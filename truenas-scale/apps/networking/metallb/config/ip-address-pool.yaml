@@ -43,3 +43,14 @@ spec:
   addresses:
     - ${NETWORK_L2_BLOCKY_CIDR}
   autoAssign: true
+---
+# Not via BGP - only L2
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: syncthing-pool
+  namespace: networking
+spec:
+  addresses:
+    - ${NETWORK_L2_SYNCTHING_CIDR}
+  autoAssign: true

@@ -29,12 +29,16 @@ spec:
       tag: 1.24.0
     service:
       main:
+        loadBalancerIP: "${LB_SYNCTHING}"
+        externalTrafficPolicy: Local
         ports:
           http:
             port: 8384
       listdisc:
         enabled: true
         type: LoadBalancer
+        loadBalancerIP: "${LB_SYNCTHING}"
+        externalTrafficPolicy: Local
         ports:
           discovery:
             enabled: true
