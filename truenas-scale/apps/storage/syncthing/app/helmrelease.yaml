@@ -29,6 +29,7 @@ spec:
     service:
       main:
         type: LoadBalancer
+        externalTrafficPolicy: Local
         annotations:
           metallb.universe.tf/loadBalancerIPs: |-
             ${LB_SYNCTHING}
@@ -38,10 +39,10 @@ spec:
       listdisc:
         enabled: true
         type: LoadBalancer
+        externalTrafficPolicy: Local
         annotations:
           metallb.universe.tf/loadBalancerIPs: |-
             ${LB_SYNCTHING_DISCOVERY}
-        externalTrafficPolicy: Local
         ports:
           discovery:
             enabled: true
