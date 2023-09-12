@@ -69,10 +69,10 @@ spec:
     resources:
       requests:
         cpu: 15m
-        memory: 64M
+        memory: 256M
       limits:
         cpu: 100m
-        memory: 128M
+        memory: 512M
     env:
       PUID: "1000"
       PGID: "1000"
