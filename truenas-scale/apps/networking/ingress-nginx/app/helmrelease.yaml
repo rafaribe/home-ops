@@ -36,7 +36,7 @@ spec:
       service:
         annotations:
           metallb.universe.tf/loadBalancerIPs: |-
-            ${LB_NGINX}
+            "${LB_NGINX}"
         ports:
           postgres: 5432
         targetPorts:
