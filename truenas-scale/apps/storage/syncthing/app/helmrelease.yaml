@@ -48,16 +48,13 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
+        annotations:
+          hajimari.io/icon: arcticons:syncthing
         hosts:
           - host: &host "syncthing.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
-
-    podSecurityContext:
-      runAsUser: 0
-      privileged: true
-
     persistence:
       config:
         enabled: true
@@ -70,5 +67,6 @@ spec:
       limits:
         memory: 1565Mi
     env:
-      PUID: "568"
+      PUID: "1000"
       PGID: "1000"
+      TZ: "${TZ}"
