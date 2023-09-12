@@ -56,10 +56,10 @@ spec:
               - path: /
                 pathType: Prefix
     persistence:
-      config:
+      data:
         enabled: true
         existingClaim: syncthing
-        mountPath: /data
+        mountPath: /var/syncthing
     resources:
       requests:
         cpu: 15m
