@@ -16,11 +16,9 @@ spec:
         namespace: flux-system
   interval: 15m
   values:
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
+    securityContext:
+      seccompProfile:
+        type: Unconfined
     image:
       repository: ghcr.io/bjw-s/calibre-web
       tag: 0.6.20@sha256:94d6ce520837c9ebd2df3575cae0969cefded753f347ae9fb64966b95de9f0a8
