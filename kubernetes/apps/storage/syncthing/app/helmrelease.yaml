@@ -33,6 +33,8 @@ spec:
             port: 8384
       listdisc:
         enabled: true
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_SYNCTHING}
         labels:
           pool: lb
         type: LoadBalancer
