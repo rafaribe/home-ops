@@ -72,7 +72,9 @@ spec:
         memory: 299M
     probes:
       startup:
-        enabled: false
+        spec:
+          initialDelaySeconds: 60
+          failureThreshold: 160
       liveness:
         enabled: false
       readiness:
