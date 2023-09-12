@@ -22,10 +22,9 @@ spec:
     remediation:
       retries: 5
   values:
-    global:
-      nameOverride: *app
+    fullnameOverride: *app
     image:
-      repository: ghcr.io/linuxserver/syncthing
+      repository: syncthing/syncthing
       tag: 1.24.0
     service:
       main:
@@ -71,9 +70,10 @@ spec:
     resources:
       requests:
         cpu: 15m
-        memory: 249Mi
+        memory: 64M
       limits:
-        memory: 1565Mi
+        cpu: 100m
+        memory: 128M
     env:
       PUID: "1000"
       PGID: "1000"
