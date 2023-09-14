@@ -4,7 +4,7 @@ terraform {
 
     doppler = {
       source  = "DopplerHQ/doppler"
-      version = "1.2.3"
+      version = "1.3.0"
     }
     random = {
       source  = "hashicorp/random"
