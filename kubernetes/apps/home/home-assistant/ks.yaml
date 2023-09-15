@@ -11,8 +11,8 @@ spec:
   dependsOn:
     - name: external-secrets-provider
     - name: external-secrets-operator
-    - name: cluster-apps-volsync-app
-  path: ./kubernetes/apps/default/home-assistant/app
+    - name: cluster-apps-volsync
+  path: ./apps/home/home-assistant/app
   prune: true
   sourceRef:
     kind: OCIRepository
