@@ -8,7 +8,7 @@ spec:
   provider:
     doppler:
       project: volsync
-      config: prd
+      config: prod
       auth:
         secretRef:
           dopplerToken:
