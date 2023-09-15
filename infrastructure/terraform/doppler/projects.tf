@@ -238,3 +238,12 @@ module "emqx" {
     doppler = doppler
   }
 }
+
+module "hass" {
+  source       = "./project"
+  project_name = "hass"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
