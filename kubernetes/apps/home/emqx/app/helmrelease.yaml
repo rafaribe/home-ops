@@ -57,8 +57,10 @@ spec:
     service:
       type: LoadBalancer
       annotations:
-        metallb.universe.tf/loadBalancerIPs: |-
-          ${LB_EMQX}
+        io.cilium/lb-ipam-ips: ${LB_EMQX}
+      labels:
+        pool: lb
+      loadBalancerIP: ${LB_NGINX}
       externalTrafficPolicy: Local
 
     ingress:
@@ -113,13 +115,13 @@ spec:
   valuesFrom:
     - targetPath: emqxConfig.EMQX_DASHBOARD__DEFAULT_PASSWORD
       kind: Secret
-      name: emqx-config
-      valuesKey: admin_password
+      name: emqx-secret
+      valuesKey: ADMIN_PASSWORD
     - targetPath: emqxConfig.EMQX_AUTH__USER__1__USERNAME
       kind: Secret
-      name: emqx-config
-      valuesKey: user_1_username
+      name: emqx-secret
+      valuesKey: USER_1_USERNAME
     - targetPath: emqxConfig.EMQX_AUTH__USER__1__PASSWORD
       kind: Secret
-      name: emqx-config
-      valuesKey: user_1_password
+      name: emqx-secret
+      valuesKey: USER_1_PASSWORD
