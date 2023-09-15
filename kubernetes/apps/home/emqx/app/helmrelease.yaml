@@ -29,7 +29,7 @@ spec:
     recreatePods: true
 
     emqxConfig:
-      EMQX_ALLOW_ANONYMOUS: "false"
+      EMQX_ALLOW_ANONYMOUS: "true"
       EMQX_AUTH__MNESIA__PASSWORD_HASH: plain
 
     emqxAclConfig: >
@@ -60,15 +60,16 @@ spec:
         io.cilium/lb-ipam-ips: ${LB_EMQX}
       labels:
         pool: lb
-      loadBalancerIP: ${LB_NGINX}
+      loadBalancerIP: ${LB_EMQX}
       externalTrafficPolicy: Local
 
     ingress:
       dashboard:
         annotations:
           hajimari.io/enable: "true"
+          hajimari.io/appName: "EMQX"
           hajimari.io/icon: "radio-tower"
-          external-dns.alpha.kubernetes.io/hostname: "eqmx.${EXTERNAL_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "emqx.${EXTERNAL_DOMAIN}"
 
         enabled: true
         ingressClassName: nginx
@@ -87,23 +88,18 @@ spec:
       enabled: true
       storageClass: ceph-block
       size: 100Mi
-    ssl:
-      enabled: true
-      issuer:
-        name: letsencrypt-production
-        kind: ClusterIssuer
-    # affinity:
-    #   podAntiAffinity:
-    #     preferredDuringSchedulingIgnoredDuringExecution:
-    #       - weight: 100
-    #         podAffinityTerm:
-    #           labelSelector:
-    #             matchExpressions:
-    #               - key: app.kubernetes.io/name
-    #                 operator: In
-    #                 values:
-    #                   - emqx
-    #           topologyKey: kubernetes.io/hostname
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - emqx
+              topologyKey: kubernetes.io/hostname
 
     resources:
       requests:
