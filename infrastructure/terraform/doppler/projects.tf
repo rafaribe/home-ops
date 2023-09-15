@@ -229,3 +229,12 @@ module "unpackerr" {
     doppler = doppler
   }
 }
+
+module "emqx" {
+  source       = "./project"
+  project_name = "emqx"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
