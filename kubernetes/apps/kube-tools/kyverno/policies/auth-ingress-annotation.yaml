@@ -30,7 +30,7 @@ spec:
           metadata:
             annotations:
               +(nginx.ingress.kubernetes.io/auth-url): |-
-                http://ak-outpost-skovald-outpost.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+                http://ak-outpost-home-ops-outpost.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
               +(nginx.ingress.kubernetes.io/auth-signin): |-
                 https://{{ host }}//outpost.goauthentik.io/start?rd=$escaped_request_uri
               +(nginx.ingress.kubernetes.io/auth-response-headers): |-
@@ -46,3 +46,11 @@ spec:
             kind: Ingress
             name: kube-prometheus-stack-prometheus
             namespace: monitoring
+          - apiVersion: networking.k8s.io/v1
+            kind: Ingress
+            name: media-browser
+            namespace: media
+          - apiVersion: networking.k8s.io/v1
+            kind: Ingress
+            name: home-assistant-addon-codeserver
+            namespace: home
