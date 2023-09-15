@@ -5,7 +5,7 @@ module "home-ops" {
   authentik_external_host     = "rafaribe.com"
   authentik_api_token         = local.authentik_api_token
   authentik_api_url           = local.authentik_domain_proxy_external_url
-  authentik_kubeconfig        = local.home-ops_kubeconfig
+  authentik_kubeconfig        = local.homeops_kubeconfig
   authentik_outpost_config    = local.outpost_config
 
   oidc = [
@@ -47,6 +47,13 @@ module "home-ops" {
       authentik_proxy_application_group    = "home-ops"
       authentik_proxy_application_icon_url = "https://media-browser.rafaribe.com/static/img/logo.svg"
       authentik_proxy_external_host        = "https://media-browser.rafaribe.com"
+    },
+
+    {
+      authentik_proxy_application_name     = "hass-code"
+      authentik_proxy_application_group    = "home-ops"
+      authentik_proxy_application_icon_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/512px-Visual_Studio_Code_1.35_icon.svg.png"
+      authentik_proxy_external_host        = "https://hass-code.rafaribe.com"
     },
 
   ]
