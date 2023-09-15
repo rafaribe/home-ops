@@ -7,3 +7,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./emqx/ks.yaml
+  - ./home-assistant/ks.yaml
