@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: docker.io/golift/unifi-poller
-      tag: 2.1.3
+      tag: v2.9.2
     env:
       TZ: "${TZ}"
       UP_UNIFI_DEFAULT_ROLE: "homelab-controller"
