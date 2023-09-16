@@ -1,0 +1,15 @@
+on:
+    workflow_dispatch:
+  
+  jobs:
+    approve-prs:
+      runs-on: ubuntu-latest
+      name: Approve valid PRs 
+      steps:
+        - name: Approve valid workflows
+          uses: Cian911/gomerge-action@master
+          with:
+            repository: ${{ github.repository }}
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            labels: ""
+            approve: "true"
