@@ -30,7 +30,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/paperless-ngx/paperless-ngx
-      tag: 1.17.1
+      tag: 1.17.4
     env:
       COMPOSE_PROJECT_NAME: paperless
       PAPERLESS_CONSUMER_POLLING: "60"
