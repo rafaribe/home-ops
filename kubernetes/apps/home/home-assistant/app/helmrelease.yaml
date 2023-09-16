@@ -47,6 +47,7 @@ spec:
     envFrom: *envFrom
     service:
       main:
+        type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: ${LB_HASS}
         labels:
