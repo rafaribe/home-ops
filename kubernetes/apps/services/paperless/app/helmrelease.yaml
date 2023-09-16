@@ -121,6 +121,6 @@ spec:
           - name: DISABLE_GOOGLE_CHROME
             value: "1"
       tika:
-        image: ghcr.io/paperless-ngx/tika:2.8.0-full@sha256:a9c9c6d5c925f4ad9660e66368801e3166f309a3a2c7514cc17c4b470f239849
+        image: ghcr.io/paperless-ngx/tika:2.9.0-full@sha256:bebdafd8dc44dc01bae55c82f2f6050fa245255e6fe2ed60fbc2aedce9923941
         name: tika
         imagePullPolicy: Always
