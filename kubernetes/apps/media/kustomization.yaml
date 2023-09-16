@@ -8,6 +8,7 @@ resources:
   - ./audiobookshelf/ks.yaml
   - ./calibre/ks.yaml
   - ./calibre-web/ks.yaml
+  - ./flaresolverr/ks.yaml
   - ./jellyfin/ks.yaml
   - ./media-browser/ks.yaml
   - ./openbooks/ks.yaml
