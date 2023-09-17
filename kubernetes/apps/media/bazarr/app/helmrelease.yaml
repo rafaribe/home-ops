@@ -64,7 +64,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: bazarr-config-v2
+        existingClaim: bazarr-config-v1
       media:
         enabled: true
         server: truenas.rafaribe.site
