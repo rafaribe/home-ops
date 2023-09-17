@@ -6,7 +6,7 @@ metadata:
   name: downloads-sabnzbd
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/downloads/sabnzbd/app
+  path: ./apps/downloads/sabnzbd/app
   prune: true
   sourceRef:
     kind: OCIRepository
