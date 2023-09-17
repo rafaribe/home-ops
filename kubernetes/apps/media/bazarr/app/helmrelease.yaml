@@ -67,6 +67,7 @@ spec:
         existingClaim: bazarr-config-v1
       media:
         enabled: true
+        type: nfs
         server: truenas.rafaribe.site
         path: /mnt/storage-0/media
         mountPath: /data
