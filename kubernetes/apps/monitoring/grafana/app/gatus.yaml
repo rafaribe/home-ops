@@ -9,7 +9,7 @@ metadata:
 data:
   config.yaml: |
     endpoints:
-      - name: apps
+      - name: grafana
         group: services
         url: https://grafana.rafaribe.com
         interval: 1m
