@@ -76,10 +76,13 @@ spec:
         enabled: true
         ingressClassName: nginx
         hosts:
-          - host: sabnzbd.${EXTERNAL_DOMAIN}"
+          - host: &host "sabnzbd.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
+        tls:
+          - hosts:
+              - *host
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
