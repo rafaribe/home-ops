@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: sabnzbd-gatus-ep
-  namespace: default
+  namespace: downloads
   labels:
     gatus.io/enabled: "true"
 data:
