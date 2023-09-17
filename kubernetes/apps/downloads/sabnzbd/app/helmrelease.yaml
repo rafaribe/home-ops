@@ -47,7 +47,7 @@ spec:
         sabnzbd.default.svc,
         sabnzbd.default.svc.cluster,
         sabnzbd.default.svc.cluster.local,
-        sabnzbd.devbu.io
+        sabnzbd.rafaribe.com
     envFrom:
       - secretRef:
           name: sabnzbd-secret
@@ -76,13 +76,10 @@ spec:
         enabled: true
         ingressClassName: nginx
         hosts:
-          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+          - host: sabnzbd.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - hosts:
-              - *host
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000

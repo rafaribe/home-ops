@@ -9,7 +9,7 @@ metadata:
 data:
   config.yaml: |
     endpoints:
-      - name: apps
+      - name: sabnzbd
         group: services
         url: https://sabnzbd.rafaribe.com
         interval: 1m
@@ -17,5 +17,5 @@ data:
           dns-resolver: tcp://1.1.1.1:53
         conditions:
           - "[STATUS] == 200"
-        alerts:
-          - type: pushover
+        # alerts:
+        #   - type: pushover
