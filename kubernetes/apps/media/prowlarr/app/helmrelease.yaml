@@ -87,7 +87,13 @@ spec:
     persistence:
       config:
         enabled: true
-        type: emptyDir
+        existingClaim: prowlarr-config-v1
+      backup:
+        enabled: true
+        type: nfs
+        server: truenas.rafaribe.site
+        path: /mnt/storage-0/media/prowlarr/backup
+        mountPath: /config/backups
     resources:
       requests:
         cpu: 10m
