@@ -247,3 +247,13 @@ module "hass" {
     doppler = doppler
   }
 }
+
+
+module "sabnbzd" {
+  source       = "./project"
+  project_name = "sabnbzd"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
