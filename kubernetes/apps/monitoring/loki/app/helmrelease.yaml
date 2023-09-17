@@ -195,9 +195,6 @@ spec:
       extraVolumeMounts:
         - name: rules
           mountPath: /rules
-      extraVolumes:
-        - name: rules
-          emptyDir: {}
       persistence:
         size: 20Gi
         storageClass: ceph-block
