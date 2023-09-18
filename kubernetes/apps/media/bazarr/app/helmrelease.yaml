@@ -62,9 +62,6 @@ spec:
       supplementalGroups: [568]
 
     persistence:
-      config:
-        enabled: true
-        existingClaim: bazarr-config-v1
       media:
         enabled: true
         type: nfs
