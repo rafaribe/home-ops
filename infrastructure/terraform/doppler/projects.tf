@@ -257,3 +257,11 @@ module "sabnbzd" {
     doppler = doppler
   }
 }
+module "readarr" {
+  source       = "./project"
+  project_name = "readarr"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
