@@ -31,14 +31,14 @@ spec:
       repository: ghcr.io/onedr0p/readarr-nightly
       tag: 0.3.4.2207@sha256:17df7f7b477f84dc82f62686f6ffa57cccd3281d1bca385929b03d3b680b50ea
     env:
-      TZ: "America/New_York"
+      TZ: "{TZ}"
       READARR__INSTANCE_NAME: Readarr (Audio)
       READARR__PORT: &port 80
       READARR__LOG_LEVEL: info
       READARR__API_KEY:
         valueFrom:
           secretKeyRef:
-            name: readarr-audio-secret
+            name: readarr-audio
             key: READARR_AUDIO_APIKEY
 
     service:
@@ -77,7 +77,7 @@ spec:
         mountPath: /media
 
     podAnnotations:
-      secret.reloader.stakater.com/reload: *app
+      secret.reloader.stakater.com/reload: readarr-audio
 
     volumeClaimTemplates:
       - name: config
