@@ -67,7 +67,7 @@ spec:
         type: nfs
         server: truenas.rafaribe.site
         path: /mnt/storage-0/media
-        mountPath: /data
+        mountPath: /media
       add-ons:
         enabled: true
         type: emptyDir
