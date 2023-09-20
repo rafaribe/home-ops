@@ -108,13 +108,13 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
-    nodeSelector:
-      intel.feature.node.kubernetes.io/gpu: "true"
+    # nodeSelector:
+    #   intel.feature.node.kubernetes.io/gpu: "true"
     resources:
       requests:
-        gpu.intel.com/i915: 1
+        # gpu.intel.com/i915: 1
         cpu: 100m
         memory: 1000Mi
       limits:
-        gpu.intel.com/i915: 1
-        memory: 4000Mi
+        # gpu.intel.com/i915: 1
+        memory: 3000Mi
