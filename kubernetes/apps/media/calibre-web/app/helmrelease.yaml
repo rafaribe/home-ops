@@ -25,10 +25,11 @@ spec:
       PGID: "1000"
       DOCKER_MODS: "linuxserver/mods:universal-calibre"
     podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
       fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups: [1000]
     service:
       main:
         ports:
@@ -45,15 +46,15 @@ spec:
           cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
           hajimari.io/enable: "true"
           hajimari.io/icon: "book-open-page-variant"
-          external-dns.alpha.kubernetes.io/hostname: calibre-web.${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: library.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
           theme.home.arpa/enabled: "true"
         hosts:
-          - host: &host calibre-web.${EXTERNAL_DOMAIN}
+          - host: &host library.${EXTERNAL_DOMAIN}
             paths:
               - path: /
         tls:
-          - secretName: calibre-web-tls
+          - secretName: library-tls
             hosts:
               - *host
     persistence:
