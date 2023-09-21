@@ -108,9 +108,3 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
-    resources:
-      requests:
-        cpu: 100m
-        memory: 1000Mi
-      limits:
-        memory: 3000Mi
