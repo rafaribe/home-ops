@@ -16,7 +16,7 @@ resource "cloudflare_firewall_rule" "terraform" {
 
 resource "cloudflare_filter" "notportugal" {
   zone_id     = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
-  description = "Block Requests that don't come from Portugal"
+  description = "Block Requests that dont come from Portugal and Germany"
   expression  = "(ip.geoip.country ne \"PT\") or (ip.geoip.country eq \"DE\")"
 }
 
