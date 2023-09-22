@@ -77,7 +77,7 @@ spec:
         annotations:
           hajimari.io/icon: mdi:television-classic
         hosts:
-          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+          - host: &host "sonarr.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
