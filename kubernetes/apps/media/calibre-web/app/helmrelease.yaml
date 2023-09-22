@@ -25,11 +25,11 @@ spec:
       PGID: "1000"
       DOCKER_MODS: "linuxserver/mods:universal-calibre"
     podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups: [1000]
+      supplementalGroups: [568]
     service:
       main:
         ports:
