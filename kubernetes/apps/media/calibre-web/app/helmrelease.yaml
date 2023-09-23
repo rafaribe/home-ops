@@ -17,14 +17,20 @@ spec:
   interval: 15m
   values:
     image:
-      repository: ghcr.io/linuxserver/calibre-web
-      tag: 0.6.20@sha256:5f8495fc0ac4ecf758f3a311ec1c907746a331596bd57408973f38c07ab1d5b8
+      repository: ghcr.io/bjw-s/calibre-web
+      tag: 0.6.20@sha256:a5a40ae5bc78afee94515cc20dca470ce775c2e7456962fac3e09e63cc00ddf2
+    securityContext:
+      seLinuxOptions:
+        level: s0
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 1000
     env:
-      TZ: "${TZ}"
-      PUID: "1000"
-      PGID: "1000"
-      DOCKER_MODS: "linuxserver/mods:universal-calibre|linuxserver/mods:calibre-web-dtrpg-metadata"
-      CALIBRE_PORT: "8080"
+      CACHE_DIR: /cache
     service:
       main:
         ports:
@@ -38,11 +44,8 @@ spec:
           theme-park.home/name: calibreweb
           theme-park.home/theme: maroon
         annotations:
-          cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
           hajimari.io/enable: "true"
           hajimari.io/icon: "book-open-page-variant"
-          external-dns.alpha.kubernetes.io/hostname: library.${EXTERNAL_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
         hosts:
           - host: &host library.${EXTERNAL_DOMAIN}
             paths:
@@ -54,13 +57,17 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: calibre-web-config-v2
+        existingClaim: calibre-web-config-v3
       media:
         enabled: true
         type: nfs
         server: truenas.rafaribe.site
         path: /mnt/storage-0/media/books
         mountPath: /media
+      cache:
+        enabled: true
+        type: emptyDir
+        mountPath: /cache
     resources:
       requests:
         cpu: 15m

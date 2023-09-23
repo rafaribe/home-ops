@@ -48,7 +48,7 @@ metadata:
   name: calibre-web
   namespace: media
 spec:
-  sourcePVC: config-calibre-web
+  sourcePVC: calibre-web-config-v3
   trigger:
     schedule: "0 7 * * *"
   restic:
