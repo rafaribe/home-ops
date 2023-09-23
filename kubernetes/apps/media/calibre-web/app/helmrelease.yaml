@@ -24,6 +24,7 @@ spec:
       PUID: "1000"
       PGID: "1000"
       DOCKER_MODS: "linuxserver/mods:universal-calibre|linuxserver/mods:calibre-web-dtrpg-metadata"
+      CALIBRE_PORT: "8080"
     service:
       main:
         ports:
