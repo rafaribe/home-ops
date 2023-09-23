@@ -25,6 +25,11 @@ spec:
       PGID: "1000"
       DOCKER_MODS: "linuxserver/mods:universal-calibre|linuxserver/mods:calibre-web-dtrpg-metadata"
       CALIBRE_PORT: "8080"
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
     service:
       main:
         ports:
