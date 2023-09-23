@@ -17,19 +17,13 @@ spec:
   interval: 15m
   values:
     image:
-      repository: ghcr.io/bjw-s/calibre-web
-      tag: 0.6.20@sha256:a5a40ae5bc78afee94515cc20dca470ce775c2e7456962fac3e09e63cc00ddf2
+      repository: ghcr.io/linuxserver/calibre-web
+      tag: 0.6.20@sha256:5f8495fc0ac4ecf758f3a311ec1c907746a331596bd57408973f38c07ab1d5b8
     env:
       TZ: "${TZ}"
       PUID: "1000"
       PGID: "1000"
       DOCKER_MODS: "linuxserver/mods:universal-calibre"
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups: [568]
     service:
       main:
         ports:
@@ -48,7 +42,6 @@ spec:
           hajimari.io/icon: "book-open-page-variant"
           external-dns.alpha.kubernetes.io/hostname: library.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
-          theme.home.arpa/enabled: "true"
         hosts:
           - host: &host library.${EXTERNAL_DOMAIN}
             paths:
