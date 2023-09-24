@@ -6,5 +6,5 @@ namespace: flux-system
 resources:
   - ./cloudflare
   - ./doppler
-  - ./unifi
+  # - ./unifi
   - ./authentik
