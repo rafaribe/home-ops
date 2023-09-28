@@ -42,10 +42,11 @@ spec:
         ingressClassName: nginx
         labels:
           theme-park.home/name: calibreweb
-          theme-park.home/theme: maroon
+          theme-park.home/theme: hotline
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "book-open-page-variant"
+          theme.home.arpa/enabled: "true"
         hosts:
           - host: &host library.${EXTERNAL_DOMAIN}
             paths:
