@@ -56,6 +56,13 @@ module "home-ops" {
       authentik_proxy_external_host        = "https://hass-code.rafaribe.com"
     },
 
+    {
+      authentik_proxy_application_name     = "syncthing"
+      authentik_proxy_application_group    = "home-ops"
+      authentik_proxy_application_icon_url = "https://upload.wikimedia.org/wikipedia/commons/8/83/SyncthingAugustLogo.png?20140908050918"
+      authentik_proxy_external_host        = "https://syncthing.rafaribe.com"
+    },
+
   ]
   providers = {
     authentik = authentik
