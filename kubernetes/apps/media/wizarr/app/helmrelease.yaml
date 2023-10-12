@@ -35,7 +35,7 @@ spec:
       type: statefulset
     image:
       repository: ghcr.io/wizarrrr/wizarr
-      tag: 3.0.1
+      tag: 3.4.1
     env:
       TZ: Europe/Lisbon
       APP_URL: https://invite.rafaribe.com
