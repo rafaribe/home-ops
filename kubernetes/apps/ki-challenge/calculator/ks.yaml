@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ki-challenge-calculator
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  path: ./apps/ki-challenge/calculator/addition
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: home-ops
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: addition
+      namespace: ki-challenge
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
