@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: docker.io/rafaribe/ki-challenge-calculator
-      tag: challenge-1-20231014190512
+      tag: challenge-1
     service:
       main:
         ports:
