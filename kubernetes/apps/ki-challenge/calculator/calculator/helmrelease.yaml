@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: addition
+  name: calculator
   namespace: ki-challenge
 spec:
   interval: 30m
@@ -17,7 +17,7 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: docker.io/rafaribe/ki-challenge-addition
+      repository: docker.io/rafaribe/ki-challenge-calculator
       tag: challenge-1-20231014190512
     service:
       main:
@@ -29,7 +29,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         hosts:
-          - host: &host addition.rafaribe.com
+          - host: &host calculator.rafaribe.com
             paths:
               - path: /
                 pathType: Prefix
