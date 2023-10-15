@@ -36,13 +36,7 @@ spec:
         tls:
           - hosts:
               - *host
-    resources:
-      requests:
-        cpu: 100m
-        memory: 150Mi
-      limits:
-        cpu: 200m
-        memory: 250Mi
+
     probes:
       liveness: &probes
         enabled: true
