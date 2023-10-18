@@ -4,7 +4,7 @@
   on:
     pull_request:
       branches: ["main"]
-      paths: ["kubernetes/**.yaml"]
+      paths: ["kubernetes/**"]
   
   jobs:
     flux-diff:
