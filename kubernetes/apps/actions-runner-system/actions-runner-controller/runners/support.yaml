@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: arc-home-ops
+  namespace: actions-runner-system
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: gha-runner-scale-set
+      version: 0.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: actions-runner-controller
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    runnerScaleSetName: arc-runner-set-smp
+    githubConfigUrl: https://github.com/neoception/pf-32-3-smp-connectivity-architecture
+    minRunners: 4
+    maxRunners: 10
+    containerMode:
+      type: dind
+    template:
+      spec:
+        containers:
+          - name: runner
+            image: ghcr.io/onedr0p/github-actions-runner:rolling@sha256:c0300ea8c54d1d5bbf04470d25970fe277ce5a8b47d60702b232624a981942dd
+            volumeMounts:
+              - mountPath: /runner/_work
+                name: work
+          - name: dind
+            image: docker:dind
+            volumeMounts:
+              - mountPath: /runner/_work
+                name: work
+        volumes:
+          - name: work
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "ceph-block"
+                  resources:
+                    requests:
+                      storage: 25Gi
+  valuesFrom:
+    - kind: Secret
+      name: github-token
+      valuesKey: github_token
+      targetPath: githubConfigSecret.github_token
