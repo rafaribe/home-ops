@@ -37,7 +37,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/onedr0p/github-actions-runner:rolling@sha256:c0300ea8c54d1d5bbf04470d25970fe277ce5a8b47d60702b232624a981942dd
+            image: ghcr.io/onedr0p/github-actions-runner:rolling@sha256:5c022f2b91aa48384e05428015f1ff29062623293296e400e03b031f2104151a
             volumeMounts:
               - mountPath: /runner/_work
                 name: work
