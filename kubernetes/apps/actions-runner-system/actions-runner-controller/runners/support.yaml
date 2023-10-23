@@ -27,7 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    runnerScaleSetName: arc-runner-set-smp
+    runnerScaleSetName: arc-runner-set-smp-support
     githubConfigUrl: https://github.com/neoception/pf-32-3-smp-connectivity-architecture
     minRunners: 4
     maxRunners: 10
