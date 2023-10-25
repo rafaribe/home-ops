@@ -3,19 +3,19 @@
   
   on:
     pull_request:
-      branches:
-        - main
-      paths:
-        - "kubernetes/**/*.yaml"
+      branches: ["main"]
+      paths: ["kubernetes/**"]
   
   jobs:
     flux-diff:
+      name: Flux Diff
       runs-on: ubuntu-latest
+      permissions:
+        pull-requests: write
       strategy:
         matrix:
-          resource:
-            - helmrelease
-            - kustomization
+          path: ["kubernetes"]
+          resource: ["helmrelease", "kustomization"]
       steps:
         - name: Generate Token
           uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
@@ -35,8 +35,8 @@
           uses: allenporter/flux-local/action/diff@efbe055c6dc2a63d1102db582632d2aa03696664 # 3.1.1
           id: diff
           with:
-            live-branch: main
-            path: "kubernetes"
+            sources: home-ops
+            path: "${{ matrix.path }}"
             resource: "${{ matrix.resource }}"
   
         - if: ${{ steps.diff.outputs.diff != '' }}
