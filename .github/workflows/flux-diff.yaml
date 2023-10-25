@@ -4,7 +4,7 @@
   on:
     pull_request:
       branches: ["main"]
-      paths: ["kubernetes/**"]
+      paths: ["kubernetes/**/*.yaml"]
   
   jobs:
     flux-diff:
@@ -35,6 +35,7 @@
           uses: allenporter/flux-local/action/diff@efbe055c6dc2a63d1102db582632d2aa03696664 # 3.1.1
           id: diff
           with:
+            live-branch: main
             sources: home-ops
             path: "${{ matrix.path }}"
             resource: "${{ matrix.resource }}"
