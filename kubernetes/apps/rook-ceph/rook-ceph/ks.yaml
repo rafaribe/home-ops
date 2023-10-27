@@ -10,7 +10,7 @@ spec:
   path: "./apps/rook-ceph/rook-ceph/cluster/"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -35,7 +35,7 @@ spec:
   path: "./apps/rook-ceph/rook-ceph/operator/"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

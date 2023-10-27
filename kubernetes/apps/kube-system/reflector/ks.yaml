@@ -5,10 +5,10 @@ metadata:
   name: cluster-apps-refector
   namespace: flux-system
 spec:
-  path: ./apps/kube-system/reflector/app
+  path: ./kubernetes/apps/kube-system/reflector/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

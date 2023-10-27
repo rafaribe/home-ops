@@ -6,10 +6,10 @@ metadata:
   name: media-radarr
   namespace: flux-system
 spec:
-  path: ./apps/media/radarr/app
+  path: ./kubernetes/apps/media/radarr/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

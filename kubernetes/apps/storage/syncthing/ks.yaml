@@ -4,10 +4,10 @@ metadata:
   name: storage-syncthing-app
   namespace: flux-system
 spec:
-  path: ./apps/storage/syncthing/app
+  path: ./kubernetes/apps/storage/syncthing/app
   prune: false
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

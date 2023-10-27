@@ -6,10 +6,10 @@ metadata:
   name: services-theme-park
   namespace: flux-system
 spec:
-  path: ./apps/services/theme-park/app
+  path: ./kubernetes/apps/services/theme-park/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

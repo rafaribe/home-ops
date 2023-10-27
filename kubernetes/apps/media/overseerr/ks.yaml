@@ -6,10 +6,10 @@ metadata:
   name: media-overseerr
   namespace: flux-system
 spec:
-  path: ./apps/media/overseerr/app
+  path: ./kubernetes/apps/media/overseerr/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

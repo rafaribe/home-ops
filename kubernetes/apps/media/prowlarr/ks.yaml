@@ -6,10 +6,10 @@ metadata:
   name: media-prowlarr
   namespace: flux-system
 spec:
-  path: ./apps/media/prowlarr/app
+  path: ./kubernetes/apps/media/prowlarr/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

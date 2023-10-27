@@ -4,10 +4,10 @@ metadata:
   name: kube-tools-descheduler-app
   namespace: flux-system
 spec:
-  path: ./apps/kube-tools/descheduler/app
+  path: ./kubernetes/apps/kube-tools/descheduler/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

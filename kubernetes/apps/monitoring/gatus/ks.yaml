@@ -6,10 +6,10 @@ metadata:
   name: monitoring-gatus
   namespace: flux-system
 spec:
-  path: ./apps/monitoring/gatus/app
+  path: ./kubernetes/apps/monitoring/gatus/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

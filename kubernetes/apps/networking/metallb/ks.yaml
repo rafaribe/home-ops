@@ -10,7 +10,7 @@ spec:
   path: "./apps/networking/metallb/app/"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -28,7 +28,7 @@ spec:
   path: "./apps/networking/metallb/config/"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

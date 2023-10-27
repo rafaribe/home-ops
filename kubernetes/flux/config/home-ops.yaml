@@ -32,7 +32,7 @@ spec:
   prune: true
   wait: false
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   postBuild:
     substituteFrom:

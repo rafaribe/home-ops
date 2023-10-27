@@ -12,10 +12,10 @@ spec:
     - name: external-secrets-provider
     - name: external-secrets-operator
     - name: cluster-apps-volsync
-  path: ./apps/home/home-assistant/app
+  path: ./kubernetes/apps/home/home-assistant/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1

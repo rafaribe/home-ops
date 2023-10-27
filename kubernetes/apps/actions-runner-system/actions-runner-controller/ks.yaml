@@ -15,7 +15,7 @@ spec:
   prune: true
   wait: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
@@ -32,7 +32,7 @@ spec:
   prune: true
   wait: false
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   dependsOn:
     - name: actions-runner-controller

@@ -7,7 +7,7 @@ spec:
   path: "./apps/networking/cloudflare-dyndns/app"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: true
   interval: 1m

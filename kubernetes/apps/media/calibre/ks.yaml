@@ -6,10 +6,10 @@ metadata:
   name: media-calibre
   namespace: flux-system
 spec:
-  path: ./apps/media/calibre/app
+  path: ./kubernetes/apps/media/calibre/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

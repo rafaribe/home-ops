@@ -5,10 +5,10 @@ metadata:
   name: home-eqmx
   namespace: flux-system
 spec:
-  path: ./apps/home/emqx/app
+  path: ./kubernetes/apps/home/emqx/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: true
   interval: 30m

@@ -9,6 +9,6 @@ spec:
   path: "./apps/kube-system/nfs-subdir-external-provisioner/app"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: true

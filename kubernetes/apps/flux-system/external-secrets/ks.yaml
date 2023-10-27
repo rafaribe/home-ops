@@ -10,7 +10,7 @@ spec:
   path: "./apps/flux-system/external-secrets/operator"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -27,7 +27,7 @@ spec:
   path: "./apps/flux-system/external-secrets/provider"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

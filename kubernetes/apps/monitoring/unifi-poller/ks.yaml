@@ -4,10 +4,10 @@ metadata:
   name: monitoring-unifi-poller-app
   namespace: flux-system
 spec:
-  path: ./apps/monitoring/unifi-poller/app
+  path: ./kubernetes/apps/monitoring/unifi-poller/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

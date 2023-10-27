@@ -9,10 +9,10 @@ spec:
   dependsOn:
     - name: metallb
     - name: metallb-config
-  path: ./apps/networking/k8s-gateway
+  path: ./kubernetes/apps/networking/k8s-gateway
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

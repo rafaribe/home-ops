@@ -6,10 +6,10 @@ metadata:
   name: media-sonarr-tv-shows
   namespace: flux-system
 spec:
-  path: ./apps/media/sonarr/tv-shows
+  path: ./kubernetes/apps/media/sonarr/tv-shows
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m
@@ -23,10 +23,10 @@ metadata:
   name: media-sonarr-anime
   namespace: flux-system
 spec:
-  path: ./apps/media/sonarr/anime
+  path: ./kubernetes/apps/media/sonarr/anime
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

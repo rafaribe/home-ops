@@ -4,10 +4,10 @@ metadata:
   name: cilium-app
   namespace: flux-system
 spec:
-  path: ./apps/kube-system/cilium/app
+  path: ./kubernetes/apps/kube-system/cilium/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -24,10 +24,10 @@ metadata:
   name: cilium-bgp
   namespace: flux-system
 spec:
-  path: ./apps/kube-system/cilium/bgp
+  path: ./kubernetes/apps/kube-system/cilium/bgp
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   dependsOn:
     - name: cilium-app

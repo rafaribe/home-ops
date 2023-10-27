@@ -6,10 +6,10 @@ metadata:
   name: monitoring-node-exporter
   namespace: flux-system
 spec:
-  path: ./apps/monitoring/node-exporter/app
+  path: ./kubernetes/apps/monitoring/node-exporter/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

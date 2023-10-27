@@ -8,10 +8,10 @@ metadata:
 spec:
   dependsOn:
     - name: media-external-secrets-stores
-  path: ./apps/media/plex/app
+  path: ./kubernetes/apps/media/plex/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m
@@ -27,10 +27,10 @@ metadata:
 spec:
   dependsOn:
     - name: media-external-secrets-stores
-  path: ./apps/media/plex/auto-languages
+  path: ./kubernetes/apps/media/plex/auto-languages
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m
@@ -46,10 +46,10 @@ metadata:
 spec:
   dependsOn:
     - name: media-external-secrets-stores
-  path: ./apps/media/plex/off-deck
+  path: ./kubernetes/apps/media/plex/off-deck
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

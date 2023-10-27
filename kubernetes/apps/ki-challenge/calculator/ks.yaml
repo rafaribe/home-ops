@@ -8,10 +8,10 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./apps/ki-challenge/calculator/addition
+  path: ./kubernetes/apps/ki-challenge/calculator/addition
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -31,10 +31,10 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./apps/ki-challenge/calculator/calculator
+  path: ./kubernetes/apps/ki-challenge/calculator/calculator
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -54,10 +54,10 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./apps/ki-challenge/calculator/division
+  path: ./kubernetes/apps/ki-challenge/calculator/division
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -77,10 +77,10 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./apps/ki-challenge/calculator/multiplication
+  path: ./kubernetes/apps/ki-challenge/calculator/multiplication
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -100,10 +100,10 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./apps/ki-challenge/calculator/subtraction
+  path: ./kubernetes/apps/ki-challenge/calculator/subtraction
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -123,10 +123,10 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./apps/ki-challenge/calculator/remainder
+  path: ./kubernetes/apps/ki-challenge/calculator/remainder
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -146,10 +146,10 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./apps/ki-challenge/calculator/client
+  path: ./kubernetes/apps/ki-challenge/calculator/client
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1

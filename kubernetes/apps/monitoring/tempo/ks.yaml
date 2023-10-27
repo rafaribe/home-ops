@@ -4,10 +4,10 @@ metadata:
   name: monitoring-tempo-app
   namespace: flux-system
 spec:
-  path: ./apps/monitoring/tempo/app
+  path: ./kubernetes/apps/monitoring/tempo/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -19,7 +19,7 @@ spec:
 #   name: monitoring-loki-dashboards
 #   namespace: flux-system
 # spec:
-#   path: ./apps/monitoring/loki/dashboards
+#   path: ./kubernetes/apps/monitoring/loki/dashboards
 #   prune: true
 #   sourceRef:
 #     kind: GitRepository

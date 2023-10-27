@@ -8,10 +8,10 @@ metadata:
 spec:
   dependsOn:
     - name: media-external-secrets-stores
-  path: ./apps/media/unpackerr/app
+  path: ./kubernetes/apps/media/unpackerr/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

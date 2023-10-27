@@ -6,10 +6,10 @@ metadata:
   name: media-jellyfin
   namespace: flux-system
 spec:
-  path: ./apps/media/jellyfin/app
+  path: ./kubernetes/apps/media/jellyfin/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

@@ -6,10 +6,10 @@ metadata:
   name: cluster-apps-snapshot-controller
   namespace: flux-system
 spec:
-  path: ./apps/kube-system/snapshot-controller/app
+  path: ./kubernetes/apps/kube-system/snapshot-controller/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: true
   interval: 30m

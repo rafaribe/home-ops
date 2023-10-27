@@ -6,10 +6,10 @@ metadata:
   name: media-openbooks
   namespace: flux-system
 spec:
-  path: ./apps/media/openbooks/app
+  path: ./kubernetes/apps/media/openbooks/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

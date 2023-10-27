@@ -4,10 +4,10 @@ metadata:
   name: downloads-qbittorrent
   namespace: flux-system
 spec:
-  path: ./apps/downloads/qbittorrent/app
+  path: ./kubernetes/apps/downloads/qbittorrent/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -19,10 +19,10 @@ metadata:
   name: downloads-qbittorrent-tag
   namespace: flux-system
 spec:
-  path: ./apps/downloads/qbittorrent/tag
+  path: ./kubernetes/apps/downloads/qbittorrent/tag
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

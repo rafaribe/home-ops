@@ -4,10 +4,10 @@ metadata:
   name: kube-tools-kyverno-app
   namespace: flux-system
 spec:
-  path: ./apps/kube-tools/kyverno/app
+  path: ./kubernetes/apps/kube-tools/kyverno/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -19,10 +19,10 @@ metadata:
   name: kube-tools-kyverno-policies
   namespace: flux-system
 spec:
-  path: ./apps/kube-tools/kyverno/policies
+  path: ./kubernetes/apps/kube-tools/kyverno/policies
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

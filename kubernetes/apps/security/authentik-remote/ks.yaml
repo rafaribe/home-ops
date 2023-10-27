@@ -10,7 +10,7 @@ spec:
   path: "./apps/security/authentik-remote/rbac"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -33,7 +33,7 @@ spec:
   path: "./apps/security/authentik-remote/outpost"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

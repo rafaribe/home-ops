@@ -4,10 +4,10 @@ metadata:
   name: monitoring-kube-prometheus-stack-app
   namespace: flux-system
 spec:
-  path: ./apps/monitoring/kube-prometheus-stack/app
+  path: ./kubernetes/apps/monitoring/kube-prometheus-stack/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -19,10 +19,10 @@ metadata:
   name: monitoring-alertmanager-discord
   namespace: flux-system
 spec:
-  path: ./apps/monitoring/kube-prometheus-stack/alertmanager-discord
+  path: ./kubernetes/apps/monitoring/kube-prometheus-stack/alertmanager-discord
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

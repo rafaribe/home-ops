@@ -6,10 +6,10 @@ metadata:
   name: cluster-apps-intel-device-plugin
   namespace: flux-system
 spec:
-  path: ./apps/kube-system/intel-device-plugin/app
+  path: ./kubernetes/apps/kube-system/intel-device-plugin/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m
@@ -23,10 +23,10 @@ metadata:
   name: cluster-apps-intel-device-plugin-gpu
   namespace: flux-system
 spec:
-  path: ./apps/kube-system/intel-device-plugin/gpu
+  path: ./kubernetes/apps/kube-system/intel-device-plugin/gpu
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m
@@ -40,10 +40,10 @@ metadata:
   name: cluster-apps-intel-device-plugin-exporter
   namespace: flux-system
 spec:
-  path: ./apps/kube-system/intel-device-plugin/exporter
+  path: ./kubernetes/apps/kube-system/intel-device-plugin/exporter
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

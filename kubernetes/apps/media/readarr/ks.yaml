@@ -9,7 +9,7 @@ spec:
   path: "./apps/media/readarr/audio"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false # no flux ks dependents
 ---
@@ -23,6 +23,6 @@ spec:
   path: "./apps/media/readarr/ebooks"
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false # no flux ks dependents

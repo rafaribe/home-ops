@@ -6,10 +6,10 @@ metadata:
   name: csi-driver-nfs
   namespace: flux-system
 spec:
-  path: ./apps/storage/csi-driver-nfs/app
+  path: ./kubernetes/apps/storage/csi-driver-nfs/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

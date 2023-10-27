@@ -6,10 +6,10 @@ metadata:
   name: media-browser
   namespace: flux-system
 spec:
-  path: ./apps/media/media-browser/app
+  path: ./kubernetes/apps/media/media-browser/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

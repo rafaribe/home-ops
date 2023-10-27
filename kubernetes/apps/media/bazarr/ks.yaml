@@ -6,10 +6,10 @@ metadata:
   name: media-bazarr
   namespace: flux-system
 spec:
-  path: ./apps/media/bazarr/app
+  path: ./kubernetes/apps/media/bazarr/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: false
   interval: 30m

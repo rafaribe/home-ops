@@ -4,10 +4,10 @@ metadata:
   name: monitoring-grafana-app
   namespace: flux-system
 spec:
-  path: ./apps/monitoring/grafana/app
+  path: ./kubernetes/apps/monitoring/grafana/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
@@ -19,10 +19,10 @@ metadata:
   name: monitoring-grafana-dashboards
   namespace: flux-system
 spec:
-  path: ./apps/monitoring/grafana/dashboards
+  path: ./kubernetes/apps/monitoring/grafana/dashboards
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m

@@ -6,10 +6,10 @@ metadata:
   name: kube-system-node-nvidia-gpu-operator
   namespace: flux-system
 spec:
-  path: ./apps/kube-system/nvidia-gpu-operator/app
+  path: ./kubernetes/apps/kube-system/nvidia-gpu-operator/app
   prune: true
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: home-ops
   wait: true
   interval: 30m
