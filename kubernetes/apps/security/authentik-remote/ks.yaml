@@ -7,7 +7,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./apps/security/authentik-remote/rbac"
+  path: "./kubernetes/apps/security/authentik-remote/rbac"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -30,7 +30,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./apps/security/authentik-remote/outpost"
+  path: "./kubernetes/apps/security/authentik-remote/outpost"
   prune: true
   sourceRef:
     kind: GitRepository

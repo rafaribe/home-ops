@@ -7,7 +7,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./apps/networking/metallb/app/"
+  path: "./kubernetes/apps/networking/metallb/app/"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -25,7 +25,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./apps/networking/metallb/config/"
+  path: "./kubernetes/apps/networking/metallb/config/"
   prune: true
   sourceRef:
     kind: GitRepository

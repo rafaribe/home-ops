@@ -11,7 +11,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  path: "./apps/actions-runner-system/actions-runner-controller/app"
+  path: "./kubernetes/apps/actions-runner-system/actions-runner-controller/app"
   prune: true
   wait: true
   sourceRef:
@@ -28,7 +28,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  path: "./apps/actions-runner-system/actions-runner-controller/runners"
+  path: "./kubernetes/apps/actions-runner-system/actions-runner-controller/runners"
   prune: true
   wait: false
   sourceRef:

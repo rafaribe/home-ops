@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: "./apps/media/readarr/audio"
+  path: "./kubernetes/apps/media/readarr/audio"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -20,7 +20,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: "./apps/media/readarr/ebooks"
+  path: "./kubernetes/apps/media/readarr/ebooks"
   prune: true
   sourceRef:
     kind: GitRepository

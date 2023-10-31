@@ -7,7 +7,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./apps/media/flaresolverr/app/"
+  path: "./kubernetes/apps/media/flaresolverr/app/"
   prune: true
   sourceRef:
     kind: GitRepository
