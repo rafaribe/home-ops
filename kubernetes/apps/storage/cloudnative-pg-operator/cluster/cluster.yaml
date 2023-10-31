@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: truenas-storage
+  name: home-ops-storage
   namespace: storage
   annotations:
     kyverno.io/ignore: "true"
@@ -29,7 +29,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgresql/
       endpointURL: http://minio.rafaribe.com
-      serverName: truenas-storage
+      serverName: home-ops-storage
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-minio
@@ -42,7 +42,7 @@ spec:
       barmanObjectStore:
         destinationPath: s3://postgresql/
         endpointURL: http://minio.rafaribe.com
-        serverName: truenas-storage
+        serverName: home-ops-storage
         s3Credentials:
           accessKeyId:
             name: cloudnative-pg-minio
