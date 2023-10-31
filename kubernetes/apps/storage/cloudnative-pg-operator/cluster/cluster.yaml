@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: truenas-storage
+  namespace: storage
+  annotations:
+    kyverno.io/ignore: "true"
+spec:
+  instances: 3
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 100Gi
+    storageClass: ceph-block
+  superuserSecret:
+    name: cloudnative-pg-superuser
+  monitoring:
+    enablePodMonitor: true
+
+  bootstrap:
+    recovery:
+      source: clusterBackup
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      destinationPath: s3://postgresql/
+      endpointURL: http://minio.rafaribe.com
+      serverName: truenas-storage
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg-minio
+          key: MINIO_ACCESS_KEY
+        secretAccessKey:
+          name: cloudnative-pg-minio
+          key: MINIO_SECRET_KEY
+  externalClusters:
+    - name: clusterBackup
+      barmanObjectStore:
+        destinationPath: s3://postgresql/
+        endpointURL: http://minio.rafaribe.com
+        serverName: truenas-storage
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg-minio
+            key: MINIO_ACCESS_KEY
+          secretAccessKey:
+            name: cloudnative-pg-minio
+            key: MINIO_SECRET_KEY
+        wal:
+          maxParallel: 8

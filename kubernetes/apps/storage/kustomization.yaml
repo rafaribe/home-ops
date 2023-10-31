@@ -8,3 +8,4 @@ resources:
   # Flux-Kustomizations
   - ./csi-driver-nfs/ks.yaml
   - ./syncthing/ks.yaml
+  - ./cloudnative-pg-operator/ks.yaml
