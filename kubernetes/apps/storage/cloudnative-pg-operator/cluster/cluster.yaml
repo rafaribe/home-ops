@@ -10,6 +10,7 @@ metadata:
 spec:
   instances: 3
   primaryUpdateStrategy: unsupervised
+  enableSuperuserAccess: true
   storage:
     size: 100Gi
     storageClass: ceph-block
