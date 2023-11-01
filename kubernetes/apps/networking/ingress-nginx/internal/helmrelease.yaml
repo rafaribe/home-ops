@@ -93,15 +93,6 @@ spec:
       extraArgs:
         default-ssl-certificate: "networking/wildcard-default-certificate-tls"
 
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: ingress-nginx
-              app.kubernetes.io/component: controller
-
     defaultBackend:
       enabled: false
 

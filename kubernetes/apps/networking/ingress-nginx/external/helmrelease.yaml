@@ -98,14 +98,6 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "networking/wildcard-default-certificate-tls"
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: ingress-nginx
-              app.kubernetes.io/component: controller
       podAnnotations:
         configmap.reloader.stakater.com/reload: *proxiednetworks
     defaultBackend:
