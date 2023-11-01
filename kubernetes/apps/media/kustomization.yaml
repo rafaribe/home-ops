@@ -13,7 +13,7 @@ resources:
   - ./jellyfin/ks.yaml
   - ./media-browser/ks.yaml
   - ./openbooks/ks.yaml
-  - ./overseerr/ks.yaml
+  # - ./overseerr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./radarr/ks.yaml
   - ./readarr/ks.yaml
