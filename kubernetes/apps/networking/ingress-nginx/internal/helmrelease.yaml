@@ -18,7 +18,7 @@ spec:
   install:
     createNamespace: true
   values:
-    fullnameOverride: nginx-internal
+    fullnameOverride: internal-nginx
 
     controller:
       replicaCount: 3
@@ -39,14 +39,14 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: "ingress-int.rafaribe.com"
         labels:
           pool: lb
-        internalTrafficPolicy: Cluster
         externalTrafficPolicy: Cluster
 
       publishService:
         enabled: true
 
       ingressClassResource:
-        default: true
+        name: internal-nginx
+        default: false
         controllerValue: k8s.io/ingress-nginx-internal
 
       admissionWebhooks:

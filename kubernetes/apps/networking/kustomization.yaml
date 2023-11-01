@@ -11,3 +11,5 @@ resources:
   #- ./k8s-gateway/ks.yaml
   # - ./static-routes/ks.yaml
   - ./cloudflare-dyndns/ks.yaml
+  - ./gateway-api/ks.yaml
+  - ./nginx-gateway-fabric/ks.yaml

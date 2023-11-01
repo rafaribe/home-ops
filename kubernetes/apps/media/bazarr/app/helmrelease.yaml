@@ -44,7 +44,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: external-nginx
         hosts:
           - host: &host bazarr.${EXTERNAL_DOMAIN}
             paths:

@@ -26,7 +26,7 @@ spec:
           - "/config/.vscode"
         ingress:
           enabled: true
-          ingressClassName: nginx
+          ingressClassName: external-nginx
           annotations:
             hajimari.io/appName: "Hass Config"
             hajimari.io/icon: cib:visual-studio-code

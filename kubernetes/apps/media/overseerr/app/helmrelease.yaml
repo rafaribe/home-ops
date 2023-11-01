@@ -48,7 +48,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: external-nginx
         hosts:
           - host: &host requests.rafaribe.com
             paths:

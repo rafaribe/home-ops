@@ -73,7 +73,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: external-nginx
         annotations:
           hajimari.io/icon: simple-icons:gatsby
         hosts:

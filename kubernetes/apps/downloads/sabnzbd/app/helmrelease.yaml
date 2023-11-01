@@ -74,7 +74,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: external-nginx
         hosts:
           - host: &host "sabnzbd.${EXTERNAL_DOMAIN}"
             paths:

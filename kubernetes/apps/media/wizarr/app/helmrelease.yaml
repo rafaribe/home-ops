@@ -48,7 +48,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: external-nginx
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           nginx.ingress.kubernetes.io/auth-method: GET
