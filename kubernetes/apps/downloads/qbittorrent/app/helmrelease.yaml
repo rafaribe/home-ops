@@ -33,11 +33,13 @@ spec:
   values:
     controller:
       type: statefulset
-      annotations:
-        configmap.reloader.stakater.com/reload: qbittorrent-scripts
-    image:
-      repository: ghcr.io/onedr0p/qbittorrent
-      tag: 4.6.0@sha256:cb6259df3be61a5108bc4f85b09a523fc4b250589ca9b315ef927cbdf779afb6
+      containers:
+        main:
+          annotations:
+            configmap.reloader.stakater.com/reload: qbittorrent-scripts
+          image:
+            repository: ghcr.io/onedr0p/qbittorrent
+            tag: 4.6.0@sha256:cb6259df3be61a5108bc4f85b09a523fc4b250589ca9b315ef927cbdf779afb6
     env:
       TZ: ${TZ}
       QBITTORRENT__PORT: &port 80
