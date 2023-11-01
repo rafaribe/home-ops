@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: qbittorrent
+  name: &name qbittorrent
   namespace: downloads
 spec:
   interval: 30m
@@ -41,6 +41,7 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
     controllers:
       main:
+        type: statefulset
         containers:
           main:
             image:
@@ -54,6 +55,13 @@ spec:
               requests:
                 cpu: 200m
                 memory: 700Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
     service:
       main:
         ports:
@@ -91,12 +99,6 @@ spec:
         tls:
           - hosts:
               - *host
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
     # Note: If downloading very large torrents it might be worth using NFS for your download directory.
     # Beware if you are downloading torrents directly to a ZFS dataset that dataset will accrue fragmentation.
     persistence:
@@ -117,4 +119,3 @@ spec:
         subPath: completed.sh
         defaultMode: 0775
         readOnly: true
-
