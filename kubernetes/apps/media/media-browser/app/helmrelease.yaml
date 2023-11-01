@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.rafaribe.com/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -29,58 +29,79 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
-    controller:
-      type: statefulset
-    image:
-      # https://github.com/filebrowser/filebrowser/issues/1571
-      repository: ghcr.io/onedr0p/filebrowser
-      tag: v2.25.0
-    env:
-      TZ: Europe/Lisbon
-      FB_DATABASE: "/config/filebrowser.db"
-      FB_ROOT: "/media"
-      FB_LOG: "stdout"
-      FB_NOAUTH: "true"
+    defaultPodOptions:
+      enableServiceLinks: false
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [44, 105, 10000, 568]
+    controllers:
+      main:
+        type: statefulset
+        containers:
+          main:
+            image:
+              # https://github.com/filebrowser/filebrowser/issues/1571
+              repository: ghcr.io/onedr0p/filebrowser
+              tag: v2.25.0
+            env:
+              TZ: ${TZ}
+              FB_DATABASE: "/config/filebrowser.db"
+              FB_ROOT: "/media"
+              FB_LOG: "stdout"
+              FB_NOAUTH: "true"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 80
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 500Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
     service:
       main:
+        ipFamilyPolicy: PreferDualStack
         ports:
           http:
-            port: &port 80
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /health
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
+            port: 80
     ingress:
       main:
         enabled: true
-        ingressClassName: external-nginx
+        className: external-nginx
         annotations:
-          auth.home.arpa/enabled: "true"
+          hajimari.io/icon: mdi:folder-play-outline
         hosts:
           - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
     persistence:
       media:
         enabled: true
@@ -88,9 +109,3 @@ spec:
         server: truenas.rafaribe.site
         path: /mnt/storage-0/media
         mountPath: /media
-    resources:
-      requests:
-        cpu: 10m
-        memory: 50Mi
-      limits:
-        memory: 500Mi
