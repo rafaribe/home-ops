@@ -57,7 +57,6 @@ spec:
   retryInterval: 1m
   timeout: 3m
   dependsOn:
-    - name: ingress-nginx-app
     - name: cert-manager
     - name: cert-manager-issuers
   healthChecks:
