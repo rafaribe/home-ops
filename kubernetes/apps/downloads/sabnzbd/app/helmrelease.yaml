@@ -59,6 +59,12 @@ spec:
           envFrom:
             - secretRef:
                 name: sabnzbd-secret
+          resources:
+            requests:
+              cpu: 10m
+              memory: 250Mi
+            limits:
+              memory: 500Mi
       statefulset:
         volumeClaimTemplates:
           - name: config
@@ -112,9 +118,3 @@ spec:
       incomplete:
         enabled: true
         type: emptyDir
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 500Mi
