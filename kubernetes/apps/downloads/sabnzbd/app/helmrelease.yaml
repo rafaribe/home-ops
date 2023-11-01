@@ -31,26 +31,41 @@ spec:
     - name: volsync
       namespace: volsync
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        supplementalGroups: [3000, 3001, 568]
     controller:
       type: statefulset
       annotations:
         reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/sabnzbd
-      tag: 4.1.0@sha256:91f3cd6b9f1c9988af5447f464b299630706eb7f691dee857eab1487d4bb626e
-    env:
-      TZ: Europe/Lisbon
-      SABNZBD__PORT: &port 80
-      SABNZBD__HOST_WHITELIST_ENTRIES: >-
-        sabnzbd,
-        sabnzbd.default,
-        sabnzbd.default.svc,
-        sabnzbd.default.svc.cluster,
-        sabnzbd.default.svc.cluster.local,
-        sabnzbd.rafaribe.com
-    envFrom:
-      - secretRef:
-          name: sabnzbd-secret
+      containers:
+        main:
+          image:
+            repository: ghcr.io/onedr0p/sabnzbd
+            tag: 4.1.0@sha256:91f3cd6b9f1c9988af5447f464b299630706eb7f691dee857eab1487d4bb626e
+          env:
+            TZ: ${TZ}
+            SABNZBD__PORT: &port 80
+            SABNZBD__HOST_WHITELIST_ENTRIES: >-
+              sabnzbd,
+              sabnzbd.default,
+              sabnzbd.default.svc,
+              sabnzbd.default.svc.cluster,
+              sabnzbd.default.svc.cluster.local,
+              sabnzbd.rafaribe.com
+          envFrom:
+            - secretRef:
+                name: sabnzbd-secret
+      statefulset:
+        volumeClaimTemplates:
+          - name: config
+            mountPath: /config
+            accessMode: ReadWriteOnce
+            size: 1Gi
+            storageClass: ceph-block
     service:
       main:
         ports:
@@ -74,7 +89,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external-nginx
+        className: external-nginx
         hosts:
           - host: &host "sabnzbd.${EXTERNAL_DOMAIN}"
             paths:
@@ -83,18 +98,6 @@ spec:
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: OnRootMismatch
-      supplementalGroups: [10000]
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
     # Note: If downloading very large nzbs it might be worth using NFS for your download directory.
     persistence:
       media:
@@ -111,4 +114,4 @@ spec:
         cpu: 10m
         memory: 250Mi
       limits:
-        memory: 8000Mi
+        memory: 500Mi
