@@ -22,29 +22,44 @@ spec:
     remediation:
       retries: 5
   values:
-    image:
-      repository: docker.io/golift/unifi-poller
-      tag: v2.9.2
-    env:
-      TZ: "${TZ}"
-      UP_UNIFI_DEFAULT_ROLE: "homelab-controller"
-      UP_UNIFI_DEFAULT_URL: "https://10.0.1.254"
-      UP_UNIFI_DEFAULT_VERIFY_SSL: false
-      UP_UNIFI_DEFAULT_USER: "unifipoller"
-      UP_UNIFI_DEFAULT_PASS: "unifipoller"
-      UP_UNIFI_DEFAULT_SAVE_SITES: true
-      UP_UNIFI_DEFAULT_SAVE_DPI: false
-      UP_INFLUXDB_DISABLE: true
-      UP_PROMETHEUS_DISABLE: false
-      UP_PROMETHEUS_NAMESPACE: "unifipoller"
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/unpoller/unpoller
+              tag: v2.9.2
+            env:
+              TZ: "${TZ}"
+              UP_UNIFI_DEFAULT_ROLE: "homelab-controller"
+              UP_UNIFI_DEFAULT_URL: "https://10.0.1.254"
+              UP_UNIFI_DEFAULT_VERIFY_SSL: false
+              UP_UNIFI_DEFAULT_USER: "unifipoller"
+              UP_UNIFI_DEFAULT_PASS: "unifipoller"
+              UP_UNIFI_DEFAULT_SAVE_SITES: true
+              UP_UNIFI_DEFAULT_SAVE_DPI: false
+              UP_INFLUXDB_DISABLE: true
+              UP_PROMETHEUS_DISABLE: false
+              UP_PROMETHEUS_NAMESPACE: "unifipoller"
+            resources:
+              requests:
+                cpu: 15m
+                memory: 79M
+              limits:
+                memory: 102M
     service:
       main:
         ports:
           http:
             port: 9130
-    resources:
-      requests:
-        cpu: 10m
-        memory: 100Mi
-      limits:
-        memory: 500Mi
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 2m
+            scrapeTimeout: 30s
