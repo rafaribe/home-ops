@@ -43,7 +43,7 @@ spec:
       barmanObjectStore:
         destinationPath: s3://postgresql/
         endpointURL: http://minio.rafaribe.com
-        serverName: home-ops-storage
+        serverName: truenas-storage
         s3Credentials:
           accessKeyId:
             name: cloudnative-pg-minio
