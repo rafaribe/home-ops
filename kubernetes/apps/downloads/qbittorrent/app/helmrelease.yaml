@@ -74,6 +74,8 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
         tls:
           - hosts:
               - *host
