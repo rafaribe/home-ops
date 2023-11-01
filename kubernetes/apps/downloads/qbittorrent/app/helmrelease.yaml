@@ -31,19 +31,29 @@ spec:
     - name: volsync
       namespace: volsync
   values:
-    controller:
-      type: statefulset
-      containers:
-        main:
-          annotations:
-            configmap.reloader.stakater.com/reload: qbittorrent-scripts
-          image:
-            repository: ghcr.io/onedr0p/qbittorrent
-            tag: 4.6.0@sha256:cb6259df3be61a5108bc4f85b09a523fc4b250589ca9b315ef927cbdf779afb6
-    env:
-      TZ: ${TZ}
-      QBITTORRENT__PORT: &port 80
-      QBITTORRENT__BT_PORT: &bittorrentPort 50413
+    fullnameOverride: *name
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        supplementalGroups: [3000, 3001, 568]
+        fsGroupChangePolicy: "OnRootMismatch"
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/qbittorrent
+              tag: 4.6.0@sha256:cb6259df3be61a5108bc4f85b09a523fc4b250589ca9b315ef927cbdf779afb6
+            env:
+              TZ: ${TZ}
+              QBITTORRENT__PORT: &port 80
+              QBITTORRENT__BT_PORT: &bittorrentPort 50413
+            resources:
+              requests:
+                cpu: 200m
+                memory: 700Mi
     service:
       main:
         ports:
@@ -54,6 +64,7 @@ spec:
       bittorrent:
         enabled: true
         type: LoadBalancer
+        controller: main
         annotations:
           io.cilium/lb-ipam-ips: ${LB_QBITTORRENT}
         labels:
@@ -76,14 +87,10 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      supplementalGroups: [3000, 3001]
     volumeClaimTemplates:
       - name: config
         mountPath: /config
@@ -110,9 +117,4 @@ spec:
         subPath: completed.sh
         defaultMode: 0775
         readOnly: true
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 16Gi
+
