@@ -22,25 +22,52 @@ spec:
     remediation:
       retries: 5
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+        supplementalGroups:
+          - 568
 
-    image:
-      repository: ghcr.io/onedr0p/readarr-nightly
-      tag: 0.3.9.2272@sha256:2a378c0cfe170af9f9747def0541891d8994f81143420dd20a69462f28664d72
-    env:
-      TZ: "{TZ}"
-      READARR__INSTANCE_NAME: Readarr (Audio)
-      READARR__PORT: &port 80
-      READARR__LOG_LEVEL: info
-      READARR__API_KEY:
-        valueFrom:
-          secretKeyRef:
-            name: readarr-audio
-            key: READARR_AUDIO_APIKEY
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
 
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/readarr-nightly
+              tag: 0.3.10.2287
+            envFrom:
+              - secretRef:
+                  name: *app
+            env:
+              TZ: "{TZ}"
+              READARR__INSTANCE_NAME: Readarr (Audio)
+              READARR__PORT: &port 80
+              READARR__LOG_LEVEL: info
+              READARR__API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: readarr-audio
+                    key: READARR_AUDIO_APIKEY
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 1000Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 10Gi
+              storageClass: ceph-block
     service:
       main:
         ports:
@@ -60,14 +87,6 @@ spec:
           - hosts:
               - *host
 
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 568
-
     persistence:
       media:
         enabled: true
@@ -75,13 +94,3 @@ spec:
         server: truenas.rafaribe.site
         path: /mnt/storage-0/media
         mountPath: /media
-
-    podAnnotations:
-      secret.reloader.stakater.com/reload: readarr-audio
-
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 10Gi
-        storageClass: ceph-block
