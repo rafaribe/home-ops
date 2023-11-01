@@ -9,3 +9,9 @@ labels:
   - pairs:
       app.kubernetes.io/name: bazarr
       app.kubernetes.io/instance: bazarr
+configMapGenerator:
+  - name: bazarr-scripts
+    files:
+      - post-process.sh=./scripts/post-process.sh
+configurations:
+  - ./patches/kustomizeconfig.yaml
