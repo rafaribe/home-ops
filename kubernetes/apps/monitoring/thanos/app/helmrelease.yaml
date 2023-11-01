@@ -1,11 +1,13 @@
 ---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: thanos
   namespace: monitoring
 spec:
-  interval: 15m
+  interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: thanos
@@ -14,9 +16,8 @@ spec:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -25,6 +26,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: local-path-provisioner
+      namespace: kube-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     image:
       registry: quay.io
@@ -36,7 +42,7 @@ spec:
         insecure: true
     queryFrontend:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
       ingress:
         enabled: true
         ingressClassName: external-nginx
@@ -44,22 +50,22 @@ spec:
           nginx.ingress.kubernetes.io/whitelist-source-range: |
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           hajimari.io/enable: "false"
-          auth.home.arpa/enabled: "true"
         hostname: &host thanos.${EXTERNAL_DOMAIN}
+        pathType: Prefix
         tls: true
         extraTls:
           - hosts:
               - *host
     query:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
       replicaLabel: ["__replica__"]
       dnsDiscovery:
         sidecarsService: kube-prometheus-stack-thanos-discovery
         sidecarsNamespace: monitoring
     bucketweb:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
       ingress:
         enabled: false
     compactor:
@@ -67,23 +73,23 @@ spec:
       extraFlags:
         - --compact.concurrency=4
         - --delete-delay=30m
-      retentionResolutionRaw: 14d
-      retentionResolution5m: 14d
-      retentionResolution1h: 14d
+      retentionResolutionRaw: 30d
+      retentionResolution5m: 60d
+      retentionResolution1h: 90d
       persistence:
         enabled: true
-        storageClass: ceph-block
+        storageClass: local-path
         size: 20Gi
     storegateway:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
       persistence:
         enabled: true
-        storageClass: ceph-block
+        storageClass: local-path
         size: 20Gi
     ruler:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
       replicaLabel: __replica__
       alertmanagers:
         [
@@ -103,7 +109,7 @@ spec:
                   severity: critical
       persistence:
         enabled: true
-        storageClass: ceph-block
+        storageClass: local-path
         size: 20Gi
     metrics:
       enabled: true
