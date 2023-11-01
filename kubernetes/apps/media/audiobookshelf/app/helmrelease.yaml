@@ -27,13 +27,20 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: ingress-nginx
-      namespace: networking
   values:
-    image:
-      repository: ghcr.io/advplyr/audiobookshelf
-      tag: latest
+    controllers:
+      main:
+        type: deployment
+        replicas: 1
+        pod:
+          labels:
+            ingress.home.arpa/nginx: "allow"
+            egress.home.arpa/world: "allow"
+        containers:
+          main:
+            image:
+              repository: "ghcr.io/advplyr/audiobookshelf"
+              tag: "2.4.4"
     env:
       TZ: ${TZ}
     service:
@@ -54,7 +61,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "external-nginx"
         annotations:
           forecastle.stakater.com/expose: "true"
           forecastle.stakater.com/icon: podcast

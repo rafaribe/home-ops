@@ -189,7 +189,7 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      ingressClassName: "nginx"
+      ingressClassName: "external-nginx"
       annotations:
         external-dns.alpha.kubernetes.io/hostname: grafana.${EXTERNAL_DOMAIN}
         external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}

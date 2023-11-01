@@ -53,7 +53,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "external-nginx"
         annotations:
           external-dns.alpha.kubernetes.io/hostname: pgadmin.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}

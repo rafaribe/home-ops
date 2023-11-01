@@ -51,7 +51,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "external-nginx"
         annotations:
           hajimari.io/icon: "mdi:book-search"
         hosts:
