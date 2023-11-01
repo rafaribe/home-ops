@@ -61,7 +61,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "external-nginx"
+        className: external-nginx
         annotations:
           forecastle.stakater.com/expose: "true"
           forecastle.stakater.com/icon: podcast
