@@ -38,33 +38,34 @@ spec:
         fsGroup: 1000
         supplementalGroups: [3000, 3001, 568]
     controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-      containers:
-        main:
-          image:
-            repository: ghcr.io/onedr0p/sabnzbd
-            tag: 4.1.0@sha256:91f3cd6b9f1c9988af5447f464b299630706eb7f691dee857eab1487d4bb626e
-          env:
-            TZ: ${TZ}
-            SABNZBD__PORT: &port 80
-            SABNZBD__HOST_WHITELIST_ENTRIES: >-
-              sabnzbd,
-              sabnzbd.default,
-              sabnzbd.default.svc,
-              sabnzbd.default.svc.cluster,
-              sabnzbd.default.svc.cluster.local,
-              sabnzbd.rafaribe.com
-          envFrom:
-            - secretRef:
-                name: sabnzbd-secret
-          resources:
-            requests:
-              cpu: 10m
-              memory: 250Mi
-            limits:
-              memory: 500Mi
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/sabnzbd
+              tag: 4.1.0@sha256:91f3cd6b9f1c9988af5447f464b299630706eb7f691dee857eab1487d4bb626e
+            env:
+              TZ: ${TZ}
+              SABNZBD__PORT: &port 80
+              SABNZBD__HOST_WHITELIST_ENTRIES: >-
+                sabnzbd,
+                sabnzbd.default,
+                sabnzbd.default.svc,
+                sabnzbd.default.svc.cluster,
+                sabnzbd.default.svc.cluster.local,
+                sabnzbd.rafaribe.com
+            envFrom:
+              - secretRef:
+                  name: sabnzbd-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 500Mi
       statefulset:
         volumeClaimTemplates:
           - name: config
