@@ -18,22 +18,32 @@ spec:
     createNamespace: true
     remediation:
       retries: 5
+      remediateLastFailure: true
   upgrade:
     remediation:
       retries: 5
+      remediateLastFailure: true
   values:
-    image:
-      repository: ghcr.io/flaresolverr/flaresolverr
-      tag: v3.3.6@sha256:07abf069637a3a2d94b82d4074bb61237ecfe62536ac8f6fc4664fd98329f7c4
-
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/flaresolverr/flaresolverr
+              tag: v3.3.6
+            env:
+              TZ: ${TZ}
+            resources:
+              requests:
+                memory: 250Mi
+                cpu: 10m
+              limits:
+                memory: 500Mi
     service:
       main:
         ports:
           http:
             port: 8191
-
-    resources:
-      requests:
-        memory: 105Mi
-      limits:
-        memory: 292Mi
+    ingress:
+      main:
+        enabled: false
