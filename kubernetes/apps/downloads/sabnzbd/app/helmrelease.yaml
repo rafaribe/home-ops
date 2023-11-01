@@ -37,7 +37,7 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         supplementalGroups: [3000, 3001, 568]
-    controller:
+    controllers:
       main:
         type: statefulset
         annotations:
