@@ -12,7 +12,7 @@ spec:
       chart: nginx-gateway-fabric
       version: 1.0.0
       sourceRef:
-        kind: OCIRepository
+        kind: HelmRepository
         name: nginx-gateway-fabric
         namespace: flux-system
       interval: 10m
