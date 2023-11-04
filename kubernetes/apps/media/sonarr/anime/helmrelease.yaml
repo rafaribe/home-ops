@@ -6,7 +6,7 @@ metadata:
   name: sonarr-anime
   namespace: media
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: app-template
@@ -15,61 +15,66 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
+      interval: 15m
   install:
+    createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
-    cleanupOnFail: true
     remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+      retries: 5
   values:
-    initContainers:
-      01-init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.9
-        imagePullPolicy: IfNotPresent
-        envFrom: &envFrom
-          - secretRef:
-              name: sonarr
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/sonarr-develop
-      tag: 4.0.0.703@sha256:7f97e4783153bedc1c70568beb2bf925826fc92a4461d61ba58e8eda1649b49f
-    env:
-      TZ: Europe/Lisbon
-      PUSHOVER_DEBUG: "false"
-      SONARR__INSTANCE_NAME: Sonarr Anime
-      SONARR__PORT: &port 80
-      SONARR__LOG_LEVEL: info
-      SONARR__THEME: dark
+    controllers:
+      main:
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [10000]
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/sonarr-develop
+              tag: 4.0.0.703@sha256:7f97e4783153bedc1c70568beb2bf925826fc92a4461d61ba58e8eda1649b49f
+            probes:
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 15m
+                memory: 443Mi
+              limits:
+                memory: 474Mi
+            env:
+              TZ: Europe/Lisbon
+              PUSHOVER_DEBUG: "false"
+              SONARR__INSTANCE_NAME: Sonarr Anime
+              SONARR__PORT: &port 80
+              SONARR__LOG_LEVEL: info
+              SONARR__THEME: dark
     envFrom: *envFrom
+
+        initContainers:
+          init-permission:
+            image:
+              repository: ghcr.io/cbc02009/busybox
+              tag: 1.36.1
+            imagePullPolicy: IfNotPresent
+            command:
+              - sh
+              - -c
+            args:
+              - chown -R 568:568 /tv;
+                chown -R 568:568 /downloads
+            securityContext:
+              runAsUser: 0
     service:
       main:
         ports:
           http:
             port: *port
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /ping
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
     ingress:
       main:
         enabled: true
@@ -84,12 +89,6 @@ spec:
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: OnRootMismatch
-      supplementalGroups: [10000]
     persistence:
       config:
         enabled: true
@@ -108,9 +107,3 @@ spec:
         mountPath: /scripts/pushover-notify.sh
         defaultMode: 0775
         readOnly: true
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 2000Mi
