@@ -31,32 +31,46 @@ spec:
     - name: volsync
       namespace: volsync
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/recyclarr/recyclarr
-      tag: 6.0.2
-    env:
-      TZ: Europe/Lisbon
-    envFrom:
-      - secretRef:
-          name: recyclarr-secret
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+        supplementalGroups:
+          - 568
+
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+    containers:
+      main:
+        image:
+          repository: ghcr.io/recyclarr/recyclarr
+          tag: 6.0.2
+        env:
+          TZ: Europe/Lisbon
+        envFrom:
+          - secretRef:
+              name: recyclarr-secret
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 10Gi
+              storageClass: ceph-block
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            memory: 200Mi
     service:
       main:
         enabled: false
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: OnRootMismatch
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
     persistence:
       config-file:
         enabled: true
@@ -65,9 +79,3 @@ spec:
         subPath: recyclarr.yml
         mountPath: /config/recyclarr.yml
         readOnly: true
-    resources:
-      requests:
-        cpu: 10m
-        memory: 50Mi
-      limits:
-        memory: 200Mi
