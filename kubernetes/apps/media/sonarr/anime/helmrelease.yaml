@@ -54,22 +54,14 @@ spec:
               SONARR__PORT: &port 80
               SONARR__LOG_LEVEL: info
               SONARR__THEME: dark
-            envFrom: *envFrom
-
+            envFrom: &envFrom
+              - secretRef:
+                  name: sonarr
         initContainers:
-          init-permission:
-            image:
-              repository: ghcr.io/cbc02009/busybox
-              tag: 1.36.1
+          init-db:
+            image: ghcr.io/onedr0p/postgres-init:14.9
             imagePullPolicy: IfNotPresent
-            command:
-              - sh
-              - -c
-            args:
-              - chown -R 568:568 /tv;
-                chown -R 568:568 /downloads
-            securityContext:
-              runAsUser: 0
+            envFrom: *envFrom
     service:
       main:
         ports:
