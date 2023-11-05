@@ -77,7 +77,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external-nginx
+        className: external-nginx
         hosts:
           - host: &host "audio.rafaribe.com"
             paths:
