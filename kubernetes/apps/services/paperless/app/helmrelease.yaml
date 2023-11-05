@@ -111,25 +111,29 @@ spec:
     persistence:
       data:
         enabled: true
-        mountPath: /usr/src/paperless/data
         type: nfs
         server: truenas.rafaribe.site
         path: /mnt/storage-0/docs/paperless/data
+        globalMounts:
+          - path: /usr/src/paperless/data
       media:
         enabled: true
-        mountPath: /usr/src/paperless/media
         type: nfs
         server: truenas.rafaribe.site
         path: /mnt/storage-0/docs/paperless/media
+        globalMounts:
+          - path: /usr/src/paperless/media
       consume:
         enabled: true
-        mountPath: ${NAS_DIR}/paperless/consume
         type: nfs
         server: truenas.rafaribe.site
         path: /mnt/storage-0/docs/paperless/incoming
+        globalMounts:
+          - path: /usr/src/paperless/consume
       export:
         enabled: true
-        mountPath: /usr/src/paperless/export
         type: nfs
         server: truenas.rafaribe.site
         path: /mnt/storage-0/docs/paperless/export
+        globalMounts:
+          - path: /usr/src/paperless/export
