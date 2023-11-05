@@ -17,7 +17,6 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-
   values:
     controllers:
       main:
