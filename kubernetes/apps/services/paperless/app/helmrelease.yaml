@@ -34,7 +34,7 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-init:14.9
+              repository: ghcr.io/onedr0p/postgres-init
               tag: 14.9
             imagePullPolicy: IfNotPresent
             envFrom: &envFrom
