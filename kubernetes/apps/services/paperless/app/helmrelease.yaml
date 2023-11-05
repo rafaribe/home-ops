@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -10,52 +11,81 @@ spec:
     spec:
       chart: app-template
       version: 2.0.3
-      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    initContainers:
-      01-init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.9
-        imagePullPolicy: IfNotPresent
-        envFrom: &envFrom
-          - secretRef:
-              name: paperless
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/paperless-ngx/paperless-ngx
-      tag: 1.17.4
-    env:
-      COMPOSE_PROJECT_NAME: paperless
-      PAPERLESS_CONSUMER_POLLING: "60"
-      PAPERLESS_CONSUMER_RECURSIVE: "true"
-      PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
-      PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
-      PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: HTTP_REMOTE_USER
-      PAPERLESS_ALLOWED_HOSTS: https://paperless.rafaribe.com
-      PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
-      PAPERLESS_OCR_LANGUAGES: por eng
-      PAPERLESS_OCR_LANGUAGE: por
-      PAPERLESS_TIME_ZONE: Europe/Lisbon
-      PAPERLESS_URL: https://paperless.rafaribe.com
-      PAPERLESS_PORT: &port 80
-      PAPERLESS_REDIS: redis://localhost:6379
-      PAPERLESS_TASK_WORKERS: 2
-      PAPERLESS_TIKA_ENABLED: 1
-      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
-      PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
-      PAPERLESS_TRUSTED_PROXIES: 10.42.0.0/16,10.0.1.0/24,10.0.4.0/24
-      USERMAP_UID: 1000
-      USERMAP_GID: 1000
-    postgresql:
-      enabled: false
-    envFrom: *envFrom
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image: ghcr.io/onedr0p/postgres-init:14.9
+            imagePullPolicy: IfNotPresent
+            envFrom: &envFrom
+              - secretRef:
+                  name: paperless
+        containers:
+          main:
+            image:
+              repository: ghcr.io/paperless-ngx/paperless-ngx
+              tag: 1.17.4
+            env:
+              COMPOSE_PROJECT_NAME: paperless
+              PAPERLESS_CONSUMER_POLLING: "60"
+              PAPERLESS_CONSUMER_RECURSIVE: "true"
+              PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
+              PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
+              PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: HTTP_REMOTE_USER
+              PAPERLESS_ALLOWED_HOSTS: https://paperless.rafaribe.com
+              PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
+              PAPERLESS_OCR_LANGUAGES: por eng
+              PAPERLESS_OCR_LANGUAGE: por
+              PAPERLESS_TIME_ZONE: Europe/Lisbon
+              PAPERLESS_URL: https://paperless.rafaribe.com
+              PAPERLESS_PORT: &port 80
+              PAPERLESS_REDIS: redis://localhost:6379
+              PAPERLESS_TASK_WORKERS: 2
+              PAPERLESS_TIKA_ENABLED: 1
+              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
+              PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
+              PAPERLESS_TRUSTED_PROXIES: 10.42.0.0/16,10.0.1.0/24,10.0.4.0/24
+              USERMAP_UID: 1000
+              USERMAP_GID: 1000
+            envFrom: *envFrom
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1000Mi
+              limits:
+                memory: 5000Mi
+          gotenburg:
+            image:
+              repository: thecodingmachine/gotenberg
+              tag: 7.9.2
+            env:
+              - { name: DISABLE_GOOGLE_CHROME, value: "1" }
+          redis:
+            image:
+              repository: public.ecr.aws/docker/library/redis
+              tag: 7.2.3
+          tika:
+            image:
+              repository: ghcr.io/paperless-ngx/tika
+              tag: 2.9.0-full
     service:
       main:
         ports:
@@ -64,7 +94,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "external-nginx"
+        className: nginx
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
           external-dns.alpha.kubernetes.io/hostname: paperless.rafaribe.com
@@ -73,7 +103,9 @@ spec:
           - host: &host "paperless.rafaribe.com"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
@@ -103,24 +135,3 @@ spec:
         type: nfs
         server: ${NAS_ADDRESS}
         path: ${NAS_DOCUMENTS}/paperless/export
-    resources:
-      requests:
-        cpu: 23m
-        memory: 300Mi
-      limits:
-        memory: 750Mi
-    sidecars:
-      redis:
-        name: redis
-        image: public.ecr.aws/docker/library/redis:7.2.2@sha256:1f1bd4adf5dabf173b235ba373faef55f3ad53394791d1473763bf5a2181780d
-        imagePullPolicy: IfNotPresent
-      gotenburg:
-        name: gotenburg
-        image: thecodingmachine/gotenberg:7.9.2@sha256:7af0d333fbcc81914496f1d7c630fed1016692e0ad836686c2a988a72169716b
-        env:
-          - name: DISABLE_GOOGLE_CHROME
-            value: "1"
-      tika:
-        image: ghcr.io/paperless-ngx/tika:2.9.0-full@sha256:a6831e844fd4f57fcd1abe4e10489c4b868fcf73f19aef6ed3d2bfa06dd6f14f
-        name: tika
-        imagePullPolicy: Always
