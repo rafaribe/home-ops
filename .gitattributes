@@ -1,4 +1,4 @@
+* text=auto eol=lf
 *.sops.* diff=sopsdiffer
 *.sops.toml linguist-language=JSON
-*-secrets.{yaml,json,ini,env} diff=sopsdiffer
-.sops.*.{yaml,json,ini,env} diff=sopsdiffer
+*.yaml.j2 linguist-language=YAML

@@ -1,8 +1,0 @@
-apiVersion: cloudflare.zelic.io/v1alpha1
-kind: CloudflareAccessApplication
-metadata:
-  name: internal-domain
-  namespace: zero-trust-system
-spec:
-  name: internal-domain-passthrough'
-  domain: ${INTERNAL_DOMAIN}

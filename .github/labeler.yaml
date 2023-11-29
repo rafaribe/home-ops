@@ -1,13 +1,11 @@
 ---
-area/ci:
-    - .github/**/*
-area/cluster:
-    - kubernetes/global/**/*
-    - kubernetes/clusters/**/*
-    - kubernetes/manifests/**/*
-area/docs:
-    - docs/**/*
-area/os:
-    - bootstrap/ansible/k3s/**/*
-area/backup-server:
-    - bootstrap/ansible/nas/**/*
+area/ansible:
+  - "ansible/**/*"
+area/github:
+  - ".github/**/*"
+area/kubernetes:
+  - "kubernetes/**/*"
+area/hack:
+  - "hack/**/*"
+area/terraform:
+  - "terraform/**/*"

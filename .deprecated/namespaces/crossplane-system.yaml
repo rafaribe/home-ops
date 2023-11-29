@@ -1,7 +1,0 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: crossplane-system
-  labels:
-    goldilocks.fairwinds.com/enabled: "true"

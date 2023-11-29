@@ -1,9 +1,0 @@
----
-apiVersion: metal.sidero.dev/v1alpha1
-kind: ServerClass
-metadata:
-  name: controlplanes
-spec:
-  selector:
-    matchLabels:
-      controlplanes: "true"
