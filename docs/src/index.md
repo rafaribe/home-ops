@@ -47,7 +47,7 @@ This allows for a interesting workflow:
         <td>Container orchestration platform for automating deployment, scaling, and management of containerized applications. T</td>
     </tr>
         <tr>
-         <td><img src="https://cncf-branding.netlify.app/img/projects/helm/icon/color/helm-icon-color.svg" alt="helm"></td>
+         <td><img src="https://helm.sh/img/helm.svg" alt="helm"></td>
         <td><b>Helm</b></td>
         <td>The package manager for Kubernetes</td>
     </tr>
@@ -57,7 +57,7 @@ This allows for a interesting workflow:
         <td>Nginx-based Kubernetes Ingress controller used to manage external access to Kubernetes cluster services.</td>
     </tr>
     <tr>
-         <td><img src="https://cncf-branding.netlify.app/img/projects/flux/icon/color/flux-icon-color.svg" alt="flux"></td>
+         <td><img src="https://fluxcd.io/img/logos/flux-stacked-color.png" alt="flux"></td>
         <td><b>Flux</b></td>
         <td>GitOps continuous delivery tool used to automate application deployments to Kubernetes clusters by managing changes in a Git repository.</td>
     </tr>
@@ -83,7 +83,7 @@ This allows for a interesting workflow:
     </tr>
     </tr>
         <tr>
-         <td><img src="https://cncf-branding.netlify.app/img/projects/thanos/icon/color/thanos-icon-color.svg" alt="loki"></td>
+         <td><img src="https://avatars.githubusercontent.com/u/49725059?s=200&v=4" alt="loki"></td>
         <td><b>Thanos</b></td>
         <td>Metrics efficent backend using S3-storage for Prometheus</td>
     </tr>

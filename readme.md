@@ -48,7 +48,7 @@ _Below are some of the tools I find useful_
 
 ## :handshake:&nbsp; Thanks
 
-A lot of inspiration for my cluster came from the people that have shared their clusters over at [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes)
+A lot of inspiration for my cluster came from the people that have shared their clusters over at [kubernetes at home community](https://github.com/k8s-at-home)
 
 - [xUnholy/k8s-gitops](https://github.com/xUnholy/k8s-gitops)
 - [billimek/k8s-gitops](https://github.com/billimek/k8s-gitops)
@@ -61,6 +61,13 @@ A lot of inspiration for my cluster came from the people that have shared their 
 - [Truxnell/home-cluster](https://github.com/Truxnell/home-cluster)
 - [haraldkoch/kochhaus-home](https://github.com/haraldkoch/kochhaus-home)
 - [auricom/home-ops](https://github.com/auricom/home-ops)
+
+And to the projects that I use every day to help make my cluster better:
+
+- [Kubesearch](https://kubesearch.dev/)
+- [Flux-Local](https://github.com/allenporter/flux-local)
+- [Home Operations Discord](https://discord.gg/qBnQsM3y)
+
 
 ## Star History
 
