@@ -32,7 +32,7 @@ I prefer to have everything on the garage because it's the coldest room in the h
 ## TrueNas Scale Box
 
 - Motherboard: [Supermicro X10SLL-F](https://www.supermicro.com/en/products/motherboard/X10SLL-F)
-- Processor: [Intel Xeon CPU E3-1230 v3 @ 3.30GHz](https://ark.intel.com/content/www/br/pt/ark/products/75054/intel-xeon-processor-e31230-v3-8m-cache-3-30-ghz.html)
+- Processor: [Intel Xeon CPU E3-1230 v3 @ 3.30GHz](https://www.intel.com.br/content/www/br/pt/products/sku/75054/intel-xeon-processor-e31230-v3-8m-cache-3-30-ghz/specifications.html)
 - Memory: 32 GB ECC RAM
 - Boot Disk: [Samsung 850 250GB SSD SATA](https://www.samsung.com/pt/support/model/MZ-75E250B/EU/) (nvme not supported for boot)
 - Storage: [6 TB WD Red Plus](https://www.westerndigital.com/pt-br/products/internal-drives/wd-red-plus-sata-3-5-hdd#WD60EFPX) x2 ZFS Pool
