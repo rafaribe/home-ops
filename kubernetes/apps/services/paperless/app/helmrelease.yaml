@@ -112,28 +112,28 @@ spec:
       data:
         enabled: true
         type: nfs
-        server: truenas.rafaribe.site
+        server: 10.0.1.6
         path: /mnt/storage-0/docs/paperless/data
         globalMounts:
           - path: /usr/src/paperless/data
       media:
         enabled: true
         type: nfs
-        server: truenas.rafaribe.site
+        server: 10.0.1.6
         path: /mnt/storage-0/docs/paperless/media
         globalMounts:
           - path: /usr/src/paperless/media
       consume:
         enabled: true
         type: nfs
-        server: truenas.rafaribe.site
+        server: 10.0.1.6
         path: /mnt/storage-0/docs/paperless/incoming
         globalMounts:
           - path: /usr/src/paperless/consume
       export:
         enabled: true
         type: nfs
-        server: truenas.rafaribe.site
+        server: 10.0.1.6
         path: /mnt/storage-0/docs/paperless/export
         globalMounts:
           - path: /usr/src/paperless/export

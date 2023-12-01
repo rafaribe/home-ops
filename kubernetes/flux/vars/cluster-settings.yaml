@@ -15,7 +15,7 @@ data:
   TZ: Europe/Lisbon
 
   # NAS NFS Settings
-  NAS_ADDRESS: truenas.rafaribe.site
+  NAS_ADDRESS: 10.0.1.6
   NAS_MEDIA: /mnt/storage-0/media
   NAS_DOCUMENTS: /mnt/storage-0/docs
   NAS_CONFIG: /mnt/storage-0/config
