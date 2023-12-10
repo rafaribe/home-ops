@@ -55,10 +55,10 @@ spec:
         enabled: true
         ingressClassName: "external-nginx"
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: pgadmin.${EXTERNAL_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: pgadmin.rafaribe.com
+          external-dns.alpha.kubernetes.io/target: rafaribe.com
         hosts:
-          - host: &host "pgadmin.${EXTERNAL_DOMAIN}"
+          - host: &host "pgadmin..rafaribe.com"
             paths:
               - path: /
                 pathType: Prefix

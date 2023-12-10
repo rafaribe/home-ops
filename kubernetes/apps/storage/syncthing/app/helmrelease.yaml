@@ -22,23 +22,31 @@ spec:
     remediation:
       retries: 5
   values:
-    fullnameOverride: *app
-    image:
-      repository: syncthing/syncthing
-      tag: rc
+    global:
+      nameOverride: *app
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: syncthing/syncthing
+              tag: 1.27.0
+              resources:
+                requests:
+                  cpu: 15m
+                  memory: 249Mi
     service:
       main:
+        enabled: true
         ports:
           http:
             port: 8384
       listdisc:
+        controller: main
         enabled: true
+        type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: ${LB_SYNCTHING}
-        labels:
-          pool: lb
-        type: LoadBalancer
-        externalTrafficPolicy: Local
         ports:
           discovery:
             enabled: true
@@ -51,7 +59,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external-nginx
+        ingressClassName: internal-nginx
         annotations:
           hajimari.io/icon: arcticons:syncthing
         hosts:
