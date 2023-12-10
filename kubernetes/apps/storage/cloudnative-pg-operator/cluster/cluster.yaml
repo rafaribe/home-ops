@@ -19,9 +19,9 @@ spec:
   monitoring:
     enablePodMonitor: true
 
-  bootstrap:
-    recovery:
-      source: clusterBackup
+  # bootstrap:
+  #   recovery:
+  #     source: clusterBackup
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
