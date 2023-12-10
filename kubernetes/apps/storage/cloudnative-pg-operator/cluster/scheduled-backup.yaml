@@ -3,11 +3,11 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: truenas-storage-nightly
+  name: backup-weekend
   namespace: storage
 spec:
-  schedule: "0 0 3 * * *"
+  schedule: "0 3 * * 6,0"
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: truenas-storage
+    name: home-ops-r2
