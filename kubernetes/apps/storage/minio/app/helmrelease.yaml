@@ -41,7 +41,6 @@ spec:
               MINIO_PROMETHEUS_JOB_ID: minio
               MINIO_BROWSER_REDIRECT_URL: "https://minio.${EXTERNAL_DOMAIN}"
               MINIO_SERVER_URL: "https://s3.${EXTERNAL_DOMAIN}"
-              MINIO_UPDATE: "off"
             envFrom:
               - secretRef:
                   name: minio
@@ -116,7 +115,7 @@ spec:
               - *host
               - *s3Host
             secretName: tls.minio
-    persistence:         
+    persistence:
       config:
         enabled: true
         type: nfs
