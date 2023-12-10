@@ -7,8 +7,8 @@ spec:
   path: ./apps/storage/minio/app
   prune: false
   sourceRef:
-    kind: OCIRepository
-    name: home-truenas
+    kind: GitRepository
+    name: home-ops
   interval: 30m
   retryInterval: 1m
   timeout: 3m

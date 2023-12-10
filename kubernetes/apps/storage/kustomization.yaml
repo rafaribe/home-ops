@@ -9,4 +9,4 @@ resources:
   - ./csi-driver-nfs/ks.yaml
   - ./syncthing/ks.yaml
   - ./cloudnative-pg-operator/ks.yaml
-  - ./minio/app/ks.yaml
+  - ./minio/ks.yaml
