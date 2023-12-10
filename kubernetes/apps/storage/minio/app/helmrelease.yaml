@@ -65,12 +65,13 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-            securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
-              fsGroup: 1000
-              fsGroupChangePolicy: OnRootMismatch
-              supplementalGroups: [100]
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        supplementalGroups: [568]
+        fsGroupChangePolicy: OnRootMismatch
     service:
       main:
         ports:
