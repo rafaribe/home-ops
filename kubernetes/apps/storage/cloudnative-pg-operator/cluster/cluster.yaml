@@ -29,8 +29,8 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://postgresql/
-      endpointURL: http://minio.rafaribe.com
-      serverName: home-ops-storage
+      endpointURL: ${CLOUDFLARE_R2_ENDPOINT}
+      serverName: home-ops-r2
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-minio
@@ -38,18 +38,3 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-minio
           key: MINIO_SECRET_KEY
-  externalClusters:
-    - name: clusterBackup
-      barmanObjectStore:
-        destinationPath: s3://postgresql/
-        endpointURL: http://minio.rafaribe.com
-        serverName: truenas-storage
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg-minio
-            key: MINIO_ACCESS_KEY
-          secretAccessKey:
-            name: cloudnative-pg-minio
-            key: MINIO_SECRET_KEY
-        wal:
-          maxParallel: 8
