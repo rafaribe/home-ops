@@ -91,7 +91,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal-nginx
+        className: external-nginx
         annotations:
           external-dns.home.arpa/enabled: "true"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
