@@ -6,7 +6,7 @@ metadata:
   name: backup-weekend
   namespace: storage
 spec:
-  schedule: "0 4 * * SUN"
+  schedule: "0 4 * * * SUN"
   immediate: true
   backupOwnerReference: self
   cluster:
