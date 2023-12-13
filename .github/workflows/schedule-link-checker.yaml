@@ -1,55 +1,48 @@
 ---
-name: "Schedule - Check links"
+name: "Broken Link Check"
 
-on: # yamllint disable-line rule:truthy
+on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
-  push:
-    branches:
-      - main
-    paths:
-      - "docs/**.md"
+    - cron: "0 0 * * 0"
 
 jobs:
-  link-checker:
-    name: Link Checker
+  check-links:
+    name: Check Links
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-
       - name: Generate Token
-        uses: tibdex/github-app-token@v2
-        id: generate-token
+        uses: actions/create-github-app-token@2986852ad836768dfea7781f31828eb3e17990fa # v1.6.2
+        id: app-token
         with:
-          app_id: "${{ secrets.BOT_APP_ID }}"
-          private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+          app-id: "${{ secrets.BOT_APP_ID }}"
+          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
-      - name: Link Checker
-        uses: lycheeverse/lychee-action@v1.8.0
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          token: "${{ steps.app-token.outputs.token }}"
+
+      - name: Scan for broken links
+        uses: lycheeverse/lychee-action@ec3ed119d4f44ad2673a7232460dc7dff59d2421 # v1.8.0
         id: lychee
         env:
-          GITHUB_TOKEN: "${{ steps.generate-token.outputs.token }}"
+          GITHUB_TOKEN: "${{ steps.app-token.outputs.token }}"
         with:
-          args: --verbose --no-progress .
-          output: ./lychee.md
-          format: markdown
+          args: --verbose --no-progress --exclude-mail './**/*.md'
 
       - name: Find Link Checker Issue
-        id: link-checker-issue
-        uses: micalevisk/last-issue-action@v2
+        id: broken-link-check-issue
+        uses: micalevisk/last-issue-action@f5661581217cc78cc282d1351aa65bd8bd155003 # v2.2.1
         with:
           state: open
-          labels: |
-            link-checker
+          labels: broken-links
 
       - name: Update Issue
-        uses: peter-evans/create-issue-from-file@v4
+        uses: peter-evans/create-issue-from-file@433e51abf769039ee20ba1293a088ca19d573b7f # v4.0.1
         with:
-          title: Link Checker Dashboard
-          issue-number: "${{ steps.link-checker-issue.outputs.issue_number }}"
+          title: Broken links detected 🔗
+          issue-number: "${{ steps.broken-link-check-issue.outputs.issue-number }}"
           content-filepath: ./lychee.md
-          token: "${{ steps.generate-token.outputs.token }}"
-          labels: |
-            link-checker
+          token: "${{ steps.app-token.outputs.token }}"
+          labels: broken-links
