@@ -1,73 +1,83 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &app theme-park
   namespace: services
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
       version: 2.4.0
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  maxHistory: 2
+  test:
+    enable: false
   install:
-    createNamespace: true
     remediation:
       retries: 5
   upgrade:
     remediation:
       retries: 5
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    recreate: true
+    cleanupOnFail: true
+  uninstall:
+    keepHistory: false
   values:
-    env:
-      TP_COMMUNITY_THEME: "true"
-    controller:
-      replicas: 1
-      strategy: RollingUpdate
-    image:
-      repository: ghcr.io/onedr0p/theme-park
-      tag: 1.14.1@sha256:84d3de535ae7b12b31a97b9c2ecd8b02e8e18c622362f59b05408affaece6130
+    controllers:
+      main:
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/theme-park
+              tag: 1.14.1@sha256:84d3de535ae7b12b31a97b9c2ecd8b02e8e18c622362f59b05408affaece6130
+
+            resources:
+              requests:
+                cpu: 5m
+                memory: 10Mi
+              limits:
+                memory: 50Mi
+
     service:
       main:
         ports:
           http:
             port: 8080
+
     ingress:
       main:
         enabled: true
-        ingressClassName: "external-nginx"
+        className: internal
         annotations:
-          external-dns.home.arpa/enabled: "true"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "mdi:paint-outline"
+          hajimari.io/enable: "false"
         hosts:
-          - host: &host "themepark.${EXTERNAL_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
-          - hosts:
+          - secretName: "{{ .Release.Name }}-tls"
+            hosts:
               - *host
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: *app
-    resources:
-      requests:
-        cpu: 5m
-        memory: 10Mi
-      limits:
-        memory: 50Mi
-    persistence:
-      catppuccin-themes:
-        enabled: true
-        type: configMap
-        name: theme-park-catppuccin-config
-        mountPath: /usr/share/nginx/html/css/theme-options/catppuccin-macchiato.css
-        subPath: catppuccin-macchiato.css
