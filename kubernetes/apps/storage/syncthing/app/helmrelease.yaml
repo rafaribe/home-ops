@@ -1,11 +1,12 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app syncthing
+  name: syncthing
   namespace: storage
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -14,16 +15,17 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
-      retries: 5
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    global:
-      nameOverride: *app
     controllers:
       main:
         containers:
@@ -31,10 +33,17 @@ spec:
             image:
               repository: syncthing/syncthing
               tag: 1.27.1
-              resources:
-                requests:
-                  cpu: 15m
-                  memory: 249Mi
+            resources:
+              requests:
+                cpu: 15m
+                memory: 64M
+              limits:
+                cpu: 100m
+                memory: 128M
+            env:
+              PUID: "1000"
+              PGID: "1000"
+              TZ: "${TZ}"
     service:
       main:
         enabled: true
@@ -56,17 +65,33 @@ spec:
             enabled: true
             port: 22000
             protocol: TCP
+      discovery:
+        controller: main
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_SYNCTHING}
+        ports:
+          discovery:
+            enabled: true
+            port: 21027
+            protocol: UDP
+            targetPort: 21027
     ingress:
       main:
         enabled: true
-        ingressClassName: internal-nginx
+        className: internal-nginx
         annotations:
-          hajimari.io/icon: arcticons:syncthing
+          hajimari.io/icon: "arcticons:syncthing"
         hosts:
-          - host: &host "syncthing.${EXTERNAL_DOMAIN}"
+          - host: &host syncthing.${EXTERNAL_DOMAIN}
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
     persistence:
       data:
         enabled: true
@@ -80,7 +105,3 @@ spec:
         memory: 249Mi
       limits:
         memory: 750Mi
-    env:
-      PUID: "1000"
-      PGID: "1000"
-      TZ: "${TZ}"
