@@ -32,19 +32,6 @@ spec:
             env:
               TZ: ${TZ}
               WEBPASSWORD: ${PIHOLE_PASSWORD}
-            # ports:
-            #   - name: dns
-            #     containerPort: 53
-            #     protocol: TCP
-            #   - name: dns-udp
-            #     containerPort: 53
-            #     protocol: UDP
-            #   - name: dhcp
-            #     containerPort: 67
-            #     protocol: UTP
-            #   - name: portal-http
-            #     containerPort: 80
-            #     protocol: TCP
             resources:
               requests:
                 cpu: 23m
@@ -68,9 +55,6 @@ spec:
           - name: dns-udp
             containerPort: 53
             protocol: UDP
-          - name: dhcp
-            containerPort: 67
-            protocol: UTP
           - name: portal-http
             containerPort: 80
             protocol: TCP
