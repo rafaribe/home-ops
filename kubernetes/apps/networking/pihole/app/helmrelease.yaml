@@ -101,6 +101,7 @@ spec:
         type: persistentVolumeClaim
         storageClass: ceph-block
         accessMode: ReadWriteOnce
+        size: 1Gi
         globalMounts:
           - path: /etc/pihole
       dnsmasq:
@@ -108,5 +109,6 @@ spec:
         type: persistentVolumeClaim
         storageClass: ceph-block
         accessMode: ReadWriteOnce
+        size: 1Gi
         globalMounts:
           - path: /etc/dnsmasq.d
