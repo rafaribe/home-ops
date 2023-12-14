@@ -1,0 +1,112 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app unifi
+  namespace: networking
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.4.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      main:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            nameOverride: *app
+            image:
+              repository: phiole/pihole
+              tag: 2023.11.0
+            env:
+              TZ: ${TZ}
+              WEBPASSWORD: ${PIHOLE_PASSWORD}
+            ports:
+              - name: dns
+                containerPort: 53
+                protocol: TCP
+              - name: dns-udp
+                containerPort: 53
+                protocol: UDP
+              - name: dhcp
+                containerPort: 67
+                protocol: UTP
+              - name: portal-http
+                containerPort: 80
+                protocol: TCP
+            resources:
+              requests:
+                cpu: 23m
+                memory: 500Mi
+              limits:
+                memory: 500Mi
+
+    service:
+      main:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_PIHOLE}
+        labels:
+          pool: main
+        loadBalancerIP: ${LB_PIHOLE}
+        ports:
+          - name: dns
+            containerPort: 53
+            protocol: TCP
+          - name: dns-udp
+            containerPort: 53
+            protocol: UDP
+          - name: dhcp
+            containerPort: 67
+            protocol: UTP
+          - name: portal-http
+            containerPort: 80
+            protocol: TCP
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          hajimari.io/icon: wifi
+          hajimari.io/appName: unifi
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        className: "external-nginx"
+        hosts:
+          - host: &host "pihole.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: portal-http
+                  port: 80
+        tls:
+          - hosts:
+              - *host
+            secretName: pihole-tls
+
+    persistence:
+      pihole:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: ceph-block
+        path: /mnt/storage-0/config/pihole
+        globalMounts:
+          - path: /etc/pihole
+      dnsmasq:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: ceph-block
+        path: /mnt/storage-0/config/dnsmasq
+        globalMounts:
+          - path: /etc/dnsmasq.d
