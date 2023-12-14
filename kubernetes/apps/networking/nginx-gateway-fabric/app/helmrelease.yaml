@@ -31,7 +31,7 @@ spec:
     ## The NGINX image to use
     image:
       repository: ghcr.io/nginxinc/nginx-gateway-fabric/nginx
-      tag: 1.0.0
+      tag: 1.1.0
       pullPolicy: Always
     service:
       create: true
