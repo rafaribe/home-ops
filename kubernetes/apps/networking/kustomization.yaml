@@ -12,3 +12,4 @@ resources:
   # - ./static-routes/ks.yaml
   - ./cloudflare-dyndns/ks.yaml
   - ./nginx-gateway-fabric/ks.yaml
+  - ./unifi/ks.yaml
