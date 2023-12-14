@@ -43,7 +43,7 @@ spec:
       accessModes:
         - ReadWriteMany
       size: "10G"
-      storageClassName: "ceph-block"
+      storageClassName: "ceph-filesystem"
 
     adminPassword: ${PIHOLE_PASSWORD}
     DNS1: "1.1.1.1"
