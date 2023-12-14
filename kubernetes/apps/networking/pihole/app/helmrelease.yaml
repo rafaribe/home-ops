@@ -32,19 +32,19 @@ spec:
             env:
               TZ: ${TZ}
               WEBPASSWORD: ${PIHOLE_PASSWORD}
-            ports:
-              - name: dns
-                containerPort: 53
-                protocol: TCP
-              - name: dns-udp
-                containerPort: 53
-                protocol: UDP
-              - name: dhcp
-                containerPort: 67
-                protocol: UTP
-              - name: portal-http
-                containerPort: 80
-                protocol: TCP
+            # ports:
+            #   - name: dns
+            #     containerPort: 53
+            #     protocol: TCP
+            #   - name: dns-udp
+            #     containerPort: 53
+            #     protocol: UDP
+            #   - name: dhcp
+            #     containerPort: 67
+            #     protocol: UTP
+            #   - name: portal-http
+            #     containerPort: 80
+            #     protocol: TCP
             resources:
               requests:
                 cpu: 23m
@@ -81,7 +81,6 @@ spec:
           cert-manager.io/cluster-issuer: letsencrypt-production
           hajimari.io/icon: access-point-check
           hajimari.io/appName: pihole
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
         className: "external-nginx"
         hosts:
           - host: &host "pihole.${EXTERNAL_DOMAIN}"
