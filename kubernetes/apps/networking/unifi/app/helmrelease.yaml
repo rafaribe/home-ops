@@ -1,0 +1,162 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app unifi
+  namespace: networking
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.4.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      main:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            nameOverride: *app
+            image:
+              repository: jacobalberty/unifi
+              tag: v7.5.176
+            env:
+              TZ: ${TZ}
+              RUNAS_UID0: "false"
+              UNIFI_UID: "999"
+              UNIFI_GID: "999"
+              UNIFI_STDOUT: "true"
+              JVM_INIT_HEAP_SIZE:
+              JVM_MAX_HEAP_SIZE: 1024M
+              # CERTNAME: tls.crt
+              # CERT_PRIVATE_NAME: tls.key
+              # CERT_IS_CHAIN: "true"
+              PORTAL_HTTPS_PORT: "443"
+            ports:
+              - name: controller
+                containerPort: 8080
+                protocol: TCP
+              - name: discovery
+                containerPort: 10001
+                protocol: UDP
+              - name: http
+                containerPort: 8443
+                protocol: TCP
+              - name: portal-http
+                containerPort: 8880
+                protocol: TCP
+              - name: portal-https
+                containerPort: 443
+                protocol: TCP
+              - name: speedtest
+                containerPort: 6789
+                protocol: TCP
+              - name: stun
+                containerPort: 3478
+                protocol: UDP
+              - name: syslog
+                containerPort: 5514
+                protocol: UDP
+            resources:
+              requests:
+                cpu: 23m
+                memory: 1390M
+              limits:
+                memory: 1390M
+
+    service:
+      main:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_UNIFI}
+        labels:
+          pool: main
+        loadBalancerIP: ${LB_UNIFI}
+        ports:
+          controller:
+            enabled: true
+            port: 8080
+            protocol: TCP
+          http:
+            port: 8443
+            protocol: HTTPS
+          portal-http:
+            enabled: true
+            port: 8880
+            protocol: HTTP
+          portal-https:
+            enabled: true
+            port: 443
+            protocol: HTTPS
+          speedtest:
+            enabled: true
+            port: 6789
+            protocol: TCP
+          stun:
+            enabled: true
+            port: 3478
+            protocol: UDP
+          syslog:
+            enabled: true
+            port: 5514
+            protocol: UDP
+          discovery:
+            enabled: true
+            port: 10001
+            protocol: UDP
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          hajimari.io/icon: wifi
+          hajimari.io/appName: unifi
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        className: "external-nginx"
+        hosts:
+          - host: &host "unifi.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: unifi
+                  port: 8443
+          - host: &hotspot "hotspot.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: unifi
+                  port: 443
+        tls:
+          - hosts:
+              - *host
+            secretName: unifi-tls
+          - hosts:
+              - *hotspot
+            secretName: hotspot-tls
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: unifi-config-v2
+        mountPath: /unifi
+      gateway:
+        enabled: true
+        type: custom
+        volumeSpec:
+          configMap:
+            name: config-gateway
+        subPath:
+          - path: config.gateway.json
+            mountPath: /unifi/data/sites/default/config.gateway.json
+            readOnly: false

@@ -9,3 +9,14 @@ spec:
   serviceSelector:
     matchExpressions:
       - { key: allservices, operator: NotIn, values: ["will-be-announced"] }
+---
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: "main-pool"
+spec:
+  cidrs:
+    - cidr: ${NETWORK_BGP_MAIN_CIDR}
+serviceSelector:
+  matchExpressions:
+    - { key: pool, operator: In, values: [main] }
