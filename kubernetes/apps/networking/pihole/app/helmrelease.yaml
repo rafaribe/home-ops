@@ -100,7 +100,6 @@ spec:
         enabled: true
         type: persistentVolumeClaim
         storageClass: ceph-block
-        path: /mnt/storage-0/config/pihole
         accessMode: ReadWriteOnce
         globalMounts:
           - path: /etc/pihole
@@ -109,6 +108,5 @@ spec:
         type: persistentVolumeClaim
         storageClass: ceph-block
         accessMode: ReadWriteOnce
-        path: /mnt/storage-0/config/dnsmasq
         globalMounts:
           - path: /etc/dnsmasq.d
