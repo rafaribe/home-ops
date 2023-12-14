@@ -31,12 +31,6 @@ spec:
             env:
               TZ: ${TZ}
               WEBPASSWORD: ${PIHOLE_PASSWORD}
-            resources:
-              requests:
-                cpu: 23m
-                memory: 500Mi
-              limits:
-                memory: 500Mi
 
     service:
       main:
