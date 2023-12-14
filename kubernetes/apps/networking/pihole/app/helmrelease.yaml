@@ -1,90 +1,50 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app pihole
+  name: pihole
   namespace: networking
 spec:
-  interval: 15m
+  interval: 5m
   chart:
     spec:
-      chart: app-template
-      version: 2.4.0
-      interval: 30m
+      # renovate: registryUrl=https://mojo2600.github.io/pihole-kubernetes/
+      chart: pihole
+      version: 2.14.0
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: mojo2600
         namespace: flux-system
 
   values:
-    controllers:
-      main:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        containers:
-          main:
-            nameOverride: *app
-            image:
-              repository: phiole/pihole
-              tag: 2023.11.0
-            env:
-              TZ: ${TZ}
-              WEBPASSWORD: ${PIHOLE_PASSWORD}
+    replicaCount: 3
+    image:
+      repository: "pihole/pihole"
+      tag: "2023.11.0"
+      pullPolicy: IfNotPresent
 
-    service:
-      main:
-        type: LoadBalancer
-        externalTrafficPolicy: Local
-        annotations:
-          io.cilium/lb-ipam-ips: ${LB_PIHOLE}
-        labels:
-          pool: main
-        loadBalancerIP: ${LB_PIHOLE}
-        ports:
-          - name: dns
-            containerPort: 53
-            protocol: TCP
-          - name: dns-udp
-            containerPort: 53
-            protocol: UDP
-          - name: portal-http
-            containerPort: 80
-            protocol: TCP
+    serviceDns:
+      type: LoadBalancer
+      annotations:
+        io.cilium/lb-ipam-ips: ${LB_PIHOLE}
+      loadBalancerIP: ${LB_PIHOLE}
+
+    serviceDhcp:
+      enabled: false
+
     ingress:
-      main:
-        enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          hajimari.io/icon: access-point-check
-          hajimari.io/appName: pihole
-        className: "external-nginx"
-        hosts:
-          - host: &host "pihole.${EXTERNAL_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  name: portal-http
-                  port: 80
-        tls:
-          - hosts:
-              - *host
-            secretName: pihole-tls
+      ingressClassName: internal-nginx
+      enabled: true
+      hosts:
+        - pihole.${EXTERNAL_DOMAIN}
 
-    persistence:
-      pihole:
-        enabled: true
-        type: persistentVolumeClaim
-        storageClass: ceph-block
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        globalMounts:
-          - path: /etc/pihole
-      dnsmasq:
-        enabled: true
-        type: persistentVolumeClaim
-        storageClass: ceph-block
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        globalMounts:
-          - path: /etc/dnsmasq.d
+    persistentVolumeClaim:
+      enabled: true
+      accessModes:
+        - ReadWriteMany
+      size: "10G"
+      storageClassName: "ceph-block"
+
+    adminPassword: ${PIHOLE_PASSWORD}
+    DNS1: "1.1.1.1"
+    DNS2: "8.8.8.8"
