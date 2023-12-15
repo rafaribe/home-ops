@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: jacobalberty/unifi
-      tag: v7.4.162
+      tag: v7.5.176
 
     env:
       RUNAS_UID0: "true"
