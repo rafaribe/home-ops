@@ -146,6 +146,7 @@ spec:
       key:
         type: secret
         name: git-keys
-        defaultMode: 256
+        accessMode: ReadWriteOnce
         globalMounts:
           - path: /root/.ssh/
+            readOnly: true
