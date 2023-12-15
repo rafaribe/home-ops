@@ -100,13 +100,12 @@ spec:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: ${LB_HASS}
+        loadBalancerIP: 10.0.1.250 #${LB_HASS}
         externalTrafficPolicy: Local
         ports:
           http:
             port: 8123
-          codeserver:
-            enabled: true
+          cs:
             port: 8080
     ingress:
       main:
@@ -115,33 +114,24 @@ spec:
         annotations:
           hajimari.io/icon: mdi:home-assistant
         hosts:
-          - host: &host "hass.${EXTERNAL_DOMAIN}"
+          - host: &host "hass.rafaribe.com"
             paths:
               - path: /
                 service:
                   name: *app
                   port: http
-        tls:
-          - hosts:
-              - *host
       codeserver:
         enabled: true
         className: "external-nginx"
         annotations:
-          external-dns.home.arpa/enabled: "true"
-          cert-manager.home.arpa/enabled: "true"
-          auth.home.arpa/enabled: "true"
+          hajimari.io/icon: mdi:home-assistant
         hosts:
-          - host: &host-hass-config hass-config.${EXTERNAL_DOMAIN}
+          - host: &host "hc.rafaribe.com"
             paths:
               - path: /
                 service:
                   name: *app
-                  port: 8080
-        tls:
-          - hosts:
-              - *host-hass-config
-
+                  port: cs
     persistence:
       git-keys:
         enabled: true
