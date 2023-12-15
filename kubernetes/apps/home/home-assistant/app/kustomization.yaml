@@ -10,5 +10,6 @@ resources:
   - ./volsync.yaml
   - ./pvc.yaml
   - ./keys.yaml
+  - ./ingress.yaml
 # patches:
 #   - path: ./patches/addons.yaml

@@ -1,0 +1,44 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hass
+  namespace: home
+spec:
+  ingressClassName: external-nginx
+  rules:
+    - host: hass.rafaribe.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: home-assistant
+                port:
+                  number: 8123
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - hass.rafaribe.com
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hass-code
+  namespace: home
+spec:
+  ingressClassName: ingress-nginx
+  rules:
+    - host: hc.rafaribe.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: home-assistant-codeserver
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - hc.rafaribe.com
