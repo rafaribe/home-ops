@@ -9,5 +9,6 @@ resources:
   - ./podmonitor.yaml
   - ./volsync.yaml
   - ./pvc.yaml
+  - ./keys.yaml
 # patches:
 #   - path: ./patches/addons.yaml

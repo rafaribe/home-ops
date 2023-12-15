@@ -141,3 +141,10 @@ spec:
         tls:
           - hosts:
               - *host-hass-config
+    persistence:
+      key:
+        type: secret
+        name: git-keys
+        defaultMode: 256
+        globalMounts:
+          - path: /root/.ssh/
