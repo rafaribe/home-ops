@@ -79,7 +79,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: unifi
-                  port: 443
+                  port: 8443
         tls:
           - hosts:
               - *host
