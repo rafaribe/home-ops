@@ -41,31 +41,6 @@ spec:
               # CERT_PRIVATE_NAME: tls.key
               # CERT_IS_CHAIN: "true"
               PORTAL_HTTPS_PORT: "443"
-            ports:
-              - name: controller
-                containerPort: 8080
-                protocol: TCP
-              - name: discovery
-                containerPort: 10001
-                protocol: UDP
-              - name: http
-                containerPort: 8443
-                protocol: TCP
-              - name: portal-http
-                containerPort: 8880
-                protocol: TCP
-              - name: portal-https
-                containerPort: 443
-                protocol: TCP
-              - name: speedtest
-                containerPort: 6789
-                protocol: TCP
-              - name: stun
-                containerPort: 3478
-                protocol: UDP
-              - name: syslog
-                containerPort: 5514
-                protocol: UDP
             resources:
               requests:
                 cpu: 23m
@@ -83,20 +58,20 @@ spec:
           pool: main
         loadBalancerIP: ${LB_UNIFI}
         ports:
+          http:
+            port: 8443
+            protocol: HTTPS
           controller:
             enabled: true
             port: 8080
             protocol: TCP
-          http:
-            port: 8443
-            protocol: HTTPS
           portal-http:
-            enabled: true
+            enabled: false
             port: 8880
             protocol: HTTP
           portal-https:
-            enabled: true
-            port: 443
+            enabled: false
+            port: 8843
             protocol: HTTPS
           speedtest:
             enabled: true

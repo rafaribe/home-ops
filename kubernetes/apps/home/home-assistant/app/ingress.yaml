@@ -29,7 +29,7 @@ metadata:
 spec:
   ingressClassName: internal-nginx
   rules:
-    - host: hc.rafaribe.com
+    - host: hc.rafaribe.site
       http:
         paths:
           - backend:
