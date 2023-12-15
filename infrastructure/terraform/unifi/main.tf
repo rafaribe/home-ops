@@ -6,7 +6,7 @@ terraform {
     organization = "rafaribe"
 
     workspaces {
-      name = "home-unifi"
+      name = "home-unifi-v2"
     }
   }
   required_providers {
