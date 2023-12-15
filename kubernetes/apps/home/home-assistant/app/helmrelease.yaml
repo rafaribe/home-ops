@@ -33,8 +33,6 @@ spec:
         runAsGroup: 0
         fsGroup: 0
         fsGroupChangePolicy: OnRootMismatch
-      nodeSelector:
-        nodo.feature.node.kubernetes.io/rflink: "true"
     controllers:
       main:
         type: statefulset
