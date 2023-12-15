@@ -33,7 +33,32 @@ spec:
       UNIFI_STDOUT: "true"
       JVM_INIT_HEAP_SIZE:
       JVM_MAX_HEAP_SIZE: 1024M
-
+      PORTAL_HTTPS_PORT: "443"
+    ports:
+      - name: controller
+        containerPort: 8080
+        protocol: TCP
+      - name: discovery
+        containerPort: 10001
+        protocol: UDP
+      - name: http
+        containerPort: 8443
+        protocol: TCP
+      - name: portal-http
+        containerPort: 8880
+        protocol: TCP
+      - name: portal-https
+        containerPort: 443
+        protocol: TCP
+      - name: speedtest
+        containerPort: 6789
+        protocol: TCP
+      - name: stun
+        containerPort: 3478
+        protocol: UDP
+      - name: syslog
+        containerPort: 5514
+        protocol: UDP
     ingress:
       main:
         enabled: true
@@ -44,18 +69,27 @@ spec:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           external-dns.alpha.kubernetes.io/hostname: unifi.${EXTERNAL_DOMAIN}
           external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+          hajimari.io/icon: simple-icons:ubiquiti
           hajimari.io/enable: "true"
-          hajimari.io/icon: wifi
-          hajimari.io/appName: unifi
+          hajimari.io/group: "infra"
         hosts:
           - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
+          - host: &hotspot "hotspot.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: unifi
+                  port: 443
         tls:
-          - secretName: "tls.{{ .Release.Name }}"
-            hosts:
+          - hosts:
               - *host
+            secretName: unifi-tls
+          - hosts:
+              - *hotspot
+            secretName: hotspot-tls
 
     service:
       main:
@@ -65,20 +99,20 @@ spec:
         type: LoadBalancer
         externalTrafficPolicy: Local
         ports:
-          http:
-            port: 8443
-            protocol: HTTPS
           controller:
             enabled: true
             port: 8080
             protocol: TCP
+          http:
+            port: 8443
+            protocol: HTTPS
           portal-http:
-            enabled: false
+            enabled: true
             port: 8880
             protocol: HTTP
           portal-https:
-            enabled: false
-            port: 8843
+            enabled: true
+            port: 443
             protocol: HTTPS
           speedtest:
             enabled: true
