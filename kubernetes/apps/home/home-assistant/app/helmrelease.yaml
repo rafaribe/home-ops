@@ -128,7 +128,7 @@ spec:
                   port: http
       codeserver:
         enabled: true
-        className: "external-nginx"
+        className: "internal-nginx"
         annotations:
           hajimari.io/icon: mdi:home-assistant
         hosts:
