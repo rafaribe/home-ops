@@ -83,16 +83,6 @@ spec:
             port: 53
             protocol: TCP
             targetPort: 53
-      dns-udp:
-        enabled: true
-        controller: main
-        type: LoadBalancer
-        annotations:
-          io.cilium/lb-ipam-ips: ${LB_BLOCKY}
-        labels:
-          pool: main
-        externalTrafficPolicy: Local
-        ports:
           dns-udp:
             enabled: true
             port: 53
