@@ -11,7 +11,7 @@ spec:
   dependsOn:
     - name: external-secrets-provider
     - name: external-secrets-operator
-    - name: cluster-apps-volsync
+    # - name: cluster-apps-volsync
   path: ./kubernetes/apps/home/home-assistant/app
   prune: true
   sourceRef:
