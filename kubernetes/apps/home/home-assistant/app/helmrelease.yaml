@@ -89,7 +89,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "nginx"
+        className: "external-nginx"
         annotations:
           hajimari.io/icon: mdi:home-assistant
         hosts:
