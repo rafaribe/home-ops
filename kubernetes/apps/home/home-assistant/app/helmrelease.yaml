@@ -137,10 +137,11 @@ spec:
               - path: /
                 service:
                   name: *app
-                  port: codeserver
+                  port: 8080
         tls:
           - hosts:
               - *host-hass-config
+
     persistence:
       key:
         type: secret
