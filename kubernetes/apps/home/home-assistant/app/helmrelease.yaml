@@ -105,7 +105,13 @@ spec:
         ports:
           http:
             port: 8123
+      codeserver:
+        enabled: true
+        controller: main
+        primary: false
+        ports:
           cs:
+            enabled: true
             port: 8080
     ingress:
       main:
@@ -130,7 +136,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: *app
+                  name: home-assistant-codeserver
                   port: cs
     persistence:
       git-keys:
