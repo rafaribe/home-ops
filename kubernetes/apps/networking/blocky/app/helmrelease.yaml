@@ -61,12 +61,18 @@ spec:
                 initialDelaySeconds: 5
                 failureThreshold: 30
                 periodSeconds: 10
+          ui:
+            image:
+              repository: ghcr.io/mozart409/blocky-frontend
+              tag: v0.1.1
     service:
       main:
         enabled: true
         ports:
           http:
             port: 4000
+          ui:
+            port: 8002
       dns:
         enabled: true
         controller: main
@@ -88,6 +94,11 @@ spec:
             port: 53
             protocol: UDP
             targetPort: 53
+          ui:
+            enabled: true
+            port: 8002
+            protocol: TCP
+            targetPort: 8002
     serviceMonitor:
       main:
         enabled: true
@@ -120,20 +131,21 @@ spec:
                 ads:
                 - https://raw.githubusercontent.com/buvis/clusters/main/cluster-home/operations/network/blocky/blacklist.txt
                 - https://dbl.oisd.nl/
-                #- http://sysctl.org/cameleon/hosts
-                #- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-                #- https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
-                #- https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
-                #- https://raw.githubusercontent.com/hl2guide/Filterlist-for-AdGuard/master/Blocklist/filter_blocklist1.txt
-                #- https://raw.githubusercontent.com/hl2guide/Filterlist-for-AdGuard/master/Blocklist/filter_blocklist2.txt
-                #- https://raw.githubusercontent.com/hl2guide/Filterlist-for-AdGuard/master/Blocklist/filter_blocklist3.txt
-                #- https://raw.githubusercontent.com/hl2guide/Filterlist-for-AdGuard/master/Blocklist/filter_blocklist4.txt
-                #- https://raw.githubusercontent.com/kodlz/pihole_easylist/main/adblock_list/adblock.hosts
-                #- https://raw.githubusercontent.com/herrbischoff/trackers/master/trackers.txt
-                #- https://raw.githubusercontent.com/herrbischoff/trackers/master/domains.txt
-                #- https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/smartphone-ads-tracking.txt
-                #- https://codeberg.org/spootle/blocklist/raw/branch/master/blocklist.txt
-                #- https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt
+                - https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/black.list
+                - http://sysctl.org/cameleon/hosts
+                - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+                - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+                - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
+                - https://raw.githubusercontent.com/hl2guide/Filterlist-for-AdGuard/master/Blocklist/filter_blocklist1.txt
+                - https://raw.githubusercontent.com/hl2guide/Filterlist-for-AdGuard/master/Blocklist/filter_blocklist2.txt
+                - https://raw.githubusercontent.com/hl2guide/Filterlist-for-AdGuard/master/Blocklist/filter_blocklist3.txt
+                - https://raw.githubusercontent.com/hl2guide/Filterlist-for-AdGuard/master/Blocklist/filter_blocklist4.txt
+                - https://raw.githubusercontent.com/kodlz/pihole_easylist/main/adblock_list/adblock.hosts
+                - https://raw.githubusercontent.com/herrbischoff/trackers/master/trackers.txt
+                - https://raw.githubusercontent.com/herrbischoff/trackers/master/domains.txt
+                - https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/smartphone-ads-tracking.txt
+                - https://codeberg.org/spootle/blocklist/raw/branch/master/blocklist.txt
+                - https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt
               whiteLists:
                 ads:
                 - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt

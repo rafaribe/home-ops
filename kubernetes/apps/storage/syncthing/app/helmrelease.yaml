@@ -83,7 +83,7 @@ spec:
         annotations:
           hajimari.io/icon: "arcticons:syncthing"
         hosts:
-          - host: &host syncthing.${EXTERNAL_DOMAIN}
+          - host: &host syncthing.${INTERNAL_DOMAIN}
             paths:
               - path: /
                 service:
