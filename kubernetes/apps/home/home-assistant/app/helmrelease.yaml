@@ -100,7 +100,7 @@ spec:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: ${LB_UNIFI}
+        loadBalancerIP: ${LB_HASS}
         externalTrafficPolicy: Local
         ports:
           http:
