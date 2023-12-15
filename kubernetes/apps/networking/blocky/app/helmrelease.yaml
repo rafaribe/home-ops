@@ -142,9 +142,6 @@ spec:
               clientGroupsBlock:
                 default:
                 - ads
-            conditional:
-              mapping:
-                buvis.net: ${GATEWAY_MANAGEMENT}
             clientLookup:
               upstream: ${GATEWAY_MANAGEMENT}
             prometheus:
@@ -152,3 +149,7 @@ spec:
               path: /metrics
             httpPort: 4000
             logLevel: info
+            customDNS:
+              mapping:
+                .rafaribe.site: 10.0.5.10
+                .rafaribe.com: 10.0.5.1
