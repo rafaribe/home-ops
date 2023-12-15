@@ -77,9 +77,6 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-          - host: &hotspot "hotspot.${EXTERNAL_DOMAIN}"
-            paths:
-              - path: /
                 service:
                   name: unifi
                   port: 443
@@ -87,9 +84,6 @@ spec:
           - hosts:
               - *host
             secretName: unifi-tls
-          - hosts:
-              - *hotspot
-            secretName: hotspot-tls
 
     service:
       main:
