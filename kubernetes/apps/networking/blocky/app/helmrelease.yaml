@@ -71,8 +71,11 @@ spec:
         enabled: true
         controller: main
         type: LoadBalancer
-        externalIPs:
-          - ${LB_BLOCKY}
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_BLOCKY}
+        labels:
+          pool: main
+        loadBalancerIP: ${LB_BLOCKY}
         externalTrafficPolicy: Local
         ports:
           dns-tcp:
@@ -84,8 +87,10 @@ spec:
         enabled: true
         controller: main
         type: LoadBalancer
-        externalIPs:
-          - ${LB_BLOCKY}
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_BLOCKY}
+        labels:
+          pool: main
         externalTrafficPolicy: Local
         ports:
           dns-udp:
