@@ -32,7 +32,7 @@ spec:
             hajimari.io/icon: cib:visual-studio-code
             auth.home.arpa/enabled: "true"
           hosts:
-            - host: &host hass-code.${EXTERNAL_DOMAIN}
+            - host: &host hass-code.${INTERNAL_DOMAIN}
               paths:
                 - path: /
                   pathType: Prefix
