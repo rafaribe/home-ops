@@ -27,7 +27,7 @@ metadata:
   name: hass-code
   namespace: home
 spec:
-  ingressClassName: ingress-nginx
+  ingressClassName: internal-nginx
   rules:
     - host: hc.rafaribe.com
       http:
