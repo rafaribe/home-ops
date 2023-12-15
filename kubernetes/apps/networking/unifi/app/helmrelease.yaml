@@ -51,7 +51,7 @@ spec:
                 cpu: 50m
         statefulset:
           volumeClaimTemplates:
-            - name: config
+            - name: unifi-config-v2
               accessMode: ReadWriteOnce
               size: 10Gi
               storageClass: ceph-block
