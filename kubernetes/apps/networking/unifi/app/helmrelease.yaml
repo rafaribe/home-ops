@@ -54,7 +54,7 @@ spec:
             - name: config
               accessMode: ReadWriteOnce
               size: 10Gi
-              storageClass: rook-ceph-block
+              storageClass: ceph-block
               globalMounts:
                 - path: /unifi
     service:
