@@ -126,6 +126,7 @@ spec:
               - *host
       codeserver:
         enabled: true
+        className: "external-nginx"
         annotations:
           external-dns.home.arpa/enabled: "true"
           cert-manager.home.arpa/enabled: "true"
