@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &app home-assistant
@@ -27,31 +27,64 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-      01-init-db:
-        image: ghcr.io/auricom/postgres-init:15.5
-        imagePullPolicy: IfNotPresent
-        envFrom: &envFrom
-          - secretRef:
-              name: hass
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/home-assistant
-      tag: 2023.12.2@sha256:913f21b589a2a34e4af711fd8731d6b05e387d3e6fef867ddf2a6d3a8ab2c769
-    env:
-      TZ: "${TZ}"
-      POSTGRES_HOST: ${POSTGRES_HOST}
-      POSTGRES_DB: home_assistant
-    envFrom: *envFrom
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        fsGroupChangePolicy: OnRootMismatch
+      nodeSelector:
+        nodo.feature.node.kubernetes.io/rflink: "true"
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/auricom/postgres-init
+              tag: 15.5@sha256:9b1b80d8101d3f1c73ef13b90dff2ab3bc855bd79ebcd334cba57db391ce6db0
+              pullPolicy: IfNotPresent
+            envFrom: &envFrom
+              - secretRef:
+                  name: hass
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/home-assistant
+              tag: 2023.12.2@sha256:913f21b589a2a34e4af711fd8731d6b05e387d3e6fef867ddf2a6d3a8ab2c769
+            env:
+              TZ: "${TIMEZONE}"
+              POSTGRES_HOST: ${POSTGRES_HOST}
+              POSTGRES_DB: home_assistant
+            envFrom: *envFrom
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              privileged: true
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 10Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /config
     service:
       main:
         type: LoadBalancer
-        annotations:
-          io.cilium/lb-ipam-ips: ${LB_HASS}
-        labels:
-          pool: lb
         loadBalancerIP: ${LB_HASS}
         externalTrafficPolicy: Local
         ports:
@@ -60,40 +93,16 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "external-nginx"
+        className: "nginx"
         annotations:
           hajimari.io/icon: mdi:home-assistant
         hosts:
           - host: &host "hass.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
-    podSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
-      fsGroupChangePolicy: "OnRootMismatch"
-    securityContext:
-      privileged: true
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *app
-    persistence:
-      config:
-        enabled: true
-        existingClaim: hass-config
-    resources:
-      requests:
-        cpu: 10m
-        memory: 100Mi
-      limits:
-        memory: 750Mi
