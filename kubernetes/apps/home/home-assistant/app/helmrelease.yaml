@@ -119,7 +119,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  name: *app
                   port: http
         tls:
           - hosts:
@@ -135,7 +135,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  name: *app
                   port: codeserver
         tls:
           - hosts:
