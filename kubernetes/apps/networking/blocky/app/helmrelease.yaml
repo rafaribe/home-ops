@@ -67,7 +67,7 @@ spec:
         ports:
           http:
             port: 4000
-      dns-tcp:
+      dns:
         enabled: true
         controller: main
         type: LoadBalancer
