@@ -1,114 +1,82 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: unifi
-  namespace: unifi
+  name: &app unifi
+  namespace: networking
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
-      retries: 5
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    image:
-      repository: jacobalberty/unifi
-      tag: v7.4.162
-
-    env:
-      RUNAS_UID0: "true"
-      UNIFI_UID: "0"
-      UNIFI_GID: "0"
-      UNIFI_STDOUT: "true"
-      JVM_INIT_HEAP_SIZE:
-      JVM_MAX_HEAP_SIZE: 1024M
-      PORTAL_HTTPS_PORT: "443"
-    ports:
-      - name: controller
-        containerPort: 8080
-        protocol: TCP
-      - name: discovery
-        containerPort: 10001
-        protocol: UDP
-      - name: http
-        containerPort: 8443
-        protocol: TCP
-      - name: portal-http
-        containerPort: 8880
-        protocol: TCP
-      - name: portal-https
-        containerPort: 443
-        protocol: TCP
-      - name: speedtest
-        containerPort: 6789
-        protocol: TCP
-      - name: stun
-        containerPort: 3478
-        protocol: UDP
-      - name: syslog
-        containerPort: 5514
-        protocol: UDP
-    ingress:
+    controllers:
       main:
-        enabled: true
-        ingressClassName: "nginx"
+        type: statefulset
         annotations:
-          kubernetes.io/tls-acme: "true"
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          external-dns.alpha.kubernetes.io/hostname: unifi.${EXTERNAL_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
-          hajimari.io/icon: simple-icons:ubiquiti
-          hajimari.io/enable: "true"
-          hajimari.io/group: "infra"
-        hosts:
-          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: unifi
-                  port: 443
-        tls:
-          - hosts:
-              - *host
-            secretName: unifi-tls
-
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: jacobalberty/unifi
+              tag: v7.5.176
+              pullPolicy: IfNotPresent
+            env:
+              RUNAS_UID0: "false"
+              UNIFI_UID: "999"
+              UNIFI_GID: "999"
+              UNIFI_STDOUT: "true"
+              JVM_INIT_HEAP_SIZE:
+              JVM_MAX_HEAP_SIZE: 1024M
+            resources:
+              requests:
+                memory: 2Gi
+                cpu: 50m
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 10Gi
+              storageClass: rook-ceph-block
+              globalMounts:
+                - path: /unifi
     service:
       main:
-        annotations:
-          io.cilium/lb-ipam-ips: ${LB_UNIFI}
-        labels:
-          pool: main
-        loadBalancerIP: ${LB_UNIFI}
         type: LoadBalancer
         externalTrafficPolicy: Local
+        loadBalancerIP: ${LB_UNIFI}
         ports:
+          http:
+            port: 8443
+            protocol: HTTPS
           controller:
             enabled: true
             port: 8080
             protocol: TCP
-          http:
-            port: 8443
-            protocol: HTTPS
           portal-http:
-            enabled: true
+            enabled: false
             port: 8880
             protocol: HTTP
           portal-https:
-            enabled: true
-            port: 443
+            enabled: false
+            port: 8843
             protocol: HTTPS
           speedtest:
             enabled: true
@@ -126,27 +94,22 @@ spec:
             enabled: true
             port: 10001
             protocol: UDP
-
-    persistence:
-      data:
+    ingress:
+      main:
         enabled: true
-        existingClaim: unifi-config-v2
-        mountPath: /unifi
-      gateway:
-        enabled: true
-        type: custom
-        volumeSpec:
-          configMap:
-            name: config-gateway
-        subPath:
-          - path: config.gateway.json
-            mountPath: /unifi/data/sites/default/config.gateway.json
-            readOnly: false
-
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
+        className: "external-nginx"
+        annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          hajimari.io/icon: simple-icons:ubiquiti
+          hajimari.io/enable: "true"
+          hajimari.io/group: "infra"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
