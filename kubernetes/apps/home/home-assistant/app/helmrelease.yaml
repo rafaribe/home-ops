@@ -67,9 +67,28 @@ spec:
                 cpu: 10m
                 memory: 128Mi
               limits:
-                memory: 1Gi
+                memory: 512Mi
             securityContext:
               privileged: true
+          codeserver:
+            enabled: true
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.19.1
+            args:
+              - --auth
+              - none
+              - --user-data-dir
+              - /config/.vscode
+              - --extensions-dir
+              - /config/.vscode
+              - /config
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 1Gi
         statefulset:
           volumeClaimTemplates:
             - name: config
@@ -86,6 +105,9 @@ spec:
         ports:
           http:
             port: 8123
+          codeserver:
+            enabled: true
+            port: 8080
     ingress:
       main:
         enabled: true
@@ -102,3 +124,20 @@ spec:
         tls:
           - hosts:
               - *host
+      codeserver:
+        enabled: true
+        annotations:
+          external-dns.home.arpa/enabled: "true"
+          cert-manager.home.arpa/enabled: "true"
+          auth.home.arpa/enabled: "true"
+        hosts:
+          - host: &host-hass-config hass-config.${EXTERNAL_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: codeserver
+        tls:
+          - hosts:
+              - *host-hass-config
+            secretName: hass-config-tls
