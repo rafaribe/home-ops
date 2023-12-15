@@ -28,25 +28,16 @@ spec:
             nameOverride: *app
             image:
               repository: jacobalberty/unifi
-              tag: v7.2.94
+              tag: v7.5.176
             env:
               TZ: ${TZ}
-              RUNAS_UID0: "false"
-              UNIFI_UID: "999"
-              UNIFI_GID: "999"
+              RUNAS_UID0: "true"
+              UNIFI_UID: "0"
+              UNIFI_GID: "0"
               UNIFI_STDOUT: "true"
               JVM_INIT_HEAP_SIZE:
               JVM_MAX_HEAP_SIZE: 1024M
-              # CERTNAME: tls.crt
-              # CERT_PRIVATE_NAME: tls.key
-              # CERT_IS_CHAIN: "true"
               PORTAL_HTTPS_PORT: "8443"
-            resources:
-              requests:
-                cpu: 23m
-                memory: 1390M
-              limits:
-                memory: 1390M
 
     service:
       main:
