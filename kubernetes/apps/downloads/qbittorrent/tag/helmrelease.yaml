@@ -1,9 +1,8 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: qbittools-tags
+  name: qbittorrent-tools
   namespace: downloads
 spec:
   interval: 30m
@@ -18,26 +17,46 @@ spec:
         namespace: flux-system
   dependsOn:
     - name: qbittorrent
-
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        supplementalGroups: [3000, 3001, 568]
+
     controllers:
       main:
-        type: cronjob
-
-        cronjob:
-          schedule: "@hourly"
-
-        pod:
-          restartPolicy: OnFailure
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-
         containers:
           main:
-            image:
-              repository: ghcr.io/buroa/qbittools
+            image: &image
+              repository: ghcr.io/buroa/qbtools
               tag: v0.11.0
+            resources: &resources
+              requests:
+                memory: 250Mi
+                cpu: 25m
+              limits:
+                memory: 500Mi
+            args:
+              - reannounce
+              - --process-seeding
+              - -s
+              - qbittorrent.downloads.svc.cluster.local
+              - -p
+              - "8080"
+
+      tagging:
+        type: cronjob
+        cronjob:
+          schedule: "@hourly"
+          concurrencyPolicy: Forbid
+          successfulJobsHistory: 1
+          ttlSecondsAfterFinished: 30
+        containers:
+          main:
+            image: *image
+            resources: *resources
             args:
               - tagging
               - --added-on
@@ -52,21 +71,62 @@ spec:
               - "8080"
               - --config
               - /config/config.yaml
-            resources:
-              requests:
-                memory: 250Mi
-                cpu: 5m
-              limits:
-                memory: 500Mi
+
+      prune-expired:
+        type: cronjob
+        cronjob:
+          schedule: 10 */6 * * *
+          concurrencyPolicy: Forbid
+          successfulJobsHistory: 1
+          ttlSecondsAfterFinished: 30
+        containers:
+          main:
+            image: *image
+            resources: *resources
+            args:
+              - prune
+              - --exclude-category
+              - manual
+              - --include-tag
+              - expired
+              - --exclude-tag
+              - activity:24h
+              - --server
+              - qbittorrent.downloads.svc.cluster.local
+              - --port
+              - "8080"
+
+      prune-unregistered:
+        type: cronjob
+        cronjob:
+          schedule: 20 */6 * * *
+          concurrencyPolicy: Forbid
+          successfulJobsHistory: 1
+          ttlSecondsAfterFinished: 30
+        containers:
+          main:
+            image: *image
+            resources: *resources
+            args:
+              - prune
+              - --include-tag
+              - unregistered
+              - --exclude-tag
+              - expired
+              - --server
+              - qbittorrent.downloads.svc.cluster.local
+              - --port
+              - "8080"
 
     persistence:
       config-file:
+        enabled: true
         type: configMap
-        name: qbittools-configmap
+        name: qbittorrent-tools-configmap
+        readOnly: true
         globalMounts:
           - path: /config/config.yaml
             subPath: config.yaml
-            readOnly: true
 
     service:
       main:
