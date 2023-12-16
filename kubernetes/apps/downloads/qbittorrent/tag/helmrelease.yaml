@@ -44,7 +44,7 @@ spec:
               - -s
               - qbittorrent.downloads.svc.cluster.local
               - -p
-              - "8080"
+              - "80"
 
       tagging:
         type: cronjob
@@ -68,7 +68,7 @@ spec:
               - --server
               - qbittorrent.downloads.svc.cluster.local
               - --port
-              - "8080"
+              - "80"
               - --config
               - /config/config.yaml
 
@@ -94,7 +94,7 @@ spec:
               - --server
               - qbittorrent.downloads.svc.cluster.local
               - --port
-              - "8080"
+              - "80"
 
       prune-unregistered:
         type: cronjob
@@ -116,7 +116,7 @@ spec:
               - --server
               - qbittorrent.downloads.svc.cluster.local
               - --port
-              - "8080"
+              - "80"
 
     persistence:
       config-file:
