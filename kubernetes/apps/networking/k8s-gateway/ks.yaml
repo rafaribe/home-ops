@@ -6,9 +6,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: metallb
-    - name: metallb-config
   path: ./kubernetes/apps/networking/k8s-gateway
   prune: true
   sourceRef:
