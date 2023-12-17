@@ -36,7 +36,6 @@ spec:
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: ${LB_NGINX_INTERNAL}
-          external-dns.alpha.kubernetes.io/hostname: "ingress-int.rafaribe.com"
         labels:
           pool: lb
         externalTrafficPolicy: Cluster

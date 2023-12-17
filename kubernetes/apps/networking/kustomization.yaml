@@ -7,7 +7,7 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   #- ./metallb/ks.yaml
-  #- ./k8s-gateway/ks.yaml
+  - ./k8s-gateway/ks.yaml
   # - ./static-routes/ks.yaml
   - ./blocky/ks.yaml
   - ./cloudflare-dyndns/ks.yaml
