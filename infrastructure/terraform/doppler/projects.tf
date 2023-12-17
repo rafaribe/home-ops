@@ -65,7 +65,7 @@ module "proxmox" {
 module "cloudnativepg" {
   source       = "./project"
   project_name = "cloudnativepg"
-  environments = ["truenas", "skovald"]
+  environments = ["truenas"]
   providers = {
     doppler = doppler
   }

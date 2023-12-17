@@ -17,6 +17,7 @@ output "all_service_tokens" {
       "loki"            = module.loki.service_tokens
       "alertmanager"    = module.pgadmin.service_tokens
       "webhook_discord" = module.webhook_discord.service_tokens
+      "minio"           = module.minio.service_tokens
     } :
     module_name => module_outputs
   }
