@@ -6,7 +6,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./kubernetes/apps/networking/k8s-gateway
+  path: ./kubernetes/apps/networking/k8s-gateway/app
   prune: true
   sourceRef:
     kind: GitRepository
