@@ -14,4 +14,5 @@ resources:
   # - ./pihole/ks.yaml
   - ./ingress-nginx/ks.yaml
   - ./nginx-gateway-fabric/ks.yaml
+  - ./tailscale/ks.yaml
   - ./unifi/ks.yaml
