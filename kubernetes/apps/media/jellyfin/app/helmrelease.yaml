@@ -99,11 +99,11 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "external-nginx"
+        className: "internal-nginx"
         annotations:
           hajimari.io/icon: simple-icons:jellyfin
         hosts:
-          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${INTERNAL_DOMAIN}"
             paths:
               - path: /
                 service:
