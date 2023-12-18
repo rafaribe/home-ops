@@ -71,7 +71,7 @@ spec:
         annotations:
           hajimari.io/enable: "false"
         hosts:
-          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${INTERNAL_DOMAIN}"
             paths:
               - path: /
                 service:
