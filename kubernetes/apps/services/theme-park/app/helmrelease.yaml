@@ -71,13 +71,13 @@ spec:
         annotations:
           hajimari.io/enable: "false"
         hosts:
-          - host: &host "{{ .Release.Name }}.${INTERNAL_DOMAIN}"
+          - host: &host "themepark.${INTERNAL_DOMAIN}"
             paths:
               - path: /
                 service:
                   name: main
                   port: http
         tls:
-          - secretName: "{{ .Release.Name }}-tls"
+          - secretName: "themepark-tls"
             hosts:
               - *host
