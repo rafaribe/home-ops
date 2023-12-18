@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: nginx-gateway-fabric
-      version: 1.0.0
+      version: 1.1.0
       sourceRef:
         kind: HelmRepository
         name: nginx-gateway-fabric
