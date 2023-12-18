@@ -7,12 +7,9 @@ resources:
   # Flux-Kustomizations
   - ./cilium/ks.yaml
   - ./nfs-subdir-external-provisioner/ks.yaml
-  #- ./kubelet-csr-approver/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reflector/ks.yaml
   - ./reloader/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./local-path-provisioner/ks.yaml
-  #  - ./intel-device-plugin/ks.yaml
   - ./node-feature-discovery/ks.yaml
-  #- ./nvidia-gpu-operator/ks.yaml

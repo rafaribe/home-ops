@@ -1,5 +1,0 @@
----
-providerRegex: |
-  ^(odin|thor|loki|freya)$
-
-bypassDnsResolution: true
