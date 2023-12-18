@@ -8,5 +8,3 @@ spec:
   type: "oci"
   interval: 1m
   url: oci://ghcr.io/nginxinc/charts/nginx-gateway-fabric
-  ref:
-    tag: 1.1.0
