@@ -6,4 +6,3 @@ resources:
   - ./terraform-authentik-oci.yaml
   - ./terraform-doppler-oci.yaml
   - ./terraform-unifi-oci.yaml
-  - ./nginx-gateway-fabric.yaml

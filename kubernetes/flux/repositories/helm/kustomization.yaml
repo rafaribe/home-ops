@@ -39,6 +39,7 @@ resources:
   - ./mojo2600.yaml
   - ./node-feature-discovery.yaml
   - ./nfs-provisioner.yaml
+  - ./nginx-gateway-fabric.yaml
   - ./nvidia.yaml
   - ./openebs.yaml
   - ./openebs-cstor-chart.yaml
