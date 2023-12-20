@@ -46,7 +46,7 @@ metadata:
   name: cilium-gateway-api
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/kube-system/cilium/cilium-gateway-api
+  path: ./kubernetes/apps/kube-system/cilium/gateway-api
   prune: true
   sourceRef:
     kind: GitRepository
