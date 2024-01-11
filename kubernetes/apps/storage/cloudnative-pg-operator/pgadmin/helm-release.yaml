@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: dpage/pgadmin4
-      tag: "8.1"
+      tag: "8.2"
     strategy:
       type: Recreate
 
