@@ -33,8 +33,6 @@ spec:
   values:
     defaultPodOptions:
       enableServiceLinks: false
-      nodeSelector:
-        intel.feature.node.kubernetes.io/gpu: "true"
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
