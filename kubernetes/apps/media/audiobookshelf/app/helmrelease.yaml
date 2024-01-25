@@ -40,7 +40,7 @@ spec:
           main:
             image:
               repository: "ghcr.io/advplyr/audiobookshelf"
-              tag: "2.6.0"
+              tag: "2.7.2"
     env:
       TZ: ${TZ}
     service:
