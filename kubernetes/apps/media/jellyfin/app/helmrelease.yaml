@@ -72,8 +72,8 @@ spec:
                 enabled: false
             resources:
               requests:
-                cpu: 100m
-                memory: 512Mi
+                cpu: 400m
+                memory: 1Gi
               limits:
                 memory: 4Gi
         statefulset:
