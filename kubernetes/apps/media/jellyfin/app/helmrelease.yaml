@@ -28,8 +28,6 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
-      namespace: volsync
   values:
     defaultPodOptions:
       enableServiceLinks: false
@@ -41,44 +39,54 @@ spec:
         supplementalGroups: [44, 105, 10000, 568]
     controllers:
       main:
-        annotations:
-          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/jellyfin
-              tag: 10.8.11@sha256:926e2a9f6677a0c7b12feba29f36c954154869318d6a52df72f72ff9c74cf494
+              repository: jellyfin/jellyfin
+              tag: 10.8.13
             env:
               DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
               JELLYFIN_FFmpeg__probesize: 50000000
               JELLYFIN_FFmpeg__analyzeduration: 50000000
-              JELLYFIN_PublishedServerUrl: &loadBalancerIP ${LB_JELLYFIN}
-              TZ: ${TZ}
+              JELLYFIN_PublishedServerUrl: &ip 192.168.100.10
+              TZ: America/Vancouver
+            resources:
+              requests:
+                gpu.intel.com/i915: 1
+                cpu: 100m
+                memory: 1000Mi
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 4000Mi
             probes:
-              liveness: &probes
+              liveness: &probe
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
                     path: /health
-                    port: &port 8096
+                    port: 8096
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
-              readiness: *probes
+              readiness: *probe
               startup:
-                enabled: false
-          resources:
-            requests:
-              cpu: 100m
-              memory: 512Mi
-            limits:
-              memory: 4Gi
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 8096
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 30
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: *loadBalancerIP
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_JELLYFIN}
         externalTrafficPolicy: Local
         ports:
           http:
