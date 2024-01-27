@@ -43,8 +43,11 @@ values:
               memory: 604M
   service:
     main:
+      enabled: true
+      controller: main
       ports:
         http:
+          enabled: true
           port: 8080
   ingress:
     main:
