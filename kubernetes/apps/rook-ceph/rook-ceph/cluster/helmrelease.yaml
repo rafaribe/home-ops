@@ -82,7 +82,7 @@ spec:
             - name: "/dev/disk/by-id/usb-SanDisk_Portable_SSD_323331373747343031363231-0:0"
         - name: "tyr"
           devices:
-            - name: "/dev/disk/by-id/wwn-0x50014ee6b106d62b"
+            - name: "/dev/disk/by-id/ata-WDC_WD10SPCX-24HWST1_WD-WXK1AA5P94JV"
     cephBlockPoolsVolumeSnapshotClass:
       enabled: false
     cephBlockPools:
