@@ -15,100 +15,65 @@ spec:
         name: bjw-s
         namespace: flux-system
   interval: 15m
-  values:
-    initContainers:
-      update-config-permission:
-        image: busybox@sha256:6d9ac9237a84afe1516540f40a0fafdc86859b2141954b4d643af7066d598b74
-        command: ["sh", "-c", "chown -R 1000:1000 /config"]
-        volumeMounts:
-          - name: config
-            mountPath: /config
-        securityContext:
-          runAsUser: 0
-      update-media-permission:
-        image: busybox@sha256:6d9ac9237a84afe1516540f40a0fafdc86859b2141954b4d643af7066d598b74
-        command: ["sh", "-c", "chown -R 1000:1000 /config"]
-        volumeMounts:
-          - name: config
-            mountPath: /config
-        securityContext:
-          runAsUser: 0
-    image:
-      repository: ghcr.io/linuxserver/calibre
-      tag: version-v6.26.0
-    env:
-      PGID: "1000"
-      PUID: "1000"
-      UMASK_SET: "022"
-      PASSWORD: ${SECRET_CALIBRE}
+values:
+  defaultPodOptions:
+    enableServiceLinks: false
     securityContext:
-      seccompProfile:
-        type: Unconfined
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
-      webserver:
-        enabled: true
-        ports:
-          webserver:
-            enabled: true
-            port: 8081
-            protocol: TCP
-            targetPort: 8081
-        type: LoadBalancer
-        externalTrafficPolicy: Cluster
-        loadBalancerIP: "${LB_CALIBRE}"
-      wireless:
-        enabled: true
-        ports:
-          wireless:
-            enabled: true
-            port: 9090
-            protocol: TCP
-            targetPort: 9090
-        type: LoadBalancer
-        externalTrafficPolicy: Cluster
-        loadBalancerIP: "${LB_CALIBRE_WIRELESS}"
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: external-nginx
-        annotations:
-          external-dns/is-public: "true"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: bookshelf
-        hosts:
-          - host: &host calibre.${EXTERNAL_DOMAIN}
-            paths:
-              - path: /
-        tls:
-          - secretName: calibre-tls
-            hosts:
-              - *host
-    persistence:
-      config:
-        enabled: true
-        existingClaim: calibre-config-v2
-      media:
-        enabled: true
-        type: nfs
-        server: 10.0.1.6
-        path: /mnt/storage-0/media/books
-        mountPath: /media
-    resources:
-      requests:
-        cpu: 250m
-        memory: 900M
-      limits:
-        memory: 1Gi
-    probes:
-      startup:
-        spec:
-          initialDelaySeconds: 60
-          failureThreshold: 160
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+      supplementalGroups: [44, 105, 10000, 568]
+  controllers:
+    main:
+      containers:
+        main:
+          image:
+            repository: ghcr.io/linuxserver/calibre
+            tag: version-v7.4.0@sha256:b2ed61e2b25102a15903f29e97a3972a3af6585e20bf149475b68ff8aec1c8bc
+          env:
+            TZ: "${TZ}"
+            PUID: "1000"
+            PGID: "1000"
+          resources:
+            requests:
+              cpu: 15m
+              memory: 324M
+            limits:
+              memory: 604M
+  service:
+    main:
+      ports:
+        http:
+          port: 8080
+  ingress:
+    main:
+      enabled: true
+      className: external-nginx
+      annotations:
+        external-dns/is-public: "true"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: bookshelf
+      hosts:
+        - host: &host calibre.${EXTERNAL_DOMAIN}
+          paths:
+            - path: /
+              service:
+                name: main
+                port: http
+      tls:
+        - hosts:
+            - *host
+  persistence:
+    config:
+      enabled: true
+      existingClaim: calibre-config-v2
+      globalMounts:
+        - path: /config
+    books:
+      enabled: true
+      type: nfs
+      server: "10.0.1.6"
+      path: /mnt/storage-0/media/books
+      globalMounts:
+        - path: /media
