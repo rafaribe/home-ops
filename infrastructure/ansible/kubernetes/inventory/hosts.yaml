@@ -24,3 +24,7 @@ kubernetes:
           ansible_host: 10.0.1.10
           ceph_drives:
             - /dev/disk/by-id/usb-SanDisk_Portable_SSD_323331373747343031363231-0:0
+        tyr:
+          ansible_host: 10.0.1.12
+          ceph_drives:
+            - /dev/disk/by-id/wwn-0x50014ee6b106d62b
