@@ -73,7 +73,7 @@ spec:
             resources:
               requests:
                 cpu: 400m
-                memory: 1Gi
+                memory: 750Mi
               limits:
                 memory: 4Gi
         statefulset:
