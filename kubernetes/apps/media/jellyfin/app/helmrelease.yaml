@@ -41,14 +41,12 @@ spec:
         supplementalGroups: [44, 105, 10000, 568]
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
               repository: ghcr.io/onedr0p/jellyfin
-              tag: 10.8.11@sha256:926e2a9f6677a0c7b12feba29f36c954154869318d6a52df72f72ff9c74cf494
             env:
               DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
               JELLYFIN_FFmpeg__probesize: 50000000
@@ -70,20 +68,12 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-            resources:
-              requests:
-                cpu: 400m
-                memory: 500Mi
-              limits:
-                memory: 4Gi
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 50Gi
-              storageClass: rook-ceph-block
-              globalMounts:
-                - path: /config
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              memory: 4Gi
     service:
       main:
         type: LoadBalancer
@@ -109,6 +99,11 @@ spec:
           - hosts:
               - *host
     persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /config
       media:
         enabled: true
         type: nfs
