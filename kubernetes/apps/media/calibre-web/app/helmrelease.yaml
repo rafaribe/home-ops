@@ -16,21 +16,31 @@ spec:
         namespace: flux-system
   interval: 15m
   values:
-    image:
-      repository: ghcr.io/bjw-s/calibre-web
-      tag: 0.6.21
-    securityContext:
-      seLinuxOptions:
-        level: s0
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 1000
-    env:
-      CACHE_DIR: /cache
+    defaultPodOptions:
+      enableServiceLinks: false
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [44, 105, 10000, 568]
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/bjw-s/calibre-web
+              tag: 0.6.21@sha256:772f009387c5d23cfcd5efeae067b4cb225b8c2a0674ee0733915ac5f2bdeedb
+            env:
+              CACHE_DIR: /cache
+            resources:
+              requests:
+                cpu: 5m
+                memory: 470M
+              limits:
+                memory: 470M
     service:
       main:
         ports:
@@ -59,16 +69,23 @@ spec:
       config:
         enabled: true
         existingClaim: calibre-web-config-v3
+        advancedMounts:
+          main:
+            main:
+              - path: /config
       media:
         enabled: true
         type: nfs
         server: 10.0.1.6
         path: /mnt/storage-0/media/books
-        mountPath: /media
+        advancedMounts:
+          main:
+            main:
+              - path: /media
       cache:
-        enabled: true
         type: emptyDir
-        mountPath: /cache
+        globalMounts:
+          - path: /cache
     resources:
       requests:
         cpu: 15m
