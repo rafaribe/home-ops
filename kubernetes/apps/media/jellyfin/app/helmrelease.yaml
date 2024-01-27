@@ -49,7 +49,7 @@ spec:
               JELLYFIN_FFmpeg__probesize: 50000000
               JELLYFIN_FFmpeg__analyzeduration: 50000000
               JELLYFIN_PublishedServerUrl: &ip 192.168.100.10
-              TZ: America/Vancouver
+              TZ: ${TZ}
             resources:
               requests:
                 gpu.intel.com/i915: 1
@@ -110,7 +110,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: *app
+        existingClaim: config-jellyfin-0
         globalMounts:
           - path: /config
       media:
