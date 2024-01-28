@@ -23,7 +23,9 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [44, 105, 10000, 568]
+        supplementalGroups: [44, 105, 568]
+        seLinuxOptions:
+          level: s0
     controllers:
       main:
         annotations:
@@ -41,11 +43,11 @@ spec:
                 memory: 470M
               limits:
                 memory: 470M
+
     service:
       main:
         ports:
           http:
-            enabled: true
             port: 8083
     ingress:
       main:
@@ -59,9 +61,12 @@ spec:
           hajimari.io/icon: "book-open-page-variant"
           theme.home.arpa/enabled: "true"
         hosts:
-          - host: &host library.${EXTERNAL_DOMAIN}
+          - host: &host library.rafaribe.com
             paths:
               - path: /
+                service:
+                  name: main
+                  port: http
         tls:
           - secretName: library-tls
             hosts:
@@ -87,16 +92,3 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /cache
-    resources:
-      requests:
-        cpu: 15m
-        memory: 249M
-      limits:
-        memory: 299M
-    probes:
-      startup:
-        enabled: false
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
