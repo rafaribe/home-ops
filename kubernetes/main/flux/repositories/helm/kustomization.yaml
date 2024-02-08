@@ -11,6 +11,7 @@ resources:
   - ./cilium.yaml
   - ./cloudnative-pg.yaml
   - ./csi-driver-nfs.yaml
+  - ./democratic-csi.yaml
   - ./dysnix.yaml
   - ./emqx.yaml
   - ./emberstack.yaml
