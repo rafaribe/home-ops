@@ -34,7 +34,7 @@ spec:
           main:
             image:
               repository: ghcr.io/tailscale/tailscale
-              tag: v1.56.0@sha256:ed1f9317d0bab2bc17f6eecc29401479b91c938df48c28b1bd3d3014eba9d013
+              tag: v1.58.2@sha256:6dc3334d142df48cdf9876152762aff4f17df46c62507f2b4fb07179882a1962
             env:
               NO_AUTOUPDATE: true
               # PORT: &port ${TAILNET_PUBLIC_PORT}
