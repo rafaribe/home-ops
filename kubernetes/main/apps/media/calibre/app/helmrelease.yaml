@@ -62,7 +62,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: *app
+        existingClaim: calibre-config-v2
         globalMounts:
           - path: /config
       books:
