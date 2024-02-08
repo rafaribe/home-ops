@@ -41,24 +41,24 @@ spec:
         http:
           enabled: true
           port: 8080
-  ingress:
-    main:
-      enabled: true
-      className: external-nginx
-      annotations:
-        external-dns/is-public: "true"
-        hajimari.io/enable: "true"
-        hajimari.io/icon: bookshelf
-      hosts:
-        - host: &host calibre.${EXTERNAL_DOMAIN}
-          paths:
-            - path: /
-              service:
-                name: main
-                port: http
-      tls:
-        - hosts:
-            - *host
+    ingress:
+      main:
+        enabled: true
+        className: "nginx"
+        annotations:
+          external-dns/is-public: "true"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: bookshelf
+        hosts:
+          - host: &host calibre.${EXTERNAL_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
   persistence:
     config:
       enabled: true
