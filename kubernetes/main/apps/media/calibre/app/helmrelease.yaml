@@ -30,7 +30,7 @@ values:
         main:
           image:
             repository: ghcr.io/linuxserver/calibre
-            tag: version-v7.4.0@sha256:b2ed61e2b25102a15903f29e97a3972a3af6585e20bf149475b68ff8aec1c8bc
+            tag: version-v7.4.0@sha256:fe57cc3a6d3ec8937c07d3230497577782c549f80f490897649f9b9650426fb3
           env:
             TZ: "${TZ}"
             PUID: "1000"
