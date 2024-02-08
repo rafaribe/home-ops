@@ -42,10 +42,10 @@ spec:
           hajimari.io/icon: simple-icons:prometheus
           auth.home.arpa/enabled: "true"
         hosts:
-          - &host alertmanager.${EXTERNAL_DOMAIN}
+          - &amhost alertmanager.${EXTERNAL_DOMAIN}
         tls:
           - hosts:
-              - *host
+              - *amhost
       alertmanagerSpec:
         replicas: 1
         useExistingSecret: true
