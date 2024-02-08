@@ -87,7 +87,7 @@ spec:
       main:
         ports:
           http:
-            port: 2000
+            port: &port 2000
       tailnet:
         controller: main
         type: LoadBalancer
