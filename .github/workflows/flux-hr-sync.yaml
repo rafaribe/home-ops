@@ -38,7 +38,8 @@ jobs:
           token: "${{ steps.app-token.outputs.token }}"
           fetch-depth: 0
 
-      - name: Setup Homebrew
+      - name: Set up Homebrew
+        id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Setup Workflow Tools

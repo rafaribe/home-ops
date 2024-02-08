@@ -28,35 +28,20 @@ spec:
     keepHistory: false
   values:
     runnerScaleSetName: arc-runner-set-home-ops
-    githubConfigUrl: https://github.com/rafaribe/home-ops
+    githubConfigUrl: https://github.com/onedr0p/home-ops
     minRunners: 1
-    maxRunners: 2
+    maxRunners: 6
     containerMode:
       type: dind
     template:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/actions/actions-runner:2.312.0
+            image: ghcr.io/onedr0p/actions-runner:2.313.0@sha256:5caa4f5d95ff75285cb263302210ba28c5752497a29ee353eddbde89345a1e71
             command: ["/home/runner/run.sh"]
-            volumeMounts:
-              - mountPath: /runner/_work
-                name: work
-          - name: dind
-            image: docker:dind
-            volumeMounts:
-              - mountPath: /runner/_work
-                name: work
-        volumes:
-          - name: work
-            ephemeral:
-              volumeClaimTemplate:
-                spec:
-                  accessModes: ["ReadWriteOnce"]
-                  storageClassName: "ceph-block"
-                  resources:
-                    requests:
-                      storage: 25Gi
+    controllerServiceAccount:
+      name: actions-runner-controller-gha-rs-controller
+      namespace: actions-runner-system
   valuesFrom:
     - kind: Secret
       name: actions-runner-controller-auth-secret
