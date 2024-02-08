@@ -1,0 +1,5 @@
+changelog:
+  exclude:
+    authors:
+      - naoki-bot
+      - naoki-bot[bot]
