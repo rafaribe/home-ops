@@ -33,14 +33,14 @@ spec:
                 memory: 324M
               limits:
                 memory: 604M
-  service:
-    main:
-      enabled: true
-      controller: main
-      ports:
-        http:
-          enabled: true
-          port: 8080
+    service:
+      main:
+        enabled: true
+        controller: main
+        ports:
+          http:
+            enabled: true
+            port: 8080
     ingress:
       main:
         enabled: true
