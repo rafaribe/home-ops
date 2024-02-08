@@ -59,16 +59,16 @@ spec:
         tls:
           - hosts:
               - *host
-  persistence:
-    config:
-      enabled: true
-      existingClaim: calibre-config-v2
-      globalMounts:
-        - path: /config
-    books:
-      enabled: true
-      type: nfs
-      server: "10.0.1.6"
-      path: /mnt/storage-0/media/books
-      globalMounts:
-        - path: /media
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /config
+      books:
+        enabled: true
+        type: nfs
+        server: "10.0.1.6"
+        path: /mnt/storage-0/media/books
+        globalMounts:
+          - path: /media
