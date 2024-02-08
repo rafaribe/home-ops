@@ -1,11 +1,26 @@
 ---
+# Areas
 area/ansible:
-  - "ansible/**/*"
+  - changed-files:
+      - any-glob-to-any-file: "ansible/**/*"
+area/docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "docs/**/*"
+          - "README.md"
 area/github:
-  - ".github/**/*"
+  - changed-files:
+      - any-glob-to-any-file: ".github/**/*"
 area/kubernetes:
-  - "kubernetes/**/*"
-area/hack:
-  - "hack/**/*"
+  - changed-files:
+      - any-glob-to-any-file: "kubernetes/**/*"
 area/terraform:
-  - "terraform/**/*"
+  - changed-files:
+      - any-glob-to-any-file: "terraform/**/*"
+# Clusters
+cluster/main:
+  - changed-files:
+      - any-glob-to-any-file: "kubernetes/main/**/*"
+cluster/storage:
+  - changed-files:
+      - any-glob-to-any-file: "kubernetes/storage/**/*"
