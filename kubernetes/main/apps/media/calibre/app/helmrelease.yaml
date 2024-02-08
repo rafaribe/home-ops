@@ -15,32 +15,24 @@ spec:
         name: bjw-s
         namespace: flux-system
   interval: 15m
-values:
-  defaultPodOptions:
-    enableServiceLinks: false
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: OnRootMismatch
-      supplementalGroups: [44, 105, 10000, 568]
-  controllers:
-    main:
-      containers:
-        main:
-          image:
-            repository: ghcr.io/linuxserver/calibre
-            tag: version-v7.4.0@sha256:f372e1a05619472f382578253907f969647f81b24acc444319a99bdb661ff58a
-          env:
-            TZ: "${TZ}"
-            PUID: "1026"
-            PGID: "1000"
-          resources:
-            requests:
-              cpu: 15m
-              memory: 324M
-            limits:
-              memory: 604M
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/linuxserver/calibre
+              tag: version-v7.4.0@sha256:f372e1a05619472f382578253907f969647f81b24acc444319a99bdb661ff58a
+            env:
+              TZ: "${TZ}"
+              PUID: "1000"
+              PGID: "1000"
+            resources:
+              requests:
+                cpu: 15m
+                memory: 324M
+              limits:
+                memory: 604M
   service:
     main:
       enabled: true
