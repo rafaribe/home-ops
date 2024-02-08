@@ -32,7 +32,7 @@ values:
             repository: ghcr.io/linuxserver/calibre
             tag: version-v7.4.0@sha256:f372e1a05619472f382578253907f969647f81b24acc444319a99bdb661ff58a
           env:
-            TZ: "${TIMEZONE}"
+            TZ: "${TZ}"
             PUID: "1026"
             PGID: "1000"
           resources:
