@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: docker.io/mpepping/cyberchef
-      tag: v10.5.2@sha256:51cbc1463da6a93a6884268e01759e860288226cf6e2613b3d97e054be82849a
+      tag: v10.7.0@sha256:3f96eaec9228e93b6677da9951ab1b33b6be0961ba7ab73eb8854c53db32b4ab
     service:
       main:
         ports:
