@@ -33,71 +33,73 @@ spec:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 65539
+
         initContainers:
-          init-db:
+          01-init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 16
+              tag: 14.9
+              pullPolicy: IfNotPresent
             envFrom: &envFrom
               - secretRef:
                   name: radarr
+
         containers:
           main:
             image:
               repository: ghcr.io/onedr0p/radarr-develop
-              tag: 5.3.4.8567@sha256:9b317a8933a338f285d9c785ac8ea2e6be3705c3bf34c31c8d1a250a97095847
+              tag: 5.2.4.8328@sha256:9908d5e7ef16122cfdf80fa0d1fefef743cc598346bc12c3408e645d99012c74
             env:
-              COMPlus_EnableDiagnostics: "0"
-              PUSHOVER_DEBUG: "false"
               RADARR__INSTANCE_NAME: Radarr
               RADARR__PORT: &port 80
+              RADARR__APPLICATION_URL: "radarr.${EXTERNAL_DOMAIN}"
               RADARR__LOG_LEVEL: info
               RADARR__THEME: dark
-              TZ: Europe/Lisbon
             envFrom: *envFrom
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /ping
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: false
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 10m
+                cpu: 14m
+                memory: 431M
               limits:
-                memory: 1Gi
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups: [44, 105, 10000, 568]
+                memory: 2Gi
+
     service:
       main:
         ports:
           http:
             port: *port
+
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /ping
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
+
     ingress:
       main:
         enabled: true
-        className: internal-nginx
+        className: "internal-nginx"
         hosts:
-          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+          - host: &host radarr.${EXTERNAL_DOMAIN}
             paths:
               - path: /
                 service:
@@ -106,6 +108,7 @@ spec:
         tls:
           - hosts:
               - *host
+
     persistence:
       config:
         enabled: true
