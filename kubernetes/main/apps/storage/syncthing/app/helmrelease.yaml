@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -15,7 +15,6 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -32,18 +31,14 @@ spec:
           main:
             image:
               repository: syncthing/syncthing
-              tag: 1.27.2
+              tag: 1.27.3
             resources:
               requests:
                 cpu: 15m
-                memory: 64M
+                memory: 100M
               limits:
                 cpu: 100m
-                memory: 128M
-            env:
-              PUID: "1000"
-              PGID: "1000"
-              TZ: "${TZ}"
+                memory: 200M
     service:
       main:
         enabled: true
@@ -79,11 +74,11 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal-nginx
+        className: internal
         annotations:
-          hajimari.io/icon: "arcticons:syncthing"
+          hajimari.io/icon: "cloud"
         hosts:
-          - host: &host syncthing.${INTERNAL_DOMAIN}
+          - host: &host syncthing.${EXTERNAL_DOMAIN}
             paths:
               - path: /
                 service:
@@ -98,10 +93,5 @@ spec:
         type: nfs
         server: 10.0.1.6
         path: /mnt/storage-0/syncthing
-        mountPath: /var/syncthing
-    resources:
-      requests:
-        cpu: 15m
-        memory: 249Mi
-      limits:
-        memory: 750Mi
+        globalMounts:
+          - path: /var/syncthing
