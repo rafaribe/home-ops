@@ -2,10 +2,10 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: kyverno
+  name: &app kyverno
   namespace: kube-tools
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: kyverno
@@ -15,34 +15,40 @@ spec:
         name: kyverno
         namespace: flux-system
   install:
-    createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
-      retries: 5
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
     crds:
       install: true
-    config:
-      excludeKyvernoNamespace: false
+    grafana:
+      enabled: true
     admissionController:
       replicas: 3
-      updateStrategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxSurge: 1
+      rbac:
+        clusterRole:
+          extraResources:
+            - apiGroups:
+                - ""
+              resources:
+                - pods
+              verbs:
+                - create
+                - update
+                - delete
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              app.kubernetes.io/instance: kyverno
-      container:
-        resources:
-          limits:
-            memory: 582Mi
+              app.kubernetes.io/instance: *app
+              app.kubernetes.io/component: admission-controller
       serviceMonitor:
         enabled: true
     backgroundController:
@@ -52,7 +58,6 @@ spec:
             - apiGroups:
                 - ""
               resources:
-                - namespaces
                 - pods
               verbs:
                 - create
@@ -61,3 +66,22 @@ spec:
                 - delete
                 - get
                 - list
+      resources:
+        requests:
+          cpu: 100m
+        limits:
+          memory: 1Gi
+      serviceMonitor:
+        enabled: true
+    cleanupController:
+      serviceMonitor:
+        enabled: true
+    reportsController:
+      serviceMonitor:
+        enabled: true
+    config:
+      webhooks:
+        - objectSelector:
+            matchExpressions:
+              - key: webhooks.kyverno.io/exclude
+                operator: DoesNotExist
