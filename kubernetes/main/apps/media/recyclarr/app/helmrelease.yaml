@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.rafaribe.com/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -15,7 +15,6 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -29,53 +28,55 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
-      namespace: volsync
+      namespace: storage
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: "OnRootMismatch"
-        supplementalGroups:
-          - 568
-
     controllers:
       main:
-        type: statefulset
+        type: cronjob
         annotations:
           reloader.stakater.com/auto: "true"
-    containers:
-      main:
-        image:
-          repository: ghcr.io/recyclarr/recyclarr
-          tag: 6.0.2
-        env:
-          TZ: Europe/Lisbon
-        envFrom:
-          - secretRef:
-              name: recyclarr-secret
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              mountPath: /config
-              accessMode: ReadWriteOnce
-              size: 10Gi
-              storageClass: ceph-block
-        resources:
-          requests:
-            cpu: 10m
-            memory: 50Mi
-          limits:
-            memory: 200Mi
+        cronjob:
+          schedule: "@daily"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/recyclarr/recyclarr
+              tag: 6.0.2@sha256:02add40feae0569401b5020528e06419b47046723d0bb4bef1e82325e9eefdad
+            env:
+              COMPlus_EnableDiagnostics: "0"
+              TZ: Europe/Lisbon
+            envFrom:
+              - secretRef:
+                  name: recyclarr-secret
+            args: ["sync"]
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 128Mi
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 568
     service:
       main:
         enabled: false
     persistence:
-      config-file:
+      config:
         enabled: true
+        existingClaim: recyclarr
+      config-file:
         type: configMap
         name: recyclarr-configmap
-        subPath: recyclarr.yml
-        mountPath: /config/recyclarr.yml
-        readOnly: true
+        globalMounts:
+          - path: /config/recyclarr.yml
+            subPath: recyclarr.yml
+            readOnly: true
