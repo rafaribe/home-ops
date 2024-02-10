@@ -45,21 +45,6 @@ spec:
         ports:
           http:
             port: 8384
-      listdisc:
-        controller: main
-        enabled: true
-        type: LoadBalancer
-        annotations:
-          io.cilium/lb-ipam-ips: ${LB_SYNCTHING}
-        ports:
-          discovery:
-            enabled: true
-            port: 21027
-            protocol: UDP
-          listen:
-            enabled: true
-            port: 22000
-            protocol: TCP
       discovery:
         controller: main
         type: LoadBalancer
@@ -71,6 +56,10 @@ spec:
             port: 21027
             protocol: UDP
             targetPort: 21027
+          listen:
+            enabled: true
+            port: 22000
+            protocol: TCP
     ingress:
       main:
         enabled: true
