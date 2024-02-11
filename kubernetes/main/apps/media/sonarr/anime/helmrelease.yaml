@@ -97,7 +97,9 @@ spec:
           - host: &host "anime.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
