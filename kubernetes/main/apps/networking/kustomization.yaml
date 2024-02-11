@@ -13,6 +13,6 @@ resources:
   - ./cloudflare-dyndns/ks.yaml
   # - ./pihole/ks.yaml
   - ./ingress-nginx/ks.yaml
-  - ./nginx-gateway-fabric/ks.yaml
+  # - ./nginx-gateway-fabric/ks.yaml
   - ./tailscale/ks.yaml
   - ./unifi/ks.yaml
