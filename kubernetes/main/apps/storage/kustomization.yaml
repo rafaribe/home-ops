@@ -10,3 +10,4 @@ resources:
   - ./syncthing/ks.yaml
   - ./cloudnative-pg-operator/ks.yaml
   - ./minio/ks.yaml
+  - ./redis/ks.yaml
