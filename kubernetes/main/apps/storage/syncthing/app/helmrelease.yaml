@@ -63,7 +63,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal
+        className: internal-nginx
         annotations:
           hajimari.io/icon: "cloud"
         hosts:
