@@ -16,9 +16,21 @@ spec:
         name: bjw-s
         namespace: flux-system
   values:
-    image:
-      repository: docker.io/mpepping/cyberchef
-      tag: v10.5.2@sha256:51cbc1463da6a93a6884268e01759e860288226cf6e2613b3d97e054be82849a
+    defaultPodOptions:
+      automountServiceAccountToken: true
+      enableServiceLinks: true
+      # nodeSelector:
+      #   kubernetes.io/arch: arm64
+    controllers:
+      main:
+        strategy: RollingUpdate
+        rollingUpdate:
+          unavailable: 0
+        containers:
+          main:
+            image:
+              repository: mpepping/cyberchef
+              tag: v10.7.0
     service:
       main:
         ports:
@@ -27,7 +39,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "external-nginx"
+        className: "external-nginx"
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: hammer-wrench
