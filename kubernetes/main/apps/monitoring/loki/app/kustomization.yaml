@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ./helmrelease.yaml
-  - ./prometheusrule.yaml
   - ./objectbucketclaim.yaml
 configMapGenerator:
   - name: loki-alerting-rules
