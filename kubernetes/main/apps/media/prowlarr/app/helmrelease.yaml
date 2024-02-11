@@ -92,7 +92,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external-nginx
+        ingressClassName: internal-nginx
         hosts:
           - host: &host "{{ .Release.Name }}.devbu.io"
             paths:
