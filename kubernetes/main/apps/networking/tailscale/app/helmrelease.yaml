@@ -26,7 +26,7 @@ spec:
   values:
     controllers:
       main:
-        replicas: 2
+        replicas: 1
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -38,22 +38,23 @@ spec:
             env:
               NO_AUTOUPDATE: true
               PORT: &port ${TAILNET_PUBLIC_PORT}
+              TS_KUBE_SECRET: ""
               TS_EXTRA_ARGS: --advertise-exit-node
-              TS_KUBE_SECRET: "tailscale-secret"
               SA_NAME: tailscale
               TS_USERSPACE: "true"
               TS_ROUTES: ${LB_TAILSCALE_CIRDS}
               TS_STATE_DIR: /tmp
-              TS_TAILSCALED_EXTRA_ARGS: --debug=0.0.0.0:2000
               TZ: ${TZ}
             envFrom:
               - secretRef:
                   name: tailscale-secret
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 256Mi
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
