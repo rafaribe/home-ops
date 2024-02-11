@@ -72,7 +72,7 @@ spec:
           master_name: redis-master
       ingress:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: internal-nginx
         hostname: &host thanos-query-frontend.rafaribe.com
         tls: true
         extraTls:
