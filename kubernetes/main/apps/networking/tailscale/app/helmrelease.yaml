@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.4.0
+      version: 2.5.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -34,28 +34,25 @@ spec:
           main:
             image:
               repository: ghcr.io/tailscale/tailscale
-              tag: v1.56.0@sha256:ed1f9317d0bab2bc17f6eecc29401479b91c938df48c28b1bd3d3014eba9d013
+              tag: v1.58.2@sha256:6dc3334d142df48cdf9876152762aff4f17df46c62507f2b4fb07179882a1962
             env:
               NO_AUTOUPDATE: true
-              # PORT: &port ${TAILNET_PUBLIC_PORT}
+              PORT: &port ${TAILNET_PUBLIC_PORT}
               TS_EXTRA_ARGS: --advertise-exit-node --advertise-tags=tag:k8s
-              TS_HOSTNAME:
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.name
               TS_KUBE_SECRET: ""
-              TS_ROUTES: ${LB_TAILSCALE_CIRDS},${NETWORK_BGP_LB_CIDR}
+              TS_ROUTES: ${NETWORK_BGP_LB_CIDR},${LB_TAILSCALE_CIRDS}
               TS_STATE_DIR: /tmp
               TS_TAILSCALED_EXTRA_ARGS: --debug=0.0.0.0:2000
               TS_USERSPACE: true
               TZ: ${TZ}
-              TS_AUTHKEY: ${TAILSCALE_AUTHKEY}
+            envFrom:
+              - secretRef:
+                  name: tailscale-secret
             resources:
               requests:
-                cpu: 5m
-                memory: 128M
+                cpu: 10m
               limits:
-                memory: 256M
+                memory: 256Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -69,6 +66,7 @@ spec:
             runAsNonRoot: true
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [3000, 3001, 568]
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
