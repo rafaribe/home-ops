@@ -19,8 +19,6 @@ spec:
     defaultPodOptions:
       automountServiceAccountToken: true
       enableServiceLinks: true
-      # nodeSelector:
-      #   kubernetes.io/arch: arm64
     controllers:
       main:
         strategy: RollingUpdate
@@ -47,6 +45,9 @@ spec:
           - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
