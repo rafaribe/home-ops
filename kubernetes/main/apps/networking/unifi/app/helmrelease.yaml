@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -29,14 +29,13 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
               repository: jacobalberty/unifi
-              tag: v8.0.26
+              tag: v8.0.28@sha256:f88940c7c713a6fd492be528953b83320deba91dfd86f3a499dd101223e043d5
               pullPolicy: IfNotPresent
             env:
               RUNAS_UID0: "false"
@@ -49,14 +48,6 @@ spec:
               requests:
                 memory: 2Gi
                 cpu: 50m
-        statefulset:
-          volumeClaimTemplates:
-            - name: unifi-config-v2
-              accessMode: ReadWriteOnce
-              size: 10Gi
-              storageClass: ceph-block
-              globalMounts:
-                - path: /unifi
     service:
       main:
         type: LoadBalancer
@@ -113,3 +104,9 @@ spec:
         tls:
           - hosts:
               - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: unifi-config-v2
+        globalMounts:
+          - path: /unifi
