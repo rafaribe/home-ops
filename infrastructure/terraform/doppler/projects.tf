@@ -265,3 +265,11 @@ module "readarr" {
     doppler = doppler
   }
 }
+module "tailscale" {
+  source       = "./project"
+  project_name = "tailscale"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
