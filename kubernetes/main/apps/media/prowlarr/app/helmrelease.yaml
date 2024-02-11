@@ -1,10 +1,8 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app prowlarr
-  namespace: media
 spec:
   interval: 30m
   chart:
@@ -13,7 +11,7 @@ spec:
       version: 2.5.0
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: bjw-s-charts
         namespace: flux-system
   maxHistory: 2
   install:
@@ -27,82 +25,66 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [3000, 3001, 568]
+
     controllers:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
+
         initContainers:
-          init-db:
+          01-init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 16
+              tag: "16.1"
             envFrom: &envFrom
               - secretRef:
                   name: prowlarr-secret
+
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/prowlarr-develop
-              tag: 1.13.2.4251@sha256:23d16bf7bac36b6e0c6b5d0a690cb602b3911736a48f2e006f7c87ad09c8d775
+              repository: ghcr.io/onedr0p/prowlarr-nightly
+              tag: 1.13.3.4271@sha256:7c46c027dc1e03587fc2c8e432a693c8cbc3162b4eafe119afb3a7ab8879997c
             env:
-              COMPlus_EnableDiagnostics: "0"
               PROWLARR__INSTANCE_NAME: Prowlarr
               PROWLARR__PORT: &port 8080
               PROWLARR__LOG_LEVEL: info
               PROWLARR__THEME: dark
               TZ: ${TZ}
             envFrom: *envFrom
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /ping
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: false
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 750Mi
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups: [44, 105, 10000, 568]
     service:
       main:
         ports:
           http:
             port: *port
+
     ingress:
       main:
         enabled: true
-        ingressClassName: internal-nginx
+        className: internal-nginx
         hosts:
-          - host: &host "{{ .Release.Name }}.devbu.io"
+          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
+                pathType: Prefix
                 service:
                   name: main
                   port: http
         tls:
           - hosts:
               - *host
+
     persistence:
       config:
         enabled: true
