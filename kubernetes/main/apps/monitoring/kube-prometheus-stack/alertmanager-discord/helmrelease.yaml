@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -14,6 +15,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      interval: 15m
   maxHistory: 3
   install:
     createNamespace: true
@@ -26,14 +28,21 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: benjojo/alertmanager-discord
-      tag: latest@sha256:7d27cd8494b269fe592cf6a9d7f6bdf14ac628bba34c381dc43cf533eaa95158
-    env:
-      TZ: ${TZ}
-    envFrom:
-      - secretRef:
-          name: *name
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: docker.io/rogerrum/alertmanager-discord
+              tag: 1.0.6
+            env:
+              TZ: ${TZ}
+              VERBOSE: ON
+            envFrom:
+              - secretRef:
+                  name: *name
     service:
       main:
         ports:
@@ -42,10 +51,3 @@ spec:
     ingress:
       main:
         enabled: false
-    resources:
-      requests:
-        cpu: 100m
-        memory: 64Mi
-      limits:
-        cpu: 250m
-        memory: 128Mi
