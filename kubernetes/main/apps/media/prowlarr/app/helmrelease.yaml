@@ -46,7 +46,7 @@ spec:
               tag: "16.1"
             envFrom: &envFrom
               - secretRef:
-                  name: prowlarr-secret
+                  name: prowlarr
 
         containers:
           main:
