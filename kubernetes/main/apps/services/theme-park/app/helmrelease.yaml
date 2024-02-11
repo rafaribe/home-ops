@@ -36,40 +36,27 @@ spec:
   values:
     controllers:
       main:
-        pod:
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
-
+        replicas: 2
+        strategy: RollingUpdate
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/theme-park
-              tag: 1.15.0@sha256:2da2d2f0571f0f1b7fe86000920db0dbc7bddd4e8117320ae98ee00e1a860a19
-
+              repository: ghcr.io/lildrunkensmurf/theme-park
+              tag: 1.15.1@sha256:881ef9840d368c79c9ce32f91c2086e6861b46e1ca42e2bfe806def50d193e4f
             resources:
               requests:
-                cpu: 5m
-                memory: 10Mi
+                cpu: 15m
               limits:
-                memory: 50Mi
-
+                memory: 64M
     service:
       main:
         ports:
           http:
             port: 8080
-
     ingress:
       main:
         enabled: true
         className: internal-nginx
-        annotations:
-          hajimari.io/enable: "false"
         hosts:
           - host: &host "themepark.${INTERNAL_DOMAIN}"
             paths:
@@ -81,3 +68,10 @@ spec:
           - secretName: "themepark-tls"
             hosts:
               - *host
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
