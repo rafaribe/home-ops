@@ -1,57 +1,78 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.rafaribe.com/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: plex-auto-languages
   namespace: media
 spec:
-  interval: 30m
   chart:
     spec:
       chart: app-template
       version: 2.5.0
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
-  dependsOn:
-    - name: plex
-      namespace: media
+  interval: 30m
   values:
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: docker.io/remirigal/plex-auto-languages
-      tag: v1.2.3
-    env:
-      PLEX_URL: http://plex.default.svc.cluster.local:32400
-      REFRESH_LIBRARY_ON_SCAN: false
-    envFrom:
-      - secretRef:
-          name: plex-auto-languages-secret
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          enableServiceLinks: false
+          labels:
+            egress.home.arpa/internet: allow
+            egress.home.arpa/kubedns: allow # FIXME: Remove when clusterNetworkPolicy is in place
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups: [44, 105, 10000, 568]
+        containers:
+          main:
+            image:
+              repository: docker.io/remirigal/plex-auto-languages
+              tag: v1.2.3
+            env:
+              PLEX_URL: http://plex.media.svc.cluster.local:32400
+              REFRESH_LIBRARY_ON_SCAN: false
+              PLEX_TOKEN:
+                valueFrom:
+                  secretKeyRef:
+                    name: plex-auto-languages-secret
+                    key: PLEX_TOKEN
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 128Mi
+              limits:
+                memory: 128Mi
+
     service:
       main:
         enabled: false
+
+    ingress:
+      main:
+        enabled: false
+
     persistence:
-      local:
+      config:
         enabled: true
         type: emptyDir
-        mountPath: /.local
-    resources:
-      requests:
-        cpu: 50m
-        memory: 100Mi
-      limits:
-        memory: 1Gi
+      local:
+        type: emptyDir
+        globalMounts:
+          - path: /.local
