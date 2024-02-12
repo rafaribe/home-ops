@@ -107,6 +107,6 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: unifi-config-v2
+        existingClaim: unifi-config-v2-unifi-0
         globalMounts:
           - path: /unifi
