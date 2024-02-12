@@ -65,11 +65,11 @@ spec:
             port: 8080
             protocol: TCP
           portal-http:
-            enabled: false
+            enabled: true
             port: 8880
             protocol: HTTP
           portal-https:
-            enabled: false
+            enabled: true
             port: 8843
             protocol: HTTPS
           speedtest:
