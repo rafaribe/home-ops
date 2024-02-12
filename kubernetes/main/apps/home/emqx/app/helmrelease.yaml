@@ -52,7 +52,7 @@ spec:
       enabled: false
     persistence:
       enabled: true
-      storageClassName: local-hostpath
+      storageClassName: ceph-block
       size: 250Mi
     affinity:
       podAntiAffinity:
