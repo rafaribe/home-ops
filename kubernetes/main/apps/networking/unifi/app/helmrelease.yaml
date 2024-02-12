@@ -118,4 +118,4 @@ spec:
         type: configMap
         name: config-gateway
         globalMounts:
-          - path: /unifi/data/sites/default/config.gateway.json
+          - path: /unifi/data/sites/default
