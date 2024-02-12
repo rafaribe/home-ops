@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: emqx
+  name: &app emqx
   namespace: home
 spec:
   interval: 15m
@@ -12,7 +12,7 @@ spec:
       version: 5.4.1
       sourceRef:
         kind: HelmRepository
-        name: emqx
+        name: emqx-charts
         namespace: flux-system
   install:
     createNamespace: true
@@ -24,56 +24,23 @@ spec:
   values:
     image:
       repository: public.ecr.aws/emqx/emqx
-
-    replicaCount: 3
+    replicaCount: 2
     recreatePods: true
-
     emqxConfig:
-      EMQX_ALLOW_ANONYMOUS: "true"
+      EMQX_ALLOW_ANONYMOUS: "false"
       EMQX_AUTH__MNESIA__PASSWORD_HASH: plain
-
-    emqxAclConfig: >
-      {allow, {user, "rafaribe"}, pubsub, ["$SYS/#", "#"]}.
-      {allow, {user, "dashboard"}, subscribe, ["$SYS/#"]}.
-      {allow, {ipaddr, "127.0.0.1"}, pubsub, ["$SYS/#", "#"]}.
-      {allow, all, subscribe, ["$SYS/#", {eq, "#"}]}.
-      {allow, all}.
-    emqxLoadedPlugins: >
-      {emqx_management, true}.
-      {emqx_recon, true}.
-      {emqx_retainer, true}.
-      {emqx_dashboard, true}.
-      {emqx_telemetry, false}.
-      {emqx_rule_engine, true}.
-      {emqx_bridge_mqtt, false}.
-      {emqx_auth_mnesia, true}.
-      {emqx_prometheus, true}.
-    emqxLoadedModules: >
-      {emqx_mod_presence, true}.
-      {emqx_mod_delayed, false}.
-      {emqx_mod_rewrite, false}.
-      {emqx_mod_subscription, false}.
-      {emqx_mod_topic_metrics, true}.
 
     service:
       type: LoadBalancer
-      annotations:
-        io.cilium/lb-ipam-ips: ${LB_EMQX}
-      labels:
-        pool: lb
-      loadBalancerIP: ${LB_EMQX}
+      loadBalancerIP: "${LB_EMQX}"
       externalTrafficPolicy: Local
-
     ingress:
       dashboard:
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/appName: "EMQX"
-          hajimari.io/icon: "radio-tower"
-          external-dns.alpha.kubernetes.io/hostname: "emqx.${EXTERNAL_DOMAIN}"
-
         enabled: true
-        ingressClassName: external-nginx
+        ingressClassName: internal-nginx
+        annotations:
+          hajimari.io/appName: "EMQX"
+          hajimari.io/icon: simple-icons:eclipsemosquitto
         path: /
         pathType: Prefix
         hosts:
@@ -81,14 +48,12 @@ spec:
         tls:
           - hosts:
               - *host
-
     metrics:
-      enabled: true
-
+      enabled: false
     persistence:
       enabled: true
-      storageClass: ceph-block
-      size: 100Mi
+      storageClassName: local-hostpath
+      size: 250Mi
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -101,24 +66,22 @@ spec:
                     values:
                       - emqx
               topologyKey: kubernetes.io/hostname
-
     resources:
       requests:
         cpu: 10m
         memory: 150Mi
       limits:
         memory: 512Mi
-
   valuesFrom:
     - targetPath: emqxConfig.EMQX_DASHBOARD__DEFAULT_PASSWORD
       kind: Secret
-      name: emqx-secret
+      name: *app
       valuesKey: ADMIN_PASSWORD
     - targetPath: emqxConfig.EMQX_AUTH__USER__1__USERNAME
       kind: Secret
-      name: emqx-secret
+      name: *app
       valuesKey: USER_1_USERNAME
     - targetPath: emqxConfig.EMQX_AUTH__USER__1__PASSWORD
       kind: Secret
-      name: emqx-secret
+      name: *app
       valuesKey: USER_1_PASSWORD
