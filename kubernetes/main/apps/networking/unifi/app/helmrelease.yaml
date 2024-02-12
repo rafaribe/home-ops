@@ -115,11 +115,7 @@ spec:
           - path: /unifi
       gateway:
         enabled: true
-        type: custom
-        volumeSpec:
-          configMap:
-            name: config-gateway
-        subPath:
-          - path: config.gateway.json
-            mountPath: /unifi/data/sites/default/config.gateway.json
-            readOnly: false
+        type: configMap
+        name: config-gateway
+        globalMounts:
+          - path: /unifi/data/sites/default/config.gateway.json
