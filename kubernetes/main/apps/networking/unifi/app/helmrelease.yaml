@@ -53,7 +53,7 @@ spec:
         type: LoadBalancer
         externalTrafficPolicy: Local
         annotations:
-          io.cilium/lb-ipam-ips: ${LB_QBITTORRENT}
+          io.cilium/lb-ipam-ips: ${LB_UNIFI}
         labels:
           pool: lb
         ports:
@@ -110,6 +110,6 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: unifi-config-v2
+        existingClaim: unifi-config-v2-unifi-0
         globalMounts:
           - path: /unifi
