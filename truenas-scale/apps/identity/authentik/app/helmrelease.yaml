@@ -74,7 +74,7 @@ spec:
         create: true
     initContainers:
       init-db:
-        image: ghcr.io/haraldkoch/postgres-initdb:15.2
+        image: ghcr.io/haraldkoch/postgres-initdb:16.2
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
