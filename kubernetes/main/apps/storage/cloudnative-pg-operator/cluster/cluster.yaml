@@ -47,7 +47,7 @@ spec:
       endpointURL: https://minio.rafaribe.com
       # Note: serverName version needs to be inclemented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster home-ops-storage-v3
+      serverName: &currentCluster home-ops-storage
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-minio
