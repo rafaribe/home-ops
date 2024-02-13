@@ -32,16 +32,130 @@ spec:
   uninstall:
     keepHistory: false
 
-  valuesFrom:
-    - kind: ConfigMap
-      name: cilium-values
+  # valuesFrom:
+  #   - kind: ConfigMap
+  #     name: cilium-values
 
   values:
-    prometheus:
-      serviceMonitor:
-        enabled: true
-
-    operator:
-      prometheus:
+    autoDirectNodeRoutes: true
+    bandwidthManager:
+      enabled: true
+      bbr: true
+    bpf:
+      masquerade: true
+    cgroup:
+      automount:
+        enabled: false
+      hostRoot: /sys/fs/cgroup
+    cluster:
+      id: 1
+      name: main
+    containerRuntime:
+      integration: containerd
+    devices: enp+
+    enableRuntimeDeviceDetection: true
+    endpointRoutes:
+      enabled: true
+    hubble:
+      enabled: true
+      metrics:
+        enabled:
+          - dns:query
+          - drop
+          - tcp
+          - flow
+          - port-distribution
+          - icmp
+          - http
         serviceMonitor:
           enabled: true
+        dashboards:
+          enabled: true
+          annotations:
+            grafana_folder: Cilium
+      relay:
+        enabled: true
+        rollOutPods: true
+        prometheus:
+          serviceMonitor:
+            enabled: true
+      ui:
+        enabled: true
+        rollOutPods: true
+        ingress:
+          enabled: true
+          className: internal-nginx
+          hosts:
+            - &host hubble.rafaribe.com
+          tls:
+            - hosts:
+                - *host
+    ipam:
+      mode: kubernetes
+    ipv4NativeRoutingCIDR: 10.32.0.0/16
+    k8sServiceHost: 10.0.1.17
+    k8sServicePort: 6443
+    kubeProxyReplacement: true
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+    l2announcements:
+      enabled: true
+    loadBalancer:
+      algorithm: maglev
+      mode: dsr
+    localRedirectPolicy: true
+    operator:
+      rollOutPods: true
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      dashboards:
+        enabled: true
+        annotations:
+          grafana_folder: Cilium
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        trustCRDsExist: true
+    dashboards:
+      enabled: true
+      annotations:
+        grafana_folder: Cilium
+    rollOutCiliumPods: true
+    routingMode: native
+    securityContext:
+      capabilities:
+        ciliumAgent:
+          - CHOWN
+          - KILL
+          - NET_ADMIN
+          - NET_RAW
+          - IPC_LOCK
+          - SYS_ADMIN
+          - SYS_RESOURCE
+          - DAC_OVERRIDE
+          - FOWNER
+          - SETGID
+          - SETUID
+        cleanCiliumState:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+    ## Gateway API
+    gatewayAPI:
+      # -- Enable support for Gateway API in cilium
+      # This will automatically set enable-envoy-config as well.
+      enabled: true
+
+      # -- SecretsNamespace is the namespace in which envoy SDS will retrieve TLS secrets from.
+      secretsNamespace:
+        # -- Create secrets namespace for Gateway API.
+        create: true
+
+        # -- Name of Gateway API secret namespace.
+        name: cilium-secrets
+
+        # -- Enable secret sync, which will make sure all TLS secrets used by Ingress are synced to secretsNamespace.name.
+        # If disabled, TLS secrets must be maintained externally.
+        sync: true
