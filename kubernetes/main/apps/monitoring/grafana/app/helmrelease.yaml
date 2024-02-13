@@ -32,6 +32,8 @@ spec:
           - secretRef:
               name: &secret grafana-secret
     replicas: 2
+    envFromSecrets:
+      - name: *secret
     env:
       GF_EXPLORE_ENABLED: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
