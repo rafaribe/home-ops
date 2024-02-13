@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres16
+  name: home-ops-storage
 spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:16.1-19
@@ -46,7 +46,7 @@ spec:
       endpointURL: https://minio.rafaribe.com
       # Note: serverName version needs to be inclemented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster postgres16-v3
+      serverName: &currentCluster home-ops-storage-v3
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-minio
@@ -58,7 +58,7 @@ spec:
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
     recovery:
-      source: &previousCluster postgres16-v2
+      source: &previousCluster home-ops-storage-v2
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
     - name: *previousCluster
