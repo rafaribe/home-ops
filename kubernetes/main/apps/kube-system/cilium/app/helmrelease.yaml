@@ -43,6 +43,9 @@ spec:
       bbr: true
     bpf:
       masquerade: true
+    bgpControlPlane:
+      # -- Enables the BGP control plane.
+      enabled: true
     cgroup:
       automount:
         enabled: false
