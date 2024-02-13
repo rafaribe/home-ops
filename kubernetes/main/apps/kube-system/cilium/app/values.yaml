@@ -120,3 +120,6 @@ gatewayAPI:
     # -- Enable secret sync, which will make sure all TLS secrets used by Ingress are synced to secretsNamespace.name.
     # If disabled, TLS secrets must be maintained externally.
     sync: true
+bgpControlPlane:
+  # -- Enables the BGP control plane.
+  enabled: true
