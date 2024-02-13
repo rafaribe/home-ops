@@ -1,36 +1,52 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/postgresql.cnpg.io/cluster_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: home-ops-storage
-  namespace: storage
-  annotations:
-    kyverno.io/ignore: "true"
+  name: postgres16
 spec:
   instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.1-19
   primaryUpdateStrategy: unsupervised
-  enableSuperuserAccess: true
   storage:
-    size: 100Gi
+    size: 20Gi
     storageClass: ceph-block
   superuserSecret:
-    name: cloudnative-pg-superuser
+    name: cloudnative-pg-secret
+  enableSuperuserAccess: true
+  postgresql:
+    parameters:
+      max_connections: "600"
+      max_slot_wal_keep_size: 10GB
+      shared_buffers: 512MB
+  resources:
+    requests:
+      cpu: 500m
+    limits:
+      memory: 4Gi
   monitoring:
     enablePodMonitor: true
-
-  # bootstrap:
-  #   recovery:
-  #     source: clusterBackup
+    # Ref: https://github.com/cloudnative-pg/cloudnative-pg/issues/2501
+    podMonitorMetricRelabelings:
+      - {
+          sourceLabels: ["cluster"],
+          targetLabel: cnpg_cluster,
+          action: replace,
+        }
+      - { regex: cluster, action: labeldrop }
   backup:
     retentionPolicy: 30d
-    barmanObjectStore:
+    barmanObjectStore: &barmanObjectStore
+      data:
+        compression: bzip2
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://postgresql/
+      destinationPath: s3://cloudnative-pg/
       endpointURL: https://minio.rafaribe.com
-      serverName: home-ops-minio
+      # Note: serverName version needs to be inclemented
+      # when recovering from an existing cnpg cluster
+      serverName: &currentCluster postgres16-v3
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-minio
@@ -38,3 +54,14 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-minio
           key: MINIO_SECRET_KEY
+  # Note: previousCluster needs to be set to the name of the previous
+  # cluster when recovering from an existing cnpg cluster
+  bootstrap:
+    recovery:
+      source: &previousCluster postgres16-v2
+  # Note: externalClusters is needed when recovering from an existing cnpg cluster
+  externalClusters:
+    - name: *previousCluster
+      barmanObjectStore:
+        <<: *barmanObjectStore
+        serverName: *previousCluster

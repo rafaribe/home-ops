@@ -1,13 +1,12 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/postgresql.cnpg.io/scheduledbackup_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/scheduledbackup_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: backup-weekend
-  namespace: storage
+  name: postgres
 spec:
-  schedule: "0 4 * * * SUN"
+  schedule: "@daily"
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: home-ops-storage
+    name: postgres16
