@@ -87,7 +87,7 @@ spec:
       main:
         ports:
           http:
-            port: &port 2000
+            port: *port
     serviceAccount:
       name: tailscale
       tailnet:
