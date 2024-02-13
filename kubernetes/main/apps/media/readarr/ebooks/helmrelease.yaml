@@ -22,31 +22,25 @@ spec:
     remediation:
       retries: 5
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: "OnRootMismatch"
-        supplementalGroups:
-          - 568
-
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
-
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 568
         containers:
           main:
             image:
               repository: ghcr.io/onedr0p/readarr-nightly
-              tag: 0.3.17.2406
-            envFrom:
-              - secretRef:
-                  name: *app
+              tag: 0.3.19.2424@sha256:b30d37fa8432b17e5f11096eceac2e1c1c5903400a61ad364ad0fc3ff9fe346b
             env:
-              TZ: "{TZ}"
+              TZ: "${TZ}"
               READARR__INSTANCE_NAME: Readarr (Ebooks)
               READARR__PORT: &port 80
               READARR__LOG_LEVEL: info
@@ -55,19 +49,30 @@ spec:
                   secretKeyRef:
                     name: readarr-ebooks
                     key: READARR_EBOOKS_APIKEY
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - /usr/bin/env
+                      - bash
+                      - -c
+                      - curl --fail localhost:8787/api/v1/system/status?apiKey=`IFS=\> && while
+                        read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
+                  failureThreshold: 5
+                  initialDelaySeconds: 60
+                  periodSeconds: 10
+                  successThreshold: 1
+                  timeoutSeconds: 10
             resources:
               requests:
-                cpu: 10m
-                memory: 250Mi
+                memory: 100Mi
+                cpu: 100m
               limits:
-                memory: 1000Mi
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              mountPath: /config
-              accessMode: ReadWriteOnce
-              size: 10Gi
-              storageClass: ceph-block
+                memory: 1.5G
+
     service:
       main:
         ports:
@@ -91,6 +96,11 @@ spec:
               - *host
 
     persistence:
+      config:
+        enabled: true
+        existingClaim: config-readarr-ebooks-0
+        globalMounts:
+          - path: /config
       media:
         enabled: true
         type: nfs
