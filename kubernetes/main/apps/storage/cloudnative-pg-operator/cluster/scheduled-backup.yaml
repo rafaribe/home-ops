@@ -10,4 +10,4 @@ spec:
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: home-ops-r2
+    name: home-ops-storage
