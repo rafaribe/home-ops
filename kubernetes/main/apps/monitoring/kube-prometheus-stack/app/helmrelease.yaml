@@ -31,7 +31,14 @@ spec:
   values:
     crds:
       enabled: true
+
     cleanPrometheusOperatorObjectNames: true
+
+    defaultRules:
+      disabled:
+        HostHighCpuLoad: true
+        NodeSystemSaturation: true
+
     alertmanager:
       ingress:
         enabled: true
@@ -56,10 +63,10 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
+              storageClassName: ceph-block
               resources:
                 requests:
-                  storage: 50Mi
+                  storage: 10Mi
 
     kubelet:
       enabled: true
@@ -126,6 +133,9 @@ spec:
     kubeProxy:
       enabled: false
 
+    nodeExporter:
+      enabled: false
+
     prometheus:
       ingress:
         enabled: true
@@ -158,11 +168,14 @@ spec:
           - auto-gomaxprocs
           - memory-snapshot-on-shutdown
           - new-service-discovery-manager
+        externalLabels:
+          cluster: main
         thanos:
           image: quay.io/thanos/thanos:v0.34.0
           objectStorageConfig:
-            name: thanos-objstore-secret
-            key: objstore.yml
+            existingSecret:
+              name: thanos-objstore-secret
+              key: objstore.yml
         retention: 2d
         retentionSize: 15GB
         storageSpec:
@@ -172,7 +185,19 @@ spec:
               resources:
                 requests:
                   storage: 20Gi
-
+        resources:
+          requests:
+            cpu: 150m
+            memory: 2000Mi
+    prometheusOperator:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          memory: 384Mi
+    kubeStateMetrics:
+      enabled: true
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -181,7 +206,18 @@ spec:
           multicluster:
             etcd:
               enabled: true
-    nodeExporter:
-      enabled: false
-    kubeStateMetrics:
-      enabled: false
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              version: v1
+              kind: ConfigMap
+              labelSelector: grafana_dashboard in (1)
+            patch: |-
+              apiVersion: v1
+              kind: ConfigMap
+              metadata:
+                name: not-used
+                namespace: not-used
+                annotations:
+                  grafana_folder: Prometheus
