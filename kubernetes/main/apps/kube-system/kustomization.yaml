@@ -13,3 +13,4 @@ resources:
   - ./snapshot-controller/ks.yaml
   - ./local-path-provisioner/ks.yaml
   - ./node-feature-discovery/ks.yaml
+  - ./nvidia-device-plugin/ks.yaml
