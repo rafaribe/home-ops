@@ -55,3 +55,4 @@ resources:
   - ./tf-controller.yaml
   - ./vector.yaml
   - ./weave-gitops.yaml
+  - ./xenitab.yaml
