@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *appname
   interval: 10m
-  path: "./kubernetes/main/apps/monitoring/alertmanager/app"
+  path: "./kubernetes/main/apps/monitoring/alertmanager/app/"
   prune: true
   sourceRef:
     kind: GitRepository
