@@ -9,6 +9,8 @@ resources:
   - ./cyberchef/ks.yaml
   - ./hajimari/ks.yaml
   - ./it-tools/ks.yaml
+  - ./linkding/ks.yaml
+  - ./obsidian-couchdb/ks.yaml
   - ./paperless/ks.yaml
   - ./thelounge/ks.yaml
   - ./theme-park/ks.yaml

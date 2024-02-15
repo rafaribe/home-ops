@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &appname obsidian-couchdb
+  namespace: flux-system
+spec:
+  targetNamespace: services
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *appname
+  interval: 10m
+  path: "./kubernetes/main/apps/services/obsidian-couchdb/app"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops
+  wait: false
+  postBuild:
+    substitute:
+      APP: *appname
+      HOSTNAME: obsidian-db.rafaribe.com
+      APP_UID: "1000"
+      APP_GID: "1000"
+      VOLSYNC_CLAIM: obsidian-couchdb-data
