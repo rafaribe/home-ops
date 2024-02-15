@@ -376,7 +376,7 @@ spec:
       accessModes:
         - ReadWriteOnce
       size: 4Gi
-      storageClass: rook-ceph-block
+      storageClass: ceph-block
 
     testFramework:
       enabled: false
