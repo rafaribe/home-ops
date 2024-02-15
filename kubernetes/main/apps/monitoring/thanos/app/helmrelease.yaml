@@ -91,6 +91,7 @@ spec:
         enabled: true
         hostname: thanos.rafaribe.com
         tls: true
+        ingressClassName: internal-nginx
       networkPolicy:
         enabled: false
     bucketweb:
