@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: thanos
-      version: 12.23.2
+      version: 13.0.0
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -91,9 +91,13 @@ spec:
         enabled: true
         hostname: thanos.rafaribe.com
         tls: true
+      networkPolicy:
+        enabled: false
     bucketweb:
       enabled: true
       replicaCount: 2
+      networkPolicy:
+        enabled: false
     compactor:
       enabled: true
       extraFlags:
@@ -121,6 +125,8 @@ spec:
       alertmanagers:
         ["http://alertmanager-operated.monitoring.svc.cluster.local:9093"]
       extraFlags: ["--web.prefix-header=X-Forwarded-Prefix"]
+      dnsDiscovery:
+        enabled: true
       config: |-
         groups:
           - name: PrometheusWatcher
