@@ -273,3 +273,45 @@ module "tailscale" {
     doppler = doppler
   }
 }
+module "linkding" {
+  source       = "./project"
+  project_name = "linkding"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+module "shlink" {
+  source       = "./project"
+  project_name = "shlink"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+module "obsidian-couchdb" {
+  source       = "./project"
+  project_name = "obsidian-couchdb"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+
+module "immich" {
+  source       = "./project"
+  project_name = "immich"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
+
+module "zipline" {
+  source       = "./project"
+  project_name = "zipline"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
