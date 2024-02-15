@@ -173,9 +173,8 @@ spec:
         thanos:
           image: quay.io/thanos/thanos:v0.34.0
           objectStorageConfig:
-            existingSecret:
-              name: thanos-objstore-secret
-              key: objstore.yml
+            name: thanos-objstore-secret
+            key: objstore.yml
         retention: 2d
         retentionSize: 15GB
         storageSpec:
@@ -197,7 +196,7 @@ spec:
         limits:
           memory: 384Mi
     kubeStateMetrics:
-      enabled: true
+      enabled: false
     grafana:
       enabled: false
       forceDeployDashboards: true
