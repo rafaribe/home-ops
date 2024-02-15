@@ -26,7 +26,7 @@ spec:
     keepHistory: false
   values:
     spegel:
-      containerdSock: /run/containerd/containerd.sock
-      containerdRegistryConfigPath: /etc/cri/conf.d/hosts
+      containerdSock: /run/k3s/containerd/containerd.sock
+      containerdRegistryConfigPath: /var/lib/rancher/k3s/agent/etc/containerd/certs.d
     serviceMonitor:
       enabled: true
