@@ -6,7 +6,7 @@ metadata:
   name: &appname zipline
   namespace: flux-system
 spec:
-  targetNamespace: selfhosted
+  targetNamespace: services
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
