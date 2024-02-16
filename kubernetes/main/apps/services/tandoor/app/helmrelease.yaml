@@ -99,40 +99,26 @@ spec:
               - hosts:
                   - *host
     persistence:
-      config:
-        type: persistentvolumeclaim
-        existingClaim: *app
+      files:
+        existingClaim: *pvc
         advancedMounts:
           main:
             main:
               - path: /opt/recipes/mediafiles
+                subPath: mediafiles
+              - path: /opt/recipes/staticfiles
+                subPath: staticfiles
             nginx:
               - path: /media
+                subPath: mediafiles
+              - path: /static
+                subPath: staticfiles
       nginx-config:
         type: configMap
-        name: tandoor-configmap
+        name: tandoor-nginx
         advancedMounts:
           main:
             nginx:
               - path: /etc/nginx/nginx.conf
                 subPath: nginx-config
-      django-js-reverse:
-        type: emptyDir
-        advancedMounts:
-          main:
-            main:
-              - path: /opt/recipes/cookbook/static/django_js_reverse
-      static:
-        type: emptyDir
-        advancedMounts:
-          main:
-            main:
-              - path: /opt/recipes/staticfiles
-            nginx:
-              - path: /static
-      cache:
-        type: emptyDir
-        advancedMounts:
-          main:
-            nginx:
-              - path: /var/cache/nginx
+                readOnly: true
