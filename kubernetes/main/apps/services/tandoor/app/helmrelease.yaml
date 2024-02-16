@@ -122,5 +122,5 @@ spec:
           main:
             nginx:
               - path: /opt/bitnami/nginx/conf/nginx.conf
-                subPath: nginx-config
+                subPath: nginx.conf
                 readOnly: true
