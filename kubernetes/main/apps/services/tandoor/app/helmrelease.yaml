@@ -3,7 +3,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: tandoor
+  name: &app tandoor
+  namespace: &ns default
 spec:
   chart:
     spec:
@@ -104,7 +105,7 @@ spec:
     persistence:
       config:
         type: persistentvolumeclaim
-        existingClaim: tandoor
+        existingClaim: *app
         advancedMounts:
           main:
             main:
@@ -146,7 +147,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: tandoor
-              namespace: services
+              namespace: *ns
             spec:
               template:
                 spec:
