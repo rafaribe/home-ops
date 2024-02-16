@@ -22,4 +22,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 2Gi
+      HOSTNAME: recipes.${EXTERNAL_DOMAIN}
+      APP_UID: "1000"
+      APP_GID: "1000"
