@@ -146,7 +146,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: tandoor
-              namespace: *ns
+              namespace: services
             spec:
               template:
                 spec:
@@ -157,4 +157,3 @@ spec:
                           mountPath: /opt/recipes/cookbook/static/django_js_reverse
                         - name: static
                           mountPath: /opt/recipes/staticfiles
-
