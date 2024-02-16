@@ -15,6 +15,14 @@ spec:
         name: bjw-s
         namespace: flux-system
   values:
+    fullnameOverride: *name
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        supplementalGroups: [3000, 3001, 568]
+        fsGroupChangePolicy: "OnRootMismatch"
     controllers:
       main:
         containers:
@@ -26,6 +34,8 @@ spec:
 
             env:
               TZ: "${TZ}"
+              PUID: 1000
+              PGID: 1000
               # DEFAULT_EMAIL: "${SECRET_CLOUDFLARE_EMAIL}"
               ALLOW_SIGNUP: false
               API_PORT: 9000
@@ -81,6 +91,6 @@ spec:
         enabled: true
         type: nfs
         server: "10.0.1.6"
-        path: "/mnt/storage-0/config/mealie"
+        path: "/mnt/storage-0/media/mealie"
         globalMounts:
           - path: /app/data/backups
