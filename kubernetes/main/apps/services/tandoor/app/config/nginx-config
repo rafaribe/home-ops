@@ -1,9 +1,8 @@
-pid /tmp/nginx.pid;
 events {
   worker_connections 1024;
 }
 http {
-  include /etc/nginx/mime.types;
+  include /opt/bitnami/nginx/conf/mime.types;
   server {
     listen 8080;
     server_name _;
