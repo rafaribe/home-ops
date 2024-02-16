@@ -102,7 +102,7 @@ spec:
                   - *host
     persistence:
       files:
-        existingClaim: *name
+        existingClaim: *app
         advancedMounts:
           main:
             main:
