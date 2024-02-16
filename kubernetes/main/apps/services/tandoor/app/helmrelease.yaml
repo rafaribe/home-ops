@@ -16,6 +16,13 @@ spec:
         namespace: flux-system
   interval: 30m
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        supplementalGroups: [568]
+        fsGroupChangePolicy: "OnRootMismatch"
     controllers:
       main:
         annotations:
@@ -46,11 +53,6 @@ spec:
                 memory: 256Mi
               limits:
                 memory: 512Mi
-            securityContext:
-              runAsUser: ${APP_UID}
-              runAsGroup: ${APP_GID}
-              fsGroup: ${APP_GID}
-              fsGroupChangePolicy: "OnRootMismatch"
             probes:
               liveness: &probes
                 enabled: true
@@ -75,8 +77,8 @@ spec:
                   periodSeconds: 10
           nginx:
             image:
-              repository: public.ecr.aws/nginx/nginx
-              tag: 1.25.3
+              repository: bitnami/nginx
+              tag: 1.25-debian-11
     service:
       main:
         ports:
@@ -119,6 +121,6 @@ spec:
         advancedMounts:
           main:
             nginx:
-              - path: /etc/nginx/nginx.conf
+              - path: /opt/bitnami/nginx/conf/nginx.conf
                 subPath: nginx-config
                 readOnly: true
