@@ -136,21 +136,3 @@ spec:
           main:
             nginx:
               - path: /var/cache/nginx
-  postRenderers:
-    - kustomize:
-        patchesStrategicMerge:
-          - kind: Deployment
-            apiVersion: apps/v1
-            metadata:
-              name: tandoor
-              namespace: *ns
-            spec:
-              template:
-                spec:
-                  initContainers:
-                    - name: migrations
-                      volumeMounts:
-                        - name: django-js-reverse
-                          mountPath: /opt/recipes/cookbook/static/django_js_reverse
-                        - name: static
-                          mountPath: /opt/recipes/staticfiles
