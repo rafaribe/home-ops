@@ -16,13 +16,13 @@ spec:
         namespace: flux-system
   interval: 30m
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        supplementalGroups: [568]
-        fsGroupChangePolicy: "OnRootMismatch"
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsUser: 1000
+    #     runAsGroup: 1000
+    #     fsGroup: 1000
+    #     supplementalGroups: [568]
+    #     fsGroupChangePolicy: "OnRootMismatch"
     controllers:
       main:
         annotations:
@@ -49,47 +49,25 @@ spec:
                   name: *configmap
             resources:
               requests:
+                memory: 100Mi
                 cpu: 100m
-                memory: 256Mi
               limits:
-                memory: 512Mi
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /accounts/login/
-                    port: 8000
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /accounts/login/
-                    port: 8000
-                  failureThreshold: 30
-                  periodSeconds: 10
-          nginx:
-            image:
-              repository: nginxinc/nginx-unprivileged
-              tag: 1.25.3-alpine
+                memory: 250Mi
+        strategy: Recreate
     service:
       main:
         ports:
           http:
             port: 8080
+          static:
+            port: 80
     ingress:
       main:
         enabled: true
         className: external-nginx
         annotations:
-          hajimari.io/icon: mdi:chef-hat
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "chef-hat"
         hosts:
           - host: &host tandoor.rafaribe.com
             paths:
@@ -101,40 +79,9 @@ spec:
               - hosts:
                   - *host
     persistence:
-      config:
-        type: persistentvolumeclaim
-        existingClaim: *app
-        advancedMounts:
-          main:
-            main:
-              - path: /opt/recipes/mediafiles
-            nginx:
-              - path: /media
-      nginx-config:
-        type: configMap
-        name: tandoor-nginx
-        advancedMounts:
-          main:
-            nginx:
-              - path: /etc/nginx/nginx.conf
-                subPath: nginx-config
-      django-js-reverse:
-        type: emptyDir
-        advancedMounts:
-          main:
-            main:
-              - path: /opt/recipes/cookbook/static/django_js_reverse
-      static:
-        type: emptyDir
-        advancedMounts:
-          main:
-            main:
-              - path: /opt/recipes/staticfiles
-            nginx:
-              - path: /static
-      cache:
-        type: emptyDir
-        advancedMounts:
-          main:
-            nginx:
-              - path: /var/cache/nginx
+      media:
+        enabled: true
+        type: persistentVolumeClaim
+        existingClaim: tandoor-media-v1
+        globalMounts:
+          - path: /opt/recipes/mediafiles

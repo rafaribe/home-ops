@@ -15,3 +15,4 @@ data:
   SHOPPING_MIN_AUTOSYNC_INTERVAL: "5"
   # SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
   ENABLE_SIGNUP: "1"
+  ENABLE_PDF_EXPORT: "1"
