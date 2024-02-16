@@ -315,3 +315,11 @@ module "zipline" {
     doppler = doppler
   }
 }
+module "tandoor" {
+  source       = "./project"
+  project_name = "tandoor"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}
