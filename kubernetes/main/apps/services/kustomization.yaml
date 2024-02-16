@@ -11,6 +11,7 @@ resources:
   - ./it-tools/ks.yaml
   - ./kubernetes-schemas/ks.yaml
   - ./linkding/ks.yaml
+  - ./mealie/ks.yaml
   - ./obsidian-couchdb/ks.yaml
   - ./paperless/ks.yaml
   # - ./tandoor/ks.yaml

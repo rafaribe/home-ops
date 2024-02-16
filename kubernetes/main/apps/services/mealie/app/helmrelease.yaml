@@ -1,0 +1,86 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: mealie
+  namespace: services
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/mealie-recipes/mealie
+              tag: v1.0.0-rc1.1
+              pullPolicy: IfNotPresent
+
+            env:
+              TZ: "${TZ}"
+              # DEFAULT_EMAIL: "${SECRET_CLOUDFLARE_EMAIL}"
+              ALLOW_SIGNUP: false
+              API_PORT: 9000
+              AUTO_BACKUP_ENABLED: true
+              BASE_URL: https://meals.rafaribe.com
+              # SMTP_HOST: smtp-relay.system.svc.cluster.local.
+              # SMTP_PORT: 2525
+              # SMTP_FROM_NAME: meals@${SECRET_DOMAIN}
+              # SMTP_AUTH_STRATEGY: none
+              # SMTP_FROM_EMAIL: meals@${SECRET_DOMAIN}
+              TOKEN_TIME: 720
+
+            resources:
+              requests:
+                cpu: 10m
+                memory: 411M
+              limits:
+                memory: 512M
+
+    service:
+      main:
+        ports:
+          http:
+            port: 9000
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "external-nginx"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "food"
+          hajimari.io/appName: "Mealie"
+          hajimari.io/group: "Home"
+        hosts:
+          - host: &host "meals.rafaribe.com"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      api-data:
+        enabled: true
+        existingClaim: mealie-api-data
+        globalMounts:
+          - path: /app/data/
+      backups:
+        enabled: true
+        type: nfs
+        server: "10.0.1.6"
+        path: "/mnt/storage-0/config/mealie"
+        globalMounts:
+          - path: /app/data/backups
