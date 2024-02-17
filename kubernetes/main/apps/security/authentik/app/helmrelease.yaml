@@ -26,17 +26,22 @@ spec:
     remediation:
       retries: 1
   values:
+    initContainers:
+      init-db:
+        image: ghcr.io/onedr0p/postgres-init:16.2
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: &secret authentik-db-secret
     controller:
       annotations:
-        secret.reloader.stakater.com/reload: authentik-config,authentik-db-secret
+        secret.reloader.stakater.com/reload: *secret
     serviceAccount:
       create: false
 
     envFrom:
       - secretRef:
-          name: authentik-config
-      - secretRef:
-          name: authentik-db-secret
+          name: *secret
 
     ingress:
       enabled: true
@@ -49,23 +54,31 @@ spec:
         nginx.ingress.kubernetes.io/enable-global-auth: "false"
         cert-manager.io/cluster-issuer: letsencrypt-production
       hosts:
-        - host: authentik.${EXTERNAL_DOMAIN}
+        - host: &home authentik.rafaribe.com
           paths:
             - path: /
               pathType: Prefix
       tls:
         - hosts:
-            - authentik.${EXTERNAL_DOMAIN}
+            - *home
 
     # Password in clear text because this is a random test instance
     authentik:
+      log_level: info
+      email:
+        port: 587
+        use_tls: true
+      error_reporting:
+        enabled: false
+        send_pii: false
       redis:
         host: redis.storage.svc.cluster.local
     env:
       AUTHENTIK_REDIS__DB: "1"
     redis:
       enabled: false
-
+    postgresql:
+      enabled: false
     prometheus:
       serviceMonitor:
         create: true
@@ -80,10 +93,3 @@ spec:
       worker:
         enabled: true
         minReplicas: 2
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-init:16.2
-        imagePullPolicy: IfNotPresent
-        envFrom:
-          - secretRef:
-              name: *secret
