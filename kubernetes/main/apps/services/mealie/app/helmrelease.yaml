@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: mealie
+  name: &name mealie
   namespace: services
 spec:
   interval: 30m
@@ -33,7 +33,7 @@ spec:
               pullPolicy: IfNotPresent
 
             env:
-              TZ: "${TZ}"
+              TZ: "Europe/Lisbon"
               PUID: 1000
               PGID: 1000
               # DEFAULT_EMAIL: "${SECRET_CLOUDFLARE_EMAIL}"
