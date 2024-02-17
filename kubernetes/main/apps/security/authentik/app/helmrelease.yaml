@@ -72,7 +72,7 @@ spec:
         enabled: false
         send_pii: false
       redis:
-        host: redis.storage.svc.cluster.local
+        host: redis.security.svc.cluster.local
     env:
       AUTHENTIK_REDIS__DB: "1"
     redis:
