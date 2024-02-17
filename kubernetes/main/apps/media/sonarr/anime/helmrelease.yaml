@@ -90,7 +90,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external-nginx
+        className: external-nginx
         annotations:
           hajimari.io/icon: mdi:television-classic
         hosts:

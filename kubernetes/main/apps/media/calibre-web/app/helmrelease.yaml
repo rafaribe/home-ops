@@ -60,7 +60,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external-nginx
+        className: external-nginx
         labels:
           theme-park.home/name: calibreweb
           theme-park.home/theme: hotline
