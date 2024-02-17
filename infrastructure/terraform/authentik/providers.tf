@@ -25,5 +25,5 @@ data "doppler_secrets" "this" {}
 provider "authentik" {
   url      = nonsensitive(data.doppler_secrets.this.map.TF_API_URL)
   token    = nonsensitive(data.doppler_secrets.this.map.TF_API_TOKEN)
-  insecure = false
+  insecure = true
 }

@@ -42,7 +42,10 @@ spec:
     envFrom:
       - secretRef:
           name: *secret
-
+    service:
+      type: LoadBalancer
+      annotations:
+        io.cilium/lb-ipam-ips: ${LB_AUTHENTIK}
     ingress:
       enabled: true
       ingressClassName: external-nginx

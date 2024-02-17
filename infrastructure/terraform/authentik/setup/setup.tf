@@ -12,21 +12,21 @@ module "apps" {
 
 }
 
-module "outpost" {
+# module "outpost" {
 
-  source = "./outpost"
+#   source = "./outpost"
 
-  providers = {
-    authentik.setup = authentik
-  }
+#   providers = {
+#     authentik.setup = authentik
+#   }
 
-  authentik_proxy_provider_ids = module.apps.proxy_providers_id
+#   authentik_proxy_provider_ids = module.apps.proxy_providers_id
 
-  authentik_application_group = local.group
+#   authentik_application_group = local.group
 
-  authentik_kubeconfig     = var.authentik_kubeconfig
-  authentik_outpost_config = var.authentik_outpost_config
+#   authentik_kubeconfig     = var.authentik_kubeconfig
+#   authentik_outpost_config = var.authentik_outpost_config
 
-}
+# }
 
 
