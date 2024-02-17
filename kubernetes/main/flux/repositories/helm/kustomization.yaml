@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ./actions-runner-controller.yaml
+  - ./authentik.yaml
   - ./backube.yaml
   - ./bitnami.yaml
   - ./bjw-s.yaml
