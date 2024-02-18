@@ -11,6 +11,7 @@ resources:
   # - ./static-routes/ks.yaml
   - ./blocky/ks.yaml
   - ./cloudflare-dyndns/ks.yaml
+  - ./external-dns/ks.yaml
   # - ./pihole/ks.yaml
   - ./ingress-nginx/ks.yaml
   # - ./nginx-gateway-fabric/ks.yaml
