@@ -323,3 +323,12 @@ module "tandoor" {
     doppler = doppler
   }
 }
+
+module "atuin" {
+  source       = "./project"
+  project_name = "atuin"
+  environments = ["prod"]
+  providers = {
+    doppler = doppler
+  }
+}

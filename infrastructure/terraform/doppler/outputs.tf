@@ -19,6 +19,7 @@ output "all_service_tokens" {
       "webhook_discord" = module.webhook_discord.service_tokens
       "minio"           = module.minio.service_tokens
       "tailscale"       = module.tailscale.service_tokens
+      "atuin"           = module.atuin.service_tokens
     } :
     module_name => module_outputs
   }
