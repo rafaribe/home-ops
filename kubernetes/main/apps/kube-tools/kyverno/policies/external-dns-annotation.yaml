@@ -32,5 +32,3 @@ spec:
                 rafaribe.com
               +(external-dns.alpha.kubernetes.io/enabled): true
               +(external-dns.home.arpa/enabled): "true"
-        targets:
-          - kind: Ingress
