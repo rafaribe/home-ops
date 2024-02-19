@@ -2,12 +2,12 @@
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: external-dns-annotation
+  name: external-dns-for-external-nginx
   annotations:
-    policies.kyverno.io/title: Apply external-dns annotation with target to the ${EXTERNAL_DOMAIN}
+    policies.kyverno.io/title: Apply external-dns annotation with target to the cluster domain
     policies.kyverno.io/subject: Ingress
     policies.kyverno.io/description: >-
-      This policy creates an external-dns.alpha.kubernetes.io/target: ${EXTERNAL_DOMAIN}
+      This policy creates an external-dns.alpha.kubernetes.io/target: rafaribe.com
       when there is an external-dns.alpha.kubernetes.io/hostname present, ensuring that external-dns
       creates a CNAME record that is proxied.
 spec:
@@ -19,11 +19,13 @@ spec:
         any:
           - resources:
               kinds: ["Ingress"]
+              ingressClassName: "external-nginx"
       mutate:
         patchStrategicMerge:
           metadata:
             annotations:
               +(external-dns.alpha.kubernetes.io/target): |-
-                ${EXTERNAL_DOMAIN}
+                rafaribe.com
+              +(external-dns.alpha.kubernetes.io/enabled): true
         targets:
           - kind: Ingress
