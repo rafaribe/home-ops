@@ -46,6 +46,8 @@ spec:
                   name: *secret
               - configMapRef:
                   name: *configmap
+            env:
+              TANDOOR_PORT: &port 8888
             resources:
               requests:
                 cpu: 100m
@@ -59,7 +61,7 @@ spec:
                 spec:
                   httpGet:
                     path: /accounts/login/
-                    port: &port 8000
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -76,13 +78,15 @@ spec:
                   periodSeconds: 10
           nginx:
             image:
-              repository: public.ecr.aws/nginx/nginx
-              tag: 1.25.3
+              repository: nginxinc/nginx-unprivileged
+              tag: 1.25.3-alpine
     service:
       main:
         ports:
           http:
             port: *port
+          nginx:
+            port: &port2 8080
     ingress:
       main:
         enabled: true
@@ -94,6 +98,14 @@ spec:
                 service:
                   name: main
                   port: http
+              - path: /media
+                service:
+                  name: main
+                  port: *port2
+              - path: /static
+                service:
+                  name: main
+                  port: *port2
         tls: [hosts: [*host]]
     persistence:
       files:
