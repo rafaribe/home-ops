@@ -1,11 +1,12 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app kyverno
+  name: kyverno
   namespace: kube-tools
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: kyverno
@@ -14,7 +15,10 @@ spec:
         kind: HelmRepository
         name: kyverno
         namespace: flux-system
+      interval: 15m
+  maxHistory: 3
   install:
+    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -28,6 +32,30 @@ spec:
       install: true
     grafana:
       enabled: true
+    backgroundController:
+      serviceMonitor:
+        enabled: true
+      rbac:
+        clusterRole:
+          extraResources:
+            - apiGroups:
+                - ""
+              resources:
+                - ingresses
+                - pods
+              verbs:
+                - create
+                - update
+                - patch
+                - delete
+                - get
+                - list
+    cleanupController:
+      serviceMonitor:
+        enabled: true
+    reportsController:
+      serviceMonitor:
+        enabled: true
     admissionController:
       replicas: 3
       rbac:
@@ -41,47 +69,13 @@ spec:
                 - create
                 - update
                 - delete
+      serviceMonitor:
+        enabled: true
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              app.kubernetes.io/instance: *app
-              app.kubernetes.io/component: admission-controller
-      serviceMonitor:
-        enabled: true
-    backgroundController:
-      rbac:
-        clusterRole:
-          extraResources:
-            - apiGroups:
-                - ""
-              resources:
-                - pods
-              verbs:
-                - create
-                - update
-                - patch
-                - delete
-                - get
-                - list
-      resources:
-        requests:
-          cpu: 100m
-        limits:
-          memory: 1Gi
-      serviceMonitor:
-        enabled: true
-    cleanupController:
-      serviceMonitor:
-        enabled: true
-    reportsController:
-      serviceMonitor:
-        enabled: true
-    config:
-      webhooks:
-        - objectSelector:
-            matchExpressions:
-              - key: webhooks.kyverno.io/exclude
-                operator: DoesNotExist
+              app.kubernetes.io/instance: kyverno
+              app.kubernetes.io/component: kyverno
