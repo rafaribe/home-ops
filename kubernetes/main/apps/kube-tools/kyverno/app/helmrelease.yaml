@@ -1,81 +1,33 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: kyverno
-  namespace: kube-tools
+  namespace: kube-system
 spec:
   interval: 15m
   chart:
     spec:
       chart: kyverno
-      version: 3.1.4
+      version: v2.5.2
       sourceRef:
         kind: HelmRepository
         name: kyverno
         namespace: flux-system
       interval: 15m
-  maxHistory: 3
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
-    cleanupOnFail: true
     remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
+      retries: 5
   values:
-    crds:
-      install: true
-    grafana:
+    installCRDs: false
+    replicaCount: 3
+    extraArgs:
+      - --autogenInternals=false
+      - --clientRateLimitQPS=30
+      - --clientRateLimitBurst=60
+    serviceMonitor:
       enabled: true
-    backgroundController:
-      serviceMonitor:
-        enabled: true
-      rbac:
-        clusterRole:
-          extraResources:
-            - apiGroups:
-                - ""
-              resources:
-                - ingresses
-                - pods
-              verbs:
-                - create
-                - update
-                - patch
-                - delete
-                - get
-                - list
-    cleanupController:
-      serviceMonitor:
-        enabled: true
-    reportsController:
-      serviceMonitor:
-        enabled: true
-    admissionController:
-      replicas: 3
-      rbac:
-        clusterRole:
-          extraResources:
-            - apiGroups:
-                - ""
-              resources:
-                - pods
-              verbs:
-                - create
-                - update
-                - delete
-      serviceMonitor:
-        enabled: true
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/instance: kyverno
-              app.kubernetes.io/component: kyverno
