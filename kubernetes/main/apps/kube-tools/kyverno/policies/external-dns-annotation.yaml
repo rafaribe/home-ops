@@ -19,11 +19,8 @@ spec:
         any:
           - resources:
               kinds: ["Ingress"]
-      preconditions:
-        all:
-          - key: "{{ request.object.spec.ingressClassName }}"
-            operator: Equal
-            value: "external-nginx"
+              annotations:
+                external-dns.home.arpa/enabled: "true"
       mutate:
         patchStrategicMerge:
           metadata:
@@ -31,4 +28,3 @@ spec:
               +(external-dns.alpha.kubernetes.io/target): |-
                 rafaribe.com
               +(external-dns.alpha.kubernetes.io/enabled): true
-              +(external-dns.home.arpa/enabled): "true"
