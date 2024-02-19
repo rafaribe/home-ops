@@ -14,6 +14,11 @@ module "home-ops" {
       authentik_oidc_application_group    = "home-ops"
       authentik_oidc_application_icon_url = "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/grafana-icon.png"
     },
+    {
+      authentik_oidc_application_name     = "mealie"
+      authentik_oidc_application_group    = "home-ops"
+      authentik_oidc_application_icon_url = "https://getumbrel.github.io/umbrel-apps-gallery/mealie/icon.svg"
+    },
   ]
 
   proxy = [
