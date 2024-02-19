@@ -12,6 +12,7 @@ data:
   FRACTION_PREF_DEFAULT: "0"
   COMMENT_PREF_DEFAULT: "1"
   SHOPPING_MIN_AUTOSYNC_INTERVAL: "5"
+  SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
 ---
 apiVersion: v1
 kind: ConfigMap
