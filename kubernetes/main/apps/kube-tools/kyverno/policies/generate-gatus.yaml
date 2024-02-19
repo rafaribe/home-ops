@@ -13,7 +13,6 @@ metadata:
       all Ingresses with the annotation `gatus.io/enabled: "true"`.
     pod-policies.kyverno.io/autogen-controllers: none
 spec:
-  generateExisting: true
   rules:
     - name: generate-gatus
       match:
