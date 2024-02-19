@@ -42,17 +42,19 @@ spec:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
               tag: "1.5.13"
-            envFrom: *envFrom
+            envFrom:
+              - secretRef:
+                  name: *secret
             command:
-            - sh
-            - -c
-            - |
-              set -e
-              source /opt/recipes/venv/bin/activate
-              echo "Updating database"
-              python3 /opt/recipes/manage.py migrate
-              python3 /opt/recipes/manage.py collectstatic_js_reverse
-              python3 /opt/recipes/manage.py collectstatic --noinput
+              - sh
+              - -c
+              - |
+                set -e
+                source /opt/recipes/venv/bin/activate
+                echo "Updating database"
+                python3 /opt/recipes/manage.py migrate
+                python3 /opt/recipes/manage.py collectstatic_js_reverse
+                python3 /opt/recipes/manage.py collectstatic --noinput
         containers:
           main:
             image:
