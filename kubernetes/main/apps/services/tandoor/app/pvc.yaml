@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: tandoor-media-v1
+  name: tandoor-data
   namespace: services
   annotations:
     helm.sh/resource-policy: "keep"
