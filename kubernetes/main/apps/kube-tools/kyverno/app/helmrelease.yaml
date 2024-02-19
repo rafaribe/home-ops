@@ -27,6 +27,8 @@ spec:
       install: true
     grafana:
       enabled: true
+    upgrade:
+      fromV2: true
     admissionController:
       replicas: 3
       rbac:
