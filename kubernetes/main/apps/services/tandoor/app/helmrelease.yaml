@@ -48,7 +48,7 @@ spec:
               - configMapRef:
                   name: *configmap
             env:
-              TANDOOR_PORT: &port 8888
+              TANDOOR_PORT: &port 8000
               SHOPPING_MIN_AUTOSYNC_INTERVAL: "5"
             resources:
               requests:
