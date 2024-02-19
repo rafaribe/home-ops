@@ -19,6 +19,11 @@ module "home-ops" {
       authentik_oidc_application_group    = "home-ops"
       authentik_oidc_application_icon_url = "https://getumbrel.github.io/umbrel-apps-gallery/mealie/icon.svg"
     },
+    {
+      authentik_oidc_application_name     = "tandoor"
+      authentik_oidc_application_group    = "home-ops"
+      authentik_oidc_application_icon_url = "https://static-00.iconduck.com/assets.00/tandoor-icon-1024x1024-ancm1z7g.png"
+    },
   ]
 
   proxy = [
