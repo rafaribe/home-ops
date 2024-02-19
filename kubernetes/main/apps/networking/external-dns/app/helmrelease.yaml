@@ -30,13 +30,13 @@ spec:
       - name: CF_API_EMAIL
         valueFrom:
           secretKeyRef:
-            name: &cloudflare-secret
-            key: CLOUDFLARE_EMAIL
+            name: cloudflare-secret
+            key: cloudflare-email
       - name: CF_API_KEY
         valueFrom:
           secretKeyRef:
-            name: *cloudflare-secret
-            key: CLOUDFLARE_APIKEY
+            name: cloudflare-secret
+            key: cloudflare-api-key
     extraArgs:
       - --cloudflare-proxied
       - --annotation-filter=external-dns.home.arpa/enabled in (true)
@@ -57,5 +57,3 @@ spec:
         cpu: 25m
       limits:
         memory: 250Mi
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *cloudflare-secret
