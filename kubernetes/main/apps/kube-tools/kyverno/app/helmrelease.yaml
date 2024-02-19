@@ -1,49 +1,87 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: kyverno
+  name: &app kyverno
   namespace: kube-tools
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: kyverno
-      version: v2.5.2
+      version: 3.1.4
       sourceRef:
         kind: HelmRepository
         name: kyverno
         namespace: flux-system
-      interval: 15m
   install:
-    createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
-      retries: 5
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    installCRDs: true
-    replicaCount: 3
-    extraArgs:
-      - --autogenInternals=false
-      - --clientRateLimitQPS=30
-      - --clientRateLimitBurst=60
-    serviceMonitor:
+    crds:
+      install: true
+    grafana:
       enabled: true
+    admissionController:
+      replicas: 3
+      rbac:
+        clusterRole:
+          extraResources:
+            - apiGroups:
+                - ""
+              resources:
+                - pods
+              verbs:
+                - create
+                - update
+                - delete
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/instance: *app
+              app.kubernetes.io/component: admission-controller
+      serviceMonitor:
+        enabled: true
+    backgroundController:
+      rbac:
+        clusterRole:
+          extraResources:
+            - apiGroups:
+                - ""
+              resources:
+                - pods
+              verbs:
+                - create
+                - update
+                - patch
+                - delete
+                - get
+                - list
+      resources:
+        requests:
+          cpu: 100m
+        limits:
+          memory: 1Gi
+      serviceMonitor:
+        enabled: true
     cleanupController:
       serviceMonitor:
         enabled: true
     reportsController:
       serviceMonitor:
         enabled: true
-    grafana:
-      enabled: true
-    topologySpreadConstraints:
-          - maxSkew: 1
-            topologyKey: kubernetes.io/hostname
-            whenUnsatisfiable: DoNotSchedule
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/instance: *app
-                app.kubernetes.io/component: admission-controller
+    config:
+      webhooks:
+        - objectSelector:
+            matchExpressions:
+              - key: webhooks.kyverno.io/exclude
+                operator: DoesNotExist
