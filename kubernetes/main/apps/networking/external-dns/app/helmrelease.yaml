@@ -30,12 +30,12 @@ spec:
       - name: CF_API_EMAIL
         valueFrom:
           secretKeyRef:
-            name: cloudflare-secret
+            name: &cloudflare-secret
             key: CLOUDFLARE_EMAIL
       - name: CF_API_KEY
         valueFrom:
           secretKeyRef:
-            name: cloudflare-secret
+            name: *cloudflare-secret
             key: CLOUDFLARE_APIKEY
     extraArgs:
       - --cloudflare-proxied
@@ -44,8 +44,7 @@ spec:
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
     policy: sync
-    sources:
-      - ingress
+    sources: ["crd", "ingress"]
     txtPrefix: "k8s."
     txtOwnerId: "default"
     domainFilters:
@@ -58,3 +57,5 @@ spec:
         cpu: 25m
       limits:
         memory: 250Mi
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *cloudflare-secret
