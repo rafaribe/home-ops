@@ -26,7 +26,7 @@ data:
     http {
       include /etc/nginx/mime.types;
       server {
-        listen 8888;
+        listen 8080;
         server_name _;
         client_max_body_size 128M;
         # serve media files

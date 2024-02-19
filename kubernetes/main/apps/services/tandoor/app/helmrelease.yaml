@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: tandoor
+  namespace: &ns services
 spec:
   chart:
     spec:
@@ -36,6 +37,22 @@ spec:
             envFrom:
               - secretRef:
                   name: *secret
+          migrations:
+            order: 2
+            image:
+              repository: ghcr.io/tandoorrecipes/recipes
+              tag: "1.5.13"
+            envFrom: *envFrom
+            command:
+            - sh
+            - -c
+            - |
+              set -e
+              source /opt/recipes/venv/bin/activate
+              echo "Updating database"
+              python3 /opt/recipes/manage.py migrate
+              python3 /opt/recipes/manage.py collectstatic_js_reverse
+              python3 /opt/recipes/manage.py collectstatic --noinput
         containers:
           main:
             image:
@@ -48,6 +65,18 @@ spec:
                   name: *configmap
             env:
               TANDOOR_PORT: &port 8888
+              SHOPPING_MIN_AUTOSYNC_INTERVAL: "5"
+            command:
+              - /opt/recipes/venv/bin/gunicorn
+              - -b
+              - :8888
+              - --access-logfile
+              - "-"
+              - --error-logfile
+              - "-"
+              - --log-level
+              - INFO
+              - recipes.wsgi
             resources:
               requests:
                 cpu: 100m
@@ -93,26 +122,58 @@ spec:
                   port: *port2
         tls: [hosts: [*host]]
     persistence:
-      files:
+      config:
+        type: persistentvolumeclaim
         existingClaim: tandoor-data
         advancedMounts:
           main:
             main:
               - path: /opt/recipes/mediafiles
-                subPath: mediafiles
-              - path: /opt/recipes/staticfiles
-                subPath: staticfiles
             nginx:
               - path: /media
-                subPath: mediafiles
-              - path: /static
-                subPath: staticfiles
       nginx-config:
         type: configMap
-        name: tandoor-nginx
+        name: tandoor-configmap
         advancedMounts:
           main:
             nginx:
               - path: /etc/nginx/nginx.conf
                 subPath: nginx-config
-                readOnly: true
+      django-js-reverse:
+        type: emptyDir
+        advancedMounts:
+          main:
+            main:
+              - path: /opt/recipes/cookbook/static/django_js_reverse
+      static:
+        type: emptyDir
+        advancedMounts:
+          main:
+            main:
+              - path: /opt/recipes/staticfiles
+            nginx:
+              - path: /static
+      cache:
+        type: emptyDir
+        advancedMounts:
+          main:
+            nginx:
+              - path: /var/cache/nginx
+  postRenderers:
+    - kustomize:
+        patchesStrategicMerge:
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: tandoor
+              namespace: *ns
+            spec:
+              template:
+                spec:
+                  initContainers:
+                    - name: migrations
+                      volumeMounts:
+                        - name: django-js-reverse
+                          mountPath: /opt/recipes/cookbook/static/django_js_reverse
+                        - name: static
+                          mountPath: /opt/recipes/staticfiles
