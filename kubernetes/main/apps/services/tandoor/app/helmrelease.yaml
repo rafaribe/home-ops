@@ -55,27 +55,12 @@ spec:
               limits:
                 memory: 512Mi
             probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /accounts/login/
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
               startup:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /accounts/login/
-                    port: *port
-                  failureThreshold: 30
-                  periodSeconds: 10
+                enabled: false
           nginx:
             image:
               repository: nginxinc/nginx-unprivileged
