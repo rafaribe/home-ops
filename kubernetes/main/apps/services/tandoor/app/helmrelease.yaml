@@ -86,7 +86,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: external-ingress
+        className: external-nginx
         hosts:
           - host: &host ${HOSTNAME}
             paths:
