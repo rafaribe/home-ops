@@ -8,3 +8,4 @@ resources:
   # Flux-Kustomizations
   - ./authentik/ks.yaml
   # - ./falco/ks.yaml
+  - ./tetragon/ks.yaml

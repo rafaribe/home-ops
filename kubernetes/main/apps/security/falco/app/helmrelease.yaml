@@ -41,7 +41,7 @@ spec:
   maxHistory: 3
   # https://github.com/falcosecurity/charts/blob/master/falco/values.yaml
   values:
-    timezone: ${TZ}
+    timezone: Europe/Lisbon
 
     tty: true
 
