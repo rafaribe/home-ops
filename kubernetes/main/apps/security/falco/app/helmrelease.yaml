@@ -39,6 +39,67 @@ spec:
   uninstall:
     keepHistory: false
   maxHistory: 3
+  # https://github.com/falcosecurity/charts/blob/master/falco/values.yaml
   values:
-    ebpf:
+    timezone: ${TZ}
+
+    tty: true
+
+    driver:
       enabled: true
+      kind: ebpf
+      epbf:
+        hostNetwork: true
+        leastPrivileged: true
+
+    collectors:
+      containerd:
+        enabled: true
+        socket: /var/run/k3s/containerd/containerd.sock
+
+      docker:
+        enabled: false
+
+      ebpf:
+        enabled: true
+        settings:
+          hostNetwork: true
+
+    falco:
+      grpc:
+        enabled: true
+      grpcOutput:
+        enabled: true
+      plugins:
+        - name: k8saudit
+          library_path: libk8saudit.so
+          open_params: "http://:9765/k8s-audit"
+
+        - name: json
+          library_path: libjson.so
+          init_config: ""
+
+      load_plugins:
+        - json
+        - k8saudit
+
+    tolerations:
+      - effect: NoSchedule
+        operator: Exists
+
+    falcosidekick:
+      enabled: true
+
+      # https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml
+      webui:
+        enabled: true
+        replicaCount: 1
+
+        ingress:
+          enabled: true
+          hosts:
+            - host: falcosidekick-ui.${EXTERNAL_DOMAIN}
+              paths:
+                - path: /
+          annotations:
+            kubernetes.io/ingress.class: external-domain
