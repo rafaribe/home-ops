@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ./auth-ingress-annotation.yaml
   - ./cluster-role-binding.yaml
-  - ./themepark-skin-annotation.yaml
+  #- ./themepark-skin-annotation.yaml
   - ./remove-cpu-limits.yaml
   - ./generate-gatus.yaml
   - ./inject-timezone.yaml

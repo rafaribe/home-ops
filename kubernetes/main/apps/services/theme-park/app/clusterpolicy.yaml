@@ -1,28 +1,28 @@
+---
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
   name: themepark-skin
   annotations:
     policies.kyverno.io/title: ThemePark Skin
-    policies.kyverno.io/category: Theme-Park
     policies.kyverno.io/subject: Ingress
-    policies.kyverno.io/severity: low
-    policies.kyverno.io/minversion: 1.6.0
     policies.kyverno.io/description: |
       This policy applies an ingress notation that will apply a theme-park theme.
-      You can apply an optional annotation on the ingress to adjust the theme:
-      - "theme.home.arpa/theme": should match the theme that you want, and will default to catppuccin-macchiato if not specified.
+      You will need two labels on the ingress:
+      - "theme-park.home/name" should match the name of the application on theme park, for example calibre-web should be calibreweb
+      - "theme-park.home/theme": should match the theme that you want, and will default to onedark if not specified.
 spec:
   mutateExistingOnPolicyUpdate: true
+  generateExistingOnPolicyUpdate: true
   rules:
     - name: theme
       context:
         - name: appName
           variable:
-            jmesPath: request.object.metadata.name == 'vaultwarden' && 'bitwarden' || request.object.metadata.name
+            jmesPath: 'request.object.metadata.labels."theme-park.home/name"'
         - name: theme
           variable:
-            jmesPath: request.object.metadata.annotations."theme.home.arpa/theme" || 'catppuccin-macchiato'
+            jmesPath: 'request.object.metadata.labels."theme-park.home/theme" || onedark'
       match:
         any:
           - resources:
@@ -30,15 +30,13 @@ spec:
               annotations:
                 theme.home.arpa/enabled: "true"
       mutate:
-        targets:
-          - apiVersion: networking.k8s.io/v1
-            kind: Ingress
-            name: "{{request.object.metadata.name}}"
-            namespace: "{{request.object.metadata.namespace}}"
         patchStrategicMerge:
           metadata:
             annotations:
-              nginx.ingress.kubernetes.io/configuration-snippet: |-
+              +(nginx.ingress.kubernetes.io/configuration-snippet): |-
                 proxy_set_header Accept-Encoding "";
-                sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${EXTERNAL_DOMAIN}/css/base/{{ appName }}/{{ appName }}-base.css"> <link rel="stylesheet" type="text/css" href="https://theme-park.${EXTERNAL_DOMAIN}/css/theme-options/{{ theme }}.css"></head>';
+                sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://themepark.${EXTERNAL_DOMAIN}/css/base/{{ appName }}/{{ theme }}.css"></head>';
                 sub_filter_once on;
+        targets:
+          - apiVersion: networking.k8s.io/v1
+            kind: Ingress

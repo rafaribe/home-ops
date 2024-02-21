@@ -1,9 +1,8 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app theme-park
+  name: theme-park
   namespace: services
 spec:
   interval: 30m
@@ -11,43 +10,42 @@ spec:
     spec:
       chart: app-template
       version: 2.6.0
-      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
-  test:
-    enable: false
+  maxHistory: 3
   install:
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
-      retries: 5
-      remediateLastFailure: true
-    cleanupOnFail: true
-  rollback:
-    timeout: 10m
-    recreate: true
-    cleanupOnFail: true
+      retries: 3
   uninstall:
     keepHistory: false
   values:
     controllers:
       main:
-        replicas: 2
-        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
-              repository: ghcr.io/lildrunkensmurf/theme-park
-              tag: 1.15.1@sha256:881ef9840d368c79c9ce32f91c2086e6861b46e1ca42e2bfe806def50d193e4f
+              repository: ghcr.io/onedr0p/theme-park
+              tag: 1.15.1@sha256:a22b171c05c63ec4d52b8c042bafb8f58fc4cd426069d221d792a1fc9864535d
             resources:
               requests:
-                cpu: 15m
+                cpu: 10m
+                memory: 50Mi
               limits:
-                memory: 64M
+                memory: 150Mi
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
     service:
       main:
         ports:
@@ -56,22 +54,19 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal-nginx
+        ingressClassName: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          .hajimari.io/enable: "true"
+          hajimari.io/icon: "mdi:paint-outline"
         hosts:
-          - host: &host "themepark.${INTERNAL_DOMAIN}"
+          - host: &host "theme-park.${EXTERNAL_DOMAIN}"
             paths:
               - path: /
                 service:
                   name: main
                   port: http
         tls:
-          - secretName: "themepark-tls"
-            hosts:
+          - hosts:
               - *host
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: *app
