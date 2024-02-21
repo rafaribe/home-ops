@@ -7,4 +7,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./authentik/ks.yaml
-  - ./falco/ks.yaml
+  # - ./falco/ks.yaml
