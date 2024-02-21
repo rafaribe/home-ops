@@ -45,6 +45,14 @@ spec:
 
     tty: true
 
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 600Mi
+
     driver:
       enabled: true
       kind: ebpf
@@ -64,6 +72,9 @@ spec:
         enabled: true
         settings:
           hostNetwork: true
+
+      crio:
+        enabled: false
 
     falco:
       grpc:
@@ -88,6 +99,7 @@ spec:
         operator: Exists
 
     falcosidekick:
+      replicaCount: 1
       enabled: true
 
       # https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml
