@@ -54,14 +54,14 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: external-nginx
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
           nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-          .hajimari.io/enable: "true"
+          hajimari.io/enable: "true"
           hajimari.io/icon: "mdi:paint-outline"
         hosts:
-          - host: &host "theme-park.${EXTERNAL_DOMAIN}"
+          - host: &host "themepark.rafaribe.com"
             paths:
               - path: /
                 service:
