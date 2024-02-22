@@ -16,15 +16,15 @@ spec:
         namespace: flux-system
   interval: 30m
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        # supplementalGroups: [3000, 3001, 568]
-        # fsGroupChangePolicy: "OnRootMismatch"
     controllers:
       main:
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
         annotations:
           secret.reloader.stakater.com/reload: &secret tandoor-secret
           configmap.reloader.stakater.com/reload: &configmap tandoor-configmap
