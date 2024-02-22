@@ -26,7 +26,7 @@ spec:
     kind: ClusterSecretStore
     name: *name
   target:
-    name: *name
+    name: home-assistant-restic-secret
     template:
       engineVersion: v2
       data:
@@ -51,7 +51,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: home-assistant-restic
+    repository: home-assistant-restic-secret
     cacheCapacity: 2Gi
     volumeSnapshotClassName: csi-ceph-blockpool
     storageClassName: ceph-block
