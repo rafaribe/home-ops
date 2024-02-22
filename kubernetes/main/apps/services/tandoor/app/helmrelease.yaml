@@ -39,19 +39,25 @@ spec:
                   name: *secret
 
           02-set-permissions:
-            image: busybox
+            image:
+              repository: busybox
+              tag: 1.36.1
             command:
               - sh
               - -c
               - chown -R 1000:1000 /opt/recipes/
           03-set-permissions:
-            image: busybox
+            image:
+              repository: busybox
+              tag: 1.36.1
             command:
               - sh
               - -c
               - chown -R 1000:1000 /tmp
           04-set-permissions:
-            image: busybox
+            image:
+              repository: busybox
+              tag: 1.36.1
             command:
               - sh
               - -c
