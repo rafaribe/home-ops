@@ -37,6 +37,25 @@ spec:
             envFrom:
               - secretRef:
                   name: *secret
+
+          02-set-permissions:
+            image: busybox
+            command:
+              - sh
+              - -c
+              - chown -R 1000:1000 /opt/recipes/
+          03-set-permissions:
+            image: busybox
+            command:
+              - sh
+              - -c
+              - chown -R 1000:1000 /tmp
+          04-set-permissions:
+            image: busybox
+            command:
+              - sh
+              - -c
+              - chown -R 1000:1000 /tmp
         containers:
           main:
             image:
