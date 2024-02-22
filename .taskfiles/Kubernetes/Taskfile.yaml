@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+
+  browse-pvc: # This is broken
+    desc: Browse PersistentVolumeClaims
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+        ns: Namespace to browse PersistentVolumeClaims in (default: default)
+        claim: PersistentVolumeClaim to browse (required)
+    interactive: true
+    cmd: |
+      kubectl browse-pvc --context {{.cluster}} \
+          --namespace {{.ns}} \
+          --image ghcr.io/onedr0p/alpine:rolling \
+          {{.claim}}
+    requires:
+      vars: ["cluster", "claim"]
+
+  drain:
+    desc: Drain a node
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+        node: Node to drain (required)
+    cmd: |
+      kubectl --context {{.cluster}} drain {{.node}} --ignore-daemonsets \
+          --delete-local-data --force --pod-selector 'app!=rook-ceph-osd'
+    requires:
+      vars: ["cluster", "node"]
+
+  delete-failed-pods:
+    desc: Deletes pods with a fucked status
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmds:
+      - for: ["Evicted", "Failed", "Succeeded"]
+        cmd: kubectl --context {{.cluster}} delete pods --field-selector status.phase={{.ITEM}} -A --ignore-not-found=true
+    requires:
+      vars: ["cluster"]

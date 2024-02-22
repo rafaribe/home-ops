@@ -27,3 +27,4 @@ terraform/**/.decrypted~.env
 known_hosts
 .monokle
 .gomerge/
+age.key

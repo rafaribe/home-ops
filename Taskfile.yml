@@ -1,59 +1,28 @@
 ---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
 vars:
-    PROJECT_DIR:
-        sh: git rev-parse --show-toplevel
-    CLUSTER_DIR: "{{.PROJECT_DIR}}/kubernetes/clusters/delta"
-    ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible/rke2"
+  ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
 
-dotenv: [.config.env]
+env:
+  KUBECONFIG: "{{.KUBERNETES_DIR}}/kubernetes/main/kubeconfig"
+  SOPS_AGE_KEY_FILE: "{{.ROOT_DIR}}/age.key"
+  cluster: main
+  app: qbittorrent
 
 includes:
-    ansible: .github/taskfiles/ansible.yaml
-    cluster: .github/taskfiles/cluster.yaml
-    precommit: .github/taskfiles/pre-commit.yaml
-    lint: .github/taskfiles/lint.yaml
-    format: .github/taskfiles/format.yaml
-    snapshot: .github/taskfiles/snapshot-tasks.yaml
+  ansible: .taskfiles/Ansible/Taskfile.yaml
+  bootstrap: .taskfiles/Bootstrap/Taskfile.yaml
+  external-secrets: .taskfiles/ExternalSecrets/Taskfile.yaml
+  flux: .taskfiles/Flux/Taskfile.yaml
+  kubernetes: .taskfiles/Kubernetes/Taskfile.yaml
+  rook: .taskfiles/Rook/Taskfile.yaml
+  talos: .taskfiles/Talos/Taskfile.yaml
+  volsync: .taskfiles/VolSync/Taskfile.yaml
 
 tasks:
-    init:
-        desc: Initialize workstation dependencies with Brew
-        cmds:
-            - brew install {{.DEPS}} {{.CLI_ARGS}}
-        preconditions:
-            - sh: command -v brew
-              msg: |
-                  Homebrew is not installed. Using MacOS, Linux or WSL?
-                  Head over to https://brew.sh to get up and running.
-        vars:
-            DEPS: >-
-                age
-                ansible
-                direnv
-                fluxcd/tap/flux
-                gitleaks
-                go-task/tap/go-task
-                helm
-                ipcalc
-                jq
-                kubernetes-cli
-                kustomize
-                pre-commit
-                prettier
-                sops
-                stern
-                terraform
-                yamllint
-                yq
-
-    verify:
-        desc: Verify env settings
-        cmds:
-            - ./configure --verify
-
-    configure:
-        desc: Configure repository from env settings
-        cmds:
-            - ./configure
+  default:
+    silent: true
+    cmd: task -l
