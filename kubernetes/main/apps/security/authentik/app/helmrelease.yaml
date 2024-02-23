@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: authentik
@@ -12,7 +12,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.goauthentik.io
       chart: authentik
-      version: 2023.10.7
+      version: 2024.2.1
       sourceRef:
         kind: HelmRepository
         name: authentik
@@ -42,7 +42,9 @@ spec:
         secret.reloader.stakater.com/reload: *secret
     serviceAccount:
       create: false
-
+    global:
+      envFrom:
+        - secretRef:
     service:
       type: LoadBalancer
       annotations:
