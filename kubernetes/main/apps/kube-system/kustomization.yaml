@@ -7,7 +7,6 @@ resources:
   # Flux-Kustomizations
   - ./cilium/ks.yaml
   - ./intel-device-plugin/ks.yaml
-  - ./nfs-subdir-external-provisioner/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reflector/ks.yaml
   - ./reloader/ks.yaml
