@@ -9,7 +9,7 @@ spec:
   targetNamespace: services
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app"
+      app.kubernetes.io/name: *app
   path: "./kubernetes/main/apps/services/kubernetes-schemas/app/"
   prune: true
   sourceRef:
