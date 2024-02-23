@@ -33,6 +33,10 @@ spec:
         envFrom:
           - secretRef:
               name: &secret authentik-db-secret
+    global:
+      envFrom:
+        - secretRef:
+            name: *secret
     controller:
       annotations:
         secret.reloader.stakater.com/reload: *secret
@@ -41,7 +45,6 @@ spec:
     global:
       envFrom:
         - secretRef:
-            name: *secret
     service:
       type: LoadBalancer
       annotations:
