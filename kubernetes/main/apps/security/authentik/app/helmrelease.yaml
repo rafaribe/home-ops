@@ -38,10 +38,10 @@ spec:
         secret.reloader.stakater.com/reload: *secret
     serviceAccount:
       create: false
-
-    envFrom:
-      - secretRef:
-          name: *secret
+    global:
+      envFrom:
+        - secretRef:
+            name: *secret
     service:
       type: LoadBalancer
       annotations:
