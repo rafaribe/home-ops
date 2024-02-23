@@ -24,7 +24,7 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: *name
+    name: prowlarr-restic-secret
   target:
     name: *name
     template:
@@ -51,7 +51,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: prowlarr-restic
+    repository: prowlarr-restic-secret
     cacheCapacity: 2Gi
     volumeSnapshotClassName: csi-ceph-blockpool
     storageClassName: ceph-block
