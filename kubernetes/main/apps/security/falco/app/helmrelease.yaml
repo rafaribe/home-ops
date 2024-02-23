@@ -48,10 +48,10 @@ spec:
     resources:
       requests:
         cpu: 100m
-        memory: 512Mi
+        memory: 256Mi
       limits:
-        cpu: 500m
-        memory: 600Mi
+        cpu: 300m
+        memory: 512Mi
 
     driver:
       enabled: true
@@ -110,7 +110,7 @@ spec:
         ingress:
           enabled: true
           hosts:
-            - host: falcosidekick-ui.${EXTERNAL_DOMAIN}
+            - host: falcosidekick-ui.rafaribe.com
               paths:
                 - path: /
           annotations:
