@@ -24,9 +24,9 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: prowlarr-restic-secret
-  target:
     name: *name
+  target:
+    name: prowlarr-restic-secret
     template:
       engineVersion: v2
       data:
