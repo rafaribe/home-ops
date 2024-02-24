@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: atuin
+  namespace: services
 spec:
   interval: 30m
   chart:
@@ -88,7 +89,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal-nginx
+        className: external-nginx
         hosts:
           - host: &host sh.rafaribe.com
             paths:
