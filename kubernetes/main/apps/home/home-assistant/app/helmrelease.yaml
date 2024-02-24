@@ -1,10 +1,9 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app home-assistant
-  namespace: home
+  name: home-assistant
 spec:
   interval: 30m
   chart:
@@ -15,9 +14,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -26,94 +23,121 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync-system
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
-        fsGroupChangePolicy: OnRootMismatch
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: "16.2"
-              pullPolicy: IfNotPresent
-            envFrom: &envFrom
-              - secretRef:
-                  name: hass
         containers:
           main:
             image:
               repository: ghcr.io/onedr0p/home-assistant
               tag: 2024.2.3@sha256:4880575480641e0f83618de45c27dd75ff9d413f092523a75b7ec1e825d22b1b
             env:
-              TZ: "${TZ}"
-            envFrom: *envFrom
-            probes:
+              TZ: Europe/Lisbon
+              HASS_HTTP_TRUSTED_PROXY_1: 10.0.1.0/24
+              HASS_HTTP_TRUSTED_PROXY_2: 10.32.0.0/16
+              HASS_HTTP_TRUSTED_PROXY_3: 10.33.0.0/16
+
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secret
+            probes: &probes
               liveness:
                 enabled: false
               readiness:
                 enabled: false
               startup:
                 enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
-                memory: 128Mi
               limits:
-                memory: 512Mi
-            securityContext:
-              privileged: true
-          codeserver:
-            enabled: true
+                memory: 1Gi
+          code:
             image:
               repository: ghcr.io/coder/code-server
               tag: 4.21.1
+            env:
+              TZ: Europe/Lisbon
             args:
-              - --auth
-              - none
-              - --user-data-dir
-              - /config/.vscode
-              - --extensions-dir
-              - /config/.vscode
-              - /config
+              [
+                "--auth",
+                "none",
+                "--user-data-dir",
+                "/config/.vscode",
+                "--extensions-dir",
+                "/config/.vscode",
+                "--port",
+                "80",
+                "/config",
+              ]
+            probes: *probes
             resources:
               requests:
                 cpu: 10m
-                memory: 128Mi
               limits:
-                memory: 1Gi
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 10Gi
-              storageClass: ceph-block
-              globalMounts:
-                - path: /config
+                memory: 512Mi
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
     service:
       main:
         type: LoadBalancer
         loadBalancerIP: ${LB_HASS}
-        externalTrafficPolicy: Local
         ports:
           http:
             port: 8123
-      codeserver:
+          code:
+            port: 80
+    ingress:
+      main:
         enabled: true
-        controller: main
-        primary: false
-        ports:
-          cs:
-            enabled: true
-            port: 8080
+        className: external-nginx
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+        hosts:
+          - host: &host hass.rafaribe.com
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+      code:
+        enabled: true
+        className: internal-nginx
+        hosts:
+          - host: &host hass-code.rafaribe.com
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: code
+        tls:
+          - hosts:
+              - *host
     persistence:
+      config:
+        enabled: true
+        existingClaim: hass-config
+      tmp:
+        type: emptyDir
       git-keys:
         enabled: true
         type: secret
