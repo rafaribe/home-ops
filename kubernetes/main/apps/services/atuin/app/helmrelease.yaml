@@ -103,4 +103,4 @@ spec:
     persistence:
       config:
         enabled: true
-        type: emptyDir
+        existingClaim: atuin-config
