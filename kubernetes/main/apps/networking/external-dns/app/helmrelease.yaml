@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: external-dns
+  name: &app external-dns
   namespace: networking
 spec:
   interval: 15m
@@ -26,6 +26,7 @@ spec:
     interval: 15m
     logLevel: debug
     provider: cloudflare
+    fullnameOverride: *app
     env:
       - name: CF_API_EMAIL
         valueFrom:
@@ -51,6 +52,8 @@ spec:
       - rafaribe.com
     serviceMonitor:
       enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: cloudflare-secret
     resources:
       requests:
         memory: 100Mi
