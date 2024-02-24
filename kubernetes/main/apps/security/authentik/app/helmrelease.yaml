@@ -33,10 +33,6 @@ spec:
         envFrom:
           - secretRef:
               name: &secret authentik-db-secret
-
-    controller:
-      annotations:
-        secret.reloader.stakater.com/reload: *secret
     serviceAccount:
       create: false
     service:
@@ -94,6 +90,10 @@ spec:
         enabled: true
         minReplicas: 2
     global:
+      podAnnotations:
+        secret.reloader.stakater.com/reload: authentik-secret
+      deploymentStrategy:
+        type: RollingUpdate
       envFrom:
         - secretRef:
-            name: *secret
+            name: authentik-secret
