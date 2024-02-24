@@ -63,6 +63,13 @@ spec:
                 cpu: 10m
               limits:
                 memory: 256Mi
+            lifecycle:
+              preStop:
+                exec:
+                  command:
+                    [
+                      "/usr/local/bin/pg_ctl stop -D /var/lib/postgresql/data -w -t 60 -m fast",
+                    ]
         pod:
           securityContext:
             runAsUser: 1000
