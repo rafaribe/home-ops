@@ -33,18 +33,12 @@ spec:
         envFrom:
           - secretRef:
               name: &secret authentik-db-secret
-    global:
-      envFrom:
-        - secretRef:
-            name: *secret
+
     controller:
       annotations:
         secret.reloader.stakater.com/reload: *secret
     serviceAccount:
       create: false
-    global:
-      envFrom:
-        - secretRef:
     service:
       type: LoadBalancer
       annotations:
@@ -99,3 +93,7 @@ spec:
       worker:
         enabled: true
         minReplicas: 2
+    global:
+      envFrom:
+        - secretRef:
+            name: *secret
