@@ -20,7 +20,7 @@ spec:
     replicaCount: 1
     image:
       repository: "pihole/pihole"
-      tag: "2024.02.0"
+      tag: "2024.02.2"
       pullPolicy: IfNotPresent
 
     serviceDns:
