@@ -5,7 +5,7 @@ namespace: services
 resources:
   - ./helmrelease.yaml
   - ./clusterpolicy.yaml
-  - ./gatus.yaml
+  # - ./gatus.yaml
 configMapGenerator:
   - name: theme-park-catppuccin-config
     files:
