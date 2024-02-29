@@ -1,0 +1,94 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: netboot
+  namespace: services
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 15m
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/netbootxyz/netbootxyz
+              tag: latest
+    defaultPodOptions:
+      hostNetwork: true
+    service:
+      main:
+        ports:
+          http:
+            port: 3000
+      web:
+        enabled: true
+        primary: false
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_NETBOOT_XYZ}
+        controller: main
+        ports:
+          web:
+            enabled: true
+            primary: false
+            port: 80
+            targetPort: 80
+            protocol: HTTP
+      tftp:
+        enabled: true
+        primary: false
+        controller: main
+        type: NodePort
+        ports:
+          tftp:
+            enabled: true
+            primary: false
+            port: 69
+            targetPort: 69
+            protocol: UDP
+    ingress:
+      main:
+        enabled: true
+        className: "nginx-internal"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/appName: "Netboot.xyz"
+          hajimari.io/info: "Network boot system"
+          hajimari.io/icon: "refresh-auto"
+        hosts:
+          - host: netboot.rafaribe.com
+            paths:
+              - path: "/"
+                pathType: "Prefix"
+                service:
+                  name: main
+        tls:
+          - hosts:
+              - netboot.rafaribe.com
+    persistence:
+      config:
+        enabled: true
+        storageClass: ceph-filesystem
+        accessMode: ReadWriteMany
+        size: 2Gi
+        globalMounts:
+          - path: /config
+        retain: true
+      data:
+        enabled: true
+        storageClass: ceph-filesystem
+        accessMode: ReadWriteMany
+        size: 512Gi
+        globalMounts:
+          - path: /assets
+        retain: true

@@ -1,0 +1,11 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - ./helmrelease.yaml
+  # - ../../../../templates/gatus/guarded
+labels:
+  - pairs:
+      app.kubernetes.io/name: netboot
+      app.kubernetes.io/instance: netboot
