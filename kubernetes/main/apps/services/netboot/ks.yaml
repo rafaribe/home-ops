@@ -10,11 +10,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-ops
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta2
-      kind: HelmRelease
-      name: netboot
-      namespace: services
   interval: 30m
   retryInterval: 1m
   timeout: 3m
