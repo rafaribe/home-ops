@@ -59,7 +59,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "nginx-internal"
+        className: "external-nginx"
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/appName: "Netboot.xyz"
