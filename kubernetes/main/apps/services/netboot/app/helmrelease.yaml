@@ -30,32 +30,32 @@ spec:
         ports:
           http:
             port: 3000
-      web:
+      pxe:
         enabled: true
-        primary: false
+        controller: main
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: ${LB_NETBOOT_XYZ}
-        controller: main
-        ports:
-          web:
-            enabled: true
-            primary: false
-            port: 80
-            targetPort: 80
-            protocol: HTTP
-      tftp:
-        enabled: true
-        primary: false
-        controller: main
-        type: NodePort
         ports:
           tftp:
-            enabled: true
-            primary: false
+            enabled: "true"
             port: 69
-            targetPort: 69
             protocol: UDP
+          tftp0:
+            enabled: true
+            port: 30000
+          tftp1:
+            enabled: true
+            port: 30001
+          tftp2:
+            enabled: true
+            port: 30002
+          tftp3:
+            enabled: true
+            port: 30003
+          tftp4:
+            enabled: true
+            port: 30004
     ingress:
       main:
         enabled: true
