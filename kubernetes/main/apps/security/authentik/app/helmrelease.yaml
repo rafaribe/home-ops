@@ -32,7 +32,7 @@ spec:
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
-              name: &secret authentik-db-secret
+              name: &secret authentik-secret
     serviceAccount:
       create: false
     service:
