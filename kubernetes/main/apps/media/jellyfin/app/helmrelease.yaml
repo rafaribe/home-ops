@@ -37,24 +37,29 @@ spec:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [44, 105, 10000, 568]
+      nodeSelector:
+        intel.feature.node.kubernetes.io/gpu: "true"
     controllers:
       main:
         containers:
           main:
             image:
-              repository: jellyfin/jellyfin
-              tag: 10.8.13
+              repository: ghcr.io/onedr0p/jellyfin
+              tag: 10.8.11@sha256:926e2a9f6677a0c7b12feba29f36c954154869318d6a52df72f72ff9c74cf494
             env:
               DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
               JELLYFIN_FFmpeg__probesize: 50000000
               JELLYFIN_FFmpeg__analyzeduration: 50000000
-              JELLYFIN_PublishedServerUrl: &ip 192.168.100.10
+              JELLYFIN_PublishedServerUrl: &ip ${LB_JELLYFIN}
               TZ: ${TZ}
             resources:
               requests:
-                memory: 4Gi
+                cpu: 700m
+                memory: 2Gi
+                gpu.intel.com/i915: 1
               limits:
-                memory: 6Gi
+                memory: 4Gi
+                gpu.intel.com/i915: 1
             probes:
               liveness: &probe
                 enabled: true
@@ -117,13 +122,13 @@ spec:
         path: /mnt/storage-0/media
         mountPath: /media
         readOnly: false
-      transcode:
-        enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /transcode
       cache:
         enabled: true
         type: emptyDir
         globalMounts:
           - path: /cache
+      transcode:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /transcode
