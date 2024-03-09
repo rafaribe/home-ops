@@ -194,7 +194,7 @@ spec:
         # -- The address at which to expose metrics. Set it to "" to expose on all available interfaces.
         address: ""
         # -- The port at which to expose metrics.
-        port: 2112
+        port: 9100
         serviceMonitor:
           # -- Whether to create a 'ServiceMonitor' resource targeting the 'tetragon' pods.
           enabled: true
