@@ -1,7 +1,7 @@
 # https://github.com/NVIDIA/k8s-device-plugin
 # Possibly switch to https://github.com/NVIDIA/gpu-operator
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: nvidia-device-plugin
