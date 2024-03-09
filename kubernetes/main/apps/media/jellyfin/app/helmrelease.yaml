@@ -35,8 +35,9 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [44, 105, 10000, 568]
+        fsGroupChangePolicy: "Always"
+        supplementalGroups: [44, 105, 104, 109, 10000, 568]
+        seccompProfile: { type: "RuntimeDefault" }
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
     controllers:
@@ -122,13 +123,12 @@ spec:
         path: /mnt/storage-0/media
         mountPath: /media
         readOnly: false
-      cache:
+      tmp:
         enabled: true
         type: emptyDir
+        medium: Memory
         globalMounts:
-          - path: /cache
-      transcode:
-        enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /transcode
+          - subPath: "tmp"
+            path: "/tmp"
+          - subPath: "transcode"
+            path: "/transcode"
