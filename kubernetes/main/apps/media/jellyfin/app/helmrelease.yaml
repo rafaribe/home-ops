@@ -52,10 +52,9 @@ spec:
               TZ: ${TZ}
             resources:
               requests:
-                cpu: 700m
-                memory: 2Gi
-              limits:
                 memory: 4Gi
+              limits:
+                memory: 6Gi
             probes:
               liveness: &probe
                 enabled: true
