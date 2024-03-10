@@ -89,11 +89,12 @@ spec:
       worker:
         enabled: true
         minReplicas: 2
+    envFrom:
+      - secretRef:
+          name: authentik-secret
+
     global:
       podAnnotations:
         secret.reloader.stakater.com/reload: authentik-secret
       deploymentStrategy:
         type: RollingUpdate
-      envFrom:
-        - secretRef:
-            name: authentik-secret
