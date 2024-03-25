@@ -69,9 +69,7 @@ spec:
         send_pii: false
       redis:
         host: authentik-redis.security.svc.cluster.local
-      envFrom:
-        - secretRef:
-          name: authentik-secret
+
     env:
       AUTHENTIK_REDIS__DB: "1"
     redis:
@@ -98,3 +96,6 @@ spec:
         secret.reloader.stakater.com/reload: authentik-secret
       deploymentStrategy:
         type: RollingUpdate
+      envFrom:
+        - secretRef:
+          name: authentik-secret
