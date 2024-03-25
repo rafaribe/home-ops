@@ -69,6 +69,9 @@ spec:
         send_pii: false
       redis:
         host: authentik-redis.security.svc.cluster.local
+      envFrom:
+        - secretRef:
+          name: authentik-secret
     env:
       AUTHENTIK_REDIS__DB: "1"
     redis:
@@ -89,9 +92,6 @@ spec:
       worker:
         enabled: true
         minReplicas: 2
-    envFrom:
-      - secretRef:
-          name: authentik-secret
 
     global:
       podAnnotations:
