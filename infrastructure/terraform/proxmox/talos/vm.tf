@@ -1,4 +1,3 @@
-
 resource "proxmox_virtual_environment_vm" "talos" {
   name        = var.name
   description = "Managed by Terraform"
@@ -10,11 +9,11 @@ resource "proxmox_virtual_environment_vm" "talos" {
     datastore_id = "local-lvm"
     interface    = "scsi0"
     size         = 15
-    file_format  = "qcow2"
+    file_format  = "raw"
   }
   cpu {
     cores   = var.cpu
-    sockets = 1
+    sockets = var.sockets
     type    = "host"
   }
   memory {

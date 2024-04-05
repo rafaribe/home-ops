@@ -6,19 +6,18 @@ terraform {
     organization = "rafaribe"
 
     workspaces {
-      name           = "home-proxmox"
-      execution_mode = "local"
+      name = "home-proxmox"
     }
 
   }
   required_providers {
     doppler = {
       source  = "DopplerHQ/doppler"
-      version = "1.6.2"
+      version = "1.7.0"
     }
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.51.0"
+      version = "0.51.1"
     }
     tls = {
       source  = "hashicorp/tls"

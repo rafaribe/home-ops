@@ -21,10 +21,8 @@ data "doppler_secrets" "this" {}
 
 # Inject secrets from doppler into Unifi Provider
 provider "proxmox" {
-  virtual_environment {
-    endpoint = nonsensitive(data.doppler_secrets.this.map.PX_ENDPOINT)
-    username = nonsensitive(data.doppler_secrets.this.map.PX_USERNAME)
-    password = nonsensitive(data.doppler_secrets.this.map.PX_PASSWORD)
-    insecure = nonsensitive(data.doppler_secrets.this.map.PX_INSECURE)
-  }
+  endpoint = nonsensitive(data.doppler_secrets.this.map.PX_ENDPOINT)
+  username = nonsensitive(data.doppler_secrets.this.map.PX_USERNAME)
+  password = nonsensitive(data.doppler_secrets.this.map.PX_PASSWORD)
+  insecure = nonsensitive(data.doppler_secrets.this.map.PX_INSECURE)
 }

@@ -1,7 +1,7 @@
 ---
 kubernetes:
   vars:
-    ansible_user: rafaribe
+    ansible_user: root
     ansible_ssh_port: 22
   children:
     master:
@@ -26,5 +26,9 @@ kubernetes:
             - /dev/disk/by-id/usb-SanDisk_Portable_SSD_323331373747343031363231-0:0
         tyr:
           ansible_host: 10.0.1.12
+          ceph_drives:
+            - /dev/disk/by-id/ata-WDC_WD10SPCX-24HWST1_WD-WXK1AA5P94JV
+        router:
+          ansible_host: 10.0.1.253
           ceph_drives:
             - /dev/disk/by-id/ata-WDC_WD10SPCX-24HWST1_WD-WXK1AA5P94JV

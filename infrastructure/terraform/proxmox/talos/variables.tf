@@ -10,6 +10,10 @@ variable "cpu" {
   type        = string
   description = "number of cpu cores"
 }
+variable "sockets" {
+  type        = string
+  description = "number of cpu sockets"
+}
 variable "memory" {
   type        = string
   description = "memory in megabytes"
