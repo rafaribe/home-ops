@@ -1,7 +1,7 @@
-resource "proxmox_virtual_environment_vm" "talos" {
+resource "proxmox_virtual_environment_vm" "virtualmachine" {
   name        = var.name
   description = "Managed by Terraform"
-  tags        = ["terraform", "talos", "kubernetes"]
+  tags        = var.tags
 
   node_name = var.node_name
   vm_id     = var.vm_id

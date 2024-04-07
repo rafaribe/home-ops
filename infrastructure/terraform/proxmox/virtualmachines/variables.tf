@@ -10,6 +10,10 @@ variable "cpu" {
   type        = string
   description = "number of cpu cores"
 }
+variable "sockets" {
+  type        = string
+  description = "number of cpu sockets"
+}
 variable "memory" {
   type        = string
   description = "memory in megabytes"
@@ -33,7 +37,7 @@ variable "mac_address" {
   type        = string
   description = "mac address for the network interface"
 }
-variable "password" {
-  type        = string
-  description = "A password for the user"
+variable "tags" {
+  type        = list(string)
+  description = "vm tags"
 }

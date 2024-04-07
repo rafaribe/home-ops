@@ -32,3 +32,36 @@ resource "proxmox_virtual_environment_file" "fedora_coreos_iso" {
   }
 }
 
+
+resource "proxmox_virtual_environment_file" "debian_iso" {
+  for_each     = toset(data.proxmox_virtual_environment_nodes.available_nodes.names)
+  content_type = "iso"
+  datastore_id = "local"
+  node_name    = each.key
+
+  source_file {
+    path = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.5.0-amd64-netinst.iso"
+  }
+}
+
+resource "proxmox_virtual_environment_file" "vyos_iso" {
+  for_each     = toset(data.proxmox_virtual_environment_nodes.available_nodes.names)
+  content_type = "iso"
+  datastore_id = "local"
+  node_name    = each.key
+
+  source_file {
+    path = "https://github.com/onedr0p/vyos-build/releases/download/v1.4.0-epa2%2Bonedr0p.2/vyos-1.4.0-epa2+onedr0p.2.amd64.iso"
+  }
+}
+
+resource "proxmox_virtual_environment_file" "opnsense" {
+  for_each     = toset(data.proxmox_virtual_environment_nodes.available_nodes.names)
+  content_type = "iso"
+  datastore_id = "local"
+  node_name    = each.key
+
+  source_file {
+    path = "https://mirror.ams1.nl.leaseweb.net/opnsense/releases/24.1/OPNsense-24.1-dvd-amd64.iso.bz2"
+  }
+}
