@@ -39,7 +39,7 @@ module "kubernetes" {
   cpu       = local.nodes[each.key].cpu
   sockets   = local.nodes[each.key].sockets
   memory    = local.nodes[each.key].memory
-  disk_size = 16
+  disk_size = 70
 
   iso_id      = proxmox_virtual_environment_file.talos_iso[each.key].id
   vm_id       = 2001 + index(keys(local.nodes), each.key)

@@ -1,0 +1,154 @@
+clusterName: skovald
+# renovate: datasource=github-releases depName=siderolabs/talos
+talosVersion: "v1.4.7"
+# renovate: datasource=github-releases depName=siderolabs/kubelet
+kubernetesVersion: "v1.27.4"
+endpoint: https://skovald.rafaribe.site:6443
+allowSchedulingOnMasters: true
+clusterPodNets:
+  - 10.196.0.0/16
+clusterSvcNets:
+  - 10.197.0.0/16
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: odin
+    ipAddress: 10.0.1.7
+    installDisk: /dev/sdb
+    controlPlane: true
+    disableSearchDomain: true
+
+  - hostname: loki
+    ipAddress: 10.0.1.8
+    installDisk: /dev/sda
+    controlPlane: true
+    disableSearchDomain: true
+
+  - hostname: thor
+    ipAddress: 10.0.1.9
+    installDisk: /dev/sda
+    controlPlane: true
+    disableSearchDomain: true
+
+  - hostname: freya
+    ipAddress: 10.0.1.149
+    installDisk: /dev/nvme0n1
+    controlPlane: false
+    disableSearchDomain: true
+
+controlPlane:
+  inlinePatch:
+    cluster:
+      allowSchedulingOnMasters: true
+      apiServer:
+        disablePodSecurityPolicy: true
+        admissionControl: []
+        certSANs:
+          - ${clusterEndpointIP}
+          - skovald.rafaribe.site
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true
+      controllerManager:
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true
+      discovery:
+        registries:
+          service:
+            disabled: true
+      extraManifests:
+        - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/integrations/cni/cilium.yaml
+        - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/integrations/kubelet-csr-approver/kubelet-csr-approver.yaml
+      proxy:
+        disabled: true
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true
+      scheduler:
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true
+    machine:
+      certSANs:
+        - ${clusterEndpointIP}
+        - skovald.rafaribe.site
+      kubelet:
+        extraArgs:
+          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
+          rotate-server-certificates: "true"
+      sysctls:
+        fs.inotify.max_user_watches: "1048576"
+        fs.inotify.max_user_instances: "8192"
+        vm.nr_hugepages: "1024"
+      time:
+        disabled: false
+        servers:
+          - time.cloudflare.com
+      files:
+        - content: |
+            [plugins]
+              [plugins."io.containerd.grpc.v1.cri"]
+                enable_unprivileged_ports = true
+                enable_unprivileged_icmp = true
+          path: /etc/cri/conf.d/20-customization.part
+          op: create
+      network:
+        interfaces:
+          - interface: eth0
+            mtu: 0
+            dhcp: true
+            vip:
+              ip: ${clusterEndpointIP}
+      install:
+        extensions:
+          - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
+      nodeLabels:
+        openebs.io/engine: mayastor
+worker:
+  inlinePatch:
+    cluster:
+      discovery:
+        registries:
+          service:
+            disabled: true
+
+    machine:
+      certSANs:
+        - ${clusterEndpointIP}
+        - skovald.rafaribe.site
+      time:
+        disabled: false
+        servers:
+          - time.cloudflare.com
+      kubelet:
+        extraArgs:
+          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
+          rotate-server-certificates: "true"
+        extraMounts:
+          - destination: /var/openebs/local
+            type: bind
+            source: /var/openebs/local
+            options:
+              - bind
+              - rshared
+              - rw
+      sysctls:
+        fs.inotify.max_user_watches: "1048576"
+        fs.inotify.max_user_instances: "8192"
+        vm.nr_hugepages: "1024"
+      files:
+        - content: |
+            [plugins]
+              [plugins."io.containerd.grpc.v1.cri"]
+                enable_unprivileged_ports = true
+                enable_unprivileged_icmp = true
+          path: /etc/cri/conf.d/20-customization.part
+          op: create
+      network:
+        interfaces:
+          - interface: eth0
+            mtu: 0
+            dhcp: true
+      install:
+        extensions:
+          - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
+      nodeLabels:
+        openebs.io/engine: mayastor

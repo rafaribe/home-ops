@@ -8,7 +8,7 @@ resource "proxmox_virtual_environment_vm" "talos" {
   disk {
     datastore_id = "local-lvm"
     interface    = "scsi0"
-    size         = 15
+    size         = var.disk_size
     file_format  = "raw"
   }
   cpu {
@@ -31,6 +31,10 @@ resource "proxmox_virtual_environment_vm" "talos" {
 
   operating_system {
     type = "l26"
+  }
+
+  agent {
+    enabled = true
   }
 
 

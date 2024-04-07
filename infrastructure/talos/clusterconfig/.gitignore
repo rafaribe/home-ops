@@ -4,3 +4,8 @@ skovald-thor.yaml
 skovald-freya.yaml
 talosconfig
 skovald-helya.yaml
+main-freya.rafaribe.com.yaml
+main-loki.rafaribe.com.yaml
+main-thor.rafaribe.com.yaml
+main-odin.rafaribe.com.yaml
+main-tyr.rafaribe.com.yaml

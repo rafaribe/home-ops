@@ -1,139 +1,218 @@
-clusterName: skovald
-# renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: "v1.4.7"
-# renovate: datasource=github-releases depName=siderolabs/kubelet
-kubernetesVersion: "v1.27.4"
-endpoint: https://skovald.rafaribe.site:6443
+---
+clusterName: ${clusterName}
+
+# renovate: image depName=ghcr.io/siderolabs/installer
+talosVersion: v1.6.7
+# renovate: image depName=registry.k8s.io/kube-apiserver
+kubernetesVersion: v1.29.3
+endpoint: "https://${clusterEndpointIP}:6443"
+
 allowSchedulingOnMasters: true
+
+imageFactory:
+  registryURL: factory.talos.dev
+  schematicEndpoint: /schematics
+  protocol: https
+
 clusterPodNets:
   - 10.196.0.0/16
 clusterSvcNets:
   - 10.197.0.0/16
+
 cniConfig:
   name: none
 
+additionalMachineCertSans: &san
+  - ${clusterEndpointIP}
+  - ${clusterName}.${domainName}
+  - "127.0.0.1"
+
+additionalApiServerCertSans: *san
+
 nodes:
-  - hostname: odin
-    ipAddress: 10.0.1.7
-    installDisk: /dev/sdb
+  - hostname: freya.${domainName}
+    ipAddress: &freya ${k8s_ip_prefix}0
     controlPlane: true
-    disableSearchDomain: true
-
-  - hostname: loki
-    ipAddress: 10.0.1.8
     installDisk: /dev/sda
-    controlPlane: true
-    disableSearchDomain: true
+    machineFiles:
+      - &ts
+        op: create
+        path: /var/etc/tailscale/auth.env
+        permissions: 0o600
+        content: |
+          TS_KUBE_SECRET=""
+          TS_STATE_DIR=/var/lib/tailscale
+          TS_USERSPACE=false
+          TS_ACCEPT_DNS=false
+      - &tsNode
+        op: append
+        path: /var/etc/tailscale/auth.env
+        permissions: 0o600
+        content: |
+          TS_HOSTNAME=freya-talos
+          TS_EXTRA_ARGS=--accept-routes=false --netfilter-mode=off --snat-subnet-routes=false --advertise-tags=tag:talos
+          TS_AUTHKEY=${tailscale_auth_key}
+          TS_ROUTES= ${k8s_ip_prefix}0/32
 
-  - hostname: thor
-    ipAddress: 10.0.1.9
+  - hostname: loki.${domainName}
+    ipAddress: &loki ${k8s_ip_prefix}1
+    controlPlane: true
     installDisk: /dev/sda
-    controlPlane: true
-    disableSearchDomain: true
+    machineFiles:
+      - &ts
+        op: create
+        path: /var/etc/tailscale/auth.env
+        permissions: 0o600
+        content: |
+          TS_KUBE_SECRET=""
+          TS_STATE_DIR=/var/lib/tailscale
+          TS_USERSPACE=false
+          TS_ACCEPT_DNS=false
+      - &tsNode
+        op: append
+        path: /var/etc/tailscale/auth.env
+        permissions: 0o600
+        content: |
+          TS_HOSTNAME=loki-talos
+          TS_EXTRA_ARGS=--accept-routes=false --netfilter-mode=off --snat-subnet-routes=false --advertise-tags=tag:talos
+          TS_AUTHKEY=${tailscale_auth_key}
+          TS_ROUTES=${k8s_ip_prefix}1/32
 
-  - hostname: freya
-    ipAddress: 10.0.1.149
-    installDisk: /dev/nvme0n1
+  - hostname: thor.${domainName}
+    ipAddress: &thor ${k8s_ip_prefix}3
+    controlPlane: true
+    installDisk: /dev/sda
+    machineFiles:
+      - &ts
+        op: create
+        path: /var/etc/tailscale/auth.env
+        permissions: 0o600
+        content: |
+          TS_KUBE_SECRET=""
+          TS_STATE_DIR=/var/lib/tailscale
+          TS_USERSPACE=false
+          TS_ACCEPT_DNS=false
+      - &tsNode
+        op: append
+        path: /var/etc/tailscale/auth.env
+        permissions: 0o600
+        content: |
+          TS_HOSTNAME=thor-talos
+          TS_EXTRA_ARGS=--accept-routes=false --netfilter-mode=off --snat-subnet-routes=false --advertise-tags=tag:talos
+          TS_AUTHKEY=${tailscale_auth_key}
+          TS_ROUTES=${k8s_ip_prefix}3/32
+
+  - hostname: odin.${domainName}
+    ipAddress: &odin ${k8s_ip_prefix}2
     controlPlane: false
-    disableSearchDomain: true
+    installDisk: /dev/sda
+    machineFiles:
+      - &ts
+        op: create
+        path: /var/etc/tailscale/auth.env
+        permissions: 0o600
+        content: |
+          TS_KUBE_SECRET=""
+          TS_STATE_DIR=/var/lib/tailscale
+          TS_USERSPACE=false
+          TS_ACCEPT_DNS=false
+      - &tsNode
+        op: append
+        path: /var/etc/tailscale/auth.env
+        permissions: 0o600
+        content: |
+          TS_HOSTNAME=odin-talos
+          TS_EXTRA_ARGS=--accept-routes=false --netfilter-mode=off --snat-subnet-routes=false --advertise-tags=tag:talos
+          TS_AUTHKEY=${tailscale_auth_key}
+          TS_ROUTES=${k8s_ip_prefix}2/32
+
+  - hostname: tyr.${domainName}
+    ipAddress: &tyr ${k8s_ip_prefix}4
+    controlPlane: false
+    installDisk: /dev/sda
+    machineFiles:
+      - &ts
+        op: create
+        path: /var/etc/tailscale/auth.env
+        permissions: 0o600
+        content: |
+          TS_KUBE_SECRET=""
+          TS_STATE_DIR=/var/lib/tailscale
+          TS_USERSPACE=false
+          TS_ACCEPT_DNS=false
+      - &tsNode
+        op: append
+        path: /var/etc/tailscale/auth.env
+        permissions: 0o600
+        content: |
+          TS_HOSTNAME=tyr-talos
+          TS_EXTRA_ARGS=--accept-routes=false --netfilter-mode=off --snat-subnet-routes=false --advertise-tags=tag:talos
+          TS_AUTHKEY=${tailscale_auth_key}
+          TS_ROUTES=${k8s_ip_prefix}4/32
 
 controlPlane:
-  inlinePatch:
-    cluster:
-      allowSchedulingOnMasters: true
-      apiServer:
-        disablePodSecurityPolicy: true
-        admissionControl: []
-        certSANs:
-          - ${clusterEndpointIP}
-          - skovald.rafaribe.site
-        extraArgs:
-          feature-gates: MixedProtocolLBService=true
-      controllerManager:
-        extraArgs:
-          feature-gates: MixedProtocolLBService=true
-      discovery:
-        registries:
-          service:
-            disabled: true
-      extraManifests:
-        - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/integrations/cni/cilium.yaml
-        - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/integrations/kubelet-csr-approver/kubelet-csr-approver.yaml
-      proxy:
-        disabled: true
-        extraArgs:
-          feature-gates: MixedProtocolLBService=true
-      scheduler:
-        extraArgs:
-          feature-gates: MixedProtocolLBService=true
-    machine:
-      certSANs:
-        - ${clusterEndpointIP}
-        - skovald.rafaribe.site
-      kubelet:
-        extraArgs:
-          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
-          rotate-server-certificates: "true"
-      sysctls:
-        fs.inotify.max_user_watches: "1048576"
-        fs.inotify.max_user_instances: "8192"
-        vm.nr_hugepages: "1024"
-      time:
-        disabled: false
-        servers:
-          - time.cloudflare.com
-      files:
-        - content: |
-            [plugins]
-              [plugins."io.containerd.grpc.v1.cri"]
-                enable_unprivileged_ports = true
-                enable_unprivileged_icmp = true
-          path: /etc/cri/conf.d/20-customization.part
-          op: create
-      network:
-        interfaces:
-          - interface: eth0
-            mtu: 0
-            dhcp: true
-            vip:
-              ip: ${clusterEndpointIP}
-      install:
-        extensions:
-          - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
-      nodeLabels:
-        openebs.io/engine: mayastor
-worker:
-  inlinePatch:
-    cluster:
-      discovery:
-        registries:
-          service:
-            disabled: true
+  schematic:
+    customization:
+      extraKernelArgs:
+        - net.ifnames=0
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/i915-ucode
+          - siderolabs/intel-ice-firmware
+          - siderolabs/intel-ucode
+          - siderolabs/tailscale
+          - siderolabs/qemu-guest-agent
+          - siderolabs/nvidia-open-gpu-kernel-modules
+          - siderolabs/nvidia-container-toolkit
+  patches:
+    - &apiServerExtraArgs |-
+      - op: add
+        path: /cluster/apiServer/extraArgs
+        value:
+          feature-gates: CronJobTimeZone=true,GracefulNodeShutdown=true,ServerSideApply=true
 
-    machine:
-      certSANs:
-        - ${clusterEndpointIP}
-        - skovald.rafaribe.site
-      time:
-        disabled: false
-        servers:
-          - time.cloudflare.com
-      kubelet:
-        extraArgs:
-          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
-          rotate-server-certificates: "true"
-        extraMounts:
-          - destination: /var/openebs/local
-            type: bind
-            source: /var/openebs/local
-            options:
-              - bind
-              - rshared
-              - rw
-      sysctls:
-        fs.inotify.max_user_watches: "1048576"
-        fs.inotify.max_user_instances: "8192"
-        vm.nr_hugepages: "1024"
+    - &nodeCidrSize |-
+      - op: add
+        path: /cluster/controllerManager/extraArgs
+        value:
+          node-cidr-mask-size: 22
+
+    - &etcdQuota |-
+      - op: add
+        path: /cluster
+        value: 
+          etcd:
+            extraArgs:
+              quota-backend-bytes: 4294967296 # 4 GiB
+              listen-metrics-urls: "http://0.0.0.0:2381"
+          allowSchedulingOnMasters: true
+          proxy:
+            disabled: true
+    # https://www.talos.dev/v1.5/advanced/etcd-maintenance/#space-quota
+    # maximum recommended is 8GiB, will resize to 4GiB for now so etcd won't shoot its load all at once
+
+    # - &cilium |-
+    #   - op: add
+    #     path: /cluster/extraManifests
+    #     - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/integrations/cni/cilium.yaml
+    #     - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/integrations/kubelet-csr-approver/kubelet-csr-approver.yaml
+worker:
+  schematic:
+    customization:
+      extraKernelArgs:
+        - net.ifnames=0
+        - i915.disable_display=true
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/i915-ucode
+          - siderolabs/intel-ice-firmware
+          - siderolabs/intel-ucode
+          - siderolabs/tailscale
+          - siderolabs/qemu-guest-agent
+          - siderolabs/nvidia-open-gpu-kernel-modules
+          - siderolabs/nvidia-container-toolkit
+  patches:
+    - &containerdPatch |
       files:
         - content: |
             [plugins]
@@ -142,13 +221,27 @@ worker:
                 enable_unprivileged_icmp = true
           path: /etc/cri/conf.d/20-customization.part
           op: create
-      network:
-        interfaces:
-          - interface: eth0
-            mtu: 0
-            dhcp: true
-      install:
-        extensions:
-          - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
-      nodeLabels:
-        openebs.io/engine: mayastor
+    - &machine |-
+      machine:
+        - op: add
+            path: /machine
+            value:
+              kernel:
+                modules:
+                  - name: nvidia
+                  - name: nvidia_uvm
+                  - name: nvidia_drm
+                  - name: nvidia_modeset
+    - &systemctls |-
+      systemctls:
+        - op: add
+            path: /systemctls
+            value:
+              sysctls:
+                net.core.bpf_jit_harden: 1
+    - &nodeLabels |-
+      nodelabels:
+        - op: add
+            path: /nodeLabels
+            value:
+              node-role.kubernetes.io/worker: worker

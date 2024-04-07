@@ -7,7 +7,7 @@ helmCharts:
     version: 1.15.3
     releaseName: cilium
     namespace: kube-system
-    valuesFile: ../../../../kubernetes/clusters/skovald/apps/kube-system/cilium/app/values.yaml
+    valuesFile: ../../../../kubernetes/main/apps/kube-system/cilium/app/values.yaml
 commonAnnotations:
   meta.helm.sh/release-name: cilium
   meta.helm.sh/release-namespace: kube-system
