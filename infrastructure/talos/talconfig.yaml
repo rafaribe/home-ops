@@ -165,37 +165,105 @@ controlPlane:
           - siderolabs/nvidia-open-gpu-kernel-modules
           - siderolabs/nvidia-container-toolkit
   patches:
-    - &apiServerExtraArgs |-
-      - op: add
-        path: /cluster/apiServer/extraArgs
-        value:
-          feature-gates: CronJobTimeZone=true,GracefulNodeShutdown=true,ServerSideApply=true
+    # Disable search domain everywhere
+    - |-
+      machine:
+        network:
+          disableSearchDomain: true
 
-    - &nodeCidrSize |-
-      - op: add
-        path: /cluster/controllerManager/extraArgs
-        value:
-          node-cidr-mask-size: 22
+    # Force nameserver
+    - |-
+      machine:
+        network:
+          nameservers:
+            - 1.1.1.1
 
-    - &etcdQuota |-
-      - op: add
-        path: /cluster
-        value: 
-          etcd:
-            extraArgs:
-              quota-backend-bytes: 4294967296 # 4 GiB
-              listen-metrics-urls: "http://0.0.0.0:2381"
-          allowSchedulingOnMasters: true
-          proxy:
-            disabled: true
-    # https://www.talos.dev/v1.5/advanced/etcd-maintenance/#space-quota
-    # maximum recommended is 8GiB, will resize to 4GiB for now so etcd won't shoot its load all at once
+    # Configure NTP
+    - |-
+      machine:
+        time:
+          disabled: false
+          servers:
+            - 10.1.1.1
 
-    # - &cilium |-
-    #   - op: add
-    #     path: /cluster/extraManifests
-    #     - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/integrations/cni/cilium.yaml
-    #     - https://raw.githubusercontent.com/rafaribe/home-ops/main/infrastructure/talos/integrations/kubelet-csr-approver/kubelet-csr-approver.yaml
+    # Enable KubePrism
+    - |-
+      machine:
+        features:
+          kubePrism:
+            enabled: true
+            port: 7445
+
+    # Cluster configuration
+    - |-
+      cluster:
+        allowSchedulingOnMasters: true
+        proxy:
+          disabled: true
+
+    # ETCD configuration
+    - |-
+      cluster:
+        etcd:
+          advertisedSubnets:
+            - 10.1.1.0/24
+
+    # Configure containerd
+    - |-
+      machine:
+        files:
+          - op: create
+            path: /etc/cri/conf.d/20-customization.part
+            content: |
+              [plugins]
+                [plugins."io.containerd.grpc.v1.cri"]
+                  enable_unprivileged_ports = true
+                  enable_unprivileged_icmp = true
+
+    # Configure nfs mount options
+    - |-
+      machine:
+        files:
+          - op: overwrite
+            path: /etc/nfsmount.conf
+            permissions: 0o644
+            content: |
+              [ NFSMount_Global_Options ]
+              nfsvers=4.2
+              hard=True
+              noatime=True
+              nodiratime=True
+              rsize=131072
+              wsize=131072
+              nconnect=8
+
+    # Disable default API server admission plugins.
+    - |-
+      - op: remove
+        path: /cluster/apiServer/admissionControl
+
+    # Kubelet configuration
+    - |-
+      machine:
+        kubelet:
+          extraArgs:
+            feature-gates: GracefulNodeShutdown=true,NewVolumeManagerReconstruction=false
+            rotate-server-certificates: "true"
+          extraConfig:
+            maxPods: 150
+          nodeIP:
+            validSubnets:
+                - 10.1.1.0/24
+
+    # Custom sysctls
+    - |-
+      machine:
+        sysctls:
+          fs.inotify.max_queued_events: "65536"
+          fs.inotify.max_user_instances: "8192"
+          fs.inotify.max_user_watches: "524288"
+          net.core.rmem_max: "2500000"
+          net.core.wmem_max: "2500000"
 worker:
   schematic:
     customization:
