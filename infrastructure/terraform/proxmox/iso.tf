@@ -44,16 +44,17 @@ resource "proxmox_virtual_environment_file" "debian_iso" {
   }
 }
 
-resource "proxmox_virtual_environment_file" "vyos_iso" {
-  for_each     = toset(data.proxmox_virtual_environment_nodes.available_nodes.names)
-  content_type = "iso"
-  datastore_id = "local"
-  node_name    = each.key
+# resource "proxmox_virtual_environment_file" "vyos_iso" {
+#   for_each     = toset(data.proxmox_virtual_environment_nodes.available_nodes.names)
+#   content_type = "iso"
+#   datastore_id = "local"
+#   node_name    = each.key
 
-  source_file {
-    path = "https://github.com/onedr0p/vyos-build/releases/download/v1.4.0-epa2%2Bonedr0p.2/vyos-1.4.0-epa2+onedr0p.2.amd64.iso"
-  }
-}
+#   source_file {
+#     path      = "tmp/vyos-1.4.0-epa2+onedr0p.2.amd64.iso"
+#     file_name = " vyos-1.4.0-epa2+onedr0p.2.amd64.iso"
+#   }
+# }
 
 resource "proxmox_virtual_environment_file" "opnsense" {
   for_each     = toset(data.proxmox_virtual_environment_nodes.available_nodes.names)
@@ -62,6 +63,7 @@ resource "proxmox_virtual_environment_file" "opnsense" {
   node_name    = each.key
 
   source_file {
-    path = "https://mirror.ams1.nl.leaseweb.net/opnsense/releases/24.1/OPNsense-24.1-dvd-amd64.iso.bz2"
+    path      = "https://mirror.ams1.nl.leaseweb.net/opnsense/releases/24.1/OPNsense-24.1-dvd-amd64.iso.bz2"
+    file_name = "OPNsense-24.1-dvd-amd64.iso"
   }
 }

@@ -5,6 +5,7 @@ provider "registry.terraform.io/bpg/proxmox" {
   version     = "0.51.1"
   constraints = "0.51.1"
   hashes = [
+    "h1:AStzha4VTsdVwdO1DGYZOXPCwqn7fHhn91vznQWZd74=",
     "h1:VjVtnGT+u8BKizCkxXzlJP80zjyqYj9yFgKEnM8cEts=",
     "zh:1c436fd13815eddc4e9a3aac11d163fd4cf9034c8928aade85fe897e78758969",
     "zh:271f022b6088a6490d11363acd8c3217fe69a6482c89639908ea905cb83624ed",
@@ -29,6 +30,7 @@ provider "registry.terraform.io/dopplerhq/doppler" {
   constraints = "1.7.0"
   hashes = [
     "h1:DYNfqclEy0uwQGQI6Q+PeM7L5GXEa5rO7HJEr+6ZrG4=",
+    "h1:tXl1Hl96REXo3E1l7qLTrXDSbO1YR6LWrANGaZ/YkmU=",
     "zh:02365b7e656a4ffa800a61bd93ae29b910347f92a894c4afa63106d5d2ce5a14",
     "zh:18d9d72aa6094c6dca3e839b9e3d669a5aa47cf8686041e8af7a74e9ef6e5404",
     "zh:1c92cab26aafe44f315f9f75f30e65db566a08ab1c4f016f30c8a29c63757131",
@@ -46,11 +48,32 @@ provider "registry.terraform.io/dopplerhq/doppler" {
   ]
 }
 
+provider "registry.terraform.io/hashicorp/random" {
+  version     = "3.6.0"
+  constraints = "3.6.0"
+  hashes = [
+    "h1:I8MBeauYA8J8yheLJ8oSMWqB0kovn16dF/wKZ1QTdkk=",
+    "zh:03360ed3ecd31e8c5dac9c95fe0858be50f3e9a0d0c654b5e504109c2159287d",
+    "zh:1c67ac51254ba2a2bb53a25e8ae7e4d076103483f55f39b426ec55e47d1fe211",
+    "zh:24a17bba7f6d679538ff51b3a2f378cedadede97af8a1db7dad4fd8d6d50f829",
+    "zh:30ffb297ffd1633175d6545d37c2217e2cef9545a6e03946e514c59c0859b77d",
+    "zh:454ce4b3dbc73e6775f2f6605d45cee6e16c3872a2e66a2c97993d6e5cbd7055",
+    "zh:78d5eefdd9e494defcb3c68d282b8f96630502cac21d1ea161f53cfe9bb483b3",
+    "zh:91df0a9fab329aff2ff4cf26797592eb7a3a90b4a0c04d64ce186654e0cc6e17",
+    "zh:aa57384b85622a9f7bfb5d4512ca88e61f22a9cea9f30febaa4c98c68ff0dc21",
+    "zh:c4a3e329ba786ffb6f2b694e1fd41d413a7010f3a53c20b432325a94fa71e839",
+    "zh:e2699bc9116447f96c53d55f2a00570f982e6f9935038c3810603572693712d0",
+    "zh:e747c0fd5d7684e5bfad8aa0ca441903f15ae7a98a737ff6aca24ba223207e2c",
+    "zh:f1ca75f417ce490368f047b63ec09fd003711ae48487fba90b4aba2ccf71920e",
+  ]
+}
+
 provider "registry.terraform.io/hashicorp/tls" {
   version     = "4.0.5"
   constraints = "4.0.5"
   hashes = [
     "h1:e4LBdJoZJNOQXPWgOAG0UuPBVhCStu98PieNlqJTmeU=",
+    "h1:zeG5RmggBZW/8JWIVrdaeSJa0OG62uFX5HY1eE8SjzY=",
     "zh:01cfb11cb74654c003f6d4e32bbef8f5969ee2856394a96d127da4949c65153e",
     "zh:0472ea1574026aa1e8ca82bb6df2c40cd0478e9336b7a8a64e652119a2fa4f32",
     "zh:1a8ddba2b1550c5d02003ea5d6cdda2eef6870ece86c5619f33edd699c9dc14b",
