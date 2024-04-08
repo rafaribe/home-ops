@@ -11,7 +11,7 @@ module "opnsense" {
 
   iso_id      = proxmox_virtual_environment_file.opnsense[each.key].id
   vm_id       = 1000 + index(keys(local.router_nodes), each.key)
-  mac_address = "42:C3:B0:6B:80:E${index(keys(local.router_nodes), each.key) + 1}"
+  mac_address = "42:C3:B0:6B:80:A${index(keys(local.router_nodes), each.key) + 1}"
   tags        = ["opnsense", "router", "terraform"]
   providers = {
     doppler = doppler
