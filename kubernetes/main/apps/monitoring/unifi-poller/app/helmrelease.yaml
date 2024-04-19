@@ -43,7 +43,7 @@ spec:
           main:
             image:
               repository: ghcr.io/unpoller/unpoller
-              tag: v2.10.0
+              tag: v2.11.2
             env:
               UP_UNIFI_DEFAULT_ROLE: "homelab-controller"
               UP_UNIFI_DEFAULT_VERIFY_SSL: true
