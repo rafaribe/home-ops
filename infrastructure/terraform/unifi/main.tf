@@ -12,7 +12,7 @@ terraform {
   required_providers {
     doppler = {
       source  = "DopplerHQ/doppler"
-      version = "1.6.2"
+      version = "1.7.1"
     }
     unifi = {
       source  = "paultyng/unifi"
