@@ -9,7 +9,7 @@ spec:
     spec:
       # registryUrl=https://grafana.github.io/helm-charts
       chart: tempo
-      version: 1.7.2
+      version: 1.7.3
       sourceRef:
         kind: HelmRepository
         name: grafana
