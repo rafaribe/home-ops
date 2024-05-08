@@ -45,7 +45,7 @@ services:
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
   syncthing:
-    image: lscr.io/linuxserver/syncthing:1.27.4
+    image: lscr.io/linuxserver/syncthing:1.27.7
     container_name: syncthing
     hostname: syncthing #optional
     environment:
