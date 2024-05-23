@@ -64,7 +64,7 @@ spec:
           ui:
             image:
               repository: ghcr.io/mozart409/blocky-frontend
-              tag: v0.1.1
+              tag: v0.2.1
     service:
       main:
         enabled: true
