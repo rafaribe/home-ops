@@ -1,0 +1,292 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
+clusterName: &cluster ${clusterName}
+endpoint: "https://${clusterEndpointIP}:6443"
+
+clusterPodNets:
+  - 10.42.0.0/16
+clusterSvcNets:
+  - 10.43.0.0/16
+
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+talosVersion: v1.7.2
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.30.1
+
+additionalApiServerCertSans: &sans
+  - ${clusterEndpointIP}
+  - main.${clusterDNSSuffix}
+  - 127.0.0.1 # KubePrism
+
+additionalMachineCertSans: *sans
+
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: thor.${clusterDNSSuffix}
+    ipAddress: 10.0.0.4
+    controlPlane: true
+    installDiskSelector:
+      busPath: /pci0000:00/0000:00:17.0/ata1/host1/target1:0:0/1:0:0:0/
+    networkInterfaces:
+      - interface: enp2s0
+        dhcp: true
+        mtu: 1500
+        vip:
+          ip: ${clusterEndpointIP}
+    patches:
+      - &kubelet_extra_mounts |-
+        machine:
+          kubelet:
+            extraMounts:
+              - destination: /var/mnt/sata
+                type: bind
+                source: /var/mnt/sata
+                options:
+                  - rbind
+                  - rshared
+                  - rw
+
+  - hostname: loki.${clusterDNSSuffix}
+    ipAddress: 10.0.0.5
+    controlPlane: true
+    installDiskSelector:
+      busPath: /pci0000:00/0000:00:17.0/ata1/host1/target1:0:0/1:0:0:0/
+    networkInterfaces:
+      - interface: enp2s0
+        dhcp: true
+        mtu: 1500
+        vip:
+          ip: ${clusterEndpointIP}
+
+    patches:
+      - *kubelet_extra_mounts
+
+  - hostname: freya.${clusterDNSSuffix}
+    ipAddress: 10.0.0.8
+    controlPlane: true
+    installDiskSelector:
+      busPath: /pci0000:00/0000:00:13.0/0000:01:00.0/nvme/nvme0/nvme0n1
+    networkInterfaces:
+      - interface: enp2s0
+        dhcp: true
+        mtu: 1500
+        vip:
+          ip: ${clusterEndpointIP}
+
+    patches:
+      - *kubelet_extra_mounts
+
+  - hostname: odin.${clusterDNSSuffix}
+    ipAddress: 10.0.0.3
+    controlPlane: false
+    installDiskSelector:
+      busPath: /pci0000:00/0000:00:1f.2/ata5/host5/target5:0:0/5:0:0:0/
+    networkInterfaces:
+      - interface: enp2s0
+        dhcp: true
+        mtu: 1500
+    patches:
+      - *kubelet_extra_mounts
+
+  - hostname: tyr.${clusterDNSSuffix}
+    ipAddress: 10.0.0.7
+    controlPlane: false
+    installDiskSelector:
+      busPath: /pci0000:00/0000:00:17.0/ata1/host1/target1:0:0/1:0:0:0/
+    networkInterfaces:
+      - interface: enp2s0
+        dhcp: true
+        mtu: 1500
+    patches:
+      - *kubelet_extra_mounts
+
+controlPlane:
+  schematic:
+    customization:
+      extraKernelArgs:
+        - net.ifnames=0
+        - mitigations=off
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/i915-ucode
+          - siderolabs/intel-ucode
+          - siderolabs/nonfree-kmod-nvidia
+          - siderolabs/nvidia-container-toolkit
+          - siderolabs/nvidia-open-gpu-kernel-modules
+          - siderolabs/spin
+  nodeLabels:
+    topology.kubernetes.io/region: *cluster
+    topology.kubernetes.io/zone: m
+  patches:
+    # Configure containerd
+    - &containerdPatch |-
+      machine:
+        files:
+          - op: create
+            path: /etc/cri/conf.d/20-customization.part
+            content: |-
+              [plugins."io.containerd.grpc.v1.cri"]
+                enable_unprivileged_ports = true
+                enable_unprivileged_icmp = true
+              [plugins."io.containerd.grpc.v1.cri".containerd]
+                discard_unpacked_layers = false
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+                discard_unpacked_layers = false
+
+    # Disable search domain everywhere
+    - &disableSearchDomainPatch |-
+      machine:
+        network:
+          disableSearchDomain: true
+
+    # Enable cluster discovery
+    - &discoveryPatch |-
+      cluster:
+        discovery:
+          registries:
+            kubernetes:
+              disabled: false
+            service:
+              disabled: true
+
+    # Configure kubelet
+    - &kubeletPatch |-
+      machine:
+        kubelet:
+          extraArgs:
+            rotate-server-certificates: true
+          nodeIP:
+            validSubnets:
+              -10.0.0.0/24
+
+    # Enable KubePrism
+    - &kubePrismPatch |-
+      machine:
+        features:
+          kubePrism:
+            enabled: true
+            port: 7445
+
+    # Force nameserver
+    - &nameserverPatch |-
+      machine:
+        network:
+          nameservers:
+            - 10.0.0.1
+
+    # Configure NFS mount options
+    - &nfsPatch |-
+      machine:
+        files:
+          - op: overwrite
+            path: /etc/nfsmount.conf
+            permissions: 0o644
+            content: |
+              [ NFSMount_Global_Options ]
+              nfsvers=4.2
+              hard=True
+              noatime=True
+              nodiratime=True
+              rsize=131072
+              wsize=131072
+              nconnect=8
+
+    # Configure NTP
+    - &ntpPatch |-
+      machine:
+        time:
+          disabled: false
+          servers:
+            - time.cloudflare.com
+
+    # Static host entries
+    - &staticHostEntriesPatch |-
+      machine:
+        network:
+          extraHostEntries:
+            - ip: ${clusterEndpointIP}
+              aliases:
+                - main.${clusterDNSSuffix}
+
+    # Custom sysctl settings
+    - &sysctlPatch |-
+      machine:
+        sysctls:
+          fs.inotify.max_user_watches: 1048576
+          fs.inotify.max_user_instances: 8192
+          kernel.randomize_va_space: 0
+          net.core.netdev_max_backlog: 30000
+          net.core.rmem_max: 67108864
+          net.core.wmem_max: 67108864
+          net.ipv4.tcp_rmem: 4096 87380 33554432
+          net.ipv4.tcp_wmem: 4096 65536 33554432
+          net.ipv4.tcp_tw_reuse: 1
+          net.ipv4.tcp_window_scaling: 1
+
+    # Cluster configuration
+    - |-
+      cluster:
+        allowSchedulingOnMasters: true
+        controllerManager:
+          extraArgs:
+            bind-address: 0.0.0.0
+        coreDNS:
+          disabled: true
+        proxy:
+          disabled: true
+        scheduler:
+          extraArgs:
+            bind-address: 0.0.0.0
+
+    # ETCD configuration
+    - |-
+      cluster:
+        etcd:
+          extraArgs:
+            listen-metrics-urls: http://0.0.0.0:2381
+          advertisedSubnets:
+            -10.0.0.0/24
+
+    # Disable default API server admission plugins.
+    - |-
+      - op: remove
+        path: /cluster/apiServer/admissionControl
+
+    # Enable K8s Talos API Access
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedRoles:
+              - os:admin
+            allowedKubernetesNamespaces:
+              - system-upgrade
+
+worker:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/i915-ucode
+          - siderolabs/intel-ucode
+          - siderolabs/nonfree-kmod-nvidia
+          - siderolabs/nvidia-container-toolkit
+          - siderolabs/nvidia-open-gpu-kernel-modules
+          - siderolabs/spin
+  nodeLabels:
+    topology.kubernetes.io/region: *cluster
+    topology.kubernetes.io/zone: w
+  patches:
+    - *containerdPatch
+    - *disableSearchDomainPatch
+    - *discoveryPatch
+    - *kubeletPatch
+    - *kubePrismPatch
+    - *nameserverPatch
+    - *nfsPatch
+    - *ntpPatch
+    - *staticHostEntriesPatch
+    - *sysctlPatch

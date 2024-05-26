@@ -1,0 +1,41 @@
+---
+helmDefaults:
+  wait: true
+  waitForJobs: true
+  timeout: 600
+  recreatePods: true
+  force: true
+
+repositories:
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+  - name: postfinance
+    url: https://postfinance.github.io/kubelet-csr-approver
+  - name: cilium
+    url: https://helm.cilium.io
+
+releases:
+  - name: cilium
+    namespace: kube-system
+    chart: cilium/cilium
+    version: 1.15.3
+    values:
+      - ../../../apps/kube-system/cilium/app/values.yaml
+
+  - name: kubelet-csr-approver
+    namespace: kube-system
+    chart: postfinance/kubelet-csr-approver
+    version: 1.2.1
+    wait: true
+    values:
+      - ../../../apps/kube-system/kubelet-csr-approver/app/values.yaml
+    needs:
+      - cilium
+
+  - name: prometheus-operator-crds
+    namespace: monitoring
+    chart: prometheus-community/prometheus-operator-crds
+    version: 11.0.0
+    needs:
+      - cilium
+      - kubelet-csr-approver

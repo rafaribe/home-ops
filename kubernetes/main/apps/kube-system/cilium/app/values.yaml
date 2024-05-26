@@ -53,8 +53,8 @@ hubble:
             - *host
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: 10.32.0.0/16
-k8sServiceHost: 10.0.1.17
+ipv4NativeRoutingCIDR: 10.42.0.0/16
+k8sServiceHost: 10.0.0.10
 k8sServicePort: 6443
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
