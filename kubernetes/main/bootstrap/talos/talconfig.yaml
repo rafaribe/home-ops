@@ -82,7 +82,7 @@ nodes:
     ipAddress: 10.0.0.3
     controlPlane: false
     installDiskSelector:
-      busPath: /pci0000:00/0000:00:1f.2/ata5/host5/target5:0:0/5:0:0:0/
+      busPath: /pci0000:00/0000:00:1f.2/ata5/host6/target6:0:0/6:0:0:0/
     networkInterfaces:
       - interface: enp2s0
         dhcp: true
@@ -94,7 +94,7 @@ nodes:
     ipAddress: 10.0.0.7
     controlPlane: false
     installDiskSelector:
-      busPath: /pci0000:00/0000:00:17.0/ata1/host1/target1:0:0/1:0:0:0/
+      busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
     networkInterfaces:
       - interface: enp2s0
         dhcp: true
@@ -112,9 +112,6 @@ controlPlane:
         officialExtensions:
           - siderolabs/i915-ucode
           - siderolabs/intel-ucode
-          - siderolabs/nonfree-kmod-nvidia
-          - siderolabs/nvidia-container-toolkit
-          - siderolabs/nvidia-open-gpu-kernel-modules
           - siderolabs/spin
   nodeLabels:
     topology.kubernetes.io/region: *cluster
@@ -272,7 +269,6 @@ worker:
         officialExtensions:
           - siderolabs/i915-ucode
           - siderolabs/intel-ucode
-          - siderolabs/nonfree-kmod-nvidia
           - siderolabs/nvidia-container-toolkit
           - siderolabs/nvidia-open-gpu-kernel-modules
           - siderolabs/spin
