@@ -123,7 +123,7 @@ services:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 
   nginx:
-    image: nginx:1.26.0-alpine
+    image: nginx:1.27.0-alpine
     container_name: nginx
     volumes:
       - /home/rafaribe/nginx/server.conf:/etc/nginx/nginx.conf
