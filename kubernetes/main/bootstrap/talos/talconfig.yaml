@@ -26,6 +26,9 @@ cniConfig:
 nodes:
   - hostname: thor.${clusterDNSSuffix}
     ipAddress: 10.0.0.4
+    nameservers:
+      - "10.0.0.1"
+      - "10.0.0.254"
     controlPlane: true
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host1/target1:0:0/1:0:0:0/
@@ -50,6 +53,9 @@ nodes:
 
   - hostname: loki.${clusterDNSSuffix}
     ipAddress: 10.0.0.5
+    nameservers:
+      - "10.0.0.1"
+      - "10.0.0.254"
     controlPlane: true
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host1/target1:0:0/1:0:0:0/
@@ -64,6 +70,9 @@ nodes:
 
   - hostname: freya.${clusterDNSSuffix}
     ipAddress: 10.0.0.8
+    nameservers:
+      - "10.0.0.1"
+      - "10.0.0.254"
     controlPlane: true
     installDiskSelector:
       busPath: /pci0000:00/0000:00:13.0/0000:01:00.0/nvme/nvme0/nvme0n1
@@ -78,6 +87,9 @@ nodes:
 
   - hostname: odin.${clusterDNSSuffix}
     ipAddress: 10.0.0.3
+    nameservers:
+      - "10.0.0.1"
+      - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
       busPath: /pci0000:00/0000:00:1f.2/ata5/host6/target6:0:0/6:0:0:0/
@@ -90,6 +102,9 @@ nodes:
 
   - hostname: tyr.${clusterDNSSuffix}
     ipAddress: 10.0.0.7
+    nameservers:
+      - "10.0.0.1"
+      - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
@@ -97,6 +112,9 @@ nodes:
       - interface: enp2s0
         dhcp: true
         mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1
     patches:
       - *kubelet_extra_mounts
 
@@ -115,6 +133,16 @@ controlPlane:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: m
   patches:
+    # set all disks to no scheduler
+    - &noschedulerPatch |-
+      machine:
+        udev:
+          rules:
+            # set all disks to `none` scheduler (optimal setting for Ceph and ZFS)
+            - SUBSYSTEM=="block", ENV{DEVTYPE}=="disk", ATTR{queue/scheduler}="none"
+            # allow GID 44 (video) to use Intel GPU
+            #- SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
+            - SUBSYSTEM=="drm", GROUP="44", MODE="0660"
     # Configure containerd
     - &containerdPatch |-
       machine:
@@ -163,13 +191,6 @@ controlPlane:
           kubePrism:
             enabled: true
             port: 7445
-
-    # Force nameserver
-    - &nameserverPatch |-
-      machine:
-        network:
-          nameservers:
-            - 10.0.0.1
 
     # Configure NFS mount options
     - &nfsPatch |-
@@ -279,8 +300,8 @@ worker:
     - *discoveryPatch
     - *kubeletPatch
     - *kubePrismPatch
-    - *nameserverPatch
     - *nfsPatch
     - *ntpPatch
     - *staticHostEntriesPatch
     - *sysctlPatch
+    - *noschedulerPatch
