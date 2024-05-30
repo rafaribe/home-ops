@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-talosctl apply --insecure -n 10.0.0.4 --file clusterconfig/main-thor.home.arpa.yaml
+talosctl apply -n 10.0.0.4 --file clusterconfig/main-thor.home.arpa.yaml
 sleep 30
-talosctl apply --insecure -n 10.0.0.5 --file clusterconfig/main-loki.home.arpa.yaml
+talosctl apply -n 10.0.0.5 --file clusterconfig/main-loki.home.arpa.yaml
 sleep 30
-talosctl apply --insecure -n 10.0.0.8 --file clusterconfig/main-freya.home.arpa.yaml
+talosctl apply -n 10.0.0.8 --file clusterconfig/main-freya.home.arpa.yaml
 sleep 30
-talosctl apply --insecure -n 10.0.0.3 --file clusterconfig/main-odin.home.arpa.yaml
+talosctl apply -n 10.0.0.3 --file clusterconfig/main-odin.home.arpa.yaml
 sleep 30
-talosctl apply --insecure -n 10.0.0.7 --file clusterconfig/main-tyr.home.arpa.yaml
+talosctl apply -n 10.0.0.7 --file clusterconfig/main-tyr.home.arpa.yaml
 echo "sleeping"
 sleep 120
 echo "done sleeping"

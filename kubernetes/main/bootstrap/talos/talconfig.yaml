@@ -38,18 +38,6 @@ nodes:
         mtu: 1500
         vip:
           ip: ${clusterEndpointIP}
-    patches:
-      - &kubelet_extra_mounts |-
-        machine:
-          kubelet:
-            extraMounts:
-              - destination: /var/mnt/sata
-                type: bind
-                source: /var/mnt/sata
-                options:
-                  - rbind
-                  - rshared
-                  - rw
 
   - hostname: loki.${clusterDNSSuffix}
     ipAddress: 10.0.0.5
@@ -65,8 +53,6 @@ nodes:
         mtu: 1500
         vip:
           ip: ${clusterEndpointIP}
-    patches:
-      - *kubelet_extra_mounts
 
   - hostname: freya.${clusterDNSSuffix}
     ipAddress: 10.0.0.8
@@ -82,8 +68,6 @@ nodes:
         mtu: 1500
         vip:
           ip: ${clusterEndpointIP}
-    patches:
-      - *kubelet_extra_mounts
 
   - hostname: odin.${clusterDNSSuffix}
     ipAddress: 10.0.0.3
@@ -97,8 +81,6 @@ nodes:
       - interface: enp2s0
         dhcp: true
         mtu: 1500
-    patches:
-      - *kubelet_extra_mounts
 
   - hostname: tyr.${clusterDNSSuffix}
     ipAddress: 10.0.0.7
@@ -115,8 +97,6 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-    patches:
-      - *kubelet_extra_mounts
 
 controlPlane:
   schematic:
