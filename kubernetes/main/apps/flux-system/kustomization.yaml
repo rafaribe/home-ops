@@ -10,4 +10,4 @@ resources:
   #- ./addons/ks.yaml
   - ./tf-controller/ks.yaml
   # - ./weave-gitops/ks.yaml
-  - ./crds/gateway-api/ks.yaml
+  #- ./crds/gateway-api/ks.yaml
