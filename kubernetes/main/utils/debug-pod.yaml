@@ -9,7 +9,7 @@ spec:
   nodeSelector:
     kubernetes.io/hostname: tyr
   containers:
-    - image: ubuntu:lunar
+    - image: ubuntu:lunar-20231128
       command:
         - "tail"
         - "-f"
