@@ -15,7 +15,7 @@ kubernetesVersion: v1.30.1
 
 additionalApiServerCertSans: &sans
   - ${clusterEndpointIP}
-  - main.${clusterDNSSuffix}
+  - ${clusterName}.${clusterDNSSuffix}
   - 127.0.0.1 # KubePrism
 
 additionalMachineCertSans: *sans
