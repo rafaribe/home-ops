@@ -1,14 +1,15 @@
-#useful to debug stuff
 apiVersion: v1
 kind: Pod
 metadata:
   name: ubuntu
-  namespace: networking
+  namespace: default
   labels:
     app: ubuntu
 spec:
+  nodeSelector:
+    kubernetes.io/hostname: tyr
   containers:
-    - image: ubuntu:latest
+    - image: ubuntu:lunar
       command:
         - "tail"
         - "-f"
@@ -16,12 +17,10 @@ spec:
       imagePullPolicy: IfNotPresent
       name: supa-dupa-debug-pod
       volumeMounts:
-        - mountPath: /app/cloudflare-ddns.sh
-          name: config
-          subPath: cloudflare-ddns.sh
+        - mountPath: /host
+          name: host-root
   restartPolicy: Always
   volumes:
-    - configMap:
-        defaultMode: 0755
-        name: cloudflare-ddns-configmap-self
-      name: config
+    - name: host-root
+      hostPath:
+        path: /
