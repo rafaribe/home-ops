@@ -9,7 +9,7 @@ clusterSvcNets:
   - 10.43.0.0/16
 
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.7.2
+talosVersion: v1.7.4
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.30.1
 
@@ -33,7 +33,7 @@ nodes:
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host1/target1:0:0/1:0:0:0/
     networkInterfaces:
-      - interface: enp2s0
+      - interface: enp9s0
         dhcp: true
         mtu: 1500
         vip:
