@@ -17,6 +17,7 @@ additionalApiServerCertSans: &sans
   - ${clusterEndpointIP}
   - ${clusterName}.${clusterDNSSuffix}
   - 127.0.0.1 # KubePrism
+  - "*.${clusterDNSSuffix}"
 
 additionalMachineCertSans: *sans
 

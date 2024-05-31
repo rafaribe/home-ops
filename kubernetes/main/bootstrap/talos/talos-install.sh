@@ -1,22 +1,25 @@
 #!/usr/bin/env bash
-talosctl apply -n 10.0.0.4 --file clusterconfig/main-thor.home.arpa.yaml
-sleep 30
-talosctl apply -n 10.0.0.5 --file clusterconfig/main-loki.home.arpa.yaml
-sleep 30
-talosctl apply -n 10.0.0.8 --file clusterconfig/main-freya.home.arpa.yaml
-sleep 30
-talosctl apply -n 10.0.0.3 --file clusterconfig/main-odin.home.arpa.yaml
-sleep 30
-talosctl apply -n 10.0.0.7 --file clusterconfig/main-tyr.home.arpa.yaml
-echo "sleeping"
-sleep 120
-echo "done sleeping"
-talosctl -n 10.0.0.4 bootstrap
 
-# # after provision
+echo "Applying configuration to Node 10.0.0.4 thor.cluster.home"
+talosctl apply-config --insecure -n 10.0.0.4 --file clusterconfig/main-thor.home.arpa.yaml
+sleep 2
 
-# talosctl apply -n 10.0.1.7 --file clusterconfig/skovald-odin.yaml
-# talosctl apply -n 10.0.1.8 --file clusterconfig/skovald-loki.yaml
+echo "Applying configuration to Node 10.0.0.5 loki.cluster.home"
+talosctl apply-config --insecure -n 10.0.0.5 --file clusterconfig/main-loki.home.arpa.yaml
+sleep 2
 
-# talosctl apply -n 10.0.1.9 --file clusterconfig/skovald-thor.yaml
-# talosctl apply -n 10.0.1.10 --file clusterconfig/skovald-freya.yaml
+echo "Applying configuration to Node 10.0.0.8 freya.cluster.home"
+talosctl apply-config --insecure -n 10.0.0.8 --file clusterconfig/main-freya.home.arpa.yaml
+sleep 2
+
+echo "Applying configuration to Node 10.0.0.3 odin.cluster.home"
+talosctl apply-config --insecure -n 10.0.0.3 --file clusterconfig/main-odin.home.arpa.yaml
+sleep 2
+
+echo "Applying configuration to Node 10.0.0.7 tyr.cluster.home"
+talosctl apply-config --insecure -n 10.0.0.7 --file clusterconfig/main-tyr.home.arpa.yaml
+sleep 2
+
+echo "Bootstrapping the cluster"
+talosctl 10.0.0.4 bootstrap
+

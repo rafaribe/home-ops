@@ -37,5 +37,5 @@ releases:
     chart: prometheus-community/prometheus-operator-crds
     version: 11.0.0
     needs:
-      - cilium
-      - kubelet-csr-approver
+      - kube-system/cilium
+      - kube-system/kubelet-csr-approver
