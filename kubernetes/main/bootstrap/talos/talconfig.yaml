@@ -33,7 +33,8 @@ nodes:
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host1/target1:0:0/1:0:0:0/
     networkInterfaces:
-      - interface: enp9s0
+      - deviceSelector:
+          hardwareAddr: "18:66:da:29:9f:9d"
         dhcp: true
         mtu: 1500
         vip:
@@ -48,7 +49,8 @@ nodes:
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host1/target1:0:0/1:0:0:0/
     networkInterfaces:
-      - interface: enp2s0
+      - deviceSelector:
+          hardwareAddr: "18:66:da:3c:a4:86"
         dhcp: true
         mtu: 1500
         vip:
@@ -63,7 +65,8 @@ nodes:
     installDiskSelector:
       busPath: /pci0000:00/0000:00:13.0/0000:01:00.0/nvme/nvme0/nvme0n1
     networkInterfaces:
-      - interface: enp2s0
+      - deviceSelector:
+          hardwareAddr: "00:1e:06:45:43:3e"
         dhcp: true
         mtu: 1500
         vip:
@@ -78,7 +81,8 @@ nodes:
     installDiskSelector:
       busPath: /pci0000:00/0000:00:1f.2/ata5/host6/target6:0:0/6:0:0:0/
     networkInterfaces:
-      - interface: enp2s0
+      - deviceSelector:
+          hardwareAddr: "10:c3:7b:1d:d6:f4"
         dhcp: true
         mtu: 1500
 
@@ -91,7 +95,8 @@ nodes:
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
     networkInterfaces:
-      - interface: enp2s0
+      - deviceSelector:
+          hardwareAddr: "50:7b:9d:d3:95:a3"
         dhcp: true
         mtu: 1500
         routes:
