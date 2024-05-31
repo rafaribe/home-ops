@@ -39,3 +39,23 @@ releases:
     needs:
       - kube-system/cilium
       - kube-system/kubelet-csr-approver
+  - name: coredns
+    namespace: kube-system
+    chart: coredns/coredns
+    version: 1.30.0
+    values:
+      - ../../../apps/kube-system/coredns/app/helm-values.yaml
+    needs:
+      - monitoring/prometheus-operator-crds
+      - kube-system/cilium
+  - name: spegel
+    namespace: kube-system
+    chart: oci://ghcr.io/spegel-org/helm-charts/spegel
+    version: v0.0.22
+    values:
+      - ../../../apps/kube-system/spegel/app/helm-values.yaml
+    needs:
+      - monitoring/prometheus-operator-crds
+      - kube-system/cilium
+      - kube-system/coredns
+      - kube-system/kubelet-csr-approver

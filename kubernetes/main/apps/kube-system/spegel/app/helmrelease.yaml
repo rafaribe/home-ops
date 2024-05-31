@@ -1,32 +1,30 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: spegel
-  namespace: kube-system
 spec:
   interval: 30m
   chart:
     spec:
       chart: spegel
-      version: v0.0.18
+      version: v0.0.22
       sourceRef:
         kind: HelmRepository
-        name: xenitab
+        name: spegel
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
+  valuesFrom:
+    - kind: ConfigMap
+      name: spegel-helm-values
   values:
-    spegel:
-      containerdSock: /run/k3s/containerd/containerd.sock
-      containerdRegistryConfigPath: /var/lib/rancher/k3s/agent/etc/containerd/certs.d
     serviceMonitor:
       enabled: true
