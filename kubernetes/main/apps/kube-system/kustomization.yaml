@@ -6,6 +6,7 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./cilium/ks.yaml
+  - ./coredns/ks.yaml
   - ./intel-device-plugin/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reflector/ks.yaml
