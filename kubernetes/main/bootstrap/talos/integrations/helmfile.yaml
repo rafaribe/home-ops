@@ -7,12 +7,12 @@ helmDefaults:
   force: true
 
 repositories:
-  - name: prometheus-community
-    url: https://prometheus-community.github.io/helm-charts
-  - name: postfinance
-    url: https://postfinance.github.io/kubelet-csr-approver
   - name: cilium
     url: https://helm.cilium.io
+  - name: coredns
+    url: https://coredns.github.io/helm
+  - name: postfinance
+    url: https://postfinance.github.io/kubelet-csr-approver
 
 releases:
   - name: cilium
