@@ -5,7 +5,7 @@ metadata:
   name: "primary-pool"
 spec:
   cidrs:
-    - cidr: ${NETWORK_BGP_LB_CIDR}
+    - cidr: 10.0.5.0/24
   serviceSelector:
     matchExpressions:
       - { key: allservices, operator: NotIn, values: ["will-be-announced"] }
@@ -16,7 +16,7 @@ metadata:
   name: "main-pool"
 spec:
   cidrs:
-    - cidr: ${NETWORK_BGP_MAIN_CIDR}
+    - cidr: 10.0.0.250/29
   serviceSelector:
     matchExpressions:
       - { key: pool, operator: In, values: [main] }

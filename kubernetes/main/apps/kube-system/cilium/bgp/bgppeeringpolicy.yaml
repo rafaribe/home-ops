@@ -13,5 +13,5 @@ spec:
         matchExpressions:
           - { key: allservices, operator: NotIn, values: ["will-be-announced"] }
       neighbors: # []CiliumBGPNeighbor
-        - peerAddress: "10.0.1.1/32"
+        - peerAddress: "10.0.0.1/32"
           peerASN: 64512

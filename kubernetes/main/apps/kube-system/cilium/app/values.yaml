@@ -55,3 +55,6 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
+bgpControlPlane:
+  # -- Enables the BGP control plane.
+  enabled: true
