@@ -28,5 +28,5 @@ known_hosts
 .monokle
 .gomerge/
 age.key
-utilities/doppler-to-akeyless/venv
-utilities/doppler-to-akeyless/.env
+utilities/doppler-to-vault/venv
+utilities/doppler-to-vault/.env
