@@ -3,7 +3,7 @@ import logging
 from pprint import pprint
 from dopplersdk import DopplerSDK
 
-import hvac
+import akeyless
 
 # Set the root logger's level to DEBUG
 logging.getLogger().setLevel(logging.DEBUG)
@@ -26,12 +26,19 @@ def setup_doppler_sdk(access_token):
     doppler.set_access_token(access_token)
     return doppler
 
+configuration = akeyless.Configuration(
+        # default: public API Gateway
+        host = "https://api.akeyless.io"
+)
+def setup_akeyless_sdk(akeyless_access_id, akeyless_access_key):
+    global token
+    api_client = akeyless.ApiClient(configuration)
+    api = akeyless.V2Api(api_client)
 
-def setup_vault_client(url, token):
-    client = hvac.Client(url=url, token=token)
-    if not client.is_authenticated():
-        raise Exception("Vault authentication failed")
-    return client
+    body = akeyless.Auth(access_id=akeyless_access_id, access_key=akeyless_access_key)
+    res = api.auth(body)
+    token = res.token
+    return api
 
 def get_projects(doppler):
     projects_response = doppler.projects.list()
@@ -46,15 +53,25 @@ def process_project_secrets(doppler, akeyless_api, project_name, config_name):
         logger.debug(secret)
         secret_detail = doppler.secrets.get(project=project_name, config=config_name, name=secret)
         logger.debug(pprint(vars(secret_detail)))
-        secret_body =  akeyless.CreateSecret(name=secret, tags=[project_name], value=secret_detail.value['raw'], token = token)
-        api_response = akeyless_api.create_secret(secret_body)
-        pprint(api_response)
+        secret_name_with_path = f'{project_name}/{secret}'
+        try:
+            describe_item_body = akeyless.DescribeItem(name=secret_name_with_path, token=token)
+            api_response = akeyless_api.describe_item(describe_item_body)
+            # If the response is positive, do some action
+            logger.debug(f"Secret {secret_name_with_path} exists. Skipping")
+            # Add your action for existing secret here
+        except akeyless.exceptions.ApiException as e:
+            # If an exception occurs, log the error and do other action
+            secret_body =  akeyless.CreateSecret(name=secret_name_with_path, tags=[project_name], value=secret_detail.value['raw'], token = token)
+            api_response = akeyless_api.create_secret(secret_body)
+            logger.debug(f"Secret {secret_name_with_path} Created")
+        
 
 def main():
     # Init envs
     access_token = os.environ.get("DOPPLER_TOKEN")
-    vault_token = os.environ.get("VAULT_TOKEN")
-    vault_url = os.environ.get("VAULT_URL")
+    akeyless_access_id = os.environ.get("AKEYLESS_ACCESS_ID")
+    akeyless_access_key = os.environ.get("AKEYLESS_ACCESS_KEY")
 
     akeyless_api = setup_akeyless_sdk(akeyless_access_id, akeyless_access_key )
     doppler = setup_doppler_sdk(access_token)

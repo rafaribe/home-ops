@@ -8,11 +8,11 @@
             "name": "Doppler to Akeyless",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/utilities/doppler-to-vault/main.py",
+            "program": "${workspaceFolder}/utilities/doppler-to-akeyless/main.py",
             "console": "integratedTerminal",
             "args": [],
-            "envFile": "${workspaceFolder}/utilities/doppler-to-vault/.env",
-            "python": "${workspaceFolder}/utilities/doppler-to-vault/venv/bin/python"
+            "envFile": "${workspaceFolder}/utilities/doppler-to-akeyless/.env",
+            "python": "${workspaceFolder}/utilities/doppler-to-akeyless/venv/bin/python"
         }
     ]
 }
