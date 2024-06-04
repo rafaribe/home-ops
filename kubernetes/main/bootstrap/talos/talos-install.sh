@@ -20,6 +20,13 @@ echo "Applying configuration to Node 10.0.0.7 tyr.cluster.home"
 talosctl apply-config --insecure -n 10.0.0.7 --file clusterconfig/main-tyr.home.arpa.yaml
 sleep 2
 
+echo "Applying configuration to Node 10.0.0.9 mimir.cluster.home"
+talosctl apply-config --insecure -n 10.0.0.9 --file clusterconfig/main-mimir.home.arpa.yaml
+sleep 2
+
+echo "Applying configuration to Node 10.0.0.11 mimir.cluster.home"
+talosctl apply-config --insecure -n 10.0.0.11 --file clusterconfig/main-heimdall.home.arpa.yaml
+sleep 2
+
 echo "Bootstrapping the cluster"
 talosctl 10.0.0.4 bootstrap
-

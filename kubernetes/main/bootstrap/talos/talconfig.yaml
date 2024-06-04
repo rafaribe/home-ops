@@ -104,6 +104,39 @@ nodes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
 
+  - hostname: mimir.${clusterDNSSuffix}
+    ipAddress: 10.0.0.9
+    nameservers:
+      - "10.0.0.1"
+      - "10.0.0.254"
+    controlPlane: false
+    installDiskSelector:
+      size: ">= 512GB"
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "00:e0:4c:2f:6b:41"
+        dhcp: true
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1
+
+  - hostname: heimdall.${clusterDNSSuffix}
+    ipAddress: 10.0.0.11
+    nameservers:
+      - "10.0.0.1"
+      - "10.0.0.254"
+    controlPlane: false
+    installDiskSelector:
+      size: ">= 512GB"
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "00:e0:4c:2f:6b:76"
+        dhcp: true
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1
 controlPlane:
   schematic:
     customization:
