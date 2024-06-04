@@ -4,6 +4,6 @@ kind: Kustomization
 resources:
   - wipe-freya.yaml
   - wipe-loki.yaml
-  - wipe-odin.yaml
-  - wipe-rook.yaml
+  - wipe-tyr.yaml
+  # - wipe-rook.yaml
   - wipe-thor.yaml

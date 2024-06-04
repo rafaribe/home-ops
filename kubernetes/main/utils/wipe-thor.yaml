@@ -15,7 +15,7 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "apt update; apt install fdisk gdisk parted udev -y; dd if=/dev/zero of=/dev/sdc bs=1M count=100 oflag=direct,dsync; sgdisk --zap-all /dev/sdc; wipefs -af /dev/sdc; blkdiscard /dev/sdc; partprobe /dev/sdc",
+          "export DISK=/dev/sda; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK",
         ]
   nodeSelector:
     kubernetes.io/hostname: thor

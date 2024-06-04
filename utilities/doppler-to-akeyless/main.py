@@ -41,7 +41,7 @@ def setup_akeyless_sdk(akeyless_access_id, akeyless_access_key):
     return api
 
 def get_projects(doppler):
-    projects_response = doppler.projects.list()
+    projects_response = doppler.projects.list(page=2)
     return projects_response.projects
 
 def process_project_secrets(doppler, akeyless_api, project_name, config_name):

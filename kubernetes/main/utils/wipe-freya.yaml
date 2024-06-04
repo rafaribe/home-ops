@@ -15,7 +15,7 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/sda; dd if=/dev/zero bs=1M count=100  oflag=direct,dsync of=/dev/sda; wipefs -af /dev/sda; blkdiscard /dev/sda; partprobe /dev/sda",
+          "export DISK=/dev/sda; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK",
         ]
   nodeSelector:
     kubernetes.io/hostname: freya
