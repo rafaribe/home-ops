@@ -102,24 +102,6 @@ nodes:
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.0.0.1
-
-  - hostname: mimir.${clusterDNSSuffix}
-    ipAddress: 10.0.0.9
-    nameservers:
-      - "10.0.0.1"
-      - "10.0.0.254"
-    controlPlane: false
-    installDiskSelector:
-      size: ">= 512GB"
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "00:e0:4c:2f:6b:41"
-        dhcp: true
-        mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 10.0.0.1
 
   - hostname: heimdall.${clusterDNSSuffix}
     ipAddress: 10.0.0.11
@@ -137,6 +119,24 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
+
+  - hostname: mimir.${clusterDNSSuffix}
+    ipAddress: 10.0.0.12
+    nameservers:
+      - "10.0.0.1"
+      - "10.0.0.254"
+    controlPlane: false
+    installDiskSelector:
+      size: ">= 512GB"
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "00:e0:4c:2f:6b:41"
+        dhcp: true
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1
+
 controlPlane:
   schematic:
     customization:
@@ -307,8 +307,6 @@ worker:
         officialExtensions:
           - siderolabs/i915-ucode
           - siderolabs/intel-ucode
-          - siderolabs/nvidia-container-toolkit
-          - siderolabs/nvidia-open-gpu-kernel-modules
           - siderolabs/spin
   nodeLabels:
     topology.kubernetes.io/region: *cluster
