@@ -9,4 +9,3 @@ resources:
   - ./authentik/ks.yaml
   # - ./falco/ks.yaml
   - ./tetragon/ks.yaml
-  - ./external-secrets/ks.yaml
