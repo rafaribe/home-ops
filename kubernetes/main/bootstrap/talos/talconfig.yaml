@@ -80,7 +80,7 @@ nodes:
       - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
-      busPath: /pci0000:00/0000:00:1f.2/ata5/host6/target6:0:0/6:0:0:0/
+      wwid: naa.5002538d7025e8be
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "10:c3:7b:1d:d6:f4"
@@ -94,7 +94,7 @@ nodes:
       - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
-      busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
+      wwid: naa.5001b448b6b834eb
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "50:7b:9d:d3:95:a3"

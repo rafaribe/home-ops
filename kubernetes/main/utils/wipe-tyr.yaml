@@ -36,7 +36,7 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "export DISK=/dev/sdc; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK",
+          "export DISK=/dev/sdd; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK",
         ]
   nodeSelector:
     kubernetes.io/hostname: tyr
