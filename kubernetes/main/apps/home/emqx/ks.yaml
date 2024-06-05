@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/main/apps/home/emqx/app
+  targetNamespace: home
   prune: true
   sourceRef:
     kind: GitRepository
