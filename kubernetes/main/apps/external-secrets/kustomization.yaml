@@ -6,7 +6,5 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./authentik/ks.yaml
-  # - ./falco/ks.yaml
-  - ./tetragon/ks.yaml
   - ./external-secrets/ks.yaml
+  - ./akeyless/ks.yaml
