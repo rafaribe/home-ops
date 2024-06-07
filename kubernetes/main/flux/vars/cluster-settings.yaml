@@ -10,7 +10,7 @@ data:
   CLUSTER_ID: "1"
   CLUSTER_CERT: "letsencrypt-production"
 
-  GATEWAY_MANAGEMENT: 10.0.1.1
+  GATEWAY_MANAGEMENT: 10.0.0.1
   LB_UNIFI: 10.0.5.254
   TZ: Europe/Lisbon
 
