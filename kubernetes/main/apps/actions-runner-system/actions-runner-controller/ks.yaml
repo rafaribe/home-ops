@@ -10,6 +10,7 @@ metadata:
 spec:
   interval: 30m
   retryInterval: 1m
+  targetNamespace: actions-runner-system
   timeout: 3m
   path: "./kubernetes/main/apps/actions-runner-system/actions-runner-controller/app"
   prune: true
@@ -30,6 +31,7 @@ spec:
   timeout: 3m
   path: "./kubernetes/main/apps/actions-runner-system/actions-runner-controller/runners"
   prune: true
+  targetNamespace: actions-runner-system
   wait: false
   sourceRef:
     kind: GitRepository
