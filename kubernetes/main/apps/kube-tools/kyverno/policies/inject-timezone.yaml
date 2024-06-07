@@ -29,7 +29,7 @@ spec:
           spec:
             initContainers:
               - name: provide-timezone
-                image: quay.io/k8tz/k8tz:0.16.0@sha256:a3f33a57e10351a76cc836a3dbc760bbf286f1b230acb15a0f583cc246588437
+                image: quay.io/k8tz/k8tz:0.16.1@sha256:0fc2048f836d5d42120992dd4c3a1b8eed2811ae3c7b2dc6f014c477391e8c2d
                 imagePullPolicy: IfNotPresent
                 resources:
                   requests:
