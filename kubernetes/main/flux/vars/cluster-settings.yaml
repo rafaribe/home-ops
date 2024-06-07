@@ -15,14 +15,14 @@ data:
   TZ: Europe/Lisbon
 
   # NAS NFS Settings
-  NAS_ADDRESS: 10.0.1.6
+  NAS_ADDRESS: 10.0.0.6
   NAS_MEDIA: /mnt/storage-0/media
   NAS_DOCUMENTS: /mnt/storage-0/docs
   NAS_CONFIG: /mnt/storage-0/config
   NAS_MINIO: /mnt/storage-0/config
 
   #Network
-  K8S_API_ADDRESS: skovald.rafaribe.site
+  K8S_API_ADDRESS: 10.0.0.10
   K8S_CLUSTER_CIDR: 10.196.0.0/16
   K8S_SERVICE_CIDR: 10.197.0.0/16
 
