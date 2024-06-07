@@ -38,7 +38,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/readarr-nightly
-              tag: 0.3.28.2548@sha256:598f327328fdd5ddee94702f75785073bb86ef0ef6d2049cbb40dfd8e84332a6
+              tag: 0.3.28.2549@sha256:86c0ba70f298bb18d79d539d5bcc02d3853e2667e43818286210b24e0dd9dcd3
             env:
               TZ: "${TZ}"
               READARR__INSTANCE_NAME: Readarr (Ebooks)
