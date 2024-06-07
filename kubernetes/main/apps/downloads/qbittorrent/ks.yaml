@@ -6,6 +6,7 @@ metadata:
 spec:
   path: ./kubernetes/main/apps/downloads/qbittorrent/app
   prune: true
+  targetNamespace: downloads
   sourceRef:
     kind: GitRepository
     name: home-ops
@@ -16,11 +17,12 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: downloads-qbittorrent-tag
+  name: downloads-qbittorrent-tools
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/downloads/qbittorrent/tag
+  path: ./kubernetes/main/apps/downloads/qbittorrent/tools
   prune: true
+  targetNamespace: downloads
   sourceRef:
     kind: GitRepository
     name: home-ops
