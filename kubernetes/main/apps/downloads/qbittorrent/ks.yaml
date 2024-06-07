@@ -7,12 +7,20 @@ spec:
   path: ./kubernetes/main/apps/downloads/qbittorrent/app
   prune: true
   targetNamespace: downloads
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   sourceRef:
     kind: GitRepository
     name: home-ops
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: qb
+      VOLSYNC_CAPACITY: 2Gi
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
