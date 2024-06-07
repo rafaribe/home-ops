@@ -25,7 +25,7 @@ spec:
       # Collector contrib has more features
       collectorImage:
         repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib
-        tag: 0.101.0
+        tag: 0.102.1
     admissionWebhooks:
       certManager:
         enabled: true
