@@ -12,4 +12,3 @@ resources:
   - ./external-dns/ks.yaml
   - ./ingress-nginx/ks.yaml
   - ./tailscale/ks.yaml
-  - ./unifi/ks.yaml
