@@ -11,8 +11,6 @@ spec:
   dnsNames:
     - "${EXTERNAL_DOMAIN}"
     - "*.${EXTERNAL_DOMAIN}"
-    - "${INTERNAL_DOMAIN}"
-    - "*.${INTERNAL_DOMAIN}"
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
