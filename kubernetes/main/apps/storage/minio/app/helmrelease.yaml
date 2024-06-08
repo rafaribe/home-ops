@@ -90,13 +90,13 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.home.arpa/enabled: "true"
+          #external-dns.home.arpa/enabled: "true"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
           nginx.ingress.kubernetes.io/proxy-body-size: 5000m
           nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
-        className: external
+        className: internal
         hosts:
           - host: &host "minio.rafaribe.com"
             paths:
