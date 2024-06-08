@@ -5,8 +5,7 @@ namespace: services
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-  - ./pvc.yaml
-  - ./volsync.yaml
+  - ../../../../templates/volsync
 commonLabels:
   app.kubernetes.io/name: obsidian-couchdb
   app.kubernetes.io/instance: obsidian-couchdb
