@@ -28,7 +28,6 @@ nodes:
   - hostname: thor.${clusterDNSSuffix}
     ipAddress: 10.0.0.4
     nameservers:
-      - "10.0.0.1"
       - "10.0.0.254"
     controlPlane: true
     installDiskSelector:
@@ -44,7 +43,6 @@ nodes:
   - hostname: loki.${clusterDNSSuffix}
     ipAddress: 10.0.0.5
     nameservers:
-      - "10.0.0.1"
       - "10.0.0.254"
     controlPlane: true
     installDiskSelector:
@@ -60,7 +58,6 @@ nodes:
   - hostname: freya.${clusterDNSSuffix}
     ipAddress: 10.0.0.8
     nameservers:
-      - "10.0.0.1"
       - "10.0.0.254"
     controlPlane: true
     installDiskSelector:
@@ -76,7 +73,6 @@ nodes:
   - hostname: odin.${clusterDNSSuffix}
     ipAddress: 10.0.0.3
     nameservers:
-      - "10.0.0.1"
       - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
@@ -90,7 +86,6 @@ nodes:
   - hostname: tyr.${clusterDNSSuffix}
     ipAddress: 10.0.0.7
     nameservers:
-      - "10.0.0.1"
       - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
@@ -106,7 +101,6 @@ nodes:
   - hostname: heimdall.${clusterDNSSuffix}
     ipAddress: 10.0.0.11
     nameservers:
-      - "10.0.0.1"
       - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
@@ -123,7 +117,6 @@ nodes:
   - hostname: mimir.${clusterDNSSuffix}
     ipAddress: 10.0.0.12
     nameservers:
-      - "10.0.0.1"
       - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
