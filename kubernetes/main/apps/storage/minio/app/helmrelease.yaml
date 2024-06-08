@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -9,35 +9,26 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        supplementalGroups: [568]
-        fsGroupChangePolicy: OnRootMismatch
     controllers:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: quay.io/minio/minio
               tag: RELEASE.2024-06-06T09-36-42Z
@@ -51,11 +42,7 @@ spec:
             envFrom:
               - secretRef:
                   name: minio
-            args:
-              - server
-              - /data
-              - --console-address
-              - :9001
+            args: ["server", "/data", "--console-address", ":9001"]
             probes:
               liveness: &probes
                 enabled: true
@@ -69,18 +56,30 @@ spec:
                   timeoutSeconds: 10
                   failureThreshold: 6
               readiness: *probes
-              startup:
-                enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [568]
+        seccompProfile: { type: RuntimeDefault }
     service:
-      main:
+      app:
+        controller: main
         ports:
           http:
             port: 9001
           s3:
             port: 9000
     serviceMonitor:
-      main:
-        enabled: true
+      app:
+        serviceName: minio
         endpoints:
           - port: s3
             scheme: http
@@ -88,9 +87,7 @@ spec:
             interval: 1m
             scrapeTimeout: 10s
     ingress:
-      main:
-        enabled: true
-        className: external
+      app:
         annotations:
           external-dns.home.arpa/enabled: "true"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
@@ -98,18 +95,19 @@ spec:
           nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
+        className: external
         hosts:
           - host: &host "minio.rafaribe.com"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
           - host: &s3Host "s3.rafaribe.com"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: s3
         tls:
           - hosts:

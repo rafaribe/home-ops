@@ -6,12 +6,12 @@ metadata:
   name: cluster-settings
 data:
   # Networking
-  CLUSTER_NAME: skovald
+  CLUSTER_NAME: main
   CLUSTER_ID: "1"
   CLUSTER_CERT: "letsencrypt-production"
 
   GATEWAY_MANAGEMENT: 10.0.0.1
-  LB_UNIFI: 10.0.1.254
+  LB_UNIFI: 10.0.0.254
   TZ: Europe/Lisbon
 
   # NAS NFS Settings
@@ -27,10 +27,7 @@ data:
   K8S_SERVICE_CIDR: 10.197.0.0/16
 
   # Home Network IP's
-  LB_BLOCKY: 10.0.1.250
-  LB_PIHOLE: 10.0.1.251
-  LB_NGINX_EXTERNAL: 10.0.1.1
-  LB_JELLYFIN: 10.0.1.2
+  LB_NGINX_EXTERNAL: 10.0.1.2
   LB_QBITTORRENT: 10.0.1.3
   LB_SYNCTHING: 10.0.1.4
   LB_CALIBRE: 10.0.1.5
@@ -45,6 +42,9 @@ data:
   LB_POSTGRES: 10.0.1.14
   LB_AUTHENTIK: 10.0.1.15
   LB_NETBOOT_XYZ: 10.0.1.16
+  LB_JELLYFIN: 10.0.1.17
+  LB_PIHOLE: 10.0.1.251
+  LB_BLOCKY: 10.0.1.250
   # Tailscale Network IPs
   LB_TAILSCALE_CIRDS: 10.0.4.0/24,10.0.1.0/24
   TAILNET_PUBLIC_PORT: "41642"
