@@ -14,7 +14,7 @@
 
 resource "cloudflare_record" "cname_root" {
   name    = "cname_root"
-  zone_id = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
+  zone_id = lookup(data.cloudflare_zone, "id")
   value   = var.cloudflare_domain_com
   proxied = true
   type    = "CNAME"
@@ -23,7 +23,7 @@ resource "cloudflare_record" "cname_root" {
 
 resource "cloudflare_record" "cname_www" {
   name    = "www"
-  zone_id = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
+  zone_id = lookup(data.cloudflare_zone, "id")
   value   = var.cloudflare_domain_com
   proxied = true
   type    = "CNAME"
@@ -32,7 +32,7 @@ resource "cloudflare_record" "cname_www" {
 
 resource "cloudflare_record" "cname_test" {
   name    = "test"
-  zone_id = lookup(data.cloudflare_zones.domain_com.zones[0], "id")
+  zone_id = lookup(data.cloudflare_zone, "id")
   value   = var.cloudflare_domain_com
   proxied = true
   type    = "CNAME"

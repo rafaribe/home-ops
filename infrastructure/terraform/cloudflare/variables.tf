@@ -6,9 +6,9 @@ variable "cloudflare_email" {
   type        = string
   description = "Cloudflare Email Address"
 }
-variable "cloudflare_apikey" {
+variable "cloudflare_api_token" {
   type        = string
-  description = "Cloudflare Account API Key"
+  description = "Cloudflare Account API Token"
 }
 variable "cloudflare_domain_com" {
   type        = string

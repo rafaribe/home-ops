@@ -1,0 +1,10 @@
+---
+originRequest:
+  originServerName: rafaribe.com
+
+ingress:
+  - hostname: rafaribe.com
+    service: https://nginx-external-controller.networking.svc.cluster.local:443
+  - hostname: "*.rafaribe.com"
+    service: https://nginx-external-controller.networking.svc.cluster.local:443
+  - service: http_status:404
