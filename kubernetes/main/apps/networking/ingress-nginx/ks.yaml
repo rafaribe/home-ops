@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: ingress-nginx-external
+  name: nginx-external
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -23,7 +23,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: ingress-nginx-internal
+  name: nginx-internal
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -67,7 +67,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: ingress-nginx-config
+  name: nginx-config
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -84,7 +84,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: ingress-nginx-dashboards
+  name: nginx-dashboards
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
