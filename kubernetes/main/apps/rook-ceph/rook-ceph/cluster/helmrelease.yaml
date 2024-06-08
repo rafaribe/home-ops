@@ -51,13 +51,13 @@ spec:
         ssl: false
     ingress:
       dashboard:
-        ingressClassName: "external"
+        ingressClassName: "internal"
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           hajimari.io/appName: "Rook"
           hajimari.io/icon: mdi:chess-rook
         host:
-          name: &host "rook.${EXTERNAL_DOMAIN}"
+          name: &host "rook.${INTERNAL_DOMAIN}"
           path: "/"
         tls:
           - hosts:
