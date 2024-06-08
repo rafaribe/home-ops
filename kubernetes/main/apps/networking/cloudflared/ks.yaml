@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  targetNamespace: network
+  targetNamespace: networking
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
