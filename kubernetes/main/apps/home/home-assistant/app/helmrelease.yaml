@@ -101,7 +101,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: external-nginx
+        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
@@ -116,7 +116,7 @@ spec:
               - *host
       code:
         enabled: true
-        className: internal-nginx
+        className: internal
         hosts:
           - host: &host hass-code.rafaribe.com
             paths:

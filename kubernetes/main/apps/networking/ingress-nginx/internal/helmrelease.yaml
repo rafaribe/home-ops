@@ -25,7 +25,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    fullnameOverride: internal-nginx
+    fullnameOverride: internal
     controller:
       replicaCount: 1
       service:
@@ -36,7 +36,7 @@ spec:
           pool: lb
         externalTrafficPolicy: Cluster
       ingressClassResource:
-        name: internal-nginx
+        name: internal
         default: true
         controllerValue: k8s.io/ingress-nginx-internal
       admissionWebhooks:
@@ -44,7 +44,7 @@ spec:
           matchExpressions:
             - key: ingress-class
               operator: In
-              values: ["internal-nginx"]
+              values: ["internal"]
       allowSnippetAnnotations: true
       config:
         block-user-agents: GPTBot,~*GPTBot*,ChatGPT-User,~*ChatGPT-User*,Google-Extended,~*Google-Extended*,CCBot,~*CCBot*,Omgilibot,~*Omgilibot*,FacebookBot,~*FacebookBot*

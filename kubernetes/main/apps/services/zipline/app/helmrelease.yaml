@@ -129,7 +129,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: external-nginx
+        className: external
         hosts:
           - host: &host "zipline.rafaribe.com"
             paths:

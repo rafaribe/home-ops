@@ -41,7 +41,7 @@ spec:
         io.cilium/lb-ipam-ips: ${LB_AUTHENTIK}
     ingress:
       enabled: true
-      ingressClassName: external-nginx
+      ingressClassName: external
       annotations:
         nginx.ingress.kubernetes.io/router.entrypoints: websecure
         nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"

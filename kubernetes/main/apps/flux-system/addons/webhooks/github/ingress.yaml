@@ -9,7 +9,7 @@ metadata:
     # external-dns.home.arpa/enabled: "true"
     probe.home.arpa/enabled: "false"
 spec:
-  ingressClassName: "external-nginx"
+  ingressClassName: "external"
   rules:
     - host: &host "flux-receiver.${EXTERNAL_DOMAIN}"
       http:

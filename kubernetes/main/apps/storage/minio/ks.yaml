@@ -10,5 +10,6 @@ spec:
     kind: GitRepository
     name: home-ops
   interval: 30m
+  targetNamespace: storage
   retryInterval: 1m
   timeout: 3m

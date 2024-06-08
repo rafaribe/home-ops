@@ -5,7 +5,7 @@ metadata:
   name: hass
   namespace: home
 spec:
-  ingressClassName: external-nginx
+  ingressClassName: external
   rules:
     - host: hass.rafaribe.com
       http:
@@ -27,7 +27,7 @@ metadata:
   name: hass-code
   namespace: home
 spec:
-  ingressClassName: internal-nginx
+  ingressClassName: internal
   rules:
     - host: hc.rafaribe.site
       http:

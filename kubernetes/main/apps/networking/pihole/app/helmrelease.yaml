@@ -33,7 +33,7 @@ spec:
       enabled: false
 
     ingress:
-      ingressClassName: internal-nginx
+      ingressClassName: internal
       enabled: true
       hosts:
         - pihole.${EXTERNAL_DOMAIN}

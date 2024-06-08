@@ -76,7 +76,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external-nginx
+        ingressClassName: external
         hosts:
           - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
             paths:

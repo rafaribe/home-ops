@@ -82,7 +82,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: external-nginx
+        className: external
         hosts:
           - host: &host "ebooks.rafaribe.com"
             paths:

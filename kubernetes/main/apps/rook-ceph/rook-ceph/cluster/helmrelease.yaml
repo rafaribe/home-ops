@@ -51,7 +51,7 @@ spec:
         ssl: false
     ingress:
       dashboard:
-        ingressClassName: "external-nginx"
+        ingressClassName: "external"
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           hajimari.io/appName: "Rook"

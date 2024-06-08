@@ -38,7 +38,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "external-nginx"
+        className: "external"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-prod"
           hajimari.io/enable: "true"

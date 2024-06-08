@@ -365,7 +365,7 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      ingressClassName: external-nginx
+      ingressClassName: external
       hosts:
         - &host grafana.rafaribe.com
       tls:

@@ -5,7 +5,7 @@ metadata:
   name: "primary-pool"
 spec:
   cidrs:
-    - cidr: 10.0.5.0/24
+    - cidr: 10.0.1.0/24
   serviceSelector:
     matchExpressions:
       - { key: allservices, operator: NotIn, values: ["will-be-announced"] }

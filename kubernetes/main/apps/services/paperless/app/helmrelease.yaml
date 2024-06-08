@@ -92,7 +92,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: external-nginx
+        className: external
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
           external-dns.alpha.kubernetes.io/hostname: paperless.rafaribe.com

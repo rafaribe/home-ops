@@ -72,7 +72,7 @@ spec:
           master_name: redis-master
       ingress:
         enabled: true
-        ingressClassName: internal-nginx
+        ingressClassName: internal
         hostname: &host thanos-query-frontend.rafaribe.com
         tls: true
         extraTls:
@@ -91,7 +91,7 @@ spec:
         enabled: true
         hostname: thanos.rafaribe.com
         tls: true
-        ingressClassName: internal-nginx
+        ingressClassName: internal
       networkPolicy:
         enabled: false
     bucketweb:

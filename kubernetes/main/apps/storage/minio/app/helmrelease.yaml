@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: minio
-  namespace: storage
 spec:
   interval: 30m
   chart:
@@ -91,7 +90,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: external-nginx
+        className: external
         annotations:
           external-dns.home.arpa/enabled: "true"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
@@ -121,7 +120,7 @@ spec:
       config:
         enabled: true
         type: nfs
-        server: 10.0.1.6
+        server: 10.0.0.6
         path: /mnt/storage-0/minio
         globalMounts:
           - path: /data

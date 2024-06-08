@@ -5,7 +5,7 @@ metadata:
   name: authentik-outpost
   namespace: security
 spec:
-  ingressClassName: external-nginx
+  ingressClassName: external
   rules:
     - host: "hubble.${EXTERNAL_DOMAIN}"
       http:

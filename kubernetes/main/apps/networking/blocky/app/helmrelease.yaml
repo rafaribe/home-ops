@@ -163,6 +163,6 @@ spec:
             logLevel: info
             customDNS:
               mapping:
-                hc.rafaribe.site: 10.0.5.10
-                syncthing.rafaribe.site: 10.0.5.10
-                theme-park.rafaribe.com: 10.0.5.10
+                hc.rafaribe.site: 10.0.1.10
+                syncthing.rafaribe.site: 10.0.1.10
+                theme-park.rafaribe.com: 10.0.1.10

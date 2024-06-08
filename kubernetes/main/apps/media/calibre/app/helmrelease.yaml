@@ -44,7 +44,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "internal-nginx"
+        className: "internal"
         annotations:
           external-dns/is-public: "true"
           hajimari.io/enable: "true"

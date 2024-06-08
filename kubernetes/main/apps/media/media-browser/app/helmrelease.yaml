@@ -89,7 +89,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: external-nginx
+        className: external
         annotations:
           hajimari.io/icon: mdi:folder-play-outline
         hosts:

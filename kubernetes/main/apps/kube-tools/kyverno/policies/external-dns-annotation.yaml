@@ -2,7 +2,7 @@
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: external-dns-for-external-nginx
+  name: external-dns-for-external
   annotations:
     policies.kyverno.io/title: Apply external-dns annotation with target to the cluster domain
     policies.kyverno.io/subject: Ingress

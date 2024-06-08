@@ -37,7 +37,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "external-nginx"
+        className: "external"
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: hammer-wrench

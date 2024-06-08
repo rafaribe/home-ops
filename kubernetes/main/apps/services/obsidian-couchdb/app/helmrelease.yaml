@@ -72,7 +72,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "external-nginx"
+        className: "external"
         hosts:
           - host: "${HOSTNAME}"
             paths:

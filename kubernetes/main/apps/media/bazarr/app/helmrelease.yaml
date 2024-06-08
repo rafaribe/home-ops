@@ -77,7 +77,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "external-nginx"
+        className: "external"
         annotations:
           auth.home.arpa/enabled: "true"
           hajimari.io/icon: mdi:subtitles-outline

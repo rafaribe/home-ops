@@ -1,5 +1,5 @@
 locals {
-  dhcp_dns     = ["10.0.5.250", "1.1.1.1", "9.9.9.9"]
+  dhcp_dns     = ["10.0.1.250", "1.1.1.1", "9.9.9.9"]
   domain_name  = "home"
   purpose      = "corporate"
   dhcp_enabled = true

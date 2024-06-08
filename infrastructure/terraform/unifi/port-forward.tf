@@ -6,7 +6,7 @@ resource "unifi_port_forward" "ipv4_kubernetes" {
   port_forward_interface = "wan"
 }
 resource "unifi_port_forward" "qbittorrent" {
-  fwd_ip                 = "10.0.5.3"
+  fwd_ip                 = "10.0.1.3"
   fwd_port               = 50413
   name                   = "qbittorrent"
   dst_port               = 50413
