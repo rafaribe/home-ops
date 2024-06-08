@@ -24,3 +24,4 @@ spec:
       APP_UID: "1000"
       APP_GID: "1000"
       VOLSYNC_CLAIM: obsidian-couchdb-data
+      VOLSYNC_CAPACITY: 4Gi

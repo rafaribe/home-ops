@@ -66,7 +66,7 @@ spec:
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
-    capacity: "${VOLSYNC_CAPACITY}"
+    capacity: "${VOLSYNC_CAPACITY:-1Gi}"
     moverSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
