@@ -6,7 +6,7 @@ resources:
   - ./pvc.yaml
   - ./externalsecret.yaml
 configMapGenerator:
-  - name: servers-json
+  - name: config-pgadmin
     files:
       - config/servers.json
 generatorOptions:

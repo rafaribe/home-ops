@@ -26,14 +26,6 @@ spec:
       memory: 4Gi
   monitoring:
     enablePodMonitor: true
-    # Ref: https://github.com/cloudnative-pg/cloudnative-pg/issues/2501
-    # podMonitorMetricRelabelings:
-    #   - {
-    #       sourceLabels: ["cluster"],
-    #       targetLabel: cnpg_cluster,
-    #       action: replace,
-    #     }
-    #   - { regex: cluster, action: labeldrop }
   backup:
     retentionPolicy: 30d
     barmanObjectStore: &barmanObjectStore
@@ -43,8 +35,8 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://cloudnative-pg/
-      endpointURL: https://s3.rafaribe.com
-      serverName: &currentCluster home-ops-storage-v1
+      endpointURL: http://minio:9000
+      serverName: &currentCluster home-ops-storage-v2
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-minio
