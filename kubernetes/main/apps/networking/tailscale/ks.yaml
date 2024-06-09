@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: networking-tailscale
+  name: &app tailscale
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -10,6 +10,9 @@ spec:
   path: "./kubernetes/main/apps/networking/tailscale/app/"
   prune: true
   targetNamespace: networking
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   sourceRef:
     kind: GitRepository
     name: home-ops
