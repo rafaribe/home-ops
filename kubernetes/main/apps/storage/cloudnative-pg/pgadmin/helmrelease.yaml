@@ -1,86 +1,78 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app pgadmin
-  interval: 15m
+spec:
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
-      main:
+      pgadmin:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
           volume-permissions:
             image:
-              repository: dpage/pgadmin4
+              repository: docker.io/dpage/pgadmin4
               tag: "8.8@sha256:61fd25f428c155027fb2aa74b913d317af11a14f55e6135484b5e86a8840520b"
             command: ["/bin/chown", "-R", "5050:5050", "/var/lib/pgadmin"]
-            volumeMounts:
-              - name: config
-                mountPath: /var/lib/pgadmin
             securityContext:
               runAsUser: 0
         containers:
-          main:
+          app:
             image:
-              repository: dpage/pgadmin4
+              repository: docker.io/dpage/pgadmin4
               tag: "8.8@sha256:61fd25f428c155027fb2aa74b913d317af11a14f55e6135484b5e86a8840520b"
-            env:
-              PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
             envFrom:
               - secretRef:
-                  name: pgadmin-secrets
+                  name: pgadmin-secret
             resources:
               requests:
-                cpu: 50m
-                memory: 100Mi
+                cpu: 15m
+                memory: 164M
               limits:
-                memory: 500Mi
+                memory: 236M
     service:
-      main:
+      app:
+        controller: pgadmin
         ports:
           http:
             port: 80
     ingress:
-      main:
+      app:
         enabled: true
-        className: "internal"
-        annotations:
-          hajimari.io/icon: mdi:database
+        className: internal
         hosts:
-          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.rafaribe.com"
             paths:
               - path: /
+                pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
               - *host
     persistence:
       config:
-        enabled: true
-        existingClaim: pgadmin-config
+        existingClaim: config-pgadmin
         globalMounts:
           - path: /var/lib/pgadmin
       server-json:
