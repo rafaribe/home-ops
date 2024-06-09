@@ -21,53 +21,51 @@ spec:
     - extract:
         key: /volsync
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: "${APP}-bootstrap"
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: "${APP}-volsync"
+    copyMethod: Snapshot
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-ceph-block}" #was local-hostpath
+    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
+    storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
+    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
+    moverSecurityContext:
+      runAsUser: "${VOLSYNC_UID:-1000}"
+      runAsGroup: "${VOLSYNC_GID:-1000}"
+      fsGroup: "${VOLSYNC_GID:-1000}"
+    capacity: "${VOLSYNC_CAPACITY}"
+---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: "${APP}"
 spec:
-  sourcePVC: "${APP}"
+  sourcePVC: "${CLAIM:-${APP}}"
   trigger:
     schedule: "0 * * * *"
   restic:
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
-    pruneIntervalDays: 7
-    repository: "${APP}-volsync-secret"
+    pruneIntervalDays: 10
+    repository: "${APP}-volsync"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-4Gi}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-ceph-block}" #was local-hostpath
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
+      runAsUser: "${VOLSYNC_UID:-1000}"
+      runAsGroup: "${VOLSYNC_GID:-1000}"
+      fsGroup: "${VOLSYNC_GID:-1000}"
     retain:
       hourly: 24
-      daily: 7
+      daily: 10
       weekly: 5
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
-metadata:
-  name: "${APP}-dst"
-spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: "${APP}-volsync-secret"
-    copyMethod: Snapshot # must be Snapshot
-    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
-    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
-    storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
-    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
-    capacity: "${VOLSYNC_CAPACITY}"
-    # moverSecurityContext:
-    #   runAsUser: 568
-    #   runAsGroup: 568
-    #   fsGroup: 568
