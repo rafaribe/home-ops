@@ -9,7 +9,7 @@ spec:
     kind: ClusterSecretStore
     name: akeyless-secret-store
   target:
-    name: "${APP}-volsync-secret"
+    name: "${APP}-volsync"
     template:
       engineVersion: v2
       data:
