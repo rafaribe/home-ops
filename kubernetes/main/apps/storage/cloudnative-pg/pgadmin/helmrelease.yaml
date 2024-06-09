@@ -72,7 +72,7 @@ spec:
               - *host
     persistence:
       config:
-        existingClaim: config-pgadmin
+        existingClaim: pgadmin-config
         globalMounts:
           - path: /var/lib/pgadmin
       server-json:
