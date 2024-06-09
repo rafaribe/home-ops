@@ -12,8 +12,7 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./kube-state-metrics/ks.yaml
   - ./loki/ks.yaml
-  - ./node-exporter/ks.yaml
+  - ./prometheus-operator-crds/ks.yaml
   - ./opentelemetry/ks.yaml
-  - ./tempo/ks.yaml
   - ./thanos/ks.yaml
   - ./unifi-poller/ks.yaml

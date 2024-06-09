@@ -6,6 +6,7 @@ metadata:
 spec:
   path: ./kubernetes/main/apps/monitoring/grafana/app
   prune: true
+  targetNamespace: observability
   sourceRef:
     kind: GitRepository
     name: home-ops
