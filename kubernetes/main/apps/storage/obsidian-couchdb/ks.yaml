@@ -3,15 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &appname obsidian-couchdb
+  name: &app obsidian-couchdb
   namespace: flux-system
 spec:
-  targetNamespace: services
+  targetNamespace: storage
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *appname
+      app.kubernetes.io/name: *app
   interval: 10m
-  path: "./kubernetes/main/apps/services/obsidian-couchdb/app"
+  path: "./kubernetes/main/apps/storage/obsidian-couchdb/app"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,7 +19,7 @@ spec:
   wait: false
   postBuild:
     substitute:
-      APP: *appname
+      APP: *app
       HOSTNAME: obsidian-db.rafaribe.com
       APP_UID: "1000"
       APP_GID: "1000"
