@@ -6,7 +6,7 @@ metadata:
   name: &appname alertmanager
   namespace: flux-system
 spec:
-  targetnamespace: observability
+  targetNamespace: observability
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
