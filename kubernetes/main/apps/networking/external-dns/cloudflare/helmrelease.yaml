@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -35,19 +35,27 @@ spec:
             name: &secret external-dns-cloudflare
             key: *name
     extraArgs:
-      - --cloudflare-dns-records-per-page=1000
+      - --ingress-class=external
       - --cloudflare-proxied
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
-      - --events
-      - --ignore-ingress-tls-spec
-      - --ingress-class=external
     policy: sync
     sources: ["crd", "ingress"]
     txtOwnerId: default
     txtPrefix: k8s.
     domainFilters: ["rafaribe.com"]
+    logLevel: info
     serviceMonitor:
       enabled: true
     podAnnotations:
       secret.reloader.stakater.com/reload: *secret
+    resources:
+      requests:
+        cpu: 25m
+        memory: 50Mi
+      limits:
+        cpu: 50m
+        memory: 100Mi
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
