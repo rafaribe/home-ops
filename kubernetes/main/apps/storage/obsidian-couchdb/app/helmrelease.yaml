@@ -43,8 +43,8 @@ spec:
         containers:
           main:
             image:
-              repository: public.ecr.aws/docker/library/couchdb
-              tag: 3.3.3
+              repository: ghcr.io/dragonflydb/operator
+              tag: v1.1.2@sha256:f0d76725950095ac65b36252e0042d339d1db9b181b1d068f4b6686ea93055e4
             env:
               COUCHDB_USER:
                 valueFrom:
