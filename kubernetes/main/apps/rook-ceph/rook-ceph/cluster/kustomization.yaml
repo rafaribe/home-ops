@@ -6,3 +6,4 @@ resources:
   - ./helmrelease.yaml
   - ./dashboards
   - ./externalsecret.yaml
+  - ./cephobjectstoreuser.yaml
