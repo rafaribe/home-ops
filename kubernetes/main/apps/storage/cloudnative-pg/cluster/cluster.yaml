@@ -43,7 +43,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://cloudnative-pg/
-      endpointURL: https://minio:9000
+      endpointURL: https://s3.rafaribe.com
       serverName: &currentCluster home-ops-storage-v1
       s3Credentials:
         accessKeyId:
@@ -52,3 +52,14 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-minio
           key: MINIO_SECRET_KEY
+  # Note: previousCluster needs to be set to the name of the previous
+  # cluster when recovering from an existing cnpg cluster
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster home-ops-storage-v2
+  # # Note: externalClusters is needed when recovering from an existing cnpg cluster
+  # externalClusters:
+  #   - name: *previousCluster
+  #     barmanObjectStore:
+  #       <<: *barmanObjectStore
+  #       serverName: *previousCluster
