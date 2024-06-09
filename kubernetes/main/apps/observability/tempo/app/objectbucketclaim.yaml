@@ -1,0 +1,9 @@
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: tempo-bucket-v1
+  namespace: observability
+spec:
+  bucketName: tempo-bucket-v1
+  storageClassName: ceph-bucket

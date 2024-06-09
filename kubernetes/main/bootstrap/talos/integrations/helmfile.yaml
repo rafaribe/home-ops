@@ -33,7 +33,7 @@ releases:
       - cilium
 
   - name: prometheus-operator-crds
-    namespace: monitoring
+    namespace: observability
     chart: prometheus-community/prometheus-operator-crds
     version: 12.0.0
     needs:

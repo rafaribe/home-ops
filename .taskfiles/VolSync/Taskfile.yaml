@@ -8,7 +8,7 @@ version: "3"
 #   3. Applications are deployed as either a Kubernetes Deployment or StatefulSet
 #   4. Each application only has one PVC that is being replicated
 
-x-env: &env
+x-env-vars: &env-vars
   app: "{{.app}}"
   claim: "{{.claim}}"
   controller: "{{.controller}}"
@@ -23,16 +23,21 @@ vars:
   VOLSYNC_TEMPLATES_DIR: "{{.ROOT_DIR}}/.taskfiles/VolSync/templates"
 
 tasks:
-  suspend-controller:
-    desc: Suspends Volsync
+
+  state-*:
+    desc: Suspend or Resume Volsync
     summary: |
       Args:
         cluster: Cluster to run command against (required)
+        state: resume or suspend (required)
     cmds:
-      - flux --context {{.cluster}} suspend ks volsync
-      - flux --context {{.cluster}} suspend hr -n volsync volsync
-      - kubectl --context {{.cluster}} -n volsync scale deployment volsync --replicas 0
-    env: *env
+      - flux --context {{.cluster}} {{.state}} kustomization volsync
+      - flux --context {{.cluster}} -n {{.ns}} {{.state}} helmrelease volsync
+      - kubectl --context {{.cluster}} -n {{.ns}} scale deployment volsync --replicas {{if eq "suspend" .state}}0{{else}}1{{end}}
+    env: *env-vars
+    vars:
+      ns: '{{.ns | default "volsync-system"}}'
+      state: '{{index .MATCH 0}}'
     requires:
       vars: ["cluster"]
 
@@ -49,7 +54,7 @@ tasks:
       - kubectl --context {{.cluster}} -n {{.ns}} wait job/{{.job}} --for condition=complete --timeout=1m
       - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container main
       - kubectl --context {{.cluster}} -n {{.ns}} delete job {{.job}}
-    env: *env
+    env: *env-vars
     requires:
       vars: ["cluster", "app"]
     vars:
@@ -74,7 +79,7 @@ tasks:
       - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container minio
       - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container r2
       - kubectl --context {{.cluster}} -n {{.ns}} delete job {{.job}}
-    env: *env
+    env: *env-vars
     requires:
       vars: ["cluster", "app"]
     vars:
@@ -98,7 +103,7 @@ tasks:
       - kubectl --context {{.cluster}} -n {{.ns}} patch replicationsources {{.app}} --type merge -p '{"spec":{"trigger":{"manual":"{{.now}}"}}}'
       - bash {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh {{.job}} {{.ns}} {{.cluster}}
       - kubectl --context {{.cluster}} -n {{.ns}} wait job/{{.job}} --for condition=complete --timeout=120m
-    env: *env
+    env: *env-vars
     requires:
       vars: ["cluster", "app"]
     vars:
@@ -123,16 +128,16 @@ tasks:
         app: Application to restore (required)
         previous: Previous number of snapshots to restore (default: 2)
     cmds:
-      - { task: .suspend, vars: *env }
-      - { task: .wipe, vars: *env }
-      - { task: .restore, vars: *env }
-      - { task: .resume, vars: *env }
-    env: *env
+      - { task: .suspend, vars: *env-vars }
+      - { task: .wipe, vars: *env-vars }
+      - { task: .restore, vars: *env-vars }
+      - { task: .resume, vars: *env-vars }
+    env: *env-vars
     requires:
       vars: ["cluster", "app"]
     vars:
       ns: '{{.ns | default "default"}}'
-      previous: "{{.previous | default 2}}"
+      previous: '{{.previous | default 2}}'
       controller:
         sh: "{{.VOLSYNC_SCRIPTS_DIR}}/which-controller.sh {{.app}} {{.ns}}"
       claim:
@@ -161,7 +166,11 @@ tasks:
         cmd: |
           {{- $items := (split "/" .ITEM) }}
           kubectl --context {{.cluster}} delete pvc -n {{ $items._0 }} {{ $items._1 }}
-    env: *env
+      - for: { var: snaps }
+        cmd: |
+          {{- $items := (split "/" .ITEM) }}
+          kubectl --context {{.cluster}} delete volumesnapshot -n {{ $items._0 }} {{ $items._1 }}
+    env: *env-vars
     requires:
       vars: ["cluster"]
     vars:
@@ -169,6 +178,8 @@ tasks:
         sh: kubectl --context {{.cluster}} get pvc --all-namespaces --no-headers | grep "dst-dest" | awk '{print $1 "/" $2}'
       cache:
         sh: kubectl --context {{.cluster}} get pvc --all-namespaces --no-headers | grep "dst-cache" | awk '{print $1 "/" $2}'
+      snaps:
+        sh: kubectl --context {{.cluster}} get volumesnapshot --all-namespaces --no-headers | grep "dst-dest" | awk '{print $1 "/" $2}'
 
   # Suspend the Flux ks and hr
   .suspend:
@@ -178,7 +189,7 @@ tasks:
       - flux --context {{.cluster}} -n {{.ns}} suspend helmrelease {{.app}}
       - kubectl --context {{.cluster}} -n {{.ns}} scale {{.controller}} --replicas 0
       - kubectl --context {{.cluster}} -n {{.ns}} wait pod --for delete --selector="app.kubernetes.io/name={{.app}}" --timeout=2m
-    env: *env
+    env: *env-vars
 
   # Wipe the PVC of all data
   .wipe:
@@ -189,7 +200,7 @@ tasks:
       - kubectl --context {{.cluster}} -n {{.ns}} wait job/{{.job}} --for condition=complete --timeout=120m
       - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container main
       - kubectl --context {{.cluster}} -n {{.ns}} delete job {{.job}}
-    env: *env
+    env: *env-vars
     vars:
       job: volsync-wipe-{{.app}}
 
@@ -201,7 +212,7 @@ tasks:
       - bash {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh {{.job}} {{.ns}} {{.cluster}}
       - kubectl --context {{.cluster}} -n {{.ns}} wait job/{{.job}} --for condition=complete --timeout=120m
       - kubectl --context {{.cluster}} -n {{.ns}} delete replicationdestination {{.job}}
-    env: *env
+    env: *env-vars
     vars:
       job: volsync-dst-{{.app}}
 
@@ -211,4 +222,4 @@ tasks:
     cmds:
       - flux --context {{.cluster}} -n {{.ns}} resume helmrelease {{.app}}
       - flux --context {{.cluster}} -n flux-system resume kustomization {{.app}}
-    env: *env
+    env: *env-vars
