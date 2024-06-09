@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: monitoring-unifi-poller-app
+  name: unifi-poller
   namespace: flux-system
 spec:
   path: ./kubernetes/main/apps/monitoring/unifi-poller/app
@@ -12,3 +12,6 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app

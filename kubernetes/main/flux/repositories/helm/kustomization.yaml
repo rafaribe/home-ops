@@ -52,6 +52,7 @@ resources:
   - ./prometheus-community.yaml
   - ./rook-ceph.yaml
   - ./stakater.yaml
+  - ./stevehipwell.yaml
   - ./tf-controller.yaml
   - ./vector.yaml
   - ./weave-gitops.yaml

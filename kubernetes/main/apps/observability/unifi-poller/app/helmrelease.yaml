@@ -32,12 +32,12 @@ spec:
       main:
         strategy: RollingUpdate
         annotations:
-          secret.reloader.stakater.com/reload: &secret unifi-poller-secret
+          secret.reloader.stakater.com/reload: &secret unpoller-secret
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
         containers:
           main:
@@ -46,12 +46,13 @@ spec:
               tag: v2.10.0
             env:
               UP_UNIFI_DEFAULT_ROLE: "homelab-controller"
-              UP_UNIFI_DEFAULT_VERIFY_SSL: true
+              UP_UNIFI_DEFAULT_URL: https://10.0.0.254:8443
+              UP_UNIFI_DEFAULT_VERIFY_SSL: false
               UP_UNIFI_DEFAULT_SAVE_SITES: true
               UP_UNIFI_DEFAULT_SAVE_DPI: false
               UP_INFLUXDB_DISABLE: true
               UP_PROMETHEUS_DISABLE: false
-              UP_PROMETHEUS_NAMESPACE: "monitoring"
+              UP_PROMETHEUS_NAMESPACE: "observability"
             envFrom:
               - secretRef:
                   name: *secret
