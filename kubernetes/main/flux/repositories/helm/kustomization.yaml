@@ -45,8 +45,6 @@ resources:
   - ./nginx-gateway-fabric.yaml
   - ./nvidia.yaml
   - ./openebs.yaml
-  - ./openebs-cstor-chart.yaml
-  - ./openebs-jiva-chart.yaml
   - ./opentelemetry.yaml
   - ./pascaliske.yaml
   - ./piraeus.yaml

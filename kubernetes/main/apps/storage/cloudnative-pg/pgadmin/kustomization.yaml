@@ -2,11 +2,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  # App
   - ./helmrelease.yaml
-  - ./pvc.yaml
+  #- ./pvc.yaml
   - ./externalsecret.yaml
+  # Templates
+  - ../../../../templates/gatus/guarded
+  - ../../../../templates/volsync
 configMapGenerator:
-  - name: config-pgadmin
+  - name: servers-json
     files:
       - config/servers.json
 generatorOptions:
