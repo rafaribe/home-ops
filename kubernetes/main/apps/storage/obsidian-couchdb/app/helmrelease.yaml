@@ -98,7 +98,7 @@ spec:
               - path: /tmp/config
       data:
         enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
+        existingClaim: obsidian-couchdb
         advancedMounts:
           obsidian-couchdb:
             app:
