@@ -51,7 +51,7 @@ spec:
               - /etc/cloudflared/config/config.yaml
               - run
               - "--token"
-              - "{CLUSTER_CLOUDFLARE_TUNNEL_TOKEN}"
+              - "${CLUSTER_CLOUDFLARE_TUNNEL_TOKEN}"
             probes:
               liveness: &probes
                 enabled: true
