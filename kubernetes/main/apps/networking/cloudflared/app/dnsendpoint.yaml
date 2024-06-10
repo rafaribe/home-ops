@@ -8,4 +8,4 @@ spec:
   endpoints:
     - dnsName: external.rafaribe.com
       recordType: CNAME
-      targets: ["${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
+      targets: ["${CLUSTER_CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
