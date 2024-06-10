@@ -36,7 +36,6 @@ spec:
               tag: 2024.6.0@sha256:8245fa2eeeabf437b061909cd59f123b39730f626bc676dc37cd3fb9f6880580
             env:
               NO_AUTOUPDATE: true
-              TUNNEL_CRED_FILE: /etc/cloudflared/creds/credentials.json
               TUNNEL_METRICS: 0.0.0.0:8080
               TUNNEL_ORIGIN_ENABLE_HTTP2: true
               TUNNEL_TRANSPORT_PROTOCOL: quic
@@ -51,7 +50,8 @@ spec:
               - --config
               - /etc/cloudflared/config/config.yaml
               - run
-              - "${CLUSTER_CLOUDFLARE_TUNNEL_ID}"
+              - "--token"
+              - "{CLUSTER_CLOUDFLARE_TUNNEL_TOKEN}"
             probes:
               liveness: &probes
                 enabled: true
@@ -109,11 +109,4 @@ spec:
         globalMounts:
           - path: /etc/cloudflared/config/config.yaml
             subPath: config.yaml
-            readOnly: true
-      creds:
-        type: secret
-        name: *secret
-        globalMounts:
-          - path: /etc/cloudflared/creds/credentials.json
-            subPath: credentials.json
             readOnly: true
