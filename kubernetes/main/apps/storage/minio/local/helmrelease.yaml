@@ -116,7 +116,7 @@ spec:
               - *s3Host
             secretName: tls.minio
     persistence:
-      data:
+      config:
         enabled: true
         existingClaim: minio-local
         globalMounts:
