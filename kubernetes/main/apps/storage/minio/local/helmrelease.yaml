@@ -119,7 +119,5 @@ spec:
       data:
         enabled: true
         existingClaim: minio-local
-        advancedMounts:
-          minio-local:
-            app:
-              - path: /data
+        globalMounts:
+          - path: /data
