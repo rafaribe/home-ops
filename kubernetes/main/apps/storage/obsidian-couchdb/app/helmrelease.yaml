@@ -86,17 +86,13 @@ spec:
         enabled: true
         type: configMap
         name: obsidian-couchdb-configmap
-        advancedMounts:
-          obsidian-couchdb:
-            init-config:
-              - path: /tmp/config
+        globalMounts:
+          - path: /tmp/config
       data:
         enabled: true
         existingClaim: obsidian-couchdb
-        advancedMounts:
-          obsidian-couchdb:
-            app:
-              - path: /opt/couchdb/data
+        globalMounts:
+          - path: /opt/couchdb/data
       config-storage:
         enabled: true
         type: emptyDir
