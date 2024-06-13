@@ -29,7 +29,7 @@ spec:
         image: ghcr.io/onedr0p/postgres-init:16
         envFrom:
           - secretRef:
-              name: &secret grafana
+              name: &secret grafana-secret
     replicas: 2
     envFromSecrets:
       - name: *secret
