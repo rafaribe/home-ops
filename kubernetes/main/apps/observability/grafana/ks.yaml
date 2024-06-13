@@ -17,3 +17,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: grafana
+      VOLSYNC_CAPACITY: 3Gi

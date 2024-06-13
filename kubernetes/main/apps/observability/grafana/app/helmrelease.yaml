@@ -29,7 +29,7 @@ spec:
         image: ghcr.io/onedr0p/postgres-init:16
         envFrom:
           - secretRef:
-              name: &secret grafana-secret
+              name: &secret grafana
     replicas: 2
     envFromSecrets:
       - name: *secret
@@ -395,8 +395,8 @@ spec:
     ingress:
       enabled: true
       annotations:
-        external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-      ingressClassName: internal
+        external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+      ingressClassName: external
       hosts: ["grafana.rafaribe.com"]
     persistence:
       enabled: false

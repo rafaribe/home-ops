@@ -3,10 +3,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: monitoring-gatus
+  name: &app gatus
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/monitoring/gatus/app
+  path: ./kubernetes/main/apps/observability/gatus/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -15,3 +15,12 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  targetNamespace: observability
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: status
+      VOLSYNC_CAPACITY: 3Gi
