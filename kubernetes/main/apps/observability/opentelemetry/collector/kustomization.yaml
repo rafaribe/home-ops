@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./collector.yaml
   - ./servicemonitor.yaml
+  - ./rbac.yaml
