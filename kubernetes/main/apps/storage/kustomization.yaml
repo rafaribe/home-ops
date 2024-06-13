@@ -7,10 +7,8 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./csi-driver-nfs/ks.yaml
-  - ./syncthing/ks.yaml
   - ./cloudnative-pg/ks.yaml
   - ./minio/ks.yaml
-  - ./redis/ks.yaml
   - ./dragonfly/ks.yaml
   - ./obsidian-couchdb/ks.yaml
   - ./etcd/ks.yaml
