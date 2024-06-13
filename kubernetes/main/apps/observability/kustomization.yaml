@@ -2,15 +2,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-# Pre Flux-Kustomizations
-- ./namespace.yaml
-# Flux-Kustomizations
-- ./gatus/ks.yaml
-#- ./grafana/ks.yaml
-- ./kube-prometheus-stack/ks.yaml
-- ./kube-state-metrics/ks.yaml
-- ./loki/ks.yaml
-- ./prometheus-operator-crds/ks.yaml
-- ./opentelemetry/ks.yaml
-- ./thanos/ks.yaml
-- ./unifi-poller/ks.yaml
+  # Pre Flux-Kustomizations
+  - ./namespace.yaml
+  # Flux-Kustomizations
+  - ./gatus/ks.yaml
+  #- ./grafana/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
+  - ./kube-state-metrics/ks.yaml
+  - ./loki/ks.yaml
+  - ./prometheus-operator-crds/ks.yaml
+  - ./opentelemetry/ks.yaml
+  - ./thanos/ks.yaml
+  - ./unifi-poller/ks.yaml
+  - ./mimir/ks.yaml

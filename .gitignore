@@ -30,3 +30,4 @@ known_hosts
 age.key
 utilities/doppler-to-akeyless/venv
 utilities/doppler-to-akeyless/.env
+*.tmp.yaml
