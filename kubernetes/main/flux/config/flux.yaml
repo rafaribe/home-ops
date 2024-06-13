@@ -69,7 +69,7 @@ spec:
                       memory: 2Gi
       target:
         kind: Deployment
-        name: (kustomize-controller|helm-controller|source-controller)
+        name: (kustomize-controller|helm-controller)
     - patch: |
         apiVersion: apps/v1
         kind: Deployment
