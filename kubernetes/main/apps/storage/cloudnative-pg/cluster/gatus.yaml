@@ -9,7 +9,7 @@ data:
   config.yaml: |
     endpoints:
       - name: postgres
-        group: infrastructure
+        group: guarded
         url: tcp://home-ops-storage-rw.storage.svc.cluster.local:5432
         interval: 1m
         ui:
