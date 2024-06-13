@@ -1,22 +1,22 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name alertmanager-discord
-  namespace: observability
+  name: &app alertmanager-discord
+  namespace: monitoring
 spec:
-  interval: 15m
+  interval: 5m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
       interval: 15m
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -25,29 +25,30 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
-      main:
-        annotations:
-          reloader.stakater.com/auto: "true"
+      alertmanager-discord:
         containers:
-          main:
+          app:
             image:
-              repository: docker.io/rogerrum/alertmanager-discord
-              tag: 1.0.6
-            env:
-              TZ: ${TZ}
-              VERBOSE: ON
+              repository: benjojo/alertmanager-discord
+              tag: latest
             envFrom:
               - secretRef:
-                  name: *name
+                  name: alertmanager-discord
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: 9094
-    ingress:
-      main:
-        enabled: false

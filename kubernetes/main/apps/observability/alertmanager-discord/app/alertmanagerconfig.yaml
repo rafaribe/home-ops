@@ -1,0 +1,11 @@
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: alertmanager
+spec:
+  receivers:
+    - name: discord
+      webhookConfigs:
+        - url: "http://alertmanager-discord:9094"
+          sendResolved: true

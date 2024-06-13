@@ -13,6 +13,6 @@ resources:
   - ./loki/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
   - ./opentelemetry/ks.yaml
-  - ./thanos/ks.yaml
+  #- ./thanos/ks.yaml
   - ./unifi-poller/ks.yaml
   - ./mimir/ks.yaml
