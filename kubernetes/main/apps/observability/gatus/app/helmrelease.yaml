@@ -1,141 +1,144 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: gatus
-  namespace: observability
+  name: &app gatus
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
-      main:
+      gatus:
+        replicas: 3
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          init-db:
-            order: 1
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: "16.3"
-            envFrom: &envFrom
-              - secretRef:
-                  name: gatus-secret
-          initial-sync:
-            order: 2
+          init-config:
             image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.27.4
-            # FIXME: figure out how to avoid duplicating this list in sidecars
+              tag: 1.27.4@sha256:f6ed71d0f9f1175df8c4b8c674b339a74785384d25fdad21b3c3dc0554109286
             env:
-              - { name: FOLDER, value: /config }
-              - { name: LABEL, value: gatus.io/enabled }
-              - { name: NAMESPACE, value: ALL }
-              - { name: RESOURCE, value: both }
-              - { name: UNIQUE_FILENAMES, value: "true" }
-              - { name: METHOD, value: LIST }
+              FOLDER: /config
+              LABEL: gatus.io/enabled
+              NAMESPACE: ALL
+              RESOURCE: both
+              UNIQUE_FILENAMES: true
+              METHOD: WATCH
+            restartPolicy: Always
+            resources: &resources
+              requests:
+                cpu: 10m
+              limits:
+                memory: 256Mi
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/twin/gatus
-              tag: v5.8.0
+              tag: v5.11.0@sha256:eb0374eb55e3ff84ec8f9ea10342ddb623cfba23e5836138896cde01f11cf23d
             env:
               TZ: ${TZ}
               GATUS_CONFIG_PATH: /config
-              CUSTOM_WEB_PORT: &port 80
-              CLUSTER_DOMAIN: ${EXTERNAL_DOMAIN}
-            envFrom: *envFrom
-            resources:
-              requests:
-                cpu: 50m
-                memory: 64Mi
-              limits:
-                memory: 128Mi
-          config-sync:
-            image:
-              repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.27.4
-            env:
-              - { name: FOLDER, value: /config }
-              - { name: LABEL, value: gatus.io/enabled }
-              - { name: NAMESPACE, value: ALL }
-              - { name: RESOURCE, value: both }
-              - { name: UNIQUE_FILENAMES, value: "true" }
-              - { name: METHOD, value: WATCH }
-            resources:
-              requests:
-                cpu: 50m
-                memory: 128Mi
-              limits:
-                memory: 192Mi
-        pod:
-          enableServiceLinks: false
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
+              GATUS_DELAY_START_SECONDS: 5
+              WEB_PORT: &port 80
+            envFrom:
+              - secretRef:
+                  name: gatus-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources: *resources
+    defaultPodOptions:
+      dnsConfig:
+        options:
+          - { name: ndots, value: "1" }
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: *port
     serviceMonitor:
-      main:
-        enabled: true
+      app:
+        serviceName: *app
         endpoints:
           - port: http
             scheme: http
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
+            metricRelabelings:
+              - action: labeldrop
+                regex: (pod)
+              - action: replace
+                sourceLabels: ["service"]
+                targetLabel: instance
     ingress:
-      main:
-        enabled: true
+      app:
         className: external
         annotations:
-          hajimari.io/icon: simple-icons:gatsby
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Observability
+          gethomepage.dev/name: Gatus
+          gethomepage.dev/icon: gatus.png
+          gethomepage.dev/description: Status Page
+          gethomepage.dev/widget.type: gatus
+          gethomepage.dev/widget.url: http://gatus.observability
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
-          - host: &host status.${EXTERNAL_DOMAIN}
+          - host: status.${SECRET_DOMAIN}
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  name: main
-        tls:
-          - hosts:
-              - *host
+                  identifier: app
+                  port: http
     serviceAccount:
       create: true
-      name: gatus
+      name: *app
     persistence:
       config:
-        enabled: true
         type: emptyDir
       config-file:
         type: configMap
         name: gatus-configmap
-        advancedMounts:
-          main:
-            main:
-              - path: /config/config.yaml
-                subPath: config.yaml
-                readOnly: true
+        globalMounts:
+          - path: /config/config.yaml
+            subPath: config.yaml
+            readOnly: true

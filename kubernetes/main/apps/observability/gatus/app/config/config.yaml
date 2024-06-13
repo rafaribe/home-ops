@@ -19,6 +19,13 @@ alerting:
       send-on-resolved: true
       failure-threshold: 5
       success-threshold: 2
+  discord:
+    webhook-url: $${DISCORD_WEBHOOK_URL}
+    default-alert:
+      description: health-check failed
+      send-on-resolved: true
+      failure-threshold: 3
+      success-threshold: 3
 connectivity:
   checker:
     target: 1.1.1.1:53
