@@ -7,7 +7,7 @@ metadata:
   namespace: observability
 spec:
   bucketName: ruler-v1
-  storageClassName: slow-ceph-bucket
+  storageClassName: ceph-bucket
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/objectbucket.io/objectbucketclaim_v1alpha1.json
 apiVersion: objectbucket.io/v1alpha1
@@ -17,4 +17,4 @@ metadata:
   namespace: observability
 spec:
   bucketName: tsdb-v1
-  storageClassName: slow-ceph-bucket
+  storageClassName: ceph-bucket

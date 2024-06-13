@@ -24,5 +24,5 @@ spec:
       token:
         ttl: 10000h
       rbac:
-        existingSecret: mimir
+        existingSecret: etcd-mimir
         existingSecretPasswordKey: "MIMIR_ETCD_PASSWORD"
