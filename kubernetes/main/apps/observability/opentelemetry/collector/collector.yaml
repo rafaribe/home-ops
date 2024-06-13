@@ -1,8 +1,9 @@
 ---
-apiVersion: opentelemetry.io/v1beta1
+apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
   name: collector
+  namespace: observability
 spec:
   mode: daemonset
   serviceAccount: collector
@@ -14,13 +15,12 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: spec.nodeName
-  config:
+  config: |
     receivers:
       filelog:
         include:
           - /var/log/pods/*/*/*.log
         exclude:
-          # Exclude logs from all containers named otel-collector
           - /var/log/pods/*/otel-collector/*.log
         include_file_path: true
         include_file_name: false
@@ -32,16 +32,14 @@ spec:
           - type: move
             from: attributes.log
             to: body
-          # Extract metadata from file path
           - type: regex_parser
             id: extract_metadata_from_filepath
-            regex: '^.*\/(?P<namespace>[^_]+)_(?P<pod_name>[^_]+)_(?P<uid>[a-f0-9\-]{36})\/(?P<container_name>[^\._]+)\/(?P<restart_count>\d+)\.log$'
+            regex: '^.*\/(?P<namespace>[^_]+)_(?P<pod_name>[^_]+)_(?P<uid>[a-f0-9\-]{36})\/(?P<container_name>[^\._]+)\/(?P<restart_count>\d+)\.log'
             parse_from: attributes["log.file.path"]
           - type: recombine
             combine_field: body
             is_first_entry: body matches "^[^\\s]"
             source_identifier: attributes["log.file.path"]
-          # Rename attributes
           - type: move
             from: attributes.streamm
             to: resource["log.iostream"]
@@ -76,18 +74,17 @@ spec:
               metric_relabel_configs:
                 - action: labeldrop
                   regex: (id|name)
-                  replacement: $$1
+                  replacement: $1
                 - action: labelmap
                   regex: label_(.+)
-                  replacement: $$1
+                  replacement: $1
       k8s_events: {}
       otlp:
         protocols:
           grpc: {}
           http: {}
-
     processors:
-      batch:
+      batch: {}
       k8sattributes:
         auth_type: "serviceAccount"
         passthrough: false
@@ -101,7 +98,6 @@ spec:
             - k8s.namespace.name
             - k8s.node.name
             - k8s.pod.start_time
-          # Pod labels which can be fetched via K8sattributeprocessor
           labels:
             - tag_name: key1
               key: label1
@@ -109,7 +105,6 @@ spec:
             - tag_name: key2
               key: label2
               from: pod
-        # Pod association using resource attributes and connection
         pod_association:
           - sources:
               - from: resource_attribute
@@ -127,14 +122,13 @@ spec:
         endpoint: http://mimir-nginx/api/v1/write
       loki:
         endpoint: "http://loki-gateway/loki/api/v1/push"
-
     service:
       pipelines:
         metrics:
           receivers: [otlp, prometheus]
           processors: [batch, memory_limiter]
           exporters: [prometheusremotewrite]
-        logs/cluster:
+        logs:
           receivers: [filelog]
           processors: [k8sattributes, batch, memory_limiter]
           exporters: [loki]
