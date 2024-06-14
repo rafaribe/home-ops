@@ -41,7 +41,7 @@ spec:
       - --crd-source-kind=DNSEndpoint
     policy: sync
     sources: ["crd", "ingress"]
-    txtOwnerId: default
+    txtOwnerId: networking
     txtPrefix: k8s.
     domainFilters: ["rafaribe.com"]
     logLevel: info
