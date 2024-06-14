@@ -6,7 +6,7 @@ metadata:
   name: &app kube-state-metrics
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/monitoring/kube-state-metrics/app
+  path: ./kubernetes/main/apps/observability/kube-state-metrics/app
   prune: true
   sourceRef:
     kind: GitRepository
