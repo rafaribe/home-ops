@@ -9,7 +9,7 @@ spec:
   serviceAccount: collector
   ports:
     - name: health
-      port: 13113
+      port: 13133 # Changed the health check port to 13133
   env:
     - name: KUBE_NODE_NAME
       valueFrom:
@@ -26,7 +26,7 @@ spec:
         include_file_name: false
         operators:
           - type: regex_parser
-            regex: "^(?P<timestamp>.+?) (?P<streamm>stdout|stderr) (?P<flag>[A-Z]{1}) (?P<log>.*)$"
+            regex: '^(?P<timestamp>.+?) (?P<stream>stdout|stderr) (?P<flag>[A-Z]{1}) (?P<log>.*)$'  # Fixed the regex pattern
             id: pre_process
             on_error: drop
           - type: move
@@ -41,8 +41,8 @@ spec:
             is_first_entry: body matches "^[^\\s]"
             source_identifier: attributes["log.file.path"]
           - type: move
-            from: attributes.streamm
-            to: resource["log.iostream"]
+            from: attributes.stream
+            to: resource["log.iostream"]  # Fixed the attribute name
           - type: copy
             from: attributes.namespace
             to: resource["service.namespace"]
