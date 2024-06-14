@@ -6,8 +6,9 @@ receivers:
   - name: "pushover"
     pushover_configs:
       - html: true
-        token_file: /etc/secrets/pushover_api_token
-        user_key_file: /etc/secrets/pushover_api_userkey
+        # Not sure why but the secrets just are mounted uppercase. Weird, I know...
+        token_file: /etc/secrets/PUSHOVER_API_TOKEN
+        user_key_file: /etc/secrets/PUSHOVER_API_USERKEY
         send_resolved: true
         priority: |-
           {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
@@ -43,12 +44,12 @@ route:
   group_wait: 30s
   group_interval: 5m
   repeat_interval: 6h
-  receiver: "pushover"
+  receiver: "discord"
   routes:
     - receiver: "null"
       matchers:
         - alertname =~ "InfoInhibitor|Watchdog"
-    - receiver: "pushover"
+    - receiver: "discord"
       matchers:
         - severity = critical
       continue: true
