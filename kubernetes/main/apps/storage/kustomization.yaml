@@ -11,4 +11,3 @@ resources:
   - ./minio/ks.yaml
   - ./dragonfly/ks.yaml
   - ./obsidian-couchdb/ks.yaml
-  - ./etcd/ks.yaml
