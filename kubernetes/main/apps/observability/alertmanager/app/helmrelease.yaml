@@ -67,7 +67,7 @@ spec:
       app:
         className: internal
         annotations:
-          external-dns.alpha.kubernetes.io/target: ingress-int.rafaribe.com
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: alertmanager.rafaribe.com
             paths:
