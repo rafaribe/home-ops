@@ -15,4 +15,3 @@ resources:
   - ./opentelemetry/ks.yaml
   #- ./thanos/ks.yaml
   - ./unifi-poller/ks.yaml
-  - ./mimir/ks.yaml
