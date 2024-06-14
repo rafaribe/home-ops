@@ -118,7 +118,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host hass-code.rafaribe.com
+          - host: &host2 hass-code.rafaribe.com
             paths:
               - path: /
                 service:
@@ -126,7 +126,7 @@ spec:
                   port: code
         tls:
           - hosts:
-              - *host
+              - *host2
     persistence:
       config:
         enabled: true
