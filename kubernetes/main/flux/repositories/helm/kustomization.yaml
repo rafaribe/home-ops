@@ -58,3 +58,4 @@ resources:
   - ./vector.yaml
   - ./weave-gitops.yaml
   - ./xenitab.yaml
+  - ./victoria-metrics.yaml

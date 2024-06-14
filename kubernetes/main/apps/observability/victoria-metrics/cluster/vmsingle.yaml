@@ -1,0 +1,67 @@
+---
+# yaml-language-server: $schema=https://crds.jank.ing/operator.victoriametrics.com/vmsingle_v1beta1.json
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMSingle
+metadata:
+  name: victoria
+  namespace: observability
+spec:
+  useStrictSecurity: true
+  retentionPeriod: "6" # months if no unit specified
+  extraArgs:
+    dedup.minScrapeInterval: 60s
+    maxLabelsPerTimeseries: "40"
+    search.minStalenessInterval: 5m
+    vmalert.proxyURL: http://vmalert-victoria.svc.cluster.local:8080
+  storage:
+    storageClassName: block
+    accessModes: [ReadWriteOnce]
+    volumeMode: Filesystem
+    resources:
+      requests:
+        storage: 100Gi
+    dataSourceRef:
+      apiGroup: volsync.backube
+      kind: ReplicationDestination
+      name: victoria-vmsingle-bootstrap
+  resources: # TODO: refine
+    requests:
+      cpu: 200m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 4Gi
+---
+# yaml-language-server: $schema=https://crds.jank.ing/operator.victoriametrics.com/vmsingle_v1beta1.json
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMSingle
+metadata:
+  name: alerts
+  namespace: monitoring
+  annotations:
+    description: "VMSingle that can schedule on any node in RollingUpdate fashion to have the highest availability for VMAlerts to process"
+spec:
+  useStrictSecurity: true
+  retentionPeriod: 7d
+  extraArgs:
+    dedup.minScrapeInterval: 60s
+    maxLabelsPerTimeseries: "40"
+    search.minStalenessInterval: 5m
+    storageDataPath: &path /vmdata
+    vmalert.proxyURL: http://vmalert-victoria.svc.cluster.local:8080
+  volumes:
+    - name: &vol vmsingle-data
+      emptyDir:
+        medium: Memory
+        sizeLimit: 4Gi
+  volumeMounts:
+    - name: *vol
+      mountPath: *path
+  terminationGracePeriodSeconds: 60
+  resources: # TODO: refine
+    requests:
+      cpu: 200m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 6Gi
