@@ -392,7 +392,9 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      ingressClassName: internal
+      annotations:
+        external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+      ingressClassName: external
       hosts: ["grafana.rafaribe.com"]
     persistence:
       enabled: false
