@@ -1,13 +1,14 @@
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app tailscale
+  name: &app tailscale-operator
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/main/apps/network/tailscale/app/"
+  path: "./kubernetes/main/apps/network/tailscale/operator/"
   prune: true
   sourceRef:
     kind: GitRepository
