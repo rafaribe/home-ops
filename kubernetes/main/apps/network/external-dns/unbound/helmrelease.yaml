@@ -1,0 +1,73 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app external-dns-unbound
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: external-dns
+      version: 1.14.5
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    fullnameOverride: *app
+    # logLevel: debug
+    provider:
+      name: webhook
+      webhook:
+        image:
+          repository: ghcr.io/crutonjohn/external-dns-opnsense-webhook
+          tag: v0.1.0@sha256:72d4f5c79e515b8a70bb2e48f6472c746671a3ae3d8ad224aa686dd7192e1609
+        env:
+          - name: OPNSENSE_HOST
+            value: https://10.0.0.1
+          - name: OPNSENSE_SKIP_TLS_VERIFY
+            value: "true" # optional
+          - name: LOG_LEVEL
+            value: debug
+          - name: OPNSENSE_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: &secret external-dns-opnsense
+                key: api_key
+          - name: OPNSENSE_API_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: &secret external-dns-opnsense-
+                key: api_secret
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http-wh-metrics
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: http-wh-metrics
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+    extraArgs:
+      - --ignore-ingress-tls-spec
+    policy: sync
+    sources: ["ingress", "service"]
+    txtOwnerId: storage
+    txtPrefix: k8s.storage.
+    domainFilters: ["rafaribe.com"]
+    serviceMonitor:
+      enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *secret
