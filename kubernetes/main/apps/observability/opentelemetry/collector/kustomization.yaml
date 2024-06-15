@@ -5,3 +5,4 @@ resources:
   - ./collector.yaml
   - ./servicemonitor.yaml
   - ./rbac.yaml
+  - ./pod-logging.yaml
