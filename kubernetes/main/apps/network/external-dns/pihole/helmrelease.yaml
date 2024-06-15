@@ -33,10 +33,11 @@ spec:
             key: *name
     extraArgs:
       - --pihole-server=http://10.0.0.254
+      - --ignore-ingress-tls-spec
     policy: upsert-only
     sources: ["ingress", "service"]
     registry: noop
-    domainFilters: [rafaribe.com]
+    domainFilters: ["rafaribe.com"]
     serviceMonitor:
       enabled: true
     podAnnotations:
