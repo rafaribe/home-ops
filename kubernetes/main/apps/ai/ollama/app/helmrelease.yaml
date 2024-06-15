@@ -122,14 +122,14 @@ spec:
     persistence:
       backend-config:
         enabled: true
-        existingClaim: ${BACKEND_CLAIM}
+        existingClaim: ollama-backend-data
         advancedMounts:
           backend:
             main:
               - path: /.ollama
       ui-config:
         enabled: true
-        existingClaim: ${UI_CLAIM}
+        existingClaim: ollama-ui-data
         advancedMounts:
           ui:
             main:
