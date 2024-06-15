@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-volsync
+  name: &app volsync
   namespace: flux-system
 spec:
   dependsOn:
@@ -17,3 +17,10 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  targetNamespace: volsync
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  postBuild:
+    substitute:
+      APP: *app
