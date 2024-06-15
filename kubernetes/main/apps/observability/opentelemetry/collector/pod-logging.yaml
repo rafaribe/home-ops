@@ -21,8 +21,8 @@ spec:
         sizeLimit: 10Gi
   resources:
     limits:
-      cpu: 500m
-      memory: 4Gi
+      cpu: 20m
+      memory: 512Mi
   serviceAccount: collector
   env:
     - name: K8S_NODE_NAME
