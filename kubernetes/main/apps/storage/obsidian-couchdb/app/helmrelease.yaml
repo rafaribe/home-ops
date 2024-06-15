@@ -73,7 +73,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "external"
+        className: "internal"
         hosts:
           - host: &hostName "${HOSTNAME}"
             paths:

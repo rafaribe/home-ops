@@ -97,13 +97,13 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external
+        ingressClassName: internal
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "weather-sunset"
           hajimari.io/instance: "admin"
         hosts:
-          - host: &host apps.${EXTERNAL_DOMAIN}
+          - host: &host apps.rafaribe.com
             paths:
               - path: /
                 pathType: Prefix
