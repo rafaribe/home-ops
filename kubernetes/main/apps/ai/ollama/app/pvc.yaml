@@ -37,16 +37,3 @@ spec:
     requests:
       storage: 10Gi
   storageClassName: ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ollama-ui-data
-  namespace: ai
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
-  storageClassName: ceph-block
