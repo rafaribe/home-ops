@@ -1,0 +1,82 @@
+---
+ports:
+  dns: 0.0.0.0:53
+  http: 0.0.0.0:4000
+
+bootstrapDns:
+  - tcp-tls:1.1.1.1:853
+  - tcp-tls:1.0.0.1:853
+
+upstreams:
+  groups:
+    default:
+      - tcp-tls:1.1.1.1:853
+      - tcp-tls:1.0.0.1:853
+    kenna*:
+      - tcp-tls:family.cloudflare-dns.com:853
+
+clientLookup:
+  upstream: &router 10.0.0.1
+
+conditional:
+  fallbackUpstream: false
+  mapping:
+    internal: *router
+    rafaribe.dev: *router
+    home.arpa: *router
+    rafaribe.casa: *router
+
+customDNS:
+  zone: |
+    $TTL 3600
+    $ORIGIN jory.dev.
+    ; LAN
+    opnsense      IN A      10.0.0.1
+    ; Servers
+    truenas    IN A      10.0.0.6
+    ; CNAME records
+    minio      IN CNAME  truenas.rafaribe.dev.
+    nas        IN CNAME  truenas.rafaribe.dev.
+    portainer  IN CNAME  truenas.rafaribe.dev.
+    s3         IN CNAME  truenas.rafaribe.dev.
+
+    $TTL 3600
+    $ORIGIN jory.casa.
+    ; Containers
+    traefik    IN A      10.0.1.10
+    gatus      IN A      10.0.1.10
+    ; CNAME records
+    blocky     IN CNAME  traefik.rafaribe.casa.
+    status     IN CNAME  traefik.rafaribe.casa.
+
+connectIPVersion: v4
+
+caching:
+  minTime: 15m
+  prefetching: true
+  cacheTimeNegative: -1
+
+ecs:
+  useAsClient: true
+
+prometheus:
+  enable: true
+  path: /metrics
+
+blocking:
+  loading:
+    downloads:
+      timeout: 60s
+  blackLists:
+    ads:
+      - https://big.oisd.nl/domainswild
+      - |
+        *.androidtvchannels-pa.googleapis.com
+        *.androidtvwatsonfe-pa.googleapis.com
+  whiteLists:
+    ads:
+      - |
+        *.amazonaws.com
+  clientGroupsBlock:
+    default:
+      - ads
