@@ -1,0 +1,71 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ollama-backend-pvc
+  namespace: flux-system
+spec:
+  targetNamespace: ai
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: ollama
+  interval: 10m
+  path: "./kubernetes/templates/volsync"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops
+  postBuild:
+    substitute:
+      APP: ollama-backend
+      VOLSYNC_CLAIM: ollama-backend-data
+      VOLSYNC_CAPACITY: 10Gi
+  dependsOn:
+    - name: cluster-apps-volsync
+    - name: cluster-apps-rook-ceph-cluster
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ollama-ui-pvc
+  namespace: flux-system
+spec:
+  targetNamespace: ai
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: ollama
+  interval: 10m
+  path: "./kubernetes/templates/volsync"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops
+  postBuild:
+    substitute:
+      APP: ollama-ui
+      VOLSYNC_CLAIM: ollama-ui-data
+      VOLSYNC_CAPACITY: 2Gi
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ollama
+  namespace: flux-system
+spec:
+  targetNamespace: ai
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: ollama
+  interval: 10m
+  path: "./kubernetes/apps/ai/ollama/app"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops
+  postBuild:
+    substitute:
+      BACKEND_CLAIM: ollama-backend-data
+      UI_CLAIM: ollama-ui-data
