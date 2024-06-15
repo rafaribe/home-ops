@@ -15,7 +15,3 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-ops
-  postBuild:
-    substitute:
-      BACKEND_CLAIM: ollama-backend-data
-      UI_CLAIM: ollama-ui-data
