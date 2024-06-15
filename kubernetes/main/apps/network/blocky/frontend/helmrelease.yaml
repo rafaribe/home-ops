@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app blocky-frontend
+
+spec:
+  interval: 30m
+
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  install:
+    remediation:
+      retries: 3
+
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+
+  values:
+    # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.2.0/charts/other/app-template/values.schema.json
+
+    controllers:
+      blocky-frontend:
+        replicas: 1
+        strategy: RollingUpdate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/mozart409/blocky-frontend
+              tag: v0.2.1
+
+            env:
+              - name: API_URL
+                value: http://blocky.network.svc.cluster.local:4000
+              - name: NODE_ENV
+                value: production
+
+            probes:
+              liveness: &probes
+                enabled: false
+              readiness: *probes
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 8002
+
+    ingress:
+      app:
+        className: external
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          hajimari.io/enable: "true"
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+        hosts:
+          - host: &host blocky.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+    persistence:
+      srv-env:
+        enabled: true
+        type: configMap
+        name: blocky-frontend
+        advancedMounts:
+          blocky-frontend:
+            app:
+              - path: "/srv/.env"
+                readOnly: true
+                subPath: env
+              - path: "/app/.env"
+                readOnly: true
+                subPath: env
+              - path: "/root/.env"
+                readOnly: true
+                subPath: env
+
+    serviceAccount:
+      create: true
+      name: *app
+
+    serviceMonitor:
+      app:
+        enabled: true
+        serviceName: *app

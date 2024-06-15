@@ -35,7 +35,7 @@ spec:
               repository: ghcr.io/0xerr0r/blocky
               tag: v0.24@sha256:9a82e0235c52ef3048586f8006add06e52132adaae70d02f980569dae16421a2
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TZ}
             probes:
               liveness: &probes
                 enabled: true

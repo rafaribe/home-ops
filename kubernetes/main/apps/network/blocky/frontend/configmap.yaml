@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: blocky-frontend
+data:
+  env: |-
+    API_URL: http://blocky.network.svc.cluster.local:4000
