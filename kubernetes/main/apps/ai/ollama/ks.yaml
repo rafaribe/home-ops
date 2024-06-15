@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: ollama
   interval: 10m
-  path: "./kubernetes/templates/volsync"
+  path: "./kubernetes/main/templates/volsync"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -34,7 +34,7 @@ spec:
     labels:
       app.kubernetes.io/name: ollama
   interval: 10m
-  path: "./kubernetes/templates/volsync"
+  path: "./kubernetes/main/templates/volsync"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -57,7 +57,7 @@ spec:
     labels:
       app.kubernetes.io/name: ollama
   interval: 10m
-  path: "./kubernetes/apps/ai/ollama/app"
+  path: "./kubernetes/main/apps/ai/ollama/app"
   prune: true
   sourceRef:
     kind: GitRepository
