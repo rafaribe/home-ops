@@ -41,12 +41,12 @@ spec:
           - name: OPNSENSE_API_KEY
             valueFrom:
               secretKeyRef:
-                name: &secret external-dns-opnsense
+                name: &secret external-dns-unbound
                 key: api_key
           - name: OPNSENSE_API_SECRET
             valueFrom:
               secretKeyRef:
-                name: &secret external-dns-opnsense
+                name: &secret external-dns-unbound
                 key: api_secret
         livenessProbe:
           httpGet:
@@ -62,10 +62,11 @@ spec:
           timeoutSeconds: 5
     extraArgs:
       - --ignore-ingress-tls-spec
+      - --ingress-class=internal
     policy: sync
     sources: ["ingress", "service"]
-    txtOwnerId: storage
-    txtPrefix: k8s.storage.
+    txtOwnerId: default
+    txtPrefix: k8s.
     domainFilters: ["rafaribe.com"]
     serviceMonitor:
       enabled: true
