@@ -56,7 +56,6 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: emqx-cluster
-    - name: external-secrets-stores
   path: ./kubernetes/main/apps/storage/emqx/exporter
   prune: true
   sourceRef:
