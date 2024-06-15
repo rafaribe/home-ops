@@ -32,7 +32,7 @@ spec:
       - name: &name CF_API_EMAIL
         valueFrom:
           secretKeyRef:
-            name: &secret external-dns-cloudflare-secret
+            name: &secret external-dns-cloudflare
             key: *name
       - name: &name CF_API_KEY
         valueFrom:
@@ -51,7 +51,7 @@ spec:
     sources: ["crd", "ingress"]
     txtOwnerId: default
     txtPrefix: k8s.
-    domainFilters: ["devbu.io"]
+    domainFilters: ["rafaribe.com"]
     serviceMonitor:
       enabled: true
     podAnnotations:
