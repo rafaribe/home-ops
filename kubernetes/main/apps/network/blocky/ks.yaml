@@ -17,3 +17,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  postBuild:
+    substitute:
+      APP: *app

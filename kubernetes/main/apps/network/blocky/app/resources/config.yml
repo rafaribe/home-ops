@@ -29,19 +29,17 @@ conditional:
 customDNS:
   zone: |
     $TTL 3600
-    $ORIGIN jory.dev.
+    $ORIGIN rafaribe.dev.
     ; LAN
     opnsense      IN A      10.0.0.1
     ; Servers
     truenas    IN A      10.0.0.6
     ; CNAME records
-    minio      IN CNAME  truenas.rafaribe.dev.
+    truenas    IN CNAME  truenas.rafaribe.dev.
     nas        IN CNAME  truenas.rafaribe.dev.
-    portainer  IN CNAME  truenas.rafaribe.dev.
-    s3         IN CNAME  truenas.rafaribe.dev.
 
     $TTL 3600
-    $ORIGIN jory.casa.
+    $ORIGIN rafaribe.casa.
     ; Containers
     traefik    IN A      10.0.1.10
     gatus      IN A      10.0.1.10
