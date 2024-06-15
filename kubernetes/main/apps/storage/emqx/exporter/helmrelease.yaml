@@ -25,6 +25,7 @@ spec:
   values:
     controllers:
       emqx-exporter:
+        replicas: 1
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -32,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/emqx/emqx-exporter
-              tag: 0.2.9
+              tag: main@sha256:ef9ec450e8697d05ebb2849c32a57a9edaa954b683ed1b6e82d20b1f69c6fb75
             args: ["--config.file", "/etc/emqx-exporter/config.yaml"]
             probes:
               liveness: &probes
@@ -56,12 +57,11 @@ spec:
                 cpu: 10m
               limits:
                 memory: 128Mi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65534
-        runAsGroup: 65534
-        seccompProfile: { type: RuntimeDefault }
+        pod:
+          securityContext:
+            runAsUser: 65534
+            runAsGroup: 65534
+            runAsNonRoot: true
     service:
       app:
         controller: emqx-exporter
@@ -104,8 +104,8 @@ spec:
     persistence:
       config:
         type: secret
-        name: emqx-secret
+        name: emqx-exporter
         globalMounts:
           - path: /etc/emqx-exporter/config.yaml
-            subPath: exporter-config.yaml
+            subPath: config.yaml
             readOnly: true
