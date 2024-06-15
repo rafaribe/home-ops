@@ -1,0 +1,58 @@
+---
+# yaml-language-server: $schema=http://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pihole-exporter
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      pihole-exporter:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/osnabrugge/pihole-exporter
+              tag: v0.4.0@sha256:0e8e100ed3916db1d816a4d23066e65509d79840f6e2b81df8bab42a070e2f6b
+            env:
+              PIHOLE_HOSTNAME: 10.0.0.254
+              PORT: &port 9617
+            envFrom:
+              - secretRef:
+                  name: pihole-exporter-secret
+            resources:
+              requests:
+                cpu: 15m
+              limits:
+                memory: 60M
+    service:
+      app:
+        controller: pihole-exporter
+        ports:
+          http:
+            port: *port
+    serviceMonitor:
+      app:
+        serviceName: pihole-exporter
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 60m
+            scrapeTimeout: 1m

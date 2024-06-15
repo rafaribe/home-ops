@@ -6,17 +6,10 @@ metadata:
   name: vm-additional-scrape-configs
 stringData:
   prometheus-additional.yaml: |
-    - job_name: pihole
-      scrape_interval: 1m
-      scrape_timeout: 10s
-      honor_timestamps: true
-      static_configs:
-        - targets:
-            - 10.1.1.11:4000
 
     - job_name: cadvisor
       scrape_timeout: 10s
       honor_timestamps: true
       static_configs:
         - targets:
-            - wonderful-cinnabar-bee.internal:8080
+            - wonderful-cinnabar-bee.home.arpa:8080
