@@ -66,7 +66,7 @@ def process_project_secrets(doppler, akeyless_api, project_name, config_name):
             secret_body =  akeyless.CreateSecret(name=secret_name_with_path, tags=[project_name], value=secret_detail.value['raw'], token = token)
             api_response = akeyless_api.create_secret(secret_body)
             logger.debug(f"Secret {secret_name_with_path} Created")
-            
+
 def process_project_secrets_json(doppler, akeyless_api, project_name, config_name):
     secrets_response = doppler.secrets.list(project=project_name, config=config_name)
     secrets = secrets_response.secrets
@@ -82,7 +82,7 @@ def process_project_secrets_json(doppler, akeyless_api, project_name, config_nam
     secret_body =  akeyless.CreateSecret(name=project_name, tags=[project_name], value=value_json, token = token, json=True, format='json')
     api_response = akeyless_api.create_secret(secret_body)
     logger.debug(f"Secret {project_name} Created")
-    
+
 def delete_all_akeyless_secrets(akeyless_api, items):
     for item in items:
         body = akeyless.DeleteItem(token=token, name=item)

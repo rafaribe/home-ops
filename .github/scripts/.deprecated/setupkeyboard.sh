@@ -1,4 +1,5 @@
-sudo cat > /etc/default/keyboard <<EOF
+#!/usr/bin/env bash
+sudo cat >/etc/default/keyboard <<EOF
 XKBMODEL="pc105"
 XKBLAYOUT="$1"
 XKBVARIANT=""

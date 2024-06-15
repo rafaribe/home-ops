@@ -47,4 +47,3 @@ return check_if_exists(context['oauth_userinfo']['email'],context['oauth_userinf
 
 EOF
 }
-

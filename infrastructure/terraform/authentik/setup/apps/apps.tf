@@ -28,5 +28,5 @@ module "proxy" {
     authentik_proxy_application_group     = each.value.authentik_proxy_application_group
     authentik_proxy_application_icon_url  = each.value.authentik_proxy_application_icon_url
     authentik_proxy_external_host         = each.value.authentik_proxy_external_host
-    
+
 }

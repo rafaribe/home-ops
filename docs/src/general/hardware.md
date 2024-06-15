@@ -22,7 +22,7 @@ My homelab consists of a variety of hardware equipment between networking and co
 | Unifi AP 6 Lite      | N/A                       | N/A                                  | N/A  | <img width="32" src="https://simpleicons.org/icons/ubiquiti.svg"> | [AP - Attic](https://eu.store.ui.com/products/unifi-ap-6-lite)                                      | Access Point for my Attic / Upstairs Bedrooms         | -                      |
 
 Most of this stuff is placed in the garage on an old IKEA TV stand that I had in my previous home. The cabinets are filled with cables and other misc. hardware and I have a screen that I plug on every computer there. Should probably think about getting a PiKVM or similar setup.
-I prefer to have everything on the garage because it's the coldest room in the house and I avoid having to deal with the noises. 
+I prefer to have everything on the garage because it's the coldest room in the house and I avoid having to deal with the noises.
 
 <figure markdown>
   ![homelab](../images/homelab.jpg){ width="500" }

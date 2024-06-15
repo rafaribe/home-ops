@@ -18,7 +18,7 @@ locals {
 }
 
 resource "authentik_application" "name" {
-  
+
   name              = local.application_name_normalized
   slug              = local.application_name_normalized
   protocol_provider = authentik_provider_proxy.proxy_provider.id

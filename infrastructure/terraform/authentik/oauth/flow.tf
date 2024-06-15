@@ -64,6 +64,3 @@ resource "authentik_flow_stage_binding" "login-binding" {
     data.authentik_stage.default-source-enrollment-login
   ]
 }
-
-
-

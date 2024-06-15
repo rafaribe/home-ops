@@ -9,14 +9,14 @@ def get_zone_id(zone_name, api_token):
     params = {
         "name": zone_name
     }
-    
+
     response = requests.get(url, headers=headers, params=params)
     response.raise_for_status()
-    
+
     zones = response.json()["result"]
     if not zones:
         raise Exception(f"No zones found with name {zone_name}")
-    
+
     return zones[0]["id"]
 
 def get_dns_records(zone_id, api_token, record_type="TXT"):
@@ -28,10 +28,10 @@ def get_dns_records(zone_id, api_token, record_type="TXT"):
     params = {
         "type": record_type
     }
-    
+
     response = requests.get(url, headers=headers, params=params)
     response.raise_for_status()
-    
+
     return response.json()["result"]
 
 def delete_dns_record(zone_id, record_id, api_token):
@@ -40,10 +40,10 @@ def delete_dns_record(zone_id, record_id, api_token):
         "Authorization": f"Bearer {api_token}",
         "Content-Type": "application/json"
     }
-    
+
     response = requests.delete(url, headers=headers)
     response.raise_for_status()
-    
+
     return response.json()
 
 def main():

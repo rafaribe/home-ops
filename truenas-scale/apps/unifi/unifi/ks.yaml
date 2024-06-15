@@ -1,3 +1,4 @@
+---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
@@ -28,9 +29,9 @@ spec:
   retryInterval: 1m
   timeout: 3m
   dependsOn:
-  - name: unifi-controller-storage
-  - name: ingress-nginx-app
-  - name: storage-openebs-config
+    - name: unifi-controller-storage
+    - name: ingress-nginx-app
+    - name: storage-openebs-config
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -47,11 +48,11 @@ spec:
   retryInterval: 1m
   timeout: 3m
   dependsOn:
-  - name: unifi-controller-storage
-  - name: ingress-nginx-app
-  - name: storage-openebs-config
+    - name: unifi-controller-storage
+    - name: ingress-nginx-app
+    - name: storage-openebs-config
   healthChecks:
-  - apiVersion: v1
-    kind: PersistentVolumeClaim
-    name: unifi-config-v2
-    namespace: unifi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: unifi-config-v2
+      namespace: unifi

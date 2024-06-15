@@ -13,4 +13,3 @@ data "authentik_stage" "default-source-enrollment-write" {
 data "authentik_stage" "default-source-enrollment-login" {
   name = "default-source-enrollment-login"
 }
-

@@ -11,10 +11,10 @@ spec:
     kind: OCIRepository
     name: home-truenas
   healthChecks:
-  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-    kind: HelmRelease
-    name: kubernetes-dashboard
-    namespace: monitoring
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: kubernetes-dashboard
+      namespace: monitoring
   interval: 30m
   retryInterval: 1m
   timeout: 3m

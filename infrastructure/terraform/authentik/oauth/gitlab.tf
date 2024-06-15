@@ -17,4 +17,3 @@ resource "authentik_source_oauth" "gitlab" {
   ]
 
 }
-

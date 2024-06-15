@@ -13,4 +13,3 @@ variable "environments" {
   description = "Doppler environments to create"
   default     = ["prod"]
 }
-

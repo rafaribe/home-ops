@@ -12,4 +12,3 @@ resources:
   - ./ingress-nginx/ks.yaml
   #- ./k8s-gateway/ks.yaml
   # - ./static-routes/ks.yaml
-

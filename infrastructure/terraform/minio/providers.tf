@@ -25,4 +25,3 @@ provider "minio" {
   minio_user     = nonsensitive(data.doppler_secrets.this.map.MINIO_USER)
   minio_password = nonsensitive(data.doppler_secrets.this.map.MINIO_PASSWORD)
 }
-

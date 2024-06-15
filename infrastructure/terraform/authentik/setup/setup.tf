@@ -28,5 +28,3 @@ module "apps" {
 #   authentik_outpost_config = var.authentik_outpost_config
 
 # }
-
-

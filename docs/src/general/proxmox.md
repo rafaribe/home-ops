@@ -1,6 +1,6 @@
 # Proxmox
 
-<img src="../images/proxmox_logo.svg" alt= “proxmox-logo” width="20%" height="20%">
+<img src="../images/proxmox_logo.svg" alt= "proxmox-logo" width="20%" height="20%">
 
 Proxmox is like a Swiss Army Knife for computer nerds. It's a free, open-source software that lets you create and manage virtual machines (VMs) and containers on your own hardware. So instead of having to buy separate computers for each project or experiment, you can create multiple virtual machines on one physical computer.
 
@@ -16,4 +16,4 @@ I use Proxmox to avoid having to physically go into my garage where I have most 
 
 ![proxmox-overview](../images/proxmox_overview.png)
 
-## 
+##

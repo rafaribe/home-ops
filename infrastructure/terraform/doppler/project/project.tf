@@ -18,4 +18,3 @@ resource "doppler_service_token" "service_token" {
   name     = "Terraform Token for ${each.value}"
   access   = "read"
 }
-

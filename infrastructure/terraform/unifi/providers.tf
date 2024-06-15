@@ -26,4 +26,3 @@ provider "unifi" {
   api_url        = nonsensitive(data.doppler_secrets.this.map.UNIFI_API_ENDPOINT)
   allow_insecure = true
 }
-

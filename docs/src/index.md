@@ -21,7 +21,7 @@ This allows for a interesting workflow:
         <th>Description</th>
     </tr>
     <tr>
-        <td><img src="https://simpleicons.org/icons/ansible.svg" alt= “ansible”/></td>
+        <td><img src="https://simpleicons.org/icons/ansible.svg" alt= "ansible"/></td>
         <td><b>Ansible</b></td>
         <td>Automation tool for configuration management and deployment.</td>
     </tr>
