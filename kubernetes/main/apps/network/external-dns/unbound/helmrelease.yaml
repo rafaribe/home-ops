@@ -46,7 +46,7 @@ spec:
           - name: OPNSENSE_API_SECRET
             valueFrom:
               secretKeyRef:
-                name: &secret external-dns-opnsense-
+                name: &secret external-dns-opnsense
                 key: api_secret
         livenessProbe:
           httpGet:
