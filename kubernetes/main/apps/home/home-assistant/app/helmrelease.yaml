@@ -36,10 +36,11 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/home-assistant
-              tag: 2024.6.1@sha256:7825fd74f0688aada72dbcc4971ed50d44136dbdf657090573198e0b9b6e46f7
+              repository: ghcr.io/onedr0p/home-assistant
+              tag: 2024.6.1@sha256:abcff59b10e53ca8cc311afb44f9bfd180ef22b332aeee1daff2d08ddf9c17b6
             env:
               TZ: ${TZ}
+              HOME_ASSISTANT__HACS_INSTALL: "true"
             envFrom:
               - secretRef:
                   name: home-assistant
@@ -127,5 +128,5 @@ spec:
         name: git-keys
         defaultMode: 256
         globalMounts:
-          - path: /root/.ssh/
+          - path: /home/coder/.ssh/
             readOnly: true
