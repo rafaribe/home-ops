@@ -74,7 +74,7 @@ spec:
               WEBUI_URL: https://ollama.${EXTERNAL_DOMAIN}
               DATA_DIR: /data
               OLLAMA_BASE_URL: http://ollama-backend.ai.svc.cluster.local:11434
-              WEBUI_AUTH_TRUSTED_EMAIL_HEADER: X-authentik-email
+
               AUDIO_OPENAI_API_BASE_URL: https://piper.${EXTERNAL_DOMAIN}/v1
               AUDIO_OPENAI_API_KEY: sk-111111111111 # fake key needed to make ui happy
               RAG_EMBEDDING_ENGINE: ollama
