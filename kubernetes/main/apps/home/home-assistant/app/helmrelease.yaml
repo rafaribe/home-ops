@@ -40,17 +40,23 @@ spec:
               tag: 2024.6.1@sha256:7825fd74f0688aada72dbcc4971ed50d44136dbdf657090573198e0b9b6e46f7
             env:
               TZ: ${TZ}
+            envFrom:
+              - secretRef:
+                  name: home-assistant
             probes:
               liveness:
                 enabled: false
               readiness:
                 enabled: false
+              startup:
+                enabled: false
             resources:
               requests:
-                cpu: 50m
-                memory: 400Mi
+                cpu: 47m
+                memory: 2Gi
               limits:
-                memory: 700Mi
+                memory: 2Gi
+
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
@@ -117,9 +123,9 @@ spec:
       config:
         existingClaim: *app
       git-keys:
-        enabled: true
         type: secret
         name: git-keys
+        defaultMode: 256
         globalMounts:
           - path: /root/.ssh/
             readOnly: true
