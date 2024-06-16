@@ -1,15 +1,9 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/kustomization.json
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: home
 resources:
-  - ./externalsecret.yaml
-  # - ./gatus.yaml
   - ./helmrelease.yaml
-  - ./podmonitor.yaml
-  - ./volsync.yaml
-  - ./pvc.yaml
+  - ../../../../templates/gatus/external
+  - ../../../../templates/volsync
   - ./keys.yaml
-  - ./ingress.yaml
-# patches:
-#   - path: ./patches/addons.yaml

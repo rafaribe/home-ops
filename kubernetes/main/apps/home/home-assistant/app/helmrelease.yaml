@@ -1,15 +1,16 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: home-assistant
+  name: &app home-assistant
 spec:
   interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -20,124 +21,105 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
+  dependsOn:
+    # - name: rook-ceph-cluster
+    #   namespace: rook-ceph
+    - name: volsync
+      namespace: storage
   values:
     controllers:
-      main:
+      home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
-              repository: ghcr.io/onedr0p/home-assistant
-              tag: 2024.6.0@sha256:a06e560e16131deabef39ff4842c01a5f7d797bb3d9a473c046d9d09e0b8227d
+              repository: ghcr.io/joryirving/home-assistant
+              tag: 2024.6.1@sha256:7825fd74f0688aada72dbcc4971ed50d44136dbdf657090573198e0b9b6e46f7
             env:
-              TZ: Europe/Lisbon
-              HASS_HTTP_TRUSTED_PROXY_1: 10.0.1.0/24
-              HASS_HTTP_TRUSTED_PROXY_2: 10.32.0.0/16
-              HASS_HTTP_TRUSTED_PROXY_3: 10.33.0.0/16
-
-            envFrom:
-              - secretRef:
-                  name: home-assistant-secret
-            probes: &probes
+              TZ: ${TZ}
+            probes:
               liveness:
                 enabled: false
               readiness:
                 enabled: false
-              startup:
-                enabled: false
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 10m
+                cpu: 50m
+                memory: 400Mi
               limits:
-                memory: 1Gi
-          code:
+                memory: 700Mi
+          codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.89.1
+              tag: 4.90.2
             env:
-              TZ: Europe/Lisbon
+              TZ: ${TZ}
             args:
-              [
-                "--auth",
-                "none",
-                "--user-data-dir",
-                "/config/.vscode",
-                "--extensions-dir",
-                "/config/.vscode",
-                "--port",
-                "80",
-                "/config",
-              ]
-            probes: *probes
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 512Mi
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
+              - "/config"
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
     service:
-      main:
+      app:
+        controller: *app
+        nameOverride: *app
         type: LoadBalancer
-        loadBalancerIP: ${LB_HASS}
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_HASS}
         ports:
           http:
             port: 8123
-          code:
-            port: 80
+      codeserver:
+        controller: *app
+        type: ClusterIP
+        ports:
+          http:
+            enabled: true
+            port: 8080
     ingress:
-      main:
-        enabled: true
+      app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
-          - host: &host hass.rafaribe.com
+          - host: hass.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
-      code:
-        enabled: true
+      codeserver:
         className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         hosts:
-          - host: &host2 hass-code.rafaribe.com
+          - host: hass-code.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
-                  name: main
-                  port: code
-        tls:
-          - hosts:
-              - *host2
+                  identifier: codeserver
+                  port: http
     persistence:
       config:
-        enabled: true
-        existingClaim: hass-config
-      tmp:
-        type: emptyDir
+        existingClaim: *app
       git-keys:
         enabled: true
         type: secret
         name: git-keys
-        accessMode: ReadWriteOnce
         globalMounts:
           - path: /root/.ssh/
             readOnly: true
