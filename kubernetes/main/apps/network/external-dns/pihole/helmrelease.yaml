@@ -31,14 +31,13 @@ spec:
           secretKeyRef:
             name: &secret external-dns-pihole
             key: *name
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *secret
     extraArgs:
       - --pihole-server=http://10.0.0.254
       - --ignore-ingress-tls-spec
-    policy: upsert-only
+    policy: sync
     sources: ["ingress", "service"]
-    registry: noop
-    domainFilters: ["rafaribe.com"]
+    domainFilters: ["internal.rafaribe.com"]
     serviceMonitor:
       enabled: true
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *secret
