@@ -25,8 +25,8 @@ talosctl apply -n 10.0.0.12 --file clusterconfig/main-mimir.home.arpa.yaml --mod
 sleep 2
 
 echo "Applying configuration to Node 10.0.0.11 heimdall.cluster.home"
-talosctl apply-config --insecure -n 10.0.0.11 --file clusterconfig/main-heimdall.home.arpa.yaml
-#talosctl apply -n 10.0.0.11 --file clusterconfig/main-heimdall.home.arpa.yaml --mode=auto
+#talosctl apply-config --insecure -n 10.0.0.11 --file clusterconfig/main-heimdall.home.arpa.yaml
+talosctl apply -n 10.0.0.11 --file clusterconfig/main-heimdall.home.arpa.yaml --mode=auto
 sleep 2
 
 echo "Bootstrapping the cluster"
