@@ -1,16 +1,16 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app linkding
-  namespace: services
+  namespace: default
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,12 +23,13 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   uninstall:
     keepHistory: false
   values:
     controllers:
-      main:
+      linkding:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -41,10 +42,10 @@ spec:
               - secretRef:
                   name: linkding-secret
         containers:
-          main:
+          app:
             image:
               repository: sissbruecker/linkding
-              tag: 1.26.0@sha256:5bfea7423209b8796288205399e6f25c56f6a5b553e4ca4e791e8ba05d9a226f
+              tag: 1.31.0@sha256:328c06bcb76128b653828c681d7d648baef7e8453d2d6e25f90bb31d72f997af
             envFrom: *envFrom
             probes:
               liveness: &probes
@@ -66,22 +67,23 @@ spec:
                 cpu: 10m
                 memory: 256Mi
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: *port
     ingress:
-      main:
+      app:
         enabled: true
-        className: "external"
+        className: external
         annotations:
           hajimari.io/icon: link
         hosts:
-          - host: &host "links.${EXTERNAL_DOMAIN}"
+          - host: &host "links.rafaribe.com"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
