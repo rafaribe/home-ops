@@ -81,12 +81,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: ceph-block
-        accessMode: ReadWriteMany
-        size: 2Gi
-        globalMounts:
-          - path: /config
-        retain: true
+        existingClaim: netboot
       assets:
         enabled: true
         type: emptyDir
