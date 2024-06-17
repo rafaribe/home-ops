@@ -9,6 +9,7 @@ resources:
   - ./atuin/ks.yaml
   - ./cyberchef/ks.yaml
   - ./hajimari/ks.yaml
+  # - ./homepage/ks.yaml #Left to the end
   - ./it-tools/ks.yaml
   - ./kubernetes-schemas/ks.yaml
   - ./linkding/ks.yaml

@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: homepage
+  name: &app homepage
 spec:
   interval: 30m
   chart:
@@ -20,11 +20,12 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
     controllers:
-      main:
-        replicas: 1
+      homepage:
+        replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -32,9 +33,9 @@ spec:
           app:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v0.9.2@sha256:5356c97b51e3cc817bed93612b4e57b39d28048ab9e4e3b346e827160cf0923e
+              tag: v0.9.2
             env:
-              TZ: ${TZ}
+              TZ: ${TIMEZONE}
             envFrom:
               - secretRef:
                   name: homepage-secret
@@ -45,21 +46,23 @@ spec:
               limits:
                 memory: 2G
     service:
-      main:
-        controller: main
+      app:
+        controller: *app
         ports:
           http:
             port: 3000
     ingress:
-      main:
+      app:
         className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+          - host: "{{ .Release.Name }}.rafaribe.com"
             paths:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
     persistence:
       config:
@@ -80,4 +83,4 @@ spec:
             path: /app/config/widgets.yaml
     serviceAccount:
       create: true
-      name: homepage
+      name: *app
