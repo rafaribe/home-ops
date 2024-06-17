@@ -1,139 +1,132 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: paperless
-  namespace: services
+  name: &app paperless
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
+
   values:
     controllers:
-      main:
-        type: statefulset
+      paperless:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: "16.3"
-            imagePullPolicy: IfNotPresent
-            envFrom: &envFrom
-              - secretRef:
-                  name: paperless
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups:
+              - 65542
+              - 568
+
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
               tag: 2.9.0
             env:
-              COMPOSE_PROJECT_NAME: paperless
+              # Configure application
+
+              PAPERLESS_SECRET_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-secret
+                    key: PAPERLESS_SECRET_KEY
+              PAPERLESS_URL: https://paperless.rafaribe.com
+              PAPERLESS_PORT: "8000"
+              PAPERLESS_TIME_ZONE: "Europe/Lisbon"
+              PAPERLESS_WEBSERVER_WORKERS: "2"
+              PAPERLESS_TASK_WORKERS: "2"
+              # Configure Remote User auth
+              PAPERLESS_ACCOUNT_ALLOW_SIGNUPS: "false"
+              PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "false"
+              # Configure folders
+              PAPERLESS_CONSUMPTION_DIR: /data/nas/incoming
+              PAPERLESS_DATA_DIR: /data/local/data
+              PAPERLESS_EXPORT_DIR: /data/nas/export
+              PAPERLESS_MEDIA_ROOT: /data/local/media
+              # Configure folder importer
               PAPERLESS_CONSUMER_POLLING: "60"
               PAPERLESS_CONSUMER_RECURSIVE: "true"
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
-              PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
-              PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: HTTP_REMOTE_USER
-              PAPERLESS_ALLOWED_HOSTS: https://paperless.rafaribe.com
-              PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
-              PAPERLESS_OCR_LANGUAGES: por eng
-              PAPERLESS_OCR_LANGUAGE: por
-              PAPERLESS_TIME_ZONE: Europe/Lisbon
-              PAPERLESS_URL: https://paperless.rafaribe.com
-              PAPERLESS_PORT: &port 80
-              PAPERLESS_REDIS: redis://paperless-redis.services.svc.cluster.local:6379
-              PAPERLESS_TASK_WORKERS: 2
-              PAPERLESS_TIKA_ENABLED: 1
-              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
-              PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
-              PAPERLESS_TRUSTED_PROXIES: 10.42.0.0/16,10.0.1.0/24,10.0.4.0/24
-              USERMAP_UID: 1000
-              USERMAP_GID: 1000
-            envFrom: *envFrom
+              # Configure OCR
+              PAPERLESS_OCR_LANGUAGES: pt
+              PAPERLESS_OCR_LANGUAGE: pt
+              # Configure redis integration
+              PAPERLESS_REDIS: redis://dragonfly.storage.svc.cluster.local:6379/0
+              # Configure user permissions
+              USERMAP_UID: "1000"
+              USERMAP_GID: "1000"
+              # Configure admin user
+              PAPERLESS_ADMIN_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: *app
+                    key: PAPERLESS_ADMIN_USER
+              PAPERLESS_ADMIN_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: *app
+                    key: PAPERLESS_ADMIN_PASSWORD
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
             resources:
               requests:
-                cpu: 100m
-                memory: 1000Mi
+                cpu: 25m
+                memory: 2Gi
               limits:
-                memory: 5000Mi
-          gotenburg:
-            image:
-              repository: thecodingmachine/gotenberg
-              tag: 8.6.0
-            env:
-              - { name: DISABLE_GOOGLE_CHROME, value: "1" }
-          tika:
-            image:
-              repository: ghcr.io/paperless-ngx/tika
-              tag: 2.9.1-full
+                memory: 6Gi
     service:
-      main:
+      app:
+        controller: paperless
         ports:
           http:
-            port: *port
+            port: 8000
+
     ingress:
-      main:
-        enabled: true
-        className: external
+      app:
+        className: "internal"
         annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          external-dns.alpha.kubernetes.io/hostname: paperless.rafaribe.com
-          hajimari.io/icon: mdi:barcode-scan
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: &host "paperless.rafaribe.com"
+          - host: paperless.rafaribe.com
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
-            secretName: "paperless-tls"
+
     persistence:
       data:
-        enabled: true
+        existingClaim: paperless-data
+        advancedMounts:
+          paperless:
+            app:
+              - path: /data/local
+      nas:
         type: nfs
-        server: 10.0.1.6
-        path: /mnt/storage-0/docs/paperless/data
+        server: 10.0.0.6
+        path: /mnt/storage-0/docs/paperless/
         globalMounts:
-          - path: /usr/src/paperless/data
-      media:
-        enabled: true
-        type: nfs
-        server: 10.0.1.6
-        path: /mnt/storage-0/docs/paperless/media
-        globalMounts:
-          - path: /usr/src/paperless/media
-      consume:
-        enabled: true
-        type: nfs
-        server: 10.0.1.6
-        path: /mnt/storage-0/docs/paperless/incoming
-        globalMounts:
-          - path: /usr/src/paperless/consume
-      export:
-        enabled: true
-        type: nfs
-        server: 10.0.1.6
-        path: /mnt/storage-0/docs/paperless/export
-        globalMounts:
-          - path: /usr/src/paperless/export
+          - path: /data/nas
