@@ -1,59 +1,91 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app cyberchef
-  namespace: services
 spec:
-  interval: 15m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
-      interval: 15m
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  interval: 15m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  driftDetection:
+    mode: enabled
+    ignore:
+      - paths:
+          - /spec/containers/resources/limits
+        target:
+          kind: Pod
   values:
     defaultPodOptions:
-      automountServiceAccountToken: true
-      enableServiceLinks: true
+      securityContext:
+        runAsGroup: 65534
+        runAsUser: 65534
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+
     controllers:
-      main:
-        strategy: RollingUpdate
-        rollingUpdate:
-          unavailable: 0
+      cyberchef:
         containers:
-          main:
+          app:
             image:
-              repository: mpepping/cyberchef
-              tag: v10.13.0
+              # https://hub.docker.com/r/mpepping/cyberchef
+              repository: docker.io/mpepping/cyberchef
+              tag: v10.18.8@sha256:93c427a7288c5b5d31523b865c4cb10d8ee81cac185ba88c88cf28203d5eadff
+            env:
+              TZ: ${TIMEZONE}
+            resources:
+              requests:
+                cpu: 25m
+                memory: 105M
+              limits:
+                memory: 105M
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: 8000
     ingress:
-      main:
-        enabled: true
-        className: "external"
+      app:
+        className: external
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: hammer-wrench
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          # nginx.ingress.kubernetes.io/whitelist-source-range: |
+          #   10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
         hosts:
-          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.rafaribe.com"
             paths:
               - path: /
+                pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
               - *host
-# resources:
-#   requests:
-#     cpu: 15m
-#     memory: 79M
-#   limits:
-#     memory: 79M
+
+    persistence:
+      tmp:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
