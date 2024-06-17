@@ -60,6 +60,9 @@ spec:
               # Configure OCR
               PAPERLESS_OCR_LANGUAGES: pt
               PAPERLESS_OCR_LANGUAGE: pt
+              # Enable TIKA
+              PAPERLESS_TIKA_ENABLED: true
+              PAPERLESS_TIKA_ENDPOINT: http://127.0.0.1:9998
               # Configure redis integration
               PAPERLESS_REDIS: redis://dragonfly.storage.svc.cluster.local:6379
               # Configure user permissions
@@ -92,6 +95,24 @@ spec:
                 memory: 2Gi
               limits:
                 memory: 6Gi
+          tika:
+            image:
+              repository: docker.io/apache/tika
+              tag: 2.9.2.1-full
+              pullPolicy: IfNotPresent
+            ports:
+              - containerPort: 9998
+          gotenberg:
+            image:
+              repository: gotenberg/gotenberg
+              tag: 8.7.0
+              pullPolicy: IfNotPresent
+            ports:
+              - containerPort: 3000
+            command:
+              - "gotenberg"
+              - "--chromium-disable-javascript=true"
+              - "--chromium-allow-list=file:///tmp/.*"
     service:
       app:
         controller: *app
