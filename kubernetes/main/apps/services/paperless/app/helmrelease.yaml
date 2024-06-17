@@ -43,7 +43,7 @@ spec:
               PAPERLESS_SECRET_KEY:
                 valueFrom:
                   secretKeyRef:
-                    name: paperless-secret
+                    name: *app
                     key: PAPERLESS_SECRET_KEY
               PAPERLESS_URL: https://paperless.rafaribe.com
               PAPERLESS_PORT: "8000"
