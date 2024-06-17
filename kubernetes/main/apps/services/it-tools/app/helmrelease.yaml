@@ -1,56 +1,64 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: it-tools
-  namespace: services
+  name: &app it-tools
 spec:
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  interval: 10m0s
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     controllers:
-      main:
+      it-tools:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/corentinth/it-tools
-              tag: 2023.5.14-77f2efc
-              pullPolicy: IfNotPresent
+              tag: 2023.12.21-5ed3693
+            env:
+              TZ: ${TIMEZONE}
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
             resources:
               requests:
-                memory: 10Mi
-                cpu: 10m
+                cpu: 100m
               limits:
-                memory: 50Mi
-        strategy: Recreate
+                memory: 500Mi
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: 80
     ingress:
-      main:
-        enabled: true
-        className: "external"
+      app:
+        className: external
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-prod"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "toolbox"
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
-          - host: &host "it-tools.${EXTERNAL_DOMAIN}"
+          - host: "it-tools.rafaribe.com"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
-            secretName: it-tools-tls
