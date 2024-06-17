@@ -46,22 +46,7 @@ spec:
               repository: ghcr.io/mealie-recipes/mealie
               tag: v1.8.0
               pullPolicy: IfNotPresent
-
-            env:
-              BASE_URL: https://mealie.rafaribe.com
-              ALLOW_SIGNUP: false
-              API_DOCS: false
-              TZ: Europe/Lisbon
-              # Default Values
-              WORKERS_PER_CORE: 1
-              MAX_WORKERS: 1
-              WEB_CONCURRENCY: 1
-
-              DB_ENGINE: postgres
-              POSTGRES_SERVER: home-ops-storage-rw.storage.svc.cluster.local
-              POSTGRES_PORT: 5432
-              POSTGRES_DB: *app
-            envFrom: *envFrom
+            envFrom: *envFrom # All values are created on the externalsecret
 
     service:
       app:
