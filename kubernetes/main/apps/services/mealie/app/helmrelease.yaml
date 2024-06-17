@@ -89,6 +89,6 @@ spec:
       backups:
         type: nfs
         server: 10.0.0.6
-        path: "/mnt/truenas/storage-0/mealie"
+        path: "/mnt/storage-0/mealie"
         globalMounts:
           - path: /app/data/backups
