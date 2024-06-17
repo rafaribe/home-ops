@@ -15,7 +15,7 @@ resources:
   - ./linkding/ks.yaml
   - ./mealie/ks.yaml
   - ./netboot/ks.yaml
-
+  - ./tabby/ks.yaml
   - ./paperless/ks.yaml
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
