@@ -47,29 +47,16 @@ spec:
               pullPolicy: IfNotPresent
 
             env:
-              BASE_URL: https://mealie.mcgrath.nz
+              BASE_URL: https://mealie.rafaribe.com
               ALLOW_SIGNUP: false
               API_DOCS: false
-              TZ: Pacific/Auckland
-              SMTP_HOST: smtp-relay.default.svc.cluster.local
-              SMTP_PORT: 25
-              SMTP_AUTH_STRATEGY: NONE
-              SMTP_FROM_EMAIL: mealie@mail.mcgrath.nz
+              TZ: Europe/Lisbon
               # Default Values
               WORKERS_PER_CORE: 1
               MAX_WORKERS: 1
               WEB_CONCURRENCY: 1
 
               DB_ENGINE: postgres
-
-              # OIDC
-              OIDC_AUTH_ENABLED: true
-              OIDC_CLIENT_ID: mealie
-              OIDC_CONFIGURATION_URL: https://auth.mcgrath.nz/.well-known/openid-configuration
-              OIDC_REMEMBER_ME: true
-              OIDC_PROVIDER_NAME: "Authelia"
-              OIDC_AUTO_REDIRECT: true
-              OIDC_ADMIN_GROUP: admin_of_the_lab
 
             envFrom: *envFrom
 
@@ -78,10 +65,11 @@ spec:
         controller: mealie
         ports:
           http:
-            port: 9000
+            port: &port 9000
 
     ingress:
       app:
+        enabled: true
         className: internal
         annotations:
           gethomepage.dev/enabled: "true"
