@@ -78,6 +78,7 @@ spec:
         className: external
         annotations:
           hajimari.io/icon: link
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
           - host: &host "links.rafaribe.com"
             paths:

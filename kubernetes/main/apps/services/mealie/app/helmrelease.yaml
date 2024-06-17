@@ -1,96 +1,112 @@
----
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name mealie
-  namespace: services
+  name: &app mealie
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts/
       chart: app-template
-      version: 3.0.4
+      version: 3.1.0
+      interval: 15m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
-    fullnameOverride: *name
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        supplementalGroups: [3000, 3001, 568]
-        fsGroupChangePolicy: "OnRootMismatch"
     controllers:
-      main:
+      mealie:
+        strategy: Recreate
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: mealie-secret
+
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/mealie-recipes/mealie
-              tag: v1.0.0-rc1.1
+              tag: v1.8.0
               pullPolicy: IfNotPresent
 
             env:
-              TZ: "Europe/Lisbon"
-              PUID: 1000
-              PGID: 1000
-              # DEFAULT_EMAIL: "${SECRET_CLOUDFLARE_EMAIL}"
+              BASE_URL: https://mealie.mcgrath.nz
               ALLOW_SIGNUP: false
-              API_PORT: 9000
-              AUTO_BACKUP_ENABLED: true
-              BASE_URL: https://meals.rafaribe.com
-              # SMTP_HOST: smtp-relay.system.svc.cluster.local.
-              # SMTP_PORT: 2525
-              # SMTP_FROM_NAME: meals@${SECRET_DOMAIN}
-              # SMTP_AUTH_STRATEGY: none
-              # SMTP_FROM_EMAIL: meals@${SECRET_DOMAIN}
-              TOKEN_TIME: 720
+              API_DOCS: false
+              TZ: Pacific/Auckland
+              SMTP_HOST: smtp-relay.default.svc.cluster.local
+              SMTP_PORT: 25
+              SMTP_AUTH_STRATEGY: NONE
+              SMTP_FROM_EMAIL: mealie@mail.mcgrath.nz
+              # Default Values
+              WORKERS_PER_CORE: 1
+              MAX_WORKERS: 1
+              WEB_CONCURRENCY: 1
 
-            resources:
-              requests:
-                cpu: 10m
-                memory: 411M
-              limits:
-                memory: 512M
+              DB_ENGINE: postgres
+
+              # OIDC
+              OIDC_AUTH_ENABLED: true
+              OIDC_CLIENT_ID: mealie
+              OIDC_CONFIGURATION_URL: https://auth.mcgrath.nz/.well-known/openid-configuration
+              OIDC_REMEMBER_ME: true
+              OIDC_PROVIDER_NAME: "Authelia"
+              OIDC_AUTO_REDIRECT: true
+              OIDC_ADMIN_GROUP: admin_of_the_lab
+
+            envFrom: *envFrom
 
     service:
-      main:
+      app:
+        controller: mealie
         ports:
           http:
             port: 9000
 
     ingress:
-      main:
-        enabled: true
-        ingressClassName: "external"
+      app:
+        className: internal
         annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Mealie
+          gethomepage.dev/icon: mdi-food-apple-outline
+          gethomepage.dev/group: Apps
           hajimari.io/enable: "true"
           hajimari.io/icon: "food"
           hajimari.io/appName: "Mealie"
           hajimari.io/group: "Home"
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: &host "meals.rafaribe.com"
+          - host: &host "mealie.rafaribe.com"
             paths:
               - path: /
+                pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
               - *host
 
     persistence:
-      api-data:
-        enabled: true
-        existingClaim: mealie-api-data
+      data:
+        existingClaim: *app
         globalMounts:
-          - path: /app/data/
-      backups:
-        enabled: true
-        type: nfs
-        server: "10.0.1.6"
-        path: "/mnt/storage-0/media/mealie"
-        globalMounts:
-          - path: /app/data/backups
+          - path: /app/data
