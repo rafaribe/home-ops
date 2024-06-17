@@ -58,7 +58,9 @@ spec:
               WEB_CONCURRENCY: 1
 
               DB_ENGINE: postgres
-
+              POSTGRES_SERVER: home-ops-storage-rw.storage.svc.cluster.local
+              POSTGRES_PORT: 5432
+              POSTGRES_DB: *app
             envFrom: *envFrom
 
     service:
