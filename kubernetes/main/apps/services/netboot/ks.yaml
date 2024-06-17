@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-netboot
+  name: &app netboot
   namespace: flux-system
 spec:
   path: "./kubernetes/main/apps/services/netboot/app"
@@ -15,5 +15,5 @@ spec:
   timeout: 3m
   postBuild:
     substitute:
-      APP: netboot
-      GATUS_SUBDOMAIN: netboot
+      APP: *app
+      GATUS_SUBDOMAIN: *app
