@@ -16,10 +16,14 @@ spec:
   retryInterval: 1m
   timeout: 3m
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: paperless
       namespace: services
+  targetNamespace: services
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   postBuild:
     substitute:
       APP: *app
