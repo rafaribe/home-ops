@@ -39,9 +39,7 @@ spec:
             envFrom:
               - secretRef:
                   name: tabby-secret
-            args:
-              - "--host 0.0.0.0"
-              - "--token-auth"
+            command: "--host 0.0.0.0 --token-auth"
             probes:
               liveness: &probes
                 enabled: true
