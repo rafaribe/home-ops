@@ -4,8 +4,4 @@ kind: Kustomization
 namespace: services
 resources:
   - ./helmrelease.yaml
-  # - ../../../../templates/gatus/guarded
-labels:
-  - pairs:
-      app.kubernetes.io/name: netboot
-      app.kubernetes.io/instance: netboot
+  - ../../../../templates/gatus/guarded
