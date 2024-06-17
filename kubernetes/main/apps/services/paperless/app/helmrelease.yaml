@@ -99,7 +99,7 @@ spec:
                 memory: 6Gi
     service:
       app:
-        controller: paperless
+        controller: *app
         ports:
           http:
             port: 8000
@@ -119,7 +119,7 @@ spec:
 
     persistence:
       data:
-        existingClaim: paperless-data
+        existingClaim: *app
         advancedMounts:
           paperless:
             app:
