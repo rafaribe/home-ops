@@ -36,8 +36,9 @@ spec:
     extraArgs:
       - --pihole-server=http://10.0.0.254
       - --ignore-ingress-tls-spec
+      - --ingress-class=internal
     policy: sync
     sources: ["ingress", "service"]
-    domainFilters: ["internal.rafaribe.com"]
+    domainFilters: ["rafaribe.com"]
     serviceMonitor:
       enabled: true
