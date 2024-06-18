@@ -20,7 +20,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      HOSTNAME: recipes.rafaribe.com
-      HOSTNAME_ALT: tandoor.rafaribe.com
+      HOSTNAME: tandoor.rafaribe.com
       APP_UID: "1000"
       APP_GID: "1000"
