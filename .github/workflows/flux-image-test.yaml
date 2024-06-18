@@ -38,8 +38,7 @@ jobs:
           files: kubernetes/**
           dir_names: true
           dir_names_max_depth: 2
-          json: true
-          escape_json: false
+          matrix: true
 
       - name: List All Changed Clusters
         run: echo "${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}"
@@ -86,21 +85,21 @@ jobs:
           path: pull
 
       - name: Gather Images in Default Branch
-        uses: docker://ghcr.io/allenporter/flux-local:main
+        uses: docker://ghcr.io/allenporter/flux-local:v5.3.1
         with:
           args: >-
             get cluster
-            --path /github/workspace/default/${{ matrix.paths }}
+            --path /github/workspace/default/${{ matrix.paths }}/flux
             --enable-images
             --output yaml
             --output-file default.yaml
 
       - name: Gather Images in Pull Request Branch
-        uses: docker://ghcr.io/allenporter/flux-local:main
+        uses: docker://ghcr.io/allenporter/flux-local:v5.3.1
         with:
           args: >-
             get cluster
-            --path /github/workspace/pull/${{ matrix.paths }}
+            --path /github/workspace/pull/${{ matrix.paths }}/flux
             --enable-images
             --output yaml
             --output-file pull.yaml
@@ -124,6 +123,8 @@ jobs:
           images=$(jo -a $(grep -vf default.txt pull.txt))
           echo "images=${images}" >> $GITHUB_OUTPUT
           echo "${images}"
+          echo "### Images" >> $GITHUB_STEP_SUMMARY
+          echo "${images}" | jq -r 'to_entries[] | "* \(.value)"' >> $GITHUB_STEP_SUMMARY
 
   test-images:
     if: ${{ needs.extract-images.outputs.matrix != '[]' }}
@@ -136,7 +137,7 @@ jobs:
       max-parallel: 4
       fail-fast: false
     steps:
-      - name: Test Images
+      - name: Pull image
         run: docker pull ${{ matrix.images }}
 
   # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
