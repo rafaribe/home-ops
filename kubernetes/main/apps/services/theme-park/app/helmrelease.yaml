@@ -1,72 +1,64 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: theme-park
-  namespace: services
+  name: &app theme-park
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
-      main:
-        annotations:
-          reloader.stakater.com/auto: "true"
+      theme-park:
+        replicas: 2
+        strategy: RollingUpdate
         containers:
-          main:
+          app:
             image:
-              repository: ghcr.io/onedr0p/theme-park
-              tag: 1.16.2@sha256:48cfdb526cf02d5ec874a7655ad3215539a202560c190fa48849a93559bc8bbc
+              repository: ghcr.io/joryirving/theme-park
+              tag: 1.17.0@sha256:80b9c816ec3dd0dc0a5592aeba8f2ccf86009d1ba5785f35666c6339ee2900ca
             resources:
               requests:
-                cpu: 10m
-                memory: 50Mi
+                cpu: 15m
               limits:
-                memory: 150Mi
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
+                memory: 64M
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: 8080
     ingress:
-      main:
-        enabled: true
-        ingressClassName: external
+      app:
+        className: external
         annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "mdi:paint-outline"
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
-          - host: &host "themepark.rafaribe.com"
+          - host: "themepark.rafaribe.com"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app

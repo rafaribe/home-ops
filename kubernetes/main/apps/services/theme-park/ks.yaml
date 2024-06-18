@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-theme-park
+  name: &app theme-park
   namespace: flux-system
 spec:
   path: ./kubernetes/main/apps/services/theme-park/app
@@ -15,7 +15,15 @@ spec:
   retryInterval: 1m
   timeout: 3m
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: theme-park
       namespace: services
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  targetNamespace: services
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 1Gi
