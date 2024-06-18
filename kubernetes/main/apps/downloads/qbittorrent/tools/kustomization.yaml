@@ -5,9 +5,6 @@ kind: Kustomization
 namespace: downloads
 resources:
   - ./helmrelease.yaml
-configMapGenerator:
-  - name: qbittorrent-tools-configmap
-    files:
-      - config.yaml=./config/config.yaml
+  - ./secret.yaml
 generatorOptions:
   disableNameSuffixHash: true
