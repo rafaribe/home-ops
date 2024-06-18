@@ -87,7 +87,6 @@ spec:
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: ${LB_HASS}
-          test: "test"
         ports:
           http:
             port: 8123
