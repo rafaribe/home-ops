@@ -50,7 +50,7 @@ spec:
               - --server
               - qbittorrent.downloads.svc.cluster.local
               - --port
-              - "8080"
+              - "80"
               - --config
               - /config/config.yaml
             resources: &resources
@@ -79,7 +79,7 @@ spec:
               - --server
               - qbittorrent.downloads.svc.cluster.local
               - --port
-              - "8080"
+              - "80"
             resources: *resources
             securityContext: *containerSecurityContext
 
@@ -95,7 +95,7 @@ spec:
               - --server
               - qbittorrent.downloads.svc.cluster.local
               - --port
-              - "8080"
+              - "80"
             resources: *resources
             securityContext: *containerSecurityContext
 
