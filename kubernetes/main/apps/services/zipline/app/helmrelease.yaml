@@ -1,56 +1,52 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app zipline
-  namespace: services
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         name: bjw-s
         kind: HelmRepository
         namespace: flux-system
   values:
-    global:
-      fullnameOverride: *app
     defaultPodOptions:
       automountServiceAccountToken: false
     controllers:
-      main:
+      zipline:
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
         initContainers:
-          01-init-db:
+          postgres:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16.3@sha256:8ba3204f6b293dd168766009aae2ce4fa986a29b931c2d30ac1b30238ac750b8
-            imagePullPolicy: IfNotPresent
             envFrom: &envFrom
               - secretRef:
-                  name: zipline-secret
+                  name: *app
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/diced/zipline
               tag: 3.7.9
-            resources:
-              limits:
-                memory: 3Gi
             env:
               DEBUG: "true"
-              TZ: "${TZ}"
+              TZ: "Europe/Lisbon"
               CORE_SECRET:
                 valueFrom:
                   secretKeyRef:
-                    name: zipline-secret
+                    name: *app
                     key: CORE_SECRET
               CORE_DATABASE_URL:
                 valueFrom:
                   secretKeyRef:
-                    name: zipline-secret
+                    name: *app
                     key: CORE_DATABASE_URL
               # TODO: 2023-06-03 add OAuth when Authentik support is merged: https://github.com/diced/zipline/discussions/321 and https://github.com/diced/zipline/pull/372/
               DATASOURCE_S3_ACCESS_KEY_ID:
@@ -84,7 +80,7 @@ spec:
                   configMapKeyRef:
                     name: zipline-bucket
                     key: BUCKET_REGION
-              DATASOURCE_S3_FORCE_S3_PATH: "true"
+              DATASOURCE_S3_FORCE_S3_PATH: "true" # TODO: 2023-06-03 current in-cluster RGW doesn't use subdomain (VirtualHost) based S3 buckets yet, it uses path-based
               DATASOURCE_S3_USE_SSL: "false"
               CORE_RETURN_HTTPS: "true"
               CORE_HTTPS: "true"
@@ -102,42 +98,54 @@ spec:
               RATELIMIT_ADMIN: "1"
               UPLOADER_DEFAULT_FORMAT: "DATE"
               UPLOADER_ROUTE: &upload "/i"
-              UPLOADER_ADMIN_LIMIT: "100gb"
+              UPLOADER_ADMIN_LIMIT: "10gb"
               UPLOADER_USER_LIMIT: "500mb"
               UPLOADER_DISABLED_EXTENSIONS: "ps1,pdf,bat,exe,sh,fish"
               UPLOADER_FORMAT_DATE: "YYYY-MM-DD_HH-mm-ss"
               UPLOADER_DEFAULT_EXPIRATION: ""
               URLS_ROUTE: &shorten "/go"
               URLS_LENGTH: "6"
-              WEBSITE_TITLE: "Zipline"
+              WEBSITE_TITLE: "Zipline - rafaribe"
               WEBSITE_SHOW_FILES_PER_USER: "false"
               WEBSITE_EXTERNAL_LINKS: '[{"label":"Powered by Zipline","link":"https://github.com/diced/zipline"}]'
               WEBSITE_SHOW_VERSION: "true"
               WEBSITE_DISABLE_MEDIA_PREVIEW: "false"
+            envFrom: *envFrom
             probes:
               liveness:
-                enabled: false
+                enabled: true
               readiness:
-                enabled: false
+                enabled: true
               startup:
-                enabled: false
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 15m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
     service:
-      main:
+      app:
+        controller: zipline
         ports:
           http:
             port: 3000
     ingress:
-      main:
+      app:
         enabled: true
         className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.rafaribe.com"
         hosts:
-          - host: &host "zipline.rafaribe.com"
+          - host: &host "z.rafaribe.com"
             paths:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]

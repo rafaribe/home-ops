@@ -6,3 +6,4 @@ resources:
   - ./externalsecret.yaml
   - ./objectbucketclaim.yaml
   - ./helmrelease.yaml
+  - ../../../../templates/gatus/guarded
