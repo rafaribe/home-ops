@@ -1,106 +1,126 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ishioni/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: tandoor
-  namespace: &ns services
+  name: &app tandoor
 spec:
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  interval: 30m
+
   values:
     controllers:
-      main:
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
+      tandoor:
         annotations:
-          secret.reloader.stakater.com/reload: &secret tandoor-secret
-          configmap.reloader.stakater.com/reload: &configmap tandoor-configmap
+          reloader.stakater.com/auto: "true"
+
         initContainers:
-          01-init-db:
+          init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.3
-              pullPolicy: IfNotPresent
-            envFrom:
+              tag: 16
+            envFrom: &envFrom
               - secretRef:
-                  name: *secret
+                  name: *app
+        pod:
+          securityContext:
+            runAsUser: 2000
+            runAsGroup: 2000
+            runAsNonRoot: true
+            fsGroup: 2000
+            fsGroupChangePolicy: "OnRootMismatch"
+
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: "1.5.17"
+              tag: 1.5.17
+            env:
+              COMMENT_PREF_DEFAULT: 0
+              DEBUG: 1
+              ENABLE_SIGNUP: 0
+              FRACTION_PREF_DEFAULT: 0
+              GUNICORN_MEDIA: 0
+              MAX_OWNED_SPACES_PREF_DEFAULT: 0
+              SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
+              TANDOOR_PORT: &tandoorPort 8000
             envFrom:
               - secretRef:
-                  name: *secret
-              - configMapRef:
-                  name: *configmap
-            env:
-              TANDOOR_PORT: &port 8000
+                  name: tandoor
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /accounts/login/
+                    port: *tandoorPort
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /accounts/login/
+                    port: *tandoorPort
+                  failureThreshold: 30
+                  periodSeconds: 10
             resources:
               requests:
-                cpu: 100m
+                cpu: 10m
                 memory: 256Mi
               limits:
                 memory: 512Mi
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities:
                 drop:
                   - ALL
+
           nginx:
             image:
-              repository: public.ecr.aws/nginx/nginx
-              tag: 1.27.0
+              repository: ghcr.io/nginxinc/nginx-unprivileged
+              tag: 1.27.0-alpine
+
     service:
-      main:
+      app:
+        controller: tandoor
         ports:
           http:
             port: 8080
+
     ingress:
-      main:
-        enabled: true
-        className: external
+      app:
+        className: "external"
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
-          - host: &host recipes.rafaribe.com
+          - host: tandoor.rafaribe.com
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-          - host: &host2 tandoor.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  name: main
-                  port: http
-        tls: [hosts: [*host, *host2]]
+
     persistence:
       files:
-        existingClaim: tandoor-data
+        existingClaim: *app
         advancedMounts:
-          main:
-            main:
+          tandoor:
+            app:
               - path: /opt/recipes/mediafiles
                 subPath: mediafiles
               - path: /opt/recipes/staticfiles
@@ -114,7 +134,7 @@ spec:
         type: configMap
         name: tandoor-nginx
         advancedMounts:
-          main:
+          tandoor:
             nginx:
               - path: /etc/nginx/nginx.conf
                 subPath: nginx-config
@@ -122,8 +142,8 @@ spec:
       temp:
         type: emptyDir
         advancedMounts:
-          main:
-            main:
+          tandoor:
+            app:
               - path: /tmp
                 subPath: app-tmp
               - path: /opt/recipes/cookbook/static/django_js_reverse

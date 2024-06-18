@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-tandoor
+  name: &app tandoor
   namespace: flux-system
 spec:
   path: "./kubernetes/main/apps/services/tandoor/app"
@@ -13,13 +13,13 @@ spec:
     name: home-ops
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &appname tandoor
+      app.kubernetes.io/name: *app
   prune: true
   wait: false
   interval: 10m
   postBuild:
     substitute:
-      APP: *appname
+      APP: *app
       HOSTNAME: recipes.rafaribe.com
       HOSTNAME_ALT: tandoor.rafaribe.com
       APP_UID: "1000"
