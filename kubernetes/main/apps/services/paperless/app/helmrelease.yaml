@@ -126,13 +126,15 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: paperless.rafaribe.com
+          - host: &host paperless.rafaribe.com
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-
+        tls:
+          - hosts:
+              - *host
     persistence:
       data:
         existingClaim: *app

@@ -67,7 +67,7 @@ spec:
     sources: ["ingress", "service"]
     txtOwnerId: default
     txtPrefix: k8s.
-    domainFilters: ["rafaribe.com"]
+    domainFilters: ["internal.rafaribe.com"]
     serviceMonitor:
       enabled: true
     podAnnotations:
