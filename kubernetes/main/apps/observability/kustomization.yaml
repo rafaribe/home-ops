@@ -15,5 +15,5 @@ resources:
   - ./prometheus-operator/ks.yaml
   - ./opentelemetry/ks.yaml
   #- ./thanos/ks.yaml
-  - ./unifi-poller/ks.yaml
+  - ./unpoller/ks.yaml
   - ./victoria-metrics/ks.yaml
