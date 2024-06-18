@@ -23,10 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: longhorn
-      namespace: storage
     - name: volsync
-      namespace: storage
+      namespace: volsync
   values:
     controllers:
       thelounge:
