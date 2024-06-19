@@ -68,7 +68,7 @@ identity_providers:
     jwks:
       - algorithm: RS256
         key: |-
-          {{- env "AUTHELIA_IDENTITY_PROVIDERS_OIDC_JWKS_KEY" | nindent 10 }}
+          {{- env "OIDC_JWKS_KEY" | nindent 10 }}
     clients:
       - client_name: Grafana
         client_id: grafana
