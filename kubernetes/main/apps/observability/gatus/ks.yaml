@@ -23,4 +23,3 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: status
-      VOLSYNC_CAPACITY: 3Gi
