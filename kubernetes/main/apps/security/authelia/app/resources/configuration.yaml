@@ -1,5 +1,6 @@
 ---
 # Note: Authelia vars should be escaped with $${VAR_NAME} to avoid interpolation by Flux
+# Brett has a nice configuration https://github.com/brettinternet/homeops/blob/main/kubernetes/main/apps/auth/authelia/app/resources/configuration.yaml
 authentication_backend:
   ldap:
     address: ldap://glauth.security.svc.cluster.local:389
@@ -72,7 +73,7 @@ identity_providers:
     clients:
       - client_name: Grafana
         client_id: grafana
-        client_secret: "$${GRAFANA_OAUTH_CLIENT_SECRET}"
+        client_secret: '{{ env "GRAFANA_OAUTH_CLIENT_HASHED_SECRET" }}'
         public: false
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
@@ -81,7 +82,7 @@ identity_providers:
         userinfo_signed_response_alg: none
       - client_name: Miniflux
         client_id: miniflux
-        client_secret: "$${MINIFLUX_OAUTH_CLIENT_SECRET}"
+        client_secret: '{{ env "MINIFLUX_OAUTH_CLIENT_HASHED_SECRET" }}'
         public: false
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
