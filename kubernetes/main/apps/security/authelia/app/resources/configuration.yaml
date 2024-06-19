@@ -70,6 +70,8 @@ identity_providers:
       - algorithm: RS256
         key: |-
           {{- env "OIDC_JWKS_KEY" | nindent 10 }}
+        certificate_chain: |-
+          {{- env "OIDC_CERTIFICATE_CHAIN" | nindent 10 }}
     clients:
       - client_name: Grafana
         client_id: grafana
