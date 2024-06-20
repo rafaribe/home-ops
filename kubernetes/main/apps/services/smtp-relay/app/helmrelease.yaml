@@ -39,7 +39,7 @@ spec:
               SMTP_RELAY_SERVER_PORT: 465
             envFrom:
               - secretRef:
-                  name: smtp-relay-secret
+                  name: *app
             probes:
               liveness:
                 enabled: true
