@@ -67,12 +67,15 @@ identity_providers:
       endpoints: ["authorization", "token", "revocation", "introspection"]
       allowed_origins_from_client_redirect_uris: true
     jwks:
-      - key: "{{ .authelia_jwt_secret }}"
+      - key: |
+          {{ secret "/config/secret/jwks-0-key.pem" | mindent 10 "|" | msquote }}
+        certificate_chain: |
+          {{ secret "/config/secret/jwks-0-cert.cert" | mindent 10 "|" | msquote }}
 
     clients:
       - client_name: Grafana
         client_id: grafana
-        client_secret: '{{ env "GRAFANA_OAUTH_CLIENT_HASHED_SECRET" }}'
+        client_secret: '{{ secret "/config/secret/oidc-client-grafana" }}'
         public: false
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
@@ -81,7 +84,7 @@ identity_providers:
         userinfo_signed_response_alg: none
       - client_name: Miniflux
         client_id: miniflux
-        client_secret: '{{ env "MINIFLUX_OAUTH_CLIENT_HASHED_SECRET" }}'
+        client_secret: '{{ secret "/config/secret/oidc-client-miniflux" }}'
         public: false
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
