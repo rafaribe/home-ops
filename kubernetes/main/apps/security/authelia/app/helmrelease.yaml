@@ -133,10 +133,3 @@ spec:
           - path: /config/configuration.yaml
             subPath: configuration.yaml
             readOnly: true
-      jwks-key:
-        type: secret
-        name: authelia-keys
-        globalMounts:
-          - path: /config/secrets/jwks/rsa.2048.pem
-            subPath: rsa.2048.pem
-            readOnly: true
