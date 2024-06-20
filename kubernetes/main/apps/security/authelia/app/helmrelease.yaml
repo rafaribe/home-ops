@@ -40,9 +40,9 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: authelia-secret
-              - secretRef:
-                  name: authelia-keys
-        containers:
+          #       - secretRef:
+          #           name: authelia-keys
+          # containers:
           app:
             image:
               repository: ghcr.io/authelia/authelia
@@ -54,7 +54,7 @@ spec:
               AUTHELIA_TELEMETRY_METRICS_ENABLED: "true"
               AUTHELIA_THEME: dark
               X_AUTHELIA_CONFIG: /config/configuration.yaml
-              X_AUTHELIA_CONFIG_FILTERS: expand-env
+              X_AUTHELIA_CONFIG_FILTERS: expand-env,template
             envFrom: *envFrom
             probes:
               liveness: &probes
@@ -132,4 +132,11 @@ spec:
         globalMounts:
           - path: /config/configuration.yaml
             subPath: configuration.yaml
+            readOnly: true
+      jwks-key:
+        type: secret
+        name: authelia-keys
+        globalMounts:
+          - path: /config/secrets/jwks/rsa.2048.pem
+            subPath: rsa.2048.pem
             readOnly: true
