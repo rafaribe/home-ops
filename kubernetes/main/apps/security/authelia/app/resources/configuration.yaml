@@ -69,8 +69,6 @@ identity_providers:
     jwks:
       - key: |
           {{ secret "/config/secret/jwks-0-key.pem" | mindent 10 "|" | msquote }}
-        certificate_chain: |
-          {{ secret "/config/secret/jwks-0-cert.cert" | mindent 10 "|" | msquote }}
 
     clients:
       - client_name: Grafana
