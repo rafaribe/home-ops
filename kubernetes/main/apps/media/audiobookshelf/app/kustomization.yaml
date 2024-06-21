@@ -5,6 +5,6 @@ kind: Kustomization
 namespace: media
 resources:
   - ./helmrelease.yaml
-  - ./gatus.yaml
+  # ./gatus.yaml
   - ./pvc.yaml
   - ./volsync.yaml
