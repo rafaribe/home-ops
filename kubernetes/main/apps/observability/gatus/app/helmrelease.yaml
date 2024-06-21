@@ -66,16 +66,7 @@ spec:
             envFrom: *envFrom
             probes:
               liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: *port
-                  initialDelaySeconds: 2
-                  periodSeconds: 10
-                  timeoutSeconds: 3
-                  failureThreshold: 4
+                enabled: false
               readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
