@@ -62,19 +62,19 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-        initContainers:
-          init-permission:
-            image:
-              repository: ghcr.io/cbc02009/busybox
-              tag: 1.36.1
-              pullPolicy: IfNotPresent
-            command:
-              - sh
-              - -c
-              - chown -R 1000:1000 /media
-              - chown -R 1000:1000 /config/transcodes
-            securityContext:
-              runAsUser: 0
+        # initContainers:
+        #   init-permission:
+        #     image:
+        #       repository: ghcr.io/cbc02009/busybox
+        #       tag: 1.36.1
+        #       pullPolicy: IfNotPresent
+        #     command:
+        #       - sh
+        #       - -c
+        #       - chown -R 1000:1000 /media
+        #       - chown -R 1000:1000 /config/transcodes
+        #     securityContext:
+        #       runAsUser: 0
     service:
       main:
         annotations:
