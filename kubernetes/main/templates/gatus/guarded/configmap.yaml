@@ -21,4 +21,4 @@ data:
         conditions:
           - "len([BODY]) == 0"
         alerts:
-          - type: pushover
+          - type: discord

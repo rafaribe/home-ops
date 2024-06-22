@@ -20,7 +20,7 @@ alerting:
       failure-threshold: 5
       success-threshold: 2
   discord:
-    webhook-url: $${DISCORD_WEBHOOK_URL}
+    webhook-url: $${GATUS_DISCORD_WEBHOOK_URL}
     default-alert:
       description: health-check failed
       send-on-resolved: true
@@ -40,4 +40,4 @@ endpoints:
     conditions:
       - "[STATUS] == 200"
     alerts:
-      - type: pushover
+      - type: discord
