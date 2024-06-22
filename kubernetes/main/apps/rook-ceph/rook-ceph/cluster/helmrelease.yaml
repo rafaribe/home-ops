@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rook-ceph-cluster
-  namespace: rook-ceph
 spec:
   interval: 15m
   chart:
@@ -57,7 +56,7 @@ spec:
           hajimari.io/appName: "Rook"
           hajimari.io/icon: mdi:chess-rook
         host:
-          name: &host "rook.${INTERNAL_DOMAIN}"
+          name: &host "rook.rafaribe.com"
           path: "/"
         tls:
           - hosts:
