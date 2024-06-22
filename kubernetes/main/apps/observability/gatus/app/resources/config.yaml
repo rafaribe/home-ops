@@ -32,7 +32,7 @@ connectivity:
     interval: 1m
 endpoints:
   - name: status
-    group: services
+    group: external
     url: https://status.rafaribe.com
     interval: 1m
     client:
