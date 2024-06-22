@@ -108,18 +108,15 @@ spec:
         type: nfs
         server: 10.0.0.6
         path: /mnt/storage-0/media
-        mountPath: /media
-        readOnly: false
+        globalMounts:
+          - path: /media
       transcode:
+        enabled: true
         type: emptyDir
-        advancedMounts:
-          jellyfin:
-            app:
-              - path: /transcode
+        globalMounts:
+          - path: /transcode
       cache:
         enabled: true
         type: emptyDir
-        advancedMounts:
-          jellyfin:
-            main:
-              - path: /config/cache
+        globalMounts:
+          - path: /cache
