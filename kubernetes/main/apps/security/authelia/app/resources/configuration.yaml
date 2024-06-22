@@ -41,7 +41,7 @@ notifier:
   disable_startup_check: true
   smtp:
     address: smtp-relay.services.svc.cluster.local:25
-    sender: Authelia <authelia@rafaribe.com>
+    sender: Authelia <rafaribe-alerts@sapo.pt>
     disable_require_tls: true
 
 totp:
