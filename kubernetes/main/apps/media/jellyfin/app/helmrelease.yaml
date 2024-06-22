@@ -111,10 +111,11 @@ spec:
         mountPath: /media
         readOnly: false
       transcode:
-        enabled: true
-        existingClaim: jellyfin-transcode
-        globalMounts:
-          - path: /config/transcodes
+        type: emptyDir
+        advancedMounts:
+          jellyfin:
+            app:
+              - path: /transcode
       cache:
         enabled: true
         type: emptyDir
