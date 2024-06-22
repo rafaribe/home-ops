@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app jellyfin
-  namespace: media
 spec:
   interval: 30m
   chart:
@@ -29,106 +28,97 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
-    defaultPodOptions:
-      enableServiceLinks: false
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: "Always"
-        supplementalGroups: [44, 105, 104, 109, 10000, 568]
-        seccompProfile: { type: "RuntimeDefault" }
-      nodeSelector:
-        intel.feature.node.kubernetes.io/gpu: "true"
     controllers:
-      main:
+      jellyfin:
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups:
+              - 44
+              - 109
+              - 568
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/jellyfin
-              tag: 10.8.11@sha256:926e2a9f6677a0c7b12feba29f36c954154869318d6a52df72f72ff9c74cf494
-            env:
-              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
-              JELLYFIN_FFmpeg__probesize: 50000000
-              JELLYFIN_FFmpeg__analyzeduration: 50000000
-              JELLYFIN_PublishedServerUrl: &ip ${LB_JELLYFIN}
-              TZ: ${TZ}
+              repository: jellyfin/jellyfin
+              tag: 10.8.13-1
             resources:
               requests:
-                cpu: 700m
+                cpu: 150m
                 memory: 2Gi
-                gpu.intel.com/i915: 1
               limits:
                 memory: 4Gi
                 gpu.intel.com/i915: 1
             probes:
-              liveness: &probe
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: 8096
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probe
               startup:
                 enabled: true
-                custom: true
                 spec:
-                  httpGet:
-                    path: /health
-                    port: 8096
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
                   failureThreshold: 30
+                  periodSeconds: 5
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+        initContainers:
+          init-permission:
+            image:
+              repository: ghcr.io/cbc02009/busybox
+              tag: 1.36.1
+              pullPolicy: IfNotPresent
+            command:
+              - sh
+              - -c
+              - chown -R 1000:1000 /media
+              - chown -R 1000:1000 /config/transcodes
+            securityContext:
+              runAsUser: 0
     service:
       main:
-        type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: ${LB_JELLYFIN}
-        externalTrafficPolicy: Local
+        controller: jellyfin
         ports:
           http:
             port: 8096
     ingress:
       main:
         enabled: true
-        className: "external"
+        className: internal
         annotations:
           hajimari.io/icon: simple-icons:jellyfin
         hosts:
-          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+          - host: &host jellyfin.rafaribe.com
             paths:
               - path: /
+                pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         enabled: true
-        existingClaim: config-jellyfin-0
+        existingClaim: jellyfin
         globalMounts:
           - path: /config
       media:
         enabled: true
         type: nfs
-        server: 10.0.1.6
+        server: 10.0.0.6
         path: /mnt/storage-0/media
         mountPath: /media
         readOnly: false
-      tmp:
+      transcode:
+        enabled: true
+        existingClaim: jellyfin-transcode
+        globalMounts:
+          - path: /config/transcodes
+      cache:
         enabled: true
         type: emptyDir
-        medium: Memory
-        globalMounts:
-          - subPath: "tmp"
-            path: "/tmp"
-          - subPath: "transcode"
-            path: "/transcode"
+        advancedMounts:
+          jellyfin:
+            main:
+              - path: /config/cache
