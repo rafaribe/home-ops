@@ -1,6 +1,6 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
-apiVersion: helm.toolkit.fluxcd.io/v2
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app media-browser
@@ -9,12 +9,14 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.2.1
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  maxHistory: 2
   install:
+    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -22,20 +24,24 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  uninstall:
+    keepHistory: false
   values:
     controllers:
       media-browser:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
               repository: docker.io/filebrowser/filebrowser
-              tag: v2.30.0
+              tag: v2.29.0@sha256:33816c92ba4401bab465528bb54655df427eaaa80dc177e5aecb33d5b8b0a8f7
             env:
-              TZ: ${TZ:=Etc/UTC}
+              TZ: "${TIMEZONE}"
               FB_DATABASE: /config/filebrowser.db
-              FB_ROOT: /media
+              FB_ROOT: /mnt/storage-0/media
               FB_LOG: stdout
-              FB_NOAUTH: true
+              FB_NOAUTH: "true"
             probes:
               liveness: &probes
                 enabled: true
@@ -49,53 +55,46 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              startup:
+                enabled: false
             resources:
               requests:
                 cpu: 10m
-                memory: 64Mi
+                memory: 50Mi
               limits:
-                memory: 512Mi
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
+                memory: 500Mi
     service:
       app:
-        controller: media-browser
-        ipFamilyPolicy: PreferDualStack
+        controller: *app
         ports:
           http:
             port: *port
     ingress:
       app:
+        enabled: true
         className: internal
         annotations:
           hajimari.io/icon: mdi:folder-play-outline
         hosts:
-          - host: "media.rafaribe.com"
+          - host: &host "media.rafaribe.com"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
+        tls:
+          - hosts:
+              - *host
     persistence:
       config:
+        enabled: true
         existingClaim: *app
-        advancedMounts:
-          calibre-web:
-            app:
-              - path: /config
-
-      data:
+        globalMounts:
+          - path: /config
+      music:
         enabled: true
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
         globalMounts:
-          - path: /data
+          - path: /mnt/storage-0/media
