@@ -1,113 +1,121 @@
----
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: bazarr
-  namespace: media
+  name: &app bazarr
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        supplementalGroups: [568]
-        fsGroupChangePolicy: OnRootMismatch
     controllers:
-      main:
-        type: statefulset
+      bazarr:
+        labels:
+          nfsMount: "true"
         annotations:
           reloader.stakater.com/auto: "true"
-        containers:
-          main:
+        initContainers:
+          init-db:
             image:
-              repository: ghcr.io/onedr0p/bazarr
-              tag: 1.4.3@sha256:d2b70813f7d636fb1ab3448e13ca4074630b63216c6c6d02d034cd5d9e938ea3
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.2
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
+        containers:
+          app:
+            image:
+              repository: ghcr.io/joryirving/bazarr
+              tag: 1.4.3@sha256:6f069ce5262a0375ace93cedfb8a4288df6f096e536879779dc6e332309e9b68
             env:
-              TZ: "${TZ}"
+              TZ: ${TZ}
+            envFrom:
+              - secretRef:
+                  name: *app
             resources:
               requests:
-                cpu: 23m
-                memory: 204M
+                cpu: 10m
+                memory: 256M
               limits:
-                memory: 1Gi
+                memory: 1024M
           subcleaner:
             image:
               repository: registry.k8s.io/git-sync/git-sync
               tag: v4.2.3
-              pullPolicy: IfNotPresent
             args:
               - --repo=https://github.com/KBlixt/subcleaner
               - --branch=master
               - --wait=86400 # 1 day
               - --root=/add-ons
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 2Gi
-              storageClass: ceph-block
-              globalMounts:
-                - path: /config
+            resources:
+              requests:
+                cpu: 10m
+                memory: 10M
+              limits:
+                memory: 128M
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000]
+        seccompProfile: { type: RuntimeDefault }
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: 6767
     ingress:
-      main:
-        enabled: true
-        className: "external"
+      app:
+        className: internal
         annotations:
-          auth.home.arpa/enabled: "true"
-          hajimari.io/icon: mdi:subtitles-outline
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Bazarr
+          gethomepage.dev/icon: bazarr.png
+          gethomepage.dev/description: Subtitle Downloads
+          gethomepage.dev/widget.type: bazarr
+          gethomepage.dev/widget.url: http://bazarr.downloads:6767
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_BAZARR_TOKEN}}` }}"
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: &host "{{ .Release.Name }}.${EXTERNAL_DOMAIN}"
+          - host: "bazarr.rafaribe.com"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
-      media:
+      config:
+        existingClaim: *app
+      data:
         enabled: true
         type: nfs
-        server: 10.0.1.6
+        server: 10.0.0.6
         path: /mnt/storage-0/media
-        mountPath: /media
+        globalMounts:
+          - path: /data
       add-ons:
-        enabled: true
         type: emptyDir
-        globalMounts:
-          - path: /add-ons
-      scripts:
-        enabled: true
-        type: configMap
-        name: bazarr-scripts # overriden by kustomizeconfig
-        defaultMode: 0775
-        readOnly: true
-        globalMounts:
-          - path: /scripts
