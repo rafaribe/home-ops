@@ -70,7 +70,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
-        fsGroup: 5681000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [10000, 568]
         seccompProfile: { type: RuntimeDefault }
@@ -119,10 +119,11 @@ spec:
         globalMounts:
           - path: /downloads
             subPath: usenet
-
       logs:
         type: emptyDir
         globalMounts:
           - path: /config/logs
-      # incomplete:
-      #   type: emptyDir
+      temp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
