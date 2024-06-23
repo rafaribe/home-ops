@@ -33,10 +33,10 @@ customDNS:
     ; LAN
     opnsense      IN A      10.0.0.1
     ; Servers
-    truenas    IN A      truenas.rafaribe.com
+    truenas    IN A      10.0.0.6
     ; CNAME records
-    truenas    IN CNAME  truenas.rafaribe.dev.
-    nas        IN CNAME  truenas.rafaribe.dev.
+    truenas    IN CNAME  truenas.rafaribe.com.
+    nas        IN CNAME  truenas.rafaribe.com.
 
     $TTL 3600
     $ORIGIN rafaribe.casa.
