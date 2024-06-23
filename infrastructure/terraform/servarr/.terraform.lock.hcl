@@ -1,7 +1,7 @@
-# This file is maintained automatically by "tofu init".
+# This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
-provider "registry.opentofu.org/carlpett/sops" {
+provider "registry.terraform.io/carlpett/sops" {
   version     = "1.0.0"
   constraints = "1.0.0"
   hashes = [
@@ -16,7 +16,7 @@ provider "registry.opentofu.org/carlpett/sops" {
   ]
 }
 
-provider "registry.opentofu.org/devopsarr/prowlarr" {
+provider "registry.terraform.io/devopsarr/prowlarr" {
   version     = "2.3.0"
   constraints = "2.3.0"
   hashes = [
@@ -39,7 +39,7 @@ provider "registry.opentofu.org/devopsarr/prowlarr" {
   ]
 }
 
-provider "registry.opentofu.org/devopsarr/radarr" {
+provider "registry.terraform.io/devopsarr/radarr" {
   version     = "2.2.0"
   constraints = "2.2.0"
   hashes = [
@@ -62,7 +62,7 @@ provider "registry.opentofu.org/devopsarr/radarr" {
   ]
 }
 
-provider "registry.opentofu.org/devopsarr/sonarr" {
+provider "registry.terraform.io/devopsarr/sonarr" {
   version     = "3.2.0"
   constraints = "3.2.0"
   hashes = [

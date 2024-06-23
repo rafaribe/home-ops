@@ -1,7 +1,7 @@
-resource "prowlarr_application_sonarr" "sonarr-anime" {
-  name                  = "sonarr-anime"
+resource "prowlarr_application_sonarr" "sonarr" {
+  name                  = "sonarr"
   sync_level            = "fullSync"
-  base_url              = "http://sonarr-anime.${var.cluster_media_domain}:${var.ports["sonarr"]}"
+  base_url              = "http://sonarr.${var.cluster_media_domain}:${var.ports["sonarr"]}"
   prowlarr_url          = "http://prowlarr.${var.cluster_media_domain}:${var.ports["prowlarr"]}"
   api_key               = "${data.sops_file.servarr-secrets.data["sonarr_api_key"]}"
   sync_categories       = [5000, 5010, 5030]
@@ -21,7 +21,7 @@ resource "prowlarr_download_client_sabnzbd" "sabnzbd" {
   enable   = true
   priority = 1
   name     = "sabnzbd"
-  host     = "sabnzbd.${var.cluster_media_domain}"
+  host     = "sabnzbd.${var.cluster_downloads_domain}"
   url_base = "/"
   port     = var.ports["sabnzbd"]
   category = "prowlarr"
@@ -32,7 +32,7 @@ resource "prowlarr_download_client_qbittorrent" "qbiittorrent" {
   enable   = true
   priority = 2
   name     = "qbittorrent"
-  host     = "qbittorrent.${var.cluster_media_domain}"
+  host     = "qbittorrent.${var.cluster_downloads_domain}"
   url_base = "/"
   port     = var.ports["qbittorrent"]
   category = "prowlarr"

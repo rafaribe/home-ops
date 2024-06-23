@@ -20,11 +20,11 @@ variable cluster_downloads_domain {
 variable "ports" {
   type = map(string)
   default = {
-    "sonarr"      = "8989"
-    "prowlarr"    = "9696"
-    "radarr"      = "7878"
+    "sonarr"      = "80"
+    "prowlarr"    = "80"
+    "radarr"      = "80"
     "sabnzbd"     = "8080"
-    "qbittorrent" = "8080"
+    "qbittorrent" = "80"
   }
   description = "Mapping of services to their respective ports"
 }

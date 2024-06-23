@@ -2,7 +2,7 @@ resource "radarr_download_client_sabnzbd" "sabnzbd" {
   enable            = true
   priority          = 1
   name              = "sabnzbd"
-  host              = "sabnzbd.${var.cluster_media_domain}"
+  host              = "sabnzbd.${var.cluster_downloads_domain}"
   url_base          = "/"
   port              = var.ports["sabnzbd"]
   movie_category    = "movies"
@@ -13,7 +13,7 @@ resource "radarr_download_client_qbittorrent" "qbittorrent" {
   enable         = true
   priority       = 1
   name           = "qbittorrent"
-  host           = "qbittorrent.${var.cluster_media_domain}"
+  host           = "qbittorrent.${var.cluster_downloads_domain}"
   url_base       = "/"
   movie_category = "radarr"
   port           = var.ports["qbittorrent"]
@@ -53,9 +53,9 @@ resource "radarr_media_management" "media_settings_configs" {
 }
 
 resource "radarr_root_folder" "anime" {
-  path = "/media/films/anime_movies"
+  path = "/media/anime-movies"
 }
 
 resource "radarr_root_folder" "standard" {
-  path = "/media/films/standard_movies"
+  path = "/media/movies"
 }

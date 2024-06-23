@@ -2,7 +2,7 @@ resource "sonarr_download_client_sabnzbd" "sabnzbd" {
   enable   = true
   priority = 1
   name     = "sabnzbd"
-  host     = "sabnzbd.${var.cluster_media_domain}"
+  host     = "sabnzbd.${var.cluster_downloads_domain}"
   url_base = "/"
   port     = var.ports["sabnzbd"]
   api_key  = "${data.sops_file.servarr-secrets.data["sabnzbd_api_key"]}"
@@ -54,9 +54,9 @@ resource "sonarr_media_management" "media_settings_configs" {
 }
 
 resource "sonarr_root_folder" "series" {
-  path = "/media/series/standard-series"
+  path = "/media/tv-shows"
 }
 
 resource "sonarr_root_folder" "anime" {
-  path = "/media/series/anime-series"
+  path = "/media/anime"
 }
