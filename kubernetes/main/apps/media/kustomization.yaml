@@ -7,9 +7,9 @@ resources:
   # Flux-Kustomizations
   - ./audiobookshelf/ks.yaml
   - ./bazarr/ks.yaml
-  # - ./calibre/ks.yaml
-  # - ./calibre-web/ks.yaml
-  # - ./flaresolverr/ks.yaml
+  - ./calibre/ks.yaml
+  - ./calibre-web/ks.yaml
+  - ./flaresolverr/ks.yaml
   - ./jellyfin/ks.yaml
   # - ./media-browser/ks.yaml
   # - ./prowlarr/ks.yaml
