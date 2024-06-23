@@ -1,7 +1,7 @@
-resource "prowlarr_application_sonarr" "sonarr" {
-  name                  = "sonarr"
+resource "prowlarr_application_sonarr" "sonarr-anime" {
+  name                  = "sonarr-anime"
   sync_level            = "fullSync"
-  base_url              = "http://sonarr.${var.cluster_media_domain}:${var.ports["sonarr"]}"
+  base_url              = "http://sonarr-anime.${var.cluster_media_domain}:${var.ports["sonarr"]}"
   prowlarr_url          = "http://prowlarr.${var.cluster_media_domain}:${var.ports["prowlarr"]}"
   api_key               = "${data.sops_file.servarr-secrets.data["sonarr_api_key"]}"
   sync_categories       = [5000, 5010, 5030]

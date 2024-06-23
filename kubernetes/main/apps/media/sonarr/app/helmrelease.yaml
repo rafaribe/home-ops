@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app readarr-audio
+  name: &app sonarr
 spec:
   interval: 30m
   chart:
@@ -25,10 +25,10 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
-      namespace: volsync
+      namespace: storage
   values:
     controllers:
-      readarr-audio:
+      sonarr-anime:
         labels:
           nfsMount: "true"
         annotations:
@@ -36,22 +36,43 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/readarr-develop
-              tag: 0.3.28.2554@sha256:d1a04972ae635303f88b13767d447c4f916a0223a8259a8dd506e28b95fae960
+              repository: ghcr.io/joryirving/sonarr-develop
+              tag: 4.0.5.1760@sha256:3c29eef6ff18762d6fcf48586e4489b850dbbbe9a55183a73dc8e691bb39091f
             env:
-              TZ: ${TIMEZONE}
-              READARR__INSTANCE_NAME: Readarr Audio
-              READARR__PORT: &port 80
-              READARR__LOG_LEVEL: info
+              TZ: ${TZ}
+              SONARR__APP__INSTANCENAME: Sonarr
+              SONARR__APP__THEME: dark
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__LOG__DBENABLED: "False"
+              SONARR__LOG__LEVEL: info
+              SONARR__SERVER__PORT: &port 80
+              SONARR__UPDATE__BRANCH: develop
             envFrom:
               - secretRef:
                   name: *app
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 15m
-                memory: 160M
+                cpu: 10m
               limits:
-                memory: 330M
+                memory: 1Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -73,15 +94,15 @@ spec:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads
-          gethomepage.dev/name: Readarr
-          gethomepage.dev/icon: readarr.png
-          gethomepage.dev/description: Readarr Audio
-          gethomepage.dev/widget.type: readarr
-          gethomepage.dev/widget.url: http://readarr-audio.media
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_READARR_TOKEN}}` }}"
+          gethomepage.dev/name: Sonarr
+          gethomepage.dev/icon: sonarr-anime.png
+          gethomepage.dev/description: TV Shows Downloads
+          gethomepage.dev/widget.type: sonarr
+          gethomepage.dev/widget.url: http://sonarr-anime.media
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARR_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: "audio.rafaribe.com"
+          - host: "sonarr.rafaribe.com"
             paths:
               - path: /
                 service:

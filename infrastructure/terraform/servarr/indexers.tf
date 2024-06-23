@@ -27,3 +27,27 @@ resource "prowlarr_indexer" "usenet_nzbgeek" {
     }
   ]
 }
+
+resource "prowlarr_indexer" "example" {
+  enable          = true
+  name            = "MyAnonaMouse"
+  implementation  = "MyAnonaMouse"
+  config_contract = "MyAnonaMouseSettings"
+  protocol        = "torrent"
+  app_profile_id  = 2
+  tags            = []
+
+  fields = [
+    {
+      name       = "mamId"
+      text_value = "${data.sops_file.servarr-secrets.data["prowlarr_mam_id"]}"
+    },    {
+      name         = "torrentBaseSettings.seedRatio"
+      number_value = 0.5
+    },
+    {
+      name         = "torrentBaseSettings.seedTime"
+      number_value = 5
+    },
+  ]
+}

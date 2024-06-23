@@ -12,7 +12,7 @@ resource "sonarr_download_client_qbittorrent" "qbittorrent" {
   enable         = true
   priority       = 1
   name           = "qbittorrent"
-  host           = "qbittorrent.${var.cluster_media_domain}"
+  host           = "qbittorrent.${var.cluster_downloads_domain}"
   url_base       = "/"
   tv_category    = "tv-sonarr"
   port           = var.ports["qbittorrent"]
