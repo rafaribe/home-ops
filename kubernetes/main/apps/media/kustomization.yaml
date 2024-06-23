@@ -12,7 +12,7 @@ resources:
   - ./flaresolverr/ks.yaml
   - ./jellyfin/ks.yaml
   - ./media-browser/ks.yaml
-  # - ./prowlarr/ks.yaml
+  - ./prowlarr/ks.yaml
   # - ./radarr/ks.yaml
   # - ./readarr/ks.yaml
   # - ./sonarr/ks.yaml
