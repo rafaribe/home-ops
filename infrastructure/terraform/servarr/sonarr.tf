@@ -54,9 +54,9 @@ resource "sonarr_media_management" "media_settings_configs" {
 }
 
 resource "sonarr_root_folder" "series" {
-  path = "/media/series/standard_series"
+  path = "/media/series/standard-series"
 }
 
 resource "sonarr_root_folder" "anime" {
-  path = "/media/series/anime_series"
+  path = "/media/series/anime-series"
 }

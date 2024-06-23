@@ -39,13 +39,13 @@ spec:
               repository: ghcr.io/joryirving/readarr-develop
               tag: 0.3.28.2554@sha256:d1a04972ae635303f88b13767d447c4f916a0223a8259a8dd506e28b95fae960
             env:
-              TZ: ${TZ}
-              READARR__INSTANCE_NAME: Readarr Ebooks
+              TZ: ${TIMEZONE}
+              READARR__INSTANCE_NAME: Readarr
               READARR__PORT: &port 80
               READARR__LOG_LEVEL: info
             envFrom:
               - secretRef:
-                  name: *app
+                  name: readarr
             resources:
               requests:
                 cpu: 15m
@@ -75,9 +75,9 @@ spec:
           gethomepage.dev/group: Downloads
           gethomepage.dev/name: Readarr
           gethomepage.dev/icon: readarr.png
-          gethomepage.dev/description: Readarr
+          gethomepage.dev/description: eBook Downloads
           gethomepage.dev/widget.type: readarr
-          gethomepage.dev/widget.url: http://readarr.media
+          gethomepage.dev/widget.url: http://readarr.downloads
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_READARR_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
@@ -89,10 +89,11 @@ spec:
                   port: http
     persistence:
       config:
-        enabled: true
         existingClaim: *app
+      tmp:
+        type: emptyDir
         globalMounts:
-          - path: /config
+          - path: /tmp
       media:
         enabled: true
         type: nfs
