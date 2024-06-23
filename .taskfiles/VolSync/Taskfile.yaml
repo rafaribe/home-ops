@@ -23,7 +23,6 @@ vars:
   VOLSYNC_TEMPLATES_DIR: "{{.ROOT_DIR}}/.taskfiles/VolSync/templates"
 
 tasks:
-
   state-*:
     desc: Suspend or Resume Volsync
     summary: |
@@ -37,7 +36,7 @@ tasks:
     env: *env-vars
     vars:
       ns: '{{.ns | default "volsync-system"}}'
-      state: '{{index .MATCH 0}}'
+      state: "{{index .MATCH 0}}"
     requires:
       vars: ["cluster"]
 
@@ -77,7 +76,7 @@ tasks:
       - bash {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh {{.job}} {{.ns}} {{.cluster}}
       - kubectl --context {{.cluster}} -n {{.ns}} wait job/{{.job}} --for condition=complete --timeout=1m
       - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container minio
-      - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container r2
+      #   - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container r2
       - kubectl --context {{.cluster}} -n {{.ns}} delete job {{.job}}
     env: *env-vars
     requires:
@@ -137,7 +136,7 @@ tasks:
       vars: ["cluster", "app"]
     vars:
       ns: '{{.ns | default "default"}}'
-      previous: '{{.previous | default 2}}'
+      previous: "{{.previous | default 2}}"
       controller:
         sh: "{{.VOLSYNC_SCRIPTS_DIR}}/which-controller.sh {{.app}} {{.ns}}"
       claim:
