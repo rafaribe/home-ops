@@ -28,7 +28,7 @@ spec:
       namespace: volsync
   values:
     controllers:
-      app:
+      readarr-ebooks:
         labels:
           nfsMount: "true"
         annotations:
