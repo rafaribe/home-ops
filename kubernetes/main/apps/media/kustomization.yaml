@@ -5,7 +5,7 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  # - ./audiobookshelf/ks.yaml
+  - ./audiobookshelf/ks.yaml
   # - ./bazarr/ks.yaml
   # - ./calibre/ks.yaml
   # - ./calibre-web/ks.yaml
