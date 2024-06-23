@@ -1,0 +1,26 @@
+github_token: ENC[AES256_GCM,data:Q/Kx0KbIRDjcb9peoMZi+aO1/FUx/upblWF9A91sykJa2miJukfeuQ==,iv:KJ0JbmHQa+pe+wEVGW+K+D30mEm3/fIzjb3hpyKpI3Q=,tag:09zZl1DVVf77BfKa82+5zg==,type:str]
+sonarr_api_key: ENC[AES256_GCM,data:ZGfX72Je/3rEimef88kT2WhB1MXvezA=,iv:oW5jkmLKmMLM2CopMPM9aUXctyaJjshdm47mSUieZSg=,tag:tDW18a3TG+B0zdwTluaIIw==,type:str]
+radarr_api_key: ENC[AES256_GCM,data:trhZ0d7j2mzeHZXlkUxDxUm7lkV5QKQ=,iv:v2HCx4ImgsSI5lHKFAwjBuKsEpGDnQKT4Ohj7IKWMKE=,tag:WPhPmQX9OZlQX/yon8baCA==,type:str]
+prowlarr_api_key: ENC[AES256_GCM,data:sNJ9UgHNh7S7qDdw7pvoR+KrQQgbnOA=,iv:PxsqwvlOV9xptv/aVHwBy3TemWVsU8pw6S/miyEuon0=,tag:mI1Gh1VOCv86zbH/wt3gVg==,type:str]
+sabnzbd_api_key: ENC[AES256_GCM,data:ONQiqgxI/H7EMgEjSIfVwmm0,iv:qPvXuvuBqaQo0NIY3O8GruYNXeB6a5Y2gw4oIOp4CRA=,tag:musN5fGdjoi94gxNhCYnXA==,type:str]
+nzbgeek_api_key: ENC[AES256_GCM,data:ONsVduvNuw9VFKxwxCwtUpykV/BvVxMwHI/rRiuTSRo=,iv:PP9G1Kyus/aDtl7u02bKTvyNPboQ615mHCVHHGcOGw8=,tag:Pq2h4S/hD2zdQBxotCWK0w==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBKeGUrMXlzTnREd0x1VU5H
+            YXFRNTFkb28yMTJTUFIyY2tQZFJJUndGN1R3CjUzM1ZxNC8xSnhGd2FLb3RpbWpN
+            M2lSL2pjR2FJbWdDUkdTQ1dPd1lPemcKLS0tIG10OGhQNzZEeWN1Q0w2eXF0UVdC
+            ZVpJOVp3bUY3MDlXYnJ3OEc2Nk5uYkUKdqWJ0yMWirjNT1ZJontbU+duSbOH+Sl+
+            ETcPN0oUR7o1hGYctPkM9Oupy5VFqyOhzHZhPCCCeIk6MWu9hivejQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-06-23T16:53:38Z"
+    mac: ENC[AES256_GCM,data:z+lSEbMtDFEWEXNKL3x0dWKy8bzoo2nV6x40YhoS6iFK/H8z53o1sO+j7aR0COnBtklWsoIGP6eNX9XJOuwEPThZC/2hTKF6vBjl+xNwwtwbw12zJW0ApSyvu2598IAf7E+aLTRRaiRjngwSyb37lsVOPv8Yylpgt+FB9PRNA9g=,iv:dEipbqkhfNbd3oCackHhA3B22hR2o8VZgOELRlIq8sg=,tag:4UokMbgPqemNK5TTfp/M8A==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.8.1
