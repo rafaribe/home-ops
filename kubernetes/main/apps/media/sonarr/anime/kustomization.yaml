@@ -5,14 +5,6 @@ kind: Kustomization
 namespace: media
 resources:
   - ./externalsecret.yaml
-  - ./pvc.yaml
   - ./helmrelease.yaml
-#  - ./gatus.yaml
-configMapGenerator:
-  - name: sonarr-anime-configmap
-    files:
-      - ./scripts/pushover-notify.sh
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
+  - ../../../../templates/gatus/guarded
+  - ../../../../templates/volsync

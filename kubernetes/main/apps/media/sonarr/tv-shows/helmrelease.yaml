@@ -1,60 +1,56 @@
----
-# yaml-language-server: $schema=https://kubernetes-schemas.rafaribe.com/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: sonarr-tv-shows
-  namespace: media
+  name: &app sonarr-tv-shows
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: volsync
+      namespace: storage
   values:
     controllers:
-      main:
+      sonarr-tv-shows:
+        labels:
+          nfsMount: "true"
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: "16.3"
-            envFrom: &envFrom
-              - secretRef:
-                  name: sonarr
         containers:
-          main:
+          app:
             image:
-              repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 4.0.5.1719@sha256:602af44d766a8c7c494d01fb79f6e7624aed58f0b86ffe10e1ecad280160a3df
+              repository: ghcr.io/joryirving/sonarr-develop
+              tag: 4.0.5.1760@sha256:3c29eef6ff18762d6fcf48586e4489b850dbbbe9a55183a73dc8e691bb39091f
             env:
-              COMPlus_EnableDiagnostics: "0"
-              PUSHOVER_DEBUG: "false"
-              SONARR__INSTANCE_NAME: Sonarr TV Shows
-              SONARR__PORT: &port 80
-              SONARR__LOG_LEVEL: info
-              SONARR__THEME: dark
-              TZ: Europe/Lisbon
-            envFrom: *envFrom
+              TZ: ${TIMEZONE}
+              SONARR__APP__INSTANCENAME: Sonarr TV Shows
+              SONARR__APP__THEME: dark
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__LOG__DBENABLED: "False"
+              SONARR__LOG__LEVEL: info
+              SONARR__SERVER__PORT: &port 80
+              SONARR__UPDATE__BRANCH: develop
+            envFrom:
+              - secretRef:
+                  name: *app
             probes:
               liveness: &probes
                 enabled: true
@@ -68,8 +64,6 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              startup:
-                enabled: false
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -78,51 +72,52 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 750Mi
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups: [568, 10000]
+                memory: 1Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000, 568]
+        seccompProfile: { type: RuntimeDefault }
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: *port
     ingress:
-      main:
-        enabled: true
-        className: external
+      app:
+        className: internal
         annotations:
-          hajimari.io/icon: mdi:television-classic
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Sonarr TV Showss
+          gethomepage.dev/icon: sonarr-tv-shows.png
+          gethomepage.dev/description: TV Shows Downloads
+          gethomepage.dev/widget.type: sonarr-tv-shows
+          gethomepage.dev/widget.url: http://sonarr-tv-shows.media
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARR_TOKEN}}` }}"
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: &host "tv.${EXTERNAL_DOMAIN}"
+          - host: "tv.rafaribe.com"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         enabled: true
-        existingClaim: sonarr-config
+        existingClaim: *app
+        globalMounts:
+          - path: /config
       media:
         enabled: true
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
-        mountPath: /media
-      scripts:
-        enabled: true
-        type: configMap
-        name: sonarr-configmap
-        subPath: pushover-notify.sh
-        mountPath: /scripts/pushover-notify.sh
-        defaultMode: 0775
-        readOnly: true
+        globalMounts:
+          - path: /media
