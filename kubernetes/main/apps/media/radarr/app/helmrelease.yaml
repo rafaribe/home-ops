@@ -1,131 +1,120 @@
----
-# yaml-language-server: $schema=https://kubernetes-schemas.rafaribe.com/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: radarr
-  namespace: media
+  name: &app radarr
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: volsync
+      namespace: volsync
   values:
     controllers:
-      main:
+      radarr:
+        labels:
+          nfsMount: "true"
         annotations:
           reloader.stakater.com/auto: "true"
-
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
-            supplementalGroups:
-              - 65539
-              - 568
-
-        initContainers:
-          01-init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: "16.3"
-              pullPolicy: IfNotPresent
-            envFrom: &envFrom
-              - secretRef:
-                  name: radarr
-
         containers:
-          main:
+          app:
             image:
-              repository: ghcr.io/onedr0p/radarr-develop
-              tag: 5.6.0.8846@sha256:99c264af3f2d177e6674a9b304b64a35261202de30e54b35d5758d40edd94366
+              repository: ghcr.io/joryirving/radarr-develop
+              tag: 5.7.0.8882@sha256:08e7e66e1a57cdbd5acf43972ea6f7a04cc9df6d86f7bb8bad50f763d43c8348
             env:
-              RADARR__INSTANCE_NAME: Radarr
-              RADARR__PORT: &port 80
-              RADARR__APPLICATION_URL: "radarr.${EXTERNAL_DOMAIN}"
-              RADARR__LOG_LEVEL: info
-              RADARR__THEME: dark
-            envFrom: *envFrom
+              TZ: ${TZ}
+              RADARR__APP__INSTANCENAME: Radarr
+              RADARR__APP__THEME: dark
+              RADARR__AUTH__METHOD: External
+              RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              RADARR__AUTH__REQUIRED: Radarr
+              RADARR__LOG__DBENABLED: "False"
+              RADARR__LOG__LEVEL: info
+              RADARR__SERVER__PORT: &port 80
+              RADARR__UPDATE__BRANCH: develop
+            envFrom:
+              - secretRef:
+                  name: radarr-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 14m
-                memory: 431M
+                cpu: 10m
               limits:
-                memory: 2Gi
-
+                memory: 1Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000]
+        seccompProfile: { type: RuntimeDefault }
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: *port
-
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /ping
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
-
     ingress:
-      main:
-        enabled: true
-        className: "internal"
+      app:
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Radarr
+          gethomepage.dev/icon: radarr.png
+          gethomepage.dev/description: Movie Downloads
+          gethomepage.dev/widget.type: radarr
+          gethomepage.dev/widget.url: http://radarr.downloads
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_RADARR_TOKEN}}` }}"
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: &host radarr.${EXTERNAL_DOMAIN}
+          - host: "radarr.rafaribe.com"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
-
     persistence:
       config:
-        enabled: true
-        existingClaim: radarr-config
-      pushover-notify:
-        type: configMap
-        name: radarr-configmap
-        defaultMode: 0775
-        globalMounts:
-          - path: /scripts/pushover-notify.sh
-            subPath: pushover-notify.sh
-            readOnly: true
+        existingClaim: *app
       tmp:
         type: emptyDir
-      media:
-        enabled: true
+      data:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media

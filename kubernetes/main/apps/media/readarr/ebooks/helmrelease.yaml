@@ -1,104 +1,96 @@
----
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app readarr-audio
-  namespace: media
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
   install:
-    createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
-      retries: 5
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync
   values:
     controllers:
-      main:
+      readarr:
+        labels:
+          nfsMount: "true"
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
-            supplementalGroups:
-              - 568
         containers:
-          main:
+          app:
             image:
-              repository: ghcr.io/onedr0p/readarr-nightly
-              tag: 0.3.28.2549@sha256:86c0ba70f298bb18d79d539d5bcc02d3853e2667e43818286210b24e0dd9dcd3
+              repository: ghcr.io/joryirving/readarr-develop
+              tag: 0.3.28.2554@sha256:d1a04972ae635303f88b13767d447c4f916a0223a8259a8dd506e28b95fae960
             env:
-              TZ: "${TZ}"
-              READARR__INSTANCE_NAME: Readarr (Ebooks)
+              TZ: ${TZ}
+              READARR__INSTANCE_NAME: Readarr Ebooks
               READARR__PORT: &port 80
               READARR__LOG_LEVEL: info
-              READARR__API_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: readarr-ebooks
-                    key: READARR_EBOOKS_APIKEY
-            probes:
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  exec:
-                    command:
-                      - /usr/bin/env
-                      - bash
-                      - -c
-                      - curl --fail localhost:8787/api/v1/system/status?apiKey=`IFS=\> && while
-                        read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
-                  failureThreshold: 5
-                  initialDelaySeconds: 60
-                  periodSeconds: 10
-                  successThreshold: 1
-                  timeoutSeconds: 10
+            envFrom:
+              - secretRef:
+                  name: *app
             resources:
               requests:
-                memory: 100Mi
-                cpu: 100m
+                cpu: 15m
+                memory: 160M
               limits:
-                memory: 1.5G
-
+                memory: 330M
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000]
+        seccompProfile: { type: RuntimeDefault }
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: *port
-
     ingress:
-      main:
-        enabled: true
-        className: external
+      app:
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Readarr Ebooks
+          gethomepage.dev/icon: readarr.png
+          gethomepage.dev/description: Readarr Ebooks
+          gethomepage.dev/widget.type: readarr
+          gethomepage.dev/widget.url: http://readarr-ebooks.media
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_READARR_TOKEN}}` }}"
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: &host "ebooks.rafaribe.com"
+          - host: "ebooks.rafaribe.com"
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
-
     persistence:
       config:
         enabled: true
-        existingClaim: config-readarr-ebooks-0
+        existingClaim: *app
         globalMounts:
           - path: /config
       media:
@@ -106,4 +98,5 @@ spec:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
-        mountPath: /media
+        globalMounts:
+          - path: /media

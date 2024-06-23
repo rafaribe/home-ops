@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: media-readarr-audio
+  name: &app readarr-audio
   namespace: flux-system
 spec:
   interval: 10m
@@ -12,11 +12,19 @@ spec:
     kind: GitRepository
     name: home-ops
   wait: false # no flux ks dependents
+  targetNamespace: media
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  postBuild:
+    substitute:
+      APP: *app
+
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: media-readarr-ebooks
+  name: &app readarr-ebooks
   namespace: flux-system
 spec:
   interval: 10m
@@ -26,3 +34,10 @@ spec:
     kind: GitRepository
     name: home-ops
   wait: false # no flux ks dependents
+  targetNamespace: media
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  postBuild:
+    substitute:
+      APP: *app

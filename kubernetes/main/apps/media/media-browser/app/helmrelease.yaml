@@ -91,7 +91,7 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /config
-      music:
+      media:
         enabled: true
         type: nfs
         server: truenas.rafaribe.com

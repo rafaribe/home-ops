@@ -110,12 +110,12 @@ spec:
     persistence:
       config:
         existingClaim: *app
-      data:
+      media:
         enabled: true
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
         globalMounts:
-          - path: /data
+          - path: /media
       add-ons:
         type: emptyDir
