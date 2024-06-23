@@ -76,7 +76,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "networking/wildcard-default-certificate-tls"
+        default-ssl-certificate: "network/wildcard-default-certificate-tls"
       resources:
         requests:
           cpu: 100m

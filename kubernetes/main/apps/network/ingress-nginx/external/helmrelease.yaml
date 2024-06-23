@@ -17,13 +17,6 @@ spec:
       interval: 15m
   install:
     createNamespace: true
-  valuesFrom:
-    # Cloudflare Networks
-    # https://www.cloudflare.com/ips/
-    - targetPath: controller.config.proxy-real-ip-cidr
-      kind: ConfigMap
-      name: &proxiednetworks cloudflare-proxied-networks
-      valuesKey: cloudflare-proxied-networks.txt
   values:
     fullnameOverride: nginx-external
     controller:
@@ -100,9 +93,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "networking/wildcard-default-certificate-tls"
-      podAnnotations:
-        configmap.reloader.stakater.com/reload: *proxiednetworks
+        default-ssl-certificate: "network/wildcard-default-certificate-tls"
     defaultBackend:
       enabled: false
       # image:
