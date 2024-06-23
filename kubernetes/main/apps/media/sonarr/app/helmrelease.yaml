@@ -28,7 +28,7 @@ spec:
       namespace: storage
   values:
     controllers:
-      sonarr-anime:
+      sonarr:
         labels:
           nfsMount: "true"
         annotations:
@@ -95,10 +95,10 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads
           gethomepage.dev/name: Sonarr
-          gethomepage.dev/icon: sonarr-anime.png
+          gethomepage.dev/icon: sonarr.png
           gethomepage.dev/description: TV Shows Downloads
           gethomepage.dev/widget.type: sonarr
-          gethomepage.dev/widget.url: http://sonarr-anime.media
+          gethomepage.dev/widget.url: http://sonarr.media
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARR_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:

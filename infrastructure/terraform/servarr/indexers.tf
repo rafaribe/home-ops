@@ -43,11 +43,11 @@ resource "prowlarr_indexer" "example" {
       text_value = "${data.sops_file.servarr-secrets.data["prowlarr_mam_id"]}"
     },    {
       name         = "torrentBaseSettings.seedRatio"
-      number_value = 0.5
+      number_value = 1.5
     },
     {
       name         = "torrentBaseSettings.seedTime"
-      number_value = 5
+      number_value = 30
     },
   ]
 }

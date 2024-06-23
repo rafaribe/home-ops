@@ -28,7 +28,7 @@ spec:
       namespace: volsync
   values:
     controllers:
-      readarr-readarr:
+      readarr:
         labels:
           nfsMount: "true"
         annotations:
