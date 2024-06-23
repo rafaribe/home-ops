@@ -1,41 +1,49 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app alertmanager-discord
-  namespace: monitoring
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: app-template
       version: 3.2.1
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 15m
-  maxHistory: 2
+  maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
+  uninstall:
+    keepHistory: false
   values:
     controllers:
       alertmanager-discord:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
+            env:
+              DISCORD_AVATAR_URL: https://avatars3.githubusercontent.com/u/3380462
+              DISCORD_USERNAME: AlertManager
             image:
-              repository: benjojo/alertmanager-discord
-              tag: latest
+              repository: rogerrum/alertmanager-discord
+              tag: 1.0.6@sha256:cfa615f24b7ec778ad0841c69527f798e713dfcadb7d7964dbe5b1821c767ebb
             envFrom:
               - secretRef:
                   name: alertmanager-discord
+            ports:
+              - name: http
+                containerPort: &port 9094
+                protocol: TCP
             probes:
               liveness:
                 enabled: true
@@ -43,12 +51,10 @@ spec:
                 enabled: true
               startup:
                 enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
+
     service:
       app:
         controller: *app
         ports:
           http:
-            port: 9094
+            port: *port
