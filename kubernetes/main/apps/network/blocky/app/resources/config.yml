@@ -33,7 +33,7 @@ customDNS:
     ; LAN
     opnsense      IN A      10.0.0.1
     ; Servers
-    truenas    IN A      10.0.0.6
+    truenas    IN A      truenas.rafaribe.com
     ; CNAME records
     truenas    IN CNAME  truenas.rafaribe.dev.
     nas        IN CNAME  truenas.rafaribe.dev.

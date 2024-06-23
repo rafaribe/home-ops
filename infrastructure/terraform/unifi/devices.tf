@@ -13,7 +13,7 @@ locals {
     {
       name     = "truenas"
       mac      = "0c:c4:7a:c0:df:0a"
-      fixed_ip = "10.0.1.6"
+      fixed_ip = "10.0.0.6"
       note     = "stable server running truenas scale "
     },
     {

@@ -110,7 +110,7 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: 10.0.1.6
+        server: truenas.rafaribe.com
         path: /mnt/storage-0/media
         mountPath: /media
       scripts:

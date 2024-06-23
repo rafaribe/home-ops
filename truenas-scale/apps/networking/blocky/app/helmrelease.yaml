@@ -86,7 +86,7 @@ spec:
                 loki.rafaribe.site: 10.0.1.8
                 thor.rafaribe.site: 10.0.1.9
                 freya.rafaribe.site: 10.0.1.10
-                10.0.1.6: 10.0.1.6
+                truenas.rafaribe.com: truenas.rafaribe.com
                 router.rafaribe.site: 10.0.1.1
                 bs.rafaribe.site: 10.0.1.11
     service:

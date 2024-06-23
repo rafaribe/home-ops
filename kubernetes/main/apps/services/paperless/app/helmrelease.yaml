@@ -144,7 +144,7 @@ spec:
               - path: /data/local
       nas:
         type: nfs
-        server: 10.0.0.6
+        server: truenas.rafaribe.com
         path: /mnt/storage-0/docs/paperless/
         globalMounts:
           - path: /data/nas

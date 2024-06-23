@@ -20,7 +20,7 @@ resource "unifi_network" "default" {
   dhcp_dns            = local.dhcp_dns
   dhcpd_boot_enabled  = true
   dhcpd_boot_filename = "ipxe.efi"
-  dhcpd_boot_server   = "10.0.1.6"
+  dhcpd_boot_server   = "10.0.0.6"
 }
 
 resource "unifi_network" "iot" {

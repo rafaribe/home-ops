@@ -3,7 +3,7 @@
         "bgp": {
             "64512": {
                 "neighbor": {
-                    "10.0.1.6": {
+                    "truenas.rafaribe.com": {
                         "remote-as": "64512"
                     },
                     "10.0.1.17": {

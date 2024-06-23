@@ -1,50 +1,50 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: calibre-web
-  namespace: media
 spec:
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
-      interval: 15m
+      version: 3.2.1
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  interval: 15m
+  interval: 30m
   values:
-    defaultPodOptions:
-      enableServiceLinks: false
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [44, 105, 568]
-        seLinuxOptions:
-          level: s0
     controllers:
-      main:
+      calibre-web:
         annotations:
           reloader.stakater.com/auto: "true"
 
         pod:
-          enableServiceLinks: false
-          labels:
-            egress.home.arpa/internet: allow
-            egress.home.arpa/kubedns: allow # FIXME: Remove when clusterNetworkPolicy is in place
-            ingress.home.arpa/nginx-internal: allow
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
 
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/bjw-s/calibre-web
               tag: 0.6.21@sha256:b02ff6d78863f3eede324f53c84a292afeb39442b8df1181dc676c30b6daef5a
             env:
               CACHE_DIR: /cache
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
             resources:
               requests:
                 cpu: 5m
@@ -53,49 +53,40 @@ spec:
                 memory: 470M
 
     service:
-      main:
+      app:
+        controller: calibre-web
         ports:
           http:
             port: 8083
+
     ingress:
-      main:
-        enabled: true
-        className: external
-        labels:
-          theme-park.home/name: calibreweb
-          theme-park.home/theme: hotline
+      app:
+        className: internal
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "book-open-page-variant"
-          theme.home.arpa/enabled: "true"
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: &host library.rafaribe.com
+          - host: calibre-web.rafaribe.com
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - secretName: library-tls
-            hosts:
-              - *host
+
     persistence:
       config:
-        enabled: true
-        existingClaim: calibre-web-config-v3
+        existingClaim: calibre-web
         advancedMounts:
-          main:
-            main:
+          calibre-web:
+            app:
               - path: /config
-      media:
+
+      data:
         enabled: true
         type: nfs
-        server: 10.0.1.6
-        path: /mnt/storage-0/media/books
-        advancedMounts:
-          main:
-            main:
-              - path: /media
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/media
+        globalMounts:
+          - path: /data
       cache:
         type: emptyDir
         globalMounts:
