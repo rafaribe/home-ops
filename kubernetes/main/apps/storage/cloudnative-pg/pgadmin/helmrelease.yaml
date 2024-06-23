@@ -1,18 +1,19 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app pgadmin
+  name: pgadmin
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
       version: 3.2.1
+      interval: 30m
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: bjw-s-charts
         namespace: flux-system
   install:
     remediation:
@@ -23,18 +24,26 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: DoesNotExist
     controllers:
       pgadmin:
+        pod:
+          securityContext:
+            runAsUser: 1000 # ${APP_UID}
+            runAsGroup: 1000 # ${APP_GID}
+            fsGroup: 1000 # ${APP_GID}
+            fsGroupChangePolicy: OnRootMismatch
+        replicas: 1
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          volume-permissions:
-            image:
-              repository: docker.io/dpage/pgadmin4
-              tag: "8.8@sha256:61fd25f428c155027fb2aa74b913d317af11a14f55e6135484b5e86a8840520b"
-            command: ["/bin/chown", "-R", "5050:5050", "/var/lib/pgadmin"]
-            securityContext:
-              runAsUser: 0
         containers:
           app:
             image:
@@ -56,25 +65,36 @@ spec:
           http:
             port: 80
     ingress:
-      app:
+      main:
         enabled: true
         className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: &host "{{ .Release.Name }}.rafaribe.com"
+          - host: &host "pg.rafaribe.com"
             paths:
               - path: /
                 pathType: Prefix
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
+        enabled: true
         existingClaim: pgadmin
-        globalMounts:
-          - path: /var/lib/pgadmin
+        advancedMounts:
+          pgadmin:
+            app:
+              - path: /var/lib/pgadmin
+      oauth:
+        enabled: true
+        type: secret
+        name: pgadmin-secret-auth
+        advancedMounts:
+          pgadmin:
+            app:
+              - path: /pgadmin4/config_local.py
+                subPath: config_local.py
       server-json:
         enabled: true
         type: configMap

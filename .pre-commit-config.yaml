@@ -33,6 +33,7 @@ repos:
     hooks:
       - id: forbid-crlf
       - id: forbid-tabs
+        exclude: kubernetes/main/apps/storage/cloudnative-pg/pgadmin/externalsecret.yaml
 
   - repo: https://github.com/sirosen/fix-smartquotes
     rev: 0.2.0
