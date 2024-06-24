@@ -13,7 +13,6 @@ resources:
   - ./reflector/ks.yaml
   - ./reloader/ks.yaml
   - ./snapshot-controller/ks.yaml
-  - ./local-path-provisioner/ks.yaml
   - ./node-feature-discovery/ks.yaml
   - ./spegel/ks.yaml
   - ./kubelet-csr-approver/ks.yaml
