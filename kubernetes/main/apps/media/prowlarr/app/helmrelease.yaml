@@ -35,7 +35,7 @@ spec:
               repository: ghcr.io/joryirving/prowlarr-develop
               tag: 1.18.0.4543@sha256:45b080d393a3949fa0cd20fd5783858de672a52cf5ce0e0bfda116f269218bda
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
               PROWLARR__APP__INSTANCENAME: Prowlarr
               PROWLARR__APP__THEME: dark
               PROWLARR__AUTH__METHOD: External

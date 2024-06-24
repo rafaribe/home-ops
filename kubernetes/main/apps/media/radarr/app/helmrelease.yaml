@@ -39,7 +39,7 @@ spec:
               repository: ghcr.io/joryirving/radarr-develop
               tag: 5.7.0.8882@sha256:08e7e66e1a57cdbd5acf43972ea6f7a04cc9df6d86f7bb8bad50f763d43c8348
             env:
-              TZ: ${TZ}
+              TZ: Europe/Lisbon
               RADARR__APP__INSTANCENAME: Radarr
               RADARR__APP__THEME: dark
               RADARR__AUTH__METHOD: External

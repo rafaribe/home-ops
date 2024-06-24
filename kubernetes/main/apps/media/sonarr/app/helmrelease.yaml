@@ -39,7 +39,7 @@ spec:
               repository: ghcr.io/joryirving/sonarr-develop
               tag: 4.0.5.1760@sha256:3c29eef6ff18762d6fcf48586e4489b850dbbbe9a55183a73dc8e691bb39091f
             env:
-              TZ: ${TZ}
+              TZ: Europe/Lisbon
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
               SONARR__AUTH__METHOD: External

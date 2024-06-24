@@ -24,3 +24,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  postBuild:
+    substitute:
+      CLUSTER_CLOUDFLARE_TUNNEL_ID: 86615e3e-8339-4559-a45b-01fd0cd07293

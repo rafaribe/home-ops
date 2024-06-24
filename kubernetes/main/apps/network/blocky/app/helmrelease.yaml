@@ -35,7 +35,7 @@ spec:
               repository: ghcr.io/0xerr0r/blocky
               tag: v0.24@sha256:9a82e0235c52ef3048586f8006add06e52132adaae70d02f980569dae16421a2
             env:
-              TZ: ${TZ}
+              TZ: Europe/Lisbon
             probes:
               liveness: &probes
                 enabled: true
@@ -83,7 +83,7 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${LB_BLOCKY:=temp}
+          io.cilium/lb-ipam-ips: 10.0.1.250
         ports:
           dns-tcp:
             port: *port

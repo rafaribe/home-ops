@@ -47,7 +47,7 @@ spec:
               repository: docker.io/mpepping/cyberchef
               tag: v10.18.8@sha256:93c427a7288c5b5d31523b865c4cb10d8ee81cac185ba88c88cf28203d5eadff
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
             resources:
               requests:
                 cpu: 25m

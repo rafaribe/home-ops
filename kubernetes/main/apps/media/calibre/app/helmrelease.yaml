@@ -35,7 +35,7 @@ spec:
               repository: ghcr.io/linuxserver/calibre
               tag: version-v7.12.0@sha256:7cef47ba7fd105e2352b48fcff50c43a78415511beee2f742000cf9de5609331
             env:
-              TZ: "${TZ}"
+              TZ: "Europe/Lisbon"
               PUID: "1000"
               PGID: "1000"
             resources:

@@ -73,7 +73,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: smtp-relay.rafaribe.com
-          io.cilium/lb-ipam-ips: ${LB_SMTP_RELAY}
+          io.cilium/lb-ipam-ips: 10.0.1.9
         ports:
           http:
             primary: true

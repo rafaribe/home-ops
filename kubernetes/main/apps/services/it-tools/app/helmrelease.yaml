@@ -33,7 +33,7 @@ spec:
               repository: ghcr.io/corentinth/it-tools
               tag: 2023.12.21-5ed3693
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
             probes:
               liveness:
                 enabled: false

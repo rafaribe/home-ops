@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cilium-app
+  name: &app cilium
   namespace: flux-system
 spec:
   path: ./kubernetes/main/apps/kube-system/cilium/app
@@ -17,11 +17,19 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  targetNamespace: kube-system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+
+  postBuild:
+    substitute:
+      GATEWAY_MANAGEMENT: 10.0.0.1
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cilium-bgp
+  name: &app cilium-bgp
   namespace: flux-system
 spec:
   path: ./kubernetes/main/apps/kube-system/cilium/bgp
@@ -39,6 +47,13 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  targetNamespace: kube-system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  postBuild:
+    substitute:
+      GATEWAY_MANAGEMENT: 10.0.0.1
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

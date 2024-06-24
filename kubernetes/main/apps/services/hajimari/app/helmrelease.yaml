@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   values:
     env:
-      TZ: ${TZ}
+      TZ: Europe/Lisbon
     hajimari:
       title: Apps
       darkTheme: espresso

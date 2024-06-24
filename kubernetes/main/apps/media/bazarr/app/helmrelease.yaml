@@ -47,7 +47,7 @@ spec:
               repository: ghcr.io/joryirving/bazarr
               tag: 1.4.3@sha256:6f069ce5262a0375ace93cedfb8a4288df6f096e536879779dc6e332309e9b68
             env:
-              TZ: ${TZ}
+              TZ: Europe/Lisbon
             envFrom:
               - secretRef:
                   name: *app

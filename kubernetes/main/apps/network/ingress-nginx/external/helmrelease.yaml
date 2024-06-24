@@ -24,7 +24,7 @@ spec:
 
       extraEnvs:
         - name: TZ
-          value: "${TZ}"
+          value: "Europe/Lisbon"
 
       updateStrategy:
         type: RollingUpdate
@@ -36,7 +36,7 @@ spec:
         enabled: true
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${LB_NGINX_EXTERNAL}
+          io.cilium/lb-ipam-ips: 10.0.1.2
         labels:
           pool: lb
         externalTrafficPolicy: Cluster

@@ -38,7 +38,7 @@ spec:
               repository: ghcr.io/onedr0p/qbittorrent-beta
               tag: 4.6.5@sha256:251916c90b09018e747b775f4924da711d8b4545b5b959030eb428571b38be2f
             env:
-              TZ: ${TZ}
+              TZ: Europe/Lisbon
               QBITTORRENT__PORT: &port 80
               QBITTORRENT__BT_PORT: &bittorrentPort 50413
               QBT_Application__MemoryWorkingSetLimit: 10000
@@ -89,7 +89,7 @@ spec:
         controller: qbittorrent
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${LB_QBITTORRENT}
+          io.cilium/lb-ipam-ips: 10.0.1.3
         ports:
           http:
             port: *port
@@ -114,7 +114,7 @@ spec:
         existingClaim: qbittorrent
       media:
         type: nfs
-        server: ${NAS_ADDRESS}
-        path: ${NAS_MEDIA}
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/media
         globalMounts:
           - path: /media

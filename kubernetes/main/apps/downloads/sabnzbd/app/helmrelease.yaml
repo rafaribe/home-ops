@@ -39,7 +39,7 @@ spec:
               repository: ghcr.io/joryirving/sabnzbd
               tag: 4.3.2@sha256:1130453088016d1c0e6c52485c1e5ba017906d73490b0f46b6ca7708da90ee5c
             env:
-              TZ: ${TZ}
+              TZ: Europe/Lisbon
               SABNZBD__PORT: &port 8080
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
                 sabnzbd, sabnzbd.downloads, sabnzbd.downloads.svc, sabnzbd.downloads.svc.cluster, sabnzbd.downloads.svc.cluster.local, sabnzbd.rafaribe.com

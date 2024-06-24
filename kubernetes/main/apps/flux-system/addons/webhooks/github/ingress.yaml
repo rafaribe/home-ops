@@ -3,15 +3,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: webhook-receiver
-  namespace: flux-system
   annotations:
-    hajimari.io/enable: "false"
-    # external-dns.home.arpa/enabled: "true"
-    probe.home.arpa/enabled: "false"
+    external-dns.alpha.kubernetes.io/target: external.rafaribe.com
 spec:
-  ingressClassName: "external"
+  ingressClassName: external
   rules:
-    - host: &host "flux-receiver.${EXTERNAL_DOMAIN}"
+    - host: flux-webhook.rafaribe.com
       http:
         paths:
           - path: /hook/
@@ -21,6 +18,3 @@ spec:
                 name: webhook-receiver
                 port:
                   number: 80
-  tls:
-    - hosts:
-        - *host
