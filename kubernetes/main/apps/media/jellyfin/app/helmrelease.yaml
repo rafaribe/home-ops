@@ -77,8 +77,6 @@ spec:
         #       runAsUser: 0
     service:
       main:
-        annotations:
-          io.cilium/lb-ipam-ips: ${LB_JELLYFIN}
         controller: jellyfin
         ports:
           http:

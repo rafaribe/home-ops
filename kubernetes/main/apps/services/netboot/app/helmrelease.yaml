@@ -35,7 +35,8 @@ spec:
         enabled: true
         primary: false
         type: LoadBalancer
-        loadBalancerIP: ${LB_NETBOOT_XYZ}
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_NETBOOT_XYZ}
         controller: main
         ports:
           web:

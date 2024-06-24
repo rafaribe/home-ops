@@ -1,14 +1,10 @@
 ---
 originRequest:
-  originServerName: external.${EXTERNAL_DOMAIN}
+  originServerName: external.rafaribe.com
 
 ingress:
-  - hostname: "${EXTERNAL_DOMAIN}"
+  - hostname: "rafaribe.com"
     service: https://nginx-external-controller.network.svc.cluster.local:443
-    originRequest:
-      originServerName: "external.${EXTERNAL_DOMAIN}"
-  - hostname: "*.${EXTERNAL_DOMAIN}"
+  - hostname: "*.rafaribe.com"
     service: https://nginx-external-controller.network.svc.cluster.local:443
-    originRequest:
-      originServerName: "external.${EXTERNAL_DOMAIN}"
   - service: http_status:404

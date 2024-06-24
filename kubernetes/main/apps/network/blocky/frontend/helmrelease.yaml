@@ -63,13 +63,13 @@ spec:
 
     ingress:
       app:
-        className: external
+        className: internal
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           hajimari.io/enable: "true"
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: &host blocky.${SECRET_DOMAIN}
+          - host: &host blocky.rafaribe.com
             paths:
               - path: /
                 service:
@@ -100,5 +100,5 @@ spec:
 
     serviceMonitor:
       app:
-        enabled: true
+        enabled: false
         serviceName: *app
