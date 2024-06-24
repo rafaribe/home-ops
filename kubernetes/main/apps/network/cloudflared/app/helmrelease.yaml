@@ -1,104 +1,41 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
-apiVersion: helm.toolkit.fluxcd.io/v2
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: cloudflared
+  name: &app cloudflared-tunnel
+  namespace: network
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
-      chart: app-template
-      version: 3.2.1
+      chart: cloudflare-tunnel
+      version: 0.3.0
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: cloudflare
         namespace: flux-system
-      interval: 15m
-  install:
-    createNamespace: true
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
+  dependsOn:
+    - name: ingress-nginx-external
+      namespace: network
   values:
-    controllers:
-      cloudflared:
-        replicas: 2
-        strategy: RollingUpdate
-        annotations:
-          reloader.stakater.com/auto: "true"
-        pod:
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: cloudflared
-        containers:
-          main:
-            image:
-              repository: ghcr.io/cbc02009/cloudflared
-              tag: 2024.6.1
-            args:
-              - tunnel
-              - --config
-              - /etc/cloudflared/config/config.yaml
-              - run
-              - 86615e3e-8339-4559-a45b-01fd0cd07293
-            resources:
-              requests:
-                cpu: 5m
-                memory: 10Mi
-              limits:
-                memory: 256Mi
-            probes:
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
-            env:
-              NO_AUTOUPDATE: "true"
-              TUNNEL_CRED_FILE: /etc/cloudflared/creds/credentials.json
-              TUNNEL_METRICS: 0.0.0.0:8080
-              TUNNEL_TRANSPORT_PROTOCOL: auto
-    service:
-      main:
-        controller: cloudflared
-        ports:
-          http:
-            port: 8080
-    serviceMonitor:
-      main:
-        serviceName: cloudflared
-        enabled: true
-        endpoints:
-          - port: http
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 30s
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        name: cloudflared-configmap
-        globalMounts:
-          - path: /etc/cloudflared/config/config.yaml
-            subPath: config.yaml
-            readOnly: true
-      creds:
-        enabled: true
-        type: secret
-        name: cloudflared-tunnel-secret
-        globalMounts:
-          - path: /etc/cloudflared/creds/credentials.json
-            subPath: credentials.json
-            readOnly: true
+    nameOverride: *app
+    replicaCount: 1
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 10m
+    cloudflare:
+      tunnelName: "home-ops"
+      secretName: cloudflared-tunnel-secret
+      enableWarp: true
+      ingress:
+        # Example of a request mapping to the Hello World test server:
+        - hostname: rafaribe.com"
+          service: https://nginx-external-controller.network.svc.cluster.local.:443
+        - hostname: "*.rafaribe.com"
+          service: https://nginx-external-controller.network.svc.cluster.local:443
+          originRequest:
+            noTLSVerify: true
+            originServerName: external.rafaribe.com"
