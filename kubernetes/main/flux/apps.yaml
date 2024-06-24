@@ -12,6 +12,10 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-ops
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   postBuild:
     substituteFrom:
       - kind: ConfigMap
