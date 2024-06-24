@@ -89,7 +89,7 @@ spec:
       config:
         enabled: true
         type: configMap
-        name: cloudflared-config
+        name: cloudflared-configmap
         globalMounts:
           - path: /etc/cloudflared/config/config.yaml
             subPath: config.yaml
@@ -97,7 +97,7 @@ spec:
       creds:
         enabled: true
         type: secret
-        name: cloudflared-secret
+        name: cloudflared-tunnel-secret
         globalMounts:
           - path: /etc/cloudflared/creds/credentials.json
             subPath: credentials.json
