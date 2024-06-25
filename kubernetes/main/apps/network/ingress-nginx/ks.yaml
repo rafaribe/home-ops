@@ -17,7 +17,7 @@ spec:
   timeout: 3m
   dependsOn:
     - name: nginx-config
-    - name: cilium-app
+    - name: cilium
   targetNamespace: network
   commonMetadata:
     labels:
@@ -42,7 +42,7 @@ spec:
   timeout: 3m
   dependsOn:
     - name: nginx-config
-    - name: cilium-app
+    - name: cilium
   targetNamespace: network
   commonMetadata:
     labels:

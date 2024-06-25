@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: ingress-nginx-external
+  name: nginx-external
 
 spec:
   interval: 15m
@@ -47,7 +47,7 @@ spec:
       ingressClassResource:
         name: external
         default: false
-        controllerValue: k8s.io/ingress-nginx-external
+        controllerValue: k8s.io/nginx-external
 
       admissionWebhooks:
         objectSelector:

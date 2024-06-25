@@ -23,7 +23,7 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: ingress-nginx-external
+    - name: nginx-external
       namespace: network
   values:
     controllers:

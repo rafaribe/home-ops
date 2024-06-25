@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: ingress-nginx-internal
+  name: nginx-internal
 
 spec:
   interval: 30m
@@ -38,7 +38,7 @@ spec:
       ingressClassResource:
         name: internal
         default: true
-        controllerValue: k8s.io/ingress-nginx-internal
+        controllerValue: k8s.io/nginx-internal
       admissionWebhooks:
         objectSelector:
           matchExpressions:
