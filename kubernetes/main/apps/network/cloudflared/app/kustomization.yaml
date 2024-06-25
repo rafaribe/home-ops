@@ -6,9 +6,9 @@ resources:
   - ./externalsecret.yaml
   - ./dnsendpoint.yaml
   - ./helmrelease.yaml
-# configMapGenerator:
-#   - name: cloudflared-configmap
-#     files:
-#       - config.yaml=./resources/config.yaml
+configMapGenerator:
+  - name: cloudflared-configmap
+    files:
+      - config.yaml=./resources/config.yaml
 generatorOptions:
   disableNameSuffixHash: true
