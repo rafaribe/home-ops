@@ -58,50 +58,53 @@ spec:
                   failureThreshold: 6
               readiness: *probes
     service:
-      app:
-        controller: main
+      main:
+        controller: minio
         ports:
           http:
             port: 9001
-          s3:
+          api:
             port: 9000
+    ingress:
+      main:
+        enabled: true
+        className: internal
+        hosts:
+          - host: &host minio.rafaribe.com
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+      s3:
+        enabled: true
+        className: internal
+        annotations:
+          hajimari.io/enable: "false"
+          nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
+          nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+          nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            chunked_transfer_encoding off;
+        hosts:
+          - host: &host s3.rafaribe.com
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: api
     serviceMonitor:
-      app:
+      main:
         serviceName: minio
+        enabled: true
         endpoints:
-          - port: s3
+          - port: api
             scheme: http
             path: /minio/v2/metrics/cluster
             interval: 1m
             scrapeTimeout: 10s
-    ingress:
-      app:
-        annotations:
-          #external-dns.home.arpa/enabled: "true"
-          nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
-          nginx.ingress.kubernetes.io/proxy-body-size: 5000m
-          nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            chunked_transfer_encoding off;
-        className: internal
-        hosts:
-          - host: &host "minio.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-          - host: &s3Host "s3.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: s3
-        tls:
-          - hosts:
-              - *host
-              - *s3Host
-            secretName: tls.minio
     persistence:
       config:
         enabled: true
