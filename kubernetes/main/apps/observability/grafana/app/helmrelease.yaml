@@ -382,12 +382,22 @@ spec:
         searchNamespace: ALL
         labelValue: ""
     plugins:
+      # Plugins
       - grafana-clock-panel
       - grafana-piechart-panel
       - grafana-worldmap-panel
       - natel-discrete-panel
       - pr0ps-trackmap-panel
       - vonage-status-panel
+      # Datasources
+      - netdatacloud-netdata-datasource
+      - pixie-pixie-datasource
+      - grafana-googlesheets-datasource
+      - grafana-mqtt-datasource
+      - grafana-strava-datasource
+      - grafana-github-datasource
+      - isovalent-hubble-datasource
+      - redis-datasource
     serviceMonitor:
       enabled: true
     ingress:
