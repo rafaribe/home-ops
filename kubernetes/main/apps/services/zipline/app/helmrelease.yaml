@@ -131,9 +131,9 @@ spec:
     ingress:
       app:
         enabled: true
-        className: external
+        className: internal
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.rafaribe.com"
+          external-dns.alpha.kubernetes.io/target: "internal.rafaribe.com"
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
         hosts:
           - host: &host "zipline.rafaribe.com"
