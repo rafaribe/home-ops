@@ -21,8 +21,8 @@ spec:
         path: /var/log/pods
   resources:
     limits:
-      cpu: 400m
-      memory: 1Gi
+      cpu: 200m
+      memory: 500Mi
   serviceAccount: collector
   env:
     - name: K8S_NODE_NAME
