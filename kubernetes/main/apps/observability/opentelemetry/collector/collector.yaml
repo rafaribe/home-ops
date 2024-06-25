@@ -2,7 +2,7 @@
 apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
-  name: pod-logging
+  name: otel-collector
 spec:
   mode: daemonset
   image: otel/opentelemetry-collector-contrib:0.103.1
