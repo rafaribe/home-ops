@@ -23,6 +23,10 @@ spec:
     limits:
       cpu: 200m
       memory: 500Mi
+  podSecurityContext:
+    runAsUser: 0
+    runAsNonRoot: false
+    runAsGroup: 0
   serviceAccount: collector
   env:
     - name: K8S_NODE_NAME
