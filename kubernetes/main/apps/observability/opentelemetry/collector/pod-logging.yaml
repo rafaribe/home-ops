@@ -5,7 +5,7 @@ metadata:
   name: pod-logging
 spec:
   mode: daemonset
-  image: otel/opentelemetry-collector-contrib:0.102.0
+  image: otel/opentelemetry-collector-contrib:0.103.1
   volumeMounts:
     - name: hostvarlog
       mountPath: /host/var/log
