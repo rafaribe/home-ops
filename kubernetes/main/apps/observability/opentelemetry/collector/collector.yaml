@@ -89,9 +89,6 @@ spec:
           - type: move
             from: attributes.uid
             to: resource["k8s.pod.uid"]
-          - type: move
-            from: attributes.uid
-            to: resource["k8s.deployment.name"]
     processors:
       batch:
       k8sattributes:
