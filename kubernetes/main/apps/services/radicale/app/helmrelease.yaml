@@ -64,7 +64,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
-          - host: rad.rafaribe.com
+          - host: radicale.rafaribe.com
             paths:
               - path: /
                 service:

@@ -93,7 +93,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
-          - host: recipes.rafaribe.com
+          - host: tandoor.rafaribe.com
             paths:
               - path: /
                 service:
