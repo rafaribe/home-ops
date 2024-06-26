@@ -44,12 +44,10 @@ spec:
               repository: ghcr.io/tandoorrecipes/recipes
               tag: 1.5.17
             env:
-              COMMENT_PREF_DEFAULT: 0
               DEBUG: 1
               ENABLE_SIGNUP: 0
-              FRACTION_PREF_DEFAULT: 0
+
               GUNICORN_MEDIA: 0
-              MAX_OWNED_SPACES_PREF_DEFAULT: 0
               SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
               TANDOOR_PORT: &tandoorPort 8000
             envFrom:
@@ -104,9 +102,9 @@ spec:
 
     ingress:
       app:
-        className: "internal"
+        className: "external"
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
           - host: tandoor.rafaribe.com
             paths:
