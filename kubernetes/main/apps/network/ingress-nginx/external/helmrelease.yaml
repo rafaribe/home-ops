@@ -3,7 +3,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: nginx-external
-
 spec:
   interval: 15m
   chart:
@@ -18,7 +17,7 @@ spec:
   install:
     createNamespace: true
   values:
-    fullnameOverride: nginx-external
+    fullnameOverride: external
     controller:
       replicaCount: 3
 

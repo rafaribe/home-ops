@@ -4,7 +4,7 @@ originRequest:
 
 ingress:
   - hostname: "rafaribe.com"
-    service: https://nginx-external-controller.network.svc.cluster.local:443
+    service: https://external-controller.network.svc.cluster.local:443
   - hostname: "*.rafaribe.com"
-    service: https://nginx-external-controller.network.svc.cluster.local:443
+    service: https://external-controller.network.svc.cluster.local:443
   - service: http_status:404
