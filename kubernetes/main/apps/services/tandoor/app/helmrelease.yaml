@@ -41,7 +41,7 @@ spec:
               ENABLE_SIGNUP: 0
               FRACTION_PREF_DEFAULT: 0
               GUNICORN_MEDIA: 0
-              MAX_OWNED_SPACES_PREF_DEFAULT: 100
+              MAX_OWNED_SPACES_PREF_DEFAULT: 0
               SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
               TANDOOR_PORT: &tandoorPort 8000
             envFrom:
