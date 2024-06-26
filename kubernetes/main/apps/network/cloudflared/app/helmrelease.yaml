@@ -46,6 +46,8 @@ spec:
               TUNNEL_POST_QUANTUM: true
             args:
               - tunnel
+              - --loglevel
+              - debug
               - --config
               - /etc/cloudflared/config/config.yaml
               - run
