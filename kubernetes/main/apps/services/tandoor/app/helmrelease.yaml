@@ -89,9 +89,9 @@ spec:
 
     ingress:
       app:
-        className: "external"
+        className: "internal"
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: recipes.rafaribe.com
             paths:
