@@ -94,13 +94,12 @@ spec:
       extraArgs:
         default-ssl-certificate: "network/wildcard-default-certificate-tls"
     defaultBackend:
-      enabled: false
-      # image:
-      #   repository: ghcr.io/tarampampam/error-pages
-      #   tag: 2.25.0
-      # replicaCount: 1
-      # extraEnvs:
-      #   - name: TEMPLATE_NAME
-      #     value: lost-in-space
-      #   - name: SHOW_DETAILS
-      #     value: "false"
+      enabled: true
+      image:
+        repository: ghcr.io/tarampampam/error-pages
+        tag: 2.27 # Using the latest tag is highly discouraged. Please, use tags in X.Y.Z format
+      extraEnvs:
+        - name: TEMPLATE_NAME # Optional: change the default theme
+          value: ghost
+        - name: SHOW_DETAILS # Optional: enables the output of additional information on error pages
+          value: "true"
