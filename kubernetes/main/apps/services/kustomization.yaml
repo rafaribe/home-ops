@@ -20,5 +20,5 @@ resources:
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
   - ./theme-park/ks.yaml
-    - ./radicale/ks.yaml
+  - ./radicale/ks.yaml
   - ./zipline/ks.yaml
