@@ -17,8 +17,8 @@ resources:
   - ./netboot/ks.yaml
   - ./paperless/ks.yaml
   - ./smtp-relay/ks.yaml
-  - ./tandoor/ks.yaml
+  # - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
   - ./theme-park/ks.yaml
-  - ./radicale/ks.yaml
+  #  - ./radicale/ks.yaml
   - ./zipline/ks.yaml
