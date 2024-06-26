@@ -44,12 +44,16 @@ spec:
               repository: ghcr.io/tandoorrecipes/recipes
               tag: 1.5.17
             env:
+              COMMENT_PREF_DEFAULT: 1
               DEBUG: 1
+              ALLOWED_HOSTS: "*"
               ENABLE_SIGNUP: 0
-
+              FRACTION_PREF_DEFAULT: 0
               GUNICORN_MEDIA: 0
+              MAX_OWNED_SPACES_PREF_DEFAULT: 100
               SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
               TANDOOR_PORT: &tandoorPort 8000
+              CORS_ALLOW_ALL_ORIGINS: "true"
             envFrom:
               - secretRef:
                   name: tandoor
@@ -61,9 +65,9 @@ spec:
                   httpGet:
                     path: /accounts/login/
                     port: *tandoorPort
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
+                  initialDelaySeconds: 10
+                  periodSeconds: 20
+                  timeoutSeconds: 3
                   failureThreshold: 3
               readiness: *probes
               startup:
