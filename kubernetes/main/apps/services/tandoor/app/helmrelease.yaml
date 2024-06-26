@@ -72,9 +72,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 256Mi
+                memory: 500Mi
               limits:
-                memory: 512Mi
+                memory: 750Mi
           nginx:
             image:
               repository: ghcr.io/nginxinc/nginx-unprivileged
