@@ -48,7 +48,8 @@ spec:
               tag: 1.31.0@sha256:328c06bcb76128b653828c681d7d648baef7e8453d2d6e25f90bb31d72f997af
             envFrom: *envFrom
             env:
-              OIDC_VERIFY_SSL: "False"
+              OIDC_VERIFY_SSL: "True"
+              OIDC_USE_NONCE: "False"
 
             probes:
               liveness: &probes
