@@ -7,6 +7,7 @@
       "Port": 5432,
       "MaintenanceDB": "postgres",
       "Username": "postgres",
+      "PassFile": "/pgadmin4/pgpass",
       "SSLMode": "prefer",
       "SSLCompression": 0,
       "Timeout": 10,
