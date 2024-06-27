@@ -1,0 +1,318 @@
+---
+mqtt:
+  host: emqx.home.svc.cluster.local
+  topic_prefix: frigate
+  user: "{FRIGATE_MQTT_USERNAME}"
+  password: "{FRIGATE_MQTT_PASSWORD}"
+
+ffmpeg:
+  global_args: ["-hide_banner", "-loglevel", "info"]
+  hwaccel_args: preset-vaapi
+
+detectors:
+  coral:
+    type: edgetpu
+    device: usb
+
+auth:
+  enabled: false
+
+tls:
+  enabled: false
+
+logger:
+  default: info
+
+database:
+  path: /data/frigate.db
+
+objects:
+  track:
+    - person
+    - dog
+    - car
+
+record:
+  enabled: true
+  retain:
+    days: 182
+    mode: all
+  events:
+    retain:
+      default: 365
+      mode: active_objects
+
+snapshots:
+  enabled: true
+  timestamp: true
+  bounding_box: true
+  crop: false
+
+go2rtc:
+  webrtc:
+    candidates:
+      - 10.10.40.102:8555
+      - stun:8555
+  streams:
+    #backyard:
+    #  - rtsp://user:{FRIGATE_AMCREST_RTSP_PASSWORD}@amcrest-backyard:554/cam/realmonitor?channel=1?subtype=1
+    #backyard_substream:
+    #  - rtsp://user:{FRIGATE_AMCREST_RTSP_PASSWORD}@amcrest-backyard:554/cam/realmonitor?channel=1?subtype=0
+    pool:
+      - rtsp://user:{FRIGATE_AMCREST_RTSP_PASSWORD}@amcrest-pool:554/cam/realmonitor?channel=1?subtype=1
+    pool_substream:
+      - rtsp://user:{FRIGATE_AMCREST_RTSP_PASSWORD}@amcrest-pool:554/cam/realmonitor?channel=1?subtype=0
+    frontyard:
+      - rtsp://user:{FRIGATE_AMCREST_RTSP_PASSWORD}@amcrest-frontyard:554/cam/realmonitor?channel=1?subtype=1
+    frontyard_substream:
+      - rtsp://user:{FRIGATE_AMCREST_RTSP_PASSWORD}@amcrest-frontyard:554/cam/realmonitor?channel=1?subtype=0
+    #office:
+    #  - rtsp://user:{FRIGATE_AMCREST_RTSP_PASSWORD}@amcrest-office:554/cam/realmonitor?channel=1?subtype=1
+    #office_substream:
+    #  - rtsp://user:{FRIGATE_AMCREST_RTSP_PASSWORD}@amcrest-office:554/cam/realmonitor?channel=1?subtype=0
+    #turret:
+    #  - rtsp://admin:{FRIGATE_AMCREST_RTSP_PASSWORD}@amcrest-turret:554/cam/realmonitor?channel=1?subtype=1
+    #turret_substream:
+    #  - rtsp://admin:{FRIGATE_AMCREST_RTSP_PASSWORD}@amcrest-turret:554/cam/realmonitor?channel=1?subtype=0
+    #bookshelf:
+    #  - rtsp://wyze:{FRIGATE_WYZECAM_RTSP_PASSWORD}@wyzecam-2/live
+    #familyroom:
+    #  - rtsp://wyze:{FRIGATE_WYZECAM_RTSP_PASSWORD}@wyzecam-1/live
+    #kitchen:
+    #  - rtsp://wyze:{FRIGATE_WYZECAM_RTSP_PASSWORD}@wyzecam-3/live
+    #backyard2:
+    #  - rtsp://user:{FRIGATE_AMCREST_RTSP_PASSWORD}@loryta-backyard:554/cam/realmonitor?channel=1?subtype=1
+    #backyard2_substream:
+    #  - rtsp://user:{FRIGATE_AMCREST_RTSP_PASSWORD}@loryta-backyard:554/cam/realmonitor?channel=1?subtype=0
+    frontdoor:
+      - rtsp://user:{FRIGATE_REOLINK_RTSP_PASSWORD}@reolink-frontdoor:554/h264Preview_01_main
+    frontdoor_substream:
+      - rtsp://user:{FRIGATE_REOLINK_RTSP_PASSWORD}@reolink-frontdoor:554/h264Preview_01_sub
+    bush:
+      - rtsp://user:{FRIGATE_REOLINK_RTSP_PASSWORD}@reolink-bush:554/h264Preview_01_main
+    bush_substream:
+      - rtsp://user:{FRIGATE_REOLINK_RTSP_PASSWORD}@reolink-bush:554/h264Preview_01_sub
+    backyard:
+      - "ffmpeg:rtsp://user:{FRIGATE_REOLINK_RTSP_PASSWORD}@reolink-backyard:554/h264Preview_01_main#video=h264#audio=copy#audio=opus"
+    backyard_substream:
+      - rtsp://user:{FRIGATE_REOLINK_RTSP_PASSWORD}@reolink-backyard:554/h264Preview_01_sub
+
+cameras:
+  reolink-backyard:
+    ffmpeg:
+      output_args:
+        record: preset-record-generic-audio-copy
+      inputs:
+        - path: rtsp://127.0.0.1:8554/backyard
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/backyard_substream
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+    detect:
+      fps: 5
+      width: 1536
+      height: 576
+  reolink-frontdoor:
+    ffmpeg:
+      output_args:
+        record: preset-record-generic-audio-copy
+      inputs:
+        - path: rtsp://127.0.0.1:8554/frontdoor
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/frontdoor_substream
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+    detect:
+      fps: 5
+      width: 640
+      height: 480
+    zones:
+      driveway:
+        coordinates: 240,224,288,222,323,221,385,220,435,218,468,219,499,222,487,224,424,231,394,235,359,236,315,236,282,239,242,237
+      street:
+        coordinates: 640,228,640,246,596,237,555,229,512,227,488,226,456,224,397,215,410,207,478,208,566,217
+      walkway:
+        coordinates: 199,312,277,313,239,277,310,294,360,319,404,341,358,365,249,364,142,352,142,304
+    review:
+      alerts:
+        required_zones:
+          - walkway
+          - driveway
+          - street
+      detections:
+        required_zones:
+          - walkway
+          - driveway
+          - street
+    snapshots:
+      required_zones:
+        - walkway
+        - driveway
+        - street
+    objects:
+      filters:
+        person:
+          max_area: 35000
+          mask:
+            - 418,253,417,281,395,291,383,313,396,329,417,349,454,354,521,372,573,383,597,347,588,277,518,248,478,238,448,235
+            - 554,240,538,233,540,212,551,210
+        dog:
+          max_area: 35000
+          mask:
+            - 418,253,417,281,395,291,383,313,396,329,417,349,454,354,521,372,573,383,597,347,588,277,518,248,478,238,448,235
+  reolink-bush:
+    ffmpeg:
+      output_args:
+        record: preset-record-generic-audio-copy
+      inputs:
+        - path: rtsp://127.0.0.1:8554/bush
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/bush_substream
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+    detect:
+      fps: 5
+      width: 640
+      height: 480
+    zones:
+      greenway:
+        coordinates: 222,168,124,151,66,148,61,193,94,211,123,226,164,244,206,247,248,266,283,280,302,288,316,297,343,302,354,314,368,319,400,330,444,346,499,362,608,390,640,398,640,247,536,230,388,198
+        objects:
+          - person
+          - car
+      pool:
+        coordinates: 73,201,33,170,0,165,0,219,0,288,49,249
+    review:
+      alerts:
+        required_zones:
+          - greenway
+          - pool
+      detections:
+        required_zones:
+          - greenway
+          - pool
+    snapshots:
+      required_zones:
+        - greenway
+        - pool
+    objects:
+      filters:
+        car:
+          mask:
+            - 640,480,640,386,574,368,488,339,402,312,319,283,256,260,209,241,164,223,127,212,96,199,72,188,0,180,0,480
+  amcrest-frontyard:
+    ffmpeg:
+      output_args:
+        record: preset-record-generic-audio-copy
+      inputs:
+        - path: rtsp://127.0.0.1:8554/frontyard
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/frontyard_substream
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+    detect:
+      fps: 5
+      width: 640
+      height: 480
+    motion:
+      mask:
+        - 510,480,640,480,640,329,640,221,609,222,577,256,572,284,581,321,564,334,530,344,502,326,470,324,416,331,382,348,365,394,370,480,422,480
+    zones:
+      walkway:
+        coordinates: 577,366,640,346,640,251,590,265,540,282,460,304,378,326,296,340,259,350,218,351,159,352,108,357,59,334,0,312,0,377,162,417,304,411,326,480,372,480,360,404,510,372
+        objects:
+          - person
+      driveway:
+        coordinates: 49,174,93,140,136,115,101,123,64,147,21,181,0,197,0,216
+        objects:
+          - person
+          - car
+      street:
+        coordinates: 301,56,392,59,469,63,568,78,640,95,640,142,547,123,478,117,415,114,340,114,242,113,151,124,0,168,0,110,57,96,128,79,170,73,227,68
+        objects:
+          - person
+          - car
+    review:
+      alerts:
+        required_zones:
+          - walkway
+          - driveway
+          - street
+      detections:
+        required_zones:
+          - walkway
+          - driveway
+          - street
+    snapshots:
+      required_zones:
+        - walkway
+        - driveway
+        - street
+    objects:
+      filters:
+        person:
+          mask:
+            - 406,314,423,311,419,285,404,286
+            - 148,117,177,112,175,80,147,90
+            - 358,100,341,102,342,79,352,80
+            - 557,123,583,127,583,83,554,82
+  amcrest-pool:
+    ffmpeg:
+      output_args:
+        record: preset-record-generic-audio-copy
+      inputs:
+        - path: rtsp://127.0.0.1:8554/pool
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/pool_substream
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+    detect:
+      fps: 5
+      width: 640
+      height: 480
+    objects:
+      filters:
+        person:
+          threshold: 0.75
+          mask:
+            - 186,207,201,203,204,186,188,185
+            - 580,240,563,233,570,209,585,218
+            - 516,240,539,240,536,195,507,198
+            - 69,227,97,228,97,169,67,172
+            - 305,209,331,209,324,142,306,144
+    zones:
+      pool:
+        coordinates: 539,480,640,480,640,188,556,176,479,172,388,168,321,157,257,152,133,147,74,147,0,135,0,245,0,480,124,480,198,480,266,480,357,480,430,480
+        objects:
+          - person
+          - dog
+      greenway:
+        coordinates: 150,198,306,198,640,240,640,162,447,141,234,131,67,137,68,215
+        objects:
+          - person
+          - car
+    review:
+      alerts:
+        required_zones:
+          - pool
+      detections:
+        required_zones:
+          - pool
+    snapshots:
+      required_zones:
+        - pool
