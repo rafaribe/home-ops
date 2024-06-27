@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: ollama
   interval: 10m
-  path: "./kubernetes/main/apps/ai/ollama/app"
+  path: "./kubernetes/main/apps/ai/ollama/ui"
   prune: true
   sourceRef:
     kind: GitRepository
