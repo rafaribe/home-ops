@@ -53,8 +53,8 @@ spec:
               APP_UR: https://ferdium.rafaribe.com
               CONNECT_WITH_FRANZ: false
               DATA_DIR: "/data"
-              IS_CREATION_ENABLED: false
-              IS_REGISTRATION_ENABLED: false
+              IS_CREATION_ENABLED: true
+              IS_REGISTRATION_ENABLED: true
               IS_DASHBOARD_ENABLED: true
               JWT_USE_PEM: true
             envFrom: *envFrom
