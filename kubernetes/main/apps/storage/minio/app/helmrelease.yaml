@@ -40,6 +40,7 @@ spec:
               MINIO_PROMETHEUS_JOB_ID: minio
               MINIO_BROWSER_REDIRECT_URL: "https://minio.rafaribe.com"
               MINIO_SERVER_URL: "https://s3.rafaribe.com"
+              MINIO_PROMETHEUS_AUTH_TYPE: "public"
             envFrom:
               - secretRef:
                   name: minio
