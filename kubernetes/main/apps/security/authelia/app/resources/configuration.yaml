@@ -93,6 +93,8 @@ identity_providers:
           [
             "https://grafana.rafaribe.com:3000/login/generic_oauth",
             "https://grafana.rafaribe.com/login/generic_oauth",
+            "http://grafana.rafaribe.com:3000/login/generic_oauth",
+            "http://grafana.rafaribe.com/login/generic_oauth",
           ]
         userinfo_signed_response_alg: none
       - client_name: Miniflux
