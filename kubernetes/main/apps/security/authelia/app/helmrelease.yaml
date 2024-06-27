@@ -142,4 +142,4 @@ spec:
         type: secret
         name: authelia-secret-files
         globalMounts:
-          - path: /config/secret
+          - path: /config/oidc-secret
