@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: docker.io/ollama/ollama
-              tag: 0.1.46
+              tag: 0.1.47
             env:
               TZ: Europe/Lisbon
               LIBVA_DRIVER_NAME: i965
