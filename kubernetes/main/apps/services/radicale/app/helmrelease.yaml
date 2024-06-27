@@ -32,8 +32,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/bjw-s/radicale
-              tag: 3.2.1@sha256:b9964bf46d0fa56e087eadd9811cc87b3e8732e84982b356098bf55e1f80f618
+              repository: tomsquest/docker-radicale
+              tag: 3.2.2.0
             probes:
               liveness:
                 enabled: true
