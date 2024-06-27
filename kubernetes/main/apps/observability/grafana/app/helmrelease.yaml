@@ -43,6 +43,8 @@ spec:
       GF_LOG_FILTERS: rendering:debug
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       GF_SECURITY_ANGULAR_SUPPORT_ENABLED: true
+      GF_DATE_FORMATS_FULL_DATE: "DD/MM/YYYY hh:mm:ss"
+      GF_SECURITY_ALLOW_EMBEDDING: true
       GF_SECURITY_COOKIE_SAMESITE: grafana
       VAR_BLOCKY_URL: "http://blocky.network-system.svc.cluster.local:4000"
     adminPassword: "${SECRET_GRAFANA_PASSWORD}"
@@ -51,10 +53,26 @@ spec:
         check_for_updates: false
         check_for_plugin_updates: false
         reporting_enabled: false
+      auth:
+        oauth_auto_login: true
+        oauth_allow_insecure_email_lookup: true
       auth.anonymous:
         enabled: false
         # org_id: 1
-        # org_role: Viewer
+        # org_role: View
+      auth.generic_oauth:
+        enabled: true
+        name: Authelia
+        icon: signin
+        scopes: openid profile email groups
+        empty_scopes: false
+        login_attribute_path: preferred_username
+        groups_attribute_path: groups
+        name_attribute_path: name
+        use_pkce: true
+      auth.generic_oauth.group_mapping:
+        org_id: 1
+        role_attribute_path: contains(groups[*], 'admins') && 'Admin' || 'Viewer'
       news:
         news_feed_enabled: false
     dashboardProviders:
