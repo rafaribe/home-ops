@@ -60,6 +60,8 @@ spec:
         enabled: false
         # org_id: 1
         # org_role: View
+      auth.basic:
+        enabled: false
       auth.generic_oauth:
         enabled: true
         name: Authelia
