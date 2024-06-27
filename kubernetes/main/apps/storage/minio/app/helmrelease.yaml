@@ -70,7 +70,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host minio.rafaribe.com
+          - host: minio.rafaribe.com
             paths:
               - path: /
                 pathType: Prefix
@@ -88,7 +88,7 @@ spec:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
         hosts:
-          - host: &host s3.rafaribe.com
+          - host: s3.rafaribe.com
             paths:
               - path: /
                 pathType: Prefix
