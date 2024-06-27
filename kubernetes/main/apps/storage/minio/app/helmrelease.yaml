@@ -59,7 +59,7 @@ spec:
               readiness: *probes
     service:
       main:
-        controller: minio
+        controller: main
         ports:
           http:
             port: 9001
