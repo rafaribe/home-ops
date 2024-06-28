@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: quay.io/minio/minio
-              tag: RELEASE.2024-06-06T09-36-42Z
+              tag: RELEASE.2024-06-28T09-06-49Z
             env:
               TZ: "Europe/Lisbon"
               MINIO_UPDATE: "off"
