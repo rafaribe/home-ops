@@ -231,7 +231,7 @@ spec:
         metrics:
           receivers:
             - prometheus
-          processors:
+          processors: []
           exporters:
             - prometheusremotewrite
       telemetry:
