@@ -21,11 +21,12 @@ metadata:
   labels:
     prometheus: observability
 spec:
-  metricsPath: /api/v1/allmetrics?format=prometheus&help=yes
+  metricsPath: /api/v1/allmetrics?format=prometheus&help=no
   scrapeInterval: 15s
   staticConfigs:
     - labels:
         job: truenas
         metric-source: netdata
+        instance: truenas
       targets:
         - "truenas.rafaribe.com:6999"
