@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/joryirving/sonarr-develop
-              tag: 4.0.5.1778@sha256:8be9e739701479575cb4f0a8ff1771ee844229daeb3ce44ab875f90c5a120416
+              tag: 4.0.5.1791@sha256:9722620d7fa1482501347f5ef6d2321a4689ace44796a8e3956d04929d399198
             env:
               TZ: Europe/Lisbon
               SONARR__APP__INSTANCENAME: Sonarr
