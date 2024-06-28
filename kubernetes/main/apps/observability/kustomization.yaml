@@ -11,7 +11,7 @@ resources:
   - ./grafana/ks.yaml
   - ./kube-state-metrics/ks.yaml
   - ./node-exporter/ks.yaml
-  # - ./loki/ks.yaml
+  - ./loki/ks.yaml
   - ./prometheus-operator/ks.yaml
   - ./opentelemetry/ks.yaml
   #- ./thanos/ks.yaml
