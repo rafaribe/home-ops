@@ -109,12 +109,13 @@ spec:
           extraArgs:
             maxLabelsPerTimeseries: "90" # More needed if you are scraping a LOT of stuff and having issues
       ingress:
-        enabled: true
-        ingressClassName: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - vminsert.rafaribe.com
+        insert:
+          enabled: true
+          ingressClassName: internal
+          annotations:
+            external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          hosts:
+            - vminsert.rafaribe.com
     # VM Alerting (however, this just watches & passes alerts to alertmanager)
     vmalert:
       enabled: true
