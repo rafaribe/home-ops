@@ -1,15 +1,27 @@
----
 apiVersion: v1
 kind: Secret
 type: Opaque
 metadata:
   name: vm-additional-scrape-configs
 stringData:
-  prometheus-additional.yaml: |
-
-    - job_name: cadvisor
-      scrape_timeout: 10s
-      honor_timestamps: true
-      static_configs:
-        - targets:
-            - wonderful-cinnabar-bee.home.arpa:8080
+  prometheus-additional.yaml: ENC[AES256_GCM,data:2HB0UIgZ53ZGblbu0mNhaeau/+7ttnhVaAjxcjp2FoZRbkAIVRkvh9WLMzd0nlgzF+mLuYSsd0CuU7dBYMspwZh9Vqba4TmC44APijzYHwRpoTLHEdH2+mx8dPiAEnsg3YTjFLleKN3p2BnNQXXppfsYUm79nNuFFg9MNwI+ugpi0wbaoKFtK0uR9FLRpVtRnOiDbQNy62dw3dMPtnrlL/gP2HyDZct25FLtl7YmNncwhTMne6WPiMnzBbfj11Ln3HrY+78O3I6+3QMU0EALpRGyJ0hDvJyVwjNCaGGjyNQ7j9ZzF7g+SkYfKPl7+cT5D3Z3nDbwhJriK8wgI4MG2nunPEjjqmEWJACupQu0xfyM8qwCQBt/9r5HSYytcKPqXOEuC10U4H+gyJPpfJCX+Pqlwf76lkCK8J5P,iv:X9rQoZ82S8YM251Y84C1NWNx4TAbWrOEC+ayG3oDw1Q=,tag:0LyzQqK45wOW/VmcJ/jZKg==,type:str]
+sops:
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age:
+    - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBXYVNsU2ZpWHFxUGVVVWUv
+        dk5yNlR5b0MvNklzYXVXbDBuYnFuN1BoajI0ClNOa1d5TlZTdmQrWi92L285RzFT
+        L0lZc2VvZVhFeFlLY3p5cmdsNUh3VnMKLS0tIHNtMnJ0ejVTanhJaTdtWVlGYzN4
+        eEV3QVF0c0U3KzVMQ0txZGdBTGhNUncK1CN2m6H3vIaYvQzjzPecodxkNK4tb04K
+        2IFgV+I0IcAA83Njx0nyhSjYLphepEl06sCfZN4wwcu8VUErfaNCRQ==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2024-06-28T07:50:57Z"
+  mac: ENC[AES256_GCM,data:wwYg77SB8oRJk3w0DX5upKrWSDQt08qqRLLPLqN3WDxRzZ7FXVEovcSrIOo+4ulNXqQ9qyfezsfbNd5ynUW72ZFArGxPxcT8qT8slky4mAw3tfz9XgylMeVY2x5C5xOfrcV0OP9h37GhRwWejtRR3wTkrblaBDsxxecLelcFXeE=,iv:aHMRK0d13cKSaCMboeXQFNcVq86ZdBRW833gDF7tyHo=,tag:4queHOm2c/HSRgKN4BdEZg==,type:str]
+  pgp: []
+  encrypted_regex: ^(data|stringData)$
+  version: 3.8.1
