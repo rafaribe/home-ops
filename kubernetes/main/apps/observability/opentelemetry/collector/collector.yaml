@@ -193,7 +193,7 @@ spec:
       debug:
         verbosity: detailed
       loki:
-        endpoint: "http://loki-write.observability.svc.cluster.local/loki/api/v1/push"
+        endpoint: "http://loki-gateway/loki/api/v1/push"
         retry_on_failure:
           initial_interval: 5s
           max_interval: 15s
