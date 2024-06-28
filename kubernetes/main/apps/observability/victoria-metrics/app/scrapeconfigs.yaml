@@ -30,3 +30,9 @@ spec:
         instance: truenas
       targets:
         - "truenas.rafaribe.com:6999"
+  metricRelabelings:
+    - action: replace
+      regex: .*
+      sourceLabels: ["instance"]
+      targetLabel: instance
+      replacement: "truenas"
