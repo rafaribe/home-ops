@@ -213,7 +213,7 @@ spec:
           num_consumers: 5
           queue_size: 300
       prometheusremotewrite:
-        endpoint: "https://vmagent-victoria-metrics:8429/api/v1/write"
+        endpoint: "http://vmagent-victoria-metrics:8429/api/v1/write"
     service:
       extensions:
         - health_check
