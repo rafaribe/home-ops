@@ -128,7 +128,16 @@ spec:
         retry_on_failure:
           enabled: true
         start_at: end
-
+      prometheus:
+        config:
+          scrape_configs:
+            - job_name: "truenas"
+              metrics_path: /api/v1/allmetrics?format=prometheus&help=no
+              scrape_interval: 15s
+              static_configs:
+                - targets: ["truenas.rafaribe.com:6999"]
+                  labels:
+                    instance: truenas
     processors:
       memory_limiter:
         check_interval: 5s
@@ -203,6 +212,8 @@ spec:
           storage: file_storage
           num_consumers: 5
           queue_size: 300
+      prometheusremotewrite:
+        endpoint: "https://vminsert-victoria-metrics/insert/0/api/v1/write"
     service:
       extensions:
         - health_check
@@ -217,6 +228,12 @@ spec:
             - batch
           exporters:
             - loki
+        metrics:
+          receivers:
+            - prometheus
+          processors:
+          exporters:
+            - prometheusremotewrite
       telemetry:
         metrics:
           level: detailed
