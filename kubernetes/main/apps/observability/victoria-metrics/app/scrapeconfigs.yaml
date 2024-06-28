@@ -2,21 +2,30 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
-  name: internal-network
+  name: wonderful-cinnabar-bee
   labels:
     prometheus: observability
 spec:
+  metricsPath: /metrics
+  scrapeInterval: 10s
   staticConfigs:
-    - job_name: cadvisor
-      scrape_timeout: 10s
-      honor_timestamps: true
-      static_configs:
-        - targets:
-            - wonderful-cinnabar-bee.home.arpa:8080
-    - job_name: "netdata"
-      metrics_path: /api/v1/allmetrics
-      params:
-        format: [prometheus]
-      static_configs:
-        - targets:
-            - "truenas.rafaribe.com:6999"
+    - labels:
+        job: cadvisor
+      targets:
+        - wonderful-cinnabar-bee.home.arpa:8080
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: truenas-netdata
+  labels:
+    prometheus: observability
+spec:
+  metricsPath: /api/v1/allmetrics
+  scrapeInterval: 15s
+  staticConfigs:
+    - labels:
+        job: truenas
+        metric-source: netdata
+      targets:
+        - "truenas.rafaribe.com:6999"
