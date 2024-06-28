@@ -91,13 +91,7 @@ identity_providers:
         require_pkce: true
         pkce_challenge_method: "S256"
         scopes: ["openid", "profile", "groups", "email"]
-        redirect_uris:
-          [
-            "https://grafana.rafaribe.com:3000/login/generic_oauth",
-            "https://grafana.rafaribe.com/login/generic_oauth",
-            "http://grafana.rafaribe.com:3000/login/generic_oauth",
-            "http://grafana.rafaribe.com/login/generic_oauth",
-          ]
+        redirect_uris: ["https://grafana.rafaribe.com/login/generic_oauth"]
         userinfo_signed_response_alg: none
         token_endpoint_auth_method: "client_secret_basic"
       - client_name: Miniflux
