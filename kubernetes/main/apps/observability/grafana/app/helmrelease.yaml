@@ -61,7 +61,7 @@ spec:
         # org_id: 1
         # org_role: View
       auth.basic:
-        enabled: false
+        enabled: true
       auth.generic_oauth:
         enabled: true
         name: Authelia
