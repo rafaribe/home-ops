@@ -21,7 +21,7 @@ metadata:
   labels:
     prometheus: observability
 spec:
-  metricsPath: /api/v1/allmetrics
+  metricsPath: /api/v1/allmetrics?format=prometheus&help=yes
   scrapeInterval: 15s
   staticConfigs:
     - labels:
