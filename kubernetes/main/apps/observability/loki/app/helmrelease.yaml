@@ -28,35 +28,9 @@ spec:
   dependsOn:
     - name: openebs
       namespace: openebs-system
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-  valuesFrom:
-    - targetPath: loki.storage.bucketNames.chunks
-      kind: ConfigMap
-      name: &cephBucket loki-bucket
-      valuesKey: BUCKET_NAME
-    - targetPath: loki.storage.s3.endpoint
-      kind: ConfigMap
-      name: *cephBucket
-      valuesKey: BUCKET_HOST
-    - targetPath: loki.storage.s3.region
-      kind: ConfigMap
-      name: *cephBucket
-      valuesKey: BUCKET_REGION
-    - targetPath: loki.storage.s3.accessKeyId
-      kind: Secret
-      name: *cephBucket
-      valuesKey: AWS_ACCESS_KEY_ID
-    - targetPath: loki.storage.s3.secretAccessKey
-      kind: Secret
-      name: *cephBucket
-      valuesKey: AWS_SECRET_ACCESS_KEY
   values:
     deploymentMode: SingleBinary
     loki:
-      podAnnotations:
-        configmap.reloader.stakater.com/reload: *cephBucket
-        secret.reloader.stakater.com/reload: *cephBucket
       auth_enabled: false
       analytics:
         reporting_enabled: false
@@ -67,40 +41,16 @@ spec:
       ingester:
         chunk_encoding: snappy
       storage:
-        type: s3
-        s3:
-          s3ForcePathStyle: true
-          insecure: true
+        type: filesystem
       schemaConfig:
         configs:
           - from: "2024-04-01" # quote
             store: tsdb
-            object_store: s3
+            object_store: filesystem
             schema: v13
             index:
               prefix: loki_index_
               period: 24h
-      structuredConfig:
-        auth_enabled: false
-        server:
-          log_level: info
-          http_listen_port: 3100
-          grpc_listen_port: 9095
-          grpc_server_max_recv_msg_size: 8388608
-          grpc_server_max_send_msg_size: 8388608
-        limits_config:
-          ingestion_burst_size_mb: 128
-          ingestion_rate_mb: 64
-          max_query_parallelism: 100
-          per_stream_rate_limit: 64M
-          per_stream_rate_limit_burst: 128M
-          reject_old_samples: true
-          reject_old_samples_max_age: 168h
-          retention_period: 30d
-          allow_structured_metadata: true
-          shard_streams:
-            enabled: true
-          split_queries_by_interval: 1h
       limits_config:
         retention_period: 14d
     singleBinary:
@@ -125,3 +75,14 @@ spec:
       enabled: false
     test:
       enabled: false
+    monitoring:
+      # Dashboards for monitoring Loki
+      dashboards:
+        # -- If enabled, create configmap with dashboards for monitoring Loki
+        enabled: true
+        # -- Labels for the dashboards ConfigMap
+        labels:
+          grafana_dashboard: "1"
+          grafana_folder: "Loki"
+      serviceMonitor:
+        enabled: true
