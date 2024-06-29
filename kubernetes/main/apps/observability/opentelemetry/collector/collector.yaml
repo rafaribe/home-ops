@@ -44,7 +44,7 @@ spec:
           - /var/log/pods/*/*/*.log
         exclude:
           # Exclude logs from all containers named otel-collector
-          - /var/log/pods/*/otel-collector/*.log
+          - /var/log/pods/*/otel-collector*/*.log
         include_file_name: false
         include_file_path: true
         operators:
