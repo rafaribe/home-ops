@@ -52,11 +52,18 @@ spec:
       name: *cephBucket
       valuesKey: AWS_SECRET_ACCESS_KEY
   values:
-    deploymentMode: SimpleScalable
+    deploymentMode: SingleBinary
     loki:
       podAnnotations:
         configmap.reloader.stakater.com/reload: *cephBucket
         secret.reloader.stakater.com/reload: *cephBucket
+      auth_enabled: false
+      analytics:
+        reporting_enabled: false
+      server:
+        log_level: info
+      commonConfig:
+        replication_factor: 1
       ingester:
         chunk_encoding: snappy
       storage:
@@ -94,54 +101,26 @@ spec:
           shard_streams:
             enabled: true
           split_queries_by_interval: 1h
-        query_scheduler:
-          max_outstanding_requests_per_tenant: 4096
-        frontend:
-          max_outstanding_per_tenant: 4096
-        ruler:
-          enable_api: true
-          enable_alertmanager_v2: true
-          alertmanager_url: http://alertmanager.observability.svc.cluster.local:9093
-          storage:
-            type: local
-            local:
-              directory: /rules
-          rule_path: /rules/fake
-        analytics:
-          reporting_enabled: false
-    backend:
-      replicas: 2
+      limits_config:
+        retention_period: 14d
+    singleBinary:
+      replicas: 1
       persistence:
-        size: 20Gi
-        storageClass: openebs-hostpath
-    gateway:
-      replicas: 2
-      image:
-        registry: ghcr.io
-      ingress:
         enabled: true
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        ingressClassName: internal
-        hosts:
-          - host: loki.rafaribe.com
-            paths:
-              - path: /
-                pathType: Prefix
-        tls: []
-    read:
-      replicas: 2
-    write:
-      replicas: 2
-      persistence:
-        size: 40Gi
         storageClass: openebs-hostpath
-    sidecar:
-      image:
-        repository: ghcr.io/kiwigrid/k8s-sidecar
-      rules:
-        searchNamespace: ALL
-        folder: /rules/fake
+        size: 50Gi
+    gateway:
+      replicas: 0
+    backend:
+      replicas: 0
+    read:
+      replicas: 0
+    write:
+      replicas: 0
+    chunksCache:
+      enabled: false
+    resultsCache:
+      enabled: false
     lokiCanary:
       enabled: false
     test:
