@@ -104,8 +104,6 @@ data:
               url: http://truenas.rafaribe.com # Internal Only
               key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
         - Pihole
-            href: http://10.0.0.254/admin
-            description: PiHole DNS Server
             widget:
               type: pihole
               url: http://pihole.rafaribe.com
