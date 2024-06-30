@@ -1,0 +1,69 @@
+---
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: otel-metrics
+spec:
+  mode: deployment
+  image: otel/opentelemetry-collector-contrib:0.103.1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 500Mi
+  serviceAccount: collector
+  env:
+    - name: K8S_NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+    - name: K8S_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+  config:
+    receivers:
+      prometheus:
+        config:
+          scrape_configs:
+            - job_name: "truenas-otel"
+              metrics_path: /api/v1/allmetrics?format=prometheus&help=no
+              scrape_interval: 15s
+              static_configs: # Need to fix the relabelings, metric still shows the instance as truenas.rafaribe.com:6999
+                - targets: ["truenas.rafaribe.com:6999"]
+                  labels:
+                    instance: truenas
+    processors:
+      memory_limiter:
+        check_interval: 5s
+        limit_percentage: 80
+        spike_limit_percentage: 25
+
+      batch:
+        send_batch_size: 8192
+        timeout: 200ms
+        send_batch_max_size: 0
+      memory_ballast:
+        size_in_percentage: 80
+
+    exporters:
+      debug:
+        verbosity: info
+      prometheusremotewrite:
+        endpoint: "http://vmagent-victoria-metrics:8429/api/v1/write"
+    service:
+      extensions:
+        - memory_ballast
+      pipelines:
+        metrics:
+          receivers:
+            - prometheus
+          processors: []
+          exporters:
+            - prometheusremotewrite
+      telemetry:
+        metrics:
+          level: detailed
+          address: 0.0.0.0:8888
+        logs:
+          level: "INFO"
+          development: false
