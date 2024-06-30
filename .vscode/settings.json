@@ -1,51 +1,18 @@
 {
-    "ansible.ansibleLint.arguments": "-c .github/linters/.ansible-lint",
-    "discord.enabled": true,
     "files.associations": {
-        "*.json5": "jsonc",
-        "**/ansible/**/*.yml": "ansible",
-        "**/ansible/**/*.sops.yml": "yaml",
-        "**/ansible/**/inventory/**/*.yml": "yaml",
-        "**/terraform/**/*.tf": "terraform",
-        "**/cluster/**/*.sops.toml": "plaintext"
-    },
-    "material-icon-theme.folders.associations": {
-        "infrastructure": "server",
-        ".taskfiles": "utils",
-        "authentication": "keys",
-        "bootstrap": "import",
-        "charts": "kubernetes",
-        "development": "less",
-        "downloaders": "download",
-        "hack": "scripts",
-        "home-automation": "home",
-        "kube-tools": "kubernetes",
-        "media-automation": "generator",
-        "media-servers": "video",
-        "monitoring": "event",
-        "networking": "connection",
-        "storage": "dump",
-        "web-tools": "custom",
-        "terraforms": "terraform",
-        "terraform": "terraform",
-        "truenas-scale": "server",
-        "truenas": "supabase",
-        "skovald": "gulp",
-        "k8s-gateway": "kubernetes",
-        "talos": "cluster",
+      "infrastructure/**/*.tf": "terraform",
+      "kubernetes/**/*.sops.toml": "plaintext"
     },
     "prettier.configPath": ".github/linters/.prettierrc.yaml",
     "prettier.ignorePath": ".github/linters/.prettierignore",
     "yaml.schemas": {
-        "Kubernetes": "cluster/*.yaml"
+      "ansible": ["infrastructure/ansible/*.yml", "infrastructure/ansible/*.yaml"],
+      "kubernetes": ["kubernetes/*.yml", "kubernetes/*.yaml"]
     },
     "editor.fontFamily": "FiraCode Nerd Font",
     "editor.fontLigatures": true,
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs":"active",
     "editor.hover.delay": 1500,
-    "explorer.autoReveal": false,
-    "conventionalCommits.scopes": [
-        "infrastructure"
-    ]
+    "explorer.autoReveal": true,
 }
