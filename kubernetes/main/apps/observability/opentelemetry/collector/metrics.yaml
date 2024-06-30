@@ -42,15 +42,11 @@ spec:
         send_batch_size: 8192
         timeout: 200ms
         send_batch_max_size: 0
-      memory_ballast:
-        size_in_percentage: 80
 
     exporters:
       prometheusremotewrite:
         endpoint: "http://vmagent-victoria-metrics:8429/api/v1/write"
     service:
-      extensions:
-        - memory_ballast
       pipelines:
         metrics:
           receivers:
