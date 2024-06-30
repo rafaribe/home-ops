@@ -1,9 +1,0 @@
----
-- name: Setup Raspberry Pi as a Backup Server
-  hosts: all
-  roles:
-    - rpi
-    - docker
-    #  - vpn
-    - syncthing
-    - geerlingguy.nfs
