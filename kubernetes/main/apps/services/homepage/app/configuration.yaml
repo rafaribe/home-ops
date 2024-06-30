@@ -71,15 +71,14 @@ data:
         #       url: https://healthchecks.io/
         #       key: {{HOMEPAGE_VAR_HEALTHCHECK_TOKEN}}
         #       uuid: {{HOMEPAGE_VAR_HEALTHCHECK_UUID}}
-        - Unifi:
-            href: https://unifi.ui.com
-            icon: unifi.png
-            description: Unifi Dashboard
+        - OPNSense:
+            href: http://10.0.0.1
+            description: OPNSense
             widget:
-              type: unifi
+              type: opnsense
               url: https://10.0.0.254:8443
-              username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
-              password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
+              username: {{HOMEPAGE_VAR_OPNSENSE_USERNAME}}
+              password: {{HOMEPAGE_VAR_OPNSENSE_PASSWORD}}
     - Calendar:
         - Agenda:
             widget:
@@ -99,9 +98,19 @@ data:
     - Infrastructure:
         - Truenas:
             href: http://truenas.rafaribe.com
-            username: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
-            password:
-            description: Unraid NAS
+            description: TrueNas Scale
+            widget:
+              type: truenas
+              url: http://truenas.rafaribe.com # Internal Only
+              key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
+        - Pihole
+            href: http://10.0.0.254/admin
+            description: PiHole DNS Server
+            widget:
+              type: pihole
+              url: http://pihole.rafaribe.com
+              version: 6
+              key: {{HOMEPAGE_VAR_PIHOLE_APIKEY}}
   settings.yaml: |
     title: Dashboard
     favicon: https://w7.pngwing.com/pngs/848/762/png-transparent-computer-icons-home-house-home-angle-building-rectangle-thumbnail.png
@@ -150,7 +159,7 @@ data:
         icon: mdi-download-circle
   widgets.yaml: |
     - logo:
-        icon: https://img.assinaja.com/upl/lojas/mundosinfinitos/imagens/foto-one-piece.png
+        icon: https://sundayguardianlive.com/wp-content/uploads/2020/07/Untitled-design-9.png
     - search:
         provider: [google]
         focus: false
@@ -171,8 +180,8 @@ data:
           showLabel: true
     - openmeteo:
         label: Home
-        latitude: ${LATITUDE}
-        longitude: ${LONGITUDE}
+        latitude: ${{HOMEPAGE_VAR_LATITUDE}}
+        longitude: ${{HOMEPAGE_VAR_LONGITUDE}}
         timezone: Europe/Lisbon
         units: metric
         cache: 5
