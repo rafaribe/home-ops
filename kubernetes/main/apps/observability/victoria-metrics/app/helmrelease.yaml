@@ -136,7 +136,7 @@ spec:
               matchLabels:
                 app.kubernetes.io/name: vmalert
         extraArgs:
-          external.url: https://vmalert.bjw-s.dev
+          external.url: https://vmalert.rafaribe.com
         notifiers:
           - url: http://alertmanager.observability.svc.cluster.local:9093
       ingress:
