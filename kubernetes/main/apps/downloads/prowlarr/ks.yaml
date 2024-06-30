@@ -6,7 +6,7 @@ metadata:
   name: &app prowlarr
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/media/prowlarr/app
+  path: ./kubernetes/main/apps/downloads/prowlarr/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -15,7 +15,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-  targetNamespace: media
+  targetNamespace: downloads
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
