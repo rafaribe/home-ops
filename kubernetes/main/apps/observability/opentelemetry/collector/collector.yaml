@@ -202,7 +202,7 @@ spec:
       debug:
         verbosity: detailed
       loki:
-        endpoint: "http://loki-gateway/loki/api/v1/push"
+        endpoint: "http://loki-headless.observability.svc.cluster.local:3100/loki/api/v1/push"
         retry_on_failure:
           initial_interval: 5s
           max_interval: 15s
