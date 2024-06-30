@@ -22,7 +22,7 @@
     "github>rafaribe/home-ops//.github/renovate/semanticCommits.json5"
   ],
   "onboarding": false,
-  "requireConfig": "optional",
+  "requireConfig": "ignored",
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
   "ignorePaths": ["**/*.sops.*", "**/.archive/**",  "**/resources/**", "**/scripts/**"],
