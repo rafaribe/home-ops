@@ -1,0 +1,17 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: gha-runner-scale-set-controller
+  namespace: actions-runner-system
+spec:
+  podMetricsEndpoints:
+    - interval: 15m
+      path: /metrics
+      port: http
+      scrapeTimeout: 10s
+  selector:
+    matchLabels:
+      actions.github.com/organization: rafaribe
+      actions.github.com/scale-set-name: arc-runner-set-home-ops
+      app.kubernetes.io/component: gha-runner-scale-set-controller

@@ -4,3 +4,4 @@ namespace: actions-runner-system
 resources:
   - ./helmrelease.yaml
   - ./pvc.yaml
+  - ./podmonitor.yaml
