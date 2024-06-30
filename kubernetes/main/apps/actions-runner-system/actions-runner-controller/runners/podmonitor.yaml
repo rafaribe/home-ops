@@ -8,7 +8,7 @@ spec:
   podMetricsEndpoints:
     - interval: 15m
       path: /metrics
-      port: http
+      port: 8080
       scrapeTimeout: 10s
   selector:
     matchLabels:
