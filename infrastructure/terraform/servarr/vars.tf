@@ -1,19 +1,12 @@
-variable local_domain {
-  type = string
-  default = "rafaribe.com"
+variable "local_domain" {
+  type        = string
+  default     = "rafaribe.com"
   description = "Proxy Address"
 }
 
-variable cluster_media_domain {
-  type = string
-  default = "media.svc.cluster.local"
-  description = "Cluster Media Namespace Domain"
-}
-
-
-variable cluster_downloads_domain {
-  type = string
-  default = "downloads.svc.cluster.local"
+variable "cluster_downloads_domain" {
+  type        = string
+  default     = "downloads.svc.cluster.local"
   description = "Cluster Downloads Namespace Domain"
 }
 
