@@ -131,7 +131,7 @@ spec:
       prometheus:
         config:
           scrape_configs:
-            - job_name: "truenas"
+            - job_name: "truenas-otel"
               metrics_path: /api/v1/allmetrics?format=prometheus&help=no
               scrape_interval: 15s
               static_configs: # Need to fix the relabelings, metric still shows the instance as truenas.rafaribe.com:6999

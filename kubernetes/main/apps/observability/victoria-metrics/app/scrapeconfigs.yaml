@@ -13,20 +13,3 @@ spec:
         job: cadvisor
       targets:
         - wonderful-cinnabar-bee.home.arpa:8080
----
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: ScrapeConfig
-metadata:
-  name: truenas-netdata
-  labels:
-    prometheus: observability
-spec:
-  metricsPath: /api/v1/allmetrics?format=prometheus&help=no
-  scrapeInterval: 15s
-  staticConfigs:
-    - labels:
-        job: truenas
-        metric-source: netdata
-        instance: truenas
-      targets:
-        - "truenas.rafaribe.com:6999"
