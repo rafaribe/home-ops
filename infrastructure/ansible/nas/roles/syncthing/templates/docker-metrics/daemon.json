@@ -1,7 +1,0 @@
-{
-  "metrics-addr": "0.0.0.0:{{ docker_daemon_metrics_port }}",
-  "experimental": true,
-  "exec-opts": [
-    "native.cgroupdriver=systemd"
-  ]
-}

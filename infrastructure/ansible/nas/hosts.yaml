@@ -1,8 +1,0 @@
----
-all:
-  hosts:
-    backup-server:
-      ansible_host: 10.0.1.11
-      ansible_user: rafaribe
-      ansible_become: true
-      nfs_exports: ["/data *(rw,sync,no_root_squash)"]

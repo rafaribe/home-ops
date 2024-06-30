@@ -1,6 +1,0 @@
-# from galaxy
-# Tailscale Role
-- src: artis3n.tailscale
-- src: geerlingguy.nfs
-# Community General
-#- src: ansible-collections/community.general
