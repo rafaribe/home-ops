@@ -8,3 +8,4 @@ resources:
   - ../../../../templates/volsync
   - ./keys.yaml
   - ./externalsecret.yaml
+  - ./podmonitor.yaml
