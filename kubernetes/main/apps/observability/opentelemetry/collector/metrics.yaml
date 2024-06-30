@@ -46,8 +46,6 @@ spec:
         size_in_percentage: 80
 
     exporters:
-      debug:
-        verbosity: info
       prometheusremotewrite:
         endpoint: "http://vmagent-victoria-metrics:8429/api/v1/write"
     service:
@@ -57,7 +55,7 @@ spec:
         metrics:
           receivers:
             - prometheus
-          processors: []
+          processors: [memory_limiter, batch]
           exporters:
             - prometheusremotewrite
       telemetry:
