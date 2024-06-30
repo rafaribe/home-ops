@@ -13,3 +13,6 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: gha-rs-controller
+    namespaceSelector:
+      matchNames:
+        - actions-runner-system

@@ -14,3 +14,6 @@ spec:
     matchLabels:
       actions.github.com/organization: rafaribe
       app.kubernetes.io/component: runner-scale-set-listener
+    namespaceSelector:
+      matchNames:
+        - actions-runner-system
