@@ -86,15 +86,21 @@ data:
               view: agenda # optional - possible values monthly, agenda
               maxEvents: 15 # optional - defaults to 10
               integrations: # optional
-                - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
-                  service_group: Downloads # group name where widget exists
-                  service_name: Sonarr # service name for that widget
-                - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
-                  service_group: Downloads # group name where widget exists
-                  service_name: Radarr # service name for that widget
-                - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonar>
-                  service_group: Downloads # group name where widget exists
-                  service_name: Readarr # service name for that widget
+                - type: ical # Show calendar events from another service
+                  url: {{HOMEPAGE_VAR_GOOGLE_CALENDAR_ICAL_URL}}
+                  name: Home-Calendar
+                  color: magenta
+                  params:
+                    showName: true
+    - Infrastructure:
+        - TrueNAS:
+            href: http://truenas.rafaribe.com
+            icon: truenas.png
+            description: TrueNAS Scale
+        - PiHole
+            href: http://pihole.rafaribe.com
+            description: PiHole DNS Server
+            icon: pihole.png
 
   settings.yaml: |
     title: Dashboard
