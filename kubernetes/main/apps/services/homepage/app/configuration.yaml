@@ -96,19 +96,24 @@ data:
                   service_group: Downloads # group name where widget exists
                   service_name: Readarr # service name for that widget
     - Infrastructure:
-        - Truenas:
+        - TrueNAS:
             href: http://truenas.rafaribe.com
-            description: TrueNas Scale
+            icon: truenas.png
+            description: TrueNAS Scale
             widget:
               type: truenas
               url: http://truenas.rafaribe.com # Internal Only
               key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
-        - Pihole
+        - PiHole
+            href: http://pihole.rafaribe.com
+            description: PiHole DNS Server
+            icon: pihole.png
             widget:
               type: pihole
               url: http://pihole.rafaribe.com
               version: 6
               key: {{HOMEPAGE_VAR_PIHOLE_APIKEY}}
+
   settings.yaml: |
     title: Dashboard
     favicon: https://w7.pngwing.com/pngs/848/762/png-transparent-computer-icons-home-house-home-angle-building-rectangle-thumbnail.png
