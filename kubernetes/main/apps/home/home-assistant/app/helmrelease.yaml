@@ -101,9 +101,9 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
-          - host: hass.${SECRET_DOMAIN}
+          - host: hass.rafaribe.com
             paths:
               - path: /
                 service:
@@ -112,9 +112,9 @@ spec:
       codeserver:
         className: internal
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: hass-code.${SECRET_DOMAIN}
+          - host: hass-code.rafaribe.com
             paths:
               - path: /
                 service:
