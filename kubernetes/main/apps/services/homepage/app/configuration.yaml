@@ -95,24 +95,6 @@ data:
                 - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonar>
                   service_group: Downloads # group name where widget exists
                   service_name: Readarr # service name for that widget
-    - Infrastructure:
-        - TrueNAS:
-          href: http://truenas.rafaribe.com
-          icon: truenas.png
-          description: TrueNAS Scale
-          widget:
-            type: truenas
-            url: http://truenas.rafaribe.com # Internal Only
-            key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
-        - PiHole
-          href: http://pihole.rafaribe.com
-          description: PiHole DNS Server
-          icon: pihole.png
-          widget:
-            type: pihole
-            url: http://pihole.rafaribe.com
-            version: 6
-            key: {{HOMEPAGE_VAR_PIHOLE_APIKEY}}
 
   settings.yaml: |
     title: Dashboard
@@ -199,4 +181,10 @@ data:
     - unifi_console:
         url: https://10.0.1.254:8443
         username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
-        password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
+    - truenas:
+        url: http://truenas.rafaribe.com # Internal Only
+        key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
+    - pihole:
+        url: http://pihole.rafaribe.com
+        version: 6
+        key: {{HOMEPAGE_VAR_PIHOLE_APIKEY}}
