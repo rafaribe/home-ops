@@ -12,6 +12,4 @@ spec:
       scrapeTimeout: 10s
   selector:
     matchLabels:
-      actions.github.com/organization: rafaribe
-      actions.github.com/scale-set-name: arc-runner-set-home-ops
-      app.kubernetes.io/component: gha-runner-scale-set-controller
+      app.kubernetes.io/name: gha-rs-controller

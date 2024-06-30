@@ -13,5 +13,4 @@ spec:
   selector:
     matchLabels:
       actions.github.com/organization: rafaribe
-      actions.github.com/scale-set-name: arc-runner-set-home-ops
       app.kubernetes.io/component: runner-scale-set-listener
