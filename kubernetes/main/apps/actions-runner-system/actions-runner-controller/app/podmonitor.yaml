@@ -9,7 +9,6 @@ spec:
     - interval: 15s
       path: /metrics
       targetPort: 8080
-      scrapeTimeout: 10s
   selector:
     matchLabels:
       app.kubernetes.io/name: gha-rs-controller
