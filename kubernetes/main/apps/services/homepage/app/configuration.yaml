@@ -3,269 +3,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: homepage-config
+  labels:
+    app.kubernetes.io/name: homepage
 data:
-  settings.yaml: |
-    title: Homelab
-    # background:
-    #   image: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/assets/101518784_p0.jpg
-    #   opacity: 20
-    favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
-    theme: dark
-    color: slate
-    headerStyle: clean
-    statusStyle: dot
-    useEqualHeights: false
-    fiveColumns: true
-    quicklaunch:
-      searchDescriptions: true
-      hideInternetSearch: true
-      showSearchSuggestions: true
-      hideVisitURL: true
-    layout:
-      Calendar:
-        style: column
-        icon: mdi-calendar
-        initiallyCollapsed: false
-      Administration:
-        style: column
-        columns: 5
-        icon: mdi-network
-      Monitoring:
-        style: column
-        columns: 5
-        icon: grafana.png
-      Storage:
-        style: column
-        columns: 5
-        icon: synology.png
-      Media:
-        style: column
-        columns: 5
-        icon: mdi-download-circle
-
-  widgets.yaml: |
-    # - logo:
-    #     icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/lds-transparent.png
-    - search:
-        provider: [google]
-        focus: false
-        target: _blank
-    # - kubernetes:
-    #     cluster:
-    #       cpu: true
-    #       memory: true
-    #       show: true
-    #       showLabel: true
-    #     nodes:
-    #       cpu: true
-    #       memory: true
-    #       show: false
-    #       showLabel: true
-    - openmeteo:
-        label: Home
-        latitude: {{HOMEPAGE_VAR_LATITUDE}}
-        longitude: {{HOMEPAGE_VAR_LONGITUDE}}
-        units: metric
-        cache: 5
-    # - datetime:
-    #     text_size: l
-    #     format:
-    #       timeStyle: short
-    #       dateStyle: short
-    #       hourCycle: h23
-    - unifi_console:
-        url: {{HOMEPAGE_VAR_UNIFI_URL}}
-        username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
-        password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
-
-  services.yaml: |
-    - Administration:
-        - Proxmox:
-            icon: proxmox.png
-            href: https://ares.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8006
-        - KVM:
-            icon: pikvm.png
-            href: https://pikvm.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-        - AdGuard Home:
-            href: https://adguard.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            widget:
-              type: adguard
-              url: https://adguard.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-              username: {{HOMEPAGE_VAR_ADGUARD_USERNAME}}
-              password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
-        - Authentik:
-            icon: authentik.png
-            href: https://sso.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-        - Mailu:
-            icon: mailu.png
-            href: https://{{HOMEPAGE_VAR_MAILU}}/admin
-        - DMARC Reports:
-            icon: mailinabox.png
-            href: https://dmarc-report.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-        - Echo Server:
-            icon: babybuddy.png
-            href: 'https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}'
-        - Who Am I:
-            icon: ward.png
-            href: 'https://whoami.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}'
-        - Cloudflared:
-            href: https://dash.cloudflare.com/
-            icon: cloudflare-zero-trust.png
-            description: Cloudflared Tunnel Status
-            widget:
-              type: cloudflared
-              accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
-              tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
-              key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
-              fields: ["status"]
-    - Monitoring:
-        - Grafana:
-            href: https://grafana.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: grafana.png
-            # widget:
-            #   type: grafana
-            #   url: http://grafana.observability.svc.cluster.local:3000
-            #   username: https://grafana.{{HOMEPAGE_VAR_GRAFANA_USERNAME}}
-            #   password: https://grafana.{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}
-        - Alert Manager:
-            href: https://alerts.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: alertmanager.png
-        - Prometheus:
-            href: https://prometheus.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/alerts
-            icon: prometheus.png
-        - Victoria Metrics:
-            href: https://vm-single.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/vmui
-            icon: prometheus.png
-        - Gatus (Gateway):
-            href: https://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8443
-            icon: gatus.png
-        - Gatus (Cluster):
-            href: https://status.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: gatus.png
-        - Change Detection:
-            href: https://changedetection.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: changedetection-io.png
-    - Storage:
-        - Rook:
-            href: https://rook.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: rook.png
-        - Hades:
-            href: https://hades.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-            icon: synology-dsm.png
-        - Minio:
-            href: https://minio.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: minio.png
-        - pgAdmin:
-            href: https://pgadmin.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: pgadmin.png
-        - Rook (Staging):
-            href: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: rook.png
-
-    - Media:
-        - Overseerr:
-            href: https://overseerr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://overseerr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: overseerr.png
-            description: Media Requests
-            widget:
-              type: overseerr
-              url: http://overseerr.media.svc.cluster.local
-              key: {{HOMEPAGE_VAR_OVERSEERR_TOKEN}}
-        - Plex:
-            href: https://plex.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://plex.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: plex.png
-            description: Media Server
-            widget:
-              type: plex
-              url: https://plex.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-              key: {{HOMEPAGE_VAR_PLEX_TOKEN}}
-        - Sonarr:
-            href: https://sonarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://sonarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: sonarr.png
-            description: TV Shows
-            widget:
-              type: sonarr
-              url: http://sonarr.media.svc.cluster.local:8989
-              key: {{HOMEPAGE_VAR_SONARR_TOKEN}}
-        - Radarr-4k:
-            href: https://radarr-4k.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://radarr-4k.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: radarr.png
-            description: 4K Movies
-            widget:
-              type: radarr
-              url: http://radarr-4k.media.svc.cluster.local:7878
-              key: {{HOMEPAGE_VAR_RADARR_4K_TOKEN}}
-        - Radarr:
-            href: https://radarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://radarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: radarr.png
-            description: Movies
-            widget:
-              type: radarr
-              url: http://radarr.media.svc.cluster.local:7878
-              key: {{HOMEPAGE_VAR_RADARR_TOKEN}}
-        - Lidarr:
-            href: https://lidarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://lidarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: lidarr.png
-            description: Music
-            widget:
-              type: lidarr
-              url: http://lidarr.media.svc.cluster.local:8686
-              key: {{HOMEPAGE_VAR_LIDARR_TOKEN}}
-        # - Navidrome:
-        #     href: https://music.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-        #     siteMonitor: https://music.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-        #     icon: navidrome.png
-        #     description: Music Library
-        #     widget:
-        #       type: navidrome
-        #       url: https://music.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-        #       username: {{HOMEPAGE_VAR_NAVIDROME_USERNAME}}
-        #       token: {{HOMEPAGE_VAR_NAVIDROME_TOKEN}}
-        #       salt: {{HOMEPAGE_VAR_NAVIDROME_SALT}}
-
-        - Sabnzbd:
-            href: https://sabnzbd.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://sabnzbd.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: sabnzbd.png
-            description: NZB Downloader
-            widget:
-              type: sabnzbd
-              url: http://sabnzbd.media.svc.cluster.local:8080
-              key: {{HOMEPAGE_VAR_SABNZBD_TOKEN}}
-        - qBitTorrent:
-            href: https://qbittorrent.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://qbittorrent.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: qbittorrent.png
-            description: Torrent Downloader
-            widget:
-              type: qbittorrent
-              url: https://qbittorrent.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-              username: {{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}
-              password: {{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}
-
-    - Calendar:
-        - Agenda:
-            widget:
-              type: calendar
-              view: agenda # optional - possible values monthly, agenda
-              maxEvents: 5 # optional - defaults to 10
-              integrations: # optional
-                - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
-                  service_group: Media # group name where widget exists
-                  service_name: Sonarr # service name for that widget
-                - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
-                  service_group: Media # group name where widget exists
-                  service_name: Radarr # service name for that widget
-                - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
-                  service_group: Media # group name where widget exists
-                  service_name: Radarr-4k # service name for that widget
-
   bookmarks.yaml: |
     - Communicate:
         - Discord:
@@ -277,13 +17,26 @@ data:
         - Google Calendar:
             - icon: google-calendar.png
               href: 'https://calendar.google.com'
-    - Media Links:
+        - Outlook:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/outlook.png
+              href: 'https://outlook.com'
+    - Media:
         - YouTube:
             - icon: youtube.png
               href: 'https://youtube.com/feed/subscriptions'
         - Spotify:
             - icon: spotify.png
               href: 'http://open.spotify.com'
+        - Youtube Music:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/youtube-music.png
+              href: 'https://music.youtube.com'
+    - Reading:
+        - Zwame:
+            - icon: https://i.imgur.com/192X5MO.png
+              href: 'https://forum.zwame.pt/'
+        - Reddit:
+            - icon: reddit.png
+              href: 'https://reddit.com'
     - Git:
         - kubesearch:
             - icon: kubernetes-dashboard.png
@@ -291,8 +44,147 @@ data:
         - home-ops:
             - icon: github.png
               href: 'https://github.com/rafaribe/home-ops'
-
+        - onedr0p-home-ops:
+            - icon: github.png
+              href: 'https://github.com/onedr0p/home-ops'
   docker.yaml: ""
-
   kubernetes.yaml: |
     mode: cluster
+  services.yaml: |
+    - Network:
+        - Cloudflared:
+            href: https://dash.cloudflare.com/
+            icon: cloudflare-zero-trust.png
+            description: Cloudflared Tunnel Status
+            widget:
+              type: cloudflared
+              accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
+              tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
+              key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
+              fields: ["status"]
+        # - Healthchecks:
+        #     href: https://healthchecks.io/
+        #     icon: healthchecks.png
+        #     description: Healthchecks Internet Uptime
+        #     widget:
+        #       type: healthchecks
+        #       url: https://healthchecks.io/
+        #       key: {{HOMEPAGE_VAR_HEALTHCHECK_TOKEN}}
+        #       uuid: {{HOMEPAGE_VAR_HEALTHCHECK_UUID}}
+        - Unifi:
+            href: https://unifi.ui.com
+            icon: unifi.png
+            description: Unifi Dashboard
+            widget:
+              type: unifi
+              url: https://10.0.0.254:8443
+              username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
+              password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
+    - Calendar:
+        - Agenda:
+            widget:
+              type: calendar
+              view: agenda # optional - possible values monthly, agenda
+              maxEvents: 15 # optional - defaults to 10
+              integrations: # optional
+                - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+                  service_group: Downloads # group name where widget exists
+                  service_name: Sonarr # service name for that widget
+                - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+                  service_group: Downloads # group name where widget exists
+                  service_name: Radarr # service name for that widget
+                - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonar>
+                  service_group: Downloads # group name where widget exists
+                  service_name: Readarr # service name for that widget
+    - Infrastructure:
+        - Truenas:
+            href: http://truenas.rafaribe.com
+            username: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
+            password:
+            description: Unraid NAS
+  settings.yaml: |
+    title: Dashboard
+    favicon: https://w7.pngwing.com/pngs/848/762/png-transparent-computer-icons-home-house-home-angle-building-rectangle-thumbnail.png
+    useEqualHeights: true
+    theme: dark
+    background:
+      image: https://i.imgur.com/oFw7T7g.jpeg
+      opacity: 20
+    color: slate
+    headerStyle: clean
+    quicklaunch:
+      searchDescriptions: true
+      hideInternetSearch: true
+      showSearchSuggestions: true
+      hideVisitURL: true
+    layout:
+      Network:
+        style: row
+        columns: 3
+        icon: mdi-network
+      Calendar:
+        style: column
+        icon: mdi-calendar
+      Video:
+        style: column
+        icon: mdi-play-circle
+      Books:
+        style: row
+        columns: 2
+        icon: mdi-book
+      Infrastructure:
+        style: row
+        columns: 5
+        icon: mdi-server
+      Observability:
+        style: row
+        columns: 5
+        icon: mdi-chart-line
+      Home:
+        style: row
+        columns: 5
+        icon: mdi-home-analytics
+      Downloads:
+        style: row
+        columns: 3
+        icon: mdi-download-circle
+  widgets.yaml: |
+    - logo:
+        icon: https://img.assinaja.com/upl/lojas/mundosinfinitos/imagens/foto-one-piece.png
+    - search:
+        provider: [google]
+        focus: false
+        target: _blank
+    - greeting:
+        text_size: xl
+        text: "Hey!"
+    - kubernetes:
+        cluster:
+          cpu: true
+          memory: true
+          show: true
+          showLabel: true
+        nodes:
+          cpu: true
+          memory: true
+          show: false
+          showLabel: true
+    - openmeteo:
+        label: Home
+        latitude: ${LATITUDE}
+        longitude: ${LONGITUDE}
+        timezone: Europe/Lisbon
+        units: metric
+        cache: 5
+        format:
+          maximumFractionDigits: 1
+    - datetime:
+        text_size: l
+        format:
+          timeStyle: short
+          dateStyle: short
+          hourCycle: h23
+    - unifi_console:
+        url: https://10.0.1.254:8443
+        username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
+        password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}

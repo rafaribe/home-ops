@@ -47,7 +47,6 @@ spec:
       GF_SECURITY_ALLOW_EMBEDDING: true
       GF_SECURITY_COOKIE_SAMESITE: grafana
       VAR_BLOCKY_URL: "http://blocky.network-system.svc.cluster.local:4000"
-    adminPassword: "${SECRET_GRAFANA_PASSWORD}"
     grafana.ini:
       analytics:
         check_for_updates: false
