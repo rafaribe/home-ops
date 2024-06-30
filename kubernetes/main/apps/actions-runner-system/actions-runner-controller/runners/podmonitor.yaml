@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  name: gha-runner-scale-set-listeners
+  name: github-runner-listeners
   namespace: actions-runner-system
 spec:
   podMetricsEndpoints:
