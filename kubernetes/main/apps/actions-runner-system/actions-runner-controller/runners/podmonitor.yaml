@@ -6,7 +6,7 @@ metadata:
   namespace: actions-runner-system
 spec:
   podMetricsEndpoints:
-    - interval: 15m
+    - interval: 15s
       path: /metrics
       targetPort: 8080
       scrapeTimeout: 10s
