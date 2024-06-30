@@ -251,7 +251,7 @@ spec:
     defaultRules:
       create: true
       rules:
-        etcd: false
+        etcd: true
         general: true
         k8s: true
         kubeApiserver: true
