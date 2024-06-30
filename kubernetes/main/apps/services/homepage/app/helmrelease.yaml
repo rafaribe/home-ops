@@ -38,7 +38,7 @@ spec:
               TZ: Europe/Lisbon
             envFrom:
               - secretRef:
-                  name: homepage4
+                  name: *app
             resources:
               requests:
                 cpu: 15m
