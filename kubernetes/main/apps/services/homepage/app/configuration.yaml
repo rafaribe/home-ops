@@ -76,7 +76,7 @@ data:
             description: OPNSense
             widget:
               type: opnsense
-              url: https://10.0.0.254:8443
+              url: http://10.0.0.254:8443
               username: {{HOMEPAGE_VAR_OPNSENSE_USERNAME}}
               password: {{HOMEPAGE_VAR_OPNSENSE_PASSWORD}}
     - Calendar:
@@ -178,15 +178,6 @@ data:
         cache: 5
         format:
           maximumFractionDigits: 1
-    - datetime:
-        text_size: l
-        format:
-          timeStyle: short
-          dateStyle: short
-          hourCycle: h23
-    - unifi_console:
-        url: https://10.0.1.254:8443
-        username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
     - truenas:
         url: http://truenas.rafaribe.com # Internal Only
         key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
