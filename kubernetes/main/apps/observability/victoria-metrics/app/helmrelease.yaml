@@ -170,9 +170,6 @@ spec:
             labelSelector:
               matchLabels:
                 app.kubernetes.io/name: vmagent
-        additionalScrapeConfigs:
-          name: vm-additional-scrape-configs
-          key: prometheus-additional.yaml
       ingress:
         enabled: true
         ingressClassName: internal
