@@ -15,7 +15,7 @@
         description: OPNSense
         widget:
           type: opnsense
-          url: http://10.0.0.1:8443
+          url: http://10.0.0.1
           username: { { HOMEPAGE_VAR_OPNSENSE_USERNAME } }
           password: { { HOMEPAGE_VAR_OPNSENSE_PASSWORD } }
 - Calendar:
