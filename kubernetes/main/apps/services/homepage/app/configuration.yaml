@@ -62,15 +62,6 @@ data:
               tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
               key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
               fields: ["status"]
-        # - Healthchecks:
-        #     href: https://healthchecks.io/
-        #     icon: healthchecks.png
-        #     description: Healthchecks Internet Uptime
-        #     widget:
-        #       type: healthchecks
-        #       url: https://healthchecks.io/
-        #       key: {{HOMEPAGE_VAR_HEALTHCHECK_TOKEN}}
-        #       uuid: {{HOMEPAGE_VAR_HEALTHCHECK_UUID}}
         - OPNSense:
             href: http://10.0.0.1
             description: OPNSense
@@ -97,10 +88,6 @@ data:
             href: http://truenas.rafaribe.com
             icon: truenas.png
             description: TrueNAS Scale
-        - PiHole
-            href: http://pihole.rafaribe.com
-            description: PiHole DNS Server
-            icon: pihole.png
 
   settings.yaml: |
     title: Dashboard
@@ -167,7 +154,7 @@ data:
         nodes:
           cpu: true
           memory: true
-          show: false
+          show: true
           showLabel: true
     - openmeteo:
         label: Home
