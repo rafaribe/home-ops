@@ -1,0 +1,47 @@
+---
+- Communicate:
+    - Discord:
+        - icon: discord.png
+          href: "https://discord.com/app"
+    - Gmail:
+        - icon: gmail.png
+          href: "http://gmail.com"
+    - Google Calendar:
+        - icon: google-calendar.png
+          href: "https://calendar.google.com"
+    - Outlook:
+        - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/outlook.png
+          href: "https://outlook.com"
+- Media:
+    - YouTube:
+        - icon: youtube.png
+          href: "https://youtube.com/feed/subscriptions"
+    - Spotify:
+        - icon: spotify.png
+          href: "http://open.spotify.com"
+    - Youtube Music:
+        - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/youtube-music.png
+          href: "https://music.youtube.com"
+- Reading:
+    - Zwame:
+        - icon: https://i.imgur.com/192X5MO.png
+          href: "https://forum.zwame.pt/"
+    - Reddit:
+        - icon: reddit.png
+          href: "https://reddit.com"
+- Git:
+    - kubesearch:
+        - icon: kubernetes-dashboard.png
+          href: "https://kubesearch.dev/"
+    - home-ops:
+        - icon: github.png
+          href: "https://github.com/rafaribe/home-ops"
+    - onedr0p-home-ops:
+        - icon: github.png
+          href: "https://github.com/onedr0p/home-ops"
+    - bjw-s-home-ops:
+        - icon: github.png
+          href: "https://github.com/bjw-s/home-ops"
+    - bjw-s-helm-charts:
+        - icon: github.png
+          href: "https://github.com/bjw-s/helm-charts"

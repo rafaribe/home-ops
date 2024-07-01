@@ -1,0 +1,37 @@
+---
+- logo:
+      icon: https://sundayguardianlive.com/wp-content/uploads/2020/07/Untitled-design-9.png
+- search:
+      provider: [google]
+      focus: false
+      target: _blank
+- greeting:
+      text_size: xl
+      text: "Hey Rafael, how are you doing today?"
+- kubernetes:
+      cluster:
+          cpu: true
+          memory: true
+          show: true
+          showLabel: true
+      nodes:
+          cpu: true
+          memory: true
+          show: false
+          showLabel: true
+- openmeteo:
+      label: Home
+      latitude: { { HOMEPAGE_VAR_LATITUDE } }
+      longitude: { { HOMEPAGE_VAR_LONGITUDE } }
+      timezone: Europe/Lisbon
+      units: metric
+      cache: 5
+      format:
+          maximumFractionDigits: 1
+- truenas:
+      url: http://truenas.rafaribe.com # Internal Only
+      key: { { HOMEPAGE_VAR_TRUENAS_APIKEY } }
+- pihole:
+      url: http://pihole.rafaribe.com
+      version: 6
+      key: { { HOMEPAGE_VAR_PIHOLE_APIKEY } }
