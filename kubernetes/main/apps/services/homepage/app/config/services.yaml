@@ -28,7 +28,7 @@
           url: https://10.0.0.254:8443
           username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
           password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
-          fields: ["uptime", "wlan", "wlan_devices"]
+          #fields: ["uptime", "wlan", "wlan_devices"]
 - Calendar:
     - Agenda:
         widget:
