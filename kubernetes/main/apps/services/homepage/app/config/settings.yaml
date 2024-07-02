@@ -4,7 +4,7 @@ favicon: https://w7.pngwing.com/pngs/848/762/png-transparent-computer-icons-home
 useEqualHeights: true
 theme: dark
 background:
-  image: https://i.imgur.com/oFw7T7g.jpeg
+  image: https://i.imgur.com/oFw7T7g.jpg
   opacity: 20
 color: slate
 headerStyle: clean
@@ -16,7 +16,7 @@ quicklaunch:
 layout:
   Network:
     style: row
-    columns: 3
+    columns: 2
     icon: mdi-network
   Calendar:
     style: column
@@ -24,17 +24,17 @@ layout:
   Video:
     style: column
     icon: mdi-play-circle
-  Books:
+  Reading:
     style: row
     columns: 2
     icon: mdi-book
   Infrastructure:
     style: row
-    columns: 5
+    columns: 3
     icon: mdi-server
   Observability:
     style: row
-    columns: 5
+    columns: 3
     icon: mdi-chart-line
   Home:
     style: row
