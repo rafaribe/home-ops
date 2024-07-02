@@ -29,19 +29,19 @@
           username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
           password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
           #fields: ["uptime", "wlan", "wlan_devices"]
-- Calendar:
-    - Agenda:
-        widget:
-          type: calendar
-          view: agenda # optional - possible values monthly, agenda
-          maxEvents: 15 # optional - defaults to 10
-          integrations: # optional
-            - type: ical # Show calendar events from another service
-              url: {{HOMEPAGE_VAR_GOOGLE_CALENDAR_ICAL_URL}}
-              name: Home-Calendar
-              color: magenta
-              params:
-                showName: true
+# - Calendar:
+#     - Agenda:
+#         widget:
+#           type: calendar
+#           view: agenda # optional - possible values monthly, agenda
+#           maxEvents: 15 # optional - defaults to 10
+#           integrations: # optional
+            # - type: ical # Show calendar events from another service
+            #   url: {{HOMEPAGE_VAR_GOOGLE_CALENDAR_ICAL_URL}}
+            #   name: Home-Calendar
+            #   color: magenta
+            #   params:
+            #     showName: true
 - Infrastructure:
     - TrueNAS:
         href: http://truenas.rafaribe.com
