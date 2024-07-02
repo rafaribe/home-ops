@@ -9,7 +9,7 @@ spec:
     spec:
       # renovate: registryUrl=https://open-telemetry.github.io/opentelemetry-helm
       chart: opentelemetry-operator
-      version: 0.63.2
+      version: 0.64.1
       sourceRef:
         kind: HelmRepository
         name: open-telemetry
