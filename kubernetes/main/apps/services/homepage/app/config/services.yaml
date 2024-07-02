@@ -42,18 +42,18 @@
           key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
           enablePools: true # optional, defaults to false
     - PiHole:
-        href: http://10.0.0.254
+        href: http://10.0.0.254/admin
         icon: pihole.png
         description: TrueNAS Scale
         widget:
           type: pihole
-          url: http://10.0.0.254
+          url: http://10.0.0.254/admin
           version: 6
           key: {{HOMEPAGE_VAR_PIHOLE_APIKEY}}
     - Proxmox:
         href: http://10.0.0.254
         icon: pihole.png
-        description: TrueNAS Scale
+        description: DNS Server
         widget:
           type: proxmox
           url: https://10.0.0.2:8006
