@@ -6,9 +6,9 @@
         description: Cloudflared Tunnel Status
         widget:
           type: cloudflared
-          accountid: { { HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID } }
-          tunnelid: { { HOMEPAGE_VAR_CLOUDFLARED_TUNNELID } }
-          key: { { HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN } }
+          accountid: {{ HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID }}
+          tunnelid: {{ HOMEPAGE_VAR_CLOUDFLARED_TUNNELID }}
+          key: {{ HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN }}
           fields: ["status"]
     - OPNSense:
         href: http://10.0.0.1
@@ -16,8 +16,8 @@
         widget:
           type: opnsense
           url: http://10.0.0.1
-          username: { { HOMEPAGE_VAR_OPNSENSE_USERNAME } }
-          password: { { HOMEPAGE_VAR_OPNSENSE_PASSWORD } }
+          username: {{ HOMEPAGE_VAR_OPNSENSE_USERNAME }}
+          password: {{ HOMEPAGE_VAR_OPNSENSE_PASSWORD }}
 - Calendar:
     - Agenda:
         widget:
@@ -26,7 +26,7 @@
           maxEvents: 15 # optional - defaults to 10
           integrations: # optional
             - type: ical # Show calendar events from another service
-              url: { { HOMEPAGE_VAR_GOOGLE_CALENDAR_ICAL_URL } }
+              url: {{ HOMEPAGE_VAR_GOOGLE_CALENDAR_ICAL_URL }}
               name: Home-Calendar
               color: magenta
               params:
