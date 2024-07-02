@@ -36,3 +36,26 @@
         href: http://truenas.rafaribe.com
         icon: truenas.png
         description: TrueNAS Scale
+        widget:
+          type: truenas
+          url: http://truenas.rafaribe.com # Internal Only
+          key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
+          enablePools: true # optional, defaults to false
+    - PiHole:
+        href: http://10.0.0.254
+        icon: pihole.png
+        description: TrueNAS Scale
+        widget:
+          url: http://pihole.rafaribe.com
+          version: 6
+          key: {{HOMEPAGE_VAR_PIHOLE_APIKEY}}
+    - Proxmox:
+        href: http://10.0.0.254
+        icon: pihole.png
+        description: TrueNAS Scale
+        widget:
+          type: proxmox
+          url: https://10.0.0.2:8006
+          username: {{HOMEPAGE_VAR_PROXMOX_API_USER}}
+          password: {{HOMEPAGE_VAR_PROXMOX_API_USER_KEY}}
+          node: router
