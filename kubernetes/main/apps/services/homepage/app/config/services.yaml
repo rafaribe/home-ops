@@ -18,6 +18,16 @@
           url: http://10.0.0.1
           username: {{HOMEPAGE_VAR_OPNSENSE_USERNAME}}
           password: {{HOMEPAGE_VAR_OPNSENSE_PASSWORD}}
+    - Unifi:
+        href: https://10.0.0.254:8443
+        description: Unifi Controller
+        ping: 10.0.0.254
+        siteMonitor: https://10.0.0.254:8443
+        widget:
+          type: unifi_console
+          url: https://10.0.0.254:8443
+          username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
+          password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
 - Calendar:
     - Agenda:
         widget:
@@ -56,6 +66,8 @@
         href: https://10.0.0.2:8006
         icon: https://www.45drives.com/solutions/proxmox/img/proxmox_Logo.png
         description: Virtualized Router
+        ping: 10.0.0.2
+        siteMonitor: http://10.0.0.2:8006
         widget:
           type: proxmox
           url: https://10.0.0.2:8006
