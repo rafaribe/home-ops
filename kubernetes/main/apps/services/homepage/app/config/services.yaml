@@ -41,19 +41,21 @@
           url: http://truenas.rafaribe.com # Internal Only
           key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
           enablePools: true # optional, defaults to false
-    - PiHole:
-        href: http://10.0.0.254/admin
-        icon: pihole.png
-        description: TrueNAS Scale
+    - Pihole:
+        href: http://pihole.rafaribe.com/admin
+        icon: https://static-00.iconduck.com/assets.00/pihole-icon-174x256-w2exgm2v.png
+        description: DNS Server
+        ping: 10.0.0.254
+        siteMonitor: http://10.0.0.254
         widget:
           type: pihole
-          url: http://10.0.0.254/admin
+          url: http://pihole.rafaribe.com/
           version: 6
-          key: {{HOMEPAGE_VAR_PIHOLE_APIKEY}}
+          key: {{HOMEPAGE_VAR_PIHOLE_API_KEY}}
     - Proxmox:
-        href: http://10.0.0.254
-        icon: pihole.png
-        description: DNS Server
+        href: https://10.0.0.2:8006
+        icon: https://www.45drives.com/solutions/proxmox/img/proxmox_Logo.png
+        description: Virtualized Router
         widget:
           type: proxmox
           url: https://10.0.0.2:8006
