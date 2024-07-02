@@ -62,3 +62,11 @@
           username: {{HOMEPAGE_VAR_PROXMOX_API_USER}}
           password: {{HOMEPAGE_VAR_PROXMOX_API_USER_KEY}}
           node: router
+- Observability:
+    - Gatus:
+      href: https://status.rafaribe.com/
+      icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT50mSXT9rej_qhHTtQplLjf63bfhnZpQoh2A&s
+      description: Status Page
+      widget:
+        type: gatus
+        url: https://status.rafaribe.com/
