@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/source.toolkit.fluxcd.io/gitrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: kubevirt-cdi
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://git.hsn.dev/jahanson/kubevirt-flux.git
+  ref:
+    branch: cdi-v1.59.0
+  ignore: |
+    # exclude all
+    /*
+    # include files
+    !/deploy

@@ -7,3 +7,5 @@ resources:
   - ./cloudflare-operator.yaml
   - ./local-path-provisioner.yaml
   - ./gateway-api.yaml
+  - ./kubevirt-cdi.yaml
+  - ./kubevirt.yaml
