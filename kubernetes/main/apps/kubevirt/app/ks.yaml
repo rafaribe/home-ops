@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: kubevirt
   dependsOn:
-    - name: openebs-cluster
+    - name: rook-ceph-cluster
   path: ./deploy
   prune: true
   sourceRef:
@@ -40,7 +40,7 @@ spec:
               featureGates:
               - CPUNodeDiscovery
               - ExpandDisks
-            vmStateStorageClass: rook-ceph
+            vmStateStorageClass: ceph-block
       target:
         group: kubevirt.io
         kind: KubeVirt
