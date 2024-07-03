@@ -8,3 +8,4 @@ resources:
   # Flux-Kustomizations
   - ./manager/ks.yaml
   - ./app/ks.yaml
+  - ./vms/ks.yaml
