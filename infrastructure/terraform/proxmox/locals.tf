@@ -35,5 +35,5 @@ locals {
     }
   }
 
-  password = nonsensitive(data.doppler_secrets.this.map.PX_PASSWORD)
+  password = data.sops_file.secrets.data["proxmox_password"]
 }

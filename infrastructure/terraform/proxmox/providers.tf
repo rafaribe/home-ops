@@ -1,28 +1,27 @@
-data "terraform_remote_state" "doppler_provider" {
-  backend = "remote"
-
-  config = {
-    organization = "rafaribe"
-    hostname     = "app.terraform.io"
-
-    workspaces = {
-      name = "home-doppler"
+terraform {
+  required_providers {
+    proxmox = {
+      source  = "bpg/proxmox"
+      version = "0.60.1"
+    }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "4.0.5"
+    }
+    sops = {
+      source  = "carlpett/sops"
+      version = "1.0.0"
     }
   }
 }
-
-# Configure the Doppler provider with the token
-provider "doppler" {
-  doppler_token = data.terraform_remote_state.doppler_provider.outputs.all_service_tokens.proxmox.prod.key
+data "sops_file" "secrets" {
+  source_file = "../terraform.sops.yaml"
 }
-# Use a service token that only has access to the unifi project
-data "doppler_secrets" "this" {}
-
 
 # Inject secrets from doppler into Unifi Provider
 provider "proxmox" {
-  endpoint = nonsensitive(data.doppler_secrets.this.map.PX_ENDPOINT)
-  username = nonsensitive(data.doppler_secrets.this.map.PX_USERNAME)
-  password = nonsensitive(data.doppler_secrets.this.map.PX_PASSWORD)
-  insecure = nonsensitive(data.doppler_secrets.this.map.PX_INSECURE)
+  endpoint = data.sops_file.secrets.data["proxmox_endpoint"]
+  username = data.sops_file.secrets.data["proxmox_username"]
+  password = data.sops_file.secrets.data["proxmox_password"]
+  insecure = true
 }
