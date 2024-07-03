@@ -1,0 +1,52 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/kubevirt.io/virtualmachine_v1.json
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: nt
+  namespace: default
+spec:
+  running: false
+  template:
+    spec:
+      architecture: amd64
+      domain:
+        clock:
+          timezone: "Europe/Lisbon"
+        cpu:
+          cores: 4
+          sockets: 1
+          threads: 2
+        devices:
+          disks:
+            - disk:
+                bus: sata
+              name: disk1
+            - cdrom:
+                bus: sata
+              name: nixosiso
+          interfaces:
+            - bridge: {}
+              name: net1
+          networkInterfaceMultiqueue: true
+        firmware:
+          # this sets the bootloader type
+          bootloader:
+            efi:
+              secureBoot: false
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 8Gi
+      networks:
+        - name: net1
+          pod: {}
+      priorityClassName: vm-standard
+      volumes:
+        - name: disk1
+          persistentVolumeClaim:
+            claimName: nt
+        - dataVolume:
+            name: "nixos-minimal"
+          name: nixosiso
