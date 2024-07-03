@@ -4,7 +4,7 @@ apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
   name: nt
-  namespace: default
+  namespace: kubevirt
 spec:
   running: false
   template:
