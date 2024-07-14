@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/joryirving/readarr-develop
-              tag: 0.3.29.2565@sha256:f77cd086ba0e82b2d06660db99993d410647e8ccef4ac319f11e2f9aef99a4c0
+              tag: 0.3.31.2578@sha256:2459944870fd18fe92b997d616eebd921abf08ad177d3a23f904640bd2aa1a76
             env:
               TZ: Europe/Lisbon
               READARR__INSTANCE_NAME: Readarr
