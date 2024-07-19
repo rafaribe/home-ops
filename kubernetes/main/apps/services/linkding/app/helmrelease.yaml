@@ -83,13 +83,13 @@ spec:
         annotations:
           hajimari.io/icon: link
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          nginx.ingress.kubernetes.io/auth-method: GET
-          nginx.ingress.kubernetes.io/auth-url: https://auth.rafaribe.com/api/verify
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.rafaribe.com/?rm=$request_method
-          nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
-          nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
+    #      nginx.ingress.kubernetes.io/auth-method: GET
+        #  nginx.ingress.kubernetes.io/auth-url: https://auth.rafaribe.com/api/verify
+       #   nginx.ingress.kubernetes.io/auth-signin: https://auth.rafaribe.com/?rm=$request_method
+      #    nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+      #    nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
         hosts:
-          - host: &host "links.rafaribe.com"
+          - host: &host "linkding.rafaribe.com"
             paths:
               - path: /
                 service:
