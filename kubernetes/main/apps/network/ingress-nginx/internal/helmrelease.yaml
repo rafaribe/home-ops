@@ -86,7 +86,7 @@ spec:
       enabled: true
       image:
         repository: ghcr.io/tarampampam/error-pages
-        tag: 2.27 # Using the latest tag is highly discouraged. Please, use tags in X.Y.Z format
+        tag: 3.2 # Using the latest tag is highly discouraged. Please, use tags in X.Y.Z format
       extraEnvs:
         - name: TEMPLATE_NAME # Optional: change the default theme
           value: lost-in-space
