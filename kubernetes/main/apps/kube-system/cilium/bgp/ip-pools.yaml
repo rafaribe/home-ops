@@ -4,7 +4,7 @@ kind: CiliumLoadBalancerIPPool
 metadata:
   name: "primary-pool"
 spec:
-  cidrs:
+  blocks:
     - cidr: 10.0.1.0/24
   serviceSelector:
     matchExpressions:
@@ -15,7 +15,7 @@ kind: CiliumLoadBalancerIPPool
 metadata:
   name: "main-pool"
 spec:
-  cidrs:
+  blocks:
     - cidr: 10.0.0.250/29
   serviceSelector:
     matchExpressions:
