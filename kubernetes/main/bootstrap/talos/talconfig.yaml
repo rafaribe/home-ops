@@ -9,7 +9,7 @@ clusterSvcNets:
   - 10.43.0.0/16
 
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.7.5
+talosVersion: v1.7.6
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.30.3
 
