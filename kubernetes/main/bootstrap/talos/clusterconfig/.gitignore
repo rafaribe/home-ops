@@ -6,3 +6,7 @@ main-tyr.home.arpa.yaml
 talosconfig
 main-mimir.home.arpa.yaml
 main-heimdall.home.arpa.yaml
+*.crt
+*.csr
+*.key
+main-borr.home.arpa.yaml

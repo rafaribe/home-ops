@@ -32,3 +32,5 @@ utilities/doppler-to-akeyless/venv
 utilities/doppler-to-akeyless/.env
 *.tmp.yaml
 .authelia/
+kubernetes/main/bootstrap/talos/talosconfig-reader
+ 

@@ -1,23 +1,3 @@
 clusterName: main
 clusterDNSSuffix: home.arpa
 clusterEndpointIP: 10.0.0.10
-sops:
-  kms: []
-  gcp_kms: []
-  azure_kv: []
-  hc_vault: []
-  age:
-    - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
-      enc: |
-        -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3UGNxdjF5bWswZXNPZlBZ
-        dzN3K0hkYW9EUHZWbHI5YkV3MTJGbldEWHhzCmFrbW9aVzJGV3NZSk5hOStXVzNi
-        UW0rbGZlbzc3ZE1oOTQyenlROGFuTUkKLS0tIFFsdDRQbENHKzdYNXZSdEZzRTgw
-        dFlXdDRYbldMZUdLQW83QlNaNjF3ZFUKb1NN305LBMTaPYwylHgDKwfm6eIayR8g
-        HWGxsvsC8pwEknZyxCMNDz4wVFp/jBzWK9qj27aQTqeW/eg+OhRPBQ==
-        -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2024-05-26T19:57:05Z"
-  mac: ENC[AES256_GCM,data:C3G4iLRKbjfogecAkGfqvCL3q8PwHJ5tOW7/AUxJNDRy/Dkg81QwpkLIWNcmgENV8nC5budO3258v4SZjy5vcLGZKOhi8r1Kjoyz0ISlo6poUIJ1tdN8+qYb+JT15vt4iONkq0PiYzMMdO7RSvD4OQQhVwYbxLrID0ZoRqVNJ9M=,iv:d57tgzaMms7jqFH0l/cciA/WL4+AEmXDOolWyMa0p2o=,tag:Z4gbuYUsU1JWVxy1wL4BZA==,type:str]
-  pgp: []
-  encrypted_regex: ^(data|stringData)$
-  version: 3.8.1
