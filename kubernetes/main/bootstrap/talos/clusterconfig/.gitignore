@@ -10,3 +10,4 @@ main-heimdall.home.arpa.yaml
 *.csr
 *.key
 main-borr.home.arpa.yaml
+.snapshot
