@@ -6,7 +6,6 @@ on:
   push:
     branches: ["main"]
     paths: ["kubernetes/main/**"]
-    paths-ignore: ["kubernetes/utils/**/"]
 jobs:
   sync:
     name: Flux Kustomization Sync
