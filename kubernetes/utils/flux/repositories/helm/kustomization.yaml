@@ -4,6 +4,8 @@ kind: Kustomization
 resources:
   - bjw-s.yaml
   - cilium.yaml
+  - coredns.yaml
+  - descheduler.yaml
   - kubernetes-sigs-metrics-server.yaml
   - openebs.yaml
   - opentelemetry.yaml
