@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-refector
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/utils/kube-system/reflector/app
+  path: ./kubernetes/utils/apps/kube-system/reflector/app
   prune: true
   sourceRef:
     kind: GitRepository
