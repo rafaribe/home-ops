@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *appname
   interval: 10m
-  path: "./kubernetes/main/utils/kube-system/kubelet-csr-approver/app"
+  path: "./kubernetes/utils/apps/kube-system/kubelet-csr-approver/app"
   prune: true
   sourceRef:
     kind: GitRepository

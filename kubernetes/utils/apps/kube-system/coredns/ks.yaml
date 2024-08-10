@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/utils/kube-system/coredns/app
+  path: ./kubernetes/utils/apps/kube-system/coredns/app
   prune: false # never should be deleted
   sourceRef:
     kind: GitRepository
