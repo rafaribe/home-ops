@@ -12,6 +12,17 @@ resource "proxmox_virtual_environment_vm" "virtualmachine" {
     size         = var.disk_size
     file_format  = "raw"
   }
+
+  dynamic "disk" {
+    for_each = var.additional_disk != null ? { 0 = var.additional_disk } : {}
+    content {
+      datastore_id = disk.value[0].datastore_id
+      file_format  = disk.value[0].file_format
+      size         = disk.value[0].size
+      interface    = "scsi1"
+    }
+  }
+
   cpu {
     cores   = var.cpu
     sockets = var.sockets

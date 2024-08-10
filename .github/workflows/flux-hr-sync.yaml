@@ -19,6 +19,7 @@ on:
   pull_request:
     branches: ["main"]
     paths: ["kubernetes/**/helmrelease.yaml"]
+    paths-ignore: ["kubernetes/utils/**/"]
 
 jobs:
   sync:

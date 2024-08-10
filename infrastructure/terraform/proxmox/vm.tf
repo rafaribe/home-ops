@@ -9,12 +9,13 @@ module "nixos" {
   memory    = local.nix_nodes[each.key].memory
   disk_size = 20
 
-  iso_id       = proxmox_virtual_environment_file.nix_os_iso[local.proxmox_node_name].id
-  vm_id        = 3000 + index(keys(local.nix_nodes), each.key)
-  mac_address  = "42:C3:B0:6B:80:B${index(keys(local.nix_nodes), each.key) + 1}"
-  tags         = ["nixos", "network-tooling", "terraform"]
-  network_boot = false
-  agent        = false
+  iso_id          = proxmox_virtual_environment_file.nix_os_iso[local.proxmox_node_name].id
+  vm_id           = 3000 + index(keys(local.nix_nodes), each.key)
+  mac_address     = "42:C3:B0:6B:80:B${index(keys(local.nix_nodes), each.key) + 1}"
+  tags            = ["nixos", "network-tooling", "terraform"]
+  network_boot    = false
+  agent           = false
+  additional_disk = null
   providers = {
     proxmox = proxmox
   }
@@ -36,7 +37,12 @@ module "talos" {
   mac_address  = "42:C3:B0:6B:80:C${index(keys(local.talos_nodes), each.key) + 1}"
   tags         = ["talos", "tooling", "terraform", "utils"]
   network_boot = false
-  agent        = false
+  agent        = true
+  additional_disk = [{
+    datastore_id = "local-lvm"
+    file_format  = "raw"
+    size         = 70
+  }]
   providers = {
     proxmox = proxmox
   }

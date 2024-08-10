@@ -9,7 +9,7 @@ locals {
   }
 
   talos_nodes = {
-    "talos1" = {
+    "utils-1" = {
       cpu     = 2
       sockets = 1
       memory  = 4096

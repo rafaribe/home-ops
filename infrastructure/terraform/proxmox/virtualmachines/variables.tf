@@ -51,3 +51,14 @@ variable "agent" {
   description = "Use network boot"
   default     = true
 }
+
+variable "additional_disk" {
+  type = list(object({
+    datastore_id = string
+    file_format  = string
+    size         = number
+  }))
+  default     = null
+  nullable    = true
+  description = "Configuration for an additional disk"
+}

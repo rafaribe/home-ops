@@ -5,15 +5,15 @@ name: "Flux Kustomization Sync"
 on:
   push:
     branches: ["main"]
-    paths: ["kubernetes/storage/**"]
-
+    paths: ["kubernetes/main/**"]
+    paths-ignore: ["kubernetes/utils/**/"]
 jobs:
   sync:
     name: Flux Kustomization Sync
     runs-on: ["arc-runner-set-home-ops"]
     strategy:
       matrix:
-        cluster: ["storage"]
+        cluster: ["main"]
     steps:
       - name: Generate Token
         uses: actions/create-github-app-token@v1

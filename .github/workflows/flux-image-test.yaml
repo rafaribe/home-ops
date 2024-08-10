@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: ["main"]
     paths: ["kubernetes/**"]
-
+    paths-ignore: ["kubernetes/utils/**/"]
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
