@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - bjw-s.yaml
   - cilium.yaml
+  - kubernetes-sigs-metrics-server.yaml
   - openebs.yaml
   - opentelemetry.yaml
   - postfinance.yaml
