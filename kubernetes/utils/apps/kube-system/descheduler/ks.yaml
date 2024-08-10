@@ -4,7 +4,7 @@ metadata:
   name: descheduler
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/utils/kube-system/descheduler/app
+  path: ./kubernetes/utrils/apps/kube-system/descheduler/app
   prune: true
   targetNamespace: kube-system
   sourceRef:
