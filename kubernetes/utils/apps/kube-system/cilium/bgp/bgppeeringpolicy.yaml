@@ -1,0 +1,25 @@
+---
+apiVersion: "cilium.io/v2alpha1"
+kind:
+metadata:
+  name: 01-bgp-peering-policy
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/os: "linux"
+  virtualRouters: # []CiliumBGPVirtualRouter
+    - localASN: 64514 # Cluster ASN
+      exportPodCIDR: true
+      serviceSelector:
+        matchExpressions: # Delete this line to allow all LoadBalancers
+          - {key: "io.cilium/bgp-announce", operator: "NotIn", values: ["fakevalue"]} # This will allow all `LoadBalancers`
+      neighbors: # []CiliumBGPNeighbor
+        - peerAddress: "10.0.0.1/32"
+          peerASN: 64512 # Set this to the ASN delegated to your Opnsense Router
+          eBGPMultihopTTL: 10
+          connectRetryTimeSeconds: 120
+          holdTimeSeconds: 90
+          keepAliveTimeSeconds: 30
+          gracefulRestart:
+            enabled: true
+            restartTimeSeconds: 120

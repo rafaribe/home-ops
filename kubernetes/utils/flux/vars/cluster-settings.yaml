@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: flux-system
+  name: cluster-settings
+data:
+  # Home Network IP's
+
+  LB_NGINX_INTERNAL: 10.0.2.2
+  LB_PIHOLE: 10.0.2.251
+  LB_BLOCKY: 10.0.2.250
+  # Tailscale Network IPs
+  LB_TAILSCALE_CIRDS: 10.0.4.0/24,10.0.1.0/24
+  TAILNET_PUBLIC_PORT: "41642"
+  # Cloudflare Tunnel
+  CLUSTER_CLOUDFLARE_TUNNEL_ID: 86615e3e-8339-4559-a45b-01fd0cd07293

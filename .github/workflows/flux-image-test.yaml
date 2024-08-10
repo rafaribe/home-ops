@@ -5,7 +5,7 @@ name: "Flux Image Test"
 on:
   pull_request:
     branches: ["main"]
-    paths: ["kubernetes/main/**"]
+    paths: ["kubernetes/**"]
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
