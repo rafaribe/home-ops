@@ -1,39 +1,21 @@
 locals {
-  nodes = {
-    "odin" = {
-      cpu     = 4
-      sockets = 2
-      memory  = 16000
-    }
-    "loki" = {
-      cpu     = 4
+  nix_nodes = {
+    "nix" = {
+      cpu     = 2
       sockets = 1
-      memory  = 16000
+      memory  = 2048
     }
-    "thor" = {
-      cpu     = 4
-      sockets = 1
-      memory  = 16000
-    }
-    "freya" = {
-      cpu     = 4
-      sockets = 1
-      memory  = 16000
-    }
-    "tyr" = {
-      cpu     = 4
-      sockets = 2
-      memory  = 32000
-    }
+
   }
 
-  router_nodes = {
-    "router" = {
+  talos_nodes = {
+    "talos-1" = {
       cpu     = 2
       sockets = 1
       memory  = 4096
     }
   }
+  proxmox_node_name = "router"
 
   password = data.sops_file.secrets.data["proxmox_password"]
 }

@@ -41,3 +41,13 @@ variable "tags" {
   type        = list(string)
   description = "vm tags"
 }
+variable "network_boot" {
+  type        = bool
+  description = "Use network boot"
+  default     = false
+}
+variable "agent" {
+  type        = bool
+  description = "Use network boot"
+  default     = true
+}

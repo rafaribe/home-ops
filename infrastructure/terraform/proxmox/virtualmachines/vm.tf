@@ -3,8 +3,9 @@ resource "proxmox_virtual_environment_vm" "virtualmachine" {
   description = "Managed by Terraform"
   tags        = var.tags
 
-  node_name = var.node_name
-  vm_id     = var.vm_id
+  node_name       = var.node_name
+  vm_id           = var.vm_id
+  keyboard_layout = "pt"
   disk {
     datastore_id = "local-lvm"
     interface    = "scsi0"
@@ -20,8 +21,8 @@ resource "proxmox_virtual_environment_vm" "virtualmachine" {
     dedicated = var.memory
   }
   cdrom {
-    enabled = true
-    file_id = var.iso_id
+    enabled = local.cdrom_config.enabled
+    file_id = lookup(local.cdrom_config, "file_id", null)
   }
 
   network_device {
@@ -33,13 +34,14 @@ resource "proxmox_virtual_environment_vm" "virtualmachine" {
     type = "l26"
   }
 
-  agent {
-    enabled = true
-  }
 
+  boot_order = local.boot_order
+  agent {
+    enabled = var.agent
+  }
 
   serial_device {}
   lifecycle {
-    ignore_changes = [tags]
+    ignore_changes = [tags, started]
   }
 }
