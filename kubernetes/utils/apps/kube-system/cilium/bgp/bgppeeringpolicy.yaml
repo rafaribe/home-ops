@@ -1,6 +1,6 @@
 ---
 apiVersion: "cilium.io/v2alpha1"
-kind:
+kind: CiliumBGPPeeringPolicy
 metadata:
   name: 01-bgp-peering-policy
 spec:
