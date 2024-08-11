@@ -9,11 +9,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-ops
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: cert-manager
-      namespace: cert-manager
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -39,11 +34,6 @@ spec:
     name: home-ops
   dependsOn:
     - name: cilium
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: cert-manager
-      namespace: cert-manager
   interval: 30m
   retryInterval: 1m
   timeout: 3m
