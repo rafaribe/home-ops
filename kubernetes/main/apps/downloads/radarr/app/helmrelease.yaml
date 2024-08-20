@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/joryirving/radarr-develop
-              tag: 5.8.3.8933@sha256:989a3714c34e39ff0169911f62745f17639dc14536996ac04a2702f467c3f97e
+              tag: 5.9.1.9070@sha256:2b92c203912e4f3ab740714d219fd57e54517286caa4d50e1405d61611f94d4b
             env:
               TZ: Europe/Lisbon
               RADARR__APP__INSTANCENAME: Radarr
