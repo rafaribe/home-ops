@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/home-assistant
-              tag: 2024.7.3@sha256:49edf11a71f1c6b8787dc5b190252d7a2e72e40d93091011be26d2162b1cdff6
+              tag: 2024.9.3@sha256:2f3371405f9b20008520ebb0b30dc676924acfe04d7aaece282a1ee89c0d91ce
             env:
               TZ: Europe/Lisbon
               HOME_ASSISTANT__HACS_INSTALL: "true"
