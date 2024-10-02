@@ -38,7 +38,7 @@ spec:
           tagging:
             image: &image
               repository: ghcr.io/buroa/qbtools
-              tag: v0.17.1
+              tag: v0.17.6
             args:
               - tagging
               - --added-on
