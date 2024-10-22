@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/joryirving/prowlarr-develop
-              tag: 1.24.3.4754@sha256:af6b9f567a6286beb6f117d222020559c321dd41bfc680b5ba9d79b9d4c04d59
+              tag: 1.25.4.4818@sha256:54ca1b05c9648e096b141bf0951b03541ad5818d28e77f327dc7f7e15972f781
             env:
               TZ: Europe/Lisbon
               PROWLARR__APP__INSTANCENAME: Prowlarr
