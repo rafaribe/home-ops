@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: tomsquest/docker-radicale
-              tag: 3.3.0.1
+              tag: 386.3.0.6.3
             probes:
               liveness:
                 enabled: true
