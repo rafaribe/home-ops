@@ -31,7 +31,7 @@ nodes:
       - "10.0.0.254"
     controlPlane: true
     installDiskSelector:
-      serial: "0x5a9de895x"
+      type: SD
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "ca:d1:4d:b4:f9:bd"
@@ -39,7 +39,6 @@ nodes:
         mtu: 1500
         vip:
           ip: ${clusterEndpointIP}
-    talosImageUrl: https://github.com/nberlee/talos/releases/download/v1.8.2/metal-arm64.raw.xz
     machineSpec:
       mode: metal
       arch: arm64
@@ -59,7 +58,6 @@ nodes:
         mtu: 1500
         vip:
           ip: ${clusterEndpointIP}
-    talosImageUrl: https://github.com/nberlee/talos/releases/download/v1.8.2/metal-arm64.raw.xz
     machineSpec:
       mode: metal
       arch: arm64
@@ -80,12 +78,12 @@ nodes:
         mtu: 1500
         vip:
           ip: ${clusterEndpointIP}
-    talosImageUrl: https://github.com/nberlee/talos/releases/download/v1.8.2/metal-arm64.raw.xz
     machineSpec:
       mode: metal
       arch: arm64
     kernelModules:
       - name: rockchip-cpufreq
+
   - hostname: tpi-4.${clusterDNSSuffix}
     ipAddress: 10.0.1.15
     nameservers:
@@ -98,13 +96,12 @@ nodes:
           hardwareAddr: "18:66:da:29:9f:9d"
         dhcp: true
         mtu: 1500
-    talosImageUrl: https://github.com/nberlee/talos/releases/download/v1.8.2/metal-arm64.raw.xz
     machineSpec:
       mode: metal
       arch: arm64
     kernelModules:
       - name: rockchip-cpufreq
-      
+
   - hostname: srv-02.${clusterDNSSuffix}
     ipAddress: 10.0.1.3
     nameservers:
@@ -196,7 +193,6 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-            
 
 controlPlane:
   schematic:
