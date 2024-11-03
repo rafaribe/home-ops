@@ -1,3 +1,3 @@
 clusterName: main
 clusterDNSSuffix: home.arpa
-clusterEndpointIP: 10.0.0.10
+clusterEndpointIP: 10.0.1.6
