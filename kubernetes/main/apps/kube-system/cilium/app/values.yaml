@@ -13,8 +13,6 @@ cgroup:
 cluster:
   id: 1
   name: main
-containerRuntime:
-  integration: containerd
 enableRuntimeDeviceDetection: true
 endpointRoutes:
   enabled: true

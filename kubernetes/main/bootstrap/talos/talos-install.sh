@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-talosctl apply-config --talosconfig=./clusterconfig/talosconfig --nodes=10.0.1.12 --file=./clusterconfig/main-tpi-1.home.arpa.yaml --insecure;
+#talosctl apply-config --talosconfig=./clusterconfig/talosconfig --nodes=10.0.1.12 --file=./clusterconfig/main-tpi-1.home.arpa.yaml --insecure;
 talosctl apply-config --talosconfig=./clusterconfig/talosconfig --nodes=10.0.1.13 --file=./clusterconfig/main-tpi-2.home.arpa.yaml --insecure;
 talosctl apply-config --talosconfig=./clusterconfig/talosconfig --nodes=10.0.1.14 --file=./clusterconfig/main-tpi-3.home.arpa.yaml --insecure;
 talosctl apply-config --talosconfig=./clusterconfig/talosconfig --nodes=10.0.1.15 --file=./clusterconfig/main-tpi-4.home.arpa.yaml --insecure;
