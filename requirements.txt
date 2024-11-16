@@ -1,5 +1,5 @@
 ansible==10.5.0
-ansible-lint==24.9.2
+ansible-lint==24.10.0
 bcrypt==4.2.0
 jmespath==1.0.1
 flux-local==6.0.2
