@@ -34,20 +34,3 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: cert-manager-dashboards
-  namespace: flux-system
-spec:
-  dependsOn:
-    - name: cert-manager
-  path: ./kubernetes/main/apps/cert-manager/cert-manager/dashboard
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-ops
-  interval: 30m
-  retryInterval: 1m
-  timeout: 3m

@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: grafana
-      version: 8.5.8
+      version: 8.6.0
       sourceRef:
         kind: HelmRepository
         name: grafana
@@ -305,7 +305,7 @@ spec:
         kubernetes-namespaces:
           # renovate: depName="Kubernetes / Views / Namespaces"
           gnetId: 15758
-          revision: 39
+          revision: 40
           datasource: Prometheus
         kubernetes-nodes:
           # renovate: depName="Kubernetes / Views / Nodes"
