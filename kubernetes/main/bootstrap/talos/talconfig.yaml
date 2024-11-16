@@ -11,7 +11,7 @@ clusterSvcNets:
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
 talosVersion: v1.8.2
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
-kubernetesVersion: v1.30.3
+kubernetesVersion: v1.31.2
 
 additionalApiServerCertSans: &sans
   - ${clusterEndpointIP}
@@ -37,61 +37,68 @@ nodes:
           hardwareAddr: "ca:d1:4d:b4:f9:bd"
         dhcp: true
         mtu: 1500
-        vip:
-          ip: ${clusterEndpointIP}
     machineSpec:
       mode: metal
       arch: arm64
     kernelModules:
       - name: rockchip-cpufreq
-    talosImageURL: --------------------------
+    patches:
+       - |-
+        machine:
+          install:
+            image: ghcr.io/nberlee/installer:v1.8.2-rk3588
+
   - hostname: tpi-2.${clusterDNSSuffix}
     ipAddress: 10.0.1.13
     nameservers:
       - "10.0.0.254"
     controlPlane: true
     installDiskSelector:
-      serial: "0x5aafe900"
+      type: SD
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "1e:66:39:1d:77:c0"
         dhcp: true
         mtu: 1500
-        vip:
-          ip: ${clusterEndpointIP}
     machineSpec:
       mode: metal
       arch: arm64
     kernelModules:
       - name: rockchip-cpufreq
-
+    patches:
+       - |-
+        machine:
+          install:
+            image: ghcr.io/nberlee/installer:v1.8.2-rk3588
   - hostname: tpi-3.${clusterDNSSuffix}
     ipAddress: 10.0.1.14
     nameservers:
       - "10.0.0.254"
     controlPlane: true
     installDiskSelector:
-      serial: "0x5e23e864"
+      type: SD
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "8e:56:66:61:bf:36"
         dhcp: true
         mtu: 1500
-        vip:
-          ip: ${clusterEndpointIP}
     machineSpec:
       mode: metal
       arch: arm64
     kernelModules:
       - name: rockchip-cpufreq
-
+    patches:
+       - |-
+        machine:
+          install:
+            image: ghcr.io/nberlee/installer:v1.8.2-rk3588
   - hostname: tpi-4.${clusterDNSSuffix}
     ipAddress: 10.0.1.15
     nameservers:
       - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
-      serial: "0x5e11e8cf"
+      type: SD
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "18:66:da:29:9f:9d"
@@ -102,7 +109,11 @@ nodes:
       arch: arm64
     kernelModules:
       - name: rockchip-cpufreq
-
+    patches:
+       - |-
+        machine:
+          install:
+            image: ghcr.io/nberlee/installer:v1.8.2-rk3588
   - hostname: srv-02.${clusterDNSSuffix}
     ipAddress: 10.0.1.3
     nameservers:
@@ -135,7 +146,7 @@ nodes:
             gateway: 10.0.0.1
 
   - hostname: srv-04.${clusterDNSSuffix}
-    ipAddress: 10.0.0.12
+    ipAddress: 	10.0.1.5
     nameservers:
       - "10.0.0.254"
     controlPlane: false
@@ -201,11 +212,6 @@ controlPlane:
       extraKernelArgs:
         - net.ifnames=0
         - mitigations=off
-      systemExtensions:
-        officialExtensions:
-          - siderolabs/i915-ucode
-          - siderolabs/intel-ucode
-          - siderolabs/spin
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: m
@@ -259,7 +265,7 @@ controlPlane:
             rotate-server-certificates: true
           nodeIP:
             validSubnets:
-              - 10.0.0.0/24
+              - 10.0.0.0/22
 
     # Enable KubePrism
     - &kubePrismPatch |-
@@ -340,7 +346,7 @@ controlPlane:
           extraArgs:
             listen-metrics-urls: http://0.0.0.0:2381
           advertisedSubnets:
-            - 10.0.0.0/24
+            - 10.0.0.0/22
 
     # Disable default API server admission plugins.
     - |-
@@ -368,12 +374,6 @@ controlPlane:
               options: ["bind", "rshared", "rw"]
 worker:
   schematic:
-    customization:
-      systemExtensions:
-        officialExtensions:
-          - siderolabs/i915-ucode
-          - siderolabs/intel-ucode
-          - siderolabs/spin
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: w
