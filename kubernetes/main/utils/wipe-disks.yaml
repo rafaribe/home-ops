@@ -40,44 +40,6 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-srv-04-sda
-  namespace: kube-system
-spec:
-  restartPolicy: Never
-  nodeName: srv-04
-  containers:
-    - name: disk-wipe
-      image: ubuntu
-      securityContext:
-        privileged: true
-      command: ["/bin/sh", "-c"]
-      args:
-        [
-          "export DISK=/dev/sda; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK;ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
-        ]
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: disk-wipe-srv-04-sdc
-  namespace: kube-system
-spec:
-  restartPolicy: Never
-  nodeName: srv-04
-  containers:
-    - name: disk-wipe
-      image: ubuntu
-      securityContext:
-        privileged: true
-      command: ["/bin/sh", "-c"]
-      args:
-        [
-          "export DISK=/dev/sdc; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK;ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
-        ]
----
-apiVersion: v1
-kind: Pod
-metadata:
   name: disk-wipe-srv-05
   namespace: kube-system
 spec:
@@ -93,6 +55,27 @@ spec:
         [
           "export DISK=/dev/sda; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK;ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
         ]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: disk-wipe-tpi-1
+  namespace: kube-system
+spec:
+  restartPolicy: Never
+  nodeName: tpi-1
+  containers:
+    - name: disk-wipe
+      image: ubuntu
+      securityContext:
+        privileged: true
+      command: ["/bin/sh", "-c"]
+      args:
+        [
+          "export DISK=/dev/nvme0n1; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK;ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
+        ]
+---
+
 ---
 apiVersion: v1
 kind: Pod
@@ -150,3 +133,5 @@ spec:
         [
           "export DISK=/dev/nvme0n1; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK;ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
         ]
+---
+
