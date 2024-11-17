@@ -37,6 +37,9 @@ nodes:
           hardwareAddr: "ca:d1:4d:b4:f9:bd"
         dhcp: true
         mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1
     machineSpec:
       mode: metal
       arch: arm64
@@ -60,6 +63,9 @@ nodes:
           hardwareAddr: "1e:66:39:1d:77:c0"
         dhcp: true
         mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1
     machineSpec:
       mode: metal
       arch: arm64
@@ -82,6 +88,9 @@ nodes:
           hardwareAddr: "8e:56:66:61:bf:36"
         dhcp: true
         mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1
     machineSpec:
       mode: metal
       arch: arm64
@@ -104,6 +113,9 @@ nodes:
           hardwareAddr: "18:66:da:29:9f:9d"
         dhcp: true
         mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1
     machineSpec:
       mode: metal
       arch: arm64
@@ -128,6 +140,7 @@ nodes:
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
+            gateway: 10.0.0.1
 
   - hostname: srv-03.${clusterDNSSuffix}
     ipAddress: 10.0.1.4
@@ -386,7 +399,6 @@ worker:
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: w
-    role.kubernetes.io/worker: "worker"
   patches:
     - *containerdPatch
     - *disableSearchDomainPatch
