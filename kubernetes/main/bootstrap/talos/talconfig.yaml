@@ -362,6 +362,7 @@ controlPlane:
             allowedRoles:
               - os:admin
             allowedKubernetesNamespaces:
+              - kube-tools
               - system-upgrade
     # Mount openebs-hostpath in kubelet
     - &openebs-hostpath |-
@@ -372,11 +373,20 @@ controlPlane:
               type: bind
               source: /var/openebs/local
               options: ["bind", "rshared", "rw"]
+    # Enable hostDNS:
+    - &hostdns |-
+      machine:
+        features:
+          hostDNS:
+            enabled: true
+            forwardKubeDNSToHost: true
+            resolveMemberNames: true
 worker:
   schematic:
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: w
+    role.kubernetes.io/worker: worker
   patches:
     - *containerdPatch
     - *disableSearchDomainPatch
@@ -389,3 +399,4 @@ worker:
     - *sysctlPatch
     - *noschedulerPatch
     - *openebs-hostpath
+    - *hostdns
