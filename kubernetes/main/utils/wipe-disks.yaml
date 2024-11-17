@@ -1,0 +1,114 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: disk-wipe-srv-02
+  namespace: kube-system
+spec:
+  restartPolicy: Never
+  nodeName: srv-02
+  containers:
+    - name: disk-wipe
+      image: ubuntu
+      securityContext:
+        privileged: true
+      command: ["/bin/sh", "-c"]
+      args:
+        [
+          "export DISK=/dev/sda; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK;ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
+        ]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: disk-wipe-srv-03
+  namespace: kube-system
+spec:
+  restartPolicy: Never
+  nodeName: srv-03
+  containers:
+    - name: disk-wipe
+      image: ubuntu
+      securityContext:
+        privileged: true
+      command: ["/bin/sh", "-c"]
+      args:
+        [
+          "export DISK=/dev/sda; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK;ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
+        ]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: disk-wipe-srv-05
+  namespace: kube-system
+spec:
+  restartPolicy: Never
+  nodeName: srv-05
+  containers:
+    - name: disk-wipe
+      image: ubuntu
+      securityContext:
+        privileged: true
+      command: ["/bin/sh", "-c"]
+      args:
+        [
+          "export DISK=/dev/sda; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK;ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
+        ]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: disk-wipe-tpi-2
+  namespace: kube-system
+spec:
+  restartPolicy: Never
+  nodeName: tpi-2
+  containers:
+    - name: disk-wipe
+      image: ubuntu
+      securityContext:
+        privileged: true
+      command: ["/bin/sh", "-c"]
+      args:
+        [
+          "export DISK=/dev/nvme0n1; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK;ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
+        ]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: disk-wipe-tpi-3
+  namespace: kube-system
+spec:
+  restartPolicy: Never
+  nodeName: tpi-3
+  containers:
+    - name: disk-wipe
+      image: ubuntu
+      securityContext:
+        privileged: true
+      command: ["/bin/sh", "-c"]
+      args:
+        [
+          "export DISK=/dev/nvme0n1; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK;ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
+        ]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: disk-wipe-tpi-4
+  namespace: kube-system
+spec:
+  restartPolicy: Never
+  nodeName: tpi-4
+  containers:
+    - name: disk-wipe
+      image: ubuntu
+      securityContext:
+        privileged: true
+      command: ["/bin/sh", "-c"]
+      args:
+        [
+          "export DISK=/dev/nvme0n1; apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all $DISK; dd if=/dev/zero bs=1M count=100 oflag=direct,dsync of=$DISK; wipefs -af $DISK; blkdiscard $DISK; partprobe $DISK;ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %; rm -rf /dev/ceph-*; rm -rf /dev/mapper/ceph--*; rm -rf /var/lib/rook/*; echo 'Complete'",
+        ]
