@@ -62,23 +62,11 @@ spec:
           - hosts:
               - *host
     storage:
-      useAllNodes: false
-      useAllDevices: false
+      useAllNodes: true
+      useAllDevices: true
+      deviceFilter: nvme0n1
       config:
         osdsPerDevice: "1"
-      nodes:
-        - name: "odin"
-          devices:
-            - name: "/dev/disk/by-id/usb-SanDisk_Portable_SSD_32333231454C343030363335-0:0"
-        - name: "loki"
-          devices:
-            - name: "/dev/disk/by-id/usb-Samsung_PSSD_T7_S6XDNS0W566278X-0:0"
-        - name: "thor"
-          devices:
-            - name: "/dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0"
-        - name: "freya"
-          devices:
-            - name: "/dev/disk/by-id/usb-SanDisk_Portable_SSD_323331373747343031363231-0:0"
     cephBlockPools:
       - name: ceph-blockpool
         spec:
