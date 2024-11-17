@@ -225,6 +225,10 @@ controlPlane:
       extraKernelArgs:
         - net.ifnames=0
         - mitigations=off
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: m
@@ -386,6 +390,17 @@ controlPlane:
               type: bind
               source: /var/openebs/local
               options: ["bind", "rshared", "rw"]
+    - &longhorn |-
+      machine:
+        kubelet:
+          extraMounts:
+            - destination: /var/lib/longhorn
+              type: bind
+              source: /var/lib/longhorn
+              options:
+                - bind
+                - rshared
+                - rw
     # Enable hostDNS:
     - &hostdns |-
       machine:
@@ -399,6 +414,13 @@ worker:
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: w
+    node.longhorn.io/create-default-disk: "true"
+    storage: longhorn
+  customization:
+    systemExtensions:
+      officialExtensions:
+        - siderolabs/iscsi-tools
+        - siderolabs/util-linux-tools
   patches:
     - *containerdPatch
     - *disableSearchDomainPatch
@@ -412,3 +434,4 @@ worker:
     - *noschedulerPatch
     - *openebs-hostpath
     - *hostdns
+    - *longhorn
