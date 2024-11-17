@@ -31,6 +31,8 @@ servers:
           fallthrough in-addr.arpa ip6.arpa
       - name: forward
         parameters: . 10.0.0.254
+      - name: forward
+        parameters: . 1.1.1.1
       - name: cache
         parameters: 30
       - name: loop
