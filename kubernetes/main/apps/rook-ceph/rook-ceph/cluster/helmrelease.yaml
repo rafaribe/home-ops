@@ -61,12 +61,36 @@ spec:
         tls:
           - hosts:
               - *host
-    storage:
-      useAllNodes: true
-      useAllDevices: true
-      deviceFilter: nvme0n1
-      config:
-        osdsPerDevice: "1"
+      storage:
+        useAllNodes: false
+        useAllDevices: false"
+        nodes:
+          - name: srv-02
+            devices:
+              - name: /dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0
+          - name: srv-03
+            devices:
+              - name: /dev/disk/by-id/usb-SanDisk_Portable_SSD_32333231454C343030363335-0:0 
+          - name: srv-04
+            devices:
+              - name: /dev/disk/by-id/ata-SanDisk_Portable_SSD_23163H445813
+              - name: /dev/disk/by-id/ata-WDC_WD10SPCX-24HWST1_WD-WXK1AA5P94JV
+          - name: srv-05
+            devices:
+              - name: /dev/disk/by-id/usb-Samsung_PSSD_T7_S6XDNS0W566278X-0:0
+          - name: tpi-1
+            devices:
+              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_24175J806474
+          - name: tpi-2
+            devices:
+              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_241766801325
+          - name: tpi-3
+            devices:
+              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_24175J802694
+          - name: tpi-4
+            devices:
+              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_24175J806480
+      # resources:
     cephBlockPools:
       - name: ceph-blockpool
         spec:
