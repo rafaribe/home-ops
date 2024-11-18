@@ -26,6 +26,11 @@ spec:
     manageCRDs: true
     metrics:
       disableAuth: true
+    image: &image
+      repository: ghcr.io/haraldkoch/volsync
+      tag: 0.11.0
+    restic:
+      <<: *image
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
