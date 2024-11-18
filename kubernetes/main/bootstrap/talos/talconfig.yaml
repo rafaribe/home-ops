@@ -386,6 +386,18 @@ controlPlane:
             enabled: true
             forwardKubeDNSToHost: false
             resolveMemberNames: true
+    # Allow ceph to recognize usb devices as scsi via udev custom rules
+    # https://github.com/rook/rook/issues/14699#issuecomment-2350953135
+    # - &udev-replace-usb-device-scsi |-
+    #   machine:
+    #     files:
+    #       - op: create
+    #         path: /etc/udev/rules.d/99-usb-to-scsi.rules
+    #         permissions: 0o644
+    #         content: |
+    #           ACTION=="add", ENV{ID_TYPE}=="disk", ENV{ID_BUS}=="usb", ENV{ID_BUS}="scsi"
+    #           ACTION=="change", ENV{ID_TYPE}=="disk", ENV{ID_BUS}=="usb", ENV{ID_BUS}="scsi"
+    #           ACTION=="online", ENV{ID_TYPE}=="disk", ENV{ID_BUS}=="usb", ENV{ID_BUS}="scsi"
 worker:
   schematic:
   nodeLabels:
@@ -411,3 +423,5 @@ worker:
     - *noschedulerPatch
     - *openebs-hostpath
     - *hostdns
+   # - *udev-replace-usb-device-scsi
+   
