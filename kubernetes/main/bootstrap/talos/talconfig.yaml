@@ -188,7 +188,9 @@ nodes:
       - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
-      wwid: "t10.ATA"
+      type: "SSD"
+      model: UDSS*
+      size: <= 520 GB
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "00:e0:4c:2f:6b:76"
@@ -203,7 +205,9 @@ nodes:
       - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
-      wwid: "t10.ATA"
+      type: "SSD"
+      model: UDSS*
+      size: <= 520 GB
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "00:e0:4c:2f:6b:41"
