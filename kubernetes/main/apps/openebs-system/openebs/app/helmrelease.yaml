@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -24,10 +24,17 @@ spec:
       retries: 3
   values:
     localpv-provisioner:
+      rbac:
+        create: true
       localpv:
         image:
           registry: quay.io/
-          repository: openebs/provisioner-localpv
+        resources:
+          requests:
+            cpu: 100m
+            memory: 48Mi
+          limits:
+            memory: 96Mi
       hostpathClass:
         name: openebs-hostpath
     openebs-crds:
