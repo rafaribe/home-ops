@@ -6,6 +6,7 @@ metadata:
 spec:
   path: ./kubernetes/main/apps/cert-manager/cert-manager/app
   prune: true
+  targetNamespace: cert-manager
   sourceRef:
     kind: GitRepository
     name: home-ops
@@ -28,6 +29,7 @@ spec:
     - name: cert-manager
   path: ./kubernetes/main/apps/cert-manager/cert-manager/issuers
   prune: true
+  targetNamespace: cert-manager
   sourceRef:
     kind: GitRepository
     name: home-ops
