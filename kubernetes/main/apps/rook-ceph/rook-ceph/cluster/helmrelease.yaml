@@ -48,8 +48,8 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
-      cephVersion:
-        image: ghcr.io/cdalvaro/ceph:v18.2.4 # Allow running on usb removable devices
+      # cephVersion:
+      #   image: ghcr.io/cdalvaro/ceph:v18.2.4 # Allow running on usb removable devices
     ingress:
       dashboard:
         ingressClassName: "internal"

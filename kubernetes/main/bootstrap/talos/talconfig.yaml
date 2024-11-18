@@ -156,7 +156,9 @@ nodes:
       - "10.0.0.254"
     controlPlane: false
     installDiskSelector:
-      wwid: "naa.5001b448b6b834e"
+      type: "SSD"
+      model: WDC*
+      size: <= 250 GB
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "50:7b:9d:d3:95:a3"
