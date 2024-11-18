@@ -39,7 +39,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/haraldkoch/actions-runner:2.321.0
+            image: ghcr.io/haraldkoch/actions-runner:2.321
             command: ["/home/runner/run.sh"]
   valuesFrom:
     - kind: Secret
