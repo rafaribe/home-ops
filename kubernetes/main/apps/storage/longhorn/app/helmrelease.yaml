@@ -30,6 +30,10 @@ spec:
       snapshotterReplicaCount: *replicas
     persistence:
       defaultClassReplicaCount: 1
+      defaultNodeSelector:
+        enable: true
+        selector: 
+          storage: longhorn
     defaultSettings:
       createDefaultDiskLabeledNodes: true
       defaultDataLocality: true

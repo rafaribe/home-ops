@@ -11,4 +11,4 @@ resources:
   - ./dragonfly/ks.yaml
   - ./obsidian-couchdb/ks.yaml
   - ./emqx/ks.yaml
-  - ./longhorn/ks.yaml
+  #- ./longhorn/ks.yaml

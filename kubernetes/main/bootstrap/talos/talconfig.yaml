@@ -9,7 +9,7 @@ clusterSvcNets:
   - 10.43.0.0/16
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
-talosVersion: v1.8.2
+talosVersion: v1.8.3
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
 kubernetesVersion: v1.31.2
 
@@ -46,10 +46,10 @@ nodes:
     kernelModules:
       - name: rockchip-cpufreq
     patches:
-       - |-
+       - &nberlee-fork-installer |-
         machine:
           install:
-            image: ghcr.io/nberlee/installer:v1.8.2-rk3588
+            image: ghcr.io/nberlee/installer:v1.8.3-rk3588
 
   - hostname: tpi-2.${clusterDNSSuffix}
     ipAddress: 10.0.1.13
@@ -72,10 +72,7 @@ nodes:
     kernelModules:
       - name: rockchip-cpufreq
     patches:
-       - |-
-        machine:
-          install:
-            image: ghcr.io/nberlee/installer:v1.8.2-rk3588
+       - *nberlee-fork-installer
   - hostname: tpi-3.${clusterDNSSuffix}
     ipAddress: 10.0.1.14
     nameservers:
@@ -97,10 +94,7 @@ nodes:
     kernelModules:
       - name: rockchip-cpufreq
     patches:
-       - |-
-        machine:
-          install:
-            image: ghcr.io/nberlee/installer:v1.8.2-rk3588
+       - *nberlee-fork-installer
   - hostname: tpi-4.${clusterDNSSuffix}
     ipAddress: 10.0.1.15
     nameservers:
@@ -122,10 +116,8 @@ nodes:
     kernelModules:
       - name: rockchip-cpufreq
     patches:
-       - |-
-        machine:
-          install:
-            image: ghcr.io/nberlee/installer:v1.8.2-rk3588
+      - *nberlee-fork-installer
+
   - hostname: srv-02.${clusterDNSSuffix}
     ipAddress: 10.0.1.3
     nameservers:
@@ -225,10 +217,6 @@ controlPlane:
       extraKernelArgs:
         - net.ifnames=0
         - mitigations=off
-      systemExtensions:
-        officialExtensions:
-          - siderolabs/iscsi-tools
-          - siderolabs/util-linux-tools
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: m
