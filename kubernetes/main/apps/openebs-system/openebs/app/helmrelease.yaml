@@ -29,6 +29,7 @@ spec:
       localpv:
         image:
           registry: quay.io/
+          repository: openebs/provisioner-localpv
         resources:
           requests:
             cpu: 100m
