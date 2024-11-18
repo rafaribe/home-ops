@@ -9,50 +9,81 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: volsync
+
   values:
     controllers:
       qbittorrent:
         annotations:
-          reloader.stakater.com/auto: "true"
+          configmap.reloader.stakater.com/reload: qbittorrent-scripts,qbittorrent-dnsdist
+          secret.reloader.stakater.com/reload: qbittorrent
+
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 65542 # gladius:external-services
+          terminationGracePeriodSeconds: 120
+
+        initContainers:
+          dnsdist:
+            image:
+              repository: docker.io/powerdns/dnsdist-19
+              tag: 1.9.7
+            restartPolicy: Always
+
+          gluetun:
+            dependsOn:
+              - dnsdist
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.39.1
+            env:
+              DOT: "off"
+              DNS_ADDRESS: "127.0.0.2"
+              VPN_SERVICE_PROVIDER: custom
+              VPN_TYPE: wireguard
+              VPN_INTERFACE: wg0
+              WIREGUARD_ENDPOINT_PORT: 51820
+              VPN_PORT_FORWARDING: on
+              VPN_PORT_FORWARDING_PROVIDER: protonvpn
+              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_OUTBOUND_SUBNETS: 10.43.0.0/12,10.44.0.0/16 # Allow access to k8s subnets
+            envFrom:
+              - secretRef:
+                  name: qbittorrent
+            resources:
+              limits:
+                squat.ai/tun: "1"
+            restartPolicy: Always
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+              allowPrivilegeEscalation: false
+
         containers:
           app:
+            nameOverride: qbittorrent
             image:
               repository: ghcr.io/onedr0p/qbittorrent-beta
-              tag: 5.0.1@sha256:684422cab9fe3cba04812cf4207398bb72aa0f0283c92fddecd833648ac3f7bf
+              tag: 5.0.2@sha256:adfd625f9cc7226eabad8aa117a551d42d5818c914850ef7fa3be60111383107
             env:
-              TZ: Europe/Lisbon
-              QBITTORRENT__PORT: &port 80
-              QBITTORRENT__BT_PORT: &bittorrentPort 50413
-              QBT_Application__MemoryWorkingSetLimit: 10000
-              QBT_Preferences__WebUI__AlternativeUIEnabled: false
-              QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
-              QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
-                10.42.0.0/16, 10.0.0.0/24
-              QBT_Preferences__WebUI__LocalHostAuth: false
-              QBT_BitTorrent__Session__Interface: eth0
-              QBT_BitTorrent__Session__InterfaceAddress:
-                valueFrom:
-                  fieldRef:
-                    fieldPath: status.podIP
-              QBT_BitTorrent__Session__InterfaceName: eth0
+              UMASK: "022"
+              QBT_WEBUI_PORT: &port 8080
+              #XSEED_HOST: cross-seed.downloads.svc.cluster.local
+              # XSEED_PORT: 2468
+              # XSEED_APIKEY:
+              #   valueFrom:
+              #     secretKeyRef:
+              #       name: sabnzbd-secret
+              #       key: xseed_api_key
             probes:
               liveness:
                 enabled: true
@@ -63,42 +94,56 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 400m
+                cpu: 150m
+                memory: 2048Mi
               limits:
-                memory: 4Gi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [10000]
-        seccompProfile: { type: RuntimeDefault }
+                memory: 8192Mi
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+
+          port-forward:
+            image:
+              repository: ghcr.io/bjw-s-labs/gluetun-qb-port-sync
+              tag: 0.0.2@sha256:2d89e112fb4e2118ea392e23e0f1391395ce6d523ebfd380b8a421054ad7123a
+            env:
+              GLUETUN_CONTROL_SERVER_HOST: localhost
+              GLUETUN_CONTROL_SERVER_PORT: 8000
+              QBITTORRENT_HOST: localhost
+              QBITTORRENT_WEBUI_PORT: *port
+              CRON_ENABLED: true
+              CRON_SCHEDULE: "*/5 * * * *"
+              LOG_TIMESTAMP: false
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+
     service:
       app:
         controller: qbittorrent
-        type: LoadBalancer
-        annotations:
-          io.cilium/lb-ipam-ips: ${LB_QBITTORRENT}
         ports:
           http:
             port: *port
-          bittorrent:
-            enabled: true
-            port: *bittorrentPort
-            protocol: TCP
+
     ingress:
       app:
+        className: "internal"
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        className: internal
         hosts:
           - host: qb.rafaribe.com
             paths:
@@ -106,14 +151,43 @@ spec:
                 service:
                   identifier: app
                   port: http
+
     persistence:
       config:
+        enabled: true
         existingClaim: qbittorrent
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /config
+      empty-config:
+        type: emptyDir
+        advancedMounts:
+          qbittorrent:
+            port-forward:
+              - path: /config
       media:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
-        globalMounts:
-          - path: /media
-      tmp:
-        type: emptyDir
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /media
+      dnsdist:
+        type: configMap
+        name: qbittorrent-dnsdist
+        advancedMounts:
+          qbittorrent:
+            dnsdist:
+              - path: /etc/dnsdist/dnsdist.conf
+                subPath: dnsdist.conf
+                readOnly: true
+      scripts:
+        type: configMap
+        name: qbittorrent-scripts
+        defaultMode: 0775
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /config/scripts

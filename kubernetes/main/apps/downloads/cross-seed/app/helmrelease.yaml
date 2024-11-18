@@ -3,13 +3,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app cross-seed
+  name: cross-seed
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -22,8 +22,7 @@ spec:
     controllers:
       cross-seed:
         annotations:
-          confimap.reloader.stakater.com/reload: cross-seed
-          secret.reloader.stakater.com/reload: *app
+          secret.reloader.stakater.com/reload: cross-seed-secret
 
         pod:
           securityContext:
@@ -32,19 +31,17 @@ spec:
             runAsNonRoot: true
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
-
+            supplementalGroups:
+              - 65542 # gladius:external-services
+              - 2000
         containers:
           app:
             image:
               repository: ghcr.io/cross-seed/cross-seed
-              tag: 5.9.2
+              tag: 6.0.0-44
             args:
               - daemon
-            env:
-              CROSSSEED_PORT: &port 2468
-            envFrom:
-              - secretRef:
-                  name: cross-seed
+              - -v
             probes:
               liveness:
                 enabled: true
@@ -73,14 +70,14 @@ spec:
         controller: cross-seed
         ports:
           http:
-            port: *port
+            port: 2468
 
     persistence:
       config:
         type: emptyDir
       config-file:
-        type: configMap
-        name: cross-seed-configmap
+        type: secret
+        name: cross-seed-secret
         globalMounts:
           - path: /config/config.js
             subPath: config.js
@@ -89,3 +86,11 @@ spec:
         existingClaim: qbittorrent
         globalMounts:
           - path: /qbittorrent
+      media:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/media
+        advancedMounts:
+          cross-seed:
+            app:
+              - path: /media

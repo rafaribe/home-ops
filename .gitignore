@@ -34,3 +34,4 @@ utilities/doppler-to-akeyless/.env
 .authelia/
 kubernetes/main/bootstrap/talos/talosconfig-reader
  kubernetes/main/bootstrap/talos.tar.gz
+wg.txt
