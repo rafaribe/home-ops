@@ -35,7 +35,7 @@ spec:
         enabled: true
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: 10.0.1.2
+          io.cilium/lb-ipam-ips: ${LB_NGINX_EXTERNAL}
         labels:
           pool: lb
         externalTrafficPolicy: Cluster

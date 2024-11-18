@@ -63,8 +63,8 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
+        runAsUser: 1000
+        runAsGroup: 1000
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -83,7 +83,7 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: 10.0.1.250
+          io.cilium/lb-ipam-ips: ${LB_BLOCKY}
         ports:
           dns-tcp:
             port: *port
