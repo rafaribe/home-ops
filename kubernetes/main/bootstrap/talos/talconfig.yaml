@@ -46,7 +46,7 @@ nodes:
     kernelModules:
       - name: rockchip-cpufreq
     patches:
-       - &nberlee-fork-installer |-
+      - &nberlee-fork-installer |-
         machine:
           install:
             image: ghcr.io/nberlee/installer:v1.8.3-rk3588
@@ -72,7 +72,7 @@ nodes:
     kernelModules:
       - name: rockchip-cpufreq
     patches:
-       - *nberlee-fork-installer
+      - *nberlee-fork-installer
   - hostname: tpi-3.${clusterDNSSuffix}
     ipAddress: 10.0.1.14
     nameservers:
@@ -94,7 +94,7 @@ nodes:
     kernelModules:
       - name: rockchip-cpufreq
     patches:
-       - *nberlee-fork-installer
+      - *nberlee-fork-installer
   - hostname: tpi-4.${clusterDNSSuffix}
     ipAddress: 10.0.1.15
     nameservers:
@@ -151,7 +151,7 @@ nodes:
             gateway: 10.0.0.1
 
   - hostname: srv-04.${clusterDNSSuffix}
-    ipAddress: 	10.0.1.5
+    ipAddress: 10.0.1.5
     nameservers:
       - "10.0.0.254"
     controlPlane: false
@@ -221,8 +221,8 @@ controlPlane:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: m
   patches:
-    # set all disks to no scheduler
-    - &noschedulerPatch |-
+    # set all disks to no scheduler and allow usb disks to be handled by rook/ceph
+    - &udev |-
       machine:
         udev:
           rules:
@@ -231,6 +231,11 @@ controlPlane:
             # allow GID 44 (video) to use Intel GPU
             #- SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
             - SUBSYSTEM=="drm", GROUP="44", MODE="0660"
+            # Allow ceph to recognize usb devices as scsi via udev custom rules
+            # https://github.com/rook/rook/issues/14699#issuecomment-2350953135
+            - ACTION=="add", ENV{ID_TYPE}=="disk", ENV{ID_BUS}=="usb", ENV{ID_BUS}="scsi"
+            - ACTION=="change", ENV{ID_TYPE}=="disk", ENV{ID_BUS}=="usb", ENV{ID_BUS}="scsi"
+            - ACTION=="online", ENV{ID_TYPE}=="disk", ENV{ID_BUS}=="usb", ENV{ID_BUS}="scsi"
     # Configure containerd
     - &containerdPatch |-
       machine:
@@ -386,30 +391,17 @@ controlPlane:
             enabled: true
             forwardKubeDNSToHost: false
             resolveMemberNames: true
-    # Allow ceph to recognize usb devices as scsi via udev custom rules
-    # https://github.com/rook/rook/issues/14699#issuecomment-2350953135
-    # - &udev-replace-usb-device-scsi |-
-    #   machine:
-    #     files:
-    #       - op: create
-    #         path: /etc/udev/rules.d/99-usb-to-scsi.rules
-    #         permissions: 0o644
-    #         content: |
-    #           ACTION=="add", ENV{ID_TYPE}=="disk", ENV{ID_BUS}=="usb", ENV{ID_BUS}="scsi"
-    #           ACTION=="change", ENV{ID_TYPE}=="disk", ENV{ID_BUS}=="usb", ENV{ID_BUS}="scsi"
-    #           ACTION=="online", ENV{ID_TYPE}=="disk", ENV{ID_BUS}=="usb", ENV{ID_BUS}="scsi"
 worker:
   schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: w
-    node.longhorn.io/create-default-disk: "true"
-    storage: longhorn
-  customization:
-    systemExtensions:
-      officialExtensions:
-        - siderolabs/iscsi-tools
-        - siderolabs/util-linux-tools
+
   patches:
     - *containerdPatch
     - *disableSearchDomainPatch
@@ -420,8 +412,6 @@ worker:
     - *ntpPatch
     - *staticHostEntriesPatch
     - *sysctlPatch
-    - *noschedulerPatch
+    - *udev
     - *openebs-hostpath
     - *hostdns
-   # - *udev-replace-usb-device-scsi
-   
