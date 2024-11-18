@@ -402,8 +402,10 @@ worker:
     customization:
       systemExtensions:
         officialExtensions:
-          - siderolabs/iscsi-tools
-          - siderolabs/util-linux-tools
+          - siderolabs/i915-ucode
+          - siderolabs/spin
+          - siderolabs/binfmt-misc
+          - siderolabs/btrfs
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: w
