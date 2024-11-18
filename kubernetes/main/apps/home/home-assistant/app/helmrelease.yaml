@@ -86,7 +86,7 @@ spec:
         nameOverride: *app
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: 10.0.1.8
+          io.cilium/lb-ipam-ips: ${LB_HASS}
         ports:
           http:
             port: 8123
