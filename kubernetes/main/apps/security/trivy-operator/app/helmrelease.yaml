@@ -14,11 +14,18 @@ spec:
         kind: HelmRepository
         name: aqua
         namespace: flux-system
+  driftDetection:
+    mode: enabled
+  maxHistory: 3
   install:
-    createNamespace: true
     crds: CreateReplace
+    remediation:
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     crds: CreateReplace
+    remediation:
+      retries: 3
   values:
     excludeNamespaces: "{{ .Release.Namespace }}"
     operator:
