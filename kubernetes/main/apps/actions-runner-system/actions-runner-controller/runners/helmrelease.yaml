@@ -32,15 +32,35 @@ spec:
     maxRunners: 6
     containerMode:
       type: dind
-    controllerServiceAccount:
-      name: gha-runner-scale-set-controller
-      namespace: actions-runner-system
     template:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/actions-runner-controller/actions-runner-controller/actions-runner-dind-rootless:v2.316.0-ubuntu-22.04-49490c4
+            image: ghcr.io/onedr0p/actions-runner:2.321.0@sha256:d968199e3772ef831c34eb8edd495ef9eb99339a2f7176d4f1774f252f7903fb
             command: ["/home/runner/run.sh"]
+        affinity :
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - amd64
+      listenerTemplate:
+        spec:
+         affinity :
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - amd64
+    controllerServiceAccount:
+      name: gha-runner-scale-set-controller
+      namespace: actions-runner-system
   valuesFrom:
     - kind: Secret
       name: actions-runner-controller-auth-secret
