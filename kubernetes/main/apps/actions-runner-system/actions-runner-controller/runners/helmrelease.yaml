@@ -39,7 +39,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/haraldkoch/actions-runner:2.321
+            image: ghcr.io/actions-runner-controller/actions-runner-controller/actions-runner-dind-rootless:v2.316.0-ubuntu-22.04-49490c4
             command: ["/home/runner/run.sh"]
   valuesFrom:
     - kind: Secret
