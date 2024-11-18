@@ -48,6 +48,8 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
+      cephVersion:
+        image: ghcr.io/cdalvaro/ceph:v18.2.4 # Allow running on usb removable devices
     ingress:
       dashboard:
         ingressClassName: "internal"
@@ -67,7 +69,8 @@ spec:
         nodes:
           - name: srv-02
             devices:
-              - name: /dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0
+             # - name: /dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0
+              - name: /dev/sda
           - name: srv-03
             devices:
               - name: /dev/disk/by-id/usb-SanDisk_Portable_SSD_32333231454C343030363335-0:0 
