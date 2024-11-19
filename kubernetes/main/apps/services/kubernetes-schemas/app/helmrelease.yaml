@@ -3,84 +3,69 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app kubernetes-schemas
+  name: kubernetes-schemas
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: bjw-s-charts
         namespace: flux-system
+      interval: 15m
   install:
+    createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
-    cleanupOnFail: true
     remediation:
-      strategy: rollback
-      retries: 3
+      retries: 5
   values:
     controllers:
       kubernetes-schemas:
-        replicas: 2
-        strategy: RollingUpdate
         containers:
-          app:
+          main:
             image:
-              repository: ghcr.io/haraldkoch/kubernetes-schemas
-              tag: latest@sha256:7c7d85da8fe6984b135434682cd01f9ef5e2833cfb2908e6a5d67864fbfb1ef3
+              repository: ghcr.io/rafaribe/kubernetes-schemas-web
+              tag: latest
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 100Mi
             probes:
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
               liveness:
                 enabled: true
               readiness:
                 enabled: true
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 5m
-                memory: 10M
-              limits:
-                memory: 64M
-        pod:
-          securityContext:
-            runAsNonRoot: true
-            runAsGroup: 1000
-            runAsUser: 1000
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
     service:
-      app:
+      main:
         controller: kubernetes-schemas
         ports:
           http:
             port: 8080
     ingress:
-      app:
+      main:
+        enabled: true
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          hajimari.io/icon: mdi:code-json
         hosts:
-          - host: &host "{{ .Release.Name }}.rafaribe.com"
+          - host: &host schemas.rafaribe.com
             paths:
               - path: /
+                pathType: Prefix
                 service:
-                  identifier: app
+                  identifier: main
                   port: http
         tls:
           - hosts:
               - *host
-    persistence:
-      tmp:
-        type: emptyDir

@@ -1,73 +1,127 @@
 ---
-# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: "Schemas"
+name: Schemas
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
   schedule:
-    - cron: "0 0 * * *" # Every day at midnight
+    - cron: 0 0 * * *
   push:
-    branches: ["main"]
-    paths: [".github/workflows/publish-schemas.yaml"]
+    branches:
+      - main
+    paths:
+      - ./github/workflows/schemas.yaml
 
 jobs:
-  publish:
-    name: Schemas
-    runs-on: ["gha-runner-scale-set"]
-    permissions:
-      contents: read
-      packages: write
+  publish-manifests:
+    name: Publish manifests
+    runs-on: ["arc-runner-set-home-ops"]
     steps:
-      - name: Generate Token
-        uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: "${{ secrets.BOT_APP_ID }}"
-          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
-
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: "${{ steps.app-token.outputs.token }}"
-
-      - name: Setup Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
-      - name: Setup Workflow Tools
+      - name: Setup tools
         shell: bash
-        run: brew install kubernetes-cli
+        run: |
+          sudo apt-get -qq update && \
+          sudo apt-get -qq install --no-install-recommends -y curl
+
+      - name: Setup Kube tools
+        uses: yokawasa/action-setup-kube-tools@v0.11.2
+        with:
+          setup-tools: |
+            kubectl
+
+      - name: Setup Flux
+        uses: fluxcd/flux2/action@v2.4.0
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.3.0
         with:
           python-version: 3.x
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3.3.0
         with:
-          node-version: 18.x
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Write kubeconfig
         id: kubeconfig
-        uses: timheuer/base64-to-file@v1
+        uses: timheuer/base64-to-file@v1.2
         with:
-          encodedString: "${{ secrets.KUBECONFIG }}"
+          encodedString: ${{ secrets.KUBECONFIG }}
           fileName: kubeconfig
 
       - name: Download and run crd-extractor
         env:
-          KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
+          KUBECONFIG: ${{ steps.kubeconfig.outputs.filePath }}
         shell: bash
         run: |
+          mkdir -p /home/runner/crds
           curl -fsSL -o $GITHUB_WORKSPACE/crd-extractor.sh \
-              https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/Utilities/crd-extractor.sh
+            https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/Utilities/crd-extractor.sh
           chmod +x $GITHUB_WORKSPACE/crd-extractor.sh
           bash $GITHUB_WORKSPACE/crd-extractor.sh
 
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
+      - name: Generate tag
+        id: generate-tag
+        shell: bash
+        run: echo "tag=ghcr.io/${{ github.repository_owner }}/kubernetes-schemas-oci:$(git rev-parse --short HEAD)" >> "${GITHUB_OUTPUT}"
+
+      - name: Publish manifests
+        shell: bash
+        run: |
+          flux push artifact oci://${{ steps.generate-tag.outputs.tag }} \
+            --path="/home/runner/.datree/crdSchemas" \
+            --source="${{ github.repositoryUrl }}" \
+            --revision="${{ github.ref_name }}@sha1:$(git rev-parse HEAD)"
+
+      - name: Tag manifests
+        shell: bash
+        run: flux tag artifact oci://${{ steps.generate-tag.outputs.tag }} --tag main
+
+  publish-web:
+    name: Publish web
+    runs-on: ["arc-runner-set-home-ops"]
+    needs: [publish-manifests]
+    steps:
+      - name: Setup Flux
+        uses: fluxcd/flux2/action@v2.4.0
+
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3.2.0
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v3.7.1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3.3.0
         with:
-          apiToken: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
-          accountId: "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
-          workingDirectory: /home/runner/.datree/crdSchemas
-          command: pages deploy --project-name=kubernetes-schemas --branch main .
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull manifests
+        shell: bash
+        run: |
+          mkdir -p /home/runner/crdSchemas
+          flux pull artifact oci://ghcr.io/${{ github.repository_owner }}/kubernetes-schemas-oci:$(git rev-parse --short HEAD) --output /home/runner/crdSchemas
+
+      - name: Write nginx-unprivileged Dockerfile
+        run: |
+          cat <<EOF > /home/runner/crdSchemas/Dockerfile
+          FROM docker.io/nginxinc/nginx-unprivileged:latest
+          COPY --chown=nginx:nginx --chmod=755 . /usr/share/nginx/html
+          USER nginx
+          EOF
+
+      - name: Publish web container
+        uses: docker/build-push-action@v6.9.0
+        with:
+          context: /home/runner/crdSchemas
+          platforms: linux/amd64,linux/arm64
+          file: /home/runner/crdSchemas/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/kubernetes-schemas-web:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
