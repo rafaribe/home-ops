@@ -59,7 +59,6 @@ resources:
   - ./stevehipwell.yaml
   - ./tf-controller.yaml
   - ./vector.yaml
-  - ./weave-gitops.yaml
   - ./xenitab.yaml
   - ./victoria-metrics.yaml
   - ./tailscale.yaml
