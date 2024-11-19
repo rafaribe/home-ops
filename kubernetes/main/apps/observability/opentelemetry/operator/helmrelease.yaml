@@ -29,11 +29,19 @@ spec:
   values:
     manager:
       image:
-        repository: ghcr.io/open-telemetry/opentelemetry-operator/opentelemetry-operator
-        tag: v0.113.0
+          repository: ghcr.io/open-telemetry/opentelemetry-operator/opentelemetry-operator
+          tag: v0.112.0
       collectorImage:
-        repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib
-        tag: 0.114.0
+          repository: "otel/opentelemetry-collector-contrib"
+          tag: 0.114.0
+        serviceMonitor:
+          enabled: true
+
+        prometheusRule:
+          enabled: true
+          defaultRules:
+            enabled: true
+
     admissionWebhooks:
       certManager:
         enabled: false
