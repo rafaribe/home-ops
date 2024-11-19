@@ -13,7 +13,7 @@ spec:
       version: 0.74.0
       sourceRef:
         kind: HelmRepository
-        name: open-telemetry-charts
+        name: open-telemetry
         namespace: flux-system
       interval: 5m
   install:
