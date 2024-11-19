@@ -56,7 +56,7 @@ spec:
           storage:
             volumeClaimTemplate:
               spec:
-                storageClassName: openebs-hostpath
+                storageClassName: ceph-block
                 resources:
                   requests:
                     storage: 10Gi
@@ -85,7 +85,7 @@ spec:
           storage:
             volumeClaimTemplate:
               spec:
-                storageClassName: openebs-hostpath
+                storageClassName: ceph-block
                 resources:
                   requests:
                     storage: 2Gi
