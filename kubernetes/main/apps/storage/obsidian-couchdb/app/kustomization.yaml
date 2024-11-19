@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-  - ../../../../templates/volsync
+  - ./../../../../shared/templates/volsync
 commonLabels:
   app.kubernetes.io/name: obsidian-couchdb
   app.kubernetes.io/instance: obsidian-couchdb
