@@ -1,30 +1,39 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: opentelemetry-operator
+  namespace: monitoring
 spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://open-telemetry.github.io/opentelemetry-helm
       chart: opentelemetry-operator
-      version: 0.74.2
+      version: 0.74.0
       sourceRef:
         kind: HelmRepository
-        name: open-telemetry
+        name: open-telemetry-charts
         namespace: flux-system
       interval: 5m
   install:
-    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     manager:
       image:
         repository: ghcr.io/open-telemetry/opentelemetry-operator/opentelemetry-operator
-      # Collector contrib has more features
+        tag: v0.113.0
       collectorImage:
         repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib
-        tag: 0.113.0
+        tag: 0.114.0
     admissionWebhooks:
       certManager:
-        enabled: true
+        enabled: false
