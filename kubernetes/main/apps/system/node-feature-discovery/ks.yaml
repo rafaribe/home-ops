@@ -6,7 +6,7 @@ metadata:
   name: kube-system-node-feature-discovery
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/kube-system/node-feature-discovery/app
+  path: ./kubernetes/main/apps/system/node-feature-discovery/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,7 +26,7 @@ spec:
 # spec:
 #   dependsOn:
 #     - name: kube-system-node-feature-discovery
-#   path: ./kubernetes/main/apps/kube-system/node-feature-discovery/rules
+#   path: ./kubernetes/main/apps/system/node-feature-discovery/rules
 #   prune: true
 #   sourceRef:
 #     kind: OCIRepository
