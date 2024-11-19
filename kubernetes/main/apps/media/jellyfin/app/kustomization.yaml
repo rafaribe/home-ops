@@ -5,5 +5,5 @@ kind: Kustomization
 namespace: media
 resources:
   - ./helmrelease.yaml
-  - ./../../../../shared/templates/volsync
+  - ../../../../../shared/templates/volsync
   - ../../../../../shared/templates/gatus/guarded

@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ../../../../../shared/templates/gatus/external
-  - ./../../../../shared/templates/volsync
+  - ../../../../../shared/templates/volsync
   - ./keys.yaml
   - ./externalsecret.yaml
   - ./podmonitor.yaml

@@ -3,5 +3,5 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-  - ./../../../../shared/templates/volsync
+  - ../../../../../shared/templates/volsync
   - ../../../../../shared/templates/gatus/guarded

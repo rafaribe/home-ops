@@ -5,4 +5,4 @@ namespace: services
 resources:
   - ./helmrelease.yaml
   - ../../../../../shared/templates/gatus/guarded
-  - ./../../../../shared/templates/volsync
+  - ../../../../../shared/templates/volsync
