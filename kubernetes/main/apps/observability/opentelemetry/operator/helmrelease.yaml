@@ -37,5 +37,3 @@ spec:
     admissionWebhooks:
       certManager:
         enabled: false
-    serviceMonitor:
-      enable: true
