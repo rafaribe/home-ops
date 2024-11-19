@@ -2,7 +2,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  # - ./logs.yaml
+  - ./logs.yaml
   - ./servicemonitor.yaml
   - ./rbac.yaml
   - ./metrics.yaml
