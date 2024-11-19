@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: opentelemetry-operator
-      version: 0.74.0
+      version: 0.74.2
       sourceRef:
         kind: HelmRepository
         name: open-telemetry
@@ -37,3 +37,5 @@ spec:
     admissionWebhooks:
       certManager:
         enabled: false
+    serviceMonitor:
+      enable: true
