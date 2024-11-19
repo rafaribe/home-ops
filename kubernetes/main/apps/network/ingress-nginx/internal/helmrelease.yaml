@@ -32,8 +32,6 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: internal.rafaribe.com
           io.cilium/lb-ipam-ips: ${LB_NGINX_INTERNAL}
-        labels:
-          pool: lb
         externalTrafficPolicy: Cluster
       ingressClassResource:
         name: internal
