@@ -1,9 +1,10 @@
 ---
 autoDirectNodeRoutes: true
 bandwidthManager:
-  enabled: true
+  enabled: false
   bbr: true
 bpf:
+  hostLegacyRouting: true
   masquerade: true
   tproxy: true
 cgroup:
@@ -16,10 +17,14 @@ cluster:
 enableRuntimeDeviceDetection: true
 endpointRoutes:
   enabled: true
+envoy:
+  enabled: false
 hubble:
   enabled: false
 ipam:
   mode: kubernetes
+bgpControlPlane:
+  enabled: true
 ipv4NativeRoutingCIDR: 10.42.0.0/16
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
@@ -53,24 +58,3 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
-bgpControlPlane:
-  # -- Enables the BGP control plane.
-  enabled: true
-
-## Gateway API
-gatewayAPI:
-  # -- Enable support for Gateway API in cilium
-  # This will automatically set enable-envoy-config as well.
-  enabled: true
-
-  # -- SecretsNamespace is the namespace in which envoy SDS will retrieve TLS secrets from.
-  secretsNamespace:
-    # -- Create secrets namespace for Gateway API.
-    create: true
-
-    # -- Name of Gateway API secret namespace.
-    name: cilium-secrets
-
-    # -- Enable secret sync, which will make sure all TLS secrets used by Ingress are synced to secretsNamespace.name.
-    # If disabled, TLS secrets must be maintained externally.
-    sync: true
