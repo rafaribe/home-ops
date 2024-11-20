@@ -1,16 +1,15 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: pgadmin
+  name: &app pgadmin
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
-      interval: 30m
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -24,59 +23,74 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    defaultPodOptions:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: node-role.kubernetes.io/control-plane
-                    operator: DoesNotExist
     controllers:
       pgadmin:
-        pod:
-          securityContext:
-            runAsUser: 5050 # ${APP_UID}
-            runAsGroup: 5050 # ${APP_GID}
-            fsGroup: 5050 # ${APP_GID}
-            supplementalGroups: [1000]
-            seccompProfile: { type: RuntimeDefault }
-            fsGroupChangePolicy: OnRootMismatch
-        replicas: 1
-        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: docker.io/dpage/pgadmin4
-              tag: "8.13@sha256:561c1f8f99f2fe24bc63814db9e30292cf4360331de9182da21e3554ce61bdaa"
-            envFrom:
-              - secretRef:
-                  name: pgadmin-secret
+              repository: dpage/pgadmin4
+              tag: "8.12"
+            env:
+              PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
+              PGADMIN_DISABLE_POSTFIX: "true"
+              PGADMIN_LISTEN_PORT: &port 80
+              PGADMIN_DEFAULT_EMAIL:
+                valueFrom:
+                  secretKeyRef:
+                    name: pgadmin-secret
+                    key: PGADMIN_DEFAULT_EMAIL
+              PGADMIN_DEFAULT_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: pgadmin-secret
+                    key: PGADMIN_DEFAULT_PASSWORD
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /misc/ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             resources:
               requests:
-                cpu: 15m
-                memory: 164M
+                cpu: 50m
+                memory: 100Mi
               limits:
-                memory: 236M
+                memory: 500Mi
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 5050
+        runAsGroup: 5050
+        fsGroup: 5050
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: pgadmin
+        controller: *app
         ports:
           http:
-            port: 80
+            port: *port
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: *app
+          gethomepage.dev/icon: si-postgresql
         hosts:
           - host: &host "pg.rafaribe.com"
             paths:
               - path: /
-                pathType: Prefix
                 service:
                   identifier: app
                   port: http
