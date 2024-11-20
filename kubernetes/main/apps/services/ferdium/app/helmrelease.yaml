@@ -47,7 +47,7 @@ spec:
               tag: 2.0.8@sha256:07f87110fa8a8f7122a6490140f3b0a86339cbe1849a2360bd3580ce2e8d0ac7
             env:
               APP_UR: https://ferdium.rafaribe.com
-              CONNECT_WITH_FRANZ: false
+              CONNECT_WITH_FRANZ: true
               DATA_DIR: /data
               DB_CONNECTION: pg
               DB_PORT: 5432
