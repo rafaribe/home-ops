@@ -20,44 +20,56 @@ spec:
     receivers:
       filelog:
         include:
-          - /var/log/pods/**/**/*.log
-        exclude:
-          - /var/log/pods/**/otc-container/*.log
-          - /var/log/pods/**/grafana-sc-datasources/*.log
-          - /var/log/pods/**/grafana-sc-dashboard/*.log
-          - /var/log/pods/**/download-dashboards/*.log
-          - /var/log/pods/**/init-db/*.log
-          - /var/log/pods/**/trim-filesystem/*.log
-          - /var/log/pods/**/config-reloader/*.log
-          - /var/log/pods/**/init-config-reloader/*.log
+          - /var/log/pods/*/*/*.log
         include_file_path: true
-        include_file_name: false
+        include_file_name: true
         operators:
+          # Find out which format is used by kubernetes
+          - type: router
+            id: get-format
+            routes:
+              - output: parser-docker
+                expr: 'body matches "^\\{"'
+              - output: parser-crio
+                expr: 'body matches "^[^ Z]+ "'
+              - output: parser-containerd
+                expr: 'body matches "^[^ Z]+Z"'
+          # Parse CRI-O format
           - type: regex_parser
-            regex: "^(?P<timestamp>.+?) (?P<streamm>stdout|stderr) (?P<flag>[A-Z]{1}) (?P<log>.*)$"
-            id: pre_process
+            id: parser-crio
+            regex: "^(?P<timestamp>[^ Z]+) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) ?(?P<message>.*)$"
+            output: extract_metadata_from_filepath
+            timestamp:
+              parse_from: attributes.timestamp
+              layout_type: gotime
+              layout: "2006-01-02T15:04:05.999999999Z07:00"
+          # Parse CRI-Containerd format
+          - type: regex_parser
+            id: parser-containerd
+            regex: "^(?P<timestamp>[^ ^Z]+Z) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) ?(?P<message>.*)$"
+            output: extract_metadata_from_filepath
+            timestamp:
+              parse_from: attributes.timestamp
+              layout: "%Y-%m-%dT%H:%M:%S.%LZ"
+          # Parse Docker format
+          - type: json_parser
+            id: parser-docker
+            output: extract_metadata_from_filepath
+            timestamp:
+              parse_from: attributes.timestamp
+              layout: "%Y-%m-%dT%H:%M:%S.%LZ"
           - type: move
-            from: attributes.log
+            from: attributes.message
             to: body
+          # Extract metadata from file path
           - type: regex_parser
             id: extract_metadata_from_filepath
-            regex: '^.*\/(?P<namespace>[^_]+)_(?P<pod_name>[^_]+)_(?P<uid>[a-f0-9\-]{36})\/(?P<container_name>[^\._]+)\/(?P<restart_count>\d+)\.log(.*)$'
+            regex: '^.*\/(?P<namespace>[^_]+)_(?P<pod_name>[^_]+)_(?P<uid>[a-f0-9\-]{36})\/(?P<container_name>[^\._]+)\/(?P<restart_count>\d+)\.log$'
             parse_from: attributes["log.file.path"]
-          - type: router
-            routes:
-              - output: recombine
-                expr: 'body matches "^ "'
-            default: first_move
-          - type: move
-            id: first_move
-            from: attributes.streamm
-            to: resource["log.iostream"]
-          - type: copy
-            from: attributes.namespace
-            to: resource["service.namespace"]
-          - type: copy
-            from: attributes.container_name
-            to: resource["service.name"]
+            cache:
+              # default maximum amount of Pods per Node is 110
+              size: 128
+          # Rename attributes
           - type: move
             from: attributes.container_name
             to: resource["k8s.container.name"]
@@ -67,59 +79,46 @@ spec:
           - type: move
             from: attributes.pod_name
             to: resource["k8s.pod.name"]
-          - type: move
-            from: attributes.restart_count
-            to: resource["k8s.container.restart_count"]
-          - type: move
-            from: attributes.uid
-            to: resource["k8s.pod.uid"]
-          - type: remove
-            field: attributes.flag
-          - type: recombine
-            combine_field: body
-            is_first_entry: body matches "^ "
-            source_identifier: attributes["log.file.path"]
+
     processors:
       batch:
+        timeout: 1s
+        send_batch_size: 100
+        send_batch_max_size: 500
       k8sattributes:
-        auth_type: "serviceAccount"
         passthrough: false
-        filter:
-          node_from_env_var: KUBE_NODE_NAME
-        extract:
-          metadata:
-            - k8s.pod.name
-            - k8s.pod.uid
-            - k8s.deployment.name
-            - k8s.namespace.name
-            - k8s.node.name
-            - k8s.pod.start_time
-          # Pod labels which can be fetched via K8sattributeprocessor
-          labels:
-            - tag_name: key1
-              key: label1
-              from: pod
-            - tag_name: key2
-              key: label2
-              from: pod
-        # Pod association using resource attributes and connection
         pod_association:
           - sources:
               - from: resource_attribute
-                name: k8s.pod.uid
-              - from: resource_attribute
                 name: k8s.pod.name
-          - sources:
-              - from: connection
-      memory_limiter:
-        check_interval: 1s
-        limit_percentage: 70
-        spike_limit_percentage: 30
-      resource:
-        attributes:
-          - action: insert
-            key: loki.format
-            value: json
+        extract:
+          metadata:
+            - k8s.cluster.uid
+            - k8s.namespace.name
+            - k8s.pod.name
+            - k8s.pod.uid
+            - k8s.node.name
+            - k8s.pod.start_time
+            - k8s.deployment.name
+            - k8s.replicaset.name
+            - k8s.replicaset.uid
+            - k8s.daemonset.name
+            - k8s.daemonset.uid
+            - k8s.job.name
+            - k8s.job.uid
+            - k8s.cronjob.name
+            - k8s.statefulset.name
+            - k8s.statefulset.uid
+            - container.image.tag
+            - container.image.name
+      transform:
+        error_mode: ignore
+        log_statements:
+          - context: resource
+            statements:
+              - set(attributes["host"], attributes["k8s.node.name"])
+              - set(attributes["type"], "log")
+              - set(attributes["source"], "OpenTelemetry Collector")
     exporters:
       loki:
         endpoint: http://loki-gateway.observability/loki/api/v1/push
@@ -129,7 +128,7 @@ spec:
       pipelines:
         logs:
           receivers: [filelog]
-          processors: [k8sattributes, batch, resource, memory_limiter]
+          processors: [batch, k8sattributes, transform]
           exporters: [loki]
   securityContext:
     runAsUser: 0
