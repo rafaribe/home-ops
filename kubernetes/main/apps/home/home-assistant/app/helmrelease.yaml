@@ -164,8 +164,6 @@ spec:
               - path: /config
             music-assistant:
               - path: /data
-      tmp:
-        type: emptyDir
       deploy-key:
         type: secret
         name: git-keys
@@ -173,3 +171,15 @@ spec:
         globalMounts:
           - path: /home/coder/.ssh/
             readOnly: true
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
+      tts:
+        type: emptyDir
+        globalMounts:
+          - path: /config/tts
