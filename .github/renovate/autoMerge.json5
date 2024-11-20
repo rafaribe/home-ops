@@ -1,6 +1,26 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
+     {
+      "datasources": ["docker"],
+      "automerge": true,
+      "automergeType": "branch",
+      "requiredStatusChecks": null,
+      "schedule": "after 1am and before 5am",
+      "updateTypes": ["minor", "patch"],
+      "packageNames": [
+        "ghcr.io/onedr0p/home-assistant",
+        "ghcr.io/wipash/home-assistant",
+        "ghcr.io/onedr0p/radarr-develop",
+        "ghcr.io/onedr0p/sonarr-develop",
+        "ghcr.io/onedr0p/prowlarr-develop",
+        "ghcr.io/onedr0p/sabnzbd",
+        "docker.io/nodered/node-red",
+        "ghcr.io/zwave-js/zwave-js-ui",
+        "ghcr.io/coder/code-server",
+        "kube-prometheus-stack"
+      ]
+    },
     {
       "description": ["Auto-merge container digests updates for trusted containers"],
       "matchDatasources": ["docker"],
@@ -16,6 +36,14 @@
       "automerge": true,
       "automergeType": "branch",
       "matchUpdateTypes": ["minor", "patch"]
-    }
+    },
+    {
+      description: "Auto merge KPS minors and patches",
+      matchDatasources: ["helm"],
+      automerge: true,
+      matchUpdateTypes: ["minor", "patch"],
+      matchPackageNames: ["kube-prometheus-stack"],
+      ignoreTests: false,
+    },
   ]
 }
