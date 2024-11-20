@@ -35,3 +35,4 @@ utilities/doppler-to-akeyless/.env
 kubernetes/main/bootstrap/talos/talosconfig-reader
  kubernetes/main/bootstrap/talos.tar.gz
 wg.txt
+kubernetes/main/apps/downloads/qbittorrent/app/secret.json
