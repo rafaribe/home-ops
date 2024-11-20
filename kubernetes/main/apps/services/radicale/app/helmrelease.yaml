@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -32,8 +32,8 @@ spec:
         containers:
           app:
             image:
-              repository: tomsquest/docker-radicale
-              tag: 3.3.0.1
+              repository: ghcr.io/bjw-s-labs/radicale
+              tag: 3.2.3@sha256:e527564b00bddb57de329b5d6f0ddab4fd4cca53317a4d0014f9a98863ddda02
             probes:
               liveness:
                 enabled: true
@@ -60,9 +60,9 @@ spec:
 
     ingress:
       app:
-        className: "internal"
+        className: "external"
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
           - host: radicale.rafaribe.com
             paths:
