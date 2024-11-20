@@ -175,11 +175,11 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /tmp
-      logs:
-        type: emptyDir
-        globalMounts:
-          - path: /config/logs
-      tts:
-        type: emptyDir
-        globalMounts:
-          - path: /config/tts
+      # logs:
+      #   type: emptyDir
+      #   globalMounts:
+      #     - path: /config/logs
+      # tts:
+      #   type: emptyDir
+      #   globalMounts:
+      #     - path: /config/tts
