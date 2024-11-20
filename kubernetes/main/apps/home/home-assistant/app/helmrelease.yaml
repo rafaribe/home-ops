@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -72,6 +72,35 @@ spec:
               - "/config/.vscode"
               - --extensions-dir
               - "/config/.vscode"
+
+          music-assistant:
+            image:
+              repository: ghcr.io/music-assistant/server
+              tag: 2.3.2@sha256:2e6f769f0a9863acea3a39d3207e41b39f325d3f36536851cc7e0509272d8a19
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 1374M
+              limits:
+                memory: 2Gi
+            securityContext:
+              apparmor:
+                enabled: false # Disables apparmor
+              allowPrivilegeEscalation: true
+              readOnlyRootFilesystem: false
+              capabilities:
+                add:
+                  - SYS_ADMIN
+                  - DAC_READ_SEARCH
+                drop:
+                  - ALL
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -90,6 +119,8 @@ spec:
         ports:
           http:
             port: 8123
+          music-server:
+            port: 8095
       codeserver:
         controller: *app
         type: ClusterIP
@@ -97,6 +128,7 @@ spec:
           http:
             enabled: true
             port: 8080
+
     ingress:
       app:
         className: external
@@ -120,10 +152,21 @@ spec:
                 service:
                   identifier: codeserver
                   port: http
+
     persistence:
       config:
         existingClaim: *app
-      git-keys:
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config
+            code-server:
+              - path: /config
+            music-assistant:
+              - path: /data
+      tmp:
+        type: emptyDir
+      deploy-key:
         type: secret
         name: git-keys
         defaultMode: 256
