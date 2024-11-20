@@ -57,7 +57,6 @@ resources:
   - ./spegel.yaml
   - ./stakater.yaml
   - ./stevehipwell.yaml
-  - ./tf-controller.yaml
   - ./vector.yaml
   - ./xenitab.yaml
   - ./victoria-metrics.yaml
