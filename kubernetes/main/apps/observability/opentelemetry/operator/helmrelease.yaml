@@ -29,7 +29,7 @@ spec:
     manager:
       image:
         repository: ghcr.io/open-telemetry/opentelemetry-operator/opentelemetry-operator
-        tag: v0.112.0
+        tag: v0.113.0
       collectorImage:
         repository: "otel/opentelemetry-collector-contrib"
         tag: 0.114.0
