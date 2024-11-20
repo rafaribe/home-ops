@@ -42,6 +42,8 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
+  dependsOn:
+    - name: cluster-shared
   path: ./kubernetes/main/flux
   prune: true
   wait: false
