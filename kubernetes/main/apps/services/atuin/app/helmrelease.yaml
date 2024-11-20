@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -22,12 +22,9 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
       atuin:
-        replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -53,7 +50,7 @@ spec:
               ATUIN_METRICS__PORT: &metricsPort 8080
               ATUIN_TLS__ENABLE: "false"
             envFrom: *envFrom
-            args: [server, start]
+            args: ["server", "start"]
             probes:
               liveness: &probes
                 enabled: true
@@ -70,31 +67,30 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: [ALL] }
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
               limits:
                 memory: 256Mi
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: *app
+        controller: atuin
         ports:
           http:
+            primary: true
             port: *port
           metrics:
             port: *metricsPort
     serviceMonitor:
       app:
-        serviceName: *app
-        enabled: true
+        serviceName: atuin
         endpoints:
           - port: metrics
             scheme: http
@@ -103,11 +99,10 @@ spec:
             scrapeTimeout: 10s
     ingress:
       app:
-        enabled: true
-        className: internal
         annotations:
           hajimari.io/icon: mdi:powershell
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        className: internal
         hosts:
           - host: &host "sh.rafaribe.com"
             paths:
@@ -115,10 +110,6 @@ spec:
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
-        enabled: true
         type: emptyDir
