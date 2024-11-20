@@ -1,3 +1,4 @@
+---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -8,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -24,25 +25,31 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
-      namespace: volsync
   values:
     controllers:
       sabnzbd:
-        labels:
-          nfsMount: "true"
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/sabnzbd
-              tag: 4.3.3@sha256:5b5cafcebd6cc0a07277c397387306cbf1d25bc1c8b6333073f60b25092f5643
+              repository: ghcr.io/onedr0p/sabnzbd
+              tag: 4.3.3@sha256:86c645db93affcbf01cc2bce2560082bfde791009e1506dba68269b9c50bc341
             env:
-              TZ: Europe/Lisbon
-              SABNZBD__PORT: &port 8080
+              TZ: ${TZ}
+              SABNZBD__PORT: &port 80
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
-                sabnzbd, sabnzbd.downloads, sabnzbd.downloads.svc, sabnzbd.downloads.svc.cluster, sabnzbd.downloads.svc.cluster.local, sabnzbd.rafaribe.com
+                sabnzbd,
+                sabnzbd.default,
+                sabnzbd.default.svc,
+                sabnzbd.default.svc.cluster,
+                sabnzbd.default.svc.cluster.local,
+                sab.rafaribe.com
+              CROSS_SEED_ENABLED: false
+              CROSS_SEED_HOST: cross-seed.downloads.svc.cluster.local
+              CROSS_SEED_PORT: 80
+              CROSS_SEED_SLEEP_INTERVAL: 30
+              PUSHOVER_ENABLED: true
             envFrom:
               - secretRef:
                   name: *app
@@ -59,12 +66,15 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 10m
-                memory: 100Mi
+                cpu: 100m
               limits:
-                memory: 12Gi
+                memory: 8Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -72,38 +82,32 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [10000, 568]
+        supplementalGroups: [10000]
         seccompProfile: { type: RuntimeDefault }
       affinity:
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values: ["qbittorrent"]
-              topologyKey: kubernetes.io/hostname
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values: ["qbittorrent"]
+                topologyKey: kubernetes.io/hostname
     service:
       app:
-        controller: *app
+        controller: sabnzbd
         ports:
           http:
             port: *port
     ingress:
       app:
-        className: internal
         annotations:
-          # gethomepage.dev/enabled: "true"
-          # gethomepage.dev/group: Downloads
-          # gethomepage.dev/name: SABnzbd
-          # gethomepage.dev/icon: sabnzbd.png
-          # gethomepage.dev/description: NZB Download Client
-          # gethomepage.dev/widget.type: sabnzbd
-          # gethomepage.dev/widget.url: http://sabnzbd.downloads:8080
-          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SABNZBD_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        className: internal
         hosts:
-          - host: "sabnzbd.rafaribe.com"
+          - host: sab.rafaribe.com
             paths:
               - path: /
                 service:
@@ -111,19 +115,36 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: *app
-      downloads:
+        existingClaim: sabnzbd
+      tmp:
+        type: emptyDir
+      scripts:
+        type: configMap
+        name: sabnzbd-scripts
+        defaultMode: 0775
+        globalMounts:
+          - readOnly: true
+      media:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
         globalMounts:
           - path: /downloads
             subPath: usenet
-      logs:
-        type: emptyDir
-        globalMounts:
-          - path: /config/logs
-      temp:
-        type: emptyDir
-        globalMounts:
-          - path: /tmp
+      incomplete:
+        type: custom
+        volumeSpec:
+          ephemeral:
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                storageClassName: openebs-hostpath
+                resources:
+                  requests:
+                    storage: 100Gi
+        advancedMounts:
+          sabnzbd:
+            app:
+              - path: /incomplete
+                subPath: incomplete
