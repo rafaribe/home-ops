@@ -97,6 +97,6 @@ spec:
         enabled: true
         type: nfs
         server: truenas.rafaribe.com
-        path: /media
+        path: /mnt/storage-0/media
         globalMounts:
-          - path: /mnt/storage-0/media
+          - path: /media
