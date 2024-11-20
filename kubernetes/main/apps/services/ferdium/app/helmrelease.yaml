@@ -49,6 +49,7 @@ spec:
               APP_UR: https://ferdium.rafaribe.com
               CONNECT_WITH_FRANZ: false
               DATA_DIR: /data
+              DB_CONNECTION: pg
               DB_PORT: 5432
               DB_SSL: false
               IS_CREATION_ENABLED: true
