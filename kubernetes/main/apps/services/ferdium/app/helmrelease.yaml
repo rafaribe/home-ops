@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -8,12 +9,11 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -44,18 +44,16 @@ spec:
           app:
             image:
               repository: ghcr.io/ferdium/ferdium-server
-              tag: 2.0.8
+              tag: 2.0.8@sha256:07f87110fa8a8f7122a6490140f3b0a86339cbe1849a2360bd3580ce2e8d0ac7
             env:
-              TZ: Europe/Lisbon
-              PUID: 1000
-              PGID: 1000
-              NODE_ENV: production
               APP_UR: https://ferdium.rafaribe.com
               CONNECT_WITH_FRANZ: false
-              DATA_DIR: "/data"
+              DATA_DIR: /data
+              DB_PORT: 5432
+              DB_SSL: false
               IS_CREATION_ENABLED: true
-              IS_REGISTRATION_ENABLED: true
               IS_DASHBOARD_ENABLED: true
+              IS_REGISTRATION_ENABLED: true
               JWT_USE_PEM: true
             envFrom: *envFrom
             resources:
@@ -64,6 +62,12 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 500Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop:
+                  - ALL
             probes:
               liveness:
                 enabled: false
@@ -73,7 +77,7 @@ spec:
                 enabled: false
     service:
       app:
-        controller: ferdium
+        controller: *app
         ports:
           http:
             port: 3333
@@ -83,7 +87,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: "internal.rafaribe.com"
         hosts:
-          - host: &host "ferdium.rafaribe.com"
+          - host: ferdium.rafaribe.com
             paths:
               - path: /
                 service:
