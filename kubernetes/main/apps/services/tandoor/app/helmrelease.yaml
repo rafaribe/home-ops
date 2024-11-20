@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -92,6 +92,16 @@ spec:
         className: "external"
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          hajimari.io/icon: mdi:chef-hat
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Tandoor
+          gethomepage.dev/description: Managing recipes, planned meals, shopping lists.
+          gethomepage.dev/group: Applications
+          gethomepage.dev/icon: tandoor.png
+          gethomepage.dev/pod-selector: >-
+            app in (
+              tandoor
+            )
         hosts:
           - host: tandoor.rafaribe.com
             paths:
