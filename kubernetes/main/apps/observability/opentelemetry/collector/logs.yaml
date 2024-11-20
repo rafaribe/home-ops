@@ -21,6 +21,10 @@ spec:
       filelog:
         include:
           - /var/log/pods/*/*/*.log
+        exclude:
+          # Excluding volsync and actions pods as they execute way too fast
+          - /var/log/pods/*volsync*/*/*.log
+          - /var/log/pods/*actions*/*/*.log
         include_file_path: true
         include_file_name: true
         operators:
