@@ -4,9 +4,9 @@ kind: HelmRelease
 metadata:
   name: tetragon
 spec:
+  interval: 30m
   chart:
     spec:
-      interval: 30m
       chart: tetragon
       version: 1.2.0
       sourceRef:
