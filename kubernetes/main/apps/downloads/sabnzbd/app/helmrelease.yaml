@@ -45,10 +45,10 @@ spec:
                 sabnzbd.default.svc.cluster,
                 sabnzbd.default.svc.cluster.local,
                 sab.rafaribe.com
-              CROSS_SEED_ENABLED: false
-              CROSS_SEED_HOST: cross-seed.downloads.svc.cluster.local
-              CROSS_SEED_PORT: 80
-              CROSS_SEED_SLEEP_INTERVAL: 30
+              #  CROSS_SEED_ENABLED: false
+              #  CROSS_SEED_HOST: cross-seed.downloads.svc.cluster.local
+              #CROSS_SEED_PORT: 80
+              # CROSS_SEED_SLEEP_INTERVAL: 30
               PUSHOVER_ENABLED: true
             envFrom:
               - secretRef:
