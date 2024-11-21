@@ -67,7 +67,7 @@ spec:
                 add:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
-
+        containers:
           app:
             nameOverride: qbittorrent
             image:
