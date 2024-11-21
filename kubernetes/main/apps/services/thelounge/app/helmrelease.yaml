@@ -24,7 +24,7 @@ spec:
       retries: 3
   dependsOn:
     - name: volsync
-      namespace: storage
+      namespace: volsync
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
