@@ -1,0 +1,51 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kepler
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: kepler
+      version: 0.5.11
+      sourceRef:
+        kind: HelmRepository
+        name: kepler
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    # -- CPU/MEM resources
+    resources: {}
+    # -- Extra environment variables
+    extraEnvVars:
+      KEPLER_LOG_LEVEL: "1"
+      # METRIC_PATH: "/metrics"
+      # BIND_ADDRESS: "0.0.0.0:9102"
+      ENABLE_GPU: "true"
+      ENABLE_QAT: "true"
+      ENABLE_EBPF_CGROUPID: "true"
+      EXPOSE_HW_COUNTER_METRICS: "true"
+      EXPOSE_IRQ_COUNTER_METRICS: "true"
+      EXPOSE_CGROUP_METRICS: "true"
+      ENABLE_PROCESS_METRICS: "true"
+      CPU_ARCH_OVERRIDE: ""
+      CGROUP_METRICS: "*"
+      # REDFISH_PROBE_INTERVAL_IN_SECONDS: "60"
+      # REDFISH_SKIP_SSL_VERIFY: "true"
+    canMount:
+      usrSrc: false
+    serviceMonitor:
+      enabled: true
+      attachMetadata:
+        node: true
+    redfish:
+      enabled: false

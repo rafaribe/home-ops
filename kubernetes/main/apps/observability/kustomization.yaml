@@ -10,6 +10,7 @@ resources:
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./karma/ks.yaml
+  - ./kepler/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-state-metrics/ks.yaml
   - ./node-exporter/ks.yaml
