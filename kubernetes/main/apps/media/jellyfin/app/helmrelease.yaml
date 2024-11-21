@@ -1,122 +1,115 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.rafaribe.com/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app jellyfin
+  name: jellyfin
 spec:
-  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+  interval: 30m
   values:
     controllers:
       jellyfin:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
         pod:
+          nodeSelector:
+            intel.feature.node.kubernetes.io/gpu: "true"
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
             fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
+            fsGroupChangePolicy: "OnRootMismatch"
             supplementalGroups:
               - 44
               - 109
-              - 568
+
         containers:
-          main:
+          app:
             image:
-              repository: jellyfin/jellyfin
-              tag: 10.8.13-1
+              repository: ghcr.io/jellyfin/jellyfin
+              tag: "10.10.1"
+            env:
+              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
+              JELLYFIN_PublishedServerUrl:
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 8096
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
             resources:
               requests:
-                cpu: 150m
-                memory: 2Gi
-              limits:
-                memory: 4Gi
+                cpu: 100m
                 gpu.intel.com/i915: 1
-            probes:
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
-        # initContainers:
-        #   init-permission:
-        #     image:
-        #       repository: ghcr.io/cbc02009/busybox
-        #       tag: 1.36.1
-        #       pullPolicy: IfNotPresent
-        #     command:
-        #       - sh
-        #       - -c
-        #       - chown -R 1000:1000 /media
-        #       - chown -R 1000:1000 /config/transcodes
-        #     securityContext:
-        #       runAsUser: 0
+                memory: 512Mi
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 4Gi
+
     service:
-      main:
+      app:
+        controller: jellyfin
+        type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: ${LB_JELLYFIN}
-        controller: jellyfin
         ports:
           http:
             port: 8096
+
     ingress:
-      main:
-        enabled: true
-        className: internal
+      app:
         annotations:
           hajimari.io/icon: simple-icons:jellyfin
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+        className: "external"
         hosts:
-          - host: &host jellyfin.rafaribe.com
+          - host: jellyfin.rafaribe.com
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
+
     persistence:
       config:
-        enabled: true
         existingClaim: jellyfin
-        globalMounts:
-          - path: /config
+        advancedMounts:
+          jellyfin:
+            app:
+              - path: /config
       media:
-        enabled: true
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
-        globalMounts:
-          - path: /media
-      transcode:
-        enabled: true
+        advancedMounts:
+          jellyfin:
+            app:
+              - path: /media
+      tmpfs:
         type: emptyDir
-        globalMounts:
-          - path: /transcode
-      cache:
-        enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /cache
+        advancedMounts:
+          jellyfin:
+            app:
+              - path: /cache
+                subPath: cache
+              - path: /transcode
+                subPath: transcode
