@@ -79,8 +79,8 @@ spec:
       app:
         annotations:
           hajimari.io/icon: simple-icons:jellyfin
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-        className: "external"
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        className: internal
         hosts:
           - host: jellyfin.rafaribe.com
             paths:
