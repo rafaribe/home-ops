@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -31,7 +31,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/bjw-s/calibre-web
+              repository: ghcr.io/bjw-s-labs/calibre-web
               tag: 0.6.24@sha256:d7d8e0e05f4c1eb6e125327dfb03550f98eb4a5b3c7f4233f34d9c624ef62c24
             env:
               CACHE_DIR: /cache
@@ -58,7 +58,6 @@ spec:
         ports:
           http:
             port: 8083
-
     ingress:
       app:
         className: internal
@@ -85,8 +84,10 @@ spec:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
-        globalMounts:
-          - path: /data
+        advancedMounts:
+          calibre-web:
+            app:
+              - path: /data
       cache:
         type: emptyDir
         globalMounts:
