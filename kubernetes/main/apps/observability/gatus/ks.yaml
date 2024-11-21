@@ -11,6 +11,9 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-ops
+  dependsOn:
+    - name: cloudnative-pg-cluster
+    - name: external-secrets-stores
   wait: false
   interval: 30m
   retryInterval: 1m
