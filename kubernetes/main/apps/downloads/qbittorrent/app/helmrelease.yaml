@@ -68,7 +68,6 @@ spec:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
 
-        containers:
           app:
             nameOverride: qbittorrent
             image:
@@ -77,13 +76,13 @@ spec:
             env:
               UMASK: "022"
               QBT_WEBUI_PORT: &port 8080
-              #XSEED_HOST: cross-seed.downloads.svc.cluster.local
-              # XSEED_PORT: 2468
-              # XSEED_APIKEY:
-              #   valueFrom:
-              #     secretKeyRef:
-              #       name: sabnzbd-secret
-              #       key: xseed_api_key
+              XSEED_HOST: cross-seed.downloads.svc.cluster.local
+              XSEED_PORT: 2468
+              XSEED_APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: sabnzbd-secret
+                    key: XSEED_API_KEY
             probes:
               liveness:
                 enabled: true
@@ -109,7 +108,22 @@ spec:
               capabilities:
                 drop:
                   - ALL
-
+          vuetorrent:
+            dependsOn: app
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.3.0
+            args:
+              - --repo=https://github.com/WDaan/VueTorrent
+              - --ref=latest-release
+              - --period=86400s
+              - --root=/add-ons
+            resources:
+              requests:
+                cpu: 10m
+                memory: 25Mi
+              limits:
+                memory: 50Mi
           port-forward:
             image:
               repository: ghcr.io/bjw-s-labs/gluetun-qb-port-sync
@@ -191,3 +205,8 @@ spec:
           qbittorrent:
             app:
               - path: /config/scripts
+      add-ons:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /add-ons
