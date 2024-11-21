@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -24,7 +24,9 @@ spec:
       retries: 3
   dependsOn:
     - name: volsync
-      namespace: volsync
+      namespace: storage
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     controllers:
       thelounge:
@@ -34,7 +36,7 @@ spec:
           app:
             image:
               repository: ghcr.io/thelounge/thelounge
-              tag: 4.4.3
+              tag: 4.4.3@sha256:7757538d79aa4f5c719d8315c32097e52981e582b1c00933c94d76c34814665a
             env:
               THELOUNGE_HOME: /config
             securityContext:
