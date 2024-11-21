@@ -6,6 +6,7 @@ metadata:
 spec:
   chart:
     spec:
+      interval: 30m
       chart: tetragon
       version: 1.2.0
       sourceRef:
