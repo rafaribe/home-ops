@@ -169,7 +169,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: qbittorrent
+        existingClaim: qbittorrent-config
         advancedMounts:
           qbittorrent:
             app:
