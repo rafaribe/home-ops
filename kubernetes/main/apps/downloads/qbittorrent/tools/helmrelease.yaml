@@ -50,7 +50,7 @@ spec:
               - --server
               - qbittorrent.downloads.svc.cluster.local
               - --port
-              - "80"
+              - "8080"
               - --config
               - /config/config.yaml
             resources: &resources
