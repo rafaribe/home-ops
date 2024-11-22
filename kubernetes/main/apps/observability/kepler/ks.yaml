@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/observability/kepler/app
+  path: ./kubernetes/main/apps/observability/kepler/app
   prune: true
   sourceRef:
     kind: GitRepository
