@@ -135,7 +135,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/kepler
+              path: /var/lib/grafana/dashboards/unifi
           - name: kepler
             orgId: 1
             folder: Kepler
