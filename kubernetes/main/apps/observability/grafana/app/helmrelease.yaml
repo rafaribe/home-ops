@@ -128,14 +128,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/storage
-          - name: thanos
-            orgId: 1
-            folder: Thanos
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/thanos
           - name: unifi
             orgId: 1
             folder: Unifi
@@ -143,7 +135,31 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/unifi
+              path: /var/lib/grafana/dashboards/kepler
+          - name: kepler
+            orgId: 1
+            folder: Kepler
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/kepler
+          - name: opnsense
+            orgId: 1
+            folder: Opnsense
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/opnsense
+          - name: logs
+            orgId: 1
+            folder: Logs
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/logs
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -189,13 +205,6 @@ spec:
         cert-manager:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
           datasource: Prometheus
-        node-exporter-freebsd:
-          # renovate: depName="Node Exporter FreeBSD"
-          gnetId: 4260
-          revision: 12
-          datasource:
-            - name: DS_PROMETHEUS
-              value: Prometheus
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
@@ -244,6 +253,14 @@ spec:
         wireguard:
           url: https://raw.githubusercontent.com/tuladhar/wireguard-connectivity-monitoring/main/wireguard-grafana-dashboard.json
           datasource: Prometheus
+      opnsense:
+        node-exporter-freebsd:
+          # renovate: depName="Node Exporter FreeBSD"
+          gnetId: 4260
+          revision: 12
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
       storage:
         minio:
           # renovate: depName="MinIO"
