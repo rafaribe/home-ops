@@ -76,13 +76,14 @@ spec:
             env:
               UMASK: "022"
               QBT_WEBUI_PORT: &port 8080
-              XSEED_HOST: cross-seed.downloads.svc.cluster.local
-              XSEED_PORT: 2468
-              XSEED_APIKEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: sabnzbd-secret
-                    key: XSEED_API_KEY
+              CROSS_SEED_ENABLED: false
+              # XSEED_HOST: cross-seed.downloads.svc.cluster.local
+              # XSEED_PORT: 2468
+              # XSEED_APIKEY:
+              #   valueFrom:
+              #     secretKeyRef:
+              #       name: sabnzbd-secret
+              #       key: XSEED_API_KEY
             probes:
               liveness:
                 enabled: true
