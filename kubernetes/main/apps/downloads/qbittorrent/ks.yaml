@@ -20,7 +20,7 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: qb
-      VOLSYNC_CLAIM: qbittorrent-config
+      VOLSYNC_CLAIM: qbittorrent
       VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_ACCESSMODES: ReadWriteMany
       VOLSYNC_STORAGECLASS: ceph-filesystem
