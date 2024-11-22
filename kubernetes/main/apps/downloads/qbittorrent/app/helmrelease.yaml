@@ -169,7 +169,9 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: qbittorrent-config
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/config/qbittorrent
         advancedMounts:
           qbittorrent:
             app:
