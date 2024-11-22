@@ -81,7 +81,7 @@ spec:
               XSEED_APIKEY:
                 valueFrom:
                   secretKeyRef:
-                    name: sabnzbd
+                    name: sabnzbd-secret
                     key: XSEED_API_KEY
             probes:
               liveness:
@@ -169,9 +169,7 @@ spec:
     persistence:
       config:
         enabled: true
-        type: nfs
-        server: truenas.rafaribe.com
-        path: /mnt/storage-0/config/qbittorrent
+        existingClaim: qbittorrent-config
         advancedMounts:
           qbittorrent:
             app:

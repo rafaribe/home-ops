@@ -83,13 +83,9 @@ spec:
             subPath: config.js
             readOnly: true
       qbittorrent:
-        type: nfs
-        server: truenas.rafaribe.com
-        path: /mnt/storage-0/config/qbittorrent
-        advancedMounts:
-          qbittorrent:
-            app:
-              - path: /qbittorrent
+        existingClaim: qbittorrent
+        globalMounts:
+          - path: /qbittorrent
       media:
         type: nfs
         server: truenas.rafaribe.com
