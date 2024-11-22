@@ -178,21 +178,17 @@ spec:
             url: http://alertmanager.observability.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
+          - name: VictoriaLogs
+            type: victorialogs-datasource
+            access: proxy
+            url: http://victoria-logs-server:9428
+
+    isDefault: true
     dashboards:
       default:
         cert-manager:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
           datasource: Prometheus
-        dragonfly:
-          url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
-          datasource: Prometheus
-        gitea:
-          # renovate: depName="Gitea"
-          gnetId: 13192
-          revision: 1
-          datasource:
-            - name: DS_PROMETHEUS
-              value: Prometheus
         node-exporter-freebsd:
           # renovate: depName="Node Exporter FreeBSD"
           gnetId: 4260
@@ -212,11 +208,6 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
-        zot:
-          # renovate: depName="Zot"
-          gnetId: 20501
-          revision: 2
-          datasource: Prometheus
       networking:
         blackbox-exporter:
           # renovate: depName="Blackbox Exporter"
@@ -243,13 +234,6 @@ spec:
         nginx-request-handling-performance:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
-        fritz-exporter:
-          # renovate: depName="Fritz!Exporter"
-          gnetId: 13983
-          revision: 10
-          datasource:
-            - name: DS_PROMETHEUS
-              value: Prometheus
         speedtest-exporter:
           # renovate: depName="Speedtest Exporter"
           gnetId: 13665
@@ -268,38 +252,12 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
-        longhorn:
-          # renovate: depName="Longhorn"
-          gnetId: 16888
-          revision: 9
+        dragonfly:
+          url: https://raw.githubusercontent.com/dragonflydb/dragonfly-operator/refs/heads/main/monitoring/grafana-dashboard.json
           datasource: Prometheus
-      thanos:
-        thanos-bucket-replicate:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/bucket-replicate.json
-          datasource: Prometheus
-        thanos-compact:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/compact.json
-          datasource: Prometheus
-        thanos-overview:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/overview.json
-          datasource: Prometheus
-        thanos-query:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query.json
-          datasource: Prometheus
-        thanos-query-frontend:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query-frontend.json
-          datasource: Prometheus
-        thanos-receive:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/receive.json
-          datasource: Prometheus
-        thanos-rule:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/rule.json
-          datasource: Prometheus
-        thanos-sidecar:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/sidecar.json
-          datasource: Prometheus
-        thanos-store:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/store.json
+      kepler:
+        kepler:
+          url: https://raw.githubusercontent.com/sustainable-computing-io/kepler/refs/heads/main/grafana-dashboards/Kepler-Exporter.json
           datasource: Prometheus
       flux:
         flux-cluster:
@@ -379,6 +337,7 @@ spec:
       - grafana-github-datasource
       - isovalent-hubble-datasource
       - redis-datasource
+      - https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.8.0/victorialogs-datasource-v0.8.0.zip;victorialogs-datasource
     serviceMonitor:
       enabled: true
     ingress:
