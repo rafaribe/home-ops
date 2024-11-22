@@ -17,8 +17,14 @@ spec:
       interval: 30m
   install:
     crds: CreateReplace
+    remediation:
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     crds: CreateReplace
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     controller:
       serviceMonitor:
