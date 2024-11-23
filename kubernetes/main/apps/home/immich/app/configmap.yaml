@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: immich-configmap
+  namespace: home
+data:
+  # URLS
+  IMMICH_SERVER_URL: http://immich-server.home.svc.cluster.local:2283
+  IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.home.svc.cluster.local:3003
+  PUBLIC_IMMICH_SERVER_URL: https://immich.rafaribe.com
+  # SETTINGS
+  DISABLE_REVERSE_GEOCODING: "true"
+  ENABLE_MAPBOX: "false"
+  LOG_LEVEL: log
+  NODE_ENV: production
+  UPLOAD_LOCATION: /usr/src/app/upload
+  # REDIS
+  REDIS_HOSTNAME: dragonfly.database.svc.cluster.local
+  REDIS_DBINDEX: "1"
+  REDIS_PORT: "6379"
