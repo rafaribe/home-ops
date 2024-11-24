@@ -36,7 +36,7 @@ spec:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.121.0@sha256:851c02f28891f1854c5b5762ee8d2e254e2de528cfe3627b2fbcb37a7f108ff3
             env:
-              TZ: ${TIMEZONE}
+              TZ: "Europe/Lisbon"
               IMMICH_WORKERS_EXCLUDE: api
             envFrom:
               - configMapRef:
