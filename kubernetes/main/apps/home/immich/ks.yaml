@@ -6,10 +6,10 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: home
-  dependsOn:
-    - name: cloudnative-pg-cluster
-    - name: dragonfly-cluster
-    - name: external-secrets-stores
+  # dependsOn:
+  #   - name: cloudnative-pg-cluster
+  #   - name: dragonfly-cluster
+  #   - name: external-secrets-stores
   path: ./kubernetes/main/apps/home/immich/app
   prune: true
   sourceRef:
