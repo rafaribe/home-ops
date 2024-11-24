@@ -28,6 +28,14 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         strategy: RollingUpdate
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.6
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
         containers:
           app:
             image:
