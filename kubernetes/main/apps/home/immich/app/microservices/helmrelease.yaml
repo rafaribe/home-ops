@@ -24,7 +24,7 @@ spec:
       retries: 3
   dependsOn:
     - name: immich-server
-      namespace: default
+      namespace: home
   values:
     controllers:
       immich-microservices:
@@ -40,11 +40,11 @@ spec:
               IMMICH_WORKERS_EXCLUDE: api
             envFrom:
               - configMapRef:
-                  name: immich-configmap
+                  name: immich
               - secretRef:
-                  name: immich-secret
+                  name: immich
               - secretRef:
-                  name: immich-db-secret
+                  name: immich-db
             resources:
               requests:
                 cpu: 10m
@@ -60,16 +60,16 @@ spec:
         pod:
           enableServiceLinks: false
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
           nodeSelector:
             intel.feature.node.kubernetes.io/gpu: "true"
     persistence:
       library:
         type: nfs
-        server: ${SECRET_NFS_SERVER}
-        path: /mnt/user/photos
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/immich
         globalMounts:
           - path: /usr/src/app/upload

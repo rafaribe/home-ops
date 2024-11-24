@@ -38,11 +38,11 @@ spec:
               IMMICH_WORKERS_INCLUDE: api
             envFrom:
               - configMapRef:
-                  name: immich-configmap
+                  name: immich
               - secretRef:
-                  name: immich-secret
+                  name: immich
               - secretRef:
-                  name: immich-db-secret
+                  name: immich-db
             probes:
               liveness: &probes
                 enabled: true
@@ -71,9 +71,9 @@ spec:
         pod:
           enableServiceLinks: false
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -83,15 +83,11 @@ spec:
             port: 2283
     ingress:
       app:
-        className: traefik-external
+        className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
-          external-dns.alpha.kubernetes.io/exclude-unifi: "true"
-          external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-traefik-middleware-chain-no-rate-limit@kubernetescrd"
+          external-dns.alpha.kubernetes.io/target: "external.rafaribe.com"
         hosts:
-          - host: &host "photos.${SECRET_DOMAIN}"
+          - host: &host "photos.rafaribe.com"
             paths:
               - path: /
                 pathType: Prefix
@@ -101,11 +97,10 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: "${SECRET_DOMAIN/./-}-production-tls"
     persistence:
       library:
         type: nfs
-        server: ${SECRET_NFS_SERVER}
+        server: /mnt/storage-0/immich
         path: /mnt/user/photos
         globalMounts:
           - path: /usr/src/app/upload

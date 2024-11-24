@@ -24,7 +24,7 @@ spec:
       retries: 3
   dependsOn:
     - name: immich-server
-      namespace: default
+      namespace: home
   values:
     controllers:
       immich-machine-learning:
@@ -40,11 +40,11 @@ spec:
               TZ: ${TIMEZONE}
             envFrom:
               - configMapRef:
-                  name: immich-configmap
+                  name: immich
               - secretRef:
-                  name: immich-secret
+                  name: immich
               - secretRef:
-                  name: immich-db-secret
+                  name: immich-db
             probes:
               liveness: &probes
                 enabled: true
@@ -73,9 +73,9 @@ spec:
         pod:
           enableServiceLinks: false
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -86,7 +86,7 @@ spec:
     persistence:
       library:
         type: nfs
-        server: ${SECRET_NFS_SERVER}
+        server: /mnt/storage-0/immich
         path: /mnt/user/photos
         globalMounts:
           - path: /usr/src/app/upload
