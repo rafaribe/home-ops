@@ -9,7 +9,7 @@ spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.2-2
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 50Gi
+    size: 70Gi
     storageClass: ceph-block
   superuserSecret:
     name: cloudnative-pg-secret
@@ -17,7 +17,7 @@ spec:
   postgresql:
     parameters:
       max_connections: "600"
-      max_slot_wal_keep_size: 10GB
+      max_slot_wal_keep_size: 30GB
       shared_buffers: 512MB
   resources:
     requests:
