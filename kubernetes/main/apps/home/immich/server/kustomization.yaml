@@ -2,10 +2,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./shared
-  - ./machine-learning
-  - ./microservices
-  - ./server
-  - ./database
+  - ./helmrelease.yaml
   - ../../../../../shared/templates/gatus/guarded
-  #- ../../../../shared/templates/volsync
