@@ -35,7 +35,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://cloudnative-pg/
-      endpointURL: http://minio:9000
+      endpointURL: https://minio.rafaribe.com
       serverName: &currentCluster home-ops-storage-v2
       s3Credentials:
         accessKeyId:
