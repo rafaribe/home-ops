@@ -2,15 +2,50 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app immich
+  name: &app immich-shared
   namespace: flux-system
 spec:
   targetNamespace: home
-  # dependsOn:
-  #   - name: cloudnative-pg-cluster
-  #   - name: dragonfly-cluster
-  #   - name: external-secrets-stores
-  path: ./kubernetes/main/apps/home/immich/app
+  path: ./kubernetes/main/apps/home/immich/shared
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app immich-database
+  namespace: flux-system
+spec:
+  targetNamespace: home
+  dependsOn:
+    - name: immich-shared
+  path: ./kubernetes/main/apps/home/immich/database
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app immich-server
+  namespace: flux-system
+spec:
+  targetNamespace: home
+  dependsOn:
+    - name: immich-shared
+    - name: immich-database
+  path: ./kubernetes/main/apps/home/immich/server
   prune: true
   sourceRef:
     kind: GitRepository
@@ -23,3 +58,45 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: photos
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app immich-microservices
+  namespace: flux-system
+spec:
+  targetNamespace: home
+  dependsOn:
+    - name: immich-server
+    - name: immich-shared
+    - name: immich-database
+  path: ./kubernetes/main/apps/home/immich/microservices
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app immich-machine-learning
+  namespace: flux-system
+spec:
+  targetNamespace: home
+  dependsOn:
+    - name: immich-server
+    - name: immich-shared
+    - name: immich-database
+  path: ./kubernetes/main/apps/home/immich/machine-learning
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
