@@ -29,14 +29,14 @@ spec:
           reloader.stakater.com/auto: "true"
         strategy: RollingUpdate
         initContainers:
-          init-db:
+          01-init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16.6
             envFrom:
               - secretRef:
                   name: immich-db
-          init-extensions:
+          02-init-extensions:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16.6
@@ -44,15 +44,12 @@ spec:
               - name: PGDATABASE
                 value: immich
               - name: PGUSER
-                valueFrom:
-                  secretKeyRef:
-                    name: immich-db
-                    key: DB_USERNAME
+                value: postgres
               - name: PGPASSWORD
                 valueFrom:
                   secretKeyRef:
                     name: immich-db
-                    key: DB_PASSWORD
+                    key: INIT_POSTGRES_SUPER_PASS
               - name: PGHOST
                 valueFrom:
                   secretKeyRef:
@@ -75,7 +72,7 @@ spec:
                   CREATE EXTENSION IF NOT EXISTS "cube";
                   CREATE EXTENSION IF NOT EXISTS "earthdistance";
                 EOF
-          init-change-vector-schema-owner:
+          03-init-change-vector-schema-owner:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16.6
