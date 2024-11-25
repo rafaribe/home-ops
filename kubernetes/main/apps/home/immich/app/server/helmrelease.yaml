@@ -75,6 +75,40 @@ spec:
                   CREATE EXTENSION IF NOT EXISTS "cube";
                   CREATE EXTENSION IF NOT EXISTS "earthdistance";
                 EOF
+          init-change-vector-schema-owner:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.6
+            env:
+              - name: PGDATABASE
+                value: immich
+              - name: PGUSER
+                value: postgres
+              - name: PGPASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-db
+                    key: INIT_POSTGRES_SUPER_PASS
+              - name: PGHOST
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-db
+                    key: DB_HOSTNAME
+              - name: PGPORT
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-db
+                    key: DB_PORT
+            envFrom:
+              - secretRef:
+                  name: immich-db
+            command:
+              - /bin/bash
+              - -c
+              - |
+                psql <<'EOF'
+                  ALTER SCHEMA vectors OWNER TO immich;
+                EOF
         containers:
           app:
             image:
