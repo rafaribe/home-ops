@@ -107,6 +107,7 @@ spec:
               - -c
               - |
                 psql <<'EOF'
+                  ALTER SYSTEM SET search_path TO "$user", public, vectors;
                   ALTER SCHEMA vectors OWNER TO immich;
                 EOF
         containers:
