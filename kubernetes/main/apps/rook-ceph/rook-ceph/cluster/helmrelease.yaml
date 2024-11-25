@@ -50,7 +50,7 @@ spec:
         ssl: false
       cephVersion:
         # workaround https://github.com/rook/rook/issues/14502 : replacing v18.2.4 by v18.2.2
-        image: quay.io/ceph/ceph:v18.2.4
+        image: quay.io/ceph/ceph:v18.2.2
     ingress:
       dashboard:
         ingressClassName: "internal"
