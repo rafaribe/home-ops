@@ -7,5 +7,6 @@ resources:
   - ./machine-learning
   - ./microservices
   - ./server
+  - ./database
   - ../../../../../shared/templates/gatus/guarded
   #- ../../../../shared/templates/volsync
