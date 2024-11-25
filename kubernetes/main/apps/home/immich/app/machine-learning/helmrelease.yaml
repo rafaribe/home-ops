@@ -86,8 +86,8 @@ spec:
     persistence:
       library:
         type: nfs
-        server: /mnt/storage-0/immich
-        path: /mnt/user/photos
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/immich
         globalMounts:
           - path: /usr/src/app/upload
       cache:
