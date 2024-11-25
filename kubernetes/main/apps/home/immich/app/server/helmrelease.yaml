@@ -47,22 +47,22 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: immich-db
-                    key: POSTGRES_USER
+                    key: DB_USERNAME
               - name: PGPASSWORD
                 valueFrom:
                   secretKeyRef:
                     name: immich-db
-                    key: POSTGRES_PASSWORD
+                    key: DB_PASSWORD
               - name: PGHOST
                 valueFrom:
                   secretKeyRef:
                     name: immich-db
-                    key: POSTGRES_HOST
+                    key: DB_HOSTNAME
               - name: PGPORT
                 valueFrom:
                   secretKeyRef:
                     name: immich-db
-                    key: POSTGRES_PORT
+                    key: DB_PORT
             envFrom:
               - secretRef:
                   name: immich-db
