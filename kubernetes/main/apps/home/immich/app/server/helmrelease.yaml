@@ -36,6 +36,45 @@ spec:
             envFrom:
               - secretRef:
                   name: immich-db
+          init-extensions:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.6
+            env:
+              - name: PGDATABASE
+                value: immich
+              - name: PGUSER
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-db
+                    key: POSTGRES_USER
+              - name: PGPASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-db
+                    key: POSTGRES_PASSWORD
+              - name: PGHOST
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-db
+                    key: POSTGRES_HOST
+              - name: PGPORT
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-db
+                    key: POSTGRES_PORT
+            envFrom:
+              - secretRef:
+                  name: immich-db
+            command:
+              - /bin/bash
+              - -c
+              - |
+                psql <<'EOF'
+                  CREATE EXTENSION IF NOT EXISTS "vectors";
+                  CREATE EXTENSION IF NOT EXISTS "cube";
+                  CREATE EXTENSION IF NOT EXISTS "earthdistance";
+                EOF
         containers:
           app:
             image:

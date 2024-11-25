@@ -33,6 +33,8 @@ spec:
       postInitSQL:
         - ALTER SYSTEM SET search_path TO "$user", public, vectors;
         - CREATE EXTENSION IF NOT EXISTS "vectors";
+        - CREATE EXTENSION IF NOT EXISTS "cube";
+        - CREATE EXTENSION IF NOT EXSISTS "earthdistance";
   backup:
     retentionPolicy: 30d
     barmanObjectStore: &barmanObjectStore
