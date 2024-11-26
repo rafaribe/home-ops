@@ -7,8 +7,10 @@ resources:
   # Flux-Kustomizations
   - ./alertmanager-discord/ks.yaml
   - ./alertmanager/ks.yaml
+  - ./exporters/ks.yaml
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
+  #- ./headlamp/ks.yaml
   - ./karma/ks.yaml
   - ./kepler/ks.yaml
   - ./kromgo/ks.yaml
