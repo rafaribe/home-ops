@@ -8,5 +8,5 @@ resources:
   # Flux-Kustomizations
   - ./authelia/ks.yaml
   - ./glauth/ks.yaml
-  - ./trivy-operator/ks.yaml
+  # - ./trivy-operator/ks.yaml
   - ./tetragon/ks.yaml

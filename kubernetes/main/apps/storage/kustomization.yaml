@@ -7,9 +7,9 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./cloudnative-pg/ks.yaml
-  - ./minio/ks.yaml
   - ./dragonfly/ks.yaml
-  - ./obsidian-couchdb/ks.yaml
   - ./emqx/ks.yaml
+  - ./minio/ks.yaml
+  - ./obsidian-couchdb/ks.yaml
   - ./snapshot-controller/ks.yaml
   #- ./longhorn/ks.yaml

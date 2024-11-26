@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/apps.emqx.io/emqx_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/apps.emqx.io/emqx_v2beta1.json
 apiVersion: apps.emqx.io/v2beta1
 kind: EMQX
 metadata:
@@ -24,6 +24,10 @@ spec:
             type = built_in_database
             enable = true
           }
+          {
+            type = file
+            path = "/opt/init-acl"
+          }
         ]
         no_match: "deny"
       }
@@ -41,6 +45,10 @@ spec:
           mountPath: /opt/init-user.json
           subPath: init-user.json
           readOnly: true
+        - name: init-user
+          mountPath: /opt/init-acl
+          subPath: init-acl
+          readOnly: true
       extraVolumes:
         - name: init-user
           secret:
@@ -48,6 +56,7 @@ spec:
   listenersServiceTemplate:
     metadata:
       annotations:
+        external-dns.alpha.kubernetes.io/hostname: "mqtt.rafaribe.com."
         lbipam.cilium.io/ips: ${LB_EMQX}
     spec:
       type: LoadBalancer
