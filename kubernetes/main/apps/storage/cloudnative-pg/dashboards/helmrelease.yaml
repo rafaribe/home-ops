@@ -16,6 +16,6 @@ spec:
   interval: 30m
   values:
     grafanaDashboard:
-      namespace: database
+      namespace: storage
       annotations:
         grafana_folder: Storage
