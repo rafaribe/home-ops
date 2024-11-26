@@ -7,3 +7,14 @@ metadata:
 spec:
   interval: 2h
   url: https://cloudnative-pg.github.io/charts
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/source.toolkit.fluxcd.io/helmrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: cloudnative-pg-dashboards
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://cloudnative-pg.github.io/grafana-dashboards
+  timeout: 3m

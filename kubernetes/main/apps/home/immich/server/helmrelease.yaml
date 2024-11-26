@@ -130,8 +130,11 @@ spec:
         className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: "internal.rafaribe.com"
-          # proxy-body-size is set to 0 to remove the body limit on file uploads
-          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
+          nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+          nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            chunked_transfer_encoding off;
           #Homepage
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media

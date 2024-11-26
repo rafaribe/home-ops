@@ -41,6 +41,7 @@ spec:
               MINIO_BROWSER_REDIRECT_URL: "https://minio.rafaribe.com"
               MINIO_SERVER_URL: "https://s3.rafaribe.com"
               MINIO_PROMETHEUS_AUTH_TYPE: "public"
+              MINIO_API_CORS_ALLOW_ORIGIN: https://minio.holrafthome.net,https://s3.rafaribe.com
             envFrom:
               - secretRef:
                   name: minio
@@ -70,6 +71,12 @@ spec:
       main:
         enabled: true
         className: internal
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/appName: "Minio Console"
+          hajimari.io/group: "storage"
+          hajimari.io/icon: mdi:pail
+          hajimari.io/instance: "admin"
         hosts:
           - host: minio.rafaribe.com
             paths:
