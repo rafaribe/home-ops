@@ -35,16 +35,16 @@ spec:
               tag: v0.4.8@sha256:c999a42cccc523b91086547f890466d09be4755bf05a52763b0d14594bf60782
             resources:
               requests:
-                cpu: 50m
-                memory: 100Mi
+                cpu: 120m
+                memory: 1Gi
                 ephemeral-storage: 1Gi
               limits:
-                memory: 200Mi
+                memory: 1Gi
                 ephemeral-storage: 2Gi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: [ALL]}
+              capabilities: { drop: [ALL] }
     serviceAccount:
       create: true
       name: *app
