@@ -38,12 +38,12 @@ spec:
       provider: host
       connections:
         encryption:
-          enabled: true
+          enabled: false
         compression:
           enabled: true
     cephClusterSpec:
       crashCollector:
-        disable: false
+        disable: true
       dashboard:
         enabled: true
         urlPrefix: /
