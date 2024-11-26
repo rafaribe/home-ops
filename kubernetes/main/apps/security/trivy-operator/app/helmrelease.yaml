@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: trivy-operator
-      version: "0.24.1"
+      version: "0.25.0"
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
