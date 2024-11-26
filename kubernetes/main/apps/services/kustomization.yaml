@@ -19,6 +19,7 @@ resources:
   - ./mealie/ks.yaml
   - ./netboot/ks.yaml
   - ./paperless/ks.yaml
+  - ./searxng/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
