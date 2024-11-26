@@ -31,8 +31,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  # dependsOn:
-  #   - name: emqx
+  dependsOn:
+    - name: emqx-operator
   path: ./kubernetes/main/apps/storage/emqx/cluster
   prune: true
   sourceRef:
