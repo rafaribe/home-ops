@@ -29,7 +29,7 @@ spec:
       namespace: volsync
   values:
     controllers:
-      stirling-pdf:
+      app:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -83,7 +83,7 @@ spec:
           - path: /usr/share/tessdata
 
     service:
-      stirling-pdf:
+      app:
         controller: stirling-pdf
         ports:
           http:
