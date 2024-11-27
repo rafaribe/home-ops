@@ -73,11 +73,6 @@ spec:
         ports:
           http:
             port: *httpPort
-      redis:
-        controller: redis
-        ports:
-          http:
-            port: 6379
 
     ingress:
       app:
