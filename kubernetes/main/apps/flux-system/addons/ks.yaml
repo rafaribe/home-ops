@@ -6,17 +6,18 @@ metadata:
   name: &app flux-addons
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/flux-system/addons/webhooks/
+  path: ./kubernetes/main/apps/flux-system/addons/app/
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-ops
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
   wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 3m
   targetNamespace: flux-system
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-
