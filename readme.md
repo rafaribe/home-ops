@@ -17,8 +17,7 @@ _... managed with Flux, Renovate and GitHub Actions_ :robot:
 [![GitHub stars](https://img.shields.io/github/stars/rafaribe/home-ops?color=green&style=for-the-badge)](https://github.com/rafaribe/home-ops/stargazers "This repo star count")
 [![GitHub last commit](https://img.shields.io/github/last-commit/rafaribe/home-ops?color=purple&style=for-the-badge)](https://github.com/rafaribe/home-ops/commits/main "Commit History")
 <br>
-[![OS](https://img.shields.io/badge/Ubuntu-22.04-important?style=for-the-badge&logo=ubuntu)](https://releases.ubuntu.com/22.04/ "Talos Linux")
-[![Kubernetes Distribution](https://img.shields.io/badge/Kubernetes-k3s-informational?style=for-the-badge&logo=kubernetes)](https://k3s.io/ "k3s")
+[![Talos](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.rafaribe.com%2Ftalos_version&style=for-the-badge&logo=talos&logoColor=white&color=blue&label=%20)](https://talos.dev)&nbsp;&nbsp;
 [![Release](https://img.shields.io/github/v/release/rafaribe/home-ops?style=for-the-badge&logo=semanticrelease)](https://github.com/rafaribe/home-ops/releases "Repo releases")
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white&style=for-the-badge&logo-pre-commit)](https://github.com/pre-commit/pre-commit "Precommit status")
 [![Schedule - Renovate](https://img.shields.io/github/actions/workflow/status/rafaribe/home-ops/schedule-renovate.yaml?label=Renovate&logo=renovatebot&style=for-the-badge&branch=main)](https://github.com/Truxnell/home-cluster/actions/workflows/schedule-renovate.yaml)
