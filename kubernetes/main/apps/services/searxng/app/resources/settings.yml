@@ -8,17 +8,17 @@ server:
   public_instance: false
 
 search:
-  autocomplete: duckduckgo
+  autocomplete: google
   favicon_resolver: duckduckgo
   languages:
     - all
     - en
     - en-US
-    - de
-    - nl-NL
+    - pt
+    - pt-PT
 
 general:
-  instance_name: BJW-S Search
+  instance_name: Rafaribe Search
 
 ui:
   default_theme: simple
