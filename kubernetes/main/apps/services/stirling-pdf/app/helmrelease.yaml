@@ -1,10 +1,11 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app stirling-pdf
 spec:
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -21,40 +22,40 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  interval: 30m
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync
   values:
     controllers:
-      stirling:
-        labels:
-          sablier.enable: "true"
-          sablier.group: books
-        strategy: RollingUpdate
+      stirling-pdf:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
-          stirling:
+          app:
             image:
               repository: ghcr.io/stirling-tools/s-pdf
-              tag: 0.33.1@sha256:d30bf0b2826f0e71cf6fe1b806d918db6d90121ac70b3384569e3b49edf51b3f
+              tag: 0.34.0@sha256:42ceaa84712f9271ca4af1c4d892899996424cbc5378f7dd168828091657c0f0
               pullPolicy: IfNotPresent
             env:
-              DOCKER_ENABLE_SECURITY: "true"
-              INSTALL_BOOK_AND_ADVANCED_HTML_OPS: "false"
-              SYSTEM_DEFAULTLOCALE: "en-GB"
-              SECURITY_ENABLE_LOGIN: true
+              TZ: Europe/Lisbon
+              DOCKER_ENABLE_SECURITY: "false"
+              SECURITY_ENABLE_LOGIN: "false"
+              INSTALL_BOOK_AND_ADVANCED_HTML_OPS: "true"
             probes:
-              liveness: &probes
-                enabled: false
-              readiness: *probes
-              startup: *probes
+              liveness: &probe
+                enabled: true
+                type: HTTP
+                path: /api/v1/info/status
+              readiness: *probe
+              startup:
+                <<: *probe
+                spec:
+                  failureThreshold: 90
+                  periodSeconds: 5
             securityContext:
               readOnlyRootFilesystem: true
-            resources:
-              requests:
-                cpu: 15m
-                memory: 411M
-              limits:
-                cpu: 25m
-                memory: 600M
-
         pod:
           securityContext:
             runAsNonRoot: true
@@ -64,9 +65,11 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
 
     persistence:
-      configs:
+      config:
         enabled: true
-        type: emptyDir
+        existingClaim: stirling-pdf
+        globalMounts:
+          - path: /configs
       logs:
         enabled: true
         type: emptyDir
@@ -80,26 +83,22 @@ spec:
           - path: /usr/share/tessdata
 
     service:
-      stirling:
-        controller: stirling
+      stirling-pdf:
+        controller: stirling-pdf
         ports:
           http:
             port: 8080
 
     ingress:
       app:
+        enabled: true
         className: internal
         annotations:
-          gethomepage.dev/name: *app
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: selfhosted
-          gethomepage.dev/icon: stirling-pdf.png
-          nginx.org/client-max-body-size: "150m"
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          external-dns.alpha.kubernetes.io/target: internal.oxygn.dev
         hosts:
-          - host: &host pdf.rafaribe.com
+          - host: pdf.oxygn.dev
             paths:
               - path: /
                 service:
-                  identifier: app
+                  identifier: stirling-pdf
                   port: http
