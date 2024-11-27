@@ -84,7 +84,7 @@ spec:
 
     service:
       app:
-        controller: stirling-pdf
+        controller: app
         ports:
           http:
             port: 8080
@@ -100,5 +100,5 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: stirling-pdf
+                  identifier: app
                   port: http
