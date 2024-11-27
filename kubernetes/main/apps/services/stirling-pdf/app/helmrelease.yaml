@@ -1,0 +1,105 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: stirling-pdf
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  interval: 30m
+  values:
+    controllers:
+      stirling:
+        labels:
+          sablier.enable: "true"
+          sablier.group: books
+        strategy: RollingUpdate
+        containers:
+          stirling:
+            image:
+              repository: ghcr.io/stirling-tools/s-pdf
+              tag: 0.33.1@sha256:d30bf0b2826f0e71cf6fe1b806d918db6d90121ac70b3384569e3b49edf51b3f
+              pullPolicy: IfNotPresent
+            env:
+              DOCKER_ENABLE_SECURITY: "true"
+              INSTALL_BOOK_AND_ADVANCED_HTML_OPS: "false"
+              SYSTEM_DEFAULTLOCALE: "en-GB"
+              SECURITY_ENABLE_LOGIN: true
+            probes:
+              liveness: &probes
+                enabled: false
+              readiness: *probes
+              startup: *probes
+            securityContext:
+              readOnlyRootFilesystem: true
+            resources:
+              requests:
+                cpu: 15m
+                memory: 411M
+              limits:
+                cpu: 25m
+                memory: 600M
+
+        pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+
+    persistence:
+      configs:
+        enabled: true
+        type: emptyDir
+      logs:
+        enabled: true
+        type: emptyDir
+      tmp:
+        enabled: true
+        type: emptyDir
+      tessdata:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /usr/share/tessdata
+
+    service:
+      stirling:
+        controller: stirling
+        ports:
+          http:
+            port: 8080
+
+    ingress:
+      app:
+        className: internal
+        annotations:
+          gethomepage.dev/name: *app
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: selfhosted
+          gethomepage.dev/icon: stirling-pdf.png
+          nginx.org/client-max-body-size: "150m"
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        hosts:
+          - host: &host pdf.rafaribe.com
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http

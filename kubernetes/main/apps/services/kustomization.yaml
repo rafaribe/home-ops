@@ -20,6 +20,7 @@ resources:
   - ./netboot/ks.yaml
   - ./paperless/ks.yaml
   - ./searxng/ks.yaml
+  - ./stirling-pdf/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
