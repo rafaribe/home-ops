@@ -3,90 +3,114 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: vikunja
+  name: &app vikunja
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
       version: 3.5.1
-      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
     controllers:
       vikunja:
         annotations:
           reloader.stakater.com/auto: "true"
-
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
-
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: vikunja-secret
         containers:
           app:
             image:
-              repository: docker.io/vikunja/vikunja
-              tag: 0.24.5
+              repository: vikunja/api
+              tag: 0.22.1@sha256:c9415431e6235229302bb8f9ee6660b74c24859d1e8adbc4a3e25bd418604b57
+            envFrom: *envFrom
             env:
-              VIKUNJA_DATABASE_TYPE: sqlite
-              VIKUNJA_DATABASE_PATH: /db/vikunja.db
-              VIKUNJA_FILES_BASEPATH: /files
-              VIKUNJA_SERVICE_ENABLECALDAV: false
-              VIKUNJA_SERVICE_ENABLELINKSHARING: false
-              VIKUNJA_SERVICE_ENABLEREGISTRATION: false
-              VIKUNJA_SERVICE_PUBLICURL: https://vikunja.rafaribe.com/
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
+              VIKUNJA_MAILER_HOST: smtp-relay.services.svc.cluster.local.
+              VIKUNJA_MAILER_PORT: "25"
+              VIKUNJA_MAILER_FROMEMAIL: Vikunja <vikunja@rafaribe.com>
             resources:
               requests:
                 cpu: 5m
-                memory: 192Mi
+                memory: 10Mi
               limits:
-                memory: 1024Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-
+                memory: 100Mi
+          frontend:
+            image:
+              repository: vikunja/frontend
+              tag: 0.22.1@sha256:f0223d441997fe29c377d0b476dc4bb2fc091b44b9c24d76b1b88c213df520c5
+          proxy:
+            image:
+              repository: caddy
+              tag: 2.8.4-alpine@sha256:e97e0e3f8f51be708a9d5fadbbd75e3398c22fc0eecd4b26d48561e3f7daa9eb
     service:
       app:
-        controller: vikunja
+        controller: *app
         ports:
           http:
-            port: 3456
-
+            port: 8080
     ingress:
       app:
-        className: "external-nginx"
+        enabled: true
+        className: external
         annotations:
+          external-dns.alpha.kubernetes.io/enabled: "true"
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          hajimari.io/icon: mdi:format-list-checks
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Vikunja
+          gethomepage.dev/description: Tasks and project management platform.
+          gethomepage.dev/group: Applications
+          gethomepage.dev/icon: vikunja.png
+          gethomepage.dev/pod-selector: >-
+            app in (
+              vikunja
+            )
         hosts:
-          - host: vikunja.rafaribe.com
+          - host: &host "vikunja.rafaribe.com"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-
+        tls:
+          - hosts:
+              - *host
     persistence:
-      data:
-        existingClaim: vikunja-data
-        advancedMounts:
-          vikunja:
-            app:
-              - path: /db
-                subPath: db
-              - path: /files
-                subPath: files
+      config:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /app/vikunja/files
+      caddy-config:
+        type: configMap
+        name: vikunja-configmap
+        globalMounts:
+          - path: /etc/caddy/Caddyfile
+            subPath: Caddyfile
+      vikunja-config:
+        type: configMap
+        name: vikunja-configmap
+        globalMounts:
+          - path: /etc/vikunja/config.yml
+            subPath: Vikunja.yaml
