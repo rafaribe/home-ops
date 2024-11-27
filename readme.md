@@ -13,10 +13,11 @@ _... managed with Flux, Renovate and GitHub Actions_ :robot:
 <div align="center">
 
 [![Docs](https://img.shields.io/static/v1.svg?color=009688&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Homelab&message=Docs&logo=readthedocs)](https://rafaribe.github.io/home-ops/ "Documentation for this repository.")
-[![Discord](https://img.shields.io/discord/673534664354430999?color=7289da&label=DISCORD&style=for-the-badge&logo=discord)](https://discord.gg/sTMX7Vh "k8s at home Discord Community")
+[![Discord](https://img.shields.io/discord/673534664354430999?style=for-the-badge&label&logo=discord&logoColor=white&color=blue)](https://discord.gg/home-operations)&nbsp;&nbsp;
 [![GitHub stars](https://img.shields.io/github/stars/rafaribe/home-ops?color=green&style=for-the-badge)](https://github.com/rafaribe/home-ops/stargazers "This repo star count")
 [![GitHub last commit](https://img.shields.io/github/last-commit/rafaribe/home-ops?color=purple&style=for-the-badge)](https://github.com/rafaribe/home-ops/commits/main "Commit History")
-[![OS](https://img.shields.io/badge/Ubuntu-22.04-important?style=for-the-badge&logo=ubuntu)](https://releases.ubuntu.com/22.04/ "Ubuntu 22.04 Jelly")
+<br>
+[![OS](https://img.shields.io/badge/Ubuntu-22.04-important?style=for-the-badge&logo=ubuntu)](https://releases.ubuntu.com/22.04/ "Talos Linux")
 [![Kubernetes Distribution](https://img.shields.io/badge/Kubernetes-k3s-informational?style=for-the-badge&logo=kubernetes)](https://k3s.io/ "k3s")
 [![Release](https://img.shields.io/github/v/release/rafaribe/home-ops?style=for-the-badge&logo=semanticrelease)](https://github.com/rafaribe/home-ops/releases "Repo releases")
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white&style=for-the-badge&logo-pre-commit)](https://github.com/pre-commit/pre-commit "Precommit status")
