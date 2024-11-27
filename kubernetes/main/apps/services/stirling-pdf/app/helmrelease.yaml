@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: stirling-pdf
+  name: &app stirling-pdf
 spec:
   chart:
     spec:
