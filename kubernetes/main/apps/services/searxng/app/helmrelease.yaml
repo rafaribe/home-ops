@@ -35,7 +35,7 @@ spec:
               SEARXNG_REDIS_URL: redis://dragonfly.storage.svc.cluster.local:6379
             envFrom:
               - secretRef:
-                  name: searxng-secret
+                  name: searxng
             probes:
               liveness: &probes
                 enabled: true
