@@ -25,4 +25,4 @@ spec:
   postBuild:
     substitute:
       APP: *appname
-      VOLSYNC_CLAIM: vikunja-data
+      VOLSYNC_CLAIM: vikunja
