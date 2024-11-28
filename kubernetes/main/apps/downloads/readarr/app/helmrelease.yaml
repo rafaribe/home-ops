@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -71,14 +71,14 @@ spec:
       app:
         className: internal
         annotations:
-          # gethomepage.dev/enabled: "true"
-          # gethomepage.dev/group: Downloads
-          # gethomepage.dev/name: Readarr
-          # gethomepage.dev/icon: readarr.png
-          # gethomepage.dev/description: eBook Downloads
-          # gethomepage.dev/widget.type: readarr
-          # gethomepage.dev/widget.url: http://readarr.downloads
-          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_READARR_TOKEN}}` }}"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Readarr
+          gethomepage.dev/icon: readarr.png
+          gethomepage.dev/description: eBook Downloads
+          gethomepage.dev/widget.type: readarr
+          gethomepage.dev/widget.url: http://readarr.downloads
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_READARR_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: "readarr.rafaribe.com"
