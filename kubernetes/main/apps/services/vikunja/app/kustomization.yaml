@@ -6,7 +6,7 @@ resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
   - ../../../../../shared/templates/volsync
-  - ../../../../../shared/templates/gatus/guarded
+  - ../../../../../shared/templates/gatus/external
 configMapGenerator:
   - name: vikunja-configmap
     files:
