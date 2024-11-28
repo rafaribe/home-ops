@@ -6,7 +6,7 @@ badge:
 
 metrics:
   - name: talos_version
-    query: node_os_info{name="Talos"}
+    query: ll{name="Talos"}
     label: version_id
     title: Talos
 
