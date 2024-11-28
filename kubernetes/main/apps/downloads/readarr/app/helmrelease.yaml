@@ -31,6 +31,7 @@ spec:
       readarr:
         labels:
           nfsMount: "true"
+          postgres: "true"
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -39,19 +40,23 @@ spec:
               repository: ghcr.io/joryirving/readarr-develop
               tag: 0.4.4.2686@sha256:e43066ec0e300687fc8cabde9385f3ad6975d79c5fe9795797c2ae0bfe0320fa
             env:
+              READARR__APP__INSTANCENAME: Readarr
+              READARR__APP__THEME: dark
+              READARR__AUTH__METHOD: External
+              READARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              # READARR__LOG__DBENABLED: "False"
+              READARR__LOG__LEVEL: info
+              READARR__SERVER__PORT: &port 80
+              READARR__UPDATE__BRANCH: develop
               TZ: Europe/Lisbon
-              READARR__INSTANCE_NAME: Readarr
-              READARR__PORT: &port 80
-              READARR__LOG_LEVEL: info
             envFrom:
               - secretRef:
-                  name: readarr
+                  name: readarr-secret
             resources:
               requests:
-                cpu: 15m
-                memory: 160M
+                cpu: 100m
               limits:
-                memory: 330M
+                memory: 1Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -59,7 +64,6 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [10000, 568]
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
@@ -92,9 +96,7 @@ spec:
         existingClaim: *app
       tmp:
         type: emptyDir
-        globalMounts:
-          - path: /tmp
-      media:
+      data:
         enabled: true
         type: nfs
         server: truenas.rafaribe.com
