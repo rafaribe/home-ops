@@ -79,7 +79,7 @@ spec:
         enabled: true
         type: nfs
         server: truenas.rafaribe.com
-        path: /mnt/storage-0/backups
+        path: /mnt/storage-0/backups/postgres
         globalMounts:
           - path: /backups
       scripts:
