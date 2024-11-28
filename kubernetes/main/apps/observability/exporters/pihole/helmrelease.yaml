@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: pihole-exporter
+  name: &app pihole-exporter
 spec:
   interval: 30m
   chart:
@@ -35,7 +35,7 @@ spec:
               PORT: &port 9617
             envFrom:
               - secretRef:
-                  name: pihole-exporter-secret
+                  name: *app
             resources:
               requests:
                 cpu: 15m
@@ -43,13 +43,13 @@ spec:
                 memory: 60M
     service:
       app:
-        controller: pihole-exporter
+        controller: *app
         ports:
           http:
             port: *port
     serviceMonitor:
       app:
-        serviceName: pihole-exporter
+        serviceName: *app
         endpoints:
           - port: http
             scheme: http
