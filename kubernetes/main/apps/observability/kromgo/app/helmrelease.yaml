@@ -10,94 +10,92 @@ spec:
     spec:
       chart: app-template
       version: 3.5.1
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
   values:
     controllers:
       kromgo:
+        replicas: 1
         strategy: RollingUpdate
+
         annotations:
           reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: kromgo
+
         containers:
-          app:
+          kromgo:
             image:
               repository: ghcr.io/kashalls/kromgo
-              tag: v0.4.2@sha256:89eab1c6604d8ef79fb0e7340620d6559ef296cc469c4eabf22598bbaf93ff42
+              tag: v0.4.2
             env:
               PROMETHEUS_URL: http://vmsingle-victoria.observability.svc.cluster.local.:8429
-              SERVER_HOST: &host "[::]"
-              SERVER_PORT: &http 8080
-              HEALTH_HOST: *host
-              HEALTH_PORT: &health 8888
+              SERVER_HOST: 0.0.0.0
+              SERVER_PORT: &port 8080
+              HEALTH_HOST: 0.0.0.0
+              HEALTH_PORT: &hport 8888
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
                 custom: true
-                spec: &probes
+                spec:
                   httpGet:
-                    path: /-/health
-                    port: *health
+                    path: /readyz
+                    port: *hport
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
-              readiness:
-                enabled: true
-                custom: true
-                spec:
-                  <<: *probes
-                  httpGet:
-                    path: /-/ready
-                    port: *health
+              readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities:
+                drop:
+                  - "ALL"
             resources:
               requests:
-                cpu: 10m
+                cpu: 5m
+                memory: 10M
               limits:
-                memory: 64Mi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        seccompProfile: { type: RuntimeDefault }
+                memory: 64M
+
     service:
-      kromgo:
+      app:
         controller: kromgo
         ports:
           http:
-            port: *http
-            protocol: HTTP
-            appProtocol: http
+            primary: true
+            port: *port
           health:
-            port: *health
-            protocol: HTTP
-            appProtocol: http
+            port: *hport
     ingress:
       app:
+        className: "external"
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-        className: external
         hosts:
-          - host: "kromgo.rafaribe.com"
+          - host: kromgo.rafaribe.com
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
+
     persistence:
       config-file:
         type: configMap
