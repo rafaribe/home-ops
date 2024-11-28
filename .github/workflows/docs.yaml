@@ -5,22 +5,15 @@ name: "Docs"
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches:
+      - main
     paths:
-      - .github/workflows/docs.yaml
+      - .github/workflows/docs-publish.yaml
       - docs/**
-      - readme.md
-      - README.md
-
-permissions:
-  actions: write
-  contents: read
-  id-token: write
-  pages: write
 
 jobs:
-  build:
-    name: Build Docs
+  release-docs:
+    name: Release documentation
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,45 +25,19 @@ jobs:
           app-id: "${{ secrets.BOT_APP_ID }}"
           private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
-      - name: Checkout
+      - name: Checkout main branch
         uses: actions/checkout@v4
         with:
-          token: "${{ steps.app-token.outputs.token }}"
-
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-        with:
-          token: "${{ steps.app-token.outputs.token }}"
-          enablement: true
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Build docs
-        uses: docker://ghcr.io/bjw-s/mdbook:0.4.43@sha256:717d8e77d7c2bbfccbfefc70875f75d5cf742df7dffd11a90dae54b28845f430
+        uses: docker://ghcr.io/bjw-s-labs/mdbook:0.4.43@sha256:febe36a62023a79ad8d8c914f89ac23093ddb1b2266b4cca5d875d66efb1f1b2
         with:
-          args: mdbook build docs
+          args: bash -c "cd docs && mdbook build"
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4.0.0
+        if: ${{ github.ref == 'refs/heads/main' }}
         with:
-          path: ./docs/book
-
-  publish:
-    name: Publish Docs
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Generate Token
-        uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: "${{ secrets.BOT_APP_ID }}"
-          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          token: "${{ steps.app-token.outputs.token }}"
+          github_token: ${{ steps.app-token.outputs.token }}
+          publish_dir: ./docs/book/html
