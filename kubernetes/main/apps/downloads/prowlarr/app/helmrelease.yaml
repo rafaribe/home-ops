@@ -88,6 +88,6 @@ spec:
                   port: http
     persistence:
       config:
-        type: emptyDir
+        existingClaim: *app
       tmp:
         type: emptyDir
