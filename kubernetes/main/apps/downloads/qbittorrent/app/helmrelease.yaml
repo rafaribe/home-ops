@@ -234,3 +234,8 @@ spec:
           qbittorrent:
             app:
               - path: /config/scripts
+      add-ons:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /add-ons
