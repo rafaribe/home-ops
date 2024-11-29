@@ -72,10 +72,9 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 10m
                 memory: 100Mi
               limits:
-                memory: 12Gi
+                memory: 8Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -149,3 +148,13 @@ spec:
             app:
               - path: /incomplete
                 subPath: incomplete
+    # Turing Pi eMMC isn't nearly enough for a sabnzbd hostpath
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                    - amd64
