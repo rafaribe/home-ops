@@ -51,7 +51,7 @@ spec:
               TZ: Europe/Lisbon
             envFrom:
               - secretRef:
-                  name: readarr-secret
+                  name: *app
             resources:
               requests:
                 cpu: 100m
