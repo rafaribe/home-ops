@@ -85,6 +85,15 @@ spec:
         supplementalGroups: [10000]
         seccompProfile: { type: RuntimeDefault }
       affinity:
+        # Turing Pi eMMC isn't nearly enough for a sabnzbd hostpath
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - weight: 100
@@ -148,13 +157,3 @@ spec:
             app:
               - path: /incomplete
                 subPath: incomplete
-    # Turing Pi eMMC isn't nearly enough for a sabnzbd hostpath
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/arch
-                  operator: In
-                  values:
-                    - amd64
