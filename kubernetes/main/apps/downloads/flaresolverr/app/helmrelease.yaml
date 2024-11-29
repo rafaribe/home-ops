@@ -38,10 +38,26 @@ spec:
               requests:
                 cpu: 15m
                 memory: 150Mi
+            env:
+              LOG_LEVEL: info
+              PORT: &port 80
+              PROMETHEUS_ENABLED: true
+              PROMETHEUS_PORT: &metricsPort 8080
     service:
       app:
         controller: *app
         type: ClusterIP
         ports:
           http:
-            port: 8191
+            port: *port
+          metrics:
+            port: *metricsPort
+    serviceMonitor:
+      app:
+        serviceName: flaresolverr
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
