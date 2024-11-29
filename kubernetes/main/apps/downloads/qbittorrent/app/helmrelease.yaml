@@ -166,11 +166,39 @@ spec:
                 service:
                   identifier: app
                   port: http
-
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000]
+        seccompProfile: { type: RuntimeDefault }
+      affinity:
+        # Turing Pi eMMC isn't nearly enough for a sabnzbd hostpath
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values: ["sabnzbd"]
+                topologyKey: kubernetes.io/hostname
     persistence:
       config:
         enabled: true
-        existingClaim: qbittorrent
+        existingClaim: qbittorrent-config
         advancedMounts:
           qbittorrent:
             app:
@@ -188,7 +216,7 @@ spec:
         advancedMounts:
           qbittorrent:
             app:
-              - path: /media
+              - path: /data/nas-media
       dnsdist:
         type: configMap
         name: qbittorrent-dnsdist
@@ -206,17 +234,3 @@ spec:
           qbittorrent:
             app:
               - path: /config/scripts
-      add-ons:
-        enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /add-ons
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/arch
-                  operator: In
-                  values:
-                    - amd64

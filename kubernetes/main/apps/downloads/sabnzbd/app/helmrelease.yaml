@@ -125,22 +125,23 @@ spec:
     persistence:
       config:
         existingClaim: sabnzbd
-      tmp:
-        type: emptyDir
-      scripts:
-        type: configMap
-        name: sabnzbd-scripts
-        defaultMode: 0775
-        globalMounts:
-          - readOnly: true
+        advancedMounts:
+          sabnzbd:
+            app:
+              - path: /config
       media:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
         globalMounts:
-          - path: /downloads
-            subPath: usenet
-      incomplete:
+          - path: /data/nas-media
+      temp:
+        type: emptyDir
+        advancedMounts:
+          sabnzbd:
+            app:
+              - path: /tmp
+      ephemeral:
         type: custom
         volumeSpec:
           ephemeral:
@@ -148,7 +149,7 @@ spec:
               spec:
                 accessModes:
                   - ReadWriteOnce
-                storageClassName: openebs-hostpath
+                storageClassName: "openebs-hostpath"
                 resources:
                   requests:
                     storage: 100Gi
@@ -157,3 +158,11 @@ spec:
             app:
               - path: /incomplete
                 subPath: incomplete
+      scripts:
+        type: configMap
+        name: sabnzbd-scripts
+        defaultMode: 0775
+        advancedMounts:
+          sabnzbd:
+            app:
+              - path: /config/scripts
