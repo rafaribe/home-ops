@@ -29,7 +29,7 @@ conditional:
 customDNS:
   zone: |
     $TTL 3600
-    $ORIGIN rafaribe.dev.
+    $ORIGIN rafaribe.com.
     ; LAN
     opnsense      IN A      10.0.0.1
     ; Servers
