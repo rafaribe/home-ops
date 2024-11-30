@@ -19,7 +19,7 @@ spec:
     controllers:
       autobrr:
         annotations:
-          secret.reloader.stakater.com/reload: autobrr-secret,autobrr-db-secret
+          secret.reloader.stakater.com/reload: autobrr
           configmap.reloader.stakater.com/reload: autobrr-configmap
         pod:
           securityContext:
@@ -44,11 +44,7 @@ spec:
               AUTOBRR__HOST: 0.0.0.0
               AUTOBRR__PORT: &port 7474
               AUTOBRR__LOG_LEVEL: DEBUG
-            envFrom:
-              - secretRef:
-                  name: autobrr-secret
-              - secretRef:
-                  name: autobrr-db-secret
+            envFrom: *envFrom
             probes:
               liveness:
                 enabled: true
