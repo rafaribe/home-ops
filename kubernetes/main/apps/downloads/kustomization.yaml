@@ -7,7 +7,7 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   #- ./cross-seed/ks.yaml\
-  - ./autobrr/ks.yaml\
+  - ./autobrr/ks.yaml
   - ./bazarr/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./prowlarr/ks.yaml
@@ -17,3 +17,4 @@ resources:
   - ./recyclarr/ks.yaml
   - ./sabnzbd/ks.yaml
   - ./sonarr/ks.yaml
+# Investigate https://github.com/joryirving/home-ops/tree/main/kubernetes/main/apps/downloads
