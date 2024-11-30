@@ -88,6 +88,6 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: *app
+        existingClaim: prowlarr-config
       tmp:
         type: emptyDir
