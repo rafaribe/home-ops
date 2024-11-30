@@ -237,3 +237,20 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /add-ons
+      ephemeral:
+        type: custom
+        volumeSpec:
+          ephemeral:
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                storageClassName: "openebs-hostpath"
+                resources:
+                  requests:
+                    storage: 100Gi
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /tmp
+                subPath: tmp
