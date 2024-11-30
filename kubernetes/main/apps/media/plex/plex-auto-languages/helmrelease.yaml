@@ -37,7 +37,7 @@ spec:
               PLEX_URL: "http://plex.media.svc.cluster.local:32400"
             envFrom:
               - secretRef:
-                  name: plex-secret
+                  name: plex
             resources:
               requests:
                 cpu: 75m
