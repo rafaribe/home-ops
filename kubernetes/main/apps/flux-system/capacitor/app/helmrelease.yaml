@@ -35,11 +35,11 @@ spec:
               tag: v0.4.8@sha256:c999a42cccc523b91086547f890466d09be4755bf05a52763b0d14594bf60782
             resources:
               requests:
-                cpu: 120m
-                memory: 1Gi
+                cpu: 350m
+                memory: 2Gi
                 ephemeral-storage: 1Gi
               limits:
-                memory: 1Gi
+                memory: 4Gi
                 ephemeral-storage: 2Gi
             securityContext:
               allowPrivilegeEscalation: false
