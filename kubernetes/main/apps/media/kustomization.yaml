@@ -10,3 +10,4 @@ resources:
   - ./calibre-web/ks.yaml
   - ./jellyfin/ks.yaml
   - ./media-browser/ks.yaml
+  - ./plex/ks.yaml
