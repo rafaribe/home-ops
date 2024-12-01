@@ -82,5 +82,4 @@ spec:
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
         globalMounts:
-          - path: /data
-            subPath: media
+          - path: /media
