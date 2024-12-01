@@ -23,3 +23,5 @@ data:
   TAILNET_PUBLIC_PORT: "41642"
   # Cloudflare Tunnel
   CLUSTER_CLOUDFLARE_TUNNEL_ID: 86615e3e-8339-4559-a45b-01fd0cd07293
+  TZ: Europe/Lisbon
+  TIMEZONE: Europe/Lisbon
