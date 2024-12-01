@@ -102,7 +102,6 @@ spec:
           gethomepage.dev/widget.url: http://plex.media:32400
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PLEX_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
           - host: "plex.rafaribe.com"
             paths:
