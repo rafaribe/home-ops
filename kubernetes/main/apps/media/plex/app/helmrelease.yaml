@@ -39,7 +39,7 @@ spec:
               tag: 1.41.2.9200-c6bbc1b53@sha256:1f28b5e5a964481f80e76db3c986082d2fc3bca2d16d2742704e9adf8349c79c
             env:
               TZ: ${TZ}
-              PLEX_ADVERTISE_URL: https://plex.rafaribe.com:443,http://${LB_PLEX}:32400
+              PLEX_ADVERTISE_URL: https://plex.rafaribe.com:443,http://${LB_PLEX}:32400,https://plex-local.rafaribe.com:443
               PLEX_NO_AUTH_NETWORKS: 10.0.0.0/22,10.42.0.0/16,10.43.0.0/16
             probes:
               liveness: &probes
@@ -104,6 +104,17 @@ spec:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
           - host: "plex.rafaribe.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+      local:
+        className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        hosts:
+          - host: "plex-local.rafaribe.com"
             paths:
               - path: /
                 service:
