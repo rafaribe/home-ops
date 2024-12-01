@@ -37,12 +37,27 @@ spec:
               tag: 1.33.2
             env:
               TZ: ${TIMEZONE}
+              LOG_LEVEL: "info"
+              PORT: &port 80
             resources:
               requests:
                 cpu: 16m
                 memory: 350M
               limits:
                 memory: 600M
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v1/status
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -56,7 +71,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 5055
+            port: *port
     ingress:
       app:
         className: external
