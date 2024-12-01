@@ -41,7 +41,7 @@ env:
 jobs:
   renovate:
     name: Renovate
-    runs-on: ["arc-runner-set-home-ops","ubuntu-latest"]
+    runs-on: ["arc-runner-set-home-ops"]
     steps:
       - name: Generate Token
         uses: actions/create-github-app-token@v1
