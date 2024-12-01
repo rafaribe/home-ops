@@ -10,6 +10,7 @@ resources:
   - ./calibre-web/ks.yaml
   - ./jellyfin/ks.yaml
   - ./kavita/ks.yaml
+  - ./komga/ks.yaml
   - ./media-browser/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
