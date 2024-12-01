@@ -85,6 +85,7 @@ spec:
           gethomepage.dev/widget.url: http://overseerr.media:5055
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_OVERSEERR_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          nginx.ingress.kubernetes.io/custom-http-errors: "400,404,500,502,503,504" # Using a smaller set than the default to fix javascript issues with oversee
         hosts:
           - host: requests.rafaribe.com
             paths:
