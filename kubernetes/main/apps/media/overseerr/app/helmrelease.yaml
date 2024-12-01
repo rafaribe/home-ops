@@ -39,7 +39,7 @@ spec:
               TZ: ${TIMEZONE}
             resources:
               requests:
-                cpu: 15m
+                cpu: 16m
                 memory: 350M
               limits:
                 memory: 600M
