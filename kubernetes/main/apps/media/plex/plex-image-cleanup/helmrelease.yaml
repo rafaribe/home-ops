@@ -43,7 +43,7 @@ spec:
               PHOTO_TRANSCODER: true
             envFrom:
               - secretRef:
-                  name: plex-secret
+                  name: plex
             probes:
               liveness:
                 enabled: false
