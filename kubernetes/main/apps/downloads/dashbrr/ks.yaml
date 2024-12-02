@@ -11,8 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: crunchy-postgres-operator-cluster
-    - name: crunchy-postgres-stores
+    - name: cloudnative-pg
     - name: external-secrets-stores
   path: ./kubernetes/main/apps/downloads/dashbrr/app
   prune: true
