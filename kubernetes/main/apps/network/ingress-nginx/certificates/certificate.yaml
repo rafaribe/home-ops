@@ -9,8 +9,8 @@ spec:
     rotationPolicy: Always
 
   dnsNames:
-    - "${EXTERNAL_DOMAIN}"
-    - "*.${EXTERNAL_DOMAIN}"
+    - "rafaribe.com"
+    - "*.rafaribe.com"
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
