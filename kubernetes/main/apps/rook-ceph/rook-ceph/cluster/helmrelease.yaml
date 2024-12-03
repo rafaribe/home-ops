@@ -56,8 +56,6 @@ spec:
         modules:
           - name: pg_autoscaler
             enabled: true
-          - name: rook
-            enabled: true
           - name: prometheus
             enabled: true
           - name: nfs
