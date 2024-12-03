@@ -65,11 +65,11 @@ spec:
           replicaCount: 2 # HA
           resources:
             requests:
-              cpu: 100m
-              memory: 256Mi
+              cpu: 200m
+              memory: 512Mi
             limits:
               cpu: 750m
-              memory: 256Mi
+              memory: 1Gi
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -94,11 +94,11 @@ spec:
           replicaCount: 2 # HA
           resources:
             requests:
-              cpu: 100m
-              memory: 256Mi
+              cpu: 200m
+              memory: 512Mi
             limits:
-              cpu: 500m
-              memory: 256Mi
+              cpu: 750m
+              memory: 1Gi
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -156,13 +156,13 @@ spec:
         scrapeInterval: 30s
         externalLabels:
           cluster: main
-        resources:
-          requests:
-            cpu: 50m
-            memory: 256Mi
-          limits:
-            cpu: 400m
-            memory: 512Mi
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: 750m
+              memory: 1Gi
         topologySpreadConstraints:
           - maxSkew: 1
             topologyKey: kubernetes.io/hostname
