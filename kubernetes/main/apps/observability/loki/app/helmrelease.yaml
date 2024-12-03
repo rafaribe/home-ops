@@ -1,9 +1,9 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: loki
-  namespace: monitoring
 spec:
   interval: 30m
   timeout: 15m
@@ -15,149 +15,72 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
-  maxHistory: 2
   install:
+    crds: Skip
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    crds: Skip
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-  valuesFrom:
-    - targetPath: loki.storage.bucketNames.chunks
-      kind: ConfigMap
-      name: &cephBucket loki-bucket
-      valuesKey: BUCKET_NAME
-    - targetPath: loki.storage.s3.endpoint
-      kind: ConfigMap
-      name: *cephBucket
-      valuesKey: BUCKET_HOST
-    - targetPath: loki.storage.s3.region
-      kind: ConfigMap
-      name: *cephBucket
-      valuesKey: BUCKET_REGION
-    - targetPath: loki.storage.s3.accessKeyId
-      kind: Secret
-      name: *cephBucket
-      valuesKey: AWS_ACCESS_KEY_ID
-    - targetPath: loki.storage.s3.secretAccessKey
-      kind: Secret
-      name: *cephBucket
-      valuesKey: AWS_SECRET_ACCESS_KEY
   values:
-    deploymentMode: SimpleScalable
+    deploymentMode: SingleBinary
     loki:
-      podAnnotations:
-        configmap.reloader.stakater.com/reload: *cephBucket
-        secret.reloader.stakater.com/reload: *cephBucket
-      deploymentMode: SingleBinary
+      auth_enabled: false
+      analytics:
+        reporting_enabled: false
+      server:
+        log_level: info
       commonConfig:
         replication_factor: 1
-      structuredConfig:
-        auth_enabled: false
-        server:
-          log_level: info
-          http_listen_port: 3100
-          grpc_listen_port: 9095
-          grpc_server_max_recv_msg_size: 8388608
-          grpc_server_max_send_msg_size: 8388608
-        limits_config:
-          ingestion_burst_size_mb: 128
-          ingestion_rate_mb: 64
-          max_query_parallelism: 100
-          per_stream_rate_limit: 64M
-          per_stream_rate_limit_burst: 128M
-          reject_old_samples: true
-          reject_old_samples_max_age: 168h
-          retention_period: 30d
-          shard_streams:
-            enabled: true
-          split_queries_by_interval: 1h
-        query_scheduler:
-          max_outstanding_requests_per_tenant: 4096
-        frontend:
-          max_outstanding_per_tenant: 4096
+      compactor:
+        working_directory: /var/loki/compactor/retention
+        delete_request_store: filesystem
+        retention_enabled: true
+      ingester:
+        chunk_encoding: snappy
+      storage:
+        type: filesystem
       schemaConfig:
         configs:
           - from: "2024-04-01" # quote
             store: tsdb
-            object_store: s3
+            object_store: filesystem
             schema: v13
             index:
               prefix: loki_index_
               period: 24h
-      ingester:
-        chunk_encoding: snappy
-      tracing:
+      limits_config:
+        retention_period: 14d
+    singleBinary:
+      replicas: 1
+      persistence:
         enabled: true
-      querier:
-        # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
-        max_concurrent: 2
-
+        storageClass: ceph-block
+        size: 50Gi
     gateway:
-      ingress:
-        enabled: true
-        ingressClassName: "internal"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: "internal.rafaribe.com"
-        hosts:
-          - host: &host loki.rafaribe.com
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
-      singleBinary:
-        replicas: 1
-        resources:
-          limits:
-            cpu: 3
-            memory: 4Gi
-          requests:
-            cpu: 2
-            memory: 2Gi
-        extraEnv:
-          # Keep a little bit lower than memory limits
-          - name: GOMEMLIMIT
-            value: 3750MiB
-
-      chunksCache:
-        # default is 500MB, with limited memory keep this smaller
-        writebackSizeLimit: 10MB
-
-      # Enable minio for storage
-      minio:
-        enabled: false
-
-      # Zero out replica counts of other deployment modes
-      backend:
-        replicas: 0
-      read:
-        replicas: 0
-      write:
-        replicas: 0
-
-      ingester:
-        replicas: 0
-      querier:
-        replicas: 0
-      queryFrontend:
-        replicas: 0
-      queryScheduler:
-        replicas: 0
-      distributor:
-        replicas: 0
-      compactor:
-        replicas: 0
-      indexGateway:
-        replicas: 0
-      bloomCompactor:
-        replicas: 0
-      bloomGateway:
-        replicas: 0
+      replicas: 0
+    backend:
+      replicas: 0
+    read:
+      replicas: 0
+    write:
+      replicas: 0
+    chunksCache:
+      enabled: false
+    resultsCache:
+      enabled: false
+    lokiCanary:
+      enabled: false
+    test:
+      enabled: false
+    sidecar:
+      image:
+        repository: ghcr.io/kiwigrid/k8s-sidecar
+      rules:
+        searchNamespace: ALL
