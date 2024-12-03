@@ -12,4 +12,4 @@ spec:
     - labels:
         job: cadvisor
       targets:
-        - wonderful-cinnabar-bee.home.arpa:8080
+        - wonderful-cinnabar-bee.rafaribe.com:8080
