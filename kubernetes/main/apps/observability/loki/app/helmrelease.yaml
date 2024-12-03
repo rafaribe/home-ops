@@ -55,22 +55,9 @@ spec:
       podAnnotations:
         configmap.reloader.stakater.com/reload: *cephBucket
         secret.reloader.stakater.com/reload: *cephBucket
-      ingester:
-        chunk_encoding: snappy
-      storage:
-        type: s3
-        s3:
-          s3ForcePathStyle: true
-          insecure: true
-      schemaConfig:
-        configs:
-          - from: "2024-04-01" # quote
-            store: tsdb
-            object_store: s3
-            schema: v13
-            index:
-              prefix: loki_index_
-              period: 24h
+      deploymentMode: SingleBinary
+      commonConfig:
+        replication_factor: 1
       structuredConfig:
         auth_enabled: false
         server:
@@ -95,21 +82,24 @@ spec:
           max_outstanding_requests_per_tenant: 4096
         frontend:
           max_outstanding_per_tenant: 4096
-        ruler:
-          enable_api: true
-          enable_alertmanager_v2: true
-          alertmanager_url: http://alertmanager-observability.svc.cluster.local:9093
-          storage:
-            type: local
-            local:
-              directory: /rules
-          rule_path: /rules/fake
-        analytics:
-          reporting_enabled: false
+      schemaConfig:
+        configs:
+          - from: "2024-04-01" # quote
+            store: tsdb
+            object_store: s3
+            schema: v13
+            index:
+              prefix: loki_index_
+              period: 24h
+      ingester:
+        chunk_encoding: snappy
+      tracing:
+        enabled: true
+      querier:
+        # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
+        max_concurrent: 2
+
     gateway:
-      replicas: 2
-      image:
-        registry: ghcr.io
       ingress:
         enabled: true
         ingressClassName: "internal"
@@ -123,35 +113,51 @@ spec:
         tls:
           - hosts:
               - *host
-    read:
-      replicas: 2
-    write:
-      replicas: 2
-      persistence:
-        size: 20Gi
-        storageClass: ceph-block
-    backend:
-      replicas: 2
-      persistence:
-        storageClass: ceph-block
-    sidecar:
-      image:
-        repository: ghcr.io/kiwigrid/k8s-sidecar
-      rules:
-        searchNamespace: ALL
-        folder: /rules/fake
-    lokiCanary:
-      enabled: false
-    test:
-      enabled: false
-    monitoring:
-      # Dashboards for monitoring Loki
-      dashboards:
-        # -- If enabled, create configmap with dashboards for monitoring Loki
-        enabled: true
-        # -- Labels for the dashboards ConfigMap
-        labels:
-          grafana_dashboard: "1"
-          grafana_folder: "Loki"
-      serviceMonitor:
-        enabled: true
+      singleBinary:
+        replicas: 1
+        resources:
+          limits:
+            cpu: 3
+            memory: 4Gi
+          requests:
+            cpu: 2
+            memory: 2Gi
+        extraEnv:
+          # Keep a little bit lower than memory limits
+          - name: GOMEMLIMIT
+            value: 3750MiB
+
+      chunksCache:
+        # default is 500MB, with limited memory keep this smaller
+        writebackSizeLimit: 10MB
+
+      # Enable minio for storage
+      minio:
+        enabled: false
+
+      # Zero out replica counts of other deployment modes
+      backend:
+        replicas: 0
+      read:
+        replicas: 0
+      write:
+        replicas: 0
+
+      ingester:
+        replicas: 0
+      querier:
+        replicas: 0
+      queryFrontend:
+        replicas: 0
+      queryScheduler:
+        replicas: 0
+      distributor:
+        replicas: 0
+      compactor:
+        replicas: 0
+      indexGateway:
+        replicas: 0
+      bloomCompactor:
+        replicas: 0
+      bloomGateway:
+        replicas: 0
