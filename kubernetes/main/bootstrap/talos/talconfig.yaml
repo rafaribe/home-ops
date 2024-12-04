@@ -167,6 +167,18 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/i915-ucode
+            - siderolabs/intel-ucode
+            - siderolabs/nonfree-kmod-nvidia-production
+            - siderolabs/nvidia-container-toolkit-production
+            - siderolabs/binfmt-misc
+            - siderolabs/util-linux-tools
+            - siderolabs/iscsi-tools
+
   - hostname: srv-05.${clusterDNSSuffix}
     ipAddress: 10.0.1.8
     nameservers:
@@ -223,6 +235,13 @@ controlPlane:
       extraKernelArgs:
         - net.ifnames=0
         - mitigations=off
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/i915-ucode
+          - siderolabs/binfmt-misc
+          - siderolabs/util-linux-tools
+          - siderolabs/iscsi-tools
+          - siderolabs/intel-ucode
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: m
@@ -329,12 +348,12 @@ controlPlane:
     - &sysctlPatch |-
       machine:
         sysctls:
-          fs.inotify.max_user_watches: 1048576
-          fs.inotify.max_user_instances: 8192
+          fs.inotify.max_user_instances: 8192    # Watchdog
+          fs.inotify.max_user_watches: 1048576   # Watchdog
           kernel.randomize_va_space: 0
           net.core.netdev_max_backlog: 30000
-          net.core.rmem_max: 67108864
-          net.core.wmem_max: 67108864
+          net.core.rmem_max: 67108864            # Cloudflared / QUIC
+          net.core.wmem_max: 67108864            # Cloudflared / QUIC
           net.ipv4.tcp_rmem: 4096 87380 33554432
           net.ipv4.tcp_wmem: 4096 65536 33554432
           net.ipv4.tcp_tw_reuse: 1
@@ -378,7 +397,8 @@ controlPlane:
             allowedRoles:
               - os:admin
             allowedKubernetesNamespaces:
-              - kube-tools
+              - kube-system
+              - system
               - system-upgrade
     # Mount openebs-hostpath in kubelet
     - &openebs-hostpath |-
@@ -403,9 +423,10 @@ worker:
       systemExtensions:
         officialExtensions:
           - siderolabs/i915-ucode
-          - siderolabs/spin
+          - siderolabs/intel-ucode
           - siderolabs/binfmt-misc
-          - siderolabs/btrfs
+          - siderolabs/util-linux-tools
+          - siderolabs/iscsi-tools
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: w
