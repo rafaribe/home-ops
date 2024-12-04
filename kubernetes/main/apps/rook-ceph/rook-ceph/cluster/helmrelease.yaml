@@ -74,16 +74,16 @@ spec:
             enabled: true
           - name: diskprediction_local
             enabled: true
-      placement:
-        mon:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: kubernetes.io/arch
-                      operator: In
-                      values:
-                        - amd64 # Don't place mons on turing pi nodes because eMMC doesn't have a big disk to avoid MON_DISK_LOW
+      # placement:
+      #   mon:
+      #     nodeAffinity:
+      #       requiredDuringSchedulingIgnoredDuringExecution:
+      #         nodeSelectorTerms:
+      #           - matchExpressions:
+      #               - key: kubernetes.io/arch
+      #                 operator: In
+      #                 values:
+      #                   - amd64 # Don't place mons on turing pi nodes because eMMC doesn't have a big disk to avoid MON_DISK_LOW
     ingress:
       dashboard:
         ingressClassName: "internal"
