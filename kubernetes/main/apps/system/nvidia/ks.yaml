@@ -7,9 +7,6 @@ metadata:
 spec:
   path: ./kubernetes/main/apps/system/nvidia/device-plugin
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
   interval: 30m
   timeout: 3m
   targetNamespace: system
