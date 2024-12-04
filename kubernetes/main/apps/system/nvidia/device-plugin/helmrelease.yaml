@@ -13,7 +13,7 @@ spec:
       version: 0.16.2
       sourceRef:
         kind: HelmRepository
-        name: nvdp
+        name: nvidia
         namespace: flux-system
       interval: 15m
   # https://github.com/NVIDIA/k8s-device-plugin/blob/main/deployments/helm/nvidia-device-plugin/values.yaml
