@@ -38,3 +38,4 @@ wg.txt
 kubernetes/main/apps/downloads/qbittorrent/app/secret.json
 kubernetes/main/apps/home/immich/app/typesense
 tools-tpi1.yaml
+kubernetes/main/bootstrap/talos/clusterconfig/etcd-snapshot
