@@ -38,6 +38,16 @@ spec:
             memory: 96Mi
       hostpathClass:
         name: openebs-hostpath
+      affinity:
+        # Turing Pi eMMC isn't nearly enough for a sabnzbd hostpath
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
     openebs-crds:
       csi:
         volumeSnapshots:
