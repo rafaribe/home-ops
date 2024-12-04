@@ -7,6 +7,9 @@ metadata:
 spec:
   path: ./kubernetes/main/apps/system/nvidia/device-plugin
   prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops
   interval: 30m
   timeout: 3m
   targetNamespace: system
