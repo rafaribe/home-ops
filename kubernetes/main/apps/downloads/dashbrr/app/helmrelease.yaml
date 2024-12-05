@@ -33,6 +33,14 @@ spec:
           postgres: "true"
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: dashbrr-secret
         containers:
           app:
             image:
@@ -45,9 +53,7 @@ spec:
               DASHBRR__LISTEN_ADDR: 0.0.0.0:8080
               GIN_MODE: debug
               TZ: ${TIMEZONE}
-            envFrom:
-              - secretRef:
-                  name: dashbrr-secret
+            envFrom: *envFrom
             probes:
               liveness: &probes
                 enabled: true
