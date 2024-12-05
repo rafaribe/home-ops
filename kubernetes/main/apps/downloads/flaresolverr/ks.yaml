@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: "./kubernetes/main/apps/downloads/flaresolverr/app/"
+  path: ./kubernetes/main/apps/downloads/flaresolverr/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -22,4 +22,4 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: flaresolverr
-      namespace: media
+      namespace: downloads

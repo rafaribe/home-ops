@@ -10,7 +10,7 @@ resources:
   - ./autobrr/ks.yaml
   - ./bazarr/ks.yaml
   - ./dashbrr/ks.yaml
-  - ./flaresolverr/ks.yaml
+  # - ./flaresolverr/ks.yaml
   - ./kapowarr/ks.yaml
   - ./metube/ks.yaml
   - ./mylar/ks.yaml
