@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-tpi-3
+  namespace: kube-system
+spec:
+  priorityClassName: system-node-critical
+  nodeSelector:
+    kubernetes.io/hostname: tpi-3 # Change to your node name
+  containers:
+    - name: ubuntu-container
+      image: ubuntu
+      command: ["tail", "-f", "/dev/null"]
+      volumeMounts:
+        - mountPath: /mnt/root
+          name: local-storage
+  volumes:
+    - name: local-storage
+      hostPath:
+        path: /
+        type: Directory
+  tolerations:
+    - key: "node.kubernetes.io/disk-pressure"
+      operator: "Exists"
+      effect: "NoSchedule"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-tpi-4
+  namespace: kube-system
+spec:
+  priorityClassName: system-node-critical
+  nodeSelector:
+    kubernetes.io/hostname: tpi-4 # Change to your node name
+  containers:
+    - name: ubuntu-container
+      image: ubuntu
+      command: ["tail", "-f", "/dev/null"]
+      volumeMounts:
+        - mountPath: /mnt/root
+          name: local-storage
+  volumes:
+    - name: local-storage
+      hostPath:
+        path: /
+        type: Directory
+  tolerations:
+    - key: "node.kubernetes.io/disk-pressure"
+      operator: "Exists"
+      effect: "NoSchedule"
