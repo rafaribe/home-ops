@@ -111,13 +111,6 @@ spec:
       extraVolumeMounts:
         - name: geolite-files
           mountPath: /etc/ingress-controller/geoip
-          subPath: GeoLite2-ASN.mmdb
-        - name: geolite-files
-          mountPath: /etc/ingress-controller/geoip
-          subPath: GeoLite2-City.mmdb
-        - name: geolite-files
-          mountPath: /etc/ingress-controller/geoip
-          subPath: GeoLite2-Country.mmdb
     defaultBackend:
       enabled: true
       image:
