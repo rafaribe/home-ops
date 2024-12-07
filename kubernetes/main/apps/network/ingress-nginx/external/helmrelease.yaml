@@ -86,7 +86,6 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "network/wildcard-default-certificate-tls"
-        maxmind-edition-ids: GeoLite2-Country
       terminationGracePeriodSeconds: 120
       resources:
         requests:
