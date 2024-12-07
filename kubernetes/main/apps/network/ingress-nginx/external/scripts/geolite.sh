@@ -2,7 +2,7 @@
 set -e
 
 # Install necessary dependencies
-#apk add --no-cache curl jq
+apk add --no-cache curl jq
 
 echo 'Fetching latest release from GitHub'
 
