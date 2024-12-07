@@ -96,7 +96,7 @@ spec:
       extraInitContainers:
         - name: download-geolite-files
           image: alpine:3.21
-          command: ["sh", "/scripts/download_geolite_files.sh"]
+          command: ["sh", "/scripts/geolite.sh"]
           volumeMounts:
             - name: geolite-files
               mountPath: /home
