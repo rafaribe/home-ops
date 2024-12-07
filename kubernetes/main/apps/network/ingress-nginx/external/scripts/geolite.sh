@@ -23,12 +23,21 @@ echo "Using release: $RELEASE"
 # Base URL for the release
 BASE_URL="https://github.com/P3TERX/GeoLite.mmdb/releases/download/${RELEASE}"
 BASE_DIR=/home
+URL_ASN="${BASE_URL}/GeoLite2-ASN.mmdb"
+URL_CITY="${BASE_URL}/GeoLite2-City.mmdb"
+URL_COUNTRY="${BASE_URL}/GeoLite2-Country.mmdb"
+
+# Echo the URLs for debugging
+echo "GeoLite2 ASN URL: $URL_ASN"
+echo "GeoLite2 City URL: $URL_CITY"
+echo "GeoLite2 Country URL: $URL_COUNTRY"
+
 # Download the GeoLite2 files
 echo "Downloading GeoLite2-ASN.mmdb"
-curl -L ${BASE_URL}/GeoLite2-ASN.mmdb -o ${BASE_DIR}/GeoLite2-ASN.mmdb
+curl -L ${URL_ASN} -o $BASE_DIR/GeoLite2-ASN.mmdb
 
 echo "Downloading GeoLite2-City.mmdb"
-curl -L ${BASE_URL}/GeoLite2-City.mmdb -o ${BASE_DIR}/GeoLite2-City.mmdb
+curl -L ${URL_CITY} -o $BASE_DIR/GeoLite2-City.mmdb
 
 echo "Downloading GeoLite2-Country.mmdb"
-curl -L ${BASE_URL}/GeoLite2-Country.mmdb -o ${BASE_DIR}/GeoLite2-Country.mmdb
+curl -L ${URL_COUNTRY} -o $BASE_DIR/GeoLite2-Country.mmdb
