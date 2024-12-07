@@ -114,7 +114,7 @@ spec:
           volumeMounts:
             - name: geolite-files
               mountPath: /home
-      volumes:
+      extraVolumes:
         - name: geolite-files
           emptyDir: {}
       extraVolumeMounts:
