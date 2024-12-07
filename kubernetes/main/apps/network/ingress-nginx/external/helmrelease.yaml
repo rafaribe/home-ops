@@ -46,7 +46,7 @@ spec:
       ingressClassResource:
         name: external
         default: false
-        controllerValue: k8s.io/external
+        controllerValue: k8s.io/nginx-external
       admissionWebhooks:
         objectSelector:
           matchExpressions:
