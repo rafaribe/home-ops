@@ -4,6 +4,7 @@ kind: HelmRelease
 metadata:
   name: victoria-metrics-operator
 spec:
+  interval: 15m
   chart:
     spec:
       interval: 1h
