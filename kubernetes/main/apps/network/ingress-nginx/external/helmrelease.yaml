@@ -94,7 +94,7 @@ spec:
           memory: 800Mi
       extraInitContainers:
         - name: download-geolite-files
-          image: busybox:1.37
+          image: alpine:3.21
           command: [
               "sh",
               "-c",
