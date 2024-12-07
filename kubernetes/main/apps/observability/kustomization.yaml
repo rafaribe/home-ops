@@ -21,5 +21,6 @@ resources:
   - ./opentelemetry/ks.yaml
   #- ./thanos/ks.yaml
   - ./unpoller/ks.yaml
-  - ./victoria-logs/ks.yaml
-  - ./victoria-metrics/ks.yaml
+  ##- ./victoria-logs/ks.yaml
+  #- ./victoria-metrics/ks.yaml
+  - ./victoria/ks.yaml
