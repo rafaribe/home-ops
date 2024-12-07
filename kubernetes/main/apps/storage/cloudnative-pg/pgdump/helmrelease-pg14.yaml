@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app cloudnative-pg-postgres14-pgdump-immich
+  name: &app cloudnative-pg-postgres14-pgdump
 spec:
   interval: 30m
   chart:
@@ -49,7 +49,7 @@ spec:
               EXCLUDE_DBS: postgres template0 template1
             envFrom: &envFrom
               - secretRef:
-                  name: cloudnative-pg-postgres17-pgdump-secret
+                  name: cloudnative-pg-postgres14-pgdump-secret
             command: /scripts/list_dbs.sh
         containers:
           app:
