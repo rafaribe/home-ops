@@ -53,10 +53,8 @@ spec:
     vmalert.proxyURL: http://vmalert-victoria.observability.svc.cluster.local.:8080
   volumes:
     - name: &vol vmsingle-data
-      emptyDir:
-        #medium: Memory
-        #sizeLimit: 2Gi
-        sizeLimit: 5Gi
+      persistentVolumeClaim:
+        claimName: vmsingle-data
   volumeMounts:
     - name: *vol
       mountPath: *path

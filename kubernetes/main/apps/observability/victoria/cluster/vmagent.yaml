@@ -27,7 +27,7 @@ spec:
   statefulStorage:
     volumeClaimTemplate:
       spec:
-        storageClassName: local
+        storageClassName: ceph-block
         resources:
           requests:
             storage: 35Gi

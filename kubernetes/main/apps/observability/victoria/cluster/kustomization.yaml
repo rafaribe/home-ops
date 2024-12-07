@@ -7,3 +7,4 @@ resources:
   - ./vmalert.yaml
   - ./vmsingle.yaml
   - ./ingress.yaml
+  - ../../../../../shared/templates/volsync
