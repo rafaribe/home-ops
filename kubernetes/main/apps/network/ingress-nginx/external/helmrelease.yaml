@@ -93,24 +93,29 @@ spec:
         limits:
           memory: 800Mi
       extraInitContainers:
-        - name: download-geolite2-country
+        - name: download-geolite-files
           image: busybox:1.37
-          command:
-            [
+          command: [
               "sh",
               "-c",
-              "wget https://git.io/GeoLite2-Country.mmdb --no-check-certificate && mv GeoLite2-Country.mmdb /home/GeoLite2-Country.mmdb",
+              "set -e; \
+              apk add --no-cache curl jq; \
+              RELEASE=$(curl -s https://api.github.com/repos/P3TERX/GeoLite.mmdb/releases/latest | jq -r '.name'); \
+              BASE_URL=https://github.com/P3TERX/GeoLite.mmdb/releases/download/${RELEASE}; \
+              curl -L ${BASE_URL}/GeoLite2-ASN.mmdb -o /home/GeoLite2-ASN.mmdb; \
+              curl -L ${BASE_URL}/GeoLite2-City.mmdb -o /home/GeoLite2-City.mmdb; \
+              curl -L ${BASE_URL}/GeoLite2-Country.mmdb -o /home/GeoLite2-Country.mmdb;",
             ]
           volumeMounts:
-            - name: geolite2-country
+            - name: geolite-files
               mountPath: /home
       extraVolumes:
-        - name: geolite2-country
+        - name: geolite-files
           emptyDir: {}
       extraVolumeMounts:
-        - name: geolite2-country
-          mountPath: /etc/ingress-controller/geoip/GeoLite2-Country.mmdb
-          subPath: GeoLite2-Country.mmdb
+        - name: geolite-files
+          mountPath: /etc/ingress-controller/geoip
+          readOnly: true
 
     defaultBackend:
       enabled: true
