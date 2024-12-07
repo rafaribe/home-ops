@@ -109,8 +109,15 @@ spec:
           configMap:
             name: download-geolite-script
       extraVolumeMounts:
-        - name: geolite-files
+        - name: geolite-asn
           mountPath: /etc/ingress-controller/geoip
+          subPath: GeoLite2-ASN.mmdb
+        - name: geolite-city
+          mountPath: /etc/ingress-controller/geoip
+          subPath: GeoLite2-City.mmdb
+        - name: geolite-country
+          mountPath: /etc/ingress-controller/geoip
+          subPath: GeoLite2-Country.mmdb
     defaultBackend:
       enabled: true
       image:
