@@ -96,27 +96,18 @@ spec:
       extraInitContainers:
         - name: download-geolite-files
           image: alpine:3.21
-          command: [
-              "sh",
-              "-c",
-              "set -e; \
-              apk add --no-cache curl jq; \
-              echo 'Fetching latest release from GitHub'; \
-              RELEASE=$(curl -s https://api.github.com/repos/P3TERX/GeoLite.mmdb/releases/latest | jq -r '.tag_name'); \
-              if [ -z \"$RELEASE\" ]; then echo 'Failed to fetch release name!' && exit 1; fi; \
-              echo 'Latest release fetched: $RELEASE'; \
-              BASE_URL=https://github.com/P3TERX/GeoLite.mmdb/releases/download/${RELEASE}; \
-              echo 'Using Base URL:' $BASE_URL; \
-              curl -L ${BASE_URL}/GeoLite2-ASN.mmdb -o /home/GeoLite2-ASN.mmdb; \
-              curl -L ${BASE_URL}/GeoLite2-City.mmdb -o /home/GeoLite2-City.mmdb; \
-              curl -L ${BASE_URL}/GeoLite2-Country.mmdb -o /home/GeoLite2-Country.mmdb;",
-            ]
+          command: ["sh", "/scripts/download_geolite_files.sh"]
           volumeMounts:
             - name: geolite-files
               mountPath: /home
+            - name: geolite-script
+              mountPath: /scripts # Mount path for the bash script
       extraVolumes:
         - name: geolite-files
           emptyDir: {}
+        - name: geolite-script
+          configMap:
+            name: download-geolite-script
       extraVolumeMounts:
         - name: geolite-files
           mountPath: /etc/ingress-controller/geoip
