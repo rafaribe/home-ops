@@ -10,7 +10,7 @@ spec:
       version: 0.8.10
       sourceRef:
         kind: HelmRepository
-        name: victoria-metrics
+        name: victoria
         namespace: flux-system
   maxHistory: 3
   install:

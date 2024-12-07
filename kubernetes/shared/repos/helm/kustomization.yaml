@@ -61,5 +61,5 @@ resources:
   - ./stevehipwell.yaml
   - ./vector.yaml
   - ./xenitab.yaml
-  - ./victoria-metrics.yaml
+  - ./victoria.yaml
   - ./tailscale.yaml
