@@ -1,10 +1,9 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: nginx-internal
-
 spec:
   interval: 30m
   chart:
@@ -21,22 +20,20 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     fullnameOverride: internal
     controller:
-      replicaCount: 3
+      replicaCount: 2
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: internal.rafaribe.com
-          io.cilium/lb-ipam-ips: ${LB_NGINX_INTERNAL}
-        externalTrafficPolicy: Cluster
+          lbipam.cilium.io/ips: ${LB_NGINX_INTERNAL}
       ingressClassResource:
         name: internal
         default: true
-        controllerValue: k8s.io/nginx-internal
+        controllerValue: k8s.io/internal
       admissionWebhooks:
         objectSelector:
           matchExpressions:
@@ -45,13 +42,14 @@ spec:
               values: ["internal"]
       allowSnippetAnnotations: true
       config:
-        block-user-agents: GPTBot,~*GPTBot*,ChatGPT-User,~*ChatGPT-User*,Google-Extended,~*Google-Extended*,CCBot,~*CCBot*,Omgilibot,~*Omgilibot*,FacebookBot,~*FacebookBot*
+        block-user-agents: "GPTBot,~*GPTBot*,ChatGPT-User,~*ChatGPT-User*,Google-Extended,~*Google-Extended*,CCBot,~*CCBot*,Omgilibot,~*Omgilibot*,FacebookBot,~*FacebookBot*" # taken from https://github.com/superseriousbusiness/gotosocial/blob/main/internal/web/robots.go
         client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120
         enable-brotli: "true"
         enable-ocsp: "true"
         enable-real-ip: "true"
+        force-ssl-redirect: "true"
         hide-headers: Server,X-Powered-By
         hsts-max-age: 31449600
         keep-alive-requests: 10000
@@ -75,6 +73,7 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "network/wildcard-default-certificate-tls"
+      terminationGracePeriodSeconds: 120
       resources:
         requests:
           cpu: 100m
