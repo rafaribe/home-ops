@@ -6,6 +6,7 @@ metadata:
 spec:
   chart:
     spec:
+      interval: 1h
       chart: victoria-metrics-operator
       version: 0.31.1
       sourceRef:

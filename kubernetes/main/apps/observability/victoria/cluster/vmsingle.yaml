@@ -17,7 +17,7 @@ spec:
     search.minStalenessInterval: 5m
     vmalert.proxyURL: http://vmalert-victoria.observability.svc.cluster.local.:8080
   storage:
-    storageClassName: block
+    storageClassName: ceph-block
     accessModes: [ReadWriteOnce]
     volumeMode: Filesystem
     resources:
