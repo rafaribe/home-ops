@@ -100,8 +100,14 @@ spec:
               "-c",
               "set -e; \
               apk add --no-cache curl jq; \
-              RELEASE=$(curl -s https://api.github.com/repos/P3TERX/GeoLite.mmdb/releases/latest | jq -r '.name'); \
+              echo 'Fetching release info from GitHub API'; \
+              RESPONSE=$(curl -s https://api.github.com/repos/P3TERX/GeoLite.mmdb/releases/latest); \
+              echo 'Response:' \"$RESPONSE\"; \
+              RELEASE=$(echo $RESPONSE | jq -r '.name'); \
+              if [ -z \"$RELEASE\" ]; then echo 'Failed to fetch release name!' && exit 1; fi; \
+              echo 'Release fetched:' $RELEASE; \
               BASE_URL=https://github.com/P3TERX/GeoLite.mmdb/releases/download/${RELEASE}; \
+              echo 'Base URL:' $BASE_URL; \
               curl -L ${BASE_URL}/GeoLite2-ASN.mmdb -o /home/GeoLite2-ASN.mmdb; \
               curl -L ${BASE_URL}/GeoLite2-City.mmdb -o /home/GeoLite2-City.mmdb; \
               curl -L ${BASE_URL}/GeoLite2-Country.mmdb -o /home/GeoLite2-Country.mmdb;",
