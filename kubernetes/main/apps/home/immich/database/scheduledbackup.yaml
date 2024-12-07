@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: immich-daily-backups
+  name: immich-daily-backup
 spec:
   schedule: "@daily"
   immediate: true
