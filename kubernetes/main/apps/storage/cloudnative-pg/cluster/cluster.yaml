@@ -34,13 +34,13 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://cloudnative-pg/
-      endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
+      destinationPath: s3://cpng-home-ops-storage/
+      endpointURL: http://minio.storage.svc.cluster.local:9000
       serverName: &currentCluster home-ops-storage-v3
       s3Credentials:
         accessKeyId:
-          name: cloudnative-pg-bucket
-          key: AWS_ACCESS_KEY_ID
+          name: cloudnative-pg-minio
+          key: MINIO_ACCESS_KEY
         secretAccessKey:
-          name: cloudnative-pg-bucket
-          key: AWS_SECRET_ACCESS_KEY
+          name: cloudnative-pg-minio
+          key: MINIO_SECRET_KEY

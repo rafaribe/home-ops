@@ -43,7 +43,7 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://cloudnative-pg/
+      destinationPath: s3://cpng-immich/
       endpointURL: http://minio.storage.svc.cluster.local:9000
       serverName: &currentCluster immich-db-v2
       s3Credentials:
