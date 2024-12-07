@@ -118,7 +118,7 @@ spec:
         - name: geolite-files
           emptyDir: {}
       extraVolumeMounts:
-        - name: geolite-asn
+        - name: geolite-files
           mountPath: /etc/ingress-controller/geoip
           subPath: GeoLite2-ASN.mmdb
         - name: geolite-files
