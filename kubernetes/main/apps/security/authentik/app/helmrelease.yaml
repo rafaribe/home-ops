@@ -1,0 +1,71 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: authentik
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: authentik
+      version: 2024.10.4
+      sourceRef:
+        kind: HelmRepository
+        name: authentik
+        namespace: flux-system
+      interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    global:
+      podAnnotations:
+        secret.reloader.stakater.com/reload: &secret authentik-secret
+      deploymentStrategy:
+        type: RollingUpdate
+      envFrom:
+        - secretRef:
+            name: *secret
+    authentik:
+      redis:
+        host: dragonfly.storage.svc.cluster.local
+        db: 1
+    server:
+      replicas: 3
+      initContainers:
+        - name: init-db
+          image: ghcr.io/onedr0p/postgres-init:16.6@sha256:35353a77777ee8f634d0f3945f495b4a40065134b8619e0d18bd49b0ee9c855b
+          envFrom:
+            - secretRef:
+                name: *secret
+      metrics:
+        enabled: false
+        serviceMonitor:
+          enabled: false
+      ingress:
+        enabled: true
+        ingressClassName: external
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: authentik.png
+          gethomepage.dev/name: Authentik
+          gethomepage.dev/group: Infrastructure
+          gethomepage.dev/app: authentik
+          gethomepage.dev/description: OIDC User Management
+          gethomepage.dev/widget.type: authentik
+          gethomepage.dev/widget.url: http://authentik-server.security
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"
+          hajimari.io/icon: simple-icons:authentik
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+        hosts:
+          - &host sso.rafaribe.com
+        tls: [hosts: [*host]]
+    prometheus:
+      rules:
+        enabled: false

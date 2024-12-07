@@ -7,6 +7,7 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./authelia/ks.yaml
+  - ./authentik/ks.yaml
   - ./glauth/ks.yaml
   # - ./trivy-operator/ks.yaml
   #- ./tetragon/ks.yaml
