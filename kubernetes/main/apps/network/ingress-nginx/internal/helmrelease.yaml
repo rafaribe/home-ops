@@ -33,7 +33,7 @@ spec:
       ingressClassResource:
         name: internal
         default: true
-        controllerValue: k8s.io/nginx-internal
+        controllerValue: k8s.io/internal
       admissionWebhooks:
         objectSelector:
           matchExpressions:
