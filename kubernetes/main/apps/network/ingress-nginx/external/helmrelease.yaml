@@ -93,6 +93,26 @@ spec:
           cpu: 200m
         limits:
           memory: 800Mi
+      extraInitContainers:
+        - name: download-geolite2-country
+          image: busybox:1.37
+          command:
+            [
+              "sh",
+              "-c",
+              "wget https://git.io/GeoLite2-Country.mmdb --no-check-certificate && mv GeoLite2-Country.mmdb /home/GeoLite2-Country.mmdb",
+            ]
+          volumeMounts:
+            - name: geolite2-country
+              mountPath: /home
+      extraVolumes:
+        - name: geolite2-country
+          emptyDir: {}
+      extraVolumeMounts:
+        - name: geolite2-country
+          mountPath: /etc/ingress-controller/geoip/GeoLite2-Country.mmdb
+          subPath: GeoLite2-Country.mmdb
+
     defaultBackend:
       enabled: true
       image:
@@ -103,22 +123,3 @@ spec:
           value: ghost
         - name: SHOW_DETAILS # Optional: enables the output of additional information on error pages
           value: "true"
-    extraInitContainers:
-      - name: download-geolite2-country
-        image: busybox:1.37
-        command:
-          [
-            "sh",
-            "-c",
-            "wget https://git.io/GeoLite2-Country.mmdb --no-check-certificate && mv GeoLite2-Country.mmdb /home/GeoLite2-Country.mmdb",
-          ]
-        volumeMounts:
-          - name: geolite2-country
-            mountPath: /home
-    extraVolumes:
-      - name: geolite2-country
-        emptyDir: {}
-    extraVolumeMounts:
-      - name: geolite2-country
-        mountPath: /etc/ingress-controller/geoip/GeoLite2-Country.mmdb
-        subPath: GeoLite2-Country.mmdb
