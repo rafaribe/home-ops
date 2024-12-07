@@ -27,7 +27,7 @@ spec:
   values:
     fullnameOverride: internal
     controller:
-      replicaCount: 1
+      replicaCount: 3
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: internal.rafaribe.com
