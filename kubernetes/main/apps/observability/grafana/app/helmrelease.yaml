@@ -175,7 +175,7 @@ spec:
             type: prometheus
             uid: prometheus
             access: proxy
-            url: http://vmselect-victoria-metrics.observability.svc.cluster.local:8481/select/0/prometheus
+            url: http://vmsingle-victoria.observability.svc.cluster.local:8429/prometheus/
             jsonData:
               prometheusType: Thanos
               timeInterval: 1m
@@ -197,7 +197,7 @@ spec:
           - name: VictoriaLogs
             type: victorialogs-datasource
             access: proxy
-            url: http://victoria-logs-server:9428
+            url: http://victoria-logs-server.observability.svc:9428
 
     isDefault: true
     dashboards:
@@ -354,7 +354,8 @@ spec:
       - grafana-github-datasource
       - isovalent-hubble-datasource
       - redis-datasource
-      - https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.8.0/victorialogs-datasource-v0.8.0.zip;victorialogs-datasource
+      - https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.10.0/victorialogs-datasource-v0.10.0.zip;victorialogs-datasource
+      - https://github.com/VictoriaMetrics/victoriametrics-datasource/releases/download/v0.10.3/victoriametrics-datasource-v0.10.3.zip;victoriametrics-datasource
     serviceMonitor:
       enabled: true
     ingress:
