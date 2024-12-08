@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app victoria-operator
+  name: &app victoria-metrics
   namespace: flux-system
 spec:
   targetNamespace: observability
@@ -13,28 +13,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-  path: ./kubernetes/main/apps/observability/victoria/operator
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-ops
-  wait: false
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app victoria-cluster
-  namespace: flux-system
-spec:
-  targetNamespace: observability
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
-  path: ./kubernetes/main/apps/observability/victoria/cluster
+  path: ./kubernetes/main/apps/observability/victoria/metrics
   prune: true
   sourceRef:
     kind: GitRepository
