@@ -175,7 +175,7 @@ spec:
             type: prometheus
             uid: prometheus
             access: proxy
-            url: http://vmsingle-victoria.observability.svc.cluster.local:8429/prometheus/
+            url: http://vmselect-victoria-metrics.observability.svc.cluster.local:8481/select/0/prometheus
             jsonData:
               prometheusType: Thanos
               timeInterval: 1m
