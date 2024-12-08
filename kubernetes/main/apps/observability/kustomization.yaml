@@ -19,6 +19,7 @@ resources:
   - ./loki/ks.yaml
   - ./prometheus-operator/ks.yaml
   - ./opentelemetry/ks.yaml
+  - ./redisinsight/ks.yaml
   #- ./thanos/ks.yaml
   - ./unpoller/ks.yaml
   # - ./victoria-logs/ks.yaml
