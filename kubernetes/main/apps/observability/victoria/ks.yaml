@@ -40,10 +40,6 @@ spec:
     kind: GitRepository
     name: home-ops
   wait: false
-  postBuild:
-    substitute:
-      APP: vmsingle-app
-      VOLSYNC_CLAIM: vmsingle-data
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
