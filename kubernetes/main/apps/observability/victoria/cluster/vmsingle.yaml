@@ -6,9 +6,6 @@ metadata:
   name: victoria
   namespace: observability
 spec:
-  podMetadata:
-    labels:
-      ingress.home.arpa/nginx-internal: allow
   useStrictSecurity: true
   retentionPeriod: "6" # months if no unit specified
   extraArgs:
@@ -23,10 +20,6 @@ spec:
     resources:
       requests:
         storage: 100Gi
-    dataSourceRef:
-      apiGroup: volsync.backube
-      kind: ReplicationDestination
-      name: victoria-vmsingle-bootstrap
   resources:
     requests:
       cpu: 200m
