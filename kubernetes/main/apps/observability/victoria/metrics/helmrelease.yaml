@@ -156,13 +156,13 @@ spec:
         scrapeInterval: 30s
         externalLabels:
           cluster: main
-          resources:
-            requests:
-              cpu: 200m
-              memory: 512Mi
-            limits:
-              cpu: 750m
-              memory: 1Gi
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            cpu: 750m
+            memory: 1Gi
         topologySpreadConstraints:
           - maxSkew: 1
             topologyKey: kubernetes.io/hostname
