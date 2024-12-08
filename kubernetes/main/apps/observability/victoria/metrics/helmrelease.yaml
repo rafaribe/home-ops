@@ -39,10 +39,10 @@ spec:
           # required for HA vmagents
           resources:
             requests:
-              cpu: 200m
-              memory: 720Mi
-            limits:
               cpu: 1
+              memory: 900Mi
+            limits:
+              cpu: 2
               memory: 2Gi
           topologySpreadConstraints:
             - maxSkew: 1
@@ -65,11 +65,11 @@ spec:
           replicaCount: 2 # HA
           resources:
             requests:
-              cpu: 200m
-              memory: 512Mi
-            limits:
-              cpu: 750m
+              cpu: 400m
               memory: 1Gi
+            limits:
+              cpu: 1
+              memory: 2Gi
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -94,11 +94,11 @@ spec:
           replicaCount: 2 # HA
           resources:
             requests:
-              cpu: 200m
-              memory: 512Mi
-            limits:
-              cpu: 750m
+              cpu: 400m
               memory: 1Gi
+            limits:
+              cpu: 1500m
+              memory: 2Gi
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -123,11 +123,11 @@ spec:
         replicaCount: 2
         resources:
           requests:
-            cpu: 50m
-            memory: 128Mi
+            cpu: 200m
+            memory: 750Mi
           limits:
-            cpu: 150m
-            memory: 256Mi
+            cpu: 750m
+            memory: 750Mi
         topologySpreadConstraints:
           - maxSkew: 1
             topologyKey: kubernetes.io/hostname
@@ -158,7 +158,7 @@ spec:
           cluster: main
         resources:
           requests:
-            cpu: 400m
+            cpu: 600m
             memory: 800Mi
           limits:
             cpu: 2
