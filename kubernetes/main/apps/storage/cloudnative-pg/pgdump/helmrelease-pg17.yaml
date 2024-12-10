@@ -55,7 +55,7 @@ spec:
           app:
             image:
               repository: prodrigestivill/postgres-backup-local
-              tag: 17-alpine@sha256:e1a3266140d8444e1826ed660dd270598ef8d3b5ccc93deb882ade611f6241a6
+              tag: 17-alpine@sha256:fc89045b39352c01738646c4b35827760b342fd8b9a29cb26e1945a3bdf45f14
             command: [/backup.sh]
             env:
               POSTGRES_DB_FILE: /config/db_list
