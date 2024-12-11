@@ -62,7 +62,7 @@ spec:
                     storage: 10Gi
         # Query backend
         vmselect:
-          replicaCount: 2 # HA
+          replicaCount: 1 # HA
           resources:
             requests:
               cpu: 200m
