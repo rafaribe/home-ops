@@ -22,3 +22,5 @@ spec:
   eventSources:
     - kind: Kustomization
       name: "*"
+  exclusionList:
+    - ".*@sha256.*" # Exclude only flux kustomization which has a OCI registry and uses sha256 instead of sha1 like gitrepo kustomizations
