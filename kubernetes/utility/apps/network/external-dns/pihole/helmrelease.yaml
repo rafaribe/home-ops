@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app external-dns-pihole
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: external-dns
+      version: 1.15.0
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    fullnameOverride: *app
+    provider: pihole
+    env:
+      - name: &name EXTERNAL_DNS_PIHOLE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: &secret external-dns-pihole
+            key: *name
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *secret
+    extraArgs:
+      - --pihole-server=http://10.0.0.254
+      - --ignore-ingress-tls-spec
+      - --ingress-class=internal
+    policy: sync
+    sources: ["ingress", "service"]
+    domainFilters: ["rafaribe.com"]
+    serviceMonitor:
+      enabled: true
