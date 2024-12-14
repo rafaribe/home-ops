@@ -38,6 +38,7 @@ loadBalancer:
 localRedirectPolicy: true
 operator:
   rollOutPods: true
+  replicas: 1
 rollOutCiliumPods: true
 routingMode: native
 securityContext:

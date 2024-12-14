@@ -9,7 +9,7 @@ clusterSvcNets:
   - 10.45.0.0/16
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
-talosVersion: v1.8.3
+talosVersion: v1.8.4
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
 kubernetesVersion: v1.31.3
 
@@ -42,7 +42,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-
+    kernelModules:
+      - name: zfs
 controlPlane:
   schematic:
     customization:
@@ -51,12 +52,18 @@ controlPlane:
         - mitigations=off
       systemExtensions:
         officialExtensions:
-          - siderolabs/binfmt-misc
-          - siderolabs/btrfs
-          - siderolabs/fuse3
-          - siderolabs/iscsi-tools
-          - siderolabs/qemu-guest-agent
-          - siderolabs/zfs
+            - siderolabs/binfmt-misc
+            - siderolabs/btrfs
+            - siderolabs/fuse3
+            - siderolabs/i915-ucode
+            - siderolabs/intel-ucode
+            - siderolabs/mei
+            - siderolabs/nonfree-kmod-nvidia-production
+            - siderolabs/nvidia-open-gpu-kernel-modules-production
+            - siderolabs/realtek-firmware
+            - siderolabs/stargz-snapshotter
+            - siderolabs/util-linux-tools
+            - siderolabs/zfs
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: m
