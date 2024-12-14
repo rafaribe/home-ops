@@ -63,7 +63,7 @@ spec:
         ingress:
           enabled: true
           annotations:
-            external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+            external-dns.alpha.kubernetes.io/target: internal-utils.rafaribe.com
           className: internal
           hosts: ["hubble-utils.rafaribe.com"]
     operator:
