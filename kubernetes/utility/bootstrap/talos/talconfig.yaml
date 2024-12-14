@@ -26,7 +26,7 @@ cniConfig:
 
 nodes:
   - hostname: srv-01.${clusterDNSSuffix}
-    ipAddress: 10.0.1.3
+    ipAddress: 10.0.0.3
     nameservers:
       - "10.0.0.254"
     controlPlane: true
