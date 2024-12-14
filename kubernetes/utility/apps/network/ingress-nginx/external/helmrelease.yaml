@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: nginx-internal
+  name: nginx-external
 spec:
   interval: 30m
   chart:
@@ -23,24 +23,36 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    fullnameOverride: internal
+    fullnameOverride: external
     controller:
-      replicaCount: 2
+      replicaCount: 3
+      extraEnvs:
+        - name: TZ
+          value: "Europe/Lisbon"
+
+      updateStrategy:
+        type: RollingUpdate
+
+      allowSnippetAnnotations: true
+      enableAnnotationValidations: true
       service:
+        enabled: true
+        type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: internal-utility.rafaribe.com
-          lbipam.cilium.io/ips: ${LB_NGINX_INTERNAL_UTILITY}
+          external-dns.alpha.kubernetes.io/hostname: external-utility.rafaribe.com
+          lbipam.cilium.io/ips: ${LB_NGINX_EXTERNAL_UTILITY}
+      publishService:
+        enabled: true
       ingressClassResource:
-        name: internal
-        default: true
-        controllerValue: k8s.io/internal
+        name: external
+        default: false
+        controllerValue: k8s.io/external
       admissionWebhooks:
         objectSelector:
           matchExpressions:
             - key: ingress-class
               operator: In
-              values: ["internal"]
-      allowSnippetAnnotations: true
+              values: ["external"]
       config:
         block-user-agents: "GPTBot,~*GPTBot*,ChatGPT-User,~*ChatGPT-User*,Google-Extended,~*Google-Extended*,CCBot,~*CCBot*,Omgilibot,~*Omgilibot*,FacebookBot,~*FacebookBot*" # taken from https://github.com/superseriousbusiness/gotosocial/blob/main/internal/web/robots.go
         client-body-buffer-size: 100M
@@ -60,10 +72,11 @@ spec:
           "request_id": "$req_id", "remote_user": "$remote_user", "bytes_sent": $bytes_sent, "request_time": $request_time,
           "status": $status, "vhost": "$host", "request_proto": "$server_protocol", "path": "$uri", "request_query": "$args",
           "request_length": $request_length, "duration": $request_time, "method": "$request_method", "http_referrer": "$http_referer",
-          "http_user_agent": "$http_user_agent"}
+          "http_user_agent": "$http_user_agent", "country_code": "$geoip2_city_country_code", "country_name": "$geoip2_city_country_name"}
         proxy-body-size: 0
         proxy-buffer-size: 16k
         ssl-protocols: TLSv1.3 TLSv1.2
+        use-geoip2: true
         use-forwarded-headers: "true"
       metrics:
         enabled: true
@@ -76,9 +89,28 @@ spec:
       terminationGracePeriodSeconds: 120
       resources:
         requests:
-          cpu: 100m
+          cpu: 200m
         limits:
-          memory: 500Mi
+          memory: 800Mi
+      # Extra Init Containers
+      extraInitContainers:
+        - name: download-geolite-files
+          image: alpine:3.21
+          command: ["sh", "/scripts/geolite.sh"]
+          volumeMounts:
+            - name: geolite-files
+              mountPath: /home
+            - name: geolite-script
+              mountPath: /scripts # Mount path for the bash script
+      extraVolumes:
+        - name: geolite-files
+          emptyDir: {}
+        - name: geolite-script
+          configMap:
+            name: download-geolite-script
+      extraVolumeMounts:
+        - name: "geolite-files"
+          mountPath: /etc/ingress-controller/geoip/
     defaultBackend:
       enabled: true
       image:
@@ -86,6 +118,6 @@ spec:
         tag: 3.3 # Using the latest tag is highly discouraged. Please, use tags in X.Y.Z format
       extraEnvs:
         - name: TEMPLATE_NAME # Optional: change the default theme
-          value: lost-in-space
+          value: ghost
         - name: SHOW_DETAILS # Optional: enables the output of additional information on error pages
           value: "true"
