@@ -3,14 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app democratic-csi
+  name: &app local-path-provisioner
   namespace: flux-system
 spec:
   targetNamespace: storage
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/utility/apps/storage/democratic-csi/app
+  path: ./kubernetes/utility/apps/storage/local-path-provisioner/app
   prune: true
   sourceRef:
     kind: GitRepository
