@@ -10,7 +10,7 @@ spec:
     kind: GitRepository
     name: home-ops
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: cilium
       namespace: kube-system
@@ -40,10 +40,10 @@ spec:
   dependsOn:
     - name: cilium
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
-      name: cert-manager
-      namespace: cert-manager
+      name: cilium
+      namespace: kube-system
   interval: 30m
   retryInterval: 1m
   timeout: 3m
