@@ -9,7 +9,7 @@ spec:
   interval: 30m
   url: ssh://git@github.com/rafaribe/home-ops
   ref:
-    branch: main
+    branch: create-utils-cluster
   secretRef:
     name: github-deploy-key
   ignore: |
