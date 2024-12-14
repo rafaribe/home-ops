@@ -17,7 +17,6 @@ spec:
   retryInterval: 1m
   timeout: 3m
   dependsOn:
-    - name: nginx-config
     - name: cilium
   targetNamespace: network
   commonMetadata:
