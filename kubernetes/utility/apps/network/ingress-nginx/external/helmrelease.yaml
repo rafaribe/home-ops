@@ -99,7 +99,7 @@ spec:
           command: ["sh", "/scripts/geolite.sh"]
           env:
             - name: GEOLITE_RELEASE
-              value: "2024.12.10"
+              value: "2024.12.07"
           volumeMounts:
             - name: geolite-files
               mountPath: /home
