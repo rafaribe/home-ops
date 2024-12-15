@@ -80,7 +80,3 @@ spec:
         trustCRDsExist: true
     dashboards:
       enabled: true
-    # Setup encryption 
-    encryption:
-      enabled: true
-      type: wireguard

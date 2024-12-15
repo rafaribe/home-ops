@@ -1,10 +1,10 @@
 ---
 autoDirectNodeRoutes: true
 bandwidthManager:
-  enabled: false
+  enabled: true
   bbr: true
 bpf:
-  hostLegacyRouting: true
+  hostLegacyRouting: false
   masquerade: true
   tproxy: true
 cgroup:
@@ -58,3 +58,7 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
+# Setup encryption 
+encryption:
+  enabled: true
+  type: wireguard
