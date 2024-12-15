@@ -4,9 +4,10 @@ bandwidthManager:
   enabled: true
   bbr: true
 bpf:
-  datapathMode: netkit
+  # Enable when upgrading Talos to v1.9.0
+  #datapathMode: netkit
   masquerade: true
-  preallocateMaps: true
+  #preallocateMaps: true
   tproxy: true
 cgroup:
   automount:
