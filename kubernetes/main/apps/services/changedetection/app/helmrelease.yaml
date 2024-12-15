@@ -65,6 +65,16 @@ spec:
                 value: "true"
               - name: DEFAULT_STEALTH
                 value: "true"
+      affinity:
+        # Browser doesnt work in arm
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
     service:
       app:
         controller: *app
