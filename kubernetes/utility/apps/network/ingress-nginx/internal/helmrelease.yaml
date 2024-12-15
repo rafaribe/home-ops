@@ -6,6 +6,7 @@ metadata:
   name: nginx-internal
 spec:
   interval: 30m
+  timeout: 5m
   chart:
     spec:
       chart: ingress-nginx
@@ -25,7 +26,7 @@ spec:
   values:
     fullnameOverride: internal
     controller:
-      replicaCount: 2
+      replicaCount: 1
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: internal-utility.rafaribe.com

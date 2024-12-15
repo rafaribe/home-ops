@@ -6,6 +6,7 @@ metadata:
   name: nginx-external
 spec:
   interval: 30m
+  timeout: 5m
   chart:
     spec:
       chart: ingress-nginx
