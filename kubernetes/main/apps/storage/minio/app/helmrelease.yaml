@@ -41,7 +41,7 @@ spec:
               MINIO_BROWSER_REDIRECT_URL: "https://minio.rafaribe.com"
               MINIO_SERVER_URL: "https://s3.rafaribe.com"
               MINIO_PROMETHEUS_AUTH_TYPE: "public"
-              MINIO_API_CORS_ALLOW_ORIGIN: https://minio.holrafthome.net,https://s3.rafaribe.com
+              MINIO_API_CORS_ALLOW_ORIGIN: https://minio.rafaribe.com,https://s3.rafaribe.com
             envFrom:
               - secretRef:
                   name: minio
@@ -90,6 +90,7 @@ spec:
         className: internal
         annotations:
           hajimari.io/enable: "false"
+          nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
           nginx.ingress.kubernetes.io/proxy-body-size: 1024m
           nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
