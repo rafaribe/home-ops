@@ -1,7 +1,7 @@
 ---
 autoDirectNodeRoutes: true
 bandwidthManager:
-  enabled: false
+  enabled: true
   bbr: true
 bpf:
   hostLegacyRouting: true
@@ -59,7 +59,3 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
-## Tests
-encryption:
-  enabled: true
-  type: wireguard
