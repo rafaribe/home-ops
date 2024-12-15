@@ -61,7 +61,3 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
-# Setup encryption 
-encryption:
-  enabled: true
-  type: wireguard
