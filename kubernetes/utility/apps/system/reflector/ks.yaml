@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: refector
+  name: reflector
   namespace: flux-system
 spec:
   path: ./kubernetes/utility/apps/system/reflector/app
