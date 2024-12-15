@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app external-dns-cloudflare
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: external-dns
+      version: 1.15.0
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: flux-system
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    fullnameOverride: *app
+    provider:
+      name: cloudflare
+    env:
+      - name: &email CF_API_EMAIL
+        valueFrom:
+          secretKeyRef:
+            name: &secret external-dns-cloudflare
+            key: *email
+      - name: &key CF_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: *secret
+            key: *key
+    extraArgs:
+      - --cloudflare-dns-records-per-page=1000
+      - --cloudflare-proxied
+      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+      - --crd-source-kind=DNSEndpoint
+      - --zone-id-filter=8e078bd77e3643a24748a69840650169
+      - --events
+      - --ignore-ingress-tls-spec
+      - --ingress-class=external
+    policy: sync
+    sources: ["crd", "ingress"]
+    txtOwnerId: default
+    txtPrefix: k8s.
+    domainFilters: ["rafaribe.com"]
+    serviceMonitor:
+      enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *secret
+    resources:
+      requests:
+        cpu: 25m
+        memory: 50Mi
+      limits:
+        cpu: 50m
+        memory: 100Mi
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
