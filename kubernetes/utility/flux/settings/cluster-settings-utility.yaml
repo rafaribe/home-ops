@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings-utility
+  namespace: flux-system
+data:
+  ## Utility cluster settings
+  CLUSTER: utility
+  VOLSYNC_SNAPSHOTCLASS: csi-local-hostpath
+  VOLSYNC_CACHE_SNAPSHOTCLASS: local-hostpath
+  VOLSYNC_STORAGECLASS: local-hostpath
+  VOLSYNC_MINIO_SCHEDULE: "30"

@@ -59,6 +59,9 @@ spec:
       - kind: ConfigMap
         name: cluster-settings
         optional: false
+      - kind: ConfigMap
+        name: cluster-settings-utility
+        optional: false
       - kind: Secret
         name: cluster-secrets
         optional: false
