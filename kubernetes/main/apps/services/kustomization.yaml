@@ -29,3 +29,4 @@ resources:
   - ./thelounge/ks.yaml
   - ./radicale/ks.yaml
   - ./vikunja/ks.yaml
+  - ./wikijs/ks.yaml
