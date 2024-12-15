@@ -39,10 +39,10 @@ spec:
           # required for HA vmagents
           resources:
             requests:
-              cpu: 100m
+              cpu: 75m
               memory: 512Mi
             limits:
-              cpu: 300m
+              cpu: 100m
               memory: 1Gi
           topologySpreadConstraints:
             - maxSkew: 1
