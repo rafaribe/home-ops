@@ -78,6 +78,12 @@ spec:
           hajimari.io/group: "storage"
           hajimari.io/icon: mdi:pail
           hajimari.io/instance: "admin"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: S3 storage
+          gethomepage.dev/group: Tools
+          gethomepage.dev/icon: sh-minio.svg
+          gethomepage.dev/name: Minio
+          gethomepage.dev/app: minio
         hosts:
           - host: minio.rafaribe.com
             paths:
