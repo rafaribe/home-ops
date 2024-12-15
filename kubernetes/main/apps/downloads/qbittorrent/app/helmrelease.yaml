@@ -214,7 +214,7 @@ spec:
         advancedMounts:
           qbittorrent:
             app:
-              - path: /data/nas-media
+              - path: /media
       dnsdist:
         type: configMap
         name: qbittorrent-dnsdist
