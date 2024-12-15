@@ -73,6 +73,8 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "network/wildcard-default-certificate-tls"
+      publishService:
+        enabled: false
       terminationGracePeriodSeconds: 120
       resources:
         requests:
