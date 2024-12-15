@@ -42,6 +42,7 @@ spec:
               MINIO_SERVER_URL: "https://s3.rafaribe.com"
               MINIO_PROMETHEUS_AUTH_TYPE: "public"
               MINIO_API_CORS_ALLOW_ORIGIN: https://minio.rafaribe.com,https://s3.rafaribe.com
+              MINIO_AUTH_TYPE: public
             envFrom:
               - secretRef:
                   name: minio
