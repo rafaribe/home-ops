@@ -6,7 +6,7 @@ metadata:
   name: &app capacitor
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/flux-system/capacitor/
+  path: ./kubernetes/utility/apps/flux-system/capacitor/
   prune: true
   sourceRef:
     kind: GitRepository
