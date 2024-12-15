@@ -6,7 +6,7 @@ metadata:
   name: &app zot
   namespace: flux-system
 spec:
-  targetNamespace: services
+  targetNamespace: registry
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
