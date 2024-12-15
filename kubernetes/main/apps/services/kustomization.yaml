@@ -22,6 +22,7 @@ resources:
   - ./paperless/ks.yaml
   - ./redlib/ks.yaml
   - ./searxng/ks.yaml
+  - ./silverbullet/ks.yaml
   - ./stirling-pdf/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./tandoor/ks.yaml
