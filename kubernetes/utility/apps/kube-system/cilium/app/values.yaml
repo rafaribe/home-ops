@@ -27,7 +27,7 @@ bgpControlPlane:
   enabled: false
 #ipv4NativeRoutingCIDR: 10.44.0.0/16 temp disabled
 # Experiment with Cilium Clustermesh https://docs.cilium.io/en/stable/network/clustermesh/clustermesh/#setting-up-cluster-mesh
-ipv4NativeRoutingCIDR:  10.42.0.0/13
+ipv4NativeRoutingCIDR: 10.42.0.0/13
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true
@@ -42,7 +42,7 @@ operator:
   rollOutPods: true
   replicas: 1
 rollOutCiliumPods: true
-routingMode:  
+routingMode: native
 securityContext:
   capabilities:
     ciliumAgent:
