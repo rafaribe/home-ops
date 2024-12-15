@@ -9,7 +9,7 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   dependsOn:
-    - name: external-dns-cloudflare
+    #- name: external-dns-cloudflare
     - name: external-secrets-stores
   path: ./kubernetes/utility/apps/network/cloudflared/app
   prune: false
