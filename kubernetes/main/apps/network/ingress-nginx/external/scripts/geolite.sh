@@ -4,21 +4,29 @@ set -e
 # Install necessary dependencies
 apk add --no-cache curl jq
 
-echo 'Fetching latest release from GitHub'
+echo 'Fetching release information'
 
-# Get the latest release response from GitHub API
-RESPONSE=$(curl -s https://api.github.com/repos/P3TERX/GeoLite.mmdb/releases/latest)
+# Check if GEOLITE_RELEASE is set, otherwise fallback to GitHub API
+if [ -z "$GEOLITE_RELEASE" ]; then
+  echo "GEOLITE_RELEASE is not set, fetching the latest release from GitHub"
 
-# Extract the release tag name
-RELEASE=$(echo $RESPONSE | jq -r '.tag_name')
+  # Get the latest release response from GitHub API
+  RESPONSE=$(curl -s https://api.github.com/repos/P3TERX/GeoLite.mmdb/releases/latest)
 
-# Check if RELEASE is empty or 'null', and set it to the current date if necessary
-if [ "$RELEASE" = "null" ] || [ -z "$RELEASE" ]; then
-  echo "No release found or release tag is null, using current date as version"
-  RELEASE=$(date +'%Y.%m.%d')  # Get the current date in YYYY.MM.DD format
+  # Extract the release tag name
+  RELEASE=$(echo $RESPONSE | jq -r '.tag_name')
+
+  # Check if RELEASE is empty or 'null', and set it to the current date if necessary
+  if [ "$RELEASE" = "null" ] || [ -z "$RELEASE" ]; then
+    echo "No release found or release tag is null, using current date as version"
+    RELEASE=$(date +'%Y.%m.%d')  # Get the current date in YYYY.MM.DD format
+  fi
+
+  echo "Using release: $RELEASE"
+else
+  echo "Using provided GEOLITE_RELEASE: $GEOLITE_RELEASE"
+  RELEASE=$GEOLITE_RELEASE
 fi
-
-echo "Using release: $RELEASE"
 
 # Base URL for the release
 BASE_URL="https://github.com/P3TERX/GeoLite.mmdb/releases/download/${RELEASE}"
