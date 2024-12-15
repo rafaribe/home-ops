@@ -23,4 +23,4 @@ spec:
       HOSTNAME: obsidian-db.rafaribe.com
       APP_UID: "1000"
       APP_GID: "1000"
-      VOLSYNC_CAPACITY: 4Gi
+      VOLSYNC_CAPACITY: 20Gi
