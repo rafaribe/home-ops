@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/shared/apps/registry/zot/app"
+  path: "./kubernetes/utility/apps/registry/zot/app"
   prune: true
   sourceRef:
     kind: GitRepository

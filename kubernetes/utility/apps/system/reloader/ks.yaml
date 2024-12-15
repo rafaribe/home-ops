@@ -11,10 +11,10 @@ spec:
     kind: GitRepository
     name: home-ops
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: reloader
-      namespace: kube-system
+      namespace: system
   interval: 30m
   retryInterval: 1m
   timeout: 3m
