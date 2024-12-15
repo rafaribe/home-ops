@@ -29,7 +29,7 @@ spec:
       enabled: true
       spec:
         # Duration to keep metrics
-        retentionPeriod: "2" # this is months unless a character prefix is added (1d, 1w, etc)
+        retentionPeriod: "4w" # this is months unless a character prefix is added (1d, 1w, etc)
         extraArgs:
           dedup.minScrapeInterval: 30s
         replicationFactor: 3
@@ -43,7 +43,7 @@ spec:
               memory: 512Mi
             limits:
               cpu: 300m
-              memory: 1536Mi
+              memory: 1Gi
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -60,6 +60,15 @@ spec:
                 resources:
                   requests:
                     storage: 10Gi
+         affinity :
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - amd64
         # Query backend
         vmselect:
           replicaCount: 1 # HA
