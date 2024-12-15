@@ -28,9 +28,6 @@ spec:
     keepHistory: false
   values:
     defaultPodOptions:
-      nodeSelector:
-        kubernetes.io/hostname: saka
-    defaultPodOptions:
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
