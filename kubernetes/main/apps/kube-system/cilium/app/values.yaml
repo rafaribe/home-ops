@@ -4,8 +4,9 @@ bandwidthManager:
   enabled: true
   bbr: true
 bpf:
-  hostLegacyRouting: false
+  datapathMode: netkit
   masquerade: true
+  preallocateMaps: true
   tproxy: true
 cgroup:
   automount:
@@ -14,7 +15,10 @@ cgroup:
 cluster:
   id: 1
   name: main
-enableRuntimeDeviceDetection: true
+cni:
+  exclusive: false
+devices: enp+
+enableIPv4BIGTCP: true
 endpointRoutes:
   enabled: true
 envoy:
@@ -23,11 +27,7 @@ hubble:
   enabled: false
 ipam:
   mode: kubernetes
-bgpControlPlane:
-  enabled: false
-#ipv4NativeRoutingCIDR: 10.42.0.0/16 temp disabled
-# Experiment with Cilium Clustermesh https://docs.cilium.io/en/stable/network/clustermesh/clustermesh/#setting-up-cluster-mesh
-ipv4NativeRoutingCIDR:  10.42.0.0/13
+ipv4NativeRoutingCIDR: 10.42.0.0/16
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true
@@ -35,11 +35,26 @@ kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
   enabled: true
 loadBalancer:
+  acceleration: best-effort
   algorithm: maglev
   mode: dsr
 localRedirectPolicy: true
 operator:
+  replicas: 2
   rollOutPods: true
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  dashboards:
+    enabled: true
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    trustCRDsExist: true
+dashboards:
+  enabled: true
 rollOutCiliumPods: true
 routingMode: native
 securityContext:
