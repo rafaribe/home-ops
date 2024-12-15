@@ -62,6 +62,7 @@ spec:
     ingress:
       app:
         enabled: true
+        controller: zot
         className: "external"
         annotations:
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
@@ -73,12 +74,21 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
               - *host
-
+    serviceMonitor:
+      app:
+        enabled: true
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
+        serviceName: zot
     persistence:
       config-file:
         type: configMap
