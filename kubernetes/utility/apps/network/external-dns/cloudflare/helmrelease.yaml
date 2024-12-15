@@ -50,8 +50,8 @@ spec:
       - --ingress-class=external
     policy: sync
     sources: ["crd", "ingress"]
-    txtOwnerId: default
-    txtPrefix: k8s.
+    txtOwnerId: utility
+    txtPrefix: k8s.utility
     domainFilters: ["rafaribe.com"]
     serviceMonitor:
       enabled: true
