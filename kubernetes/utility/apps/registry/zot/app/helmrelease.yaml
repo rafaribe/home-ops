@@ -59,11 +59,6 @@ spec:
         ports:
           http:
             port: *port
-    service:
-      main:
-        ports:
-          http:
-            port: 5000
     serviceMonitor:
       app:
         enabled: true
