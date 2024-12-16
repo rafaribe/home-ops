@@ -100,8 +100,7 @@ spec:
           - path: /etc/zot/config.json
             subPath: config.json
             readOnly: true
-
       registry:
-        existingClaim: *app
+        existingClaim: zot
         globalMounts:
           - path: /var/lib/registry
