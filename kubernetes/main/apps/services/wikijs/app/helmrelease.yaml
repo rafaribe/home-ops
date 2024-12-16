@@ -75,13 +75,3 @@ spec:
                 service:
                   identifier: main
                   port: http
-    persistence:
-      sshkey:
-        enabled: true
-        type: secret
-        name: wikijs-secret
-        items:
-          - key: id_rsa
-            path: id_rsa
-        globalMounts:
-          - path: /home/node/.ssh
