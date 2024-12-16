@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: emqx.rafaribe.com
+    - host: mqtt.rafaribe.com
       http:
         paths:
           - path: /
