@@ -68,6 +68,8 @@ spec:
       <<: *kubeControllerManager # etcd runs on control plane nodes
     kubeProxy:
       enabled: false
+    nodeExporter:
+      enabled: false
     prometheus:
       ingress:
         enabled: true
