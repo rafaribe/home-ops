@@ -22,4 +22,4 @@ resources:
   - ./redisinsight/ks.yaml
   #- ./thanos/ks.yaml
   - ./unpoller/ks.yaml
- # - ./victoria/ks.yaml
+  - ./victoria/ks.yaml
