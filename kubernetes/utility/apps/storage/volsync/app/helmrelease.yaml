@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -22,21 +22,10 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: snapshot-controller
+      namespace: storage
   values:
     manageCRDs: true
     metrics:
       disableAuth: true
-    image: &image
-      repository: ghcr.io/haraldkoch/volsync
-      tag: 0.11.0
-    restic:
-      <<: *image
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/arch
-              operator: In
-              values:
-              - amd64
