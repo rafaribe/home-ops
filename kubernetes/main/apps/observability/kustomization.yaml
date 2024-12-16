@@ -15,6 +15,7 @@ resources:
   - ./kepler/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-state-metrics/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
   - ./node-exporter/ks.yaml
   - ./loki/ks.yaml
   - ./prometheus-operator/ks.yaml
