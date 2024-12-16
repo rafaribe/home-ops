@@ -9,7 +9,6 @@ resources:
   - ./actual/ks.yaml
   - ./atuin/ks.yaml
   - ./cyberchef/ks.yaml
-  #- ./changedetection/ks.yaml
   - ./ferdium/ks.yaml
   - ./hajimari/ks.yaml
   - ./homepage/ks.yaml #Left to the end
