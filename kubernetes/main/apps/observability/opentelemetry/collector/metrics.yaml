@@ -45,7 +45,7 @@ spec:
 
     exporters:
       prometheusremotewrite:
-        endpoint: "http://vmagent-victoria-metrics:8429/api/v1/write"
+        endpoint: "http://prometheus-operated.observability.svc.cluster.local:9090/api/v1/write"
     service:
       pipelines:
         metrics:

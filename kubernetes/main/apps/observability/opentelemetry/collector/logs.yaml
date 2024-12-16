@@ -125,7 +125,7 @@ spec:
               - set(attributes["source"], "OpenTelemetry Collector")
     exporters:
       loki:
-        endpoint: http://loki-gateway.observability/loki/api/v1/push
+        endpoint: http://loki-headless.observability.svc.cluster.local:3100/loki/api/v1/push
         default_labels_enabled:
           exporter: false
     service:

@@ -5,8 +5,8 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./alertmanager-discord/ks.yaml
-  - ./alertmanager/ks.yaml
+  #- ./alertmanager-discord/ks.yaml
+ # - ./alertmanager/ks.yaml
   - ./exporters/ks.yaml
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
@@ -22,4 +22,4 @@ resources:
   - ./redisinsight/ks.yaml
   #- ./thanos/ks.yaml
   - ./unpoller/ks.yaml
-  - ./victoria/ks.yaml
+  #- ./victoria/ks.yaml
