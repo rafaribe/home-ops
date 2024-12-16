@@ -4,8 +4,9 @@ bandwidthManager:
   enabled: true
   bbr: true
 bpf:
-  hostLegacyRouting: false # Needs to be disabled for bandwidth Manager to be enabled
+  datapathMode: netkit
   masquerade: true
+  preallocateMaps: true
   tproxy: true
 cgroup:
   automount:
