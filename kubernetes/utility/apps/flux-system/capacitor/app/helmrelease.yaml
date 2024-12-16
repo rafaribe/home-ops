@@ -62,7 +62,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: internal-utility.rafaribe.com
         hosts:
-          - host: capacitor.rafaribe.com
+          - host: capacitor-utils.rafaribe.com
             paths:
               - path: /
                 service:
