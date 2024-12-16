@@ -14,4 +14,3 @@ resources:
   - ./nvidia/ks.yaml
   - ./reflector/ks.yaml
   - ./reloader/ks.yaml
-  # - ./snapshot-controller/ks.yaml
