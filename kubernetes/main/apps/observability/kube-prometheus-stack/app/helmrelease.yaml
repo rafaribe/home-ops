@@ -35,6 +35,8 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       ingress:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         enabled: true
         ingressClassName: internal
         hosts: ["alertmanager.rafaribe.com"]
@@ -72,6 +74,8 @@ spec:
       enabled: false
     prometheus:
       ingress:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         enabled: true
         ingressClassName: internal
         hosts: ["prometheus.rafaribe.com"]
