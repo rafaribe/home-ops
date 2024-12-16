@@ -27,6 +27,8 @@ spec:
       retries: 3
   values:
     controller:
+      args:
+        enableDistributedSnapshotting: true
       serviceMonitor:
         create: true
     webhook:
