@@ -27,7 +27,8 @@ spec:
     metrics:
       disableAuth: true
     image: &image
-      repository: bitnami/volsync
-      tag: 0.11.0
+      # Probably need to build my own image..
+      repository: ghcr.io/onedr0p/volsync
+      tag: 0.11.0@sha256:af3bbfba8244b7a9ec5806899ecbfda4e0ddac6fcef618c4c3afcb7fe46fbca9
     restic:
       <<: *image
