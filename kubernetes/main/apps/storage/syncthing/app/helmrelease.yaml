@@ -26,6 +26,13 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       syncthing:
         containers:
@@ -93,22 +100,23 @@ spec:
       listen:
         controller: syncthing
         type: LoadBalancer
-        externalTrafficPolicy: Local
         annotations:
           lbipam.cilium.io/ips: ${LB_SYNCTHING}
         ports:
-          listen:
-            port: 22000
-            protocol: TCP
-            targetPort: 22000
           discovery:
             enabled: true
             port: 21027
             protocol: UDP
-            targetPort: 21027
+          listen:
+            enabled: true
+            port: 22000
+            protocol: TCP
+          listen-udp:
+            enabled: true
+            port: 22000
+            protocol: UDP
       browser:
         controller: browser
-        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: *browserPort
