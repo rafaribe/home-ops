@@ -27,16 +27,7 @@ spec:
     metrics:
       disableAuth: true
     image: &image
-      repository: ghcr.io/haraldkoch/volsync
+      repository: bitnami/volsync
       tag: 0.11.0
     restic:
       <<: *image
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/arch
-              operator: In
-              values:
-              - amd64
