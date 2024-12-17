@@ -148,7 +148,7 @@ spec:
       config:
         existingClaim: *app
         advancedMounts:
-          actual:
+          browser:
             app:
               - path: /data
 
