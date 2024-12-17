@@ -43,8 +43,8 @@ spec:
                 cpu: 15m
                 memory: 150M
               limits:
-                cpu: 100m
-                memory: 300M
+                cpu: 500m
+                memory: 400M
       browser:
         containers:
           app:
