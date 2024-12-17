@@ -79,6 +79,8 @@ spec:
             image:
               repository: ghcr.io/nginxinc/nginx-unprivileged
               tag: 1.27.3-alpine
+    defaultPodOptions:
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
