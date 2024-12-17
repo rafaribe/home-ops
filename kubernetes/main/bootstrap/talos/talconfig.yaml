@@ -169,17 +169,6 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-    schematic:
-      customization:
-        systemExtensions:
-          officialExtensions:
-            - siderolabs/i915
-            - siderolabs/intel-ucode
-            - siderolabs/nonfree-kmod-nvidia-production
-            - siderolabs/nvidia-container-toolkit-production
-            - siderolabs/binfmt-misc
-            - siderolabs/util-linux-tools
-            - siderolabs/iscsi-tools
 
   - hostname: srv-05.${clusterDNSSuffix}
     ipAddress: 10.0.1.8
