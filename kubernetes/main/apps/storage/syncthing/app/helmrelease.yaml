@@ -124,6 +124,7 @@ spec:
           gethomepage.dev/group: Storage
           gethomepage.dev/icon: syncthing
           gethomepage.dev/name: Syncthing
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: syncthing.rafaribe.com
             paths:
@@ -135,6 +136,7 @@ spec:
         className: internal
         annotations:
           hajimari.io/icon: mdi:folder-arrow-up-down-outline
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: sync.rafaribe.com
             paths:
