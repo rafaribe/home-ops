@@ -52,7 +52,7 @@ spec:
                 memory: 512Mi
               limits:
                 gpu.intel.com/i915: 1
-                memory: 8000Mi
+                memory: 10Gi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
