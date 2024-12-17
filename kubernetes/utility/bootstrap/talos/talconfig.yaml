@@ -9,9 +9,9 @@ clusterSvcNets:
   - 10.45.0.0/16
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
-talosVersion: v1.9.0-beta.1
+talosVersion: v1.9.0
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
-kubernetesVersion: v1.31.4
+kubernetesVersion: v1.32.0
 
 additionalApiServerCertSans: &sans
   - ${clusterEndpointIP}
@@ -32,8 +32,12 @@ nodes:
     controlPlane: true
     installDiskSelector:
       wwid: naa.5002538d7025e8be
-      type: SSD
+      type: ssd
       size: <= 256 GB
+    machineDisks:
+      - device: /dev/disk/by-id/ata-HGST_HTS721075A9E630_JR12006QG0YW5E
+        partitions:
+          - mountpoint: /var/lib/csi-local-hostpath
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "10:c3:7b:1d:d6:f4"
@@ -45,6 +49,7 @@ nodes:
     kernelModules:
       - name: zfs
 controlPlane:
+  noSchematicValidate: true
   schematic:
     customization:
       extraKernelArgs:
@@ -55,7 +60,7 @@ controlPlane:
           - siderolabs/binfmt-misc
           - siderolabs/btrfs
           - siderolabs/fuse3
-          - siderolabs/i915-ucode
+          - siderolabs/i915
           - siderolabs/intel-ucode
           - siderolabs/mei
           - siderolabs/nonfree-kmod-nvidia-production
@@ -241,14 +246,6 @@ controlPlane:
               type: bind
               source: /var/lib/csi-local-hostpath
               options: ["bind", "rshared", "rw"]
-
-    # # Mount 2nd disk for Democratic CSI
-    - |-
-      machine:
-        disks:
-        - device: /dev/sda
-          partitions:
-            - mountpoint: /var/lib/csi-local-hostpath
 
     # Enable hostDNS:
     - &hostdns |-
