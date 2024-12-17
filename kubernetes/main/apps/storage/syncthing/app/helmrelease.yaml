@@ -150,7 +150,7 @@ spec:
         advancedMounts:
           browser:
             app:
-              - path: /data
+              - path: /config
 
       data:
         enabled: true
