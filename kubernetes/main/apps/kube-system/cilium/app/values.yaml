@@ -5,7 +5,7 @@ bandwidthManager:
   bbr: true
 bpf:
   datapathMode: netkit
-  hostLegacyRouting: true
+#  hostLegacyRouting: true
   masquerade: true
   tproxy: true
 cgroup:
