@@ -29,6 +29,6 @@ spec:
     image: &image
       # Probably need to build my own image..
       repository: ghcr.io/onedr0p/volsync
-      tag: 0.11.0@sha256:af3bbfba8244b7a9ec5806899ecbfda4e0ddac6fcef618c4c3afcb7fe46fbca9
+      tag: 0.11.0@sha256:e5314381b99e4d019da3917f1a5cbf8f1f446021423e31ee0e0702831633dcbc
     restic:
       <<: *image
