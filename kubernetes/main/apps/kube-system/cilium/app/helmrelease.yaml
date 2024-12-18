@@ -60,11 +60,9 @@ spec:
         rollOutPods: true
         ingress:
           enabled: true
-
-          annotations:
-            external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           className: internal
           annotations:
+            external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
             gethomepage.dev/enabled: "true"
             gethomepage.dev/icon: cilium.png
             gethomepage.dev/name: Hubble
