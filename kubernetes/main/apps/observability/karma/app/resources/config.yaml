@@ -5,7 +5,7 @@ alertmanager:
     - name: home
       uri: http://alertmanager-operated.observability.svc.cluster.local:9093
       #uri: http://vmalertmanager-victoria-metrics.observability.svc.cluster.local:9093
-      timeout: 10s
+      timeout: 15s
       healthcheck:
         visible: false
         filters:

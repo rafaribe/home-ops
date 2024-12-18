@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.4.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -28,7 +28,7 @@ spec:
   values:
     controllers:
       karma:
-        replicas: 3
+        replicas: 2
         strategy: RollingUpdate
         annotations:
           configmap.reloader.stakater.com/reload: karma-configmap
@@ -75,14 +75,14 @@ spec:
             scrapeTimeout: 10s
     ingress:
       app:
-        className: external
+        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: https://raw.githubusercontent.com/rafaribe/home-ops/main/docs/src/images/karma.ico
           gethomepage.dev/name: Karma
           gethomepage.dev/group: Observability
           gethomepage.dev/description: Alertmanager Quick View
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: "karma.rafaribe.com"
             paths:
