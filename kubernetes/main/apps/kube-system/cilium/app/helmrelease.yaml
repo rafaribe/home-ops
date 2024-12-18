@@ -51,6 +51,8 @@ spec:
           enabled: true
         dashboards:
           enabled: true
+          annotations:
+            grafana_folder: Network
       relay:
         enabled: true
         rollOutPods: true
@@ -62,21 +64,14 @@ spec:
         rollOutPods: true
         ingress:
           enabled: true
+
           annotations:
             external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           className: internal
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/icon: cilium.png
+            gethomepage.dev/name: Hubble
+            gethomepage.dev/group: Observability
+            gethomepage.dev/description: Network Monitoring Dashboard
           hosts: ["hubble.rafaribe.com"]
-    operator:
-      prometheus:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-      dashboards:
-        enabled: true
-    prometheus:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-        trustCRDsExist: true
-    dashboards:
-      enabled: true

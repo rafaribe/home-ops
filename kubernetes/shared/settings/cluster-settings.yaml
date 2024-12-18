@@ -6,6 +6,7 @@ metadata:
   name: cluster-settings
 data:
   # Home Network IP's
+  # Main 10.0.1.100- 10.0.1.120
   LB_NGINX_EXTERNAL: 10.0.1.100
   LB_NGINX_INTERNAL: 10.0.1.101
   LB_QBITTORRENT: 10.0.1.102

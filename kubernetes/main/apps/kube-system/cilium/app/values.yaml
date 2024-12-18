@@ -1,12 +1,12 @@
 ---
 autoDirectNodeRoutes: true
 bandwidthManager:
-  enabled: true
+  enabled: false
   bbr: true
 bpf:
   datapathMode: netkit
+  hostLegacyRouting: true
   masquerade: true
-  preallocateMaps: true
   tproxy: true
 cgroup:
   automount:
@@ -17,6 +17,7 @@ cluster:
   name: main
 cni:
   exclusive: false
+enableRuntimeDeviceDetection: true
 enableIPv4BIGTCP: true
 endpointRoutes:
   enabled: true
@@ -34,7 +35,6 @@ kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
   enabled: true
 loadBalancer:
-  acceleration: best-effort
   algorithm: maglev
   mode: dsr
 localRedirectPolicy: true
@@ -47,6 +47,8 @@ operator:
       enabled: true
   dashboards:
     enabled: true
+    annotations:
+      grafana_folder: Network
 prometheus:
   enabled: true
   serviceMonitor:
@@ -54,6 +56,8 @@ prometheus:
     trustCRDsExist: true
 dashboards:
   enabled: true
+  annotations:
+    grafana_folder: Network
 rollOutCiliumPods: true
 routingMode: native
 securityContext:
