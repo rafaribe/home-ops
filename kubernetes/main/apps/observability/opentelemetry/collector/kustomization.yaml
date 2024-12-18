@@ -5,4 +5,3 @@ resources:
   - ./logs.yaml
   - ./servicemonitor.yaml
   - ./rbac.yaml
-  - ./metrics.yaml
