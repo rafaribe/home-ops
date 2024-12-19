@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app miniflux
+  name: miniflux
 spec:
   interval: 30m
   chart:
@@ -43,7 +43,7 @@ spec:
               repository: ghcr.io/miniflux/miniflux
               tag: 2.2.3-distroless@sha256:6b778e125817592cf67b7eaf4a2fbb7a269d59ea82c82bfaae0c7daee4bc4ef6
             env:
-              BASE_URL: https://miniflux.rafaribe.com
+              BASE_URL: https://miniflux.devbu.io
               CREATE_ADMIN: "1"
               # DEBUG: "1"
               LOG_DATE_TIME: "1"
@@ -100,10 +100,8 @@ spec:
     ingress:
       app:
         className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: "{{ .Release.Name }}.rafaribe.com"
+          - host: "{{ .Release.Name }}.devbu.io"
             paths:
               - path: /
                 service:
