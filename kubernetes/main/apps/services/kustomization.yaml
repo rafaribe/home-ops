@@ -20,7 +20,6 @@ resources:
   - ./netboot/ks.yaml
   - ./paperless/ks.yaml
   - ./radicale/ks.yaml
-  - ./redlib/ks.yaml
   - ./searxng/ks.yaml
   - ./silverbullet/ks.yaml
   - ./smtp-relay/ks.yaml
