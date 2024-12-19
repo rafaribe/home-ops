@@ -3,78 +3,107 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: miniflux
+  name: &app miniflux
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
       version: 3.5.1
-      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     controllers:
       miniflux:
+        replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: miniflux
         containers:
           app:
             image:
               repository: ghcr.io/miniflux/miniflux
-              tag: 2.2.3-distroless
+              tag: 2.2.3-distroless@sha256:6b778e125817592cf67b7eaf4a2fbb7a269d59ea82c82bfaae0c7daee4bc4ef6
             env:
               BASE_URL: https://miniflux.rafaribe.com
               CREATE_ADMIN: "1"
-              DEBUG: "1"
+              # DEBUG: "1"
               LOG_DATE_TIME: "1"
-              POLLING_SCHEDULER: "entry_frequency"
+              METRICS_ALLOWED_NETWORKS: 10.42.0.0/16
+              METRICS_COLLECTOR: "1"
+              POLLING_SCHEDULER: entry_frequency
               POLLING_FREQUENCY: "15"
+              PORT: &port 80
               RUN_MIGRATIONS: "1"
-            envFrom:
-              - secretRef:
-                  name: miniflux-secret
+            envFrom: *envFrom
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
                 custom: true
                 spec:
-                  initialDelaySeconds: 30
+                  httpGet:
+                    path: /healthcheck
+                    port: *port
+                  initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
-                  httpGet:
-                    path: /healthcheck
-                    port: 8080
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 12m
-                memory: 64M
+                cpu: 10m
               limits:
-                memory: 256M
-
+                memory: 512Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: miniflux
         ports:
           http:
-            port: 8080
-
+            port: *port
+    serviceMonitor:
+      app:
+        serviceName: miniflux
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
     ingress:
       app:
-        className: "internal"
+        className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: miniflux.rafaribe.com
+          - host: "{{ .Release.Name }}.rafaribe.com"
             paths:
               - path: /
                 service:
