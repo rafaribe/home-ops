@@ -16,15 +16,17 @@ resources:
   - ./linkding/ks.yaml
   - ./lubelog/ks.yaml
   - ./mealie/ks.yaml
+  - ./miniflux/ks.yaml
   - ./netboot/ks.yaml
+  - ./outline/ks.yaml
   - ./paperless/ks.yaml
+  - ./radicale/ks.yaml
   - ./redlib/ks.yaml
   - ./searxng/ks.yaml
   - ./silverbullet/ks.yaml
-  - ./stirling-pdf/ks.yaml
   - ./smtp-relay/ks.yaml
+  - ./stirling-pdf/ks.yaml
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
-  - ./radicale/ks.yaml
   - ./vikunja/ks.yaml
-  - ./wikijs/ks.yaml
+  - ./wallabag/ks.yaml
