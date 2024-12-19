@@ -103,7 +103,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "internal.rafaribe.com"
         hosts:
-          - host: "{{ .Release.Name }}.rafaribe.com"
+          - host: "miniflux.rafaribe.com"
             paths:
               - path: /
                 service:
