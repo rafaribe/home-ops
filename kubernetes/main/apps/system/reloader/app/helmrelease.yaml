@@ -18,7 +18,7 @@ spec:
     reloader:
       podMonitor:
         enabled: true
-      reloadStrategy: annotations
+      reloadStrategy: default
       deployment:
         resources:
           requests:
