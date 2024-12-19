@@ -18,7 +18,6 @@ resources:
   - ./mealie/ks.yaml
   - ./miniflux/ks.yaml
   - ./netboot/ks.yaml
-  - ./outline/ks.yaml
   - ./paperless/ks.yaml
   - ./radicale/ks.yaml
   - ./redlib/ks.yaml
