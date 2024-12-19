@@ -43,7 +43,7 @@ spec:
               repository: ghcr.io/miniflux/miniflux
               tag: 2.2.3-distroless@sha256:6b778e125817592cf67b7eaf4a2fbb7a269d59ea82c82bfaae0c7daee4bc4ef6
             env:
-              BASE_URL: https://miniflux.devbu.io
+              BASE_URL: https://miniflux.rafaribe.com
               CREATE_ADMIN: "1"
               # DEBUG: "1"
               LOG_DATE_TIME: "1"
@@ -100,8 +100,10 @@ spec:
     ingress:
       app:
         className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "internal.rafaribe.com"
         hosts:
-          - host: "{{ .Release.Name }}.devbu.io"
+          - host: "{{ .Release.Name }}.rafaribe.com"
             paths:
               - path: /
                 service:
