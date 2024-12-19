@@ -97,9 +97,9 @@ spec:
         - name: download-geolite-files
           image: alpine:3.21
           command: ["sh", "/scripts/geolite.sh"]
-          env:
-            - name: GEOLITE_RELEASE
-              value: "2024.12.07"
+          # env:
+          #   - name: GEOLITE_RELEASE
+          #     value: "2024.12.07"
           volumeMounts:
             - name: geolite-files
               mountPath: /home
