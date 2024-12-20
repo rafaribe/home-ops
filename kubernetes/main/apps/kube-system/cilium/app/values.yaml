@@ -1,15 +1,15 @@
 ---
 autoDirectNodeRoutes: true
 bandwidthManager:
-  enabled: false
   bbr: true
+  enabled: true
 bpf:
   datapathMode: netkit
 #  hostLegacyRouting: true
   masquerade: true
   tproxy: true
 bgpControlPlane:
-  enabled: true
+  enabled: false
 cgroup:
   automount:
     enabled: false
