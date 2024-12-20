@@ -8,6 +8,8 @@ bpf:
 #  hostLegacyRouting: true
   masquerade: true
   tproxy: true
+bgpControlPlane:
+  enabled: true
 cgroup:
   automount:
     enabled: false
