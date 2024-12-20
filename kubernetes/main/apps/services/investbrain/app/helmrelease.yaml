@@ -45,6 +45,7 @@ spec:
               DB_CONNECTION: pgsql
               APP_NAME: InvestBrain
               APP_TIMEZONE: Europe/Lisbon
+              APP_PORT: &httpPort 80
               MARKET_DATA_PROVIDER: yahoo
               SESSION_DRIVER: redis
               SESSION_LIFETIME: 120
