@@ -84,6 +84,7 @@ spec:
           gethomepage.dev/icon: sh-minio.svg
           gethomepage.dev/name: Minio
           gethomepage.dev/app: minio
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: minio.rafaribe.com
             paths:
@@ -96,6 +97,7 @@ spec:
         enabled: true
         className: internal
         annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/enable: "false"
           nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
