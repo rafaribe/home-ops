@@ -36,7 +36,7 @@ spec:
     controllers:
       syncthing:
         containers:
-          app:
+          syncthing:
             image:
               repository: docker.io/syncthing/syncthing
               tag: 1.28.1
@@ -54,7 +54,7 @@ spec:
                 memory: 400M
       browser:
         containers:
-          app:
+          syncthing:
             image:
               repository: docker.io/filebrowser/filebrowser
               tag: v2.31.2
@@ -90,7 +90,7 @@ spec:
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
     service:
-      app:
+      syncthing:
         controller: syncthing
         primary: true
         ports:
@@ -121,7 +121,7 @@ spec:
           http:
             port: *browserPort
     ingress:
-      app:
+      syncthing:
         className: internal
         annotations:
           hajimari.io/appName: syncthing
