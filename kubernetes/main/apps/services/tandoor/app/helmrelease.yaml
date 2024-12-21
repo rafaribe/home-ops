@@ -108,9 +108,7 @@ spec:
           gethomepage.dev/group: Applications
           gethomepage.dev/icon: tandoor.png
           gethomepage.dev/pod-selector: >-
-            app in (
-              tandoor
-            )
+            app in (tandoor)
         hosts:
           - host: tandoor.rafaribe.com
             paths:
