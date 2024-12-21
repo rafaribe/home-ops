@@ -10,43 +10,49 @@ data:
     - Communicate:
         - Discord:
             - icon: discord.png
-              href: 'https://discord.com/app'
+              href: "https://discord.com/app"
         - Gmail:
             - icon: gmail.png
-              href: 'http://gmail.com'
+              href: "http://gmail.com"
         - Google Calendar:
             - icon: google-calendar.png
-              href: 'https://calendar.google.com'
+              href: "https://calendar.google.com"
         - Outlook:
             - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/outlook.png
-              href: 'https://outlook.com'
+              href: "https://outlook.com"
     - Media:
         - YouTube:
             - icon: youtube.png
-              href: 'https://youtube.com/feed/subscriptions'
+              href: "https://youtube.com/feed/subscriptions"
         - Spotify:
             - icon: spotify.png
-              href: 'http://open.spotify.com'
+              href: "http://open.spotify.com"
         - Youtube Music:
             - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/youtube-music.png
-              href: 'https://music.youtube.com'
+              href: "https://music.youtube.com"
     - Reading:
         - Zwame:
             - icon: https://i.imgur.com/192X5MO.png
-              href: 'https://forum.zwame.pt/'
+              href: "https://forum.zwame.pt/"
         - Reddit:
             - icon: reddit.png
-              href: 'https://reddit.com'
+              href: "https://reddit.com"
     - Git:
         - kubesearch:
             - icon: kubernetes-dashboard.png
-              href: 'https://kubesearch.dev/'
+              href: "https://kubesearch.dev/"
         - home-ops:
             - icon: github.png
-              href: 'https://github.com/rafaribe/home-ops'
+              href: "https://github.com/rafaribe/home-ops"
         - onedr0p-home-ops:
             - icon: github.png
-              href: 'https://github.com/onedr0p/home-ops'
+              href: "https://github.com/onedr0p/home-ops"
+        - bjw-s-home-ops:
+            - icon: github.png
+              href: "https://github.com/bjw-s/home-ops"
+        - bjw-s-helm-charts:
+            - icon: github.png
+              href: "https://github.com/bjw-s/helm-charts"
   docker.yaml: ""
   kubernetes.yaml: |
     mode: cluster
@@ -70,24 +76,72 @@ data:
               url: http://10.0.0.1
               username: {{HOMEPAGE_VAR_OPNSENSE_USERNAME}}
               password: {{HOMEPAGE_VAR_OPNSENSE_PASSWORD}}
-    - Calendar:
-        - Agenda:
+        - Unifi:
+            href: https://10.0.0.254:8443
+            description: Unifi Controller
+            ping: 10.0.0.254
+            siteMonitor: https://10.0.0.254:8443
             widget:
-              type: calendar
-              view: agenda # optional - possible values monthly, agenda
-              maxEvents: 15 # optional - defaults to 10
-              integrations: # optional
-                - type: ical # Show calendar events from another service
-                  url: {{HOMEPAGE_VAR_GOOGLE_CALENDAR_ICAL_URL}}
-                  name: Home-Calendar
-                  color: magenta
-                  params:
-                    showName: true
+              type: unifi
+              url: https://10.0.0.254:8443
+              username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
+              password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
+              #fields: ["uptime", "wlan", "wlan_devices"]
+    # - Calendar:
+    #     - Agenda:
+    #         widget:
+    #           type: calendar
+    #           view: agenda # optional - possible values monthly, agenda
+    #           maxEvents: 15 # optional - defaults to 10
+    #           integrations: # optional
+                # - type: ical # Show calendar events from another service
+                #   url: {{HOMEPAGE_VAR_GOOGLE_CALENDAR_ICAL_URL}}
+                #   name: Home-Calendar
+                #   color: magenta
+                #   params:
+                #     showName: true
     - Infrastructure:
         - TrueNAS:
             href: http://truenas.rafaribe.com
             icon: truenas.png
             description: TrueNAS Scale
+            widget:
+              type: truenas
+              url: http://truenas.rafaribe.com # Internal Only
+              key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
+              enablePools: true # optional, defaults to false
+        - Pihole:
+            href: http://pihole.rafaribe.com/admin
+            icon: https://static-00.iconduck.com/assets.00/pihole-icon-174x256-w2exgm2v.png
+            description: DNS Server
+            ping: 10.0.0.254
+            siteMonitor: http://10.0.0.254
+            widget:
+              type: pihole
+              url: http://pihole.rafaribe.com/
+              #version: 6
+              key: {{HOMEPAGE_VAR_PIHOLE_API_KEY}}
+        - Proxmox:
+            href: https://10.0.0.2:8006
+            icon: https://www.45drives.com/solutions/proxmox/img/proxmox_Logo.png
+            description: Virtualized Router
+            ping: 10.0.0.2
+            siteMonitor: http://10.0.0.2:8006
+            widget:
+              type: proxmox
+              url: https://10.0.0.2:8006
+              username: {{HOMEPAGE_VAR_PROXMOX_API_USER}}
+              password: {{HOMEPAGE_VAR_PROXMOX_API_USER_KEY}}
+              node: router
+    - Observability:
+        - Gatus:
+          href: https://status.rafaribe.com/
+          icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT50mSXT9rej_qhHTtQplLjf63bfhnZpQoh2A&s
+          description: Status Page
+          widget:
+            type: gatus
+            url: https://status.rafaribe.com/
+
 
   settings.yaml: |
     title: Dashboard
@@ -137,38 +191,31 @@ data:
         icon: mdi-download-circle
   widgets.yaml: |
     - logo:
-        icon: https://sundayguardianlive.com/wp-content/uploads/2020/07/Untitled-design-9.png
+          icon: https://sundayguardianlive.com/wp-content/uploads/2020/07/Untitled-design-9.png
     - search:
-        provider: [google]
-        focus: false
-        target: _blank
+          provider: [google]
+          focus: false
+          target: _blank
     - greeting:
-        text_size: xl
-        text: "Hey!"
+          text_size: xl
+          text: "Hey Rafael, how are you doing today?"
     - kubernetes:
-        cluster:
-          cpu: true
-          memory: true
-          show: true
-          showLabel: true
-        nodes:
-          cpu: true
-          memory: true
-          show: false
-          showLabel: true
+          cluster:
+              cpu: true
+              memory: true
+              show: true
+              showLabel: true
+          nodes:
+              cpu: true
+              memory: true
+              show: false
+              showLabel: true
     - openmeteo:
-        label: Home
-        latitude: {{HOMEPAGE_VAR_LATITUDE}}
-        longitude: {{HOMEPAGE_VAR_LONGITUDE}}
-        timezone: Europe/Lisbon
-        units: metric
-        cache: 5
-        format:
-          maximumFractionDigits: 1
-    - truenas:
-        url: http://truenas.rafaribe.com # Internal Only
-        key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
-    - pihole:
-        url: http://pihole.rafaribe.com
-        version: 6
-        key: {{HOMEPAGE_VAR_PIHOLE_APIKEY}}
+          label: Home
+          latitude: {{HOMEPAGE_VAR_LATITUDE}}
+          longitude: {{HOMEPAGE_VAR_LONGITUDE}}
+          timezone: Europe/Lisbon
+          units: metric
+          cache: 5
+          format:
+              maximumFractionDigits: 1
