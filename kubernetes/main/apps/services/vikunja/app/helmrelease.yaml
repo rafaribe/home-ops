@@ -83,7 +83,7 @@ spec:
           gethomepage.dev/group: Applications
           gethomepage.dev/icon: vikunja.png
           gethomepage.dev/pod-selector: >-
-            app in (vikunja)
+            app.kubernetes.io/name in (vikunja)
         hosts:
           - host: &host "vikunja.rafaribe.com"
             paths:
