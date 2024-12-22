@@ -69,6 +69,9 @@ spec:
           gethomepage.dev/name: lubelog
           gethomepage.dev/icon: https://demo.lubelogger.com/defaults/lubelogger_icon_72.png
           gethomepage.dev/description: Car Service Tracking
+          gethomepage.dev/widget.type: lubelogger
+          gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_LUBELOG_USERNAME}}` }}"
+          gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_LUBELOG_PASSWORD}}` }}"
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: "lubelog.rafaribe.com"
