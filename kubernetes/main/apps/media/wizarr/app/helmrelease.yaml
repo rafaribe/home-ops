@@ -66,9 +66,6 @@ spec:
           gethomepage.dev/name: Wizarr
           gethomepage.dev/icon: wizarr.png
           gethomepage.dev/description: Plex Invite Management
-          # gethomepage.dev/widget.type: wizarr
-          # gethomepage.dev/widget.url: http://wizarr.media.svc.cluster.local:5690
-          # gethomepage.dev/widget.key: ${WIZARR_TOKEN}
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
           - host: join.rafaribe.com
