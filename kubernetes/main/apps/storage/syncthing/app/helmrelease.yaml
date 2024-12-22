@@ -34,7 +34,7 @@ spec:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
     controllers:
-      syncthing:
+      app:
         containers:
           syncthing:
             image:
@@ -90,7 +90,7 @@ spec:
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
     service:
-      syncthing:
+      app:
         controller: syncthing
         primary: true
         ports:
@@ -121,7 +121,7 @@ spec:
           http:
             port: *browserPort
     ingress:
-      syncthing:
+      app:
         className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
