@@ -70,12 +70,12 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 150Mi
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
+        # pod:
+        #   securityContext:
+        #     runAsUser: 1000
+        #     runAsGroup: 1000
+        #     fsGroup: 1000
+        #     fsGroupChangePolicy: OnRootMismatch
     service:
       backend:
         controller: kitchenowl
