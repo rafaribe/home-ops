@@ -67,7 +67,6 @@ data:
               accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
               tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
               key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
-              fields: ["status"]
       - OPNSense:
             href: http://10.0.0.1
             description: OPNSense
@@ -86,7 +85,6 @@ data:
             url: https://10.0.0.254:8443
             username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
             password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
-            #fields: ["uptime", "wlan", "wlan_devices"]
     - Infrastructure:
       - TrueNAS:
           href: http://truenas.rafaribe.com
@@ -96,7 +94,7 @@ data:
             type: truenas
             url: http://truenas.rafaribe.com # Internal Only
             key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
-            enablePools: true # optional, defaults to false
+            enablePools: true
       - Pihole:
           href: http://pihole.rafaribe.com/admin
           icon: https://static-00.iconduck.com/assets.00/pihole-icon-174x256-w2exgm2v.png
@@ -120,14 +118,6 @@ data:
             username: {{HOMEPAGE_VAR_PROXMOX_API_USER}}
             password: {{HOMEPAGE_VAR_PROXMOX_API_USER_KEY}}
             node: router
-    - Observability:
-      - Gatus:
-        href: https://status.rafaribe.com/
-        icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT50mSXT9rej_qhHTtQplLjf63bfhnZpQoh2A&s
-        description: Status Page
-        widget:
-          type: gatus
-          url: https://status.rafaribe.com/
   settings.yaml: |
     title: Dashboard
     favicon: https://w7.pngwing.com/pngs/848/762/png-transparent-computer-icons-home-house-home-angle-building-rectangle-thumbnail.png
