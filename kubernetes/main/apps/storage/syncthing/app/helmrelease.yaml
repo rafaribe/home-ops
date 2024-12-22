@@ -34,9 +34,9 @@ spec:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
     controllers:
-      app:
+      syncthing:
         containers:
-          syncthing:
+          app:
             image:
               repository: docker.io/syncthing/syncthing
               tag: 1.28.1
@@ -54,7 +54,7 @@ spec:
                 memory: 400M
       browser:
         containers:
-          syncthing:
+          app:
             image:
               repository: docker.io/filebrowser/filebrowser
               tag: v2.31.2
@@ -135,7 +135,6 @@ spec:
           gethomepage.dev/name: Syncthing
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (syncthing)
-
         hosts:
           - host: syncthing.rafaribe.com
             paths:
