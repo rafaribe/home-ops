@@ -32,7 +32,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          backend:
             image:
               repository: docker.io/tombursch/kitchenowl-backend
               tag: v0.6.7@sha256:cc3c587d636f21d9a21d6b3048c1cd4528d725a5b795d710d7768a4930c36a30
@@ -56,7 +56,7 @@ spec:
                 memory: 200Mi
               limits:
                 memory: 500Mi
-          web:
+          frontend:
             image:
               repository: docker.io/tombursch/kitchenowl-web
               tag: v0.6.7@sha256:e511baa6771a750dfa61fd9e0295ee73fefc816d3139aef87a497f7647363e04
@@ -77,18 +77,18 @@ spec:
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
     service:
-      app:
+      backend:
         controller: kitchenowl
         ports:
           http:
             port: 5000
-      web:
+      frontend:
         controller: kitchenowl
         ports:
           http:
             port: 80
     ingress:
-      app:
+      frontend:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
@@ -107,8 +107,10 @@ spec:
     persistence:
       data:
         existingClaim: *app
-        globalMounts:
-          - path: /data
+        advancedMounts:
+          kitchenowl:
+            backend:
+              - path: /data
       tmp:
         type: emptyDir
         globalMounts:
