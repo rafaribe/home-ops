@@ -72,7 +72,7 @@ spec:
         className: internal
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Video
+          gethomepage.dev/group: Downloads
           gethomepage.dev/name: Maintainerr
           gethomepage.dev/icon: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/maintainerr.png # Thanks Jory for the icon
           gethomepage.dev/description: Media Library Management
