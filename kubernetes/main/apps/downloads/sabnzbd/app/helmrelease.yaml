@@ -40,10 +40,10 @@ spec:
               SABNZBD__PORT: &port 80
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
                 sabnzbd,
-                sabnzbd.default,
-                sabnzbd.default.svc,
-                sabnzbd.default.svc.cluster,
-                sabnzbd.default.svc.cluster.local,
+                sabnzbd.downloads,
+                sabnzbd.downloads.svc,
+                sabnzbd.downloads.svc.cluster,
+                sabnzbd.downloads.svc.cluster.local,
                 sab.rafaribe.com
               #  CROSS_SEED_ENABLED: false
               #  CROSS_SEED_HOST: cross-seed.downloads.svc.cluster.local
