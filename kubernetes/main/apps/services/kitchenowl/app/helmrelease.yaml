@@ -102,7 +102,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: web
+                  identifier: frontend
                   port: http
     persistence:
       data:
