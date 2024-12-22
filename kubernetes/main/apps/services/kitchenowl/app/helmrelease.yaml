@@ -56,6 +56,21 @@ spec:
                 memory: 200Mi
               limits:
                 memory: 500Mi
+             containers:
+          web:
+            image:
+              repository: docker.io/tombursch/kitchenowl-web
+              tag: v0.6.7@sha256:e511baa6771a750dfa61fd9e0295ee73fefc816d3139aef87a497f7647363e04
+            env:
+              TZ: ${TIMEZONE}
+              BACK_URL: "kitchenowl.services.svc.cluster.local:5000"
+              FRONT_URL: https://kitchenowl.rafaribe.com
+            resources:
+              requests:
+                cpu: 5m
+                memory: 50Mi
+              limits:
+                memory: 150Mi
         pod:
           securityContext:
             runAsUser: 1000
@@ -68,6 +83,11 @@ spec:
         ports:
           http:
             port: 5000
+      web:
+        controller: kitchenowl
+        ports:
+          http:
+            port: 80
     ingress:
       app:
         className: external
@@ -83,7 +103,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: app
+                  identifier: web
                   port: http
     persistence:
       data:
