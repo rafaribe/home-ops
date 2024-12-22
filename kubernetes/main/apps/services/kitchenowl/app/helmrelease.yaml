@@ -43,9 +43,10 @@ spec:
               EMAIL_MANDATORY: false
               FRONT_URL: https://kitchenowl.rafaribe.com
               OPEN_REGISTRATION: false
-              SMTP_PORT: 2525
+              SMTP_PORT: 25
               SMTP_HOST: smtp-relay.services.svc.cluster.local
               SMTP_FROM: alerts@rafaribe.com
+              STORAGE_PATH: "/data"
             envFrom:
               - secretRef:
                   name: kitchenowl
