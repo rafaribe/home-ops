@@ -16,7 +16,7 @@ spec:
     kind: GitRepository
     name: home-ops
   dependsOn:
-    - name: cloudnativepg-cluster
+    - name: cloudnative-pg-cluster
     - name: rook-ceph-cluster
     - name: volsync
     - name: external-secrets-stores
