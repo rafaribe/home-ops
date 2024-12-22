@@ -33,7 +33,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          plex:
+          app:
             image:
               repository: ghcr.io/onedr0p/plex
               tag: 1.41.3.9314-a0bfb8370@sha256:38fcbef239341db591f8ff87f20777d9a783b79f757fc42e360041d7ba78eada
@@ -81,7 +81,7 @@ spec:
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
     service:
-      plex:
+      app:
         controller: plex
         type: LoadBalancer
         annotations:
@@ -90,7 +90,7 @@ spec:
           http:
             port: 32400
     ingress:
-      plex:
+      app:
         className: external
         annotations:
           gethomepage.dev/enabled: "true"
@@ -99,7 +99,7 @@ spec:
           gethomepage.dev/icon: plex.png
           gethomepage.dev/description: Media Player
           gethomepage.dev/widget.type: plex
-          gethomepage.dev/widget.url: http://plex.media.svc.cluster.local:32400
+          gethomepage.dev/widget.url: http://plex.media:32400
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PLEX_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
@@ -117,6 +117,7 @@ spec:
                   identifier: app
                   port: http
       local:
+        controller: plex
         className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
