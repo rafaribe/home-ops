@@ -62,7 +62,7 @@ spec:
               tag: v0.6.7@sha256:e511baa6771a750dfa61fd9e0295ee73fefc816d3139aef87a497f7647363e04
             env:
               TZ: ${TIMEZONE}
-              BACK_URL: "kitchenowl.services.svc.cluster.local:5000"
+              BACK_URL: "kitchenowl-backend.services.svc.cluster.local:5000"
               FRONT_URL: https://kitchenowl.rafaribe.com
             resources:
               requests:
