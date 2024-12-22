@@ -85,6 +85,9 @@ data:
             url: https://10.0.0.254:8443
             username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
             password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
+      - Gatus:
+        type: gatus
+        href: http://gatus.observability:80
     - Infrastructure:
       - TrueNAS:
           href: http://truenas.rafaribe.com
@@ -110,14 +113,13 @@ data:
           href: https://10.0.0.2:8006
           icon: https://www.45drives.com/solutions/proxmox/img/proxmox_Logo.png
           description: Virtualized Router
-          ping: 10.0.0.2
-          siteMonitor: http://10.0.0.2:8006
           widget:
             type: proxmox
             url: https://10.0.0.2:8006
             username: {{HOMEPAGE_VAR_PROXMOX_API_USER}}
             password: {{HOMEPAGE_VAR_PROXMOX_API_USER_KEY}}
             node: router
+        
   settings.yaml: |
     title: Dashboard
     favicon: https://w7.pngwing.com/pngs/848/762/png-transparent-computer-icons-home-house-home-angle-building-rectangle-thumbnail.png
