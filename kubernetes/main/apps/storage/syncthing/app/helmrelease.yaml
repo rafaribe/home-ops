@@ -124,6 +124,7 @@ spec:
       syncthing:
         className: internal
         annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/appName: syncthing
           hajimari.io/enable: "true"
           hajimari.io/icon: folder-sync
@@ -132,7 +133,9 @@ spec:
           gethomepage.dev/group: Storage
           gethomepage.dev/icon: syncthing
           gethomepage.dev/name: Syncthing
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (syncthing)
+
         hosts:
           - host: syncthing.rafaribe.com
             paths:
