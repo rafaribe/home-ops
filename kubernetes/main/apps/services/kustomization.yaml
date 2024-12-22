@@ -12,6 +12,7 @@ resources:
   - ./hajimari/ks.yaml
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
+  - ./kitchenowl/ks.yaml
   - ./kubernetes-schemas/ks.yaml
   - ./linkding/ks.yaml
   - ./littlelink/ks.yaml
