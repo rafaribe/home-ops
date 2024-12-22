@@ -80,7 +80,7 @@ spec:
                   port: http
     persistence:
       app:
-        existingClaim: *app
+        existingClaim: lubelog-v2
         globalMounts:
           - path: /App/config
             subPath: config
