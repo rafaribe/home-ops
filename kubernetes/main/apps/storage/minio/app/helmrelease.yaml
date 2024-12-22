@@ -80,7 +80,7 @@ spec:
           hajimari.io/instance: "admin"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: S3 storage
-          gethomepage.dev/group: Tools
+          gethomepage.dev/group: Storage
           gethomepage.dev/icon: sh-minio.svg
           gethomepage.dev/name: Minio
           gethomepage.dev/app: minio
