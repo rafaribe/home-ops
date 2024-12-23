@@ -10,7 +10,6 @@ resources:
   - ./dragonfly/ks.yaml
   - ./emqx/ks.yaml
   - ./minio/ks.yaml
-  - ./obsidian-couchdb/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./syncthing/ks.yaml
   - ./volsync/ks.yaml
