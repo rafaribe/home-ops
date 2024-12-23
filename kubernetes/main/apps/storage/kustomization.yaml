@@ -13,4 +13,3 @@ resources:
   - ./snapshot-controller/ks.yaml
   - ./syncthing/ks.yaml
   - ./volsync/ks.yaml
-  #- ./longhorn/ks.yaml
