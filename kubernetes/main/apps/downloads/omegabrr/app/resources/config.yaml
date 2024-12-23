@@ -6,19 +6,19 @@ server:
 
 clients:
   autobrr:
-    host: http://autobrr.media.svc.cluster.local:7474
+    host: http://autobrr.media.svc.cluster.local:80
     apikey: $${AUTOBRR_API_KEY}
 
   arr:
     - name: radarr
       type: radarr
-      host: http://radarr.media.svc.cluster.local:7878
+      host: http://radarr.media.svc.cluster.local:80
       apikey: $${RADARR_API_KEY}
       filters: [5]
 
     - name: sonarr
       type: sonarr
-      host: http://sonarr.media.svc.cluster.local:8989
+      host: http://sonarr.media.svc.cluster.local:80
       apikey: $${SONARR_API_KEY}
       filters: [4]
       excludeAlternateTitles: true
