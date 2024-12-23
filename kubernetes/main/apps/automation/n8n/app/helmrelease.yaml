@@ -1,0 +1,161 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.5.1/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app n8n
+  namespace: flux-system
+spec:
+  releaseName: *app
+  targetNamespace: home-automation
+  timeout: 15m
+  interval: 2m0s
+  chart:
+    spec:
+      chart: app-template
+      version: "3.5.1"
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controllers:
+      *app :
+        replicas: 1 # active longhorn
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          *app :
+            image:
+              pullPolicy: Always
+              repository: n8nio/n8n
+              tag: "1.72.1"
+            envFrom:
+              - secretRef:
+                  name: n8n-config
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128M
+              limits:
+                memory: 4G
+
+    serviceAccount:
+      create: true
+
+    persistence:
+      data:
+        existingClaim: n8n-data-longhorn-database
+        advancedMounts:
+          *app :
+            *app :
+              - path: /home/node/.n8n
+
+    service:
+      main:
+        controller: *app
+        type: ClusterIP
+        ports:
+          http:
+            primary: true
+            port: 5678
+          sqlite:
+            port: 3000
+
+    ingress:
+      main:
+        className: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt
+          nginx.ingress.kubernetes.io/auth-url: "http://n8n-oauth2-proxy.home-automation.svc.cluster.local/oauth2/auth"
+          nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+          external-dns.alpha.kubernetes.io/cloudflare-proxied: "true" # CF breaks n8n sessions
+          external-dns.alpha.kubernetes.io/target: ${cloudflared_tunnel_uuid}.cfargotunnel.com
+        hosts:
+          - host: &host "n8n.${blog_domain}"
+            paths:
+              - path: "/"
+                service:
+                  identifier: main
+        tls:
+          - hosts:
+              - *host
+            secretName: *host
+
+      internal:
+        className: nginx
+        hosts:
+          - host: "n8n.home.arpa"
+            paths:
+              - path: "/"
+                service:
+                  identifier: main
+        tls:
+          - hosts:
+              - "*.home.arpa"
+            secretName: internal-wildcard-tls
+
+      webhooks:
+        className: nginx
+        annotations:
+          external-dns.alpha.kubernetes.io/exclude: "true"
+        hosts:
+          - host: *host
+            paths:
+              - path: "/webhook"
+                service:
+                  identifier: main
+              - path: "/webhook-test"
+                service:
+                  identifier: main
+        tls:
+          - hosts:
+              - *host
+            secretName: *host
+
+      oauth:
+        className: nginx
+        annotations:
+          external-dns.alpha.kubernetes.io/exclude: "true"
+        labels:
+          use-cloudflare-dns-solver: "true"
+        hosts:
+          - host: *host
+            paths:
+              - path: "/oauth2"
+                service:
+                  name: n8n-oauth2-proxy
+                  port: 80
+        tls:
+          - hosts:
+              - *host
+            secretName: *host
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: n8n-oauth2-proxy
+  namespace: home-automation
+spec:
+  targetNamespace: home-automation
+  releaseName: n8n-oauth2-proxy
+  chart:
+    spec:
+      chart: oauth2-proxy
+      version: "7.8.2"
+      sourceRef:
+        kind: HelmRepository
+        name: oauth2-proxy
+        namespace: flux-system
+  interval: 2m0s
+  values:
+    replicaCount: 1
+    extraArgs:
+      provider: github
+      github-org: "${blog_name}"
+      github-team: "super-admins,n8n"
+      cookie-expire: 168h0m0s
+    config:
+      existingSecret: n8n-oauth2-proxy
