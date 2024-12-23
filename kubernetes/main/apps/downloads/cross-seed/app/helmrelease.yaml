@@ -31,9 +31,6 @@ spec:
             runAsNonRoot: true
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
-            supplementalGroups:
-              - 65542 # gladius:external-services
-              - 2000
         containers:
           app:
             image:
