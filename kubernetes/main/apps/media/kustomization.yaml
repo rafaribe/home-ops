@@ -17,4 +17,4 @@ resources:
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
   - ./wizarr/ks.yaml
-  # - ./your-spotify/ks.yaml need to verify my spotify
+  - ./your-spotify/ks.yaml
