@@ -5,9 +5,3 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-configMapGenerator:
-  - name: cross-seed
-    files:
-      - ./config/config.js
-generatorOptions:
-  disableNameSuffixHash: true
