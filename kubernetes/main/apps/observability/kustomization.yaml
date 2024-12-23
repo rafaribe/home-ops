@@ -5,12 +5,9 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  #- ./alertmanager-discord/ks.yaml
- # - ./alertmanager/ks.yaml
   - ./exporters/ks.yaml
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
-  #- ./headlamp/ks.yaml
   - ./karma/ks.yaml
   - ./kepler/ks.yaml
   - ./kromgo/ks.yaml
@@ -20,8 +17,7 @@ resources:
   - ./loki/ks.yaml
   - ./prometheus-operator/ks.yaml
   - ./promtail/ks.yaml
- # - ./opentelemetry/ks.yaml
   - ./redisinsight/ks.yaml
-  #- ./thanos/ks.yaml
+  - ./silence-operator/ks.yaml
   - ./unpoller/ks.yaml
-  #- ./victoria/ks.yaml
+
