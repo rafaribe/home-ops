@@ -85,7 +85,9 @@ spec:
       qbittorrent:
         existingClaim: qbittorrent
         globalMounts:
-          - path: /qbittorrent
+          - path: /qbittorrent/qBittorrent/BT_backup
+            subPath: qBittorrent/BT_backup
+            readOnly: true
       media:
         type: nfs
         server: truenas.rafaribe.com
