@@ -128,7 +128,7 @@ spec:
         globalMounts:
           - path: /config/cache
       config:
-        existingClaim: *app
+        existingClaim: bazarr-config
       media:
         type: nfs
         server: truenas.rafaribe.com
