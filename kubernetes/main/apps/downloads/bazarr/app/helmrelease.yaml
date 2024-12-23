@@ -1,43 +1,55 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: bazarr
+  name: &app bazarr
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
       version: 3.5.1
-      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+  - name: rook-ceph-cluster
+    namespace: rook-ceph
+  - name: volsync
+    namespace: storage
   values:
     controllers:
       bazarr:
+        labels:
+          nfsMount: "true"
+          postgres: "true"
         annotations:
           reloader.stakater.com/auto: "true"
-
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
-
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/bazarr
-              tag: 1.4.5@sha256:a7bceefd6339f906b2955adf66dd8ada7c9d91b363b1389474652af9f7dd5840
-            envFrom:
-              - secretRef:
-                  name: bazarr
+              repository: ghcr.io/joryirving/bazarr
+              tag: 1.4.5@sha256:8b4f48e500f53d6c20d8d5d7cbc5825f2330c677f91764b983daa5289435bb30
+            env:
+              TZ: ${TIMEZONE}
+            envFrom: *envFrom
             probes:
               liveness: &probes
                 enabled: true
@@ -51,46 +63,88 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-            resources:
-              requests:
-                cpu: 15m
-                memory: 350Mi
-              limits:
-                cpu: 100m
-                memory: 900Mi
-            securityContext:
+            securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 4Gi
+          subcleaner:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.4.0@sha256:0330739a707a2969d617e859f096659ab6d149212658ac0ad7e550b59482ebf0
+            env:
+              GITSYNC_REPO: https://github.com/KBlixt/subcleaner
+              GITSYNC_REF: master
+              GITSYNC_PERIOD: 24h
+              GITSYNC_ROOT: /add-ons
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 128Mi
+            securityContext: *securityContext
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: bazarr
         ports:
           http:
             port: *port
-
     ingress:
       app:
-        className: "internal"
+        className: internal
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Bazarr
+          gethomepage.dev/icon: bazarr.png
+          gethomepage.dev/description: Subtitle Downloads
+          gethomepage.dev/widget.type: bazarr
+          gethomepage.dev/widget.url: http://bazarr.downloads:6767
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_BAZARR_TOKEN}}` }}"
         hosts:
-          - host: bazarr.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-
+        - host: "{{ .Release.Name }}.rafaribe.com"
+          paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
     persistence:
+      add-ons:
+        type: emptyDir
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /config/cache
       config:
-        existingClaim: bazarr-config
+        existingClaim: *app
       media:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
         globalMounts:
           - path: /media
+
+      log:
+        type: emptyDir
+        globalMounts:
+          - path: /config/log
+      scripts:
+        type: configMap
+        name: bazarr-scripts
+        defaultMode: 0775
+        globalMounts:
+          - readOnly: true
+      tmp:
+        type: emptyDir
