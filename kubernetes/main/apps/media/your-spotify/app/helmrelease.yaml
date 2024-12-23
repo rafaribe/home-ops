@@ -45,7 +45,7 @@ spec:
               MONGO_ENDPOINT: mongodb://your-spotify-mongodb:27017/your_spotify #mongo sucks
             envFrom:
               - secretRef:
-                  name: your-spotify-secret
+                  name: *app
             probes: &probes
               liveness:
                 enabled: true
