@@ -31,6 +31,14 @@ spec:
       kitchenowl:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
         containers:
           backend:
             image:
@@ -47,9 +55,7 @@ spec:
               SMTP_HOST: smtp-relay.services.svc.cluster.local
               SMTP_FROM: alerts@rafaribe.com
               STORAGE_PATH: "/data"
-            envFrom:
-              - secretRef:
-                  name: kitchenowl
+            envFrom: *envFrom
             resources:
               requests:
                 cpu: 10m
