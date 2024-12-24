@@ -23,11 +23,11 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    service:
-      port: 4466
     ingress:
       enabled: true
       ingressClassName: internal
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: internal.rafaribe.com
       hosts:
         - host: headlamp.rafaribe.com
           paths:
