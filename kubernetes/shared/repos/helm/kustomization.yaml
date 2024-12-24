@@ -52,6 +52,7 @@ resources:
   - ./openebs.yaml
   - ./opentelemetry.yaml
   - ./pascaliske.yaml
+  - ./percona.yaml
   - ./piraeus.yaml
   - ./postfinance.yaml
   - ./prometheus-community.yaml

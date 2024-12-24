@@ -10,6 +10,7 @@ resources:
   - ./dragonfly/ks.yaml
   - ./emqx/ks.yaml
   - ./minio/ks.yaml
+  - ./percona/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./syncthing/ks.yaml
   - ./volsync/ks.yaml
