@@ -23,6 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    service:
+      port: 4466
     ingress:
       enabled: true
       ingressClassName: internal
@@ -64,7 +66,7 @@ spec:
                 - key: kubernetes.io/arch
                   operator: In
                   values: 
-                    - amd64
+                    4- amd64
     extraManifests:
       - |
         apiVersion: v1
