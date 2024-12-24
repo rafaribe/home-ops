@@ -64,4 +64,13 @@ spec:
                 - key: kubernetes.io/arch
                   operator: In
                   values:
-                    - amd64
+    extraManifests:
+      - |
+        apiVersion: v1
+        kind: Secret
+        type: kubernetes.io/service-account-token
+        metadata:
+          name: {{ include "headlamp.fullname" . }}-admin-token
+          namespace: {{ .Release.Namespace }}
+          annotations:
+            kubernetes.io/service-account.name: {{ include "headlamp.serviceAccountName" . }}
