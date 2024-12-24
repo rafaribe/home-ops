@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ../../../../../shared/templates/gatus/internal
+  - ../../../../../shared/templates/gatus/guarded
   - ../../../../../shared/templates/volsync
 configMapGenerator:
   - name: node-red-configmap
