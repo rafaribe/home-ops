@@ -83,6 +83,16 @@ spec:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
               seccompProfile: { type: RuntimeDefault }
+    defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
     persistence:
       config:
         enabled: true
