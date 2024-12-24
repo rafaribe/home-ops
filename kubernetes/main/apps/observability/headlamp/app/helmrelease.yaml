@@ -63,7 +63,8 @@ spec:
             - matchExpressions:
                 - key: kubernetes.io/arch
                   operator: In
-                  values:
+                  values: 
+                    - amd64
     extraManifests:
       - |
         apiVersion: v1
