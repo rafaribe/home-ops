@@ -4,8 +4,7 @@ kind: Ingress
 metadata:
   name: emqx-dashboard
   annotations:
-    external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-spec:
+    external-dns.alpha.kubernetes.io/target: internal.rafaribe.com 
   ingressClassName: internal
   rules:
     - host: mqtt.rafaribe.com
