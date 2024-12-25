@@ -16,4 +16,4 @@ metadata:
               service:
                 name: emqx-dashboard
                 port:
-                  number: 18083
+                  number: dashboard
