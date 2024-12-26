@@ -12,6 +12,15 @@ spec:
   pxc:
     size: 3
     image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0
+    affinity: &affinity
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
     volumeSpec:
       persistentVolumeClaim:
         storageClassName: ceph-block
@@ -22,11 +31,14 @@ spec:
     enabled: true
     size: 1
     image: perconalab/percona-xtradb-cluster-operator:main-haproxy
+    affintiy: *affinity
   logcollector:
     enabled: true
     image: perconalab/percona-xtradb-cluster-operator:main-logcollector
+    affintiy: *affinity
   backup:
     image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0-backup
+    affintiy: *affinity
     storages:
       s3:
         type: s3
