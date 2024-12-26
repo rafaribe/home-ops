@@ -17,7 +17,7 @@ spec:
         storageClassName: ceph-block
         resources:
           requests:
-            storage: 50Gi
+            storage: 50Gi 
   haproxy:
     enabled: true
     size: 1
@@ -27,7 +27,8 @@ spec:
     image: perconalab/percona-xtradb-cluster-operator:main-logcollector
   backup:
     storages:
-      - name: s3
+      s3-minio:
+        type: s3
         s3:
           bucket: percona-backup
           region: us-east-1
