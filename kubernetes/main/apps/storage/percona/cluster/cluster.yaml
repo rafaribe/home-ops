@@ -9,6 +9,8 @@ spec:
   upgradeOptions:
     apply: disabled
     schedule: "0 4 * * *"
+  initContainer:
+    image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0
   pxc:
     size: 3
     image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0
