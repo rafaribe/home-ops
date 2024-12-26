@@ -14,14 +14,14 @@ spec:
     image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0
     affinity: &affinity
       advanced: 
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/arch
-              operator: In
-              values:
-              - amd64
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
     volumeSpec:
       persistentVolumeClaim:
         storageClassName: ceph-block
