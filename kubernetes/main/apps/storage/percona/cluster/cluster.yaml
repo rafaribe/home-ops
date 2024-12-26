@@ -3,14 +3,12 @@ kind: PerconaXtraDBCluster
 metadata:
   name: percona
 spec:
-  crVersion: 1.17.0
+  crVersion: 1.16.1
   secretsName: percona
   allowUnsafeConfigurations: true
   upgradeOptions:
     apply: disabled
     schedule: "0 4 * * *"
-  initContainer:
-    image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0
   pxc:
     size: 3
     image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0
