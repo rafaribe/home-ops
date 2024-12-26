@@ -32,11 +32,9 @@ spec:
     enabled: true
     size: 1
     image: perconalab/percona-xtradb-cluster-operator:main-haproxy
-    affinity: *affinity
   logcollector:
     enabled: true
     image: perconalab/percona-xtradb-cluster-operator:main-logcollector
-    affinity: *affinity
   backup:
     image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0-backup
     storages:
