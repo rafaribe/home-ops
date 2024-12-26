@@ -26,6 +26,7 @@ spec:
     enabled: true
     image: perconalab/percona-xtradb-cluster-operator:main-logcollector
   backup:
+    image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0-backup
     storages:
       s3-minio:
         type: s3
