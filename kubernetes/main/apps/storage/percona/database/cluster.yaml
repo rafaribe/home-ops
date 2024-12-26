@@ -1,0 +1,40 @@
+apiVersion: pxc.percona.com/v1
+kind: PerconaXtraDBCluster
+metadata:
+  name: percona
+spec:
+  crVersion: 1.17.0
+  secretsName: percona
+  allowUnsafeConfigurations: true
+  upgradeOptions:
+    apply: disabled
+    schedule: "0 4 * * *"
+  pxc:
+    size: 3
+    image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0
+    volumeSpec:
+      persistentVolumeClaim:
+        storageClassName: ceph-block
+        resources:
+          requests:
+            storage: 50Gi
+  haproxy:
+    enabled: true
+    size: 1
+    image: perconalab/percona-xtradb-cluster-operator:main-haproxy
+  logcollector:
+    enabled: true
+    image: perconalab/percona-xtradb-cluster-operator:main-logcollector
+  backup:
+    storages:
+      - name: s3
+        s3:
+          bucket: percona-backup
+          region: us-east-1
+          credentialsSecret: percona-s3
+          endpointUrl: http://minio:9000
+    schedule:
+      - name: "daily-backup"
+        schedule: "0 0 * * *"
+        keep: 30
+        storageName: s3
