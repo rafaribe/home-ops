@@ -38,9 +38,8 @@ spec:
     affinity: *affinity
   backup:
     image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0-backup
-    affinity: *affinity
     storages:
-      s3:
+      s3-minio:
         type: s3
         s3:
           bucket: percona-backup
