@@ -16,5 +16,4 @@ spec:
             backend:
               service:
                 name: emqx-dashboard
-                port:
-                  number: dashboard
+                port: dashboard
