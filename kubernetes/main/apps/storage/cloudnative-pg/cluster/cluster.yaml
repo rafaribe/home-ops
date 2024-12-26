@@ -6,7 +6,7 @@ metadata:
   name: home-ops-storage
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.2-24
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.2-25
   primaryUpdateStrategy: unsupervised
   storage:
     size: 70Gi
