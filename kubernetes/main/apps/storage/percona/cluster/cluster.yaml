@@ -13,6 +13,7 @@ spec:
     size: 3
     image: perconalab/percona-xtradb-cluster-operator:main-pxc8.0
     affinity: &affinity
+      advanced: 
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
