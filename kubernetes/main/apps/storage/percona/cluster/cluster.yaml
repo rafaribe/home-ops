@@ -26,8 +26,7 @@ spec:
     image: perconalab/percona-xtradb-cluster-operator:main-haproxy
     nodeSelector: *nodeSelector
   logcollector:
-    enabled: true
-    image: perconalab/percona-xtradb-cluster-operator:1.16.1-logcollector-fluentbit3.2.2
+    enabled: false
   backup:
     image: perconalab/percona-xtradb-cluster-operator:1.16.1-pxc8.0-backup-pxb8.0.35
     storages:
