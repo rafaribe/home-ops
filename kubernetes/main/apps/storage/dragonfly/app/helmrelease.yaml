@@ -25,6 +25,7 @@ spec:
   values:
     controllers:
       dragonfly-operator:
+        replicas: 1
         strategy: RollingUpdate
         containers:
           app:
@@ -67,19 +68,18 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        seccompProfile: { type: RuntimeDefault }
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: *app
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
     service:
       app:
         controller: *app
@@ -88,9 +88,6 @@ spec:
             port: *port
           metrics:
             port: 8080
-    serviceAccount:
-      create: true
-      name: *app
     serviceMonitor:
       app:
         serviceName: *app
@@ -100,3 +97,17 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
+    serviceAccount:
+      create: true
+      name: *app
+
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |-
+              apiVersion: monitoring.coreos.com/v1
+              kind: ServiceMonitor
+              metadata:
+                name: dragonfly-operator
+              spec:
+                fallbackScrapeProtocol: PrometheusText1.0.0
