@@ -17,4 +17,5 @@ spec:
             backend:
               service:
                 name: emqx-dashboard
-                port: dashboard
+                port:
+                  number: 18083
