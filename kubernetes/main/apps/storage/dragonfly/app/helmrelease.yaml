@@ -70,8 +70,8 @@ spec:
               capabilities: { drop: [ALL] }
         pod:
           securityContext:
-            runAsUser: 65534
-            runAsGroup: 65534
+            runAsUser: 1000
+            runAsGroup: 1000
             runAsNonRoot: true
           topologySpreadConstraints:
             - maxSkew: 1
@@ -99,4 +99,4 @@ spec:
             scrapeTimeout: 10s
     serviceAccount:
       create: true
-      name: *app
+      name: *app 
