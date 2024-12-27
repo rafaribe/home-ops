@@ -9,9 +9,8 @@ resources:
   - ./cloudnative-pg/ks.yaml
   - ./dragonfly/ks.yaml
   - ./emqx/ks.yaml
-  - ./mariadb/ks.yaml
   - ./minio/ks.yaml
-  #- ./percona/ks.yaml
+  - ./percona/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./syncthing/ks.yaml
   - ./volsync/ks.yaml
