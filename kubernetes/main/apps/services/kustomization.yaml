@@ -29,4 +29,3 @@ resources:
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
   - ./vikunja/ks.yaml
-  - ./wallabag/ks.yaml
