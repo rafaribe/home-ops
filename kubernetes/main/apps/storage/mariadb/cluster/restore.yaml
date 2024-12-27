@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/k8s.mariadb.com/restore_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Restore
+metadata:
+  name: restore
+spec:
+  mariaDbRef:
+    name: mariadb
+    namespace: database
+  backupRef:
+    name: mariadb-backup
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch

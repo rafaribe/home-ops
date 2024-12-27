@@ -42,6 +42,7 @@ resources:
   - ./kyverno.yaml
   - ./k8stz.yaml
   - ./lwolf.yaml
+  - ./mariadb-operator.yaml
   - ./mayastor-chart.yaml
   - ./metallb.yaml
   - ./mojo2600.yaml
