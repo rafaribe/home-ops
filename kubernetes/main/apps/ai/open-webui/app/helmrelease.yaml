@@ -57,6 +57,8 @@ spec:
       app:
         enabled: true
         className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: &host "chat.rafaribe.com"
             paths:
