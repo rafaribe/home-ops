@@ -21,3 +21,4 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CLAIM: wallabag-data
