@@ -9,6 +9,7 @@ spec:
     - targets:
         - truenas.rafaribe.com:9100
         - opnsense.rafaribe.com:9100
+        - pve.rafaribe.com:9100
   metricsPath: /metrics
   relabelings:
     - action: replace
@@ -24,6 +25,7 @@ spec:
   staticConfigs:
     - targets:
         - truenas.rafaribe.com:9633
+        - pve.rafaribe.com:9633
   metricsPath: /metrics
   relabelings:
     - action: replace
