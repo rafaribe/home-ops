@@ -21,7 +21,9 @@ endpointRoutes:
 envoy:
   enabled: false
 hubble:
-  enabled: false
+  enabled: true
+  relay:
+    enabled: true
 ipam:
   mode: kubernetes
 bgpControlPlane:
