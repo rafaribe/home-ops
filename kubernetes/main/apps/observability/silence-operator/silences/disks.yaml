@@ -24,3 +24,29 @@ spec:
     - name: device
       value: /dev/sda6
       isRegex: false
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: nodedisk-io-saturation
+spec:
+  matchers:
+    - name: alertname
+      value: NodeDiskIOSaturation
+      isRegex: false
+    - name: device
+      value: /dev/mmcblk*
+      isRegex: true
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: node-filesystem-space-filling-up
+spec:
+  matchers:
+    - name: alertname
+      value: NodeFilesystemSpaceFillingUp
+      isRegex: false
+    - name: fstype
+      value: xfs
+      isRegex: false
