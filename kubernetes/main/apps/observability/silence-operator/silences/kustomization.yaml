@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./disks.yaml
   - ./truenas-memory-usage.yaml
+  - ./qbtools-jobs.yaml
