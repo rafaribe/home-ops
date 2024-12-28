@@ -5,7 +5,7 @@ metadata:
   name: &app blocky
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/network/blocky/app/"
+  path: "./kubernetes/utility/apps/network/blocky/app/"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -27,7 +27,7 @@ metadata:
   name: &app blocky-frontend
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/network/blocky/frontend/"
+  path: "./kubernetes/utility/apps/network/blocky/frontend/"
   prune: true
   sourceRef:
     kind: GitRepository
