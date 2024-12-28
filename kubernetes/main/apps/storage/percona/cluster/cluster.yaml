@@ -37,7 +37,7 @@ spec:
           bucket: percona-backup
           region: us-east-1
           credentialsSecret: percona-s3
-          endpointUrl: http://s3:9000
+          endpointUrl: https://s3.rafaribe.com
     schedule:
       - name: "daily-backup"
         schedule: "0 0 * * *"
