@@ -99,11 +99,12 @@ spec:
           gethomepage.dev/name: Plant-it
           gethomepage.dev/icon: plant-it.png
           gethomepage.dev/pod-selector: >-
-            app in (
-              plant-it
-            )
+            app.kubernetes.io/name in (plant-it)
+          gethomepage.dev/widget.type: plantit
+          gethomepage.dev/widget.url: http://plant-it.services
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PLANTIT_API_KEY}}` }}"
         hosts:
-          - host: &host "{{ .Release.Name }}.rafaribe.com"
+          - host: &host "plantit.rafaribe.com"
             paths:
               - path: /
                 pathType: Prefix
@@ -115,9 +116,6 @@ spec:
                 service:
                   identifier: app
                   port: api
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         enabled: true
