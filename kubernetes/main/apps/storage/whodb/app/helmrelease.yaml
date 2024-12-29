@@ -36,7 +36,7 @@ spec:
               tag: 0.44.0@sha256:1df355eb62de13d01543b0e4340e92eb09d09fdcf0d98b3f52c15bf1edda65d8
             envFrom:
               - secretRef:
-                name: whodb
+                  name: whodb
             resources:
               requests:
                 cpu: 30m
