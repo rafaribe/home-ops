@@ -36,7 +36,6 @@ spec:
         innodb_stats_on_metadata        = OFF
         skip_name_resolve               = 1
         max_allowed_packet              = 128M
-
         wsrep_auto_increment_control    = OFF
         wsrep_slave_threads             = 1
         explicit_defaults_for_timestamp = 1

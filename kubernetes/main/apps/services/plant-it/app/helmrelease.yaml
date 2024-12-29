@@ -48,7 +48,7 @@ spec:
               ALLOWED_ORIGINS: "*"
               API_PORT: &port_api "8009"
               CACHE_TTL: "86400"
-              CACHE_HOST: dragonfly.database.svc.cluster.local.
+              CACHE_HOST: dragonfly.storage.svc.cluster.local.
               CACHE_USER: ""
               CACHE_PASSWORD: ""
               CACHE_PORT: "6379"
@@ -89,8 +89,9 @@ spec:
     ingress:
       app:
         enabled: true
-        className: nginx
+        className: internal
         annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/icon: mdi:leaf
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Gardening companion
@@ -99,8 +100,7 @@ spec:
           gethomepage.dev/icon: plant-it.png
           gethomepage.dev/pod-selector: >-
             app in (
-              plant-it,
-              plant-it-db
+              plant-it
             )
         hosts:
           - host: &host "{{ .Release.Name }}.rafaribe.com"
