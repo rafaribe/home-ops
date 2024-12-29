@@ -62,7 +62,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "internal"
+        className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
