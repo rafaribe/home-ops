@@ -21,6 +21,7 @@ resources:
   - ./miniflux/ks.yaml
   - ./netboot/ks.yaml
   - ./paperless/ks.yaml
+  - ./pinchflat/ks.yaml
   - ./radicale/ks.yaml
   - ./searxng/ks.yaml
   - ./silverbullet/ks.yaml
