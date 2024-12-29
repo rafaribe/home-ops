@@ -83,7 +83,7 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "internal.rafaribe.com"
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         className: internal
         hosts:
           - host: "{{ .Release.Name }}.rafaribe.com"
