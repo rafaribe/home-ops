@@ -13,7 +13,7 @@ spec:
     kind: GitRepository
     name: home-ops
   dependsOn:
-    - name: storage-rook-ceph-cluster
+    - name: rook-ceph-cluster
   interval: 30m
   retryInterval: 1m
   timeout: 5m
