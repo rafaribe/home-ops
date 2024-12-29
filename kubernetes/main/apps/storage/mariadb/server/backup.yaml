@@ -1,0 +1,24 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Backup
+metadata:
+  name: backup
+spec:
+  mariaDbRef:
+    name: mariadb-galera
+  schedule:
+    cron: "0 2 * * *"
+    suspend: false
+  maxRetention: 720h # 30 days
+  storage:
+    s3:
+      bucket: mariadb
+      endpoint: minio.storage.svc.cluster.local:9000
+      region: us-east-1
+      accessKeyIdSecretKeyRef:
+        name: mariadb-minio
+        key: access-key-id
+      secretAccessKeySecretKeyRef:
+        name: minio
+        key: secret-access-key
+      tls:
+        enabled: false

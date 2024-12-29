@@ -1,0 +1,62 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/k8s.mariadb.com/mariadb_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  name: &name mariadb-galera
+spec:
+  # renovate: datasource=docker depName=docker.io/library/mariadb
+  image: docker.io/library/mariadb:11.6.2-noble@sha256:a9547599cd87d7242435aea6fda22a9d83e2c06d16c658ef70d2868b3d3f6a80
+  replicas: 3
+  env:
+    - name: TZ
+      value: Europe/Lisbon
+
+  # bootstrapFrom:
+  #   backupRef:
+  #     name: mariabackup
+  maxScaleRef:
+    name: maxscale-galera
+    namespace: storage
+
+  rootPasswordSecretKeyRef:
+    name: mariadb-secret
+    key: password
+    generate: false
+
+  volumeClaimTemplate:
+    storageClassName: ceph-block
+    resources:
+      requests:
+        storage: 15Gi
+    accessModes:
+      - ReadWriteOnce
+      
+  myCnf: |
+    [mariadb]
+    bind-address=*
+    default_storage_engine=InnoDB
+    binlog_format=row
+    innodb_autoinc_lock_mode=2
+    innodb_buffer_pool_size=1024M
+    max_allowed_packet=256M
+    
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 512Mi
+
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+
+  service:
+    type: LoadBalancer
+    annotations:
+      io.cilium/lb-ipam-ips: ${LB_MARIADB}
