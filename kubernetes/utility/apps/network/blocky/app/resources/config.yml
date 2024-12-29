@@ -254,30 +254,7 @@ prometheus:
   enable: true
   # url path, optional (default '/metrics')
   path: /metrics
-
-# optional: write query information (question, answer, client, duration etc.) to daily csv file
-queryLog:
-  # optional one of: mysql, postgresql, csv, csv-client. If empty, log to console
-  type: postgresql
-  # directory (should be mounted as volume in docker) for csv, db connection string for mysql/postgresql
-  target: $${BLOCKY_DATABASE_URI}
-  #postgresql target: postgres://user:password@db_host_or_ip:5432/db_name
-  # if > 0, deletes log files which are older than ... days
-  logRetentionDays: 7
-  # optional: Max attempts to create specific query log writer, default: 3
-  creationAttempts: 3
-  # optional: Time between the creation attempts, default: 2s
-  creationCooldown: 2s
-  # optional: Which fields should be logged. You can choose one or more from: clientIP, clientName, responseReason, responseAnswer, question, duration. If not defined, it logs all fields
-  # fields:
-  #   - clientIP
-  #   - clientName
-  #   - responseReason
-  #   - responseAnswer
-  #   - question
-  #   - duration
-  # optional: Interval to write data in bulk to the external database, default: 30s
-  flushInterval: 30s
+    
 
 minTlsServeVersion: 1.3
 
