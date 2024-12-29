@@ -22,6 +22,7 @@ resources:
   - ./netboot/ks.yaml
   - ./paperless/ks.yaml
   - ./pinchflat/ks.yaml
+  - ./plant-it/ks.yaml
   - ./radicale/ks.yaml
   - ./searxng/ks.yaml
   - ./silverbullet/ks.yaml
