@@ -31,15 +31,15 @@ spec:
         initContainers:
           01-init-db:
             image:
-              repository: ghcr.io/rafaribe/postgres-init
-              tag: 16.6
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14
             envFrom:
               - secretRef:
                   name: immich-db
           02-init-extensions:
             image:
               repository: ghcr.io/rafaribe/postgres-init
-              tag: 16.6
+              tag: 14
             env:
               - name: PGDATABASE
                 value: immich
