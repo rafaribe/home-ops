@@ -37,7 +37,7 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
+              repository: ghcr.io/rafaribe/postgres-init
               tag: 16
             envFrom: &envFrom
               - secretRef:
@@ -45,8 +45,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/bazarr
-              tag: 1.5.0@sha256:def67a69cc8789f4ae43746e1c772ab76e69a0b8b7b0e0b4e3e01faf05efb4c9
+              repository: ghcr.io/rafaribe/bazarr
+              tag: 1.5.0@sha256:65ff37fe7767dc62cbdf98218f29fa60cd4d6ef185b3e4a51419a8efc36bbc14
             env:
               TZ: ${TIMEZONE}
             envFrom: *envFrom

@@ -28,7 +28,7 @@ spec:
       disableAuth: true
     image: &image
       # Probably need to build my own image..
-      repository: ghcr.io/onedr0p/volsync
-      tag: 0.11.0@sha256:35733dbcd556eb94d4b95296dd6416d468d71803a52c30cdec18970063095581
+      repository: ghcr.io/rafaribe/volsync
+      tag: 0.11.0@sha256:6067d8f2993ca9fe792b00b1e114692a1a9486f7a4af0efcc4cc089f64b851b4
     restic:
       <<: *image

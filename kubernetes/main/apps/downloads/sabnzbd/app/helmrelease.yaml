@@ -33,8 +33,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/sabnzbd
-              tag: 4.4.1@sha256:4188d3c29c53de1018edcfd5dc2d0a0c7955b9a239b91ff6c859626abd3494dc
+              repository: ghcr.io/rafaribe/sabnzbd
+              tag: 4.4.1@sha256:e969e3cf0be419f393e5745889b913c51a6e01acf8a50b14b7decb7856a681e0
             env:
               TZ: "Europe/Lisbon"
               SABNZBD__PORT: &port 80

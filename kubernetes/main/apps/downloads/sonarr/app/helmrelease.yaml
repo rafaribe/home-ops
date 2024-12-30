@@ -36,8 +36,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/sonarr-develop
-              tag: 4.0.11.2804@sha256:2a37efa3440b5981bd17245009a050d0a7a33bc0803a0c61d56160ab2cefae69
+              repository: ghcr.io/rafaribe/sonarr-develop
+              tag: 4.0.11@sha256:bcd549dd079cccffe5c05655db2a94437f180dc0aa86a60443fe58b58d23059b
             env:
               TZ: Europe/Lisbon
               SONARR__APP__INSTANCENAME: Sonarr

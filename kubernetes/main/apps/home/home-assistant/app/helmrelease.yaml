@@ -36,8 +36,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/home-assistant
-              tag: 2024.12.5@sha256:638e519c874a06389ce6f03e435dd80a6697e8692eac88b459775839410f3439 # Rolling back until https://github.com/home-assistant/core/issues/132336 is fixed
+              repository: ghcr.io/rafaribe/home-assistant
+              tag: 2024.12.5@sha256:2b15ab098f484104a73f45558c76ef033c739c8f3185181292dc22a997c4956d
             env:
               TZ: Europe/Lisbon
               HOME_ASSISTANT__HACS_INSTALL: "true"

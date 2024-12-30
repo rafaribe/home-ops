@@ -43,7 +43,7 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
+              repository: ghcr.io/rafaribe/postgres-init
               tag: 16
             env:
               EXCLUDE_DBS: app lidarr_log radarr_log sonarr_log prowlarr_log postgres template0 template1
