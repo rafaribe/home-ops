@@ -81,6 +81,15 @@ spec:
       app:
         className: internal
         annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: AudioBookShelf
+          gethomepage.dev/app: *app
+          gethomepage.dev/icon: audiobookshelf.png
+          gethomepage.dev/description: Audiobook Library
+          gethomepage.dev/widget.type: audiobookshelf
+          gethomepage.dev/widget.url: http://audiobookshelf.media:80
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_AUDIOBOOKSHELF_TOKEN}}`}}"
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: audiobookshelf.rafaribe.com
