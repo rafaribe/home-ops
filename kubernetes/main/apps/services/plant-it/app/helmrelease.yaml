@@ -35,7 +35,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/rafaribe/mysql-init
-              tag: 11@sha256:6a59806ccd246212217b7cb75d1ae51d7d8fb1f1ee282cb9450c8641494c3d2a
+              tag: 11@sha256:59faa45141856ee60d477c2527ac7029ae7f20c4abd55f043923420af13736a4
             envFrom: &envFrom
               - secretRef:
                   name: *app
