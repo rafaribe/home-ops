@@ -98,7 +98,7 @@ spec:
                 cpu: 25m
                 memory: 2Gi
               limits:
-                memory: 6Gi
+                memory: 16Gi
           tika:
             image:
               repository: docker.io/apache/tika
