@@ -63,7 +63,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: Mealie
           gethomepage.dev/icon: mdi-food-apple-outline
-          gethomepage.dev/group: Apps
+          gethomepage.dev/group: Home
           hajimari.io/enable: "true"
           hajimari.io/icon: "food"
           hajimari.io/appName: "Mealie"

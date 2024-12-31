@@ -80,7 +80,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: Vikunja
           gethomepage.dev/description: Tasks and project management platform.
-          gethomepage.dev/group: Applications
+          gethomepage.dev/group: Services
           gethomepage.dev/icon: vikunja.png
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (vikunja)

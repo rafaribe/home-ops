@@ -105,7 +105,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: Tandoor
           gethomepage.dev/description: Managing recipes, planned meals, shopping lists.
-          gethomepage.dev/group: Applications
+          gethomepage.dev/group: Home
           gethomepage.dev/icon: tandoor.png
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (tandoor)
