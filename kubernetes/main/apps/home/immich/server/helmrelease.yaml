@@ -127,9 +127,9 @@ spec:
             port: 2283
     ingress:
       app:
-        className: internal
+        className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "internal.rafaribe.com"
+          external-dns.alpha.kubernetes.io/target: "external.rafaribe.com"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
           nginx.ingress.kubernetes.io/proxy-body-size: 1024m
           nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
