@@ -64,8 +64,8 @@ spec:
       main: 
         controller: main
         type: LoadBalancer
-          annotations:
-            io.cilium/lb-ipam-ips: ${LB_MINIO}
+        annotations:
+          io.cilium/lb-ipam-ips: ${LB_MINIO}
         ports:
           http:
             port: 9001
