@@ -101,7 +101,7 @@ spec:
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (plant-it)
           gethomepage.dev/widget.type: plantit
-          gethomepage.dev/widget.url: http://plant-it.services
+          gethomepage.dev/widget.url: http://plant-it.services:8009
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PLANTIT_API_KEY}}` }}"
         hosts:
           - host: &host "plantit.rafaribe.com"
