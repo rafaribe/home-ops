@@ -61,8 +61,11 @@ spec:
                   failureThreshold: 6
               readiness: *probes
     service:
-      main:
+      main: 
         controller: main
+        type: LoadBalancer
+          annotations:
+            io.cilium/lb-ipam-ips: ${LB_MINIO}
         ports:
           http:
             port: 9001
