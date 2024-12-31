@@ -34,7 +34,6 @@ spec:
               tag: 2.13.5
             env:
               # Configure application
-
               PAPERLESS_SECRET_KEY:
                 valueFrom:
                   secretKeyRef:
@@ -58,16 +57,21 @@ spec:
               PAPERLESS_CONSUMER_RECURSIVE: "true"
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
               # Configure OCR
-              PAPERLESS_OCR_LANGUAGES: por
+              PAPERLESS_OCR_LANGUAGES: por eng
               PAPERLESS_OCR_LANGUAGE: por
+              PAPERLESS_OCR_MODE: "redo"
+              PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}' 
               # Enable TIKA
               PAPERLESS_TIKA_ENABLED: true
               PAPERLESS_TIKA_ENDPOINT: http://127.0.0.1:9998
+              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://127.0.0.1:3000
               # Configure redis integration
               PAPERLESS_REDIS: redis://dragonfly.storage.svc.cluster.local:6379
               # Configure user permissions
               USERMAP_UID: "1000"
               USERMAP_GID: "1000"
+              # Configure filename format
+              PAPERLESS_FILENAME_FORMAT: '{correspondent}/{document_type}/{created_year}/{created_year}{created_month}{title}'
               # Configure admin user
               PAPERLESS_ADMIN_USER:
                 valueFrom:
