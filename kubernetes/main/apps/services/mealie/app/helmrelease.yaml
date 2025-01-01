@@ -64,6 +64,10 @@ spec:
           gethomepage.dev/name: Mealie
           gethomepage.dev/icon: mdi-food-apple-outline
           gethomepage.dev/group: Home
+          gethomepage.dev/href: https://mealie.rafaribe.com
+          gethomepage.dev/widget.type: mealie
+          gethomepage.dev/widget.url: http://mealie.services:9000
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_MEALIE_API_KEY}}` }}" 
           hajimari.io/enable: "true"
           hajimari.io/icon: "food"
           hajimari.io/appName: "Mealie"
