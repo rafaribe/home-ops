@@ -88,6 +88,7 @@ spec:
           gethomepage.dev/name: *app
           gethomepage.dev/icon: si-postgresql
           gethomepage.dev/siteMonitor: http://pgadmin.storage
+          gethomepage.dev/description: "PostgreSQL administration"
         hosts:
           - host: &host "pg.rafaribe.com"
             paths:
