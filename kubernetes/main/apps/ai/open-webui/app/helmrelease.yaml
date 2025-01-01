@@ -34,13 +34,13 @@ spec:
               tag: v0.5.2
             env:
               - name: OLLAMA_BASE_URL
-                value: http://10.0.0.70:11434
+                value: http://ollama.ai.svc.cluster.local:11434
               - name: ENABLE_RAG_WEB_SEARCH
                 value: true
               - name: RAG_WEB_SEARCH_ENGINE
                 value: searxng
               - name: SEARXNG_QUERY_URL
-                value: http://searxng.servicesrrrrrrr.svc.cluster.local:8080/search?q=<query>
+                value: http://searxng.services.svc.cluster.local:8080/search?q=<query>
             resources:
               requests:
                 cpu: 500m
