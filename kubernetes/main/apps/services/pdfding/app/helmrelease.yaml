@@ -49,6 +49,8 @@ spec:
               # App
               DEFAULT_THEME: dark
               DATABASE_TYPE: postgres # Check externalsecret for values
+              HOST_PORT: &port 80
+              HOST_NAME: https://pdfding.rafaribe.com
               # Email
               EMAIL_BACKEND: smtp
               SMTP_HOST: smtp-relay.services.svc.cluster.local.
@@ -65,7 +67,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8080
+            port: *port
     ingress:
       app:
         enabled: true
