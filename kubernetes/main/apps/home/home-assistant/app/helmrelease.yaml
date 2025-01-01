@@ -73,34 +73,34 @@ spec:
               - --extensions-dir
               - "/config/.vscode"
 
-          music-assistant:
-            image:
-              repository: ghcr.io/music-assistant/server
-              tag: 2.3.4@sha256:301cc44d2405e1f12953a44ddb65454630007755af9ada9d204bc1a3b9a06175
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
-            resources:
-              requests:
-                cpu: 5m
-                memory: 1374M
-              limits:
-                memory: 2Gi
-            securityContext:
-              apparmor:
-                enabled: false # Disables apparmor
-              allowPrivilegeEscalation: true
-              readOnlyRootFilesystem: false
-              capabilities:
-                add:
-                  - SYS_ADMIN
-                  - DAC_READ_SEARCH
-                drop:
-                  - ALL
+          # music-assistant:
+          #   image:
+          #     repository: ghcr.io/music-assistant/server
+          #     tag: 2.3.4@sha256:301cc44d2405e1f12953a44ddb65454630007755af9ada9d204bc1a3b9a06175
+          #   probes:
+          #     liveness:
+          #       enabled: false
+          #     readiness:
+          #       enabled: false
+          #     startup:
+          #       enabled: false
+          #   resources:
+          #     requests:
+          #       cpu: 5m
+          #       memory: 1374M
+          #     limits:
+          #       memory: 2Gi
+          #   securityContext:
+          #     apparmor:
+          #       enabled: false # Disables apparmor
+          #     allowPrivilegeEscalation: true
+          #     readOnlyRootFilesystem: false
+          #     capabilities:
+          #       add:
+          #         - SYS_ADMIN
+          #         - DAC_READ_SEARCH
+          #       drop:
+          #         - ALL
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
