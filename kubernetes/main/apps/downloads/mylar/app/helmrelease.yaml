@@ -47,14 +47,14 @@ spec:
                 memory: 700M
               limits:
                 memory: 1200M
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: true
+    #     runAsUser: 1000
+    #     runAsGroup: 1000
+    #     fsGroup: 1000
+    #     fsGroupChangePolicy: OnRootMismatch
+    #     seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
@@ -70,12 +70,12 @@ spec:
           gethomepage.dev/name: Mylar
           gethomepage.dev/icon: mylar.png
           gethomepage.dev/description: Comic Downloads
-          # gethomepage.dev/widget.type: mylar
-          # gethomepage.dev/widget.url: http://mylar.downloads:8090
-          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_MYLAR_TOKEN}}` }}"
+          gethomepage.dev/widget.type: mylar
+          gethomepage.dev/widget.url: http://mylar.downloads:8090
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_MYLAR_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: "{{ .Release.Name }}.rafaribe.com"
+          - host: "mylar.rafaribe.com"
             paths:
               - path: /
                 service:
