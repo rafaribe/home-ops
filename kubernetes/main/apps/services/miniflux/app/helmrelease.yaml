@@ -100,6 +100,18 @@ spec:
       app:
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          #Homepage
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: Miniflux
+          gethomepage.dev/description: "RSS feed reader"
+          gethomepage.dev/icon: "miniflux.png"
+          gethomepage.dev/href: &host "http://miniflux.services"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (miniflux)
+          gethomepage.dev/widget.type: miniflux
+          gethomepage.dev/widget.url: *host
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_MINIFLUX_API_KEY}}` }}"
         className: internal
         hosts:
           - host: "miniflux.rafaribe.com"
