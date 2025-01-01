@@ -11,7 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: node-feature-discovery
     - name: volsync
     - name: rook-ceph-cluster
   path: ./kubernetes/main/apps/ai/ollama/app
