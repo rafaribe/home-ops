@@ -69,6 +69,7 @@ spec:
           gethomepage.dev/widget.type: mealie
           gethomepage.dev/widget.url: http://mealie.services:9000
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_MEALIE_API_KEY}}`}}"
+          gethomepage.dev/widget.version: "2"
           gethomepage.dev/widget.fields: '["recipes", "users", "categories", "tags"]'
           # Hajimari 
           hajimari.io/enable: "true"
