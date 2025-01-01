@@ -28,6 +28,20 @@ spec:
 apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
+  name: cephnodediskspacewarning-local-tpi
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeDiskspaceWarning
+      isRegex: false
+    - name: mountpoint
+      value: /var
+      isRegex: false
+---
+
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
   name: nodedisk-io-saturation
 spec:
   matchers:
