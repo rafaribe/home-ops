@@ -1,0 +1,95 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app pdfding
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      pdfding:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: pdfding
+        containers:
+          app:
+            image:
+              repository: mrmn/pdfding
+              tag: 0.9.0@sha256:7367d831440ceecaa6dbc77edcaf3b5cbd77d1b44983c9331a95e1c9798e99e1
+            envFrom: *envFrom
+            env:
+              # App
+              DEFAULT_THEME: dark
+              DATABASE_TYPE: postgres # Check externalsecret for values
+              # Email
+              EMAIL_BACKEND: smtp
+              SMTP_HOST: smtp-relay.services.svc.cluster.local.
+              SMTP_PORT: "25"
+            resources:
+              requests:
+                cpu: 5m
+                memory: 10Mi
+              limits:
+                memory: 100Mi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 8080
+    ingress:
+      app:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/enabled: "true"
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          hajimari.io/icon: mdi-file-pdf
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: pdfding
+          gethomepage.dev/description: PDF Viewer and Editor
+          gethomepage.dev/group: Applications
+          gethomepage.dev/icon: https://en.m.wikipedia.org/wiki/File:Icon_pdf_file.svg
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (pdfding)
+        hosts:
+          - host: &host "pdfding.rafaribe.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      data:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /home/nonroot/pdfding

@@ -95,6 +95,14 @@ spec:
         className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          hajimari.io/icon: mdi-file-pdf
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Stirling PDF
+          gethomepage.dev/description: PDF Viewer and Editor
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: https://en.m.wikipedia.org/wiki/File:Icon_pdf_file.svg
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (pdfding)
         hosts:
           - host: pdf.rafaribe.com
             paths:
