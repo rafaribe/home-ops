@@ -88,8 +88,14 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      data:
+      media:
         enabled: true
         existingClaim: *app
         globalMounts:
-          - path: /home/nonroot/pdfding
+          - path: /home/nonroot/pdfding/media
+      data:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/docs/paperless/
+        globalMounts:
+          - path: /data
