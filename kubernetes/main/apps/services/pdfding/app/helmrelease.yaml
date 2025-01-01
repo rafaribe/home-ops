@@ -69,16 +69,16 @@ spec:
     ingress:
       app:
         enabled: true
-        className: external
+        className: internal
         annotations:
           external-dns.alpha.kubernetes.io/enabled: "true"
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/icon: mdi-file-pdf
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: pdfding
           gethomepage.dev/description: PDF Viewer and Editor
-          gethomepage.dev/group: Applications
-          gethomepage.dev/icon: https://en.m.wikipedia.org/wiki/File:Icon_pdf_file.svg
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: https://cdn-icons-png.flaticon.com/512/4208/4208479.png
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (pdfding)
         hosts:
