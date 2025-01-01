@@ -109,9 +109,9 @@ spec:
           gethomepage.dev/icon: tandoor.png
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (tandoor)
-          gethomepage.dev/href: &host "http://tandoor.services:8080"
+          gethomepage.dev/href: https://tandoor.rafaribe.com
           gethomepage.dev/widget.type: tandoor
-          gethomepage.dev/widget.url: *host
+          gethomepage.dev/widget.url: http://tandoor.services:8080
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TANDOOR_API_KEY}}` }}"   
         hosts:
           - host: tandoor.rafaribe.com
