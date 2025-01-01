@@ -55,10 +55,11 @@ spec:
               SMTP_PORT: "25"
             resources:
               requests:
-                cpu: 5m
-                memory: 10Mi
-              limits:
+                cpu: 50m
                 memory: 100Mi
+              limits:
+                cpu: 100m
+                memory: 400Mi
     service:
       app:
         controller: *app
