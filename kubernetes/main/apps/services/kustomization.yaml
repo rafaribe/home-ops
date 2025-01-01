@@ -12,6 +12,7 @@ resources:
   - ./cyberchef/ks.yaml
   - ./docmost/ks.yaml
   - ./hajimari/ks.yaml
+  - ./hoarder/ks.yaml
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
   - ./kitchenowl/ks.yaml

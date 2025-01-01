@@ -39,6 +39,7 @@ spec:
       - --ingress-class=internal
     policy: sync
     sources: ["ingress", "service"]
+    triggerLoopOnEvent: true
     domainFilters: ["rafaribe.com"]
     serviceMonitor:
       enabled: true
