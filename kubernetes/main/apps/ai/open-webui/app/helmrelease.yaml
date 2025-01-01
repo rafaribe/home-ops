@@ -27,6 +27,14 @@ spec:
       open-webui:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/rafaribe/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: openwebui
         containers:
           app:
             image:
@@ -41,6 +49,7 @@ spec:
                 value: searxng
               - name: SEARXNG_QUERY_URL
                 value: http://searxng.services.svc.cluster.local:8080/search?q=<query>
+            envFrom: *envFrom
             resources:
               requests:
                 cpu: 500m
