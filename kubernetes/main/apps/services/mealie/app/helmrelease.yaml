@@ -60,18 +60,22 @@ spec:
         enabled: true
         className: internal
         annotations:
+          # Homepage
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: Mealie
-          gethomepage.dev/icon: mdi-food-apple-outline
+          gethomepage.dev/icon: mealie.svg
           gethomepage.dev/group: Home
           gethomepage.dev/href: https://mealie.rafaribe.com
           gethomepage.dev/widget.type: mealie
-          gethomepage.dev/widget.url: http://mealie.services.svc.cluster.local:9000
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_MEALIE_API_KEY}}` }}" 
+          gethomepage.dev/widget.url: http://mealie.services:9000
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_MEALIE_API_KEY}}`}}"
+          gethomepage.dev/widget.fields: '["recipes", "users", "categories", "tags"]'
+          # Hajimari 
           hajimari.io/enable: "true"
           hajimari.io/icon: "food"
           hajimari.io/appName: "Mealie"
           hajimari.io/group: "Home"
+          # External DNS
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
           - host: &host "mealie.rafaribe.com"
