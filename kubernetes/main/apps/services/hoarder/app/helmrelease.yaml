@@ -54,6 +54,10 @@ spec:
                     key: encryption_key
               NEXTAUTH_URL: https://hoarder.rafaribe.com
               DISABLE_NEW_RELEASE_CHECK: true
+              # Ai
+              INFERENCE_IMAGE_MODEL: "llava"
+              INFERENCE_TEXT_MODEL: "llama3.2:3b"
+              OLLAMA_BASE_URL: "http://ollama.ai.svc.cluster.local:11434"
             probes:
               liveness:
                 enabled: true
