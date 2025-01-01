@@ -7,9 +7,3 @@ resources:
   - ./externalsecret.yaml
   - ../../../../../shared/templates/volsync
   - ../../../../../shared/templates/gatus/external
-configMapGenerator:
-  - name: pdfding-configmap
-    files:
-      - ./config/Caddyfile
-generatorOptions:
-  disableNameSuffixHash: true
