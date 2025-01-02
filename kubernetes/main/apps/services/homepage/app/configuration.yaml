@@ -166,7 +166,11 @@ data:
       Services:
         style: row
         columns: 5
-        icon: mdi:tools
+        icon: mdi-tools
+      Media:
+        style: row
+        columns: 3
+        icon: mdi-television-play
   widgets.yaml: |
     - logo:
         icon: https://sundayguardianlive.com/wp-content/uploads/2020/07/Untitled-design-9.png
