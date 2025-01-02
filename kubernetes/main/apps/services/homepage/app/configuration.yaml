@@ -44,6 +44,9 @@ data:
         - home-ops:
             - icon: github.png
               href: "https://github.com/rafaribe/home-ops"
+        - containers:
+            - icon: github.png
+              href: "https://github.com/rafaribe/containers"
         - onedr0p-home-ops:
             - icon: github.png
               href: "https://github.com/onedr0p/home-ops"
