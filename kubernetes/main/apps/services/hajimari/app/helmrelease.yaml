@@ -103,6 +103,12 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "weather-sunset"
           hajimari.io/instance: "admin"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: Hajimari
+          gethomepage.dev/icon: https://hajimari.io/assets/logo.png
+          gethomepage.dev/description: Dashboard for applications with service discovery
+          gethomepage.dev/siteMonitor: http://hajimari.services:3000
         hosts:
           - host: &host apps.rafaribe.com
             paths:

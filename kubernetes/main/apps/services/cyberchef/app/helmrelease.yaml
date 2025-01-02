@@ -69,8 +69,12 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          # nginx.ingress.kubernetes.io/whitelist-source-range: |
-          #   10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: Cyberchef
+          gethomepage.dev/icon: https://repocloud.io/static/apps/cyberchef/assets/logo.png
+          gethomepage.dev/description: The Cyber Swiss Army Knife
+          gethomepage.dev/siteMonitor: http://cyberchef.services:8000
         hosts:
           - host: &host "{{ .Release.Name }}.rafaribe.com"
             paths:
