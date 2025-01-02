@@ -35,8 +35,8 @@ spec:
         initContainers:
           01-init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: "16.6"
+              repository: ghcr.io/rafaribe/postgres-init
+              tag: "16"
             envFrom: &envFrom
               - secretRef:
                   name: postiz
