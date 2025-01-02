@@ -57,6 +57,7 @@ spec:
               # Ai
               INFERENCE_IMAGE_MODEL: "llava"
               INFERENCE_TEXT_MODEL: "llama3.2:3b"
+              INFERENCE_JOB_TIMEOUT_SEC: 600 # 10 Minutes
               OLLAMA_BASE_URL: "http://ollama.ai.svc.cluster.local:11434"
             probes:
               liveness:
