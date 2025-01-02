@@ -41,6 +41,8 @@ spec:
                 value: &modelPath "/models"
               - name: OLLAMA_KEEP_ALIVE
                 value: "24h"
+              - name: OLLAMA_LOAD_TIMEOUT
+                value: "600"
             resources:
               requests:
                 cpu: 500m
