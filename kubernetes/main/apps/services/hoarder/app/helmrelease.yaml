@@ -140,6 +140,14 @@ spec:
         className: "internal"
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          hajimari.io/icon: mdi:archive-outline
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Hoarder
+          gethomepage.dev/description: The Bookmark Everything app
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: https://media.invisioncic.com/u329766/monthly_2024_05/hoarder.png.cb75b7347d47989bd0c3e65b9e613700.png
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (hoarder)
         hosts:
           - host: hoarder.rafaribe.com
             paths:

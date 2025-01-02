@@ -73,7 +73,6 @@ spec:
         enabled: true
         className: internal
         annotations:
-          external-dns.alpha.kubernetes.io/enabled: "true"
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/icon: mdi-file-pdf
           gethomepage.dev/enabled: "true"
