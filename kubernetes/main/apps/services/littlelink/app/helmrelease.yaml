@@ -72,6 +72,12 @@ spec:
         className: "external"
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.rafaribe.com"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: Littlelink
+          gethomepage.dev/icon: https://media.mstdn.social/accounts/avatars/109/003/317/067/542/220/original/86052f2808fd5daa.png
+          gethomepage.dev/description: Linktree Alternative
+          gethomepage.dev/siteMonitor: http://littlelink.services:3000
         hosts:
           - host: "link.rafaribe.com"
             paths:

@@ -81,13 +81,19 @@ spec:
         enabled: true
         className: external
         annotations:
-          hajimari.io/icon: link
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-        #      nginx.ingress.kubernetes.io/auth-method: GET
-        #  nginx.ingress.kubernetes.io/auth-url: https://auth.rafaribe.com/api/verify
-        #   nginx.ingress.kubernetes.io/auth-signin: https://auth.rafaribe.com/?rm=$request_method
-        #    nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
-        #    nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
+          # Hajimari
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "link"
+          hajimari.io/appName: "Linkding"
+          hajimari.io/group: "Home"
+          # Homepage
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Linkding
+          gethomepage.dev/description: Bookmark manager that is designed be to be minimal and fast
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: linkding.png
+          gethomepage.dev/siteMonitor: http://linkding.services:9090
         hosts:
           - host: &host "links.rafaribe.com"
             paths:
