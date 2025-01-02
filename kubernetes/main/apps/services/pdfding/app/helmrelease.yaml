@@ -77,7 +77,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/icon: mdi-file-pdf
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: pdfding
+          gethomepage.dev/name: PdfDing
           gethomepage.dev/description: PDF Viewer and Editor
           gethomepage.dev/group: Services
           gethomepage.dev/icon: https://cdn-icons-png.flaticon.com/512/4208/4208479.png
