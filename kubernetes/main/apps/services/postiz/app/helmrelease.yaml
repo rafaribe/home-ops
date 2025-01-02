@@ -52,7 +52,7 @@ spec:
               NEXT_PUBLIC_BACKEND_URL: "https://postiz.rafaribe.com/api"
               REDIS_URL: "redis://dragonfly.storage.svc.cluster.local:6379"
               BACKEND_INTERNAL_URL: "http://localhost:3000"
-              IS_GENERAL: "true" # Required for self-hosting.
+               qIS_GENERAL: "true" # Required for self-hosting.
               STORAGE_PROVIDER: "local"
               UPLOAD_DIRECTORY: "/uploads"
               NEXT_PUBLIC_UPLOAD_DIRECTORY: "/uploads"
