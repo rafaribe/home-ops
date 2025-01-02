@@ -57,6 +57,16 @@ spec:
               UPLOAD_DIRECTORY: "/uploads"
               NEXT_PUBLIC_UPLOAD_DIRECTORY: "/uploads"
             envFrom: *envFrom
+    defaultPodOptions: # Docker image is too big for my turing pi's disk, dont want to get into diskpressure errors.
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
     service:
       app:
         controller: *app
