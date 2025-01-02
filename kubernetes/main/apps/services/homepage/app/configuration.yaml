@@ -163,6 +163,10 @@ data:
         style: row
         columns: 3
         icon: mdi-download-circle
+      Services:
+        style: row
+        columns: 5
+        icon: mdi:tools
   widgets.yaml: |
     - logo:
         icon: https://sundayguardianlive.com/wp-content/uploads/2020/07/Untitled-design-9.png

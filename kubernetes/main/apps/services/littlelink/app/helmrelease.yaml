@@ -78,6 +78,8 @@ spec:
           gethomepage.dev/icon: https://media.mstdn.social/accounts/avatars/109/003/317/067/542/220/original/86052f2808fd5daa.png
           gethomepage.dev/description: Linktree Alternative
           gethomepage.dev/siteMonitor: http://littlelink.services:3000
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (littlelink)
         hosts:
           - host: "link.rafaribe.com"
             paths:
