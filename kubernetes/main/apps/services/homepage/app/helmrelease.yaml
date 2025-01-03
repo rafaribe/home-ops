@@ -57,7 +57,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: "{{ .Release.Name }}.rafaribe.com"
+          - host: "homepage.rafaribe.com"
             paths:
               - path: /
                 pathType: Prefix
