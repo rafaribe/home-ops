@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v0.10.7
+              tag: v0.10.7@sha256:b261c981a866a0e287205394bf365bd8cdb9152469a85ec569d7bfcd7812cf14
             env:
               TZ: Europe/Lisbon
             envFrom:
@@ -44,7 +44,7 @@ spec:
                 cpu: 15m
                 memory: 200M
               limits:
-                memory: 2G
+                memory: 512Mi
     service:
       app:
         controller: *app
