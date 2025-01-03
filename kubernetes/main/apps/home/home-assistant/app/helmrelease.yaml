@@ -159,11 +159,11 @@ spec:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           gethomepage.dev/href: 'https://hass-code.rafaribe.com'
           gethomepage.dev/enabled: 'true'
-          gethomepage.dev/app: HASS Code Server
+          gethomepage.dev/app: HASS VS Code
           gethomepage.dev/group: Home
-          gethomepage.dev/icon: visual-studio-code
-          gethomepage.dev/name: HASS Code Server
-          gethomepage.dev/description: HASS Code Server
+          gethomepage.dev/icon: sh-visual-studio-code.svg
+          gethomepage.dev/name: HASS VS Code
+          gethomepage.dev/description: Code editor for Home Assistant
           gethomepage.dev/siteMonitor: http://home-assistant-codeserver.home:8080
         hosts:
           - host: hass-code.rafaribe.com
