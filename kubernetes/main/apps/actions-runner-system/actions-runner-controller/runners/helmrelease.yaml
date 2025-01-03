@@ -49,15 +49,15 @@ spec:
                   - amd64
       listenerTemplate:
         spec:
-         affinity :
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: kubernetes.io/arch
-                  operator: In
-                  values:
-                  - amd64
+          affinity :
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                    - amd64
     controllerServiceAccount:
       name: gha-runner-scale-set-controller
       namespace: actions-runner-system
