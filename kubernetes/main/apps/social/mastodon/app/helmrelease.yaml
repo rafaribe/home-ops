@@ -36,7 +36,7 @@ spec:
               repository: ghcr.io/rafaribe/postgres-init
               tag: 16
               pullPolicy: IfNotPresent
-            envFrom:
+            envFrom: &envFrom
               - secretRef:
                   name: mastodon
         containers:
@@ -59,9 +59,7 @@ spec:
               ES_HOST: mastodon-elasticsearch.social.svc.cluster.local
               ES_PORT: "9200"
               S3_ENABLED: true
-            envFrom:
-              - secretRef:
-                  name: mastodon
+            envFrom: *envFrom
           mastodon-streaming:
             image:
               repository: ghcr.io/mastodon/mastodon-streaming
@@ -78,9 +76,7 @@ spec:
               ES_HOST: mastodon-elasticsearch.social.svc.cluster.local
               ES_PORT: "9200"
               S3_ENABLED: true
-            envFrom:
-              - secretRef:
-                  name: mastodon
+            envFrom: *envFrom
           sidkiq:
             image:
               repository: ghcr.io/mastodon/mastodon
@@ -98,9 +94,7 @@ spec:
               ES_HOST: mastodon-elasticsearch.social.svc.cluster.local
               ES_PORT: "9200"
               S3_ENABLED: true
-            envFrom:
-              - secretRef:
-                  name: mastodon
+            envFrom: *envFrom
           elasticsearch:
             image:
               repository: elasticsearch
