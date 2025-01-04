@@ -85,6 +85,10 @@ spec:
               - bundle
               - exec
               - sidekiq
+              - -c 
+              - 25
+              - -q 
+              - 10
             env:
               PUID: 1000
               PGID: 1000
@@ -158,7 +162,7 @@ spec:
     persistence:
       config:
         existingClaim: mastodon-config
-        advancedMounts:
+         :
           mastodon:
             web:
               - path: /mastodon/public/system
