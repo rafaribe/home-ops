@@ -90,11 +90,19 @@ spec:
 
     ingress:
       app:
-        className: nginx
+        className: external
         annotations:
           hajimari.io/icon: mdi:link
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Mastodon
+          gethomepage.dev/description: Social Media Platform
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: mastodon.png
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (mastodon)
         hosts:
-          - host: &host "toot.${SECRET_DOMAIN}"
+          - host: &host "toot.rafaribe.com"
             paths:
               - path: /
                 service:
