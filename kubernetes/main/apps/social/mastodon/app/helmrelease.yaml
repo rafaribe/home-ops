@@ -44,12 +44,6 @@ spec:
             image:
               repository: lscr.io/linuxserver/mastodon
               tag: 4.3.2
-            # command: 
-            #   - bundle
-            #   - exec
-            #   - puma
-            #   - -C
-            #   - config/puma.rb
             env:
               PUID: 1000
               PGID: 1000
