@@ -94,6 +94,7 @@ spec:
         annotations:
           hajimari.io/icon: mdi:link
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          # Homepage
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: Mastodon
           gethomepage.dev/description: Social Media Platform
@@ -101,6 +102,9 @@ spec:
           gethomepage.dev/icon: mastodon.png
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (mastodon)
+          gethomepage.dev/widget.type: mastodon
+          gethomepage.dev/widget.url: &url http://mastodon.social.svc.cluster.local
+          gethomepage.dev/siteMonitor: *url
         hosts:
           - host: &host "toot.rafaribe.com"
             paths:
