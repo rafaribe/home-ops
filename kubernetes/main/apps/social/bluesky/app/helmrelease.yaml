@@ -1,0 +1,89 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app bluesky
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: uninstall
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      bluesky:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/rafaribe/postgres-init
+              tag: 16
+              pullPolicy: IfNotPresent
+            envFrom: &envFrom
+              - secretRef:
+                  name: bluesky
+        containers:
+          bluesky:
+            image:
+              repository: ghcr.io/bluesky-social/pds
+              tag: 0.4.74@sha256:c39cbd49556c8109bb969b0f3d94cfc0f908c2eb6ceb3240ef4e2e7a1e71a74c
+            env:
+              PUID: 1000
+              PGID: 1000
+              TZ: Europe/Lisbon
+              LOCAL_DOMAIN: rafaribe.com
+              ES_ENABLED: true
+              ES_HOST: bluesky-elasticsearch.social.svc.cluster.local
+              ES_PORT: "9200"
+              S3_ENABLED: true
+              WEB_DOMAIN: &domain social.rafaribe.com
+            envFrom: *envFrom
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 80
+
+    ingress:
+      app:
+        className: external
+        annotations:
+          hajimari.io/icon: mdi:link
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          # Homepage
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: bluesky
+          gethomepage.dev/description: Social Media Platform
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: bluesky.png
+        hosts:
+          - host: *domain
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+    persistence:
+      data:
+        existingClaim: bluesky
+        globalMounts:
+          - path: /pds
