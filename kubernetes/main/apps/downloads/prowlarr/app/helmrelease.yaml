@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/prowlarr-develop
-              tag: 1.29.1.4903@sha256:4396de70f0ed95df587a0f1b9a0392405dfcbd3dacad3f160696b3b7c6bd079f
+              tag: 1.29.1.4903@sha256:bdd56ccb03fa88ed7bcf1295bd7e0c04d6e65f40f5f960c2e2c156ba276d3ab2
             env:
               TZ: Europe/Lisbon
               PROWLARR__APP__INSTANCENAME: Prowlarr
