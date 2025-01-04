@@ -40,16 +40,16 @@ spec:
               - secretRef:
                   name: mastodon
         containers:
-          web:
+          mastodon:
             image:
-              repository: ghcr.io/mastodon/mastodon
-              tag: v4.3.2@sha256:e1775d13cf2792e03a37f1ae65b77b6e80d89678ecb30309814ad990fe1c0717
-            command: 
-              - bundle
-              - exec
-              - puma
-              - -C
-              - config/puma.rb
+              repository: lscr.io/linuxserver/mastodon
+              tag: 4.3.2
+            # command: 
+            #   - bundle
+            #   - exec
+            #   - puma
+            #   - -C
+            #   - config/puma.rb
             env:
               PUID: 1000
               PGID: 1000
@@ -60,70 +60,6 @@ spec:
               ES_PORT: "9200"
               S3_ENABLED: true
             envFrom: *envFrom
-          streaming:
-            image:
-              repository: ghcr.io/mastodon/mastodon-streaming
-              tag: v4.3.2@sha256:ba7c8491c98ee02f564b23774cef0a0865c3efbd6e3bceb88bb40574e917a932
-            command: 
-              - node
-              - ./streaming/index.js
-            env:
-              PUID: 1000
-              PGID: 1000
-              TZ: Europe/Lisbon
-              LOCAL_DOMAIN: rafaribe.com
-              ES_ENABLED: true
-              ES_HOST: mastodon-elasticsearch.social.svc.cluster.local
-              ES_PORT: "9200"
-              S3_ENABLED: true
-            envFrom: *envFrom
-          sidkiq:
-            image:
-              repository: ghcr.io/mastodon/mastodon
-              tag: v4.3.2@sha256:e1775d13cf2792e03a37f1ae65b77b6e80d89678ecb30309814ad990fe1c0717
-            command: 
-              - bundle
-              - exec
-              - sidekiq
-              - -c 
-              - 25
-              - -q 
-              - 10
-            env:
-              PUID: 1000
-              PGID: 1000
-              TZ: Europe/Lisbon
-              LOCAL_DOMAIN: rafaribe.com
-              ES_ENABLED: true
-              ES_HOST: mastodon-elasticsearch.social.svc.cluster.local
-              ES_PORT: "9200"
-              S3_ENABLED: true
-            envFrom: *envFrom
-          elasticsearch:
-            image:
-              repository: elasticsearch
-              tag: 7.17.26@sha256:340f15d5e07488e6bddc60e90690cab1288ffbccb4d20841fa282a7b6501fe51
-            resources:
-              requests:
-                cpu: 100m
-                memory: 250Mi
-              limits:
-                memory: 4096Mi
-            probes:
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
-            env:
-              TZ: Europe/Lisbon
-              xpack.security.enabled: "false"
-              discovery.type: "single-node"
-              ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     service:
       app:
         controller: *app
@@ -162,7 +98,5 @@ spec:
     persistence:
       config:
         existingClaim: mastodon-config
-         :
-          mastodon:
-            web:
-              - path: /mastodon/public/system
+        globalMounts:
+          - path: /config
