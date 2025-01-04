@@ -51,7 +51,7 @@ spec:
               LOCAL_DOMAIN: rafaribe.com
               ES_ENABLED: true
               ES_HOST: mastodon-elasticsearch.social.svc.cluster.local
-              ES_PORT: 9200
+              ES_PORT: "9200"
               S3_ENABLED: true
             envFrom:
               - secretRef:
