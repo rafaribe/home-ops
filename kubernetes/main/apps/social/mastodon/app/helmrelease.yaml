@@ -59,6 +59,7 @@ spec:
               ES_HOST: mastodon-elasticsearch.social.svc.cluster.local
               ES_PORT: "9200"
               S3_ENABLED: true
+              WEB_DOMAIN: toot.rafaribe.com
             envFrom: *envFrom
     service:
       app:
