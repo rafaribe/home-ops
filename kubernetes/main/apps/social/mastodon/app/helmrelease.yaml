@@ -160,5 +160,4 @@ spec:
         existingClaim: mastodon-config
         advancedMounts:
           web:
-            app:
-              - path: /mastodon/public/system
+            - path: /mastodon/public/system
