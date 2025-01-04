@@ -36,7 +36,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/rafaribe/actions-runner:2.321.0@sha256:ae55622f8dd05076551da45ef3336cb5532e423eea235012679ae52e697b5a0c
+            image: ghcr.io/rafaribe/actions-runner:2.321.0@sha256:2b5bf5036a986dd4505e7c31b9ca6e76cb9ccf91a4d513ba1b3a5261ede0fc92
             command: ["/home/runner/run.sh"]
         affinity :
           nodeAffinity:
