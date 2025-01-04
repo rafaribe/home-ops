@@ -42,49 +42,14 @@ spec:
         containers:
           mastodon:
             image:
-              repository: ghcr.io/mastodon/mastodon
-              tag: v4.3.2@sha256:e1775d13cf2792e03a37f1ae65b77b6e80d89678ecb30309814ad990fe1c0717
+              repository: lscr.io/linuxserver/mastodon
+              tag: 4.3.2
             command: 
               - bundle
               - exec
               - puma
               - -C
               - config/puma.rb
-            env:
-              PUID: 1000
-              PGID: 1000
-              TZ: Europe/Lisbon
-              LOCAL_DOMAIN: rafaribe.com
-              ES_ENABLED: true
-              ES_HOST: mastodon-elasticsearch.social.svc.cluster.local
-              ES_PORT: "9200"
-              S3_ENABLED: true
-            envFrom: *envFrom
-          mastodon-streaming:
-            image:
-              repository: ghcr.io/mastodon/mastodon-streaming
-              tag: v4.3.2@sha256:ba7c8491c98ee02f564b23774cef0a0865c3efbd6e3bceb88bb40574e917a932
-            command: 
-              - node
-              - ./streaming/index.js
-            env:
-              PUID: 1000
-              PGID: 1000
-              TZ: Europe/Lisbon
-              LOCAL_DOMAIN: rafaribe.com
-              ES_ENABLED: true
-              ES_HOST: mastodon-elasticsearch.social.svc.cluster.local
-              ES_PORT: "9200"
-              S3_ENABLED: true
-            envFrom: *envFrom
-          sidkiq:
-            image:
-              repository: ghcr.io/mastodon/mastodon
-              tag: v4.3.2@sha256:e1775d13cf2792e03a37f1ae65b77b6e80d89678ecb30309814ad990fe1c0717
-            command: 
-              - bundle
-              - exec
-              - sidekiq
             env:
               PUID: 1000
               PGID: 1000
