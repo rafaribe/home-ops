@@ -1,9 +1,38 @@
+# ---
+# # yaml-language-server: $schema=https://ks.hsn.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: &app mastodon
+#   namespace: flux-system
+# spec:
+#   targetNamespace: social
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: *app
+#   dependsOn:
+#     - name: volsync
+#     - name: rook-ceph-cluster
+#   path: ./kubernetes/main/apps/social/mastodon/app
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: home-ops
+#   wait: false
+#   interval: 30m
+#   timeout: 5m
+#   postBuild:
+#     substitute:
+#       APP: *app
+#       VOLSYNC_CAPACITY: 20Gi
+#       VOLSYNC_CLAIM: mastodon-config
+# ---
 ---
 # yaml-language-server: $schema=https://ks.hsn.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app mastodon
+  name: &app mastodon-elasticsearch
   namespace: flux-system
 spec:
   targetNamespace: social
@@ -13,7 +42,7 @@ spec:
   dependsOn:
     - name: volsync
     - name: rook-ceph-cluster
-  path: ./kubernetes/main/apps/social/mastodon/app
+  path: ./kubernetes/main/apps/social/mastodon/elasticsearch
   prune: true
   sourceRef:
     kind: GitRepository
@@ -24,5 +53,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 20Gi
-      VOLSYNC_CLAIM: mastodon-config
+      VOLSYNC_CAPACITY: 30Gi
+      VOLSYNC_CLAIM: mastodon-elasticsearch-config
