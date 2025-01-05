@@ -50,7 +50,7 @@ spec:
               GTS_STORAGE_BACKEND: "s3"
               GTS_STORAGE_S3_PROXY: "true"
               GTS_STORAGE_S3_USE_SSL: "false" 
-              GTS_STORAGE_S3_ENDPOINT: "rook-ceph-rgw-ceph-objectstore.rook-ceph.svc.cluster.local:6953"
+              GTS_STORAGE_S3_ENDPOINT: "rook-ceph-rgw-ceph-objectstore.rook-ceph.svc.cluster.local"
               GTS_STORAGE_S3_BUCKET: "gotosocial-media"
               GTS_STORAGE_S3_ACCESS_KEY:
                 valueFrom:
