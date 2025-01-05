@@ -90,7 +90,6 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           nginx.ingress.kubernetes.io/proxy-body-size: 4096m
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
           - host: *host
             paths:
