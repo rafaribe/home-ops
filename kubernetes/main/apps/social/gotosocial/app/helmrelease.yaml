@@ -1,0 +1,120 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.1.0/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app gotosocial
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.0
+      sourceRef:
+        name: bjw-s
+        kind: HelmRepository
+        namespace: flux-system
+  values:
+    controllers:
+      gotosocial:
+        type: deployment
+        replicas: 1
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/rafaribe/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
+        containers:
+          main:
+            image:
+              repository: "docker.io/superseriousbusiness/gotosocial"
+              tag: "0.17.3@sha256:20b4d033dee4764104afc82eff5168d7fa29080ff8c99fbe7418a54b01a50591"
+            env:
+              TZ: "${TIMEZONE}"
+              GTS_HOST: &host social.rafaribe.com
+              GTS_ACCOUNT_DOMAIN: "rafaribe.com"
+              GTS_LANDING_PAGE_USER: ""rafaribe""
+              GTS_ACCOUNTS_REGISTRATION_OPEN: "false"
+              GTS_APPLICATION_NAME: "rafaribe's galaxy"
+              GTS_PROTOCOL: "https" # not HTTP server listen mode, but used for generating URLs etc
+              GTS_PORT: "8080"
+              GTS_METRICS_ENABLED: "true"
+              # OIDC
+              GTS_OIDC_ENABLED: "true"
+              GTS_OIDC_IDP_NAME: "Rafaribe SSO"
+              GTS_OIDC_ISSUER: https://sso.rafaribe.com/application/o/gotosocial/  
+              # S3
+              GTS_STORAGE_BACKEND: "s3"
+              GTS_STORAGE_S3_PROXY: "true"
+              GTS_STORAGE_S3_USE_SSL: "false" 
+              GTS_STORAGE_S3_ENDPOINT: "rook-ceph-rgw-ceph-objectstore.rook-ceph.svc.cluster.local:6953"
+              GTS_STORAGE_S3_BUCKET: "gotosocial-media"
+              GTS_STORAGE_S3_ACCESS_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: "gotosocial-media-s3"
+                    key: "AWS_ACCESS_KEY_ID"
+              GTS_STORAGE_S3_SECRET_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: "gotosocial-media-s3"
+                    key: "AWS_SECRET_ACCESS_KEY"
+            envFrom: *envFrom
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                cpu: 3000m
+                memory: 1536Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+    service:
+      gotosocial:
+        controller: gotosocial
+        ports:
+          http:
+            port: 8080
+            protocol: HTTP
+            appProtocol: http
+    ingress:
+      main:
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+        hosts:
+          - host: *host
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: gotosocial
+                  port: http
+    persistence:
+      tmp:
+        type: emptyDir
+        medium: Memory
+        globalMounts:
+          - subPath: tmp
+            path: /tmp # ffmpeg WASM stuff
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        runAsNonRoot: false
+        runAsUser: &uid 1000
+        runAsGroup: *uid
+        fsGroup: *uid
+        fsGroupChangePolicy: Always
+        seccompProfile: { type: "RuntimeDefault" }
