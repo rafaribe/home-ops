@@ -75,11 +75,7 @@ spec:
               limits:
                 cpu: 3000m
                 memory: 1536Mi
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
+
     service:
       gotosocial:
         controller: gotosocial
