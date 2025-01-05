@@ -45,7 +45,7 @@ spec:
               # OIDC
               GTS_OIDC_ENABLED: "true"
               GTS_OIDC_IDP_NAME: "Rafaribe SSO"
-              GTS_OIDC_ISSUER: https://sso.rafaribe.com/application/o/gotosocial/  
+              GTS_OIDC_ISSUER: https://sso.rafaribe.com/application/o/gotosocial/
               # S3
               GTS_STORAGE_BACKEND: "s3"
               GTS_STORAGE_S3_PROXY: "true"

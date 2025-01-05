@@ -16,7 +16,7 @@ locals {
       authentik_oidc_application_description = "PGAdmin OAuth application"
     },
     {
-      authentik_oidc_application_name        = "GotoSocial"
+      authentik_oidc_application_name        = "gotosocial"
       authentik_oidc_application_icon_url    = "https://raw.githubusercontent.com/superseriousbusiness/gotosocial/main/docs/overrides/public/sloth.webp"
       authentik_oidc_application_description = "Fediverse"
     }
