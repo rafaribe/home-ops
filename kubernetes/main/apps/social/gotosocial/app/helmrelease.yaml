@@ -26,7 +26,7 @@ spec:
               tag: 16
             envFrom: &envFrom
               - secretRef:
-                  name: *app
+                  name: gotosocial
         containers:
           main:
             image:
