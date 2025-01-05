@@ -34,9 +34,9 @@ spec:
               tag: "0.17.3@sha256:20b4d033dee4764104afc82eff5168d7fa29080ff8c99fbe7418a54b01a50591"
             env:
               TZ: "Europe/Lisbon"
-              GTS_HOST: social.rafaribe.com
+              GTS_HOST: &host social.rafaribe.com
               GTS_ACCOUNT_DOMAIN: "rafaribe.com"
-              GTS_LANDING_PAGE_USER: ""rafaribe""
+              GTS_LANDING_PAGE_USER: "rafaribe"
               GTS_ACCOUNTS_REGISTRATION_OPEN: "false"
               GTS_APPLICATION_NAME: "rafaribe's galaxy"
               GTS_PROTOCOL: "https" # not HTTP server listen mode, but used for generating URLs etc
@@ -94,7 +94,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
-          - host: social.rafaribe.com
+          - host: *host
             paths:
               - path: /
                 pathType: Prefix
