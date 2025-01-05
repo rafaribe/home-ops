@@ -17,10 +17,15 @@ terraform {
       source  = "goauthentik/authentik"
       version = "2024.10.2"
     }
-    
+
     sops = {
-      source = "carlpett/sops"
+      source  = "carlpett/sops"
       version = "1.1.1"
+    }
+    # To Automatically create OIDC Secrets into akeyless
+    akeyless = {
+      version = ">= 1.0.0"
+      source  = "akeyless-community/akeyless"
     }
   }
 }

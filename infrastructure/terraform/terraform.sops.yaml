@@ -13,6 +13,8 @@ proxmox_username: ENC[AES256_GCM,data:5HyeAXE5ubk=,iv:34eLuozr1gW1DTjtX4nTFWcRfi
 authentik_api_url: ENC[AES256_GCM,data:gASN0/+1v9BahM0aaXe3jB1YA5j6OzinapFluVBejA==,iv:ee4XgiZnjmkf6KIVdpOXKbuPqeU0PIewOTJFJLc9pSo=,tag:qfb8dico4002ws2RNjcsZQ==,type:str]
 authentik_api_token: ENC[AES256_GCM,data:fDYGi+fDM4y8bIEkOw4dhKlnO/5e7CtDQ2RyYc+re9kHlniKZCSBekyuKel1QsKSdy/DaNm4z3fV89z8,iv:sRnfVjecgaM3BA1DbUOs+Lozk6pa6cNMj/rdKwLy6Q8=,tag:/g9x/a1RT5JMlcEgKpLfZA==,type:str]
 authentik_external_host: ENC[AES256_GCM,data:3y7aoZROC7Pb8/oX,iv:NfqeqhdmzV5I3K0Ki0MQ9YiSSRGHi0ZDDf7v6T1G3Mo=,tag:gGjYBl9u26h5QiMhLONmaA==,type:str]
+akeyless_access_id: ENC[AES256_GCM,data:hMd+UdpNVq0dddArEFr4yQ==,iv:YZgVoJ8kaZKyWDS9Ks6yF0m3A3s0tOtBRJa/mQT28jc=,tag:Onb2ZK6CVsP+cH9Ypv0YYQ==,type:str]
+akeyless_access_secret: ENC[AES256_GCM,data:7b0P2bgnx4zOYonASiC1hYS3iCDbMdITkWo6ZFpxGv4SZE/Cax27lRur3QI=,iv:iHMpIFFp12yZLnATDtQg8/pEKo1ehm+1KR0ol2ZfzYo=,tag:AEW6PVaQMRwJ/qlqZeGXIQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -28,8 +30,8 @@ sops:
             ZVpJOVp3bUY3MDlXYnJ3OEc2Nk5uYkUKdqWJ0yMWirjNT1ZJontbU+duSbOH+Sl+
             ETcPN0oUR7o1hGYctPkM9Oupy5VFqyOhzHZhPCCCeIk6MWu9hivejQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-01-05T11:34:55Z"
-    mac: ENC[AES256_GCM,data:BkEZAvT03iLQCoOi5KwU72N9+hW2608pP3TxeWTTYRvs1BsJ3jMPLlS6+YBvlIsmBev2ivMr5LNd0OexXIQiZI+UtKLsvAIF8m6WaAiFFySjmdKcgQ3MOC68DtN2dKFdsfdC+j6+/qi8QFF5noPgOPxX9RQc3aY49KxoUhAQKWs=,iv:p6BaVe/LQQZZrvvtXkhOnZ0CdE+eIuoe12qykt1vgPA=,tag:ofkdkhbpDrDuD0SBdREhAA==,type:str]
+    lastmodified: "2025-01-05T15:37:00Z"
+    mac: ENC[AES256_GCM,data:hMqjddoBR/J57GJj2aoVzj2xckkJ8MdUN3qo8INO7pjBKMN2OfcG5av2l4+5GHWtRMcMrObPKxaupfBidnYQuFLqdKt4MbAHeAg/CgHxPW8J0Gd9Ngjt4TBkDnTTJJet/MFjZJcZJADxa4cOw4X+qJFQgSOnTvQ7mIuYFbJqp8g=,iv:ka12HeWZXVg1Bwoa9PnpzvqgWeeu2GRM86ShT/DdXwk=,tag:iQUSAPAvv969PZ8oT4nMCg==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.9.3

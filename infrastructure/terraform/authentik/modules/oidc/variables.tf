@@ -17,3 +17,9 @@ variable "authentik_oidc_application_description" {
   description = "Application Description"
   default     = "This is an OIDC Provider for the application"
 }
+
+variable "create_akeyless_secret" {
+  type        = bool
+  description = "Create secret in akeyless"
+  default     = true
+}

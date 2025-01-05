@@ -1,6 +1,28 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "registry.terraform.io/akeyless-community/akeyless" {
+  version     = "1.7.5"
+  constraints = ">= 1.0.0"
+  hashes = [
+    "h1:EfYNAcaC5XL6JIahYMxQV6kc/hM76uS1frpv9f+sc3M=",
+    "zh:0a5aa3e1193569ba8baf7aa44c5d016ff1f21c3109c6828714729126b42f468b",
+    "zh:147dacced32a6900ca133095a754271f59320fad914e122dec4c5dbcf9ed308f",
+    "zh:1a9a4f4acb335ce9e7bfaccc453c0d65e754eb1a690e1250cfac066ec850ab14",
+    "zh:28726c317862a6f7c6fbe5ef87c72531f50ae1109f147cda627f3c9ccd36e428",
+    "zh:2f7311c904a338e63dcfa270aae258ff3b8a270f15401c36c72153a7158e6560",
+    "zh:79a1de11a42d21670dbe68a9eb513444b88e7386f3c53d62780a2af8fcaa351f",
+    "zh:7bc2e72cba149b41e0c82832e42ee6ac8ce0d9faf61cc4af579cb915c304b7a4",
+    "zh:8ae6cb22c98d3c6a9a227fbfe4427b44dbb34f0ca19ef13149d7cc63bb67e2a1",
+    "zh:963f8e7f1b324d6c72df0e740f67a26766faeca6a3188b6e8e1429ffecc54a45",
+    "zh:cb68206c312706f8303e3a466a743929ce5e40df706e98529cf1bec11a7bed70",
+    "zh:d545b6ab6604a04feb57471247930c1f3d0c53b75751e894120550ec300b09ff",
+    "zh:e34edd9ecef7afbb92ae1779e0640d8b45a456265f967d1ee9eafc3ad9c81dce",
+    "zh:f651887be621e5684de02fa9d08cf2973f33b6781c27b59007289ddd7a47f760",
+    "zh:fe2b6458832c3279705d6d7913c6dc83f95e5124345bcc06d98e538c25cc7161",
+  ]
+}
+
 provider "registry.terraform.io/carlpett/sops" {
   version     = "1.1.1"
   constraints = "1.1.1"
