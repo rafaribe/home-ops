@@ -9,7 +9,7 @@ terraform {
 
     random = {
       source  = "hashicorp/random"
-      version = "3.4.3"
+      version = "3.6.3"
     }
     akeyless = {
       version = ">= 1.0.0"
