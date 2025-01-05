@@ -33,7 +33,7 @@ spec:
               repository: "docker.io/superseriousbusiness/gotosocial"
               tag: "0.17.3@sha256:20b4d033dee4764104afc82eff5168d7fa29080ff8c99fbe7418a54b01a50591"
             env:
-              TZ: "${TIMEZONE}"
+              TZ: "Europe/Lisbon"
               GTS_HOST: &host social.rafaribe.com
               GTS_ACCOUNT_DOMAIN: "rafaribe.com"
               GTS_LANDING_PAGE_USER: ""rafaribe""
