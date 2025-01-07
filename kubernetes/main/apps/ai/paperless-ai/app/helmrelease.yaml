@@ -95,3 +95,9 @@ spec:
                 service:
                   identifier: app
                   port: http
+    persistence:
+      config:
+        enabled: true
+        existingClaim: paperless-ai
+        globalMounts:
+          - path: /app/data
