@@ -1,0 +1,79 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app paperless-ai
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      paperless-ai:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: docker.io/clusterzx/paperless-ai
+              tag: 1.4.6
+            env:
+              PAPERLESS_API_URL: http://paperless.services.svc.cluster.local:8000/api
+              AI_PROVIDER: ollama
+              SCAN_INTERVAL: "*/30 * * * *"
+              PROCESS_PREDEFINED_DOCUMENTS: yes
+              ADD_AI_PROCESSED_TAG: yes
+              AI_PROCESSED_TAG_NAME: ai-processed
+              USE_PROMPT_TAGS: no
+              OLLAMA_API_URL: http://ollama.rafaribe.com:11434
+              OLLAMA_MODEL: llama3.2:3b
+            envFrom:
+              - secretRef:
+                  name: paperless-ai
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                cpu: 20m
+                memory: 600Mi
+    service:
+      app:
+        controller: paperless-ai
+        ports:
+          http:
+            port: 3000
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: Paperless
+          gethomepage.dev/icon: paperless.png
+          gethomepage.dev/description: AI Setup for Paperless
+          gethomepage.dev/siteMonitor: http://paperless-ai.ai:3000
+        hosts:
+          - host: &host "paperless-ai.rafaribe.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
