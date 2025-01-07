@@ -45,7 +45,7 @@ spec:
             env:
               TZ: *timeZone
               # Instances is a comma-separated string with IP:PORT values"
-              INSTANCE_URLS: "http://10.0.0.70:11434,http://10.0.2.103:11434,http://10.0.1.115:11434"
+              INSTANCE_URLS: "http://10.0.0.70:11434,http://10.0.1.115:11434"
               PIHOLE_HOSTNAME: "10.0.0.254"
               OLLAMA_RECORD: "ollama.rafaribe.com"
             envFrom:
