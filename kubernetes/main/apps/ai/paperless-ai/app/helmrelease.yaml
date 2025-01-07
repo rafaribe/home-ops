@@ -40,7 +40,7 @@ spec:
               ADD_AI_PROCESSED_TAG: yes
               AI_PROCESSED_TAG_NAME: ai-processed
               USE_PROMPT_TAGS: no
-              OLLAMA_API_URL: http://ollama.rafaribe.com:11434
+              OLLAMA_API_URL: http://10.0.0.70:11434
               OLLAMA_MODEL: llama3.2:3b
             envFrom:
               - secretRef:
