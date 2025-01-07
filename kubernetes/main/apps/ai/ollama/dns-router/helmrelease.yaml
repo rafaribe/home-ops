@@ -27,7 +27,7 @@ spec:
       namespace: rook-ceph
   values:
     controllers:
-      kometa:
+      ollama-dns-router:
         type: cronjob
         annotations:
           reloader.stakater.com/auto: "true"
