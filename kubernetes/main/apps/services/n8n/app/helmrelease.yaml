@@ -44,10 +44,10 @@ spec:
               N8N_DIAGONISTICS_ENABLED: true
               N8N_HIRING_BANNER_ENABLED: false
               N8N_USER_MANAGEMENT_DISABLED: true
+              N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: false
               # Public API
               N8N_PUBLIC_API_DISABLED: true
               N8N_PUBLIC_API_SWAGGERUI_DISABLED: true
-
               NODE_FUNCTION_ALLOW_BUILTIN: "*"
               N8N_METRICS: true
               NODE_FUNCTION_ALLOW_EXTERNAL: databricks/sql
