@@ -85,10 +85,8 @@ spec:
     persistence:
       config:
         existingClaim: n8n
-        advancedMounts:
-          n8n:
-            n8n:
-              - path: /home/n8n/app
+        globalMounts:
+          - path: /home/n8n/app
 
     resources:
       requests:
