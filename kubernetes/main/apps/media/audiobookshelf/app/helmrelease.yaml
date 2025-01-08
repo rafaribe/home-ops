@@ -30,14 +30,6 @@ spec:
   values:
     controllers:
       audiobookshelf:
-        pod:
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
-            seccompProfile: { type: RuntimeDefault }
         containers:
           app:
             image:
@@ -71,6 +63,12 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 500Mi
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
         controller: audiobookshelf
