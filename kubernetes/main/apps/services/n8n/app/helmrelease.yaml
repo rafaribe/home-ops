@@ -54,9 +54,7 @@ spec:
               DB_TYPE: postgresdb
               DB_POSTGRESDB_PORT: 5432
               N8N_USER_FOLDER: /home/n8n/app
-            envFrom:
-              - secretRef:
-                  name: n8n-secret
+            envFrom: *envFrom
     defaultPodOptions:
       securityContext:
         runAsUser: 1000
