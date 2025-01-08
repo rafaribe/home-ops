@@ -72,7 +72,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Home
           gethomepage.dev/name: Actual
-          gethomepage.dev/icon: https://cdn6.aptoide.com/imgs/9/0/b/90b661aa4a30c843380ede0800fe37ea_icon.png
+          gethomepage.dev/icon: actual-budget.png
           gethomepage.dev/description: Finance Manager
           gethomepage.dev/siteMonitor: http://actual.services:5006
         hosts:
