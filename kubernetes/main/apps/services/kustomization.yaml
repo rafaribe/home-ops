@@ -22,6 +22,7 @@ resources:
   - ./lubelog/ks.yaml
   - ./mealie/ks.yaml
   - ./miniflux/ks.yaml
+  - ./n8n/ks.yaml
   - ./netboot/ks.yaml
   - ./paperless/ks.yaml
   - ./pdfding/ks.yaml
