@@ -41,6 +41,7 @@ spec:
           requests:
             memory: 2Gi
         initContainers:
+          # App requires a connection string for windmill user, windmill_admin user and windmill_user. A bit strange setup but the following issue explains it
           # https://github.com/windmill-labs/windmill/issues/2584#issue-1981692100
           - name: initdb-default
             image: ghcr.io/rafaribe/postgres-init:16
