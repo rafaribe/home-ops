@@ -19,14 +19,6 @@ spec:
   values:
     controllers:
       fileflows:
-        # initContainers:
-        #   init-db:
-        #     image:
-        #       repository: ghcr.io/rafaribe/postgres-init
-        #       tag: 16
-        #     envFrom: &envFrom
-        #       - secretRef:
-        #           name: fileflows
         containers:
           app:
             image:
@@ -36,7 +28,6 @@ spec:
               TZ: ${TIMEZONE}
               PUID: 1000
               PGID: 1000
-            envFrom: *envFrom
     defaultPodOptions:
       securityContext:
         runAsUser: 1000
