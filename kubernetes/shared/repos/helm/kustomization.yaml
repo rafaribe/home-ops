@@ -65,3 +65,4 @@ resources:
   - ./xenitab.yaml
   - ./victoria.yaml
   - ./tailscale.yaml
+  - ./windmill.yaml
