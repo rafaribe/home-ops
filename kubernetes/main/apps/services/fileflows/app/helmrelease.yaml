@@ -19,6 +19,14 @@ spec:
   values:
     controllers:
       fileflows:
+        # initContainers:
+        #   init-db:
+        #     image:
+        #       repository: ghcr.io/rafaribe/postgres-init
+        #       tag: 16
+        #     envFrom: &envFrom
+        #       - secretRef:
+        #           name: fileflows
         containers:
           app:
             image:
@@ -28,12 +36,7 @@ spec:
               TZ: ${TIMEZONE}
               PUID: 1000
               PGID: 1000
-            resources:
-              requests:
-                cpu: 100m
-                memory: 100Mi
-              limits:
-                memory: 500Mi
+            envFrom: *envFrom
     defaultPodOptions:
       securityContext:
         runAsUser: 1000
@@ -52,7 +55,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "internal.rafaribe.com"
         className: internal
         hosts:
-          - host: fileflows.rafaribe.com
+          - host: *host
             paths:
               - path: /
                 service:
@@ -63,8 +66,18 @@ spec:
       data:
         existingClaim: fileflows
         globalMounts:
-          - path: /app
+          - path: /app/Data
       tmp:
         type: emptyDir
         globalMounts:
           - path: /temp
+      logs:
+        existingClaim: fileflows-logs
+        globalMounts:
+          - path: /app/Logs
+    resources:
+      requests:
+        cpu: 20m
+        memory: 128M
+      limits:
+        memory: 512M
