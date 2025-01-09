@@ -24,9 +24,7 @@ spec:
     keepHistory: false
   values:
     initContainers:
-    - image:
-      repository: ghcr.io/rafaribe/postgres-init
-      tag: 16
+    - image: ghcr.io/rafaribe/postgres-init:16
       envFrom: &envFrom
         - secretRef:
             name: *app
