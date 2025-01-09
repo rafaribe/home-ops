@@ -46,7 +46,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "internal.rafaribe.com"
         className: internal
         hosts:
-          - host: *host
+          - host: fileflows.rafaribe.com
             paths:
               - path: /
                 service:
