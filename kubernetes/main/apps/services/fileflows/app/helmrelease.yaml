@@ -1,0 +1,71 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: fileflows
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      fileflows:
+        containers:
+          app:
+            image:
+              repository: revenz/fileflows
+              tag: 24.12
+            env:
+              TZ: ${TIMEZONE}
+              PUID: 1000
+              PGID: 1000
+            envFrom: *envFrom
+            resources:
+              requests:
+                cpu: 100m
+                memory: 100Mi
+              limits:
+                memory: 500Mi
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+    service:
+      app:
+        controller: fileflows
+        ports:
+          http:
+            port: 5000
+    ingress:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "internal.rafaribe.com"
+        className: internal
+        hosts:
+          - host: fileflows.rafaribe.com
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+    persistence:
+      data:
+        existingClaim: fileflows
+        globalMounts:
+          - path: /app
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /temp
