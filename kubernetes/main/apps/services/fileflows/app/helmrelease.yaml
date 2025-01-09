@@ -28,7 +28,6 @@ spec:
               TZ: ${TIMEZONE}
               PUID: 1000
               PGID: 1000
-            envFrom: *envFrom
             resources:
               requests:
                 cpu: 100m
