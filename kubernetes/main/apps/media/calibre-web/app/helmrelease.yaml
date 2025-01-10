@@ -16,25 +16,40 @@ spec:
         namespace: flux-system
   interval: 30m
   values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       calibre-web:
         annotations:
           reloader.stakater.com/auto: "true"
-
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
-
         containers:
           app:
             image:
-              repository: ghcr.io/bjw-s-labs/calibre-web
-              tag: 0.6.24@sha256:130247a83b18307621967b9d4464a15cbf99970fdd1bedddaa0d4087f4e3b269
+              repository: crocodilestick/calibre-web-automated
+              tag: V2.1.2@sha256:2fb8b5df7f41e8520885871806e3028dac0628c71c91bdf7d9c72d5c7aa0c0b4
             env:
               CACHE_DIR: /cache
+              CALIBRE_PORT: &port 8083
+              TZ: Europe/Lisbon
+              PUID: "1000"
+              PGID: "1000"
+              DOCKER_MODS: >-
+                {{- $items := list
+                  "// renovate: lsio-docker-mod"
+                  "ghcr.io/linuxserver/mods:universal-calibre-v7.16.0"
+                -}}
+                {{- $filtered := list -}}
+                {{- range $item := $items -}}
+                  {{- if not (hasPrefix "//" $item) -}}
+                    {{- $filtered = append $filtered $item -}}
+                  {{- end -}}
+                {{- end -}}
+                {{- $filtered | join "|" -}}
             probes:
               liveness:
                 enabled: true
@@ -43,14 +58,16 @@ spec:
               startup:
                 enabled: true
                 spec:
-                  failureThreshold: 30
+                  initialDelaySeconds: 60
+                  failureThreshold: 45
                   periodSeconds: 5
+
             resources:
               requests:
-                cpu: 5m
-                memory: 470M
+                cpu: 10m
+                memory: 128Mi
               limits:
-                memory: 470M
+                memory: 768Mi
 
     service:
       app:
