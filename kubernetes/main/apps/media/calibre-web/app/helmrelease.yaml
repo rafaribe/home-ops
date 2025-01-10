@@ -109,12 +109,13 @@ spec:
         enabled: true
         type: nfs
         server: truenas.rafaribe.com
-        path: /mnt/storage-0/media
+        path: /mnt/storage-0/media/books
         advancedMounts:
           calibre-web:
             app:
-              - path: /data
+              - path: /books
       cache:
         type: emptyDir
         globalMounts:
           - path: /cache
++
