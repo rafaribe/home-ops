@@ -19,6 +19,11 @@ locals {
       authentik_oidc_application_name        = "gotosocial"
       authentik_oidc_application_icon_url    = "https://raw.githubusercontent.com/superseriousbusiness/gotosocial/main/docs/overrides/public/sloth.webp"
       authentik_oidc_application_description = "Fediverse"
+    },
+    {
+      authentik_oidc_application_name        = "windmill"
+      authentik_oidc_application_icon_url    = "https://avatars.githubusercontent.com/u/98025271?s=200&v=4"
+      authentik_oidc_application_description = "OSS developer platform to build multistep automations and internal apps from minimal Typescript and Python scripts"
     }
   ]
 }
