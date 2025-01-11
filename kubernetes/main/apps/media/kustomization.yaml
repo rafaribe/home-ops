@@ -8,6 +8,7 @@ resources:
   - ./audiobookshelf/ks.yaml
   - ./calibre-web/ks.yaml
   - ./jellyfin/ks.yaml
+  - ./jellyseerr/ks.yaml
   - ./kavita/ks.yaml
   - ./komga/ks.yaml
   - ./media-browser/ks.yaml

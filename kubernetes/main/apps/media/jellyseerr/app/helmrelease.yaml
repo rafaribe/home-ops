@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app overseerr
+  name: &app jellyseerr
 spec:
   interval: 30m
   chart:
@@ -27,37 +27,31 @@ spec:
       namespace: rook-ceph
   values:
     controllers:
-      overseerr:
+      jellyseerr:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/rafaribe/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: jellyseerr-secret
         containers:
           app:
             image:
-              repository: ghcr.io/sct/overseerr
-              tag: 1.33.2
+              repository: docker.io/fallenbagel/jellyseerr
+              tag: 2.2.3@sha256:a324fa4d81cce73116801bee3c50b632f3457c0ca0ad31aa692c640e22f50dea
             env:
-              TZ: ${TIMEZONE}
-              LOG_LEVEL: "info"
-              PORT: &port 80
+              TZ: Europe/Lisbon
+            envFrom: *envFrom
             resources:
               requests:
-                cpu: 16m
-                memory: 350M
+                cpu: 10m
+                memory: 350Mi
               limits:
-                memory: 600M
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api/v1/status
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+                memory: 600Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -71,23 +65,21 @@ spec:
         controller: *app
         ports:
           http:
-            port: *port
+            port: 5055
     ingress:
       app:
         className: external
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Downloads
-          gethomepage.dev/name: Overseerr
-          gethomepage.dev/icon: overseerr.png
+          gethomepage.dev/group: Video
+          gethomepage.dev/name: jellyseerr
+          gethomepage.dev/icon: jellyseerr.png
           gethomepage.dev/description: Media Request Management
-          gethomepage.dev/widget.type: overseerr
-          gethomepage.dev/widget.url: http://overseerr.media:80
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_OVERSEERR_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          nginx.ingress.kubernetes.io/custom-http-errors: "400,404,500,502,503,504" # Using a smaller set than the default to fix javascript issues with oversee
+          gethomepage.dev/widget.type: jellyseerr
+          gethomepage.dev/widget.url: http://jellyseerr.media:5055
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_JELLYSEERR_TOKEN}}` }}"
         hosts:
-          - host: requests-legacy.rafaribe.com
+          - host: requests.rafaribe.com
             paths:
               - path: /
                 service:
@@ -99,7 +91,7 @@ spec:
         globalMounts:
           - path: /app/config
       cache:
-        existingClaim: overseerr-cache
+        existingClaim: jellyseerr-cache
         globalMounts:
           - path: /app/config/cache
       logs:
