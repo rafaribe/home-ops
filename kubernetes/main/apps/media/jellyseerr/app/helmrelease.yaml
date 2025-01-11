@@ -81,7 +81,7 @@ spec:
         className: external
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Video
+          gethomepage.dev/group: Media
           gethomepage.dev/name: jellyseerr
           gethomepage.dev/icon: jellyseerr.png
           gethomepage.dev/description: Media Request Management
