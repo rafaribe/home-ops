@@ -23,4 +23,4 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: reqiests
+      GATUS_SUBDOMAIN: requests
