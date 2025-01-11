@@ -94,7 +94,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hosts:
-          - host: calibre-web.rafaribe.com
+          - host: calibre.rafaribe.com
             paths:
               - path: /
                 service:
