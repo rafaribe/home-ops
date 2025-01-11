@@ -160,7 +160,7 @@ data:
         icon: mdi-chart-line
       Home:
         style: row
-        columns: 5
+        columns: 3
         icon: mdi-home-analytics
       Downloads:
         style: row
