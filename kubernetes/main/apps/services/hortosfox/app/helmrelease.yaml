@@ -1,0 +1,100 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app hortosfox
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/rafaribe/mysql-init
+              tag: 11@sha256:6414d563f2795c4c7e3b06a11f409fc6b6da1475ce2091db223d7b4fa56a38a1
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
+        containers:
+          app:
+            image:
+              repository: ghcr.io/danielbrendel/hortusfox-web
+              tag: v3.3@sha256:c0d66330df4833c911fad2e8f5ae1c2b292c28ccdfb523785512a7850fa04ba3
+            env:
+              TZ: "${TIMEZONE:=Etc/UTC}"
+            envFrom: *envFrom
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 25m
+                memory: 105M
+              limits:
+                memory: 105M
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: &httpPort 80
+    ingress:
+      main:
+        enabled: true
+        className: internal
+        annotations: 
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          # Hajimari
+          hajimari.io/enable: "true"
+          hajimari.io/appName: "Plants"
+          hajimari.io/icon: mdi:flower
+          hajimari.io/group: "home automation"
+          hajimari.io/instance: "admin"
+          # Homepage
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Home
+          gethomepage.dev/name: hortosfox
+          gethomepage.dev/icon: https://avatars.githubusercontent.com/u/150462874?s=200&v=4
+          gethomepage.dev/description: Wiki
+          gethomepage.dev/siteMonitor: http://hortosfox.services:80
+        hosts:
+          - host: "hortosfox.rafaribe.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    # persistence:
+    #   data:
+    #     existingClaim: *app
+    #     globalMounts:
+    #       - path: /app/data/storage

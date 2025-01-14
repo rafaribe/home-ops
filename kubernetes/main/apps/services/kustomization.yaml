@@ -15,6 +15,7 @@ resources:
   - ./hajimari/ks.yaml
   - ./hoarder/ks.yaml
   - ./homepage/ks.yaml
+  - ./hortosfox/ks.yaml
   - ./it-tools/ks.yaml
   - ./kitchenowl/ks.yaml
   - ./kubernetes-schemas/ks.yaml
