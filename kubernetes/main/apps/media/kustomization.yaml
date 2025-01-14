@@ -13,7 +13,6 @@ resources:
   - ./komga/ks.yaml
   - ./media-browser/ks.yaml
   - ./maintainerr/ks.yaml
-  - ./overseerr/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
   - ./wizarr/ks.yaml
