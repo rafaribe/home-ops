@@ -86,8 +86,8 @@ spec:
                 service:
                   identifier: app
                   port: http
-    # persistence:
-    #   data:
-    #     existingClaim: *app
-    #     globalMounts:
-    #       - path: /app/data/storage
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /var/www/html
