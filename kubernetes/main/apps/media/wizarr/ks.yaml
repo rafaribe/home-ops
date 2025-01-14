@@ -12,7 +12,6 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: plex
-    - name: overseerr
     - name: volsync
   path: ./kubernetes/main/apps/media/wizarr/app
   prune: true
