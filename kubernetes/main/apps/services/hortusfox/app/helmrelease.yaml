@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app hortosfox
+  name: &app hortusfox
 spec:
   interval: 30m
   chart:
@@ -70,19 +70,19 @@ spec:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           # Hajimari
           hajimari.io/enable: "true"
-          hajimari.io/appName: "HortosFox"
+          hajimari.io/appName: "HortuosFox"
           hajimari.io/icon: mdi:flower
           hajimari.io/group: "home automation"
           hajimari.io/instance: "admin"
           # Homepage
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Home
-          gethomepage.dev/name: hortosfox
-          gethomepage.dev/icon: hortosfox.png
+          gethomepage.dev/name: hortusfox
+          gethomepage.dev/icon: hortusfox.png
           gethomepage.dev/description: Plant Tracker
-          gethomepage.dev/siteMonitor: http://hortosfox.services:80
+          gethomepage.dev/siteMonitor: http://hortusfox.services:80
         hosts:
-          - host: "hortosfox.rafaribe.com"
+          - host: "hortusfox.rafaribe.com"
             paths:
               - path: /
                 service:
