@@ -42,7 +42,9 @@ spec:
               tag: v3.3@sha256:c0d66330df4833c911fad2e8f5ae1c2b292c28ccdfb523785512a7850fa04ba3
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
-            envFrom: *envFrom
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
             probes:
               liveness:
                 enabled: true
