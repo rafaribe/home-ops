@@ -70,7 +70,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           # Hajimari
           hajimari.io/enable: "true"
-          hajimari.io/appName: "Plants"
+          hajimari.io/appName: "HortosFox"
           hajimari.io/icon: mdi:flower
           hajimari.io/group: "home automation"
           hajimari.io/instance: "admin"
@@ -78,8 +78,8 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Home
           gethomepage.dev/name: hortosfox
-          gethomepage.dev/icon: https://avatars.githubusercontent.com/u/150462874?s=200&v=4
-          gethomepage.dev/description: Wiki
+          gethomepage.dev/icon: hortosfox.png
+          gethomepage.dev/description: Plant Tracker
           gethomepage.dev/siteMonitor: http://hortosfox.services:80
         hosts:
           - host: "hortosfox.rafaribe.com"
