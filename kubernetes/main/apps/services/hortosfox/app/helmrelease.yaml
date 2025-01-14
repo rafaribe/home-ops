@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      app:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -62,13 +62,13 @@ spec:
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
     service:
-      main:
-        controller: main
+      app:
+        controller: app
         ports:
           http:
             port: &httpPort 80
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         annotations: 
