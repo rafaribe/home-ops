@@ -27,14 +27,14 @@ spec:
       app:
         annotations:
           reloader.stakater.com/auto: "true"
-        # initContainers:
-        #   init-db:
-        #     image:
-        #       repository: ghcr.io/rafaribe/mysql-init
-        #       tag: 11@sha256:6414d563f2795c4c7e3b06a11f409fc6b6da1475ce2091db223d7b4fa56a38a1
-        #     envFrom: &envFrom
-        #       - secretRef:
-        #           name: *app
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/rafaribe/mysql-init
+              tag: 11@sha256:6414d563f2795c4c7e3b06a11f409fc6b6da1475ce2091db223d7b4fa56a38a1
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
         containers:
           app:
             image:
@@ -77,7 +77,7 @@ spec:
           # Homepage
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Home
-          gethomepage.dev/name: HortusFox
+          gethomepage.dev/name: hortusfox
           gethomepage.dev/icon: hortusfox.png
           gethomepage.dev/description: Plant Tracker
           gethomepage.dev/siteMonitor: http://hortusfox.services:80
