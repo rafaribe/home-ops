@@ -41,6 +41,7 @@ spec:
               repository: ghcr.io/danielbrendel/hortusfox-web
               tag: v3.3@sha256:c0d66330df4833c911fad2e8f5ae1c2b292c28ccdfb523785512a7850fa04ba3
             env:
+            #  https://github.com/tomeon/hortusfox-web/blob/eb3b0158f025d8cf0cd4a686d5e869182b1cb7a0/docker-compose.yml#L12 Take a look for value inspiration
               TZ: "${TIMEZONE:=Etc/UTC}"
             envFrom: &envFrom
               - secretRef:
@@ -77,7 +78,7 @@ spec:
           # Homepage
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Home
-          gethomepage.dev/name: hortusfox
+          gethomepage.dev/name: Hortus Fox
           gethomepage.dev/icon: hortusfox.png
           gethomepage.dev/description: Plant Tracker
           gethomepage.dev/siteMonitor: http://hortusfox.services:80
