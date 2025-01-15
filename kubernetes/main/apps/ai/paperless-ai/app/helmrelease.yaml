@@ -101,3 +101,11 @@ spec:
         existingClaim: paperless-ai
         globalMounts:
           - path: /app/data
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/logs
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
