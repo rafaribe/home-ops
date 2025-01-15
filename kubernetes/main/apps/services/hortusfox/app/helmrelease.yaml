@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: ghcr.io/danielbrendel/hortusfox-web
-              tag: v3.3@sha256:c0d66330df4833c911fad2e8f5ae1c2b292c28ccdfb523785512a7850fa04ba3
+              tag: v3.9@sha256:1d27f98fc586ae6a55cad60bb1263ccafd1d9fcc4e97c052b8a8e6b66d8ead10
             env:
             #  https://github.com/tomeon/hortusfox-web/blob/eb3b0158f025d8cf0cd4a686d5e869182b1cb7a0/docker-compose.yml#L12 Take a look for value inspiration
               TZ: "${TIMEZONE:=Etc/UTC}"
