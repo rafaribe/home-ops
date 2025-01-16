@@ -24,7 +24,13 @@ spec:
         runAsNonRoot: true
         fsGroup: 1000
         fsGroupChangePolicy: "OnRootMismatch"
-
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: hoarder
+            topologyKey: "kubernetes.io/hostname"
     controllers:
       hoarder:
         annotations:
@@ -119,14 +125,6 @@ spec:
               limits:
                 memory: 1Gi
 
-    defaultPodOptions: # All pods should be scheduled in the same node
-      affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                app.kubernetes.io/name: hoarder
-            topologyKey: "kubernetes.io/hostname"
     service:
       app:
         controller: hoarder
