@@ -15,7 +15,6 @@ resources:
   - ./hajimari/ks.yaml
   - ./hoarder/ks.yaml
   - ./homepage/ks.yaml
-  - ./hortusfox/ks.yaml
   - ./it-tools/ks.yaml
   - ./kitchenowl/ks.yaml
   - ./kubernetes-schemas/ks.yaml
@@ -29,7 +28,6 @@ resources:
   - ./paperless/ks.yaml
   - ./pdfding/ks.yaml
   - ./pinchflat/ks.yaml
-  - ./plant-it/ks.yaml
   - ./postiz/ks.yaml
   - ./radicale/ks.yaml
   - ./searxng/ks.yaml
