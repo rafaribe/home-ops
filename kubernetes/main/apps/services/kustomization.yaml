@@ -11,6 +11,7 @@ resources:
   - ./bytestash/ks.yaml
   - ./cyberchef/ks.yaml
   - ./docmost/ks.yaml
+  - ./farm-os/ks.yaml
  # - ./fileflows/ks.yaml
   - ./hajimari/ks.yaml
   - ./hoarder/ks.yaml
