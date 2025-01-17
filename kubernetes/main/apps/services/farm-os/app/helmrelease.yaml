@@ -33,15 +33,7 @@ spec:
               tag: 3.3.3@sha256:23a079fc34ce9babac55ca1b87a45a1e3c528eab38aa90cc3e980e0956c9288e
             env:
               TZ: ${TIMEZONE}
-              PUID: 1000
-              PGID: 1000
             envFrom: *envFrom
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
         controller: farm-os
