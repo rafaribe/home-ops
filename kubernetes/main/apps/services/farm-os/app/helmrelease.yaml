@@ -64,4 +64,4 @@ spec:
       data:
         existingClaim: farm-os
         globalMounts:
-          - path: /opt/drupal
+          - path: /opt/drupal/web/sites
