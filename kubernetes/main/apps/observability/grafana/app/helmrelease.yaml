@@ -217,7 +217,7 @@ spec:
         blackbox-exporter:
           # renovate: depName="Blackbox Exporter"
           gnetId: 16124
-          revision: 2
+          revision: 4
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
