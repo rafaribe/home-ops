@@ -76,7 +76,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.124.2@sha256:c14dccad0611635668abf98f17ce87c3badcc17bb979c53ef96dc49e934ebbc8
+              tag: v1.125.2@sha256:b7464b8799ab31c192d9b51a59d73426fc2deb39db6166a2f5073ae304c1131d
             env:
               TZ: "Europe/Lisbon"
               IMMICH_WORKERS_INCLUDE: api
