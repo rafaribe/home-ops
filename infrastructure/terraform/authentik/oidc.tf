@@ -24,6 +24,11 @@ locals {
       authentik_oidc_application_name        = "windmill"
       authentik_oidc_application_icon_url    = "https://avatars.githubusercontent.com/u/98025271?s=200&v=4"
       authentik_oidc_application_description = "OSS developer platform to build multistep automations and internal apps from minimal Typescript and Python scripts"
+    },
+    {
+      authentik_oidc_application_name        = "tandoor"
+      authentik_oidc_application_icon_url    = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXMMZeussUqq5cUvq2G1-o4T_hGIxuOMPkYw&s"
+      authentik_oidc_application_description = "Manage your ever growing recipe collection online"
     }
   ]
 }
