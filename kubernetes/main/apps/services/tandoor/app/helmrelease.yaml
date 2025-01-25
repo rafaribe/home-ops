@@ -106,7 +106,7 @@ spec:
           gethomepage.dev/name: Tandoor
           gethomepage.dev/description: Managing recipes, planned meals, shopping lists.
           gethomepage.dev/group: Home
-          gethomepage.dev/icon: tandoor.png
+          gethomepage.dev/icon: tandoor-recipes.png
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (tandoor)
           gethomepage.dev/href: https://tandoor.rafaribe.com
