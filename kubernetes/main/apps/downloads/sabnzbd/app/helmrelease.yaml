@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/sabnzbd
-              tag: 4.4.1@sha256:0f94172e8be19fa03c6d931eec2522a7f2ebea0d446a3ed4a7e90e893945f74e
+              tag: 4.4.1@sha256:689b70f9a0943d69f1afac7ad805fbc2bfb34ddadc5bbde196d69dfc18017255
             env:
               TZ: "Europe/Lisbon"
               SABNZBD__PORT: &port 80
