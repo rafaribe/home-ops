@@ -46,7 +46,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/bazarr
-              tag: 1.5.1@sha256:66f44f16da986ba14dcfe8b196e0506c0cc67e04b24d2267b42b2c05f0572c72
+              tag: 1.5.1@sha256:f017ef31bd585b5a7d6d4826ff756d3ba1df0516299b0645df0913f90fe929fa
             env:
               TZ: ${TIMEZONE}
             envFrom: *envFrom
