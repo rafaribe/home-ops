@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.125.2@sha256:b7464b8799ab31c192d9b51a59d73426fc2deb39db6166a2f5073ae304c1131d
+              tag: v1.125.6@sha256:07e45e10be9539f04dd3a819286b5b308b08142eeff7bc58a89bf21d97237d55
             env:
               TZ: "Europe/Lisbon"
               IMMICH_WORKERS_EXCLUDE: api
