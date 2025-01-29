@@ -53,25 +53,6 @@ spec:
         image: quay.io/ceph/ceph:v18.2.2
       mgr:
         count: 2
-        modules:
-          - name: pg_autoscaler
-            enabled: true
-          - name: prometheus
-            enabled: true
-          - name: nfs
-            enabled: true
-          - name: insights
-            enabled: true
-          - name: localpool
-            enabled: true
-          - name: alerts
-            enabled: true
-          - name: rgw
-            enabled: true
-          - name: progress
-            enabled: true
-          - name: diskprediction_local
-            enabled: true
       placement:
         mon:
           nodeAffinity:
