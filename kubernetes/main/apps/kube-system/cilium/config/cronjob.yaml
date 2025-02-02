@@ -42,7 +42,7 @@ metadata:
   name: restart-cilium
   namespace: kube-system
 spec:
-  schedule: "0 3 * * *"  # Every day at 03:00 AM
+  schedule: "0 */8 * * *"  # Every 8 hours
   jobTemplate:
     spec:
       template:
