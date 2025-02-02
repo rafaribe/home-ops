@@ -21,7 +21,7 @@ spec:
           main:
             image:
               repository: ghcr.io/netbootxyz/netbootxyz
-              tag: 0.7.3-nbxyz2
+              tag: 0.7.4-nbxyz2
     defaultPodOptions:
       hostNetwork: true
     service:
