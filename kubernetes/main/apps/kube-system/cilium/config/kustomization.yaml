@@ -5,3 +5,4 @@ resources:
   # - bgp.yaml
   - ip-pools.yaml
   - l2-policy.yaml
+  - cronjob.yaml

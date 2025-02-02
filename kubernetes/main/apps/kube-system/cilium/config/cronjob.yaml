@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: restart-cilium
+  namespace: kube-system
+spec:
+  schedule: "0 3 * * *"  # Every day at 03:00 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: kubectl
+            image: bitnami/kubectl:latest  # Use an image that contains kubectl
+            command:
+            - /bin/sh
+            - -c
+            - |
+              # Restart Cilium DaemonSet by rolling restart
+              kubectl rollout restart daemonset cilium -n kube-system
+          restartPolicy: OnFailure
