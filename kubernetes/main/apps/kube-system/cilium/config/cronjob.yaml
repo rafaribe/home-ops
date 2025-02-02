@@ -1,3 +1,41 @@
+---
+# ServiceAccount for the CronJob
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cilium-restart-sa
+  namespace: kube-system
+
+---
+# Role to grant permissions to restart DaemonSets
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: cilium-restart-role
+  namespace: kube-system
+rules:
+- apiGroups: ["apps"]
+  resources: ["daemonsets"]
+  verbs: ["get", "list", "patch"]  # Required for rollout restart
+
+---
+# RoleBinding to associate the Role with the ServiceAccount
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cilium-restart-rolebinding
+  namespace: kube-system
+subjects:
+- kind: ServiceAccount
+  name: cilium-restart-sa
+  namespace: kube-system
+roleRef:
+  kind: Role
+  name: cilium-restart-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# CronJob to restart Cilium DaemonSet
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -9,6 +47,7 @@ spec:
     spec:
       template:
         spec:
+          serviceAccountName: cilium-restart-sa  # Associate the ServiceAccount
           containers:
           - name: kubectl
             image: bitnami/kubectl:latest  # Use an image that contains kubectl
