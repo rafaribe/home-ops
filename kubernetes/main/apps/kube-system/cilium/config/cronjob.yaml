@@ -39,7 +39,7 @@ roleRef:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: restart-cilium
+  name: cilim-restart-cronjob
   namespace: kube-system
 spec:
   schedule: "0 */8 * * *"  # Every 8 hours
