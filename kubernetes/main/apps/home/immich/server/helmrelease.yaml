@@ -95,8 +95,8 @@ spec:
                   httpGet:
                     path: /server-info/ping
                     port: 2283
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
+                  initialDelaySeconds: 25
+                  periodSeconds: 25
                   timeoutSeconds: 1
                   failureThreshold: 5
               readiness: *probes
