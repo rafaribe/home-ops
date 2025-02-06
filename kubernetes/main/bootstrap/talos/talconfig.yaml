@@ -9,9 +9,9 @@ clusterSvcNets:
   - 10.43.0.0/16
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
-talosVersion: v1.9.0
+talosVersion: v1.9.3
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
-kubernetesVersion: v1.32.0
+kubernetesVersion: v1.32.1
 
 additionalApiServerCertSans: &sans
   - ${clusterEndpointIP}
@@ -43,11 +43,18 @@ nodes:
     machineSpec:
       mode: metal
       arch: arm64
+    schematic:
+      overlay:
+        name: turingrk1
+        image: siderolabs/sbc-rockchip
+      customization:
+        extraKernelArgs:
+          - net.ifnames=0
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/binfmt-misc
+            - siderolabs/util-linux-tools
     patches:
-      - &turing-rk1-schematic |-
-        machine:
-          install:
-            image: factory.talos.dev/installer/c739f79cbeef721b97ddf8379a992a7d1a9a83104e349af4e358b351df51efb4:v1.9.0
       - &kubelet-gc |-
         machine:
           kubelet:
@@ -73,10 +80,18 @@ nodes:
     machineSpec:
       mode: metal
       arch: arm64
-    kernelModules:
-      - name: rockchip-cpufreq
+    schematic:
+      overlay:
+        name: turingrk1
+        image: siderolabs/sbc-rockchip
+      customization:
+        extraKernelArgs:
+          - net.ifnames=0
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/binfmt-misc
+            - siderolabs/util-linux-tools
     patches:
-      - *turing-rk1-schematic
       - *kubelet-gc
   - hostname: tpi-3.${clusterDNSSuffix}
     ipAddress: 10.0.1.14
@@ -96,8 +111,18 @@ nodes:
     machineSpec:
       mode: metal
       arch: arm64
+    schematic:
+      overlay:
+        name: turingrk1
+        image: siderolabs/sbc-rockchip
+      customization:
+        extraKernelArgs:
+          - net.ifnames=0
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/binfmt-misc
+            - siderolabs/util-linux-tools
     patches:
-      - *turing-rk1-schematic
       - *kubelet-gc
   - hostname: tpi-4.${clusterDNSSuffix}
     ipAddress: 10.0.1.15
@@ -117,8 +142,18 @@ nodes:
     machineSpec:
       mode: metal
       arch: arm64
+    schematic:
+      overlay:
+        name: turingrk1
+        image: siderolabs/sbc-rockchip
+      customization:
+        extraKernelArgs:
+          - net.ifnames=0
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/binfmt-misc
+            - siderolabs/util-linux-tools
     patches:
-      - *turing-rk1-schematic
       - *kubelet-gc
   - hostname: srv-02.${clusterDNSSuffix}
     ipAddress: 10.0.1.3
