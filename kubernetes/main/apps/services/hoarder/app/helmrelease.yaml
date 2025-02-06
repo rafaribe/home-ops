@@ -24,13 +24,6 @@ spec:
         runAsNonRoot: true
         fsGroup: 1000
         fsGroupChangePolicy: "OnRootMismatch"
-      affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                app.kubernetes.io/name: hoarder
-            topologyKey: "kubernetes.io/hostname"
     controllers:
       hoarder:
         annotations:
