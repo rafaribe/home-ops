@@ -170,7 +170,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-
+    patches:
+      - *kubelet-gc
   - hostname: srv-03.${clusterDNSSuffix}
     ipAddress: 10.0.1.4
     nameservers:
@@ -186,7 +187,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-
+    patches:
+      - *kubelet-gc
   - hostname: srv-04.${clusterDNSSuffix}
     ipAddress: 10.0.1.5
     nameservers:
@@ -204,7 +206,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-
+    patches:
+      - *kubelet-gc
   - hostname: srv-05.${clusterDNSSuffix}
     ipAddress: 10.0.1.8
     nameservers:
@@ -239,6 +242,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
+    patches:
+      - *kubelet-gc
   - hostname: srv-07.${clusterDNSSuffix}
     ipAddress: 10.0.1.10
     nameservers:
@@ -256,7 +261,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-
+    patches:
+      - *kubelet-gc
 controlPlane:
   noSchematicValidate: true
   schematic:
