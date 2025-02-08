@@ -220,6 +220,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
+    patches:
+      - *kubelet-gc
   - hostname: srv-06.${clusterDNSSuffix}
     ipAddress: 10.0.1.9
     nameservers:
