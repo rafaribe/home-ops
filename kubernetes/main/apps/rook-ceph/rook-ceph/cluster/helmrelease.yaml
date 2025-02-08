@@ -26,6 +26,7 @@ spec:
   values:
     toolbox:
       enabled: true
+      image: quay.io/ceph/ceph:v19.2.1
     monitoring:
       enabled: true
       createPrometheusRules: true
@@ -34,13 +35,14 @@ spec:
       bdev_enable_discard = true
       bdev_async_discard = true
       osd_class_update_on_start = false
+      osd_pool_default_size = 3
+      osd_pool_default_min_size = 2
+      mon_data_avail_warn = 10
+
     network:
       provider: host
       connections:
-        encryption:
-          enabled: false
-        compression:
-          enabled: true
+        requireMsgr2: true
     cephClusterSpec:
       crashCollector:
         disable: true
@@ -48,12 +50,23 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
+        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       # cephVersion:
       #   # workaround https://github.com/rook/rook/issues/14502 : replacing v18.2.4 by v18.2.2
       #   image: quay.io/ceph/ceph:v18.2.2
       mgr:
         count: 2
+        allowMultiplePerNode: false
+        modules:
+          - name: "pg_autoscaler"
+            enabled: true
+          - name: "diskprediction_local"
+            enabled: true
       placement:
+        all:
+          tolerations:
+            - key: "node-role.kubernetes.io/control-plane"
+              operator: "Exists"
         mon:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -128,10 +141,11 @@ spec:
           isDefault: true
           reclaimPolicy: Delete
           allowVolumeExpansion: true
+          mountOptions: ["discard"]
           volumeBindingMode: Immediate
           parameters:
             imageFormat: "2"
-            imageFeatures: layering
+            imageFeatures: "layering,exclusive-lock,object-map,fast-diff,deep-flatten" # https://docs.ceph.com/en/quincy/rbd/rbd-config-ref/#image-features
             csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
             csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
             csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
@@ -139,6 +153,18 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
+      - name: builtin-mgr
+        spec:
+          name: .mgr
+          failureDomain: host
+          replicated:
+            size: 3
+            requireSafeReplicaSize: false
+          parameters:
+            min_size: "2"
+            compression_mode: none
+        storageClass:
+          enabled: false
     cephBlockPoolsVolumeSnapshotClass:
       enabled: true
       name: csi-ceph-blockpool
