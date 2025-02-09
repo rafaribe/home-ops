@@ -62,6 +62,20 @@ spec:
             enabled: true
           - name: "diskprediction_local"
             enabled: true
+          - name: prometheus
+            enabled: true
+          - name: nfs
+            enabled: true
+          - name: insights
+            enabled: true
+          - name: localpool
+            enabled: true
+          - name: alerts
+            enabled: true
+          - name: rgw
+            enabled: true
+          - name: progress
+            enabled: true
       placement:
         all:
           tolerations:
