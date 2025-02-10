@@ -106,6 +106,8 @@ spec:
           gethomepage.dev/icon: https://miro.medium.com/v2/resize:fit:820/1*gJQ7_l2Q03aX7cYeCYpiFQ.png
           gethomepage.dev/description: Ceph Dashboard
           gethomepage.dev/siteMonitor: http://rook-ceph-mgr-dashboard.rook-ceph:7000
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (ceph-mgr)
         host:
           name: &host "rook.rafaribe.com"
           path: "/"
