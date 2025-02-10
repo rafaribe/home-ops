@@ -65,7 +65,7 @@ spec:
           frontend:
             image:
               repository: docker.io/tombursch/kitchenowl-web
-              tag: v0.6.8@sha256:86278a8bf22b88445835928768cd2c8207da0b706bf5ae0c5954fa10e8463952
+              tag: v0.6.9@sha256:ceca97c13dcdd5be95791e36a9cdf5949e107440f254e6874f0ef6627549b459
             env:
               TZ: ${TIMEZONE}
               BACK_URL: "kitchenowl-backend.services.svc.cluster.local:5000"
