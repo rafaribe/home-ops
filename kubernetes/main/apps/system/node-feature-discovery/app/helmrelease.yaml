@@ -27,6 +27,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    tls:
+      enabled: true
+      certManager: true
     worker:
       config:
         core:
