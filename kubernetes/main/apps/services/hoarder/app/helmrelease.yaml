@@ -29,8 +29,8 @@ spec:
             env:
               # Meillisearch
               DATA_DIR: /data
-              MEILI_ADDR: http://hoarder-meilisearch:7700
-              BROWSER_WEB_URL: http://hoarder-chrome:9222
+              MEILI_ADDR: http://localhost:7700
+              BROWSER_WEB_URL: http://localhost:9222
               MEILI_MASTER_KEY:
                 valueFrom:
                   secretKeyRef:
