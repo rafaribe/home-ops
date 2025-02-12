@@ -126,12 +126,12 @@ spec:
           http:
             port: 3000
       chrome:
-        controller: chrome
+        controller: hoarder
         ports:
           http:
             port: 9222
       meilisearch:
-        controller: meilisearch
+        controller: hoarder
         ports:
           http:
             port: 7700
