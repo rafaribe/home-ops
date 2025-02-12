@@ -158,14 +158,13 @@ spec:
                   port: http
 
     persistence:
-      data:
+      config:
         existingClaim: hoarder-data
         advancedMounts:
           hoarder:
             app:
               - path: /data
                 subPath: hoarder
-          meilisearch:
-            app:
+            meilisearch:
               - path: /meili_data
                 subPath: meilisearch
