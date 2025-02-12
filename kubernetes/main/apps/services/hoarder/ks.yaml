@@ -22,6 +22,9 @@ spec:
     - name: rook-ceph-cluster
     - name: volsync
     - name: external-secrets-stores
+  components:
+    - ../../../../shared/templates/gatus/guarded
+    - ../../../../shared/templates/volsync
   postBuild:
     substitute:
       APP: *app
