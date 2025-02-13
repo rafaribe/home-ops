@@ -28,7 +28,7 @@ envoy:
 hubble:
   enabled: true
   relay:
-    enabled: true
+    enabled: false
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: 10.42.0.0/16
@@ -46,17 +46,17 @@ operator:
   replicas: 2
   rollOutPods: true
   prometheus:
-    enabled: true
+    enabled: false
     serviceMonitor:
-      enabled: true
+      enabled: false
   dashboards:
     enabled: true
     annotations:
       grafana_folder: Network
 prometheus:
-  enabled: true
+  enabled: false
   serviceMonitor:
-    enabled: true
+    enabled: false
     trustCRDsExist: true
 dashboards:
   enabled: true

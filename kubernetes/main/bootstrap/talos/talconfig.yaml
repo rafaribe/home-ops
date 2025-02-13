@@ -25,6 +25,56 @@ cniConfig:
   name: none
 
 nodes:
+    # Qemu Control Planes
+  - hostname: virt-01.${clusterDNSSuffix}
+    ipAddress: 10.0.1.16
+    nameservers:
+      - "10.0.0.254"
+    controlPlane: true
+    installDiskSelector:
+      model: QEMU HARDDISK
+      size: '>= 100 GB'
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "00:a0:98:6d:86:f5"
+        dhcp: true
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1
+  - hostname: virt-02.${clusterDNSSuffix}
+    ipAddress: 10.0.1.17
+    nameservers:
+      - "10.0.0.254"
+    controlPlane: true
+    installDiskSelector:
+      model: QEMU HARDDISK
+      size: '>= 100 GB'
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "00:a0:98:6d:86:f5"
+        dhcp: true
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1       
+  - hostname: virt-03.${clusterDNSSuffix}
+    ipAddress: 10.0.1.18
+    nameservers:
+      - "10.0.0.254"
+    controlPlane: true
+    installDiskSelector:
+      model: QEMU HARDDISK
+      size: '>= 100 GB'
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "00:a0:98:6d:86:f5"
+        dhcp: true
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1  
+  # Turing Pi Arm64 Nodes
   - hostname: tpi-1.${clusterDNSSuffix}
     ipAddress: 10.0.1.12
     nameservers:
@@ -40,7 +90,7 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-    machineSpec:
+    machineSpec: 
       mode: metal
       arch: arm64
     schematic:
@@ -155,6 +205,7 @@ nodes:
             - siderolabs/util-linux-tools
     patches:
       - *kubelet-gc
+  # x86_64 NUC / Server Nodes
   - hostname: srv-02.${clusterDNSSuffix}
     ipAddress: 10.0.1.3
     nameservers:
@@ -170,8 +221,6 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-    patches:
-      - *kubelet-gc
   - hostname: srv-03.${clusterDNSSuffix}
     ipAddress: 10.0.1.4
     nameservers:
@@ -187,13 +236,11 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-    patches:
-      - *kubelet-gc
   - hostname: srv-04.${clusterDNSSuffix}
     ipAddress: 10.0.1.5
     nameservers:
       - "10.0.0.254"
-    controlPlane: true
+    controlPlane: false
     installDiskSelector:
       type: "ssd"
       model: WDC*
@@ -206,8 +253,6 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-    patches:
-      - *kubelet-gc
   - hostname: srv-05.${clusterDNSSuffix}
     ipAddress: 10.0.1.8
     nameservers:
@@ -223,13 +268,11 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-    patches:
-      - *kubelet-gc
   - hostname: srv-06.${clusterDNSSuffix}
     ipAddress: 10.0.1.9
     nameservers:
       - "10.0.0.254"
-    controlPlane: true
+    controlPlane: false
     installDiskSelector:
       type: "ssd"
       model: UDSS*
@@ -242,13 +285,11 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-    patches:
-      - *kubelet-gc
   - hostname: srv-07.${clusterDNSSuffix}
     ipAddress: 10.0.1.10
     nameservers:
       - "10.0.0.254"
-    controlPlane: true
+    controlPlane: false
     installDiskSelector:
       type: "ssd"
       model: UDSS*
@@ -261,8 +302,6 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-    patches:
-      - *kubelet-gc
 controlPlane:
   noSchematicValidate: true
   schematic:
@@ -272,12 +311,9 @@ controlPlane:
         - mitigations=off
       systemExtensions:
         officialExtensions:
-          - siderolabs/i915
+          - siderolabs/qemu-guest-agent
           - siderolabs/binfmt-misc
           - siderolabs/util-linux-tools
-          - siderolabs/iscsi-tools
-          - siderolabs/intel-ucode
-          - siderolabs/realtek-firmware
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: m
@@ -398,7 +434,7 @@ controlPlane:
     # Cluster configuration
     - |-
       cluster:
-        allowSchedulingOnMasters: true
+        allowSchedulingOnMasters: false
         controllerManager:
           extraArgs:
             bind-address: 0.0.0.0
