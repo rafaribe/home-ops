@@ -50,8 +50,6 @@ spec:
   externalClusters:
     - name: clusterBackup
       barmanObjectStore:
-        wal:
-          maxParallel: 8
         destinationPath: s3://cpng-home-ops-storage/
         endpointURL: http://minio.storage.svc.cluster.local:9000
       s3Credentials:
