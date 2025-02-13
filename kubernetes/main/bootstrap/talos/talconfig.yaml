@@ -176,7 +176,7 @@ nodes:
     ipAddress: 10.0.1.4
     nameservers:
       - "10.0.0.254"
-    controlPlane: true
+    controlPlane: false
     installDiskSelector:
       wwid: "naa.502b2a201d1c1b1a"
     networkInterfaces:
@@ -229,7 +229,7 @@ nodes:
     ipAddress: 10.0.1.9
     nameservers:
       - "10.0.0.254"
-    controlPlane: false
+    controlPlane: true
     installDiskSelector:
       type: "ssd"
       model: UDSS*
