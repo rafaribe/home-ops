@@ -44,3 +44,20 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-minio
           key: MINIO_SECRET_KEY
+  bootstrap:
+    recovery:
+      source: clusterBackup
+  externalClusters:
+    - name: clusterBackup
+      barmanObjectStore:
+        wal:
+          maxParallel: 8
+        destinationPath: s3://cpng-home-ops-storage/
+        endpointURL: http://minio.storage.svc.cluster.local:9000
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg-minio
+          key: MINIO_ACCESS_KEY
+        secretAccessKey:
+          name: cloudnative-pg-minio
+          key: MINIO_SECRET_KEY
