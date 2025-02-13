@@ -31,7 +31,7 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
 
       - name: Build docs
-        uses: docker://ghcr.io/bjw-s-labs/mdbook:0.4.44@sha256:cecb70606cf5d43b34d9697eaab463847a6cd29a478ec5d91afb30337e6f4ad0
+        uses: docker://ghcr.io/bjw-s-labs/mdbook:0.4.44@sha256:ccf3d97433e5aa03e41021e11030fe040d63ed93b3b681f6b08db8e4f751e1c7
         with:
           args: bash -c "cd docs && mdbook build"
 
