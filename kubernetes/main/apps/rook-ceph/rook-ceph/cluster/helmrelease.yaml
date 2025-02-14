@@ -161,7 +161,7 @@ spec:
           volumeBindingMode: Immediate
           parameters:
             imageFormat: "2"
-            imageFeatures: "layering"
+            imageFeatures: layering,exclusive-lock,object-map,fast-diff,deep-flatten
             #imageFeatures: "layering,exclusive-lock,object-map,fast-diff,deep-flatten" # https://docs.ceph.com/en/quincy/rbd/rbd-config-ref/#image-features
             csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
             csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
