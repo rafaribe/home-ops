@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app mealie
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts/
