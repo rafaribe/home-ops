@@ -36,7 +36,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://cpng-home-ops-storage/
       endpointURL: http://minio.storage.svc.cluster.local:9000
-      serverName: &currentCluster home-ops-storage-v3
+      serverName: &currentCluster home-ops-storage-v4
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-minio
@@ -46,9 +46,9 @@ spec:
           key: MINIO_SECRET_KEY
   bootstrap:
     recovery:
-      source: clusterBackup
+      source: home-ops-storage-v3
   externalClusters:
-    - name: clusterBackup
+    - name: home-ops-storage-v3
       barmanObjectStore:
         destinationPath: s3://cpng-home-ops-storage/
         endpointURL: http://minio.storage.svc.cluster.local:9000
