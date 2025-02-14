@@ -46,9 +46,9 @@ spec:
           key: MINIO_SECRET_KEY
   bootstrap:
     recovery:
-      source: home-ops-storage-v3
+      source: &previousCluster home-ops-storage-v3
   externalClusters:
-    - name: home-ops-storage-v3
+    - name: *previousCluster
       barmanObjectStore:
         destinationPath: s3://cpng-home-ops-storage/
         endpointURL: http://minio.storage.svc.cluster.local:9000
