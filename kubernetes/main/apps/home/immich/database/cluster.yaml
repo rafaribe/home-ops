@@ -45,7 +45,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://cpng-immich/
       endpointURL: http://minio.storage.svc.cluster.local:9000
-      serverName: &currentCluster immich-db-v1
+      serverName: &currentCluster immich-db-v3
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-minio
@@ -55,7 +55,7 @@ spec:
           key: MINIO_SECRET_KEY
   bootstrap:
     recovery:
-      source: &previousCluster immich-db-v1
+      source: &previousCluster immich-db-v2
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
     - name: *previousCluster
