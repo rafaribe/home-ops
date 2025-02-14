@@ -62,10 +62,10 @@ spec:
       barmanObjectStore:
         destinationPath: s3://cpng-immich/
         endpointURL: http://minio.storage.svc.cluster.local:9000
-      s3Credentials:
-        accessKeyId:
-          name: cloudnative-pg-minio
-          key: MINIO_ACCESS_KEY
-        secretAccessKey:
-          name: cloudnative-pg-minio
-          key: MINIO_SECRET_KEY
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg-minio
+            key: MINIO_ACCESS_KEY
+          secretAccessKey:
+            name: cloudnative-pg-minio
+            key: MINIO_SECRET_KEY
