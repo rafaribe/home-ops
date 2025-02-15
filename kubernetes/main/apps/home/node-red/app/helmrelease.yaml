@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: docker.io/nodered/node-red
-              tag: 4.0.8
+              tag: 4.0.9
             env:
               TZ: "${TIMEZONE}"
               NODE_RED_ENABLE_PROJECTS: "true"
