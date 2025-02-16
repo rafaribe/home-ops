@@ -69,7 +69,6 @@ spec:
             value: debug
         securityContext:
           readOnlyRootFilesystem: true
-
     interval: 1h
     triggerLoopOnEvent: true
     policy: sync
