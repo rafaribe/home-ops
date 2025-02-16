@@ -30,7 +30,7 @@ spec:
       - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
         valueFrom:
           secretKeyRef:
-            name: &secret external-dns-bind-secret
+            name: &secret external-dns-bind
             key: rfc2136_tsig_secret
     extraArgs:
       - --ignore-ingress-tls-spec
