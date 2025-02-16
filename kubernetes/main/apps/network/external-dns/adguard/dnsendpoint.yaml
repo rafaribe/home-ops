@@ -8,4 +8,5 @@ spec:
   endpoints:
     - dnsName: internal.rafaribe.com
       recordType: A
-      targets: ${LB_NGINX_INTERNAL}
+      targets:
+        - ${LB_NGINX_INTERNAL}
