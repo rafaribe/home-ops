@@ -10,3 +10,4 @@ resources:
   - ./externalsecret.yaml
   - ./gatus.yaml
   - ./objectbucketclaim.yaml
+  - ./externalservice.yaml
