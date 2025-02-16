@@ -19,6 +19,16 @@ spec:
       max_connections: "600"
       max_slot_wal_keep_size: 30GB
       shared_buffers: 512MB
+  managed:
+    services:
+      additional:
+      - selectorType: home-ops-storage-rw
+        serviceTemplate:
+          metadata:
+            annotations:
+              lbipam.cilium.io/ips: ${LB_POSTGRES_DB}
+          spec:
+            type: LoadBalancer
   resources:
     requests:
       cpu: 500m
