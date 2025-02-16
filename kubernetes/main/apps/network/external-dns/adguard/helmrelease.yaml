@@ -25,14 +25,29 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    # domainFilters: ["internal.${SECRET_DOMAIN}"]
     provider:
       name: webhook
       webhook:
         image:
           repository: ghcr.io/muhlba91/external-dns-provider-adguard
           tag: v8.0.0@sha256:1a7b12b3fef352626345653809716ada3d7569c930b1bf85c2e1b98e022ca9aa
-          pullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8888
+            name: http
+          - containerPort: 8080
+            name: healthz
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: healthz
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: healthz
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
         env:
           - name: ADGUARD_URL
             value: http://10.0.0.253
@@ -50,13 +65,22 @@ spec:
             value: 0.0.0.0
         securityContext:
           readOnlyRootFilesystem: true
+
     interval: 1h
     triggerLoopOnEvent: true
     policy: sync
     registry: noop
     extraArgs:
-      - --webhook-provider-url=http://localhost:8080
+      - --webhook-provider-url=http://localhost:8888
       - --ingress-class=internal
     podAnnotations:
       secret.reloader.stakater.com/reload: *secret
     logLevel: debug
+    resources:
+      requests:
+        cpu: 16m
+        memory: 90M
+      limits:
+        memory: 90M
+    serviceMonitor:
+      enabled: true
