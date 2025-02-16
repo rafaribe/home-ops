@@ -63,6 +63,10 @@ spec:
                 key: *name
           - name: SERVER_HOST
             value: 0.0.0.0
+          - name: DOMAIN_FILTER
+            value: "rafaribe.com"
+          - name: LOG_LEVEL
+            value: debug
         securityContext:
           readOnlyRootFilesystem: true
 
