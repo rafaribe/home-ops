@@ -22,7 +22,7 @@ spec:
   managed:
     services:
       additional:
-      - selectorType: home-ops-storage-rw
+      - selectorType: rw
         serviceTemplate:
           metadata:
             annotations:
