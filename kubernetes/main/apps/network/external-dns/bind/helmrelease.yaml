@@ -34,19 +34,19 @@ spec:
             key: rfc2136_tsig_secret
     extraArgs:
       - --ignore-ingress-tls-spec
-      - --rfc2136-host=10.0.0.1
+      - --rfc2136-host="10.0.0.1"
       - --rfc2136-port=53
-      - --rfc2136-zone=rafaribe.com
+      - --rfc2136-zone="rafaribe.com"
       - --rfc2136-min-ttl=0s
       - --rfc2136-tsig-axfr
       - --rfc2136-tsig-keyname=rndc-key
-      - --rfc2136-tsig-secret-alg=hmac-sha256
+      - --rfc2136-tsig-secret-alg=hmac-sha512
     triggerLoopOnEvent: true
     policy: sync
     sources: ["ingress", "service"]
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
-    txtOwnerId: registry
-    txtPrefix: k8s.bind.
+    txtOwnerId: infra
+    txtPrefix: k8s.infra.
     domainFilters: ["rafaribe.com"]
     logLevel: info
     serviceMonitor:
