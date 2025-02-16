@@ -55,7 +55,7 @@ spec:
     policy: sync
     registry: noop
     extraArgs:
-      - --webhook-provider-url=http://localhost:8888
+      - --webhook-provider-url=http://localhost:8080
       - --ingress-class=internal
     podAnnotations:
       secret.reloader.stakater.com/reload: *secret
