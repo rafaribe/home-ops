@@ -39,7 +39,7 @@ spec:
       - --rfc2136-zone=rafaribe.com
       - --rfc2136-min-ttl=0s
       - --rfc2136-tsig-axfr
-      - --rfc2136-tsig-keyname=externaldns
+      - --rfc2136-tsig-keyname=rndc-key
       - --rfc2136-tsig-secret-alg=hmac-sha256
     triggerLoopOnEvent: true
     policy: sync
