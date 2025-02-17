@@ -1,16 +1,9 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cilium
-  namespace: kube-system
-  annotations:
-    meta.helm.sh/release-name: cilium
-    meta.helm.sh/release-namespace: kube-system
-  labels:
-    app.kubernetes.io/managed-by: Helm
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: cilium
@@ -19,53 +12,14 @@ spec:
         kind: HelmRepository
         name: cilium
         namespace: flux-system
-      interval: 15m
-  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-      remediateLastFailure: true
-  uninstall:
-    keepHistory: false
-
   valuesFrom:
     - kind: ConfigMap
-      name: cilium-values
-  values:
-    hubble:
-      enabled: true
-      metrics:
-        enabled:
-          - dns:query
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-        serviceMonitor:
-          enabled: true
-      relay:
-        enabled: true
-        rollOutPods: true
-        prometheus:
-          serviceMonitor:
-            enabled: true
-      ui:
-        enabled: true
-        rollOutPods: true
-        ingress:
-          enabled: true
-          className: internal
-          annotations:
-            external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/icon: cilium.png
-            gethomepage.dev/name: Hubble
-            gethomepage.dev/group: Observability
-            gethomepage.dev/description: Network Monitoring Dashboard
-          hosts: ["hubble.rafaribe.com"]
+      name: cilium-helm-values
