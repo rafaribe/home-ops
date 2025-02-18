@@ -1,9 +1,19 @@
 locals {
   oidcs = [
     {
+      authentik_oidc_application_name        = "gotosocial"
+      authentik_oidc_application_icon_url    = "https://raw.githubusercontent.com/superseriousbusiness/gotosocial/main/docs/overrides/public/sloth.webp"
+      authentik_oidc_application_description = "Fediverse"
+    },
+    {
       authentik_oidc_application_name        = "grafana"
       authentik_oidc_application_icon_url    = "https://w1.pngwing.com/pngs/950/813/png-transparent-github-logo-grafana-influxdb-dashboard-visualization-web-application-installation-data-plugin-thumbnail.png"
       authentik_oidc_application_description = "Grafana OAuth application"
+    },
+    {
+      authentik_oidc_application_name        = "hoarder"
+      authentik_oidc_application_icon_url    = "https://media.invisioncic.com/u329766/monthly_2024_05/hoarder.png.cb75b7347d47989bd0c3e65b9e613700.png"
+      authentik_oidc_application_description = "A self-hostable bookmark-everything app (links, notes and images) with AI-based automatic tagging and full text search"
     },
     {
       authentik_oidc_application_name        = "paperless"
@@ -16,20 +26,15 @@ locals {
       authentik_oidc_application_description = "PGAdmin OAuth application"
     },
     {
-      authentik_oidc_application_name        = "gotosocial"
-      authentik_oidc_application_icon_url    = "https://raw.githubusercontent.com/superseriousbusiness/gotosocial/main/docs/overrides/public/sloth.webp"
-      authentik_oidc_application_description = "Fediverse"
+      authentik_oidc_application_name        = "tandoor"
+      authentik_oidc_application_icon_url    = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXMMZeussUqq5cUvq2G1-o4T_hGIxuOMPkYw&s"
+      authentik_oidc_application_description = "Manage your ever growing recipe collection online"
     },
     {
       authentik_oidc_application_name        = "windmill"
       authentik_oidc_application_icon_url    = "https://avatars.githubusercontent.com/u/98025271?s=200&v=4"
       authentik_oidc_application_description = "OSS developer platform to build multistep automations and internal apps from minimal Typescript and Python scripts"
     },
-    {
-      authentik_oidc_application_name        = "tandoor"
-      authentik_oidc_application_icon_url    = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXMMZeussUqq5cUvq2G1-o4T_hGIxuOMPkYw&s"
-      authentik_oidc_application_description = "Manage your ever growing recipe collection online"
-    }
   ]
 }
 
