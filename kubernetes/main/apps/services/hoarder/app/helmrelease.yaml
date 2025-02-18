@@ -48,8 +48,8 @@ spec:
               CRAWLER_ENABLE_ADBLOCKER: true
               CRAWLER_STORE_SCREENSHOT: true
               # OAuth setup
-              OAUTH_PROVIDER_NAME: Authentik
-              DISABLE_PASSWORD_AUTH: true
+              #OAUTH_PROVIDER_NAME: Authentik
+              DISABLE_PASSWORD_AUTH: false
               DISABLE_NEW_RELEASE_CHECK: true
               # Ai
               INFERENCE_IMAGE_MODEL: "llava"
