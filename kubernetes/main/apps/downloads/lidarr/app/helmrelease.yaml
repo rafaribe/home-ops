@@ -38,6 +38,9 @@ spec:
             runAsGroup: 1000
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
 
         initContainers:
           init-db:
@@ -50,8 +53,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/rafaribe/lidarr
-              tag: 2.9.6.4552@sha256:c0be8d29a5ff28c72e10f52b8e81f2fb3b128048eec6d28e0d12faac19ee8925
+              repository: ghcr.io/rafaribe/lidarr-develop
+              tag: 2.9.6.4552@sha256:dbbffe3067731e773fd6fde69e08e87d34be06743e6705c9c77af26d837b98fd
             env:
               TZ: Europe/Lisbon
               LIDARR__INSTANCE_NAME: Lidarr
@@ -89,20 +92,21 @@ spec:
 
     ingress:
       app:
-        className: "internal"
+        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Automatic music downloads
           gethomepage.dev/group: Downloads
           gethomepage.dev/icon: sh-lidarr.svg
           gethomepage.dev/name: Lidarr
+          external-dns.alpha.kubernetes.io/target: "internal.rafaribe.com"
         hosts:
-          - host: &host "{{ .Release.Name }}.rafaribe.com"
+          - host: &host "lidarr.rafaribe.com"
             paths:
               - path: /
                 service:
                   identifier: app
-                  port: http
+                  port: *port
         tls:
           - hosts:
               - *host
