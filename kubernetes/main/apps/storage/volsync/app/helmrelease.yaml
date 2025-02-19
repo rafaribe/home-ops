@@ -32,6 +32,6 @@ spec:
     image: &image
       # Probably need to build my own image..
       repository: ghcr.io/rafaribe/volsync
-      tag: 0.11.0@sha256:eafd09d6ac54d182cc2617299444863baa90702e71eeb6942140a70dff092e32
+      tag: 0.11.0@sha256:0c8117cee126c92e2f9d96a24531f1161ff24b1354508cb001f4e9a32708b004
     restic:
       <<: *image
