@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/plex
-              tag: 1.41.4.9463-630c9f557@sha256:99160b5187d933c6e6517663dda7a5681c065ddaad572ca86f47e89fcfd8b00e
+              tag: 1.41.4.9463-630c9f557@sha256:73c0d37532c9839bb6b419c676b8d1cf7cf682ec68127c51c333ee8dcd47e215
             env:
               TZ: ${TZ}
               PLEX_ADVERTISE_URL: https://plex.rafaribe.com:443,http://${LB_PLEX}:32400,https://plex-local.rafaribe.com:443
