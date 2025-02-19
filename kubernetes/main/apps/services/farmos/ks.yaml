@@ -20,6 +20,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-  controllers:
+  components:
     - ../../../../../shared/templates/gatus/guarded
     - ../../../../../shared/templates/volsync
