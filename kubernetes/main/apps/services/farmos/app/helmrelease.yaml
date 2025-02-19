@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: farmos/farmos
-              tag: 3.3.3@sha256:23a079fc34ce9babac55ca1b87a45a1e3c528eab38aa90cc3e980e0956c9288e
+              tag: 3.4.1@sha256:dfedcb62175f784248abe208ae3f8a99d51f43c73a34388e812a81feeb5187b3
             env:
               TZ: ${TIMEZONE}
             envFrom: *envFrom
