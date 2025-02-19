@@ -46,7 +46,7 @@ spec:
               tag: 16
             envFrom: &envFrom
               - secretRef:
-                  name: lidarr-secret
+                  name: lidarr
         containers:
           app:
             image:
@@ -60,9 +60,7 @@ spec:
               LIDARR__AUTH__METHOD: External
               LIDARR__AUTH__REQUIRED: DisabledForLocalAddresses
               LIDARR__THEME: dark
-            envFrom:
-              - secretRef:
-                  name: lidarr-secret
+            envFrom: *envFrom
 
             probes:
               liveness:
