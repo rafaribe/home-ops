@@ -33,9 +33,6 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: "OnRootMismatch"
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
-        capabilities: { drop: ["ALL"] }
         seccompProfile: { type: RuntimeDefault }
     controllers:
       lidarr:
@@ -65,15 +62,22 @@ spec:
             envFrom: *envFrom
 
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
-              startup:
-                enabled: true
+                custom: true
                 spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
 
             resources:
               requests:
