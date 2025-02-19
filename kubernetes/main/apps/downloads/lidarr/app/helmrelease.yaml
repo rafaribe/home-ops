@@ -39,18 +39,27 @@ spec:
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
 
-          nodeSelector:
-            kubernetes.io/hostname: s01
-
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/rafaribe/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: lidarr-secret
         containers:
           app:
             image:
               repository: ghcr.io/drag0n141/lidarr
               tag: 2.9.6.4552
             env:
+              TZ: Europe/Lisbon
               LIDARR__INSTANCE_NAME: Lidarr
-              LIDARR__PORT: &port 8686
+              LIDARR__SERVER__PORT: &port 80
               LIDARR__LOG_LEVEL: info
+              LIDARR__AUTH__METHOD: External
+              LIDARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              LIDARR__THEME: dark
             envFrom:
               - secretRef:
                   name: lidarr-secret
@@ -82,7 +91,7 @@ spec:
 
     ingress:
       app:
-        className: "nginx"
+        className: "internal"
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Automatic music downloads
