@@ -12,6 +12,7 @@ resources:
   - ./dashbrr/ks.yaml
   # - ./flaresolverr/ks.yaml
   - ./kapowarr/ks.yaml
+  - ./lidarr/ks.yaml
   - ./metube/ks.yaml
   - ./omegabrr/ks.yaml
   - ./prowlarr/ks.yaml
