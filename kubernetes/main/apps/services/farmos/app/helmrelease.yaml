@@ -70,4 +70,4 @@ spec:
         type: configMap
         name: php-ini
         globalMounts:
-          - path: /usr/local/etc/php/conf.d/php.ini
+          - path: /usr/local/etc/php/conf.d
