@@ -3,5 +3,9 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-  - ../../../../../shared/templates/gatus/guarded
-  - ../../../../../shared/templates/volsync
+configMapGenerator:
+  - name: php-ini
+    files:
+      - ./config/php.ini
+generatorOptions:
+  disableNameSuffixHash: true

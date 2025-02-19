@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app farm-os
+  name: &app farmos
 spec:
   interval: 30m
   chart:
@@ -17,7 +17,7 @@ spec:
         namespace: flux-system
   values:
     controllers:
-      farm-os:
+      farmos:
         initContainers:
           init-db:
             image:
@@ -36,7 +36,7 @@ spec:
             envFrom: *envFrom
     service:
       app:
-        controller: farm-os
+        controller: farmos
         ports:
           http:
             port: 80
@@ -62,6 +62,12 @@ spec:
 
     persistence:
       data:
-        existingClaim: farm-os
+        existingClaim: farmos
         globalMounts:
           - path: /opt/drupal/web/sites
+      php-ini:
+        enabled: true
+        type: configMap
+        name: php-ini
+        globalMounts:
+          - path: /usr/local/etc/php/conf.d/php.ini
