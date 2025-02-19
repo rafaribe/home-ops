@@ -50,7 +50,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/lidarr-develop
-              tag: 2.9.6.4552@sha256:dbbffe3067731e773fd6fde69e08e87d34be06743e6705c9c77af26d837b98fd
+              tag: 2.9.6.4552@sha256:bbfafd5fce417b986edfdcdbfbb2dbeebc4519f1e50af73950cfc78d11beb49f
             env:
               TZ: Europe/Lisbon
               LIDARR__INSTANCE_NAME: Lidarr
