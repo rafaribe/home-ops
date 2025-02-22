@@ -41,7 +41,7 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-    machineSpec: 
+    machineSpec:
       mode: metal
       arch: arm64
     schematic:
@@ -259,14 +259,14 @@ controlPlane:
   schematic:
     customization:
       extraKernelArgs:
-      - apparmor=0 # Less security, more speed
-      - init_on_alloc=0 # Less security, more speed
-      - init_on_free=0 # Less security, more speed
-      - intel_iommu=on # PCI Passthrough
-      - iommu=pt # PCI Passthrough
-      - mitigations=off # Less security, more speed
-      - security=none # Less security, more speed
-      - net.ifnames=1 # Enable predictable NIC naming
+        - apparmor=0 # Less security, more speed
+        - init_on_alloc=0 # Less security, more speed
+        - init_on_free=0 # Less security, more speed
+        - intel_iommu=on # PCI Passthrough
+        - iommu=pt # PCI Passthrough
+        - mitigations=off # Less security, more speed
+        - security=none # Less security, more speed
+        - net.ifnames=1 # Enable predictable NIC naming
       systemExtensions:
         officialExtensions:
           - siderolabs/qemu-guest-agent
@@ -451,18 +451,25 @@ controlPlane:
             enabled: true
             resolveMemberNames: true
             forwardKubeDNSToHost: false
+    # Enable MutatingAdmissionPolicy
+    - |-
+      cluster:
+        apiServer:
+          extraArgs:
+            runtime-config: admissionregistration.k8s.io/v1alpha1=true
+            feature-gates: MutatingAdmissionPolicy=true
 worker:
   noSchematicValidate: true
   schematic:
     extraKernelArgs:
-    - apparmor=0 # Less security, more speed
-    - init_on_alloc=0 # Less security, more speed
-    - init_on_free=0 # Less security, more speed
-    - intel_iommu=on # PCI Passthrough
-    - iommu=pt # PCI Passthrough
-    - mitigations=off # Less security, more speed
-    - security=none # Less security, more speed
-    - net.ifnames=1 # Enable predictable NIC naming
+      - apparmor=0 # Less security, more speed
+      - init_on_alloc=0 # Less security, more speed
+      - init_on_free=0 # Less security, more speed
+      - intel_iommu=on # PCI Passthrough
+      - iommu=pt # PCI Passthrough
+      - mitigations=off # Less security, more speed
+      - security=none # Less security, more speed
+      - net.ifnames=1 # Enable predictable NIC naming
     customization:
       systemExtensions:
         officialExtensions:
