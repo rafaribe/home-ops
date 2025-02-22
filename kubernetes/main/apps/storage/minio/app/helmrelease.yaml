@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: quay.io/minio/minio
-              tag: RELEASE.2024-12-18T13-15-44Z
+              tag: RELEASE.2025-02-18T16-25-55Z@sha256:1df91be8d6a6146001cd6be2569a12785a8ece583b511f56ebed08f1e65d3611
             env:
               TZ: "Europe/Lisbon"
               MINIO_PROMETHEUS_URL: http://kube-prometheus-stack-prometheus.observability:9090
@@ -134,3 +134,9 @@ spec:
         path: /mnt/storage-0/minio
         globalMounts:
           - path: /data
+    resources:
+      requests:
+        memory: 750Mi
+        cpu: 400m
+      limits:
+        memory: 2Gi
