@@ -49,7 +49,7 @@ spec:
                 name: "repository",
                 nfs: Object.spec.template.spec.volumes.nfs{
                   server: "truenas.rafaribe.com",
-                  path: "/mnt/storage-0/volsync"
+                  path: "/mnt/storage-0/minio"
                 }
               }
             }
