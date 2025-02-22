@@ -15,6 +15,6 @@ resources:
   - ./maintainerr/ks.yaml
   - ./navidrome/ks.yaml
   - ./plex/ks.yaml
-  - ./tautulli/ks.yaml
+  #  - ./tautulli/ks.yaml
   - ./wizarr/ks.yaml
   - ./your-spotify/ks.yaml
