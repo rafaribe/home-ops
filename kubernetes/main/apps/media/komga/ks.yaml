@@ -25,5 +25,5 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 20Gi
   components:
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../../shared/components/gatus/external
     - ../../../../../shared/components/volsync
