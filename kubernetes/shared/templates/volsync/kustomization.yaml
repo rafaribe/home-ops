@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./claim.yaml
   - ./minio.yaml
+  - ./nfs.yaml
