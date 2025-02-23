@@ -6,4 +6,4 @@ namespace: volsync
 resources:
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
-  - ./mutations
+  #- ./mutations
