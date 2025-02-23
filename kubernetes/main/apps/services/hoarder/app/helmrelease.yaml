@@ -155,7 +155,7 @@ spec:
 
     persistence:
       config:
-        existingClaim: hoarder-data
+        existingClaim: hoarder
         advancedMounts:
           hoarder:
             app:
