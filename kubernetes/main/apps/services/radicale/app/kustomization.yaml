@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-  - ../../../../../shared/templates/volsync
 configMapGenerator:
   - name: radicale-configmap
     files:

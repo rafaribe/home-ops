@@ -22,3 +22,5 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: grafana
       VOLSYNC_CAPACITY: 3Gi
+  components:
+    - ../../../../../shared/components/gatus/external

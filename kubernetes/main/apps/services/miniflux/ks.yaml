@@ -20,3 +20,5 @@ spec:
   wait: false
   dependsOn:
     - name: external-secrets-stores
+  components:
+    - ../../../../../shared/components/gatus/guarded

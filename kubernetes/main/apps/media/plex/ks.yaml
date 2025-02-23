@@ -26,6 +26,9 @@ spec:
       APP: *app
       GATUS_PATH: /web/index.html
       VOLSYNC_CAPACITY: 20Gi
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/external
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -57,6 +60,9 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
+  components:
+    - ../../../../../shared/components/volsync
+
 # ---
 # # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 # apiVersion: kustomize.toolkit.fluxcd.io/v1

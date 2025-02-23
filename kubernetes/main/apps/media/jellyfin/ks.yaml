@@ -24,3 +24,6 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
       GATUS_SUBDOMAIN: jellyfin
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/guarded

@@ -23,3 +23,6 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: redisinsight
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/guarded

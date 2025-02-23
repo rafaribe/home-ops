@@ -20,6 +20,9 @@ spec:
   postBuild:
     substitute:
       APP: *app
+  components:
+    - ../../../../../shared/components/gatus/guarded
+
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

@@ -24,3 +24,6 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_CLAIM: lubelog-v2
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/guarded

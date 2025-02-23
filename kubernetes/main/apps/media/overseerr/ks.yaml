@@ -23,4 +23,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: requests-legacy
+      GATUS_SUBDOMAIN: overseerr
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/external

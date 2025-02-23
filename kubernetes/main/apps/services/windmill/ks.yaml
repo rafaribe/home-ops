@@ -26,3 +26,5 @@ spec:
     substitute:
       APP: *appname
       VOLSYNC_CLAIM: windmill
+  components:
+    - ../../../../../shared/components/gatus/guarded

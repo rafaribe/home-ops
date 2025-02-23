@@ -23,3 +23,6 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: *app
       VOLSYNC_CAPACITY: 2Gi
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/guarded

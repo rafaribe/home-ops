@@ -23,3 +23,5 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: links
+  components:
+    - ../../../../../shared/components/gatus/external

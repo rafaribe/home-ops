@@ -26,6 +26,9 @@ spec:
     substitute:
       APP: *appname
       VOLSYNC_CLAIM: bazarr-config
+  components:
+    - ../../../../../shared/components/gatus/guarded
+    - ../../../../../shared/components/volsync
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1

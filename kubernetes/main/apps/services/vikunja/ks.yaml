@@ -26,3 +26,6 @@ spec:
     substitute:
       APP: *appname
       VOLSYNC_CLAIM: vikunja
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/external

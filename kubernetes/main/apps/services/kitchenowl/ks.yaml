@@ -31,3 +31,6 @@ spec:
   wait: true
   interval: 30m
   timeout: 5m
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/guarded

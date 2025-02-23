@@ -25,3 +25,6 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
       GATUS_SUBDOMAIN: chat
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/guarded

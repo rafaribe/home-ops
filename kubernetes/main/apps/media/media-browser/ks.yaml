@@ -24,3 +24,6 @@ spec:
       APP: *app
       VOLSYNC_CLAIM: media-browser
       GATUS_SUBDOMAIN: media
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/guarded

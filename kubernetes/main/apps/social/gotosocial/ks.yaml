@@ -25,4 +25,6 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
----
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/external

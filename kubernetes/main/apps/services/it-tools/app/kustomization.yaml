@@ -4,4 +4,3 @@ kind: Kustomization
 namespace: services
 resources:
   - ./helmrelease.yaml
-  - ../../../../../shared/templates/gatus/external

@@ -34,3 +34,6 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
       GATUS_SUBDOMAIN: hass
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/external

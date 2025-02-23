@@ -28,3 +28,5 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: apps
+  components:
+    - ../../../../../shared/components/gatus/guarded

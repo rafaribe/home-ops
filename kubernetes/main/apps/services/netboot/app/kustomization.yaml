@@ -4,5 +4,3 @@ kind: Kustomization
 namespace: services
 resources:
   - ./helmrelease.yaml
-  - ../../../../../shared/templates/gatus/guarded
-  - ../../../../../shared/templates/volsync

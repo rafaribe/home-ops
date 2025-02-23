@@ -25,3 +25,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
+  components:
+    - ../../../../../shared/components/gatus/external

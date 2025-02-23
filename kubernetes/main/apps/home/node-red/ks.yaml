@@ -28,3 +28,6 @@ spec:
       APP_UID: "1000"
       APP_GID: "1000"
       VOLSYNC_CLAIM: node-red-data
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/guarded

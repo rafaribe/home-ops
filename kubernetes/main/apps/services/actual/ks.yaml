@@ -26,3 +26,6 @@ spec:
     substitute:
       APP: *appname
       VOLSYNC_CLAIM: actual-data
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/guarded

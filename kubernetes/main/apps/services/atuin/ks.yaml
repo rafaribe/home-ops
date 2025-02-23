@@ -24,3 +24,5 @@ spec:
       DB_NAME: atuin
       DB_USER: atuin
       GATUS_SUBDOMAIN: sh
+  components:
+    - ../../../../../shared/components/gatus/guarded

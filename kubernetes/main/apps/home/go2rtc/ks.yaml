@@ -8,8 +8,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  components:
-    - ../../../../shared/templates/gatus/external
   path: ./kubernetes/main/apps/home/go2rtc/app
   prune: true
   sourceRef:
@@ -31,3 +29,6 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: go2rtc
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/guarded

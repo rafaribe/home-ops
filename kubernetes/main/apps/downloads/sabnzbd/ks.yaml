@@ -20,3 +20,6 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/guarded

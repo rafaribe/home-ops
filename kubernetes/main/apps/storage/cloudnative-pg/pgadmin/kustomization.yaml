@@ -5,9 +5,6 @@ resources:
   # App
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-  # Templates
-  - ../../../../../shared/templates/gatus/guarded
-  - ../../../../../shared/templates/volsync
 configMapGenerator:
   - name: servers-json
     files:

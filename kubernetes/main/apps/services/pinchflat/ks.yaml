@@ -20,3 +20,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
+  components:
+    - ../../../../../shared/components/volsync

@@ -23,3 +23,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
+  components:
+    - ../../../../../shared/components/gatus/guarded
+    - ../../../../../shared/components/volsync
