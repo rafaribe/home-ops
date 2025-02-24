@@ -5,7 +5,7 @@ metadata:
 spec:
   sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
   trigger:
-    schedule: "${VOLSYNC_CRONEXPRESSION_MINIO:=0 * * * *}"
+    schedule: "${VOLSYNC_CRON_EXPRESSION_MINIO:=30 3 * * *}"
   restic:
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
     pruneIntervalDays: 10
