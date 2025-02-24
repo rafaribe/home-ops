@@ -26,6 +26,7 @@ spec:
       APP: *app
       GATUS_PATH: /web/index.html
       VOLSYNC_CAPACITY: 20Gi
+      VOLSYNC_CRONEXPRESSION: "30 3 * * *"
   components:
     - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/external
