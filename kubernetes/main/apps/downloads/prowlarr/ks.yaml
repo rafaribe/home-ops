@@ -22,7 +22,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CLAIM: prowlarr-config
+      VOLSYNC_CLAIM: prowlarr
   components:
     - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/guarded
