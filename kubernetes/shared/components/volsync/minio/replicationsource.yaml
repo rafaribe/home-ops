@@ -1,7 +1,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: "${APP}"
+  name: "${APP}-minio"
 spec:
   sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
   trigger:
@@ -9,7 +9,7 @@ spec:
   restic:
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
     pruneIntervalDays: 10
-    repository: "${APP}-volsync"
+    repository: "${APP}-volsync-minio"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
     cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}" #was local-hostpath
@@ -21,6 +21,4 @@ spec:
       runAsGroup: "${VOLSYNC_GID:-1000}"
       fsGroup: "${VOLSYNC_GID:-1000}"
     retain:
-      hourly: 24
-      daily: 10
-      weekly: 5
+      daily: 7

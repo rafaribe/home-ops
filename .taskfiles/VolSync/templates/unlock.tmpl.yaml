@@ -16,7 +16,7 @@ spec:
           args: ["unlock", "--remove-all"]
           envFrom:
             - secretRef:
-                name: ${app}-volsync
+                name: ${app}-volsync-nfs
           volumeMounts:
             - name: repository
               mountPath: /repository
@@ -26,10 +26,10 @@ spec:
           args: ["unlock", "--remove-all"]
           envFrom:
             - secretRef:
-                name: ${app}-volsync
+                name: ${app}-volsync-minio
           resources: {}
       volumes:
         - name: repository
           nfs:
             server: truenas.rafaribe.com
-            path: /mnt/storage-0/minio
+            path: /mnt/storage-0/volsync
