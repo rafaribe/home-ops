@@ -48,8 +48,8 @@ spec:
               ND_ENABLEEXTERNALSERVICES: "false"
               ND_ENABLESHARING: "false"
               ND_ENABLESTARRATING: "false"
-              ND_LOGLEVEL: info
-              ND_MUSICFOLDER: /media/music/cd
+              ND_LOGLEeEL: info
+              ND_MUSICFOLDER: /media/music
               ND_PORT: &port 4533
               ND_SCANSCHEDULE: 30m
               ND_BASEURL: https://navidrome.rafaribe.com
