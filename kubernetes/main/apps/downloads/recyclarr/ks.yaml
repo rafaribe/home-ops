@@ -25,7 +25,7 @@ spec:
   postBuild:
     substitute:
       APP: *appname
-      VOLSYNC_CLAIM: recyclarr-config
+      VOLSYNC_CLAIM: recyclarr
   components:
     - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/guarded
