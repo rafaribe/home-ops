@@ -25,7 +25,7 @@ spec:
   postBuild:
     substitute:
       APP: *appname
-      VOLSYNC_CLAIM: bazarr-config
+      VOLSYNC_CLAIM: bazarr
   components:
     - ../../../../../shared/components/gatus/guarded
     - ../../../../../shared/components/volsync
