@@ -25,7 +25,7 @@ spec:
   postBuild:
     substitute:
       APP: *appname
-      VOLSYNC_CLAIM: actual-data
+      VOLSYNC_CLAIM: actual
   components:
     - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/guarded
