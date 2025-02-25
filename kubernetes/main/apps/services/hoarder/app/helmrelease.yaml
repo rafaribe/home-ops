@@ -25,7 +25,8 @@ spec:
           app:
             image:
               repository: ghcr.io/hoarder-app/hoarder
-              tag: 0.22.0@sha256:e2156f3de4a1eafc53afb6e682f20857be4449d7e9d24240afe6d9ccd280ed3b
+              #tag: 0.22.0@sha256:e2156f3de4a1eafc53afb6e682f20857be4449d7e9d24240afe6d9ccd280ed3b
+              tag: latest
             env:
               # Meillisearch
               DATA_DIR: /data
