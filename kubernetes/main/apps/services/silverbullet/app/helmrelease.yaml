@@ -44,7 +44,7 @@ spec:
           silverbullet:
             image:
               repository: docker.io/zefhemel/silverbullet
-              tag: '0.10.1'
+              tag: '0.10.4'
             env:
               TZ: ${TIMEZONE}
               PUID: 1000 
