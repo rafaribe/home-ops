@@ -51,6 +51,9 @@ spec:
               GTS_STORAGE_S3_PROXY: "true"
               GTS_STORAGE_S3_USE_SSL: "false"
               GTS_STORAGE_S3_BUCKET: "gotosocial-media"
+              # Trusted Proxies
+              # https://docs.gotosocial.org/en/latest/configuration/trusted_proxies/
+              GTS_TRUSTED_PROXIES: "10.42.0.0/16,10.43.0.0/16,127.0.0.1/32,::1"
             envFrom: *envFrom
             securityContext:
               readOnlyRootFilesystem: true
