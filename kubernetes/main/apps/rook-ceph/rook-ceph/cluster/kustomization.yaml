@@ -7,3 +7,5 @@ resources:
   #- ./dashboards
   - ./externalsecret.yaml
   - ./cephobjectstoreuser.yaml
+  # https://rook.io/docs/rook/latest-release/Storage-Configuration/Shared-Filesystem-CephFS/filesystem-storage/#shared-volume-creation
+  - ./cephfs-node.yaml

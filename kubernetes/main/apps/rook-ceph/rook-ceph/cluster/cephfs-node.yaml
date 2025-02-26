@@ -1,0 +1,36 @@
+apiVersion: v1
+stringData:
+    userID: ENC[AES256_GCM,data:UtkAP5E0k9TgG9RqAhY/,iv:JuLsMtsObedybD8x68/RN5QgJ5DL//Q+QuFO3XQKKyQ=,tag:Tznb28DdJDhYwFrwTSd36w==,type:str]
+    userKey: ENC[AES256_GCM,data:ews/ZZthnjpkfqfyZP2MuqpKrIGnYAHbyavmcrN43ftI8BgzHW6Mxg==,iv:wbKY8RrUM1Fw9vUwshHC2YmzwSVuyHGyIZ7HCqcPkSY=,tag:ygqb4CWmQMnKb3ccwTPpug==,type:str]
+kind: Secret
+metadata:
+    name: rook-csi-cephfs-node-user
+    namespace: rook-ceph
+    ownerReferences:
+        - apiVersion: ceph.rook.io/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: CephCluster
+          name: rook-ceph
+          uid: 6e7f729d-216d-4bfe-954b-e2392b668280
+type: kubernetes.io/rook
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwNEMvTzk4RWhHN3JabndW
+            VC9aZmt5Ri9ZU2U5Y3RidFBqMVIxL1l6NEJFCjNoWkYvZ1VZT0JPdDlRZW5hcEZh
+            T09XRE0yK00xemw2a2R6WUMxdy84WFkKLS0tIC9WTERYVG5rMzBtb1RZS2loeE9x
+            ZzZXZkFRK1ZORUQ4djBydnh0Q2NGM1EKoSjAxRizy0jcr/Eyi1bEvy0Yv7HwT8mg
+            SnJbUWZJ1ukmBQ+HdXThAQtr079m1HM0n6UeK3e1wqRAmogJyzs89Q==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-02-26T23:44:58Z"
+    mac: ENC[AES256_GCM,data:kkIjOgVPvYSqmmP4WieRLVQYSgm3ICxCkTcCBOhYUwbm5jMOt7/6Byyz949TXs8cjtEukKSH93WmvMC908H1IF1BL+p82VytYpRerWdzCSpNTXflKNJfz13FHrTNzjK8Ln0MeD0SpUCeNv2MMg2aveANsfuR4R0lzQBMhhidseg=,iv:MC0Dfik4to++LDfoo/wgEKW4DESDJgfzC9QvCu1uc6Y=,tag:J9z1R/iGc39uIPtzzsR61w==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.9.1
