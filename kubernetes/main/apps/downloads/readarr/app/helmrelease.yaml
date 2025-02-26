@@ -96,10 +96,14 @@ spec:
         existingClaim: *app
       tmp:
         type: emptyDir
-      data:
+      media:
         enabled: true
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/storage-0/media
         globalMounts:
           - path: /media
+      media-ceph:
+        existingClaim: ceph-media
+        globalMounts:
+          - path: /media-ceph

@@ -254,3 +254,7 @@ spec:
             app:
               - path: /tmp
                 subPath: tmp
+      media-ceph:
+        existingClaim: ceph-media
+        globalMounts:
+          - path: /media-ceph

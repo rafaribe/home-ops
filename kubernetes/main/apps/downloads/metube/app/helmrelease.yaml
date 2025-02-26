@@ -79,3 +79,7 @@ spec:
         globalMounts:
           - path: /downloads
             subPath: metube
+      media-ceph:
+        existingClaim: ceph-media
+        globalMounts:
+          - path: /media-ceph

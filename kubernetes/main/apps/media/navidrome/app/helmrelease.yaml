@@ -111,3 +111,7 @@ spec:
         path: /mnt/storage-0/media
         globalMounts:
           - path: /media
+      media-ceph:
+        existingClaim: ceph-media
+        globalMounts:
+          - path: /media-ceph

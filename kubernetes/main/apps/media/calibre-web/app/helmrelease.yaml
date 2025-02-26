@@ -100,8 +100,8 @@ spec:
           gethomepage.dev/icon: calibre.png
           gethomepage.dev/widget.type: calibreweb
           gethomepage.dev/widget.url: http://calibre-web.media:8083
-          gethomepage.dev/widget.username: '{{`{{HOMEPAGE_VAR_CALIBRE_USERNAME}}`}}'
-          gethomepage.dev/widget.password: '{{`{{HOMEPAGE_VAR_CALIBRE_PASSWORD}}`}}'
+          gethomepage.dev/widget.username: "{{`{{HOMEPAGE_VAR_CALIBRE_USERNAME}}`}}"
+          gethomepage.dev/widget.password: "{{`{{HOMEPAGE_VAR_CALIBRE_PASSWORD}}`}}"
         hosts:
           - host: calibre.rafaribe.com
             paths:
@@ -131,3 +131,7 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /cache
+      media-ceph:
+        existingClaim: ceph-media
+        globalMounts:
+          - path: /media-ceph

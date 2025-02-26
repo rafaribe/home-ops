@@ -113,3 +113,7 @@ spec:
                 subPath: cache
               - path: /transcode
                 subPath: transcode
+      media-ceph:
+        existingClaim: ceph-media
+        globalMounts:
+          - path: /media-ceph
