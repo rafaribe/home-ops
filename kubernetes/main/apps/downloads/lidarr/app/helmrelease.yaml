@@ -81,10 +81,10 @@ spec:
 
             resources:
               requests:
-                cpu: 10m
-                memory: 250M
-              limits:
+                cpu: 50m
                 memory: 500M
+              limits:
+                memory: 1Gi
 
     service:
       app:
