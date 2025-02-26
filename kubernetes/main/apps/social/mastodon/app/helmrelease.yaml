@@ -53,7 +53,7 @@ spec:
               ES_HOST: mastodon-elasticsearch.social.svc.cluster.local
               ES_PORT: "9200"
               S3_ENABLED: true
-              WEB_DOMAIN: &domain social.rafaribe.com
+              WEB_DOMAIN: &domain fedi.rafaribe.com
             envFrom: *envFrom
     service:
       app:
@@ -77,7 +77,7 @@ spec:
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (mastodon)
           gethomepage.dev/widget.type: mastodon
-          gethomepage.dev/widget.url: &url https://social.rafaribe.com
+          gethomepage.dev/widget.url: &url https://fedi.rafaribe.com
           gethomepage.dev/siteMonitor: *url
         hosts:
           - host: *domain
