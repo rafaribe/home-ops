@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/jordan-dalby/bytestash
-              tag: 1.5.6@sha256:077302b2cfa6c38c8ba7a1cb535111b7cc55ca9dec954958342a5063da1d31c8
+              tag: 1.5.7@sha256:fa58bbc2fc5864ea600b92bb9d95a443d49fc92c6a9c7143fc4c1df8f45c4505
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
               # See https://github.com/jordan-dalby/ByteStash/wiki/FAQ#environment-variables
