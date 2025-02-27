@@ -14,7 +14,7 @@ spec:
     driver: rook-ceph.cephfs.csi.ceph.com
     fsType: ext4
     nodeStageSecretRef:
-      name: rook-csi-cephfs-static-provisioner
+      name: rook-csi-cephfs-node-user
       namespace: rook-ceph
     volumeAttributes:
       clusterID: rook-ceph
