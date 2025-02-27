@@ -6,13 +6,6 @@ kind: Secret
 metadata:
     name: rook-csi-cephfs-node-user
     namespace: rook-ceph
-    ownerReferences:
-        - apiVersion: ceph.rook.io/v1
-          blockOwnerDeletion: true
-          controller: true
-          kind: CephCluster
-          name: rook-ceph
-          uid: 6e7f729d-216d-4bfe-954b-e2392b668280
 type: kubernetes.io/rook
 sops:
     kms: []
@@ -29,8 +22,38 @@ sops:
             ZzZXZkFRK1ZORUQ4djBydnh0Q2NGM1EKoSjAxRizy0jcr/Eyi1bEvy0Yv7HwT8mg
             SnJbUWZJ1ukmBQ+HdXThAQtr079m1HM0n6UeK3e1wqRAmogJyzs89Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-02-26T23:44:58Z"
-    mac: ENC[AES256_GCM,data:kkIjOgVPvYSqmmP4WieRLVQYSgm3ICxCkTcCBOhYUwbm5jMOt7/6Byyz949TXs8cjtEukKSH93WmvMC908H1IF1BL+p82VytYpRerWdzCSpNTXflKNJfz13FHrTNzjK8Ln0MeD0SpUCeNv2MMg2aveANsfuR4R0lzQBMhhidseg=,iv:MC0Dfik4to++LDfoo/wgEKW4DESDJgfzC9QvCu1uc6Y=,tag:J9z1R/iGc39uIPtzzsR61w==,type:str]
+    lastmodified: "2025-02-27T00:01:28Z"
+    mac: ENC[AES256_GCM,data:+tXSTQC47tbYqq9l9OOPdT9mdGtT3Knf0Rhbz+FOfnh9WD2ivaUFhvBTqwo8hIlsTsBW15s8Hf+7T9YBKyScpWQ/wmUDc04HuFyw/6NALGUTkyQdOqt0QXGGgrV3QanDvCQDfI3icQNgjpZ+DawqNfYSQ7VSxVr/VtvjS+mxNEM=,iv:ixfECmK3EALgoFKIxlThOdOqe1GnHH5Jejjy4QoFnYY=,tag:UFd4KuZcAC4hquR/RVG6HA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.9.1
+---
+apiVersion: v1
+stringData:
+    userID: ENC[AES256_GCM,data:l5LLfaxxWbKq1aPkdYlpBqwdsaevDA==,iv:3jO5y6R3Uqr4vCcN3zS85OnDvobq0JJfRpI4esr1Oko=,tag:fnlVJMJKWGkiTjYRssVJzQ==,type:str]
+    userKey: ENC[AES256_GCM,data:h3fbTHp9rBhjgI3WtIDetzmIRe0IS00loSjzPU1zOwU9j3WP1/HpdA==,iv:1ex8UzB1c8dQz1twioCsahoPxChJpfrxq8Jm0iFFshU=,tag:/9vlAhqSfMCthpJ1oePmbw==,type:str]
+kind: Secret
+metadata:
+    name: rook-csi-cephfs-static-provisioner
+    namespace: rook-ceph
+type: kubernetes.io/rook
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwNEMvTzk4RWhHN3JabndW
+            VC9aZmt5Ri9ZU2U5Y3RidFBqMVIxL1l6NEJFCjNoWkYvZ1VZT0JPdDlRZW5hcEZh
+            T09XRE0yK00xemw2a2R6WUMxdy84WFkKLS0tIC9WTERYVG5rMzBtb1RZS2loeE9x
+            ZzZXZkFRK1ZORUQ4djBydnh0Q2NGM1EKoSjAxRizy0jcr/Eyi1bEvy0Yv7HwT8mg
+            SnJbUWZJ1ukmBQ+HdXThAQtr079m1HM0n6UeK3e1wqRAmogJyzs89Q==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-02-27T00:01:28Z"
+    mac: ENC[AES256_GCM,data:+tXSTQC47tbYqq9l9OOPdT9mdGtT3Knf0Rhbz+FOfnh9WD2ivaUFhvBTqwo8hIlsTsBW15s8Hf+7T9YBKyScpWQ/wmUDc04HuFyw/6NALGUTkyQdOqt0QXGGgrV3QanDvCQDfI3icQNgjpZ+DawqNfYSQ7VSxVr/VtvjS+mxNEM=,iv:ixfECmK3EALgoFKIxlThOdOqe1GnHH5Jejjy4QoFnYY=,tag:UFd4KuZcAC4hquR/RVG6HA==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData)$
     version: 3.9.1
