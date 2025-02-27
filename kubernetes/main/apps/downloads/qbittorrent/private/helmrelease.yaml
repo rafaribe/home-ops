@@ -35,6 +35,7 @@ spec:
               UMASK: "022"
               QBT_WEBUI_PORT: &port 8080
               CROSS_SEED_ENABLED: false
+              QBITTORRENT__BT_PORT: &bittorrentPort 50413
             probes:
               liveness:
                 enabled: true
@@ -86,6 +87,10 @@ spec:
         ports:
           http:
             port: *port
+          bittorrent:
+            enabled: true
+            port: *bittorrentPort
+            protocol: TCP
 
     ingress:
       app:
