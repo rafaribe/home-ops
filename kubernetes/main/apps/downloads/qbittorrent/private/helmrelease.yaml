@@ -144,6 +144,11 @@ spec:
           qbittorrent:
             app:
               - path: /media
+      add-ons:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /add-ons
       ephemeral:
         type: custom
         volumeSpec:
