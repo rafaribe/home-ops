@@ -1,0 +1,167 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name qbittorrent-private
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      qbittorrent:
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+          terminationGracePeriodSeconds: 120
+
+        containers:
+          app:
+            nameOverride: *name
+            image:
+              repository: ghcr.io/rafaribe/qbittorrent-beta
+              tag: 5.0.4@sha256:4c8dae2f7f2c5882b3f14c720383dd5b4298cab7c2f9a2161d945d24b7626e73
+            env:
+              UMASK: "022"
+              QBT_WEBUI_PORT: &port 8080
+              CROSS_SEED_ENABLED: false
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 150m
+                memory: 1024Mi
+              limits:
+                memory: 2048Mi
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+          vuetorrent:
+            dependsOn: app
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.4.0
+            args:
+              - --repo=https://github.com/WDaan/VueTorrent
+              - --ref=latest-release
+              - --period=86400s
+              - --root=/add-ons
+            resources:
+              requests:
+                cpu: 10m
+                memory: 25Mi
+              limits:
+                memory: 50Mi
+
+    service:
+      app:
+        controller: qbittorrent
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: ${LB_QBITTORRENT}
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      app:
+        className: "internal"
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        hosts:
+          - host: qbp.rafaribe.com
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000]
+        seccompProfile: { type: RuntimeDefault }
+      affinity:
+        # Turing Pi eMMC isn't nearly enough for a sabnzbd hostpath
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values: ["sabnzbd"]
+                topologyKey: kubernetes.io/hostname
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *name
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /config
+      media:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/media
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /media
+      ephemeral:
+        type: custom
+        volumeSpec:
+          ephemeral:
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                storageClassName: "openebs-hostpath"
+                resources:
+                  requests:
+                    storage: 10Gi
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /tmp
+                subPath: tmp
+      media-ceph:
+        existingClaim: ceph-media
+        globalMounts:
+          - path: /media-ceph
