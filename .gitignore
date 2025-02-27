@@ -41,3 +41,4 @@ tools-tpi1.yaml
 kubernetes/main/bootstrap/talos/clusterconfig/etcd-snapshot
 kubernetes/main/apps/observability/opentelemetry/collector/metrics.prometheus
 temp.yaml
+kubernetes/main/apps/network/headscale

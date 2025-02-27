@@ -23,7 +23,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
+      VOLSYNC_CAPACITY: 30Gi
   components:
     - ../../../../../shared/components/gatus/guarded
     - ../../../../../shared/components/volsync
