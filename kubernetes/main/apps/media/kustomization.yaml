@@ -13,7 +13,7 @@ resources:
   - ./kavita/ks.yaml
   - ./komga/ks.yaml
   - ./media-browser/ks.yaml
-  - ./maintainerr/ks.yaml
+  #  - ./maintainerr/ks.yaml
   - ./navidrome/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
