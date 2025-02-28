@@ -6,7 +6,7 @@ metadata:
 spec:
   path: ./kubernetes/main/apps/social/funkwhale/app
   prune: true
-  targetNamespace: downloads
+  targetNamespace: social
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
