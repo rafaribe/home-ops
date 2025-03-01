@@ -38,7 +38,7 @@ spec:
               pullPolicy: IfNotPresent
             envFrom: &envFrom
               - secretRef:
-                  name: mastodon
+                  name: *app
         containers:
           mastodon:
             image:
@@ -118,9 +118,8 @@ spec:
                 service:
                   identifier: app
                   port: http
-
     persistence:
       config:
-        existingClaim: mastodon
+        existingClaim: *app
         globalMounts:
           - path: /config
