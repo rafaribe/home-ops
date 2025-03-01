@@ -49,10 +49,6 @@ spec:
               PGID: 1000
               TZ: Europe/Lisbon
               LOCAL_DOMAIN: rafaribe.com
-              ES_ENABLED: true
-              ES_HOST: mastodon-elasticsearch.social.svc.cluster.local
-              ES_PORT: "9200"
-              S3_ENABLED: true
               WEB_DOMAIN: &domain fedi.rafaribe.com
             envFrom: *envFrom
       redis:
