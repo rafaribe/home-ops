@@ -25,6 +25,10 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 20Gi
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/external
+
 ---
 # yaml-language-server: $schema=https://ks.hsn.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -52,3 +56,6 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 30Gi
+  components:
+    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/gatus/external

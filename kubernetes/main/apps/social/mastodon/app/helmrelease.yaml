@@ -55,13 +55,45 @@ spec:
               S3_ENABLED: true
               WEB_DOMAIN: &domain fedi.rafaribe.com
             envFrom: *envFrom
+      redis:
+        pod:
+          securityContext:
+            runAsUser: 65534
+            runAsGroup: 65534
+        strategy: RollingUpdate
+        containers:
+          redis:
+            image:
+              repository: docker.io/valkey/valkey
+              tag: 8.0.2
+            args:
+              - --save
+              - ""
+              - --appendonly
+              - "no"
+            resources:
+              requests:
+                cpu: 5m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
     service:
       app:
         controller: *app
         ports:
           http:
             port: 80
-
+      redis:
+        controller: redis
+        ports:
+          http:
+            port: 6379
     ingress:
       app:
         className: external
