@@ -43,7 +43,7 @@ spec:
           app:
             image:
               repository: mrmn/pdfding
-              tag: v1.0.0@sha256:8cf5da3e3428f8700efdf34662f431421661227705e12eb0d66fa092b6faa09d
+              tag: v1.1.0@sha256:1da3a0297aee1e138ad9765c7c9e43bf448f299089d98a1298466d19e48258ed
             envFrom: *envFrom
             env:
               # App
