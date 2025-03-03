@@ -162,6 +162,9 @@ spec:
             app:
               - path: /data
                 subPath: hoarder
+              # TO perform migration
+              - path: /meili_data
+                subPath: meilisearch
             meilisearch:
               - path: /meili_data
                 subPath: meilisearch
