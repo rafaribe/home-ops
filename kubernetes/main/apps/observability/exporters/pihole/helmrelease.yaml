@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/osnabrugge/pihole-exporter
-              tag: v1.0.0@sha256:2291c439cfd4684bc9df1788a1038d72ec9c805530d5b1f9e50567ebb765c6fd
+              tag: v1.0.1@sha256:c99456442c542d9d517afe2e863b92b2036548f0ee84c22c62f91a9e3396803c
             env:
               PIHOLE_HOSTNAME: 10.0.0.254
               PORT: &port 9617
