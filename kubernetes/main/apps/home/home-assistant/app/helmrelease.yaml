@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/home-assistant
-              tag: 2025.3.1@sha256:69707272f458f7837b23f9bab2d522189a9e0215fb70da2f77157b36b4a03e61
+              tag: 2025.3.2@sha256:3fe1e5b3d2efb0274a40c8b533f1252490b8eca5ea2184a36abadccdfdd670be
             env:
               TZ: Europe/Lisbon
               HOME_ASSISTANT__HACS_INSTALL: "true"
