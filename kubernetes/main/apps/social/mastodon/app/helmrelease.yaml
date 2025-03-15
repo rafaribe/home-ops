@@ -43,7 +43,7 @@ spec:
           mastodon:
             image:
               repository: lscr.io/linuxserver/mastodon
-              tag: 4.3.5
+              tag: 4.3.6
             env:
               PUID: 1000
               PGID: 1000
