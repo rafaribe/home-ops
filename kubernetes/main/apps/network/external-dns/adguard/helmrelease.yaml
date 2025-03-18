@@ -30,7 +30,7 @@ spec:
       webhook:
         image:
           repository: ghcr.io/muhlba91/external-dns-provider-adguard
-          tag: v8.0.0@sha256:1a7b12b3fef352626345653809716ada3d7569c930b1bf85c2e1b98e022ca9aa
+          tag: v8.0.1@sha256:267761a55dde38b7cba7b3bff59d0437402538a29659b03144dc9c132c887444
         ports:
           - containerPort: 8888
             name: http
