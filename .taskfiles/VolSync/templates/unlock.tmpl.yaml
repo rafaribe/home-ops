@@ -21,13 +21,6 @@ spec:
             - name: repository
               mountPath: /repository
           resources: {}
-        - name: minio
-          image: docker.io/restic/restic:latest
-          args: ["unlock", "--remove-all"]
-          envFrom:
-            - secretRef:
-                name: ${app}-volsync-minio
-          resources: {}
       volumes:
         - name: repository
           nfs:
