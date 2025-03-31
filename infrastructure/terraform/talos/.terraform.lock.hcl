@@ -2,23 +2,23 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/carlpett/sops" {
-  version     = "1.1.1"
-  constraints = "1.1.1"
+  version     = "1.2.0"
+  constraints = "1.2.0"
   hashes = [
-    "h1:0lv+4VCaIRTkBAMXmCxSJC1dsYPuoyBAvnrLsofcseA=",
-    "h1:AM1mG6OjcEL8hIr0PPel85i0HUlLZH8BZer5Dq7uiOM=",
-    "h1:FDG2jSsAr/tWk/w5zuPGovEtCqKxxosCYPlA5msBhec=",
-    "h1:WCfQL+3Nf73jZ40NkduHIBze7vOtYeyXb4t1xoa/3as=",
-    "h1:cl4VtE/cu7gL2DmwXEiNfD9xpv66Xzr4IeUzlGgfMZ0=",
-    "h1:hqyownSt8teS7g0+XDOxmAtuAHB5kDNQkW1voBhLmZU=",
-    "h1:iKoZfVYPK2awiHuf2k0F9CyDjfnYYwoaNC9/pxINU8E=",
-    "zh:175ec198e1b4d1cad1ae559ebe8cdf574617805010c22dfb8af93a2057ba8332",
-    "zh:2b550b2372f71408e7b47b099f314d981bbb82b263cb55248a36a9af8afd44a1",
-    "zh:684544ed3460c34585b090b5de1d4e0caf8eba8e6ba50ad0734cda818a6c86f0",
-    "zh:6ab656d3f3645b8158769f34c16820523a621b9e735c1b3233cecf010ac61dda",
-    "zh:6b1f0007569ea36903c9b2b1b114c3cec7c163d9b83946362c3e165e255f64e7",
-    "zh:7d562f2fc76c954f974f2745557059a4d33dacb8d46e9f1cf09323348dcf5ddc",
-    "zh:cc7e97d8b55ebd90a4c1424cf9cb930af76e98a11c6eeb07e51d648369859fa1",
+    "h1:CuMhmsOnfw4QH0N7kInsQ7gTSCfNJA40CoCjWOOkxq8=",
+    "h1:PPqzM3o5WYB4gY/TYmyTuVilePF5C0Q4aW1y9Tk0QCI=",
+    "h1:VMRX+scQQ7XVguvV7XpdMKu1b5gGmdxr9ORpOeUKV6A=",
+    "h1:bUqDrBzmC8svd6fLDFHQTYCWdko+v4fBXGJnJtwWpTs=",
+    "h1:brh+rNrzMlwvxAvZcTOLBoX4Vp3f21xKeIS89hKgL40=",
+    "h1:g3KLA//L8Tb4TtVCmFS3wimbsftQQAZH07VY4FlKYyA=",
+    "h1:xi7RcFSdmzHQ0gpro6H0YfFaKMtpVlPW3Wf/CTwYmJw=",
+    "zh:817bb1d00219de01a1bb84d7a8f216a2e92f488dd7f9491792dc3443f723aa72",
+    "zh:8856b1f78480f2ad97d1bbc7073aa826f7278771949ebe9a7cb0c4f55a0f6a01",
+    "zh:98b9dbe46f2b04a39bf0032243e4ec8cf32c6da12b94bfc9f46da6c619defa17",
+    "zh:b2bb0255ca870a096ff205bde068eab746c226affad6065f783a2a0b7e5d5c38",
+    "zh:b37cdcd416c27e7ce6ca763a9e856a69ebe4d9c4dcd30b008a14c949bcb018ca",
+    "zh:cad7d0e5256aadc079fd6b3b4ab5c71c963347bd8a80752e1f5c4f69591a99e5",
+    "zh:fda02aa8797463cfe562490c7c8534e1522231cb3a784cb3ffb42620f0e9ac77",
   ]
 }
 
