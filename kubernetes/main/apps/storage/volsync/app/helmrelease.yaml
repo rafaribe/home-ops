@@ -31,6 +31,6 @@ spec:
       runAsGroup: 1000
     image: &image
       repository: ghcr.io/rafaribe/volsync
-      tag: 0.12.0@sha256:810d9c13c556e65f9baf3326d1abbed00fa16b57d9b2aa5823287423b96cabc0
+      tag: 0.12.1@sha256:f643228c96e4c5260c79907e17be3432bd06aad8f9033c0fca921ff8a192a419
     restic:
       <<: *image
