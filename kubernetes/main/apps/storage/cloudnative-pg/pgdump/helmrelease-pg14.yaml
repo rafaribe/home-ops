@@ -44,7 +44,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 14
+              tag: 16
             env:
               EXCLUDE_DBS: postgres template0 template1
             envFrom: &envFrom
