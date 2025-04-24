@@ -45,7 +45,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/radarr-develop
-              tag: 5.22.3@sha256:1ed0534faccba0ddf51310832835de31bf0174516fb354c15af08d0f446c5846
+              tag: 5.22.4@sha256:b13b947e27c682d164b6010fffca95aa0898b49df4fa6cc75f2917189f82b5d4
             env:
               TZ: Europe/Lisbon
               RADARR__APP__INSTANCENAME: Radarr
