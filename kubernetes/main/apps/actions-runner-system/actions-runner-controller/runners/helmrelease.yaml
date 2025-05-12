@@ -70,6 +70,11 @@ spec:
                       operator: In
                       values:
                         - amd64
+        serviceAccountName: actions-runner
+        volumes:
+          - name: talos
+            secret:
+              secretName: actions-runner
       listenerTemplate:
         spec:
           affinity:
@@ -81,12 +86,6 @@ spec:
                         operator: In
                         values:
                           - amd64
-        serviceAccountName: actions-runner
-        volumes:
-          - name: talos
-            secret:
-              secretName: actions-runner
-
     controllerServiceAccount:
       name: gha-runner-scale-set-controller
       namespace: actions-runner-system
