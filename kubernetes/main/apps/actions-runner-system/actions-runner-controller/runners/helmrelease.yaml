@@ -11,7 +11,7 @@ spec:
       version: 0.11.0
       sourceRef:
         kind: HelmRepository
-        name: actions-runner-controller-
+        name: actions-runner-controller
         namespace: flux-system
       interval: 1h
   maxHistory: 2
