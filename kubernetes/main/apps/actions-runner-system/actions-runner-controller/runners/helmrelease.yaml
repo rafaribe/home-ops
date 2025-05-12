@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: gha-runner-scale-set
-      version: 0.11.0
+      version: 0.10.1
       sourceRef:
         kind: HelmRepository
         name: actions-runner-controller
@@ -38,26 +38,26 @@ spec:
           - name: runner
             image: ghcr.io/rafaribe/actions-runner:2.323.0@sha256:1eecaec4671bdb317351f8f2de6395d27bfa732749473e412bd148521d4a2a27
             command: ["/home/runner/run.sh"]
-        affinity :
+        affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
               nodeSelectorTerms:
-              - matchExpressions:
-                - key: kubernetes.io/arch
-                  operator: In
-                  values:
-                  - amd64
+                - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64
       listenerTemplate:
         spec:
-          affinity :
+          affinity:
             nodeAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
                 nodeSelectorTerms:
-                - matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                    - amd64
+                  - matchExpressions:
+                      - key: kubernetes.io/arch
+                        operator: In
+                        values:
+                          - amd64
     controllerServiceAccount:
       name: gha-runner-scale-set-controller
       namespace: actions-runner-system
