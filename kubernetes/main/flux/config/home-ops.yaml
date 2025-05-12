@@ -30,6 +30,7 @@ spec:
   path: ./kubernetes/shared
   prune: true
   wait: true
+  targetNamespace: flux-system
   sourceRef:
     kind: GitRepository
     name: home-ops
