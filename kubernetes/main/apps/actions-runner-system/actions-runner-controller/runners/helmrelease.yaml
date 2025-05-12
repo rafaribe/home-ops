@@ -1,19 +1,19 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: arc-home-ops
+  name: arc-homelab
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: gha-runner-scale-set
-      version: 0.10.1
+      version: 0.11.0
       sourceRef:
         kind: HelmRepository
-        name: actions-runner-controller
+        name: actions-runner-controller-charts
         namespace: flux-system
+      interval: 1h
   maxHistory: 2
   install:
     createNamespace: true
@@ -27,17 +27,40 @@ spec:
     keepHistory: false
   values:
     runnerScaleSetName: arc-runner-set-home-ops
+
     githubConfigUrl: https://github.com/rafaribe/home-ops
+
     minRunners: 1
-    maxRunners: 6
+    maxRunners: 3
+
     containerMode:
       type: dind
+      kubernetesModeWorkVolumeClaim:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: openebs-hostpath
+        resources:
+          requests:
+            storage: 5Gi
+
     template:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/rafaribe/actions-runner:2.323.0@sha256:1eecaec4671bdb317351f8f2de6395d27bfa732749473e412bd148521d4a2a27
-            command: ["/home/runner/run.sh"]
+            image: ghcr.io/home-operations/actions-runner:2.323.0
+            command:
+              - /home/runner/run.sh
+            env:
+              - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
+                value: "false"
+              - name: NODE_IP
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.hostIP
+            volumeMounts:
+              - mountPath: /var/run/secrets/talos.dev
+                name: talos
+                readOnly: true
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -58,6 +81,12 @@ spec:
                         operator: In
                         values:
                           - amd64
+        serviceAccountName: actions-runner
+        volumes:
+          - name: talos
+            secret:
+              secretName: actions-runner
+
     controllerServiceAccount:
       name: gha-runner-scale-set-controller
       namespace: actions-runner-system

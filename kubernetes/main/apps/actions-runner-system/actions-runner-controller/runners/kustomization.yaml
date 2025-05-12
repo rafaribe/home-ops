@@ -5,3 +5,4 @@ resources:
   - ./helmrelease.yaml
   - ./pvc.yaml
   - ./podmonitor.yaml
+  - ./rbac.yaml
