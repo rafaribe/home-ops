@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: arc-homelab
+  name: arc-home-ops
 spec:
   interval: 1h
   chart:
@@ -11,7 +11,7 @@ spec:
       version: 0.11.0
       sourceRef:
         kind: HelmRepository
-        name: actions-runner-controller-charts
+        name: actions-runner-controller-
         namespace: flux-system
       interval: 1h
   maxHistory: 2
