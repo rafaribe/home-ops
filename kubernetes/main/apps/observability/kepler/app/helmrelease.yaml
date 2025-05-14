@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kepler
-      version: 0.5.13
+      version: 0.5.18
       sourceRef:
         kind: HelmRepository
         name: kepler
