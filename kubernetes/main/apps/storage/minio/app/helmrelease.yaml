@@ -61,6 +61,10 @@ spec:
                   timeoutSeconds: 10
                   failureThreshold: 6
               readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
     service:
       main:
         controller: main
@@ -72,6 +76,15 @@ spec:
             port: 9001
           api:
             port: 9000
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [2000]
+        seccompProfile: { type: RuntimeDefault }
     ingress:
       main:
         enabled: true
