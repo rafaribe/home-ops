@@ -126,7 +126,7 @@ spec:
           key: MINIO_SECRET_KEY
   bootstrap:
     recovery:
-      source: &previousCluster immich-db2-v2
+      source: &previousCluster immich-db-v3
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
     - name: *previousCluster
