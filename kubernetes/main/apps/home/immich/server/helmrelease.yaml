@@ -91,28 +91,9 @@ spec:
                   name: immich-db
             probes:
               liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api/server/ping
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 100
-                  timeoutSeconds: 1
-                  failureThreshold: 3
+                enabled: false
               readiness: *probes
-              startup:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api/server/ping
-                    port: *port
-                  failureThreshold: 30
-                  periodSeconds: 15
-                  successThreshold: 1
-                  timeoutSeconds: 1
+              startup: *probes
             resources:
               requests:
                 cpu: 100m
