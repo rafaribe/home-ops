@@ -131,7 +131,7 @@ spec:
   externalClusters:
     - name: *previousCluster
       barmanObjectStore:
-        destinationPath: s3://cpng-immich-second/
+        destinationPath: s3://cpng-immich/
         endpointURL: http://minio.storage.svc.cluster.local:9000
         s3Credentials:
           accessKeyId:
