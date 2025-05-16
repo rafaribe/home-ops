@@ -163,3 +163,9 @@ spec:
         path: /mnt/storage-0/immich
         globalMounts:
           - path: /usr/src/app/upload
+      external-library:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/immich/external-library
+        globalMounts:
+          - path: /mnt/storage-0/immich/external-library
