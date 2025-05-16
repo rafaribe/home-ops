@@ -79,6 +79,7 @@ spec:
               tag: v1.132.3@sha256:6680d88486251b0264a78a1934fe82eef875555aa6d84d703a0980328a5d5c31
             env:
               TZ: "Europe/Lisbon"
+              LOG_LEVEL: verbose
               # IMMICH_WORKERS_INCLUDE: api
               IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
             envFrom:
@@ -95,14 +96,23 @@ spec:
                 spec:
                   httpGet:
                     path: /api/server/ping
-                    port: &port 2283
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 30
+                  failureThreshold: 3
               readiness: *probes
               startup:
-                enabled: false
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/server/ping
+                    port: *port
+                  failureThreshold: 30
+                  periodSeconds: 5
+                  successThreshold: 1
+                  timeoutSeconds: 1
             resources:
               requests:
                 cpu: 100m
