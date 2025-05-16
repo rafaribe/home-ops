@@ -151,11 +151,6 @@ spec:
           - hosts:
               - *host
     persistence:
-      config:
-        type: configMap
-        name: immich-server-config
-        globalMounts:
-          - path: /config
       library:
         type: nfs
         server: truenas.rafaribe.com
