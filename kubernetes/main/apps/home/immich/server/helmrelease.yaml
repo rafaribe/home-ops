@@ -80,6 +80,7 @@ spec:
             env:
               TZ: "Europe/Lisbon"
               IMMICH_WORKERS_INCLUDE: api
+              IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
             envFrom:
               - configMapRef:
                   name: immich
@@ -93,12 +94,12 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /server-info/ping
-                    port: 2283
-                  initialDelaySeconds: 25
-                  periodSeconds: 25
+                    path: /api/server/ping
+                    port: &port 2283
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 5
+                  failureThreshold: 30
               readiness: *probes
               startup:
                 enabled: false
@@ -124,15 +125,16 @@ spec:
         controller: immich
         ports:
           http:
-            port: 2283
+            port: *port
     ingress:
       app:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.rafaribe.com"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
-          nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
           nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+          nginx.ingress.kubernetes.io/upstream-hash-by: "$client_ip"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
           #Homepage
@@ -157,6 +159,11 @@ spec:
           - hosts:
               - *host
     persistence:
+      config:
+        type: configMap
+        name: immich-server-config
+        globalMounts:
+          - path: /config
       library:
         type: nfs
         server: truenas.rafaribe.com
