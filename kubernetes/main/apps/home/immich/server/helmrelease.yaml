@@ -168,4 +168,4 @@ spec:
         server: truenas.rafaribe.com
         path: /mnt/storage-0/immich/external-library
         globalMounts:
-          - path: /mnt/storage-0/immich/external-library
+          - path: /external-library
