@@ -116,7 +116,7 @@ spec:
         controller: immich
         ports:
           http:
-            port: *port
+            port: 2283
     ingress:
       app:
         className: external
