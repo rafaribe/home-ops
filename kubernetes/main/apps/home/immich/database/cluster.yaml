@@ -1,4 +1,75 @@
----
+# ---
+# # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
+# apiVersion: postgresql.cnpg.io/v1
+# kind: Cluster
+# metadata:
+#   name: immich-db
+# spec:
+#   instances: 3
+#   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.18
+#   primaryUpdateStrategy: unsupervised
+#   storage:
+#     size: 100Gi
+#     storageClass: ceph-block
+#   superuserSecret:
+#     name: cloudnative-pg-secret
+#   enableSuperuserAccess: true
+#   postgresql:
+#     parameters:
+#       max_connections: "600"
+#       max_slot_wal_keep_size: 10GB
+#       shared_buffers: 512MB
+#     shared_preload_libraries:
+#       - "vectors.so"
+#   resources:
+#     requests:
+#       cpu: 500m
+#     limits:
+#       memory: 4Gi
+#   monitoring:
+#     enablePodMonitor: true
+#   # bootstrap:
+#   #   initdb:
+#   #     postInitSQL:
+#   #       - ALTER SYSTEM SET search_path TO "$user", public, vectors;
+#   #       - CREATE EXTENSION IF NOT EXISTS "vectors";
+#   #       - CREATE EXTENSION IF NOT EXISTS "cube";
+#   #       - CREATE EXTENSION IF NOT EXISTS "earthdistance";
+#   backup:
+#     retentionPolicy: 30d
+#     barmanObjectStore: &barmanObjectStore
+#       data:
+#         compression: bzip2
+#       wal:
+#         compression: bzip2
+#         maxParallel: 8
+#       destinationPath: s3://cpng-immich/
+#       endpointURL: http://minio.storage.svc.cluster.local:9000
+#       serverName: &currentCluster immich-db-v3
+#       s3Credentials:
+#         accessKeyId:
+#           name: cloudnative-pg-minio
+#           key: MINIO_ACCESS_KEY
+#         secretAccessKey:
+#           name: cloudnative-pg-minio
+#           key: MINIO_SECRET_KEY
+#   bootstrap:
+#     recovery:
+#       source: &previousCluster immich-db-v2
+#   # Note: externalClusters is needed when recovering from an existing cnpg cluster
+#   externalClusters:
+#     - name: *previousCluster
+#       barmanObjectStore:
+#         destinationPath: s3://cpng-immich/
+#         endpointURL: http://minio.storage.svc.cluster.local:9000
+#         s3Credentials:
+#           accessKeyId:
+#             name: cloudnative-pg-minio
+#             key: MINIO_ACCESS_KEY
+#           secretAccessKey:
+#             name: cloudnative-pg-minio
+#             key: MINIO_SECRET_KEY
+# ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
@@ -6,78 +77,7 @@ metadata:
   name: immich-db
 spec:
   instances: 3
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.18
-  primaryUpdateStrategy: unsupervised
-  storage:
-    size: 100Gi
-    storageClass: ceph-block
-  superuserSecret:
-    name: cloudnative-pg-secret
-  enableSuperuserAccess: true
-  postgresql:
-    parameters:
-      max_connections: "600"
-      max_slot_wal_keep_size: 10GB
-      shared_buffers: 512MB
-    shared_preload_libraries:
-      - "vectors.so"
-  resources:
-    requests:
-      cpu: 500m
-    limits:
-      memory: 4Gi
-  monitoring:
-    enablePodMonitor: true
-  # bootstrap:
-  #   initdb:
-  #     postInitSQL:
-  #       - ALTER SYSTEM SET search_path TO "$user", public, vectors;
-  #       - CREATE EXTENSION IF NOT EXISTS "vectors";
-  #       - CREATE EXTENSION IF NOT EXISTS "cube";
-  #       - CREATE EXTENSION IF NOT EXISTS "earthdistance";
-  backup:
-    retentionPolicy: 30d
-    barmanObjectStore: &barmanObjectStore
-      data:
-        compression: bzip2
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      destinationPath: s3://cpng-immich/
-      endpointURL: http://minio.storage.svc.cluster.local:9000
-      serverName: &currentCluster immich-db-v3
-      s3Credentials:
-        accessKeyId:
-          name: cloudnative-pg-minio
-          key: MINIO_ACCESS_KEY
-        secretAccessKey:
-          name: cloudnative-pg-minio
-          key: MINIO_SECRET_KEY
-  bootstrap:
-    recovery:
-      source: &previousCluster immich-db-v2
-  # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  externalClusters:
-    - name: *previousCluster
-      barmanObjectStore:
-        destinationPath: s3://cpng-immich/
-        endpointURL: http://minio.storage.svc.cluster.local:9000
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg-minio
-            key: MINIO_ACCESS_KEY
-          secretAccessKey:
-            name: cloudnative-pg-minio
-            key: MINIO_SECRET_KEY
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: immich
-spec:
-  instances: 3
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.18
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.10-v0.2.0
   primaryUpdateStrategy: unsupervised
   storage:
     size: 100Gi

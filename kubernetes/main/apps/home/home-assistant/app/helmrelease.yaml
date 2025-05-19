@@ -112,7 +112,6 @@ spec:
     service:
       app:
         controller: *app
-        nameOverride: *app
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: ${LB_HASS}
@@ -134,17 +133,17 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          gethomepage.dev/href: 'https://hass.rafaribe.com'
-          gethomepage.dev/enabled: 'true'
+          gethomepage.dev/href: "https://hass.rafaribe.com"
+          gethomepage.dev/enabled: "true"
           gethomepage.dev/app: Home Assistant
           gethomepage.dev/group: Home
           gethomepage.dev/icon: home-assistant
           gethomepage.dev/name: Home Assistant
-          gethomepage.dev/description: Home Automation 
+          gethomepage.dev/description: Home Automation
           gethomepage.dev/widget.type: homeassistant
           gethomepage.dev/widget.url: &url http://home-assistant.home:8123
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}` }}"
-          
+
           gethomepage.dev/siteMonitor: *url
         hosts:
           - host: hass.rafaribe.com
@@ -157,8 +156,8 @@ spec:
         className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-          gethomepage.dev/href: 'https://hass-code.rafaribe.com'
-          gethomepage.dev/enabled: 'true'
+          gethomepage.dev/href: "https://hass-code.rafaribe.com"
+          gethomepage.dev/enabled: "true"
           gethomepage.dev/app: HASS VS Code
           gethomepage.dev/group: Home
           gethomepage.dev/icon: sh-visual-studio-code.svg
