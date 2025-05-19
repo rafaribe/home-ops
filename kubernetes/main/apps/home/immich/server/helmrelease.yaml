@@ -38,8 +38,9 @@ spec:
                   name: immich-db
           02-init-extensions:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 14
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.5.0
+              pullPolicy: IfNotPresent
             env:
               - name: PGDATABASE
                 value: immich
