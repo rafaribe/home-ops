@@ -99,17 +99,17 @@ spec:
       memory: 4Gi
   monitoring:
     enablePodMonitor: true
-  bootstrap:
-    initdb:
-      postInitSQL:
-        - ALTER SYSTEM SET search_path TO "$user", public, vectors;
-        - CREATE EXTENSION IF NOT EXISTS "vectors";
-        - CREATE EXTENSION IF NOT EXISTS "cube";
-        - CREATE EXTENSION IF NOT EXISTS "earthdistance";
-      database: app
-      owner: app
-      secret:
-        name: immich-db-app
+  # bootstrap:
+  #   initdb:
+  #     postInitSQL:
+  #       - ALTER SYSTEM SET search_path TO "$user", public, vectors;
+  #       - CREATE EXTENSION IF NOT EXISTS "vectors";
+  #       - CREATE EXTENSION IF NOT EXISTS "cube";
+  #       - CREATE EXTENSION IF NOT EXISTS "earthdistance";
+  #     database: app
+  #     owner: app
+  #     secret:
+  #       name: immich-db-app
   backup:
     retentionPolicy: 30d
     barmanObjectStore: &barmanObjectStore
@@ -120,7 +120,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://cpng-immich-v2/
       endpointURL: http://minio.storage.svc.cluster.local:9000
-      serverName: &currentCluster immich-v2
+      serverName: &currentCluster immich-v3
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-minio
@@ -128,16 +128,19 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-minio
           key: MINIO_SECRET_KEY
+  bootstrap:
+    recovery:
+      source: &previousCluster immich-v2
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  # externalClusters:
-  #   - name: *previousCluster
-  #     barmanObjectStore:
-  #       destinationPath: s3://cpng-immich/
-  #       endpointURL: http://minio.storage.svc.cluster.local:9000
-  #       s3Credentials:
-  #         accessKeyId:
-  #           name: cloudnative-pg-minio
-  #           key: MINIO_ACCESS_KEY
-  #         secretAccessKey:
-  #           name: cloudnative-pg-minio
-  #           key: MINIO_SECRET_KEY
+  externalClusters:
+    - name: *previousCluster
+      barmanObjectStore:
+        destinationPath: s3://cpng-immich-v2/
+        endpointURL: http://minio.storage.svc.cluster.local:9000
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg-minio
+            key: MINIO_ACCESS_KEY
+          secretAccessKey:
+            name: cloudnative-pg-minio
+            key: MINIO_SECRET_KEY
