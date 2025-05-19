@@ -74,7 +74,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: immich-db2
+  name: immich-db-clean
 spec:
   instances: 3
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.10-v0.2.0
@@ -125,18 +125,21 @@ spec:
           name: cloudnative-pg-minio
           key: MINIO_SECRET_KEY
   bootstrap:
-    recovery:
-      source: &previousCluster immich-db-v3
+    initdb:
+      database: app
+      owner: app
+      secret:
+        name: immich-db-app
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  externalClusters:
-    - name: *previousCluster
-      barmanObjectStore:
-        destinationPath: s3://cpng-immich/
-        endpointURL: http://minio.storage.svc.cluster.local:9000
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg-minio
-            key: MINIO_ACCESS_KEY
-          secretAccessKey:
-            name: cloudnative-pg-minio
-            key: MINIO_SECRET_KEY
+  # externalClusters:
+  #   - name: *previousCluster
+  #     barmanObjectStore:
+  #       destinationPath: s3://cpng-immich/
+  #       endpointURL: http://minio.storage.svc.cluster.local:9000
+  #       s3Credentials:
+  #         accessKeyId:
+  #           name: cloudnative-pg-minio
+  #           key: MINIO_ACCESS_KEY
+  #         secretAccessKey:
+  #           name: cloudnative-pg-minio
+  #           key: MINIO_SECRET_KEY
