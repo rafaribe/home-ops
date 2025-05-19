@@ -72,35 +72,6 @@ spec:
               - "/config/.vscode"
               - --extensions-dir
               - "/config/.vscode"
-
-          # music-assistant:
-          #   image:
-          #     repository: ghcr.io/music-assistant/server
-          #     tag: 2.3.4@sha256:301cc44d2405e1f12953a44ddb65454630007755af9ada9d204bc1a3b9a06175
-          #   probes:
-          #     liveness:
-          #       enabled: false
-          #     readiness:
-          #       enabled: false
-          #     startup:
-          #       enabled: false
-          #   resources:
-          #     requests:
-          #       cpu: 5m
-          #       memory: 1374M
-          #     limits:
-          #       memory: 2Gi
-          #   securityContext:
-          #     apparmor:
-          #       enabled: false # Disables apparmor
-          #     allowPrivilegeEscalation: true
-          #     readOnlyRootFilesystem: false
-          #     capabilities:
-          #       add:
-          #         - SYS_ADMIN
-          #         - DAC_READ_SEARCH
-          #       drop:
-          #         - ALL
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -109,8 +80,12 @@ spec:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
+      hostNetwork: true
+
     service:
-      app:
+      main:
+        primary: true
+        forceRename: home-assistant
         controller: *app
         type: LoadBalancer
         annotations:
@@ -181,8 +156,6 @@ spec:
               - path: /config
             code-server:
               - path: /config
-            music-assistant:
-              - path: /data
       deploy-key:
         type: secret
         name: git-keys
@@ -190,10 +163,27 @@ spec:
         globalMounts:
           - path: /home/coder/.ssh/
             readOnly: true
-      tmp:
+      hass-cache:
+        storageClass: "ceph-block"
+        accessMode: ReadWriteOnce
+        size: "1Gi"
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /venv
+                subPath: hass-venv
+      tmpfs:
         type: emptyDir
-        globalMounts:
-          - path: /tmp
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /tmp
+                subPath: hass-tmp
+            codeserver:
+              - path: /tmp
+                subPath: code-server-tmp
+              - path: /nonexistent
+                subPath: nonexistent
       # logs:
       #   type: emptyDir
       #   globalMounts:
