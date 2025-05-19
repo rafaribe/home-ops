@@ -74,10 +74,10 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: immich-db-clean
+  name: immich
 spec:
   instances: 3
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.10-v0.2.0
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:17.5
   primaryUpdateStrategy: unsupervised
   storage:
     size: 100Gi
@@ -99,13 +99,17 @@ spec:
       memory: 4Gi
   monitoring:
     enablePodMonitor: true
-  # bootstrap:
-  #   initdb:
-  #     postInitSQL:
-  #       - ALTER SYSTEM SET search_path TO "$user", public, vectors;
-  #       - CREATE EXTENSION IF NOT EXISTS "vectors";
-  #       - CREATE EXTENSION IF NOT EXISTS "cube";
-  #       - CREATE EXTENSION IF NOT EXISTS "earthdistance";
+  bootstrap:
+    initdb:
+      postInitSQL:
+        - ALTER SYSTEM SET search_path TO "$user", public, vectors;
+        - CREATE EXTENSION IF NOT EXISTS "vectors";
+        - CREATE EXTENSION IF NOT EXISTS "cube";
+        - CREATE EXTENSION IF NOT EXISTS "earthdistance";
+      database: app
+      owner: app
+      secret:
+        name: immich-db-app
   backup:
     retentionPolicy: 30d
     barmanObjectStore: &barmanObjectStore
@@ -114,9 +118,9 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://cpng-immich-second/
+      destinationPath: s3://cpng-immich-v2/
       endpointURL: http://minio.storage.svc.cluster.local:9000
-      serverName: &currentCluster immich-db2-v3
+      serverName: &currentCluster immich-v2
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-minio
@@ -124,12 +128,6 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-minio
           key: MINIO_SECRET_KEY
-  bootstrap:
-    initdb:
-      database: app
-      owner: app
-      secret:
-        name: immich-db-app
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   # externalClusters:
   #   - name: *previousCluster
