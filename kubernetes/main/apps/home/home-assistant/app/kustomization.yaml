@@ -7,3 +7,4 @@ resources:
   - ./keys.yaml
   - ./externalsecret.yaml
   - ./podmonitor.yaml
+  - ./pvc.yaml

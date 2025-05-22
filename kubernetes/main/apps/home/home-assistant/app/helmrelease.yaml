@@ -164,9 +164,7 @@ spec:
           - path: /home/coder/.ssh/
             readOnly: true
       hass-cache:
-        storageClass: "ceph-block"
-        accessMode: ReadWriteOnce
-        size: "1Gi"
+        existingClaim: hass-cache
         advancedMounts:
           home-assistant:
             app:
@@ -179,7 +177,7 @@ spec:
             app:
               - path: /tmp
                 subPath: hass-tmp
-            codeserver:
+            code-server:
               - path: /tmp
                 subPath: code-server-tmp
               - path: /nonexistent
