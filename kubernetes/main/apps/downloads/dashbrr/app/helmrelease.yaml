@@ -105,9 +105,24 @@ spec:
                 service:
                   identifier: app
                   port: http
+    rbac:
+      roles:
+        dashbrr:
+          type: Role
+          rules:
+            - apiGroups: [""]
+              resources: ["services"]
+              verbs: ["get", "watch", "list"]
+      bindings:
+        dashbrr:
+          type: RoleBinding
+          roleRef:
+            identifier: *app
+          subjects:
+            - identifier: *app
     serviceAccount:
-      create: true
-      name: dashbrr
+      dashbrr: {}
+
     persistence:
       cache:
         type: emptyDir

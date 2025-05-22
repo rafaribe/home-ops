@@ -25,7 +25,7 @@ spec:
     substitute:
       APP: *app
       GATUS_PATH: /web/index.html
-      VOLSYNC_CAPACITY: 20Gi
+      VOLSYNC_CAPACITY: 100Gi
       VOLSYNC_CRON_EXPRESSION: "30 3 * * *"
   components:
     - ../../../../../shared/components/volsync
