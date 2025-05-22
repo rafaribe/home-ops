@@ -154,7 +154,7 @@ spec:
           home-assistant:
             app:
               - path: /config
-            code-server:
+            codeserver:
               - path: /config
       deploy-key:
         type: secret
@@ -177,7 +177,7 @@ spec:
             app:
               - path: /tmp
                 subPath: hass-tmp
-            code-server:
+            codeserver:
               - path: /tmp
                 subPath: code-server-tmp
               - path: /nonexistent
