@@ -94,10 +94,6 @@ spec:
                 readOnly: true
                 subPath: env
 
-    serviceAccount:
-      create: true
-      name: *app
-
     serviceMonitor:
       app:
         enabled: false
