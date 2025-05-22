@@ -46,8 +46,7 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: [ALL] }
     serviceAccount:
-      create: true
-      name: *app
+      capacitor: {}
     service:
       app:
         controller: *app

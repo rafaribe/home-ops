@@ -101,5 +101,4 @@ spec:
         globalMounts:
           - path: /var/run/silence-operator/configmap
     serviceAccount:
-      create: true
-      name: silence-operator
+      silence-operator: {}
