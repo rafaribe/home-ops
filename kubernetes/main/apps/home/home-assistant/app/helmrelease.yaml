@@ -83,7 +83,7 @@ spec:
       hostNetwork: true
 
     service:
-      main:
+      app:
         primary: true
         forceRename: home-assistant
         controller: *app
