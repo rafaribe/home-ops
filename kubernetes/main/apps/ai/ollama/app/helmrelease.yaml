@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: docker.io/ollama/ollama
-              tag: 0.7.0
+              tag: 0.7.1
             env:
               - name: OLLAMA_HOST
                 value: 0.0.0.0
