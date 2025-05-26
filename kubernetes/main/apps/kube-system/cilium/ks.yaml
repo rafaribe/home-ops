@@ -58,16 +58,32 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cilium-gateway-api
+  name: cilium-gateway
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/kube-system/cilium/gateway-api
+  path: ./kubernetes/main/apps/kube-system/cilium/gateway
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-ops
   dependsOn:
     - name: cilium
+      namespace: kube-system
+    - name: cert-manager
+      namespace: cert-manager
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  postBuild:
+    substitute:
+      CLUSTER: main
+      EXTERNAL_DOMAIN: external
+      INTERNAL_DOMAIN: internal
+      SVC_GATEWAY_EXTERNAL: 10.0.1.118
+      SVC_GATEWAY_INTERNAL: 10.0.1.119
+      # Old values, kept until I remember everything
+      #LB_NGINX_EXTERNAL: 10.0.1.100
+      #LB_NGINX_INTERNAL: 10.0.1.101
