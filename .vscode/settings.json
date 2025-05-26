@@ -15,4 +15,16 @@
     "editor.guides.bracketPairs":"active",
     "editor.hover.delay": 1500,
     "explorer.autoReveal": true,
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "**/.classpath": false,
+      "**/.factorypath": true,
+      "**/.project": true,
+      "**/.settings": true
+    },
+    "explorerExclude.backup": {},
 }

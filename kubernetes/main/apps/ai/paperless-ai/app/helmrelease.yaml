@@ -75,7 +75,7 @@ spec:
         controller: paperless-ai
         ports:
           http:
-            port: 3000
+            port: &port 3000
     ingress:
       app:
         enabled: true
@@ -95,6 +95,25 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Home
+          gethomepage.dev/name: Paperless AI
+          gethomepage.dev/icon: paperless.png
+          gethomepage.dev/description: AI Setup for Paperless
+          gethomepage.dev/siteMonitor: http://paperless-ai.ai:3000
+        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         enabled: true
