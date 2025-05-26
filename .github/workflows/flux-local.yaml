@@ -59,7 +59,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        cluster: ["main", "test", "utility"]
+        cluster: ["main","utility"]
         resource: ["helmrelease", "kustomization"]
       fail-fast: false
     steps:
@@ -82,8 +82,8 @@ jobs:
           args: >-
             diff ${{ matrix.resource }}
             --unified 6
-            --path /github/workspace/pull/kubernetes/clusters/${{ matrix.cluster }}
-            --path-orig /github/workspace/default/kubernetes/clusters/${{ matrix.cluster }}
+            --path /github/workspace/pull/kubernetes/${{ matrix.cluster }}
+            --path-orig /github/workspace/default/kubernetes/${{ matrix.cluster }}
             --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
             --limit-bytes 10000
             --all-namespaces
