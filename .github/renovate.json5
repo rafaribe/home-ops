@@ -3,13 +3,12 @@
   "extends": [
     "config:recommended",
     "docker:enableMajor",
-    "replacements:k8s-registry-move",
+    "helpers:pinGitHubActionDigests",
+    ":timezone(Europe/Lisbon)",
     ":automergeBranch",
     ":disableRateLimiting",
     ":dependencyDashboard",
     ":semanticCommits",
-    ":skipStatusChecks",
-    ":timezone(Europe/Lisbon)",
     "github>rafaribe/home-ops//.github/renovate/allowedVersions.json5",
     "github>rafaribe/home-ops//.github/renovate/autoMerge.json5",
     "github>rafaribe/home-ops//.github/renovate/clusters.json5",
@@ -26,20 +25,13 @@
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
   "ignorePaths": ["**/*.sops.*", "**/.archive/**",  "**/resources/**", "**/scripts/**"],
-  "flux": {
-    "fileMatch": [
-      "(^|/)kubernetes/.+\\.ya?ml$"
-    ]
+  flux: {
+    managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
   },
   "helm-values": {
-    "fileMatch": [
-      "(^|/)kubernetes/.+\\.ya?ml$"
-    ]
+    managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
   },
-  "kubernetes": {
-    "fileMatch": [
-      "(^|/)\\.taskfiles/.+\\.ya?ml$",
-      "(^|/)kubernetes/.+\\.ya?ml$"
-    ]
-  }
+  kubernetes: {
+    managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
+  },
 }
