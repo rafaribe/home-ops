@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: docker.io/ollama/ollama
-              tag: 0.7.1
+              tag: 0.7.1@sha256:de659b95818c5ea17dc287a2e4f147f81e202d84f1dc4ad3f256c53fb81e8dd0
             env:
               - name: OLLAMA_HOST
                 value: 0.0.0.0
