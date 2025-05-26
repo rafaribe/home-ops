@@ -68,9 +68,6 @@ spec:
     name: home-ops
   dependsOn:
     - name: cilium
-      namespace: kube-system
-    - name: cert-manager
-      namespace: cert-manager
   interval: 30m
   targetNamespace: kube-system
   retryInterval: 1m
