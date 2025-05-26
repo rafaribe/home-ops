@@ -24,7 +24,7 @@ spec:
       retries: 3
   valuesFrom:
     - kind: ConfigMap
-      name: spegel-helm-values
+      name: spegel-values
   values:
     serviceMonitor:
       enabled: true
