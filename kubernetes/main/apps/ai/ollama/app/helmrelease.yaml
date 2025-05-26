@@ -6,7 +6,6 @@ metadata:
   name: &app ollama
 spec:
   interval: 30m
-  timeout: 10m
   chart:
     spec:
       chart: app-template
@@ -21,8 +20,8 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      retries: 3
       strategy: rollback
+      retries: 3
   values:
     controllers:
       ollama:
@@ -55,7 +54,7 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: ${LB_OLLAMA}
+          lbipam.cilium.io/ips: 10.0.1.115 #${LB_OLLAMA}
         ports:
           http:
             port: &port 11434
@@ -74,7 +73,7 @@ spec:
           - path: /root/.ollama
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.rafaribe.com"]
+        hostnames: ["ollama.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
