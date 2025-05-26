@@ -47,12 +47,12 @@ jobs:
           ref: ${{ matrix.branch == 'default' && github.event.repository.default_branch || '' }}
 
       - name: Gather Images
-        uses: docker://ghcr.io/allenporter/flux-local:v7.5.0
+        uses: docker://ghcr.io/allenporter/flux-local:v7.5.2
         with:
           args: >-
             get cluster
             --all-namespaces
-            --path /github/workspace/kubernetes/${{ matrix.cluster }}
+            --path /github/workspace/kubernetes/${{ matrix.cluster }}/flux
             --enable-images
             --only-images
             --output json
