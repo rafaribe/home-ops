@@ -5,17 +5,24 @@ kind: HelmRelease
 metadata:
   name: &app ollama
 spec:
-  interval: 1h
-  chartRef:
-    kind: OCIRepository
-    name: app-template
+  interval: 30m
+  timeout: 10m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
   install:
     remediation:
-      retries: -1
+      retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
+      strategy: rollback
   values:
     controllers:
       ollama:

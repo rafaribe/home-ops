@@ -35,7 +35,7 @@ spec:
             env:
               PAPERLESS_API_URL: http://paperless.services.svc.cluster.local:8000/api
               AI_PROVIDER: ollama
-              SCAN_INTERVAL: "*/30 * * * *"
+              SCAN_INTERVAL: "*/31 * * * *"
               PROCESS_PREDEFINED_DOCUMENTS: yes
               ADD_AI_PROCESSED_TAG: yes
               AI_PROCESSED_TAG_NAME: ai-processed
