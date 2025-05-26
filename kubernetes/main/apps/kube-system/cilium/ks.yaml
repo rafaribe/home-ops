@@ -72,6 +72,7 @@ spec:
     - name: cert-manager
       namespace: cert-manager
   interval: 30m
+  targetNamespace: kube-system
   retryInterval: 1m
   timeout: 3m
   commonMetadata:
