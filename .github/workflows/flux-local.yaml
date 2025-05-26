@@ -82,8 +82,8 @@ jobs:
           args: >-
             diff ${{ matrix.resource }}
             --unified 6
-            --path /github/workspace/pull/kubernetes/${{ matrix.cluster }}/apps
-            --path-orig /github/workspace/default/kubernetes/${{ matrix.cluster }}/apps
+            --path /github/workspace/pull/kubernetes/${{ matrix.cluster }}/flux
+            --path-orig /github/workspace/default/kubernetes/${{ matrix.cluster }}/flux
             --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
             --limit-bytes 10000
             --all-namespaces
@@ -111,7 +111,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@67d0dec7b07ed060a405f9b2a64b8ab319fdd7db # v2.9.2
         with:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          header: ${{ github.event.pull_request.number }}/kubernetes/${{ matrix.resource }}/apps
+          header: ${{ github.event.pull_request.number }}/kubernetes/${{ matrix.resource }}/flux
           message: |
             ```diff
             ${{ steps.diff.outputs.diff }}
