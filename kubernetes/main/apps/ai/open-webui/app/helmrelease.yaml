@@ -72,7 +72,7 @@ spec:
         controller: open-webui
         ports:
           http:
-            port: 8080
+            port: &port 8080
     route:
       app:
         hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]

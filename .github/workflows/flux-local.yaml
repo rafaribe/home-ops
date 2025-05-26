@@ -47,7 +47,7 @@ jobs:
             test
             --all-namespaces
             --enable-helm
-            --path /github/workspace/kubernetes/${{ matrix.cluster }}/apps
+            --path /github/workspace/kubernetes/${{ matrix.cluster }}/flux
             --verbose
 
   diff:
