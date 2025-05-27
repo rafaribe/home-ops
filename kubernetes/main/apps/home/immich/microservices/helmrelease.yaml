@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.133.1
+              tag: v1.134.0
             env:
               TZ: "Europe/Lisbon"
               IMMICH_WORKERS_EXCLUDE: api
