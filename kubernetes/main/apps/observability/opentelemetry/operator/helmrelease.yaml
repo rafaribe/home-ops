@@ -32,7 +32,7 @@ spec:
         tag: v0.126.0
       collectorImage:
         repository: "otel/opentelemetry-collector-contrib"
-        tag: 0.126.0
+        tag: 0.127.0
       serviceMonitor:
         enabled: true
 
