@@ -43,3 +43,4 @@ kubernetes/main/apps/observability/opentelemetry/collector/metrics.prometheus
 temp.yaml
 kubernetes/main/apps/network/headscale
 .venv/
+upgrade.sh
