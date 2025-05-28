@@ -1,104 +1,25 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-4.0.1/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: silence-operator
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.0.1
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-  driftDetection:
-    mode: enabled
+  chartRef:
+    kind: OCIRepository
+    name: silence-operator
   install:
-    remediation:
-      retries: 3
+    crds: CreateReplace
   upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
+    crds: CreateReplace
   values:
-    configMaps:
-      config:
-        enabled: true
-        data:
-          config.yml: |
-            server:
-              enable:
-                debug:
-                  server: true
-              listen:
-                address: 'http://0.0.0.0:8000'
-            service:
-              alertmanager:
-                address: http://alertmanager-operated.observability.svc.cluster.local:9093
-              kubernetes:
-                address: ''
-                inCluster: true
-                tls:
-                  caFile: ''
-                  crtFile: ''
-                  keyFile: ''
-    controllers:
-      silence-operator:
-        pod:
-          securityContext:
-            runAsGroup: 1000
-            runAsUser: 1000
-            runAsNonRoot: true
-            seccompProfile: { type: RuntimeDefault }
-        containers:
-          silence-operator:
-            image:
-              repository: quay.io/giantswarm/silence-operator
-              tag: 0.16.1
-            args:
-              - daemon
-              - --config.dirs=/var/run/silence-operator/configmap/
-              - --config.files=config
-            probes:
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /healthz
-                    port: &port 8000
-                  initialDelaySeconds: 15
-                  periodSeconds: 20
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities: { drop: ["ALL"] }
-              seccompProfile: { type: RuntimeDefault }
-    defaultPodOptions:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                      - amd64
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        identifier: config
-        globalMounts:
-          - path: /var/run/silence-operator/configmap
-    serviceAccount:
-      silence-operator: {}
+    alertmanagerAddress: http://alertmanager-operated.observability.svc.cluster.local:9093
+    image:
+      registry: quay.io
+      # TODO: Enable on next Flux release and remove name & tag
+      # REF: https://github.com/fluxcd/helm-controller/pull/1212
+      name: giantswarm/silence-operator
+      tag: 0.16.1
+    networkPolicy:
+      enabled: false
