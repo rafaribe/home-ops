@@ -109,7 +109,7 @@ spec:
       app:
         hostnames:
           - "{{ .Release.Name }}.rafaribe.com"
-          - status.rafaribe.com"
+          - status.rafaribe.com
         parentRefs:
           - name: external
             namespace: kube-system
