@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: silence-operator
+  name: &app silence-operator
 spec:
   interval: 30m
   chart:
@@ -26,11 +26,11 @@ spec:
     controllers:
       silence-operator:
         serviceAccount:
-          identifier: silence-operator
+          identifier: *app
 
         pod:
           securityContext:
-            runAsUser: 65534
+            runAsUser: 1000
             runAsNonRoot: true
 
         containers:
@@ -100,9 +100,6 @@ spec:
         silence-operator:
           type: ClusterRoleBinding
           roleRef:
-            apiGroup: rbac.authorization.k8s.io
-            kind: ClusterRole
-            name: silence-operator
+            identifier: *app
           subjects:
-            - kind: ServiceAccount
-              name: silence-operator
+            - identifier: *app
