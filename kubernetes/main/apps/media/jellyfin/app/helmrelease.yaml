@@ -20,27 +20,13 @@ spec:
       jellyfin:
         annotations:
           reloader.stakater.com/auto: "true"
-
-        pod:
-          nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
-            supplementalGroups:
-              - 44
-              - 109
-
         containers:
           app:
             image:
               repository: ghcr.io/jellyfin/jellyfin
-              tag: "10.10.7"
+              tag: 10.10.7@sha256:e4d1dc5374344446a3a78e43dd211247f22afba84ea2e5a13cbe1a94e1ff2141
             env:
-              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
-              JELLYFIN_PublishedServerUrl:
+              TZ: Europe/Lisbon
             probes:
               liveness: &probes
                 enabled: true
@@ -55,16 +41,28 @@ spec:
                   failureThreshold: 3
               readiness: *probes
               startup:
-                enabled: false
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 100m
-                gpu.intel.com/i915: 1
-                memory: 512Mi
               limits:
                 gpu.intel.com/i915: 1
                 memory: 4Gi
-
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [44]
     service:
       app:
         controller: jellyfin
@@ -73,22 +71,18 @@ spec:
           io.cilium/lb-ipam-ips: ${LB_JELLYFIN}
         ports:
           http:
-            port: 8096
-
-    ingress:
+            port: *port
+    route:
       app:
-        annotations:
-          hajimari.io/icon: simple-icons:jellyfin
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        className: internal
-        hosts:
-          - host: jellyfin.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-
+        hostnames: ["{{ .Release.Name }}.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
     persistence:
       config:
         existingClaim: jellyfin

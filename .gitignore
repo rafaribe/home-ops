@@ -44,3 +44,4 @@ temp.yaml
 kubernetes/main/apps/network/headscale
 .venv/
 upgrade.sh
+upgrade2.sh
