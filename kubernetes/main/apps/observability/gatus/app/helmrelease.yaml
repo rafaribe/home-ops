@@ -109,7 +109,7 @@ spec:
     rbac:
       roles:
         gatus:
-          type: Role
+          type: ClusterRole
           rules:
             - apiGroups: [""]
               resources: ["configmaps", "secrets"]
