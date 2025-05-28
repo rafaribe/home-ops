@@ -1,9 +1,9 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: gatus
+  name: &app gatus
 spec:
   interval: 30m
   chart:
@@ -25,6 +25,8 @@ spec:
   values:
     controllers:
       gatus:
+        replicas: 1
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -40,11 +42,11 @@ spec:
               UNIQUE_FILENAMES: true
               METHOD: WATCH
             restartPolicy: Always
-            resources:
+            resources: &resources
               requests:
                 cpu: 10m
               limits:
-                memory: 128Mi
+                memory: 256Mi
         containers:
           app:
             image:
@@ -72,13 +74,9 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 100m
-              limits:
-                memory: 256Mi
+            resources: *resources
         serviceAccount:
-          identifier: gatus
+          identifier: *app
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -88,7 +86,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: gatus
+        controller: *app
         ports:
           http:
             port: *port
@@ -99,16 +97,14 @@ spec:
           - port: http
     route:
       app:
-        hostnames:
-          - "{{ .Release.Name }}.rafaribe.com"
-          - status.rafaribe.com
+        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
         parentRefs:
           - name: external
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
-              - identifier: app
+              - name: *app
                 port: *port
     rbac:
       roles:
@@ -122,9 +118,9 @@ spec:
         gatus:
           type: RoleBinding
           roleRef:
-            identifier: gatus
+            identifier: *app
           subjects:
-            - identifier: gatus
+            - identifier: *app
     serviceAccount:
       gatus: {}
     persistence:
