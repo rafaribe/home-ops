@@ -116,7 +116,7 @@ spec:
               verbs: ["get", "watch", "list"]
       bindings:
         gatus:
-          type: RoleBinding
+          type: ClusterRoleBinding
           roleRef:
             identifier: *app
           subjects:
