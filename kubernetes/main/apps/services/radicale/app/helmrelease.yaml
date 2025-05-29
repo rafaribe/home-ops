@@ -73,7 +73,7 @@ spec:
 
       data:
         type: persistentVolumeClaim
-        existingClaim: "${VOLSYNC_CLAIM}"
+        existingClaim: radicale-data
         globalMounts:
           - path: /data
 
