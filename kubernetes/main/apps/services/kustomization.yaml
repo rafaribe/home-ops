@@ -37,4 +37,4 @@ resources:
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
   - ./vikunja/ks.yaml
-  - ./windmill/ks.yaml
+  #- ./windmill/ks.yaml
