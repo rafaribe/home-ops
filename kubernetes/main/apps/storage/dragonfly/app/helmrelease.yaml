@@ -26,13 +26,15 @@ spec:
     controllers:
       dragonfly-operator:
         replicas: 1
+        serviceAccount:
+          identifier: *app
         strategy: RollingUpdate
         containers:
           app:
             image:
               repository: ghcr.io/dragonflydb/operator
               tag: v1.1.11@sha256:11cef45ec1079b9d97930fc99ecd08ba29d4eca55cdb45887cb0ac40ee4e4d24
-            command: [/manager]
+            command: ["/manager"]
             args:
               - --health-probe-bind-address=:8081
               - --metrics-bind-address=:8080
@@ -67,7 +69,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: [ALL] }
+              capabilities: { drop: ["ALL"] }
         pod:
           securityContext:
             runAsUser: 1000
@@ -99,3 +101,14 @@ spec:
             scrapeTimeout: 10s
     serviceAccount:
       dragonfly-operator: {}
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |-
+              apiVersion: monitoring.coreos.com/v1
+              kind: ServiceMonitor
+              metadata:
+                name: dragonfly-operator
+                namespace: dbms
+              spec:
+                fallbackScrapeProtocol: PrometheusText1.0.0
