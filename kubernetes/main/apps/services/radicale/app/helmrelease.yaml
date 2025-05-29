@@ -23,6 +23,7 @@ spec:
           reloader.stakater.com/auto: "true"
 
         pod:
+          enableServiceLinks: false
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
@@ -32,62 +33,53 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/bjw-s-labs/radicale
-              tag: 3.5.4
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
+              repository: ghcr.io/ahinko/radicale
+              tag: v3.5.4@sha256:a6dfba8ec616a91be5ff4d69658366987b3186134fa4608dc2de0722a19a7bfc
+
             resources:
               requests:
-                cpu: 21m
-                memory: 192Mi
+                cpu: 600m
+                memory: 100M
               limits:
-                memory: 1024Mi
+                memory: 512M
 
     service:
       app:
-        controller: radicale
+        controller: *app
         ports:
           http:
-            port: 5232
+            port: &port 5232
 
-    ingress:
+    route:
       app:
-        className: "external"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-        hosts:
-          - host: radicale.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: [radicale.rafaribe.com]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
 
     persistence:
       config:
         type: configMap
-        name: radicale-configmap
+        name: radicale-config
         globalMounts:
           - path: /config/config
             subPath: config.cfg
             readOnly: true
+
       data:
-        existingClaim: radicale
-        advancedMounts:
-          radicale:
-            app:
-              - path: /data
+        type: persistentVolumeClaim
+        existingClaim: "${VOLSYNC_CLAIM}"
+        globalMounts:
+          - path: /data
+
       auth:
         type: secret
-        name: radicale
+        name: radicale-secret
         globalMounts:
           - path: /config/users
             subPath: users
