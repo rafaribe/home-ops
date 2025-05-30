@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: ghcr.io/techno-tim/littlelink-server
-              tag: latest@sha256:c4f8512c964356b0b9d7d89808f74d141aa429adda60ad4d20c3d9166e197a19
+              tag: latest@sha256:da67eb54a508354e17cf8e6337269f3bd5067a7e25f13f89b9327813207203d0
             env:
               TZ: "Europe/Lisbon"
               META_TITLE: Rafael Ribeiro
