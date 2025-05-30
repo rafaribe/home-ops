@@ -96,7 +96,7 @@ spec:
       # Extra Init Containers
       extraInitContainers:
         - name: download-geolite-files
-          image: alpine:3.21
+          image: alpine:3.22
           command: ["sh", "/scripts/geolite.sh"]
           # env:
           #   - name: GEOLITE_RELEASE
