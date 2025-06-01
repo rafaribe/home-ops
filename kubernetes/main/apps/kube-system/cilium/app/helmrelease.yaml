@@ -4,6 +4,8 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
   name: cilium
+  annotations:
+    api.fluxcd.io/upgrade: "v2.6.0"
 spec:
   interval: 5m
   layerSelector:
