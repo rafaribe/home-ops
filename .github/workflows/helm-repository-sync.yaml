@@ -35,7 +35,7 @@ jobs:
   helm-repository-sync:
     name: Helm Repository Sync
     needs: pre-job
-    runs-on: gha-runner-scale-set
+    runs-on: arc-runner-set-home-ops
     if: ${{ needs.pre-job.outputs.any_changed == 'true' }}
     permissions:
       contents: read

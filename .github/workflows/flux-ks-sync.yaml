@@ -13,10 +13,10 @@ permissions:
 jobs:
   sync:
     name: Flux Kustomization Sync
-    runs-on: ["gha-runner-scale-set"]
+    runs-on: ["arc-runner-set-home-ops"]
     strategy:
       matrix:
-        cluster: ["network", "registry"]
+        cluster: ["main", "utility"]
     steps:
       - name: Generate Token
         uses: actions/create-github-app-token@df432ceedc7162793a195dd1713ff69aefc7379e # v2
