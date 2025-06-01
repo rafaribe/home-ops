@@ -65,7 +65,7 @@ jobs:
           args: >-
             get cluster
             --all-namespaces
-            --path /github/workspace/kubernetes/${{ matrix.clusters }}/flux
+            --path /github/workspace/${{ matrix.clusters }}/flux
             --enable-images
             --only-images
             --output json
