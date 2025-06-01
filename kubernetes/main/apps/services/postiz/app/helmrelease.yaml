@@ -45,7 +45,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gitroomhq/postiz-app
-              tag: latest@sha256:8d0f73f8339db5380a5400cca3d5221560ade98f945dcc45cdda406d3563615f
+              tag: latest@sha256:8708c9febe05eb0ea75318a6ca3b21e184475d2b9a77ca131f7886acd9314041
             env:
               MAIN_URL: "https://postiz.rafaribe.com"
               FRONTEND_URL: "https://postiz.rafaribe.com"
