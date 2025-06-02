@@ -95,7 +95,7 @@ jobs:
     if: ${{ needs.diff.outputs.images != '[]' }}
     needs: diff
     name: Image Pull - Pull Images
-    runs-on: ${{ format('home-ops-runner-{0}', matrix.cluster) }}
+    runs-on: arc-runner-set-home-ops
     strategy:
       matrix:
         cluster: ["main", "utility"]
