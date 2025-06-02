@@ -4,6 +4,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
   name: flux-operator
+  namespace: flux-system
 spec:
   interval: 5m
   layerSelector:
@@ -18,6 +19,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: flux-operator
+  namespace: flux-system
 spec:
   interval: 1h
   chartRef:
