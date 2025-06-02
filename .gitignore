@@ -45,3 +45,4 @@ kubernetes/main/apps/network/headscale
 .venv/
 upgrade.sh
 upgrade2.sh
+.pytest_cache/
