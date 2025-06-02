@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 1m
   path: ./kubernetes/utility/apps
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-ops
@@ -40,7 +40,7 @@ spec:
               - kind: ConfigMap
                 name: cluster-settings
               - kind: ConfigMap
-                name: cluster-settings-utility          
+                name: cluster-settings-utility
               - kind: Secret
                 name: cluster-secrets
       target:
