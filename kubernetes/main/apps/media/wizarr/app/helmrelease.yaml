@@ -74,6 +74,24 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Wizarr
+          gethomepage.dev/icon: wizarr.png
+          gethomepage.dev/description: Plex Invite Management
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+        hostnames: ["join.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: wizarr
+                port: 5690
     persistence:
       config:
         existingClaim: *app

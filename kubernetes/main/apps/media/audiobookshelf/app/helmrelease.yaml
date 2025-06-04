@@ -96,6 +96,28 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: AudioBookShelf
+          gethomepage.dev/app: audiobookshelf
+          gethomepage.dev/icon: audiobookshelf.png
+          gethomepage.dev/description: Audiobook Library
+          gethomepage.dev/widget.type: audiobookshelf
+          gethomepage.dev/widget.url: http://audiobookshelf.media:80
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_AUDIOBOOKSHELF_TOKEN}}`}}"
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        hostnames: ["audiobookshelf.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: audiobookshelf
+                port: 80
     persistence:
       config:
         existingClaim: audiobookshelf

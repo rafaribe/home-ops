@@ -90,6 +90,20 @@ spec:
           - hosts:
               - *host
 
+    route:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        hostnames: ["elasticsearch-mastodon.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: mastodon-elasticsearch
+                port: 9200
+
     persistence:
       config:
         existingClaim: mastodon-elasticsearch

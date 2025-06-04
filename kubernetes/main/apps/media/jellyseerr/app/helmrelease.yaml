@@ -97,6 +97,28 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: jellyseerr
+          gethomepage.dev/icon: jellyseerr.png
+          gethomepage.dev/description: Media Request Management
+          gethomepage.dev/widget.type: jellyseerr
+          gethomepage.dev/widget.url: http://jellyseerr.media:80
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_JELLYSEERR_TOKEN}}` }}"
+          hajimari.io/icon: mdi:jellyfish-outline
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+        hostnames: ["requests.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: jellyseerr
+                port: 80
     persistence:
       config:
         existingClaim: *app

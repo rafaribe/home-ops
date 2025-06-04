@@ -90,6 +90,20 @@ spec:
                 service:
                   identifier: gotosocial
                   port: http
+    route:
+      main:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          nginx.ingress.kubernetes.io/proxy-body-size: 4096m
+        hostnames: ["social.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: gotosocial
+                port: 8080
     persistence:
       tmp:
         type: emptyDir

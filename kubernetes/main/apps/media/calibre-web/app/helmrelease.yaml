@@ -109,6 +109,28 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          hajimari.io/icon: mdi:chart-bar
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: Calibre
+          gethomepage.dev/icon: calibre.png
+          gethomepage.dev/widget.type: calibreweb
+          gethomepage.dev/widget.url: http://calibre-web.media:8083
+          gethomepage.dev/widget.username: "{{`{{HOMEPAGE_VAR_CALIBRE_USERNAME}}`}}"
+          gethomepage.dev/widget.password: "{{`{{HOMEPAGE_VAR_CALIBRE_PASSWORD}}`}}"
+        hostnames: ["calibre.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: calibre-web
+                port: 8083
 
     persistence:
       config:

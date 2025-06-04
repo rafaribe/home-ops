@@ -93,6 +93,28 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Overseerr
+          gethomepage.dev/icon: overseerr.png
+          gethomepage.dev/description: Media Request Management
+          gethomepage.dev/widget.type: overseerr
+          gethomepage.dev/widget.url: http://overseerr.media:80
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_OVERSEERR_TOKEN}}` }}"
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          nginx.ingress.kubernetes.io/custom-http-errors: "400,404,500,502,503,504"
+        hostnames: ["requests-legacy.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: overseerr
+                port: 80
     persistence:
       config:
         existingClaim: *app

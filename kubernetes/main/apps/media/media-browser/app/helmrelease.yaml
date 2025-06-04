@@ -87,6 +87,19 @@ spec:
         tls:
           - hosts:
               - *host
+    route:
+      app:
+        annotations:
+          hajimari.io/icon: mdi:folder-play-outline
+        hostnames: ["media.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: media-browser
+                port: 80
     persistence:
       config:
         enabled: true

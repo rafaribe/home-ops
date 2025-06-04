@@ -72,6 +72,28 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Kavita
+          gethomepage.dev/group: Media
+          gethomepage.dev/icon: kavita.png
+          gethomepage.dev/description: Comic/Ebook Web Reader
+          gethomepage.dev/widget.type: kavita
+          gethomepage.dev/widget.url: http://kavita.media:5000
+          gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_KAVITA_USERNAME}}` }}"
+          gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_KAVITA_PASSWORD}}` }}"
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+        hostnames: ["comics.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: kavita
+                port: 5000
     persistence:
       config:
         existingClaim: *app

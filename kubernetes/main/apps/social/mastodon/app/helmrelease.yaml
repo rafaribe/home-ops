@@ -114,6 +114,30 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          hajimari.io/icon: mdi:link
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Mastodon
+          gethomepage.dev/description: Social Media Platform
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: mastodon.png
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (mastodon)
+          gethomepage.dev/widget.type: mastodon
+          gethomepage.dev/widget.url: https://fedi.rafaribe.com
+          gethomepage.dev/siteMonitor: https://fedi.rafaribe.com
+        hostnames: ["fedi.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: mastodon
+                port: 80
     persistence:
       config:
         existingClaim: *app

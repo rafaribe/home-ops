@@ -105,15 +105,15 @@ spec:
           gethomepage.dev/icon: paperless.png
           gethomepage.dev/description: AI Setup for Paperless
           gethomepage.dev/siteMonitor: http://paperless-ai.ai:3000
-        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
+        hostnames: ["paperless-ai.rafaribe.com"]
         parentRefs:
-          - name: external
+          - name: internal
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
-                port: *port
+              - name: paperless-ai
+                port: 3000
     persistence:
       config:
         enabled: true
