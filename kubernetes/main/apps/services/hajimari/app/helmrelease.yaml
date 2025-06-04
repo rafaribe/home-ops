@@ -117,6 +117,32 @@ spec:
         tls:
           - hosts:
               - *host
+    route:
+      main:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "weather-sunset"
+          hajimari.io/instance: "admin"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: Hajimari
+          gethomepage.dev/icon: https://hajimari.io/assets/logo.png
+          gethomepage.dev/description: Dashboard for applications with service discovery
+          gethomepage.dev/siteMonitor: http://hajimari.services:3000
+        hostnames: ["apps.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: "/"
+            backendRefs:
+              - name: hajimari
+                port: 3000
     podAnnotations:
       configmap.reloader.stakater.com/reload: "hajimari-settings"
     persistence:

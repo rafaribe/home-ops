@@ -60,7 +60,7 @@ spec:
               PAPERLESS_OCR_LANGUAGES: por eng
               PAPERLESS_OCR_LANGUAGE: por
               PAPERLESS_OCR_MODE: "redo"
-              PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}' 
+              PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
               # Enable TIKA
               PAPERLESS_TIKA_ENABLED: true
               PAPERLESS_TIKA_ENDPOINT: http://127.0.0.1:9998
@@ -71,7 +71,7 @@ spec:
               USERMAP_UID: "1000"
               USERMAP_GID: "1000"
               # Configure filename format
-              PAPERLESS_FILENAME_FORMAT: '{correspondent}/{document_type}/{created_year}/{created_year}{created_month}{title}'
+              PAPERLESS_FILENAME_FORMAT: "{correspondent}/{document_type}/{created_year}/{created_year}{created_month}{title}"
               # Configure admin user
               PAPERLESS_ADMIN_USER:
                 valueFrom:
@@ -163,6 +163,31 @@ spec:
         tls:
           - hosts:
               - *host
+    route:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          hajimari.io/enable: "true"
+          hajimari.io/icon: mdi:barcode-scan
+          hajimari.io/appName: "Paperless"
+          hajimari.io/group: "Home"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Home
+          gethomepage.dev/name: Paperless
+          gethomepage.dev/icon: paperless.png
+          gethomepage.dev/description: Document OCR Software
+          gethomepage.dev/widget.type: paperlessngx
+          gethomepage.dev/widget.url: http://paperless.services:8000
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PAPERLESS_TOKEN}}` }}"
+        hostnames: ["paperless.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: paperless
+                port: 8000
     persistence:
       data:
         existingClaim: *app

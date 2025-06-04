@@ -123,6 +123,34 @@ spec:
                 service:
                   identifier: server
                   port: http
+    route:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/proxy-body-size: 1000m
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+          nginx.ingress.kubernetes.io/rewrite-target: /$1
+        hostnames: ["spotty.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: "/"
+            backendRefs:
+              - name: web
+                port: 3000
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: "/api"
+            backendRefs:
+              - name: server
+                port: 8080
     persistence:
       mongo:
         existingClaim: *app

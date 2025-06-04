@@ -78,6 +78,19 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+        hostnames: ["movie-roulette.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: movie-roulette
+                port: 4000
     persistence:
       config:
         existingClaim: *app
