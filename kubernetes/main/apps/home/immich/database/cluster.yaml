@@ -41,11 +41,11 @@ spec:
       serverName: &currentCluster immich-v3
       s3Credentials:
         accessKeyId:
-          name: cloudnative-pg-minio
-          key: MINIO_ACCESS_KEY
+          name: minio-s3-credentials
+          key: AWS_ACCESS_KEY_ID
         secretAccessKey:
-          name: cloudnative-pg-minio
-          key: MINIO_SECRET_KEY
+          name: minio-s3-credentials
+          key: AWS_SECRET_ACCESS_KEY
   bootstrap:
     recovery:
       source: &previousCluster immich-v2
@@ -57,8 +57,8 @@ spec:
         endpointURL: http://minio.storage.svc.cluster.local:9000
         s3Credentials:
           accessKeyId:
-            name: cloudnative-pg-minio
-            key: MINIO_ACCESS_KEY
+            name: minio-s3-credentials
+            key: AWS_ACCESS_KEY_ID
           secretAccessKey:
-            name: cloudnative-pg-minio
-            key: MINIO_SECRET_KEY
+            name: minio-s3-credentials
+            key: AWS_SECRET_ACCESS_KEY
