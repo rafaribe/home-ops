@@ -152,6 +152,14 @@ spec:
           - backendRefs:
               - name: plex
                 port: 32400
+            filters:
+              - type: RequestHeaderModifier
+                requestHeaderModifier:
+                  remove: ["Range"]
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /library/streams
       local:
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
@@ -164,16 +172,6 @@ spec:
           - backendRefs:
               - name: plex
                 port: 32400
-      streams:  
-        hostnames: ["plex-local.rafaribe.com"]
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
             filters:
               - type: RequestHeaderModifier
                 requestHeaderModifier:
@@ -182,9 +180,6 @@ spec:
               - path:
                   type: PathPrefix
                   value: /library/streams
-          - backendRefs:
-              - identifier: app
-                port: *port
     persistence:
       config:
         existingClaim: plex
