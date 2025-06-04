@@ -9,9 +9,9 @@ clusterSvcNets:
   - 10.43.0.0/16
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
-talosVersion: v1.9.4
+talosVersion: v1.10.3
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
-kubernetesVersion: v1.32.2
+kubernetesVersion: v1.33.1
 
 additionalApiServerCertSans: &sans
   - ${clusterEndpointIP}
@@ -469,7 +469,7 @@ worker:
       - iommu=pt # PCI Passthrough
       - mitigations=off # Less security, more speed
       - security=none # Less security, more speed
-      - net.ifnames=1 # Enable predictable NIC naming
+      - net.ifnames=1 # Enable predictable NIC namingy
     customization:
       systemExtensions:
         officialExtensions:
