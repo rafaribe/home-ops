@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: authentik
-      version: 2025.4.1
+      version: 2025.4.0
       sourceRef:
         kind: HelmRepository
         name: authentik
@@ -64,30 +64,8 @@ spec:
           hajimari.io/icon: simple-icons:authentik
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
         hosts:
-          - sso.rafaribe.com
-        tls: [hosts: [sso.rafaribe.com]]
-      route:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/icon: authentik.png
-          gethomepage.dev/name: Authentik
-          gethomepage.dev/group: Infrastructure
-          gethomepage.dev/app: authentik
-          gethomepage.dev/description: OIDC User Management
-          gethomepage.dev/widget.type: authentik
-          gethomepage.dev/widget.url: http://authentik-server.security
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"
-          hajimari.io/icon: simple-icons:authentik
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-        hostnames: ["sso.rafaribe.com"]
-        parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: authentik-server
-                port: 9000
+          - &host sso.rafaribe.com
+        tls: [hosts: [*host]]
     prometheus:
       rules:
         enabled: false
