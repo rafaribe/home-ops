@@ -36,29 +36,23 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://cpng-immich-v2/
-      endpointURL: http://minio.storage.svc.cluster.local:9000
-      serverName: &currentCluster immich-v3
+      destinationPath: s3://cnpg-immich/
+      endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
+      serverName: &currentCluster immich-v4
       s3Credentials:
         accessKeyId:
-          name: minio-s3-credentials
+          name: immich-bucket
           key: AWS_ACCESS_KEY_ID
         secretAccessKey:
-          name: minio-s3-credentials
+          name: immich-bucket
           key: AWS_SECRET_ACCESS_KEY
+  # Note: previousCluster needs to be set to the name of the previous
+  # cluster when recovering from an existing cnpg cluster
   bootstrap:
-    recovery:
-      source: &previousCluster immich-v2
+    recovery: immich-v3
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
     - name: *previousCluster
       barmanObjectStore:
-        destinationPath: s3://cpng-immich-v2/
-        endpointURL: http://minio.storage.svc.cluster.local:9000
-        s3Credentials:
-          accessKeyId:
-            name: minio-s3-credentials
-            key: AWS_ACCESS_KEY_ID
-          secretAccessKey:
-            name: minio-s3-credentials
-            key: AWS_SECRET_ACCESS_KEY
+        <<: *barmanObjectStore
+        serverName: *previousCluster
