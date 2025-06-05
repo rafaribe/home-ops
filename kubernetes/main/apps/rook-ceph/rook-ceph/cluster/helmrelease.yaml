@@ -100,7 +100,7 @@ spec:
                         - amd64 # Don't place mons on turing pi nodes because eMMC doesn't have a big disk to avoid MON_DISK_LOW
       storage:
         useAllNodes: false
-        useAllDevices: false"
+        useAllDevices: false
         nodes:
           - name: srv-02
             devices:
@@ -245,3 +245,11 @@ spec:
           volumeBindingMode: Immediate
           parameters:
             region: us-east-1
+        ingress:
+          enabled: false
+          # ingressClassName: internal
+          # annotations:
+          #   external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          # host:
+          #   name: rgw.rafaribe.com
+          #   path: /
