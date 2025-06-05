@@ -92,7 +92,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 80
+            port: &port 80
     route:
       frontend:
         annotations:
@@ -110,7 +110,7 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: 80
+                port: *port
     persistence:
       data:
         existingClaim: *app
