@@ -74,26 +74,6 @@ spec:
         ports:
           http:
             port: 80
-    ingress:
-      app:
-        className: external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Media
-          gethomepage.dev/name: Tautulli
-          gethomepage.dev/icon: tautulli.png
-          gethomepage.dev/description: Plex Stream Monitoring
-          gethomepage.dev/widget.type: tautulli
-          gethomepage.dev/widget.url: http://tautulli.media
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TAUTULLI_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-        hosts:
-          - host: "{{ .Release.Name }}.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     route:
       app:
         annotations:

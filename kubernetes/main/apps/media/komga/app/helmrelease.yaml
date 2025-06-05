@@ -52,27 +52,6 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      app:
-        className: external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Media
-          gethomepage.dev/name: Komga
-          gethomepage.dev/icon: komga.png
-          gethomepage.dev/description: Comic/Ebook Web Reader
-          gethomepage.dev/widget.type: komga
-          gethomepage.dev/widget.url: http://komga.media:8080
-          gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_KOMGA_USERNAME}}` }}"
-          gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_KOMGA_PASSWORD}}` }}"
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-        hosts:
-          - host: "{{ .Release.Name }}.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     route:
       app:
         annotations:

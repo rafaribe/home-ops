@@ -66,18 +66,6 @@ spec:
         ports:
           http:
             port: 4000
-    ingress:
-      app:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-        hosts:
-          - host: movie-roulette.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     route:
       app:
         annotations:

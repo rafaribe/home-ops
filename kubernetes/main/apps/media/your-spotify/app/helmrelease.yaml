@@ -101,28 +101,6 @@ spec:
         ports:
           http:
             port: 27017
-    ingress:
-      app:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-          nginx.ingress.kubernetes.io/proxy-body-size: 1000m
-          nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-          nginx.ingress.kubernetes.io/rewrite-target: /$1
-        hosts:
-          - host: spotty.rafaribe.com
-            paths:
-              - path: /?(.*)
-                pathType: Prefix
-                service:
-                  identifier: web
-                  port: http
-              - path: /api/?(.*)
-                pathType: Prefix
-                service:
-                  identifier: server
-                  port: http
     route:
       app:
         annotations:

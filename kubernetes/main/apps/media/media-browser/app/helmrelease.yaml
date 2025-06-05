@@ -71,22 +71,6 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      app:
-        enabled: true
-        className: internal
-        annotations:
-          hajimari.io/icon: mdi:folder-play-outline
-        hosts:
-          - host: &host "media.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
     route:
       app:
         annotations:

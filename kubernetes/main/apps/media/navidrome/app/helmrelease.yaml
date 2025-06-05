@@ -79,27 +79,6 @@ spec:
           http:
             port: *port
 
-    ingress:
-      app:
-        className: "external"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Listen to music
-          gethomepage.dev/group: Media
-          gethomepage.dev/icon: sh-navidrome.png
-          gethomepage.dev/name: Navidrome
-        hosts:
-          - host: &host navidrome.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
-
     route:
       app:
         annotations:
