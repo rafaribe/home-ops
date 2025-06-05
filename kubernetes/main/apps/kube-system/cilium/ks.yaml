@@ -80,8 +80,8 @@ spec:
       CLUSTER: main
       EXTERNAL_DOMAIN: external
       INTERNAL_DOMAIN: internal
-      SVC_GATEWAY_EXTERNAL: 10.0.1.118
-      SVC_GATEWAY_INTERNAL: 10.0.1.119
+      LB_GATEWAY_EXTERNAL: 10.0.1.100
+      LB_GATEWAY_INTERNAL: 10.0.1.101
       # Old values, kept until I remember everything
       #LB_NGINX_EXTERNAL: 10.0.1.100
       #LB_NGINX_INTERNAL: 10.0.1.101
