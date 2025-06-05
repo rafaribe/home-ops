@@ -76,25 +76,10 @@ spec:
             port: 8080
             protocol: HTTP
             appProtocol: http
-    ingress:
-      main:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          nginx.ingress.kubernetes.io/proxy-body-size: 4096m
-        hosts:
-          - host: *host
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: gotosocial
-                  port: http
     route:
       main:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          nginx.ingress.kubernetes.io/proxy-body-size: 4096m
         hostnames: ["social.rafaribe.com"]
         parentRefs:
           - name: external
