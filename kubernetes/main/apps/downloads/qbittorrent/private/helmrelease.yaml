@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name qbittorrent-private
+  name: &app qbittorrent-private
 spec:
   interval: 30m
   chart:
@@ -27,7 +27,7 @@ spec:
 
         containers:
           app:
-            nameOverride: *name
+            nameOverride: *app
             image:
               repository: ghcr.io/rafaribe/qbittorrent-beta
               tag: 5.1.0@sha256:ed54f63b5bfccd8687661cf37340d442040d01035c045bfb294ee40350282120
@@ -136,7 +136,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: *name
+        existingClaim: *app
         advancedMounts:
           qbittorrent:
             app:
