@@ -59,6 +59,7 @@ data:
   docker.yaml: ""
   kubernetes.yaml: |
     mode: cluster
+    gateway: true
   services.yaml: |
     - Network:
       - Cloudflared:
@@ -119,7 +120,7 @@ data:
             username: {{HOMEPAGE_VAR_PROXMOX_API_USER}}
             password: {{HOMEPAGE_VAR_PROXMOX_API_USER_KEY}}
             node: router
-        
+
   settings.yaml: |
     title: Dashboard
     favicon: https://w7.pngwing.com/pngs/848/762/png-transparent-computer-icons-home-house-home-angle-building-rectangle-thumbnail.png
