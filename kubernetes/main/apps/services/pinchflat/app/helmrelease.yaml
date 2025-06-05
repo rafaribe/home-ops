@@ -76,22 +76,10 @@ spec:
 
     service:
       app:
-        controller: pinchflat
+        controller: &app pinchflat
         ports:
           http:
-            port: *port
-    ingress:
-      app:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        className: internal
-        hosts:
-          - host: "{{ .Release.Name }}.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+            port: &port 80
     route:
       app:
         annotations:
@@ -103,8 +91,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: pinchflat
-                port: 80
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: pinchflat

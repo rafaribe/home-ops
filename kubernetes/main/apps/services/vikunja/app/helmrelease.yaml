@@ -68,11 +68,9 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8080
-    ingress:
+            port: &port 8080
+    route:
       app:
-        enabled: true
-        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           hajimari.io/icon: mdi:format-list-checks
@@ -82,17 +80,16 @@ spec:
           gethomepage.dev/group: Services
           gethomepage.dev/icon: vikunja.png
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (vikunja)
-        hosts:
-          - host: &host "vikunja.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+            app.kubernetes.io/name in (*app)
+        hostnames: ["vikunja.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         enabled: true

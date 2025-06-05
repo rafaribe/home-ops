@@ -67,20 +67,19 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
         annotations:
           external-dns.alpha.kubernetes.io/target: "internal.rafaribe.com"
-         # authentik.home.arpa/enabled: "true"
-          #nginx.ingress.kubernetes.io/auth-signin: "https://n8n.rafaribe.com/outpost.goauthentik.io/start?rd=$scheme://$http_host$escaped_request_uri"
-        className: internal
-        hosts:
-          - host: *host
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: [*host]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: n8n
+                port: *port
 
     persistence:
       config:

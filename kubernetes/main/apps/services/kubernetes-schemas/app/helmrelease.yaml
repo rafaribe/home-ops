@@ -48,24 +48,20 @@ spec:
                 enabled: true
     service:
       main:
-        controller: kubernetes-schemas
+        controller: &app kubernetes-schemas
         ports:
           http:
-            port: 8080
-    ingress:
+            port: &port 8080
+    route:
       main:
-        enabled: true
-        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-        hosts:
-          - host: &host schemas.rafaribe.com
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["schemas.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port

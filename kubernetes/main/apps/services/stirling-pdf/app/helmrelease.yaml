@@ -84,15 +84,12 @@ spec:
 
     service:
       app:
-        controller: app
+        controller: &app app
         ports:
           http:
-            port: 8080
-
-    ingress:
+            port: &port 8080
+    route:
       app:
-        enabled: true
-        className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/icon: mdi-file-pdf
@@ -102,11 +99,13 @@ spec:
           gethomepage.dev/group: Services
           gethomepage.dev/icon: https://cdn-icons-png.flaticon.com/512/4208/4208479.png
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (pdfding)
-        hosts:
-          - host: pdf.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+            app.kubernetes.io/name in (*app)
+        hostnames: ["pdf.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port

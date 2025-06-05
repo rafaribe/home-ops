@@ -118,24 +118,23 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: hoarder
+        controller: &app hoarder
         ports:
           http:
-            port: 3000
+            port: &port 3000
       chrome:
-        controller: hoarder
+        controller: *app
         ports:
           http:
             port: 9222
       meilisearch:
-        controller: hoarder
+        controller: *app
         ports:
           http:
             port: 7700
 
-    ingress:
+    route:
       app:
-        className: "internal"
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/icon: mdi:archive-outline
@@ -145,14 +144,16 @@ spec:
           gethomepage.dev/group: Services
           gethomepage.dev/icon: https://media.invisioncic.com/u329766/monthly_2024_05/hoarder.png.cb75b7347d47989bd0c3e65b9e613700.png
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (hoarder)
-        hosts:
-          - host: hoarder.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+            app.kubernetes.io/name in (*app)
+        hostnames: ["hoarder.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       config:

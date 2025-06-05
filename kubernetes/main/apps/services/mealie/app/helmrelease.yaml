@@ -50,17 +50,13 @@ spec:
 
     service:
       app:
-        controller: mealie
+        controller: *app
         ports:
           http:
-            port: &port 9000
-
-    ingress:
+            port: *port
+    route:
       app:
-        enabled: true
-        className: internal
         annotations:
-          # Homepage
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: Mealie
           gethomepage.dev/icon: mealie.svg
@@ -71,24 +67,20 @@ spec:
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_MEALIE_API_KEY}}`}}"
           gethomepage.dev/widget.version: "2"
           gethomepage.dev/widget.fields: '["recipes", "users", "categories", "tags"]'
-          # Hajimari 
           hajimari.io/enable: "true"
           hajimari.io/icon: "food"
           hajimari.io/appName: "Mealie"
           hajimari.io/group: "Home"
-          # External DNS
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: &host "mealie.rafaribe.com"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["mealie.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       data:

@@ -69,23 +69,23 @@ spec:
 
     service:
       app:
-        controller: searxng
+        controller: &app searxng
         ports:
           http:
-            port: *httpPort
-
-    ingress:
+            port: &port 8080
+    route:
       app:
-        className: "internal"
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: search.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["search.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       config:

@@ -84,18 +84,17 @@ spec:
         #     fsGroupChangePolicy: OnRootMismatch
     service:
       backend:
-        controller: kitchenowl
+        controller: *app
         ports:
           http:
-            port: 5000
+            port: &port 5000
       frontend:
-        controller: kitchenowl
+        controller: *app
         ports:
           http:
             port: 80
-    ingress:
+    route:
       frontend:
-        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           gethomepage.dev/enabled: "true"
@@ -103,13 +102,15 @@ spec:
           gethomepage.dev/group: Home
           gethomepage.dev/icon: sh-kitchenowl.png
           gethomepage.dev/name: Kitchen Owl
-        hosts:
-          - host: &host "kitchenowl.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: frontend
-                  port: http
+        hostnames: ["kitchenowl.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 80
     persistence:
       data:
         existingClaim: *app

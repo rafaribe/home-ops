@@ -75,33 +75,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: *port
-    ingress:
-      app:
-        enabled: true
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "link"
-          hajimari.io/appName: "Linkding"
-          hajimari.io/group: "Home"
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: Linkding
-          gethomepage.dev/description: Bookmark manager that is designed be to be minimal and fast
-          gethomepage.dev/group: Services
-          gethomepage.dev/icon: linkding.png
-          gethomepage.dev/siteMonitor: http://linkding.services:9090
-        hosts:
-          - host: links.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - links.rafaribe.com
+            port: &port 9090
     route:
       app:
         annotations:
@@ -123,5 +97,5 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: linkding
-                port: 9090
+              - name: *app
+                port: *port

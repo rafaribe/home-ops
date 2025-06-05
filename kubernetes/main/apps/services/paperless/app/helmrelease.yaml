@@ -132,37 +132,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8000
-
-    ingress:
-      app:
-        className: "internal"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-          # Hajimari
-          hajimari.io/enable: "true"
-          hajimari.io/icon: mdi:barcode-scan
-          hajimari.io/appName: "Paperless"
-          hajimari.io/group: "Home"
-          # Homepage
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Home
-          gethomepage.dev/name: Paperless
-          gethomepage.dev/icon: paperless.png
-          gethomepage.dev/description: Document OCR Software
-          gethomepage.dev/widget.type: paperlessngx
-          gethomepage.dev/widget.url: http://paperless.services:8000
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PAPERLESS_TOKEN}}` }}"
-        hosts:
-          - host: &host paperless.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+            port: &port 8000
     route:
       app:
         annotations:
@@ -186,8 +156,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: paperless
-                port: 8000
+              - name: *app
+                port: *port
     persistence:
       data:
         existingClaim: *app

@@ -65,10 +65,9 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8080
-    ingress:
+            port: &port 8080
+    route:
       app:
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Home
@@ -80,14 +79,15 @@ spec:
           gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_LUBELOG_USERNAME}}` }}"
           gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_LUBELOG_PASSWORD}}` }}"
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: "lubelog.rafaribe.com"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["lubelog.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       app:
         existingClaim: lubelog-v2

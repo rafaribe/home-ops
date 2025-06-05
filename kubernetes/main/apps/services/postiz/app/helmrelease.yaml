@@ -72,12 +72,9 @@ spec:
         controller: *app
         ports:
           http:
-            port: 5000
-
-    ingress:
+            port: &port 5000
+    route:
       main:
-        enabled: true
-        className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/icon: mdi:account-group
@@ -87,17 +84,16 @@ spec:
           gethomepage.dev/group: Services
           gethomepage.dev/icon: https://cms.postiz.com/wp-content/uploads/2024/06/newfav.png
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (postiz)
-        hosts:
-          - host: &host "postiz.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+            app.kubernetes.io/name in (*app)
+        hostnames: ["postiz.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       data:
