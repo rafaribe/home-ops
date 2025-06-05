@@ -85,10 +85,8 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [2000]
         seccompProfile: { type: RuntimeDefault }
-    ingress:
+    route:
       main:
-        enabled: true
-        className: internal
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/appName: "Minio Console"
@@ -102,17 +100,16 @@ spec:
           gethomepage.dev/name: Minio
           gethomepage.dev/app: minio
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: minio.rafaribe.com
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
+        hostnames: ["minio.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 9001
       s3:
-        enabled: true
-        className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/enable: "false"
@@ -122,14 +119,15 @@ spec:
           nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
-        hosts:
-          - host: s3.rafaribe.com
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: api
+        hostnames: ["s3.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 9000
     serviceMonitor:
       main:
         serviceName: minio
