@@ -48,6 +48,7 @@ spec:
               tag: v10.19.4@sha256:91e04eaaa1ba1eac6b8e410d6f7b340e1ea0450d48ccbb52ec67ce6faa3672c5
             env:
               TZ: Europe/Lisbon
+              PORT: &port 8000
             resources:
               requests:
                 cpu: 25m
@@ -63,10 +64,9 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8000
-    ingress:
+            port: &port 8000
+    route:
       app:
-        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           gethomepage.dev/enabled: "true"
@@ -75,17 +75,15 @@ spec:
           gethomepage.dev/icon: https://repocloud.io/static/apps/cyberchef/assets/logo.png
           gethomepage.dev/description: The Cyber Swiss Army Knife
           gethomepage.dev/siteMonitor: http://cyberchef.services:8000
-        hosts:
-          - host: &host "{{ .Release.Name }}.rafaribe.com"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["cyberchef.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       tmp:

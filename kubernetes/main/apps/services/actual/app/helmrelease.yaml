@@ -35,7 +35,7 @@ spec:
               repository: ghcr.io/actualbudget/actual-server
               tag: 25.6.1
             env:
-              ACTUAL_PORT: &httpPort 5006
+              ACTUAL_PORT: &port 5006
             probes:
               liveness:
                 enabled: true
@@ -45,7 +45,7 @@ spec:
                 spec:
                   httpGet:
                     path: /
-                    port: *httpPort
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -62,26 +62,21 @@ spec:
         controller: actual
         ports:
           http:
-            port: *httpPort
+            port: *port
 
-    ingress:
+    route:
       app:
-        className: "internal"
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Home
-          gethomepage.dev/name: Actual
-          gethomepage.dev/icon: actual-budget.png
-          gethomepage.dev/description: Finance Manager
-          gethomepage.dev/siteMonitor: http://actual.services:5006
-        hosts:
-          - host: actual.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["actual.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: actual
+                port: *port
 
     persistence:
       data:

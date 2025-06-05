@@ -81,11 +81,10 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: atuin
+        controller: *app
         ports:
           http:
-            primary: true
-            port: *port
+            port: &port 80
           metrics:
             port: *metricsPort
     serviceMonitor:
@@ -97,19 +96,6 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
-    ingress:
-      app:
-        annotations:
-          hajimari.io/icon: mdi:powershell
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        className: internal
-        hosts:
-          - host: &host "sh.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     route:
       app:
         annotations:
@@ -122,8 +108,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: atuin
-                port: 80
+              - name: *app
+                port: *port
     persistence:
       config:
         type: emptyDir

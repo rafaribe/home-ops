@@ -64,28 +64,28 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: bytestash
+        controller: *app
         ports:
           http:
-            port: 5000
-    ingress:
+            port: &port 5000
+    route:
       app:
-        enabled: true
-        className: external
-        annotations: 
+        annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Services
           gethomepage.dev/name: Bytestash
           gethomepage.dev/icon: https://raw.githubusercontent.com/jordan-dalby/ByteStash/refs/heads/main/client/public/logo512.png
           gethomepage.dev/description: Snippet manager
-        hosts:
-          - host: "bytestash.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["bytestash.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       data:
         existingClaim: *app
