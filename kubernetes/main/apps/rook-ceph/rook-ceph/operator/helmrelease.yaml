@@ -41,11 +41,7 @@ spec:
       enableVolumeGroupSnapshot: false # TODO: enable this when v1beta1 CRDs are available
       kubeletDirPath: /var/lib/kubelet
       enableCSIHostNetwork: true
-      # pluginTolerations:
-      #   - effect: "NoExecute"
-      #     operator: "Exists"
-      #   - effect: "NoSchedule"
-      #     operator: "Exists"
+
       enableLiveness: true
       serviceMonitor:
         enabled: true
