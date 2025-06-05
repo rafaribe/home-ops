@@ -60,6 +60,7 @@ data:
   kubernetes.yaml: |
     mode: cluster
     gateway: true
+    ingress: false
   services.yaml: |
     - Network:
       - Cloudflared:
