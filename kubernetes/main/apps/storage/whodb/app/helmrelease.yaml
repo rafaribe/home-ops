@@ -59,17 +59,16 @@ spec:
         ports:
           http:
             port: 8080
-    ingress:
+    route:
       main:
-        enabled: true
-        className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: "whodb.rafaribe.com"
-            paths:
-              - path: "/"
-                pathType: Prefix
-                service:
-                  identifier: whodb
-                  port: 8080
+        hostnames: ["whodb.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: whodb
+                port: 8080
