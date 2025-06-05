@@ -54,8 +54,8 @@ spec:
         endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
         s3Credentials:
           accessKeyId:
-            name: cloudnative-pg
+            name: cloudnative-pg-bucket
             key: AWS_ACCESS_KEY_ID
           secretAccessKey:
-            name: cloudnative-pg
+            name: cloudnative-pg-bucket
             key: AWS_SECRET_ACCESS_KEY
