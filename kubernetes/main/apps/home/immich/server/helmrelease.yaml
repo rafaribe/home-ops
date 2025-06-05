@@ -122,7 +122,6 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.rafaribe.com"
           #Homepage
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media

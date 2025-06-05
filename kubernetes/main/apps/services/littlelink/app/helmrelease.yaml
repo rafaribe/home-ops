@@ -69,7 +69,6 @@ spec:
     route:
       main:
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.rafaribe.com"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Services
           gethomepage.dev/name: Littlelink
