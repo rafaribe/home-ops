@@ -73,13 +73,16 @@ spec:
     nodeExporter:
       enabled: false
     prometheus:
-      ingress:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        enabled: true
-        ingressClassName: internal
-        hosts: ["prometheus.rafaribe.com"]
-        pathType: Prefix
+      route:
+        main:
+          enabled: true
+          annotations:
+            external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
+          parentRefs:
+            - name: internal
+              namespace: kube-system
+              sectionName: https
       prometheusSpec:
         scrapeInterval: 1m # Must match interval in Grafana Helm chart
         podMonitorSelectorNilUsesHelmValues: false

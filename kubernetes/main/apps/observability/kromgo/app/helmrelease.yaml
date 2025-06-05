@@ -83,19 +83,20 @@ spec:
             port: *port
           health:
             port: *hport
-    ingress:
+    route:
       app:
-        className: "external"
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
-        hosts:
-          - host: kromgo.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-
+        hostnames:
+          - "{{ .Release.Name }}.rafaribe.com"
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
     persistence:
       config-file:
         type: configMap
