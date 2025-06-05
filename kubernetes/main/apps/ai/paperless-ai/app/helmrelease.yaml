@@ -76,25 +76,6 @@ spec:
         ports:
           http:
             port: &port 3000
-    ingress:
-      app:
-        enabled: true
-        className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Home
-          gethomepage.dev/name: Paperless AI
-          gethomepage.dev/icon: paperless.png
-          gethomepage.dev/description: AI Setup for Paperless
-          gethomepage.dev/siteMonitor: http://paperless-ai.ai:3000
-        hosts:
-          - host: &host "paperless-ai.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     route:
       app:
         annotations:

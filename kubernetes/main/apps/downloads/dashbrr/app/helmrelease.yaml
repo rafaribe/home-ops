@@ -86,10 +86,10 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           # gethomepage.dev/enabled: "true"
           # gethomepage.dev/group: Downloads
           # gethomepage.dev/name: dashbrr
@@ -98,18 +98,6 @@ spec:
           # gethomepage.dev/widget.type: dashbrr
           # gethomepage.dev/widget.url: http://dashbrr.downloads
           # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_DASHBRR_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: "{{ .Release.Name }}.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-    route:
-      app:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hostnames: ["{{ .Release.Name }}.rafaribe.com"]
         parentRefs:
           - name: internal

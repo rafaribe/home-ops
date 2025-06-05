@@ -50,7 +50,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 5656
+            port: &port 5656
     ingress:
       app:
         className: internal
@@ -68,6 +68,24 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Kapowarr
+          gethomepage.dev/icon: https://repository-images.githubusercontent.com/521043428/4bc67940-e94d-4672-ab0c-674e8fed16ce
+          gethomepage.dev/description: Comic Downloads
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        hostnames: ["{{ .Release.Name }}.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: *app
