@@ -53,7 +53,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: *port
+            port: &port 9000
     route:
       app:
         annotations:
