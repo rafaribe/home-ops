@@ -91,19 +91,19 @@ spec:
             enabled: true
             port: *bittorrentPort
             protocol: TCP
-
-    ingress:
+    route:
       app:
-        className: "internal"
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: qbp.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["qbp.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true

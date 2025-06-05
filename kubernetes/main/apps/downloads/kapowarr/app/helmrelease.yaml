@@ -51,23 +51,6 @@ spec:
         ports:
           http:
             port: &port 5656
-    ingress:
-      app:
-        className: internal
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Downloads
-          gethomepage.dev/name: Kapowarr
-          gethomepage.dev/icon: https://repository-images.githubusercontent.com/521043428/4bc67940-e94d-4672-ab0c-674e8fed16ce
-          gethomepage.dev/description: Comic Downloads
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: "{{ .Release.Name }}.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     route:
       app:
         annotations:

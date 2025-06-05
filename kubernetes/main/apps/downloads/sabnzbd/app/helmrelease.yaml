@@ -110,7 +110,7 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
         annotations:
           gethomepage.dev/enabled: "true"
@@ -119,17 +119,16 @@ spec:
           gethomepage.dev/icon: sabnzbd.png
           gethomepage.dev/description: NZB Download Client
           gethomepage.dev/widget.type: sabnzbd
-          gethomepage.dev/widget.url: http://sabnzbd.downloads:80
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SABNZBD_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        className: internal
-        hosts:
-          - host: sab.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+          external-dns.alpha.kubernetes.io/target: &target internal.rafaribe.com
+        hostnames: ["sab.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: sabnzbd

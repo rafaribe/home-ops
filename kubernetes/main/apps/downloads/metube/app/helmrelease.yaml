@@ -56,7 +56,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8081
+            port: &port 8081
     ingress:
       app:
         className: internal
@@ -69,6 +69,19 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        hostnames: ["{{ .Release.Name }}.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: *app

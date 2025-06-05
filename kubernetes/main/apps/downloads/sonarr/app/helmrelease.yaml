@@ -96,26 +96,19 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
-          # gethomepage.dev/enabled: "true"
-          # gethomepage.dev/group: Downloads
-          # gethomepage.dev/name: Sonarr
-          # gethomepage.dev/icon: sonarr.png
-          # gethomepage.dev/description: TV Shows Downloads
-          # gethomepage.dev/widget.type: sonarr
-          # gethomepage.dev/widget.url: http://sonarr.media
-          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARR_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: "sonarr.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+          external-dns.alpha.kubernetes.io/target: &target internal.rafaribe.com
+        hostnames: ["sonarr.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         enabled: true

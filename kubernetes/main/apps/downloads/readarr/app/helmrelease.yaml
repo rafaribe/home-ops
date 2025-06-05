@@ -77,9 +77,8 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads
@@ -89,14 +88,16 @@ spec:
           gethomepage.dev/widget.type: readarr
           gethomepage.dev/widget.url: http://readarr.downloads
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_READARR_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: "readarr.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+          external-dns.alpha.kubernetes.io/target: &target internal.rafaribe.com
+        hostnames: ["readarr.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: *app

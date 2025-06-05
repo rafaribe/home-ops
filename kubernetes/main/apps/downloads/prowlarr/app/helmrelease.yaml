@@ -73,9 +73,8 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
           # gethomepage.dev/enabled: "true"
           # gethomepage.dev/group: Downloads
@@ -85,15 +84,16 @@ spec:
           # gethomepage.dev/widget.type: prowlarr
           # gethomepage.dev/widget.url: http://prowlarr.downloads
           # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PROWLARR_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: "prowlarr.rafaribe.com"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
+          external-dns.alpha.kubernetes.io/target: &target internal.rafaribe.com
+        hostnames: ["prowlarr.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: prowlarr

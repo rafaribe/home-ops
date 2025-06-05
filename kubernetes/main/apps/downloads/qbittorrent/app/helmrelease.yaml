@@ -136,18 +136,19 @@ spec:
           http:
             port: *port
 
-    ingress:
+    route:
       app:
-        className: "internal"
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: qb.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+          external-dns.alpha.kubernetes.io/target: &target internal.rafaribe.com
+        hostnames: ["qb.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: qbittorrent
+                port: 8080
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true

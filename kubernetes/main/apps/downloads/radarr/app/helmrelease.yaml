@@ -95,26 +95,19 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
-          # gethomepage.dev/enabled: "true"
-          # gethomepage.dev/group: Downloads
-          # gethomepage.dev/name: Radarr
-          # gethomepage.dev/icon: radarr.png
-          # gethomepage.dev/description: Movie Downloads
-          # gethomepage.dev/widget.type: radarr
-          # gethomepage.dev/widget.url: http://radarr.downloads
-          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_RADARR_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: "radarr.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+          external-dns.alpha.kubernetes.io/target: &target internal.rafaribe.com
+        hostnames: ["radarr.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: *app
