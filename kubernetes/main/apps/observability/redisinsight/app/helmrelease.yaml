@@ -59,7 +59,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 5540
+            port: &port 5540
     ingress:
       app:
         className: internal
@@ -77,6 +77,24 @@ spec:
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Observability
+          gethomepage.dev/name: Redis Insight
+          gethomepage.dev/icon: https://raw.githubusercontent.com/RedisInsight/RedisInsight/main/resources/logo.svg
+          gethomepage.dev/description: Developer GUI for Redis
+        hostnames: ["{{ .Release.Name }}.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       data:
         existingClaim: *app
