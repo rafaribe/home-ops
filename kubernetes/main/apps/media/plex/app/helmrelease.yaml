@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: plex
+  name: &app plex
 spec:
   interval: 30m
   chart:
@@ -88,7 +88,7 @@ spec:
           lbipam.cilium.io/ips: ${LB_PLEX}
         ports:
           http:
-            port: 32400
+            port: &port 32400
     route:
       app:
         annotations:
@@ -110,8 +110,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: plex
-                port: 32400
+              - name: *app
+                port: *port
             filters:
               - type: RequestHeaderModifier
                 requestHeaderModifier:
@@ -120,9 +120,11 @@ spec:
               - path:
                   type: PathPrefix
                   value: /library/streams
+          - backendRefs:
+              - name: *app
+                port: *port
       local:
         annotations:
-
         hostnames: ["plex-local.rafaribe.com"]
         parentRefs:
           - name: internal
@@ -130,8 +132,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: plex
-                port: 32400
+              - name: *app
+                port: *port
             filters:
               - type: RequestHeaderModifier
                 requestHeaderModifier:
@@ -140,6 +142,9 @@ spec:
               - path:
                   type: PathPrefix
                   value: /library/streams
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: plex
