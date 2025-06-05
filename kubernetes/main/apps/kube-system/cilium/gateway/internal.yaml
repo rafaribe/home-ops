@@ -11,8 +11,6 @@ spec:
   addresses:
     - type: IPAddress
       value: ${LB_GATEWAY_INTERNAL}
-    - type: IPAddress
-      value: ::ffff:${LB_GATEWAY_INTERNAL}
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
