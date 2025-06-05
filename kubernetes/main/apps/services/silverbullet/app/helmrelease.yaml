@@ -13,7 +13,7 @@ spec:
       version: 4.0.1
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: bjw-s-helm-charts
         namespace: flux-system
       interval: 15m
   maxHistory: 3
@@ -28,28 +28,17 @@ spec:
     keepHistory: false
   values:
     defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+      nodeSelector:
+        kubernetes.io/hostname: saka
+
     controllers:
       main:
-        strategy: RollingUpdate
-        annotations:
-          reloader.stakater.com/auto: "true"
+        strategy: Recreate
         containers:
           silverbullet:
             image:
               repository: docker.io/zefhemel/silverbullet
               tag: "0.10.4"
-            env:
-              TZ: ${TIMEZONE}
-              PUID: 1000
-              GUID: 1000
-              SB_NAME: "rafaribe's notes"
             envFrom:
               - secretRef:
                   name: *app
@@ -63,14 +52,13 @@ spec:
 
     service:
       main:
-        controller: &app main
+        controller: main
         ports:
           http:
             port: &port 3000
+
     route:
       main:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hostnames: ["notes.rafaribe.com"]
         parentRefs:
           - name: internal
@@ -79,10 +67,12 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: *port
+                port: 3000
 
     persistence:
       space:
-        existingClaim: *app
+        enabled: true
+        type: hostPath
+        hostPath: /home/player/kube_data/silverbullet
         globalMounts:
           - path: /space
