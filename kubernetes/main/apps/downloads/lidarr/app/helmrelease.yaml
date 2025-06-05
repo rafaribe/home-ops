@@ -92,10 +92,8 @@ spec:
         ports:
           http:
             port: *port
-
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Automatic music downloads
@@ -103,16 +101,15 @@ spec:
           gethomepage.dev/icon: sh-lidarr.svg
           gethomepage.dev/name: Lidarr
           external-dns.alpha.kubernetes.io/target: "internal.rafaribe.com"
-        hosts:
-          - host: &host "lidarr.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: *port
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["lidarr.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       config:
