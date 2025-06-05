@@ -52,10 +52,10 @@ spec:
       barmanObjectStore:
         destinationPath: s3://cloudnative-pg/
         endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
-      s3Credentials:
-        accessKeyId:
-          name: cloudnative-pg
-          key: AWS_ACCESS_KEY_ID
-        secretAccessKey:
-          name: cloudnative-pg
-          key: AWS_SECRET_ACCESS_KEY
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg
+            key: AWS_ACCESS_KEY_ID
+          secretAccessKey:
+            name: cloudnative-pg
+            key: AWS_SECRET_ACCESS_KEY
