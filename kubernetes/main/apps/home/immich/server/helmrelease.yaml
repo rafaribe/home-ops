@@ -119,17 +119,10 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.rafaribe.com"
-          nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
-          nginx.ingress.kubernetes.io/proxy-body-size: "0"
-          nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
-          nginx.ingress.kubernetes.io/upstream-hash-by: "$client_ip"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            chunked_transfer_encoding off;
           #Homepage
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media
@@ -140,17 +133,15 @@ spec:
           gethomepage.dev/widget.url: "http://immich-server.home:2283"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_IMMICH_API_KEY}}` }}"
           gethomepage.dev/widget.version: "2"
-        hosts:
-          - host: &host "photos.rafaribe.com"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["photos.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       library:
         type: nfs

@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: node-red
+  name: &app node-red
 spec:
   interval: 30m
   chart:
@@ -52,18 +52,19 @@ spec:
         controller: node-red
         ports:
           http:
-            port: 1880
+            port: &port 1880
 
-    ingress:
+    route:
       app:
-        className: "internal"
-        hosts:
-          - host: nodered.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["nodered.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       data:
