@@ -1,28 +1,36 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: rook-ceph-cluster
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: v1.17.3
+  url: oci://ghcr.io/rook/rook-ceph-cluster
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rook-ceph-cluster
 spec:
-  interval: 15m
-  chart:
-    spec:
-      chart: rook-ceph-cluster
-      version: v1.17.3
-      sourceRef:
-        kind: HelmRepository
-        name: rook-ceph
-        namespace: flux-system
+  interval: 1h
+  timeout: 15m
+  chartRef:
+    kind: OCIRepository
+    name: rook-ceph-cluster
   install:
-    createNamespace: true
-    remediation: # perform remediation when helm install fails
-      retries: 6
+    remediation:
+      retries: -1
   upgrade:
-    remediation: # perform remediation when helm upgrade fails
-      retries: 6
-      remediateLastFailure: true # remediate the last failure, when no retries remain
     cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
     toolbox:
       enabled: true
@@ -90,30 +98,6 @@ spec:
                       operator: In
                       values:
                         - amd64 # Don't place mons on turing pi nodes because eMMC doesn't have a big disk to avoid MON_DISK_LOW
-    ingress:
-      dashboard:
-        ingressClassName: "internal"
-        annotations:
-          # Hajimari
-          hajimari.io/appName: "Rook"
-          hajimari.io/icon: mdi:chess-rook
-          # External DNS
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-          # Homepage
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Infrastructure
-          gethomepage.dev/name: Ceph
-          gethomepage.dev/icon: https://miro.medium.com/v2/resize:fit:820/1*gJQ7_l2Q03aX7cYeCYpiFQ.png
-          gethomepage.dev/description: Ceph Dashboard
-          gethomepage.dev/siteMonitor: http://rook-ceph-mgr-dashboard.rook-ceph:7000
-          gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (ceph-mgr)
-        host:
-          name: &host "rook.rafaribe.com"
-          path: "/"
-        tls:
-          - hosts:
-              - *host
       storage:
         useAllNodes: false
         useAllDevices: false"
@@ -200,7 +184,7 @@ spec:
               name: data0
           metadataServer:
             activeCount: 1
-            activeStandby: true 
+            activeStandby: true
             priorityClassName: system-cluster-critical
             resources:
               requests:
@@ -262,10 +246,10 @@ spec:
           parameters:
             region: us-east-1
         ingress:
-          enabled: true
-          ingressClassName: internal
-          annotations:
-            external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-          host:
-            name: rgw.rafaribe.com
-            path: /
+          enabled: false
+          # ingressClassName: internal
+          # annotations:
+          #   external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          # host:
+          #   name: rgw.rafaribe.com
+          #   path: /
