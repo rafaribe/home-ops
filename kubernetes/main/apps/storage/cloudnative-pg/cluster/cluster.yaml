@@ -34,28 +34,28 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://cpng-home-ops-storage/
-      endpointURL: http://minio.storage.svc.cluster.local:9000
+      destinationPath: s3://cloudnative-pg/
+      endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
       serverName: &currentCluster home-ops-storage-v4
       s3Credentials:
         accessKeyId:
-          name: cloudnative-pg-minio
-          key: MINIO_ACCESS_KEY
+          name: cloudnative-pg
+          key: AWS_ACCESS_KEY_ID
         secretAccessKey:
-          name: cloudnative-pg-minio
-          key: MINIO_SECRET_KEY
+          name: cloudnative-pg
+          key: AWS_SECRET_ACCESS_KEY
   bootstrap:
     recovery:
       source: &previousCluster home-ops-storage-v3
   externalClusters:
     - name: *previousCluster
       barmanObjectStore:
-        destinationPath: s3://cpng-home-ops-storage/
-        endpointURL: http://minio.storage.svc.cluster.local:9000
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg-minio
-            key: MINIO_ACCESS_KEY
-          secretAccessKey:
-            name: cloudnative-pg-minio
-            key: MINIO_SECRET_KEY
+        destinationPath: s3://cloudnative-pg/
+        endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg
+          key: AWS_ACCESS_KEY_ID
+        secretAccessKey:
+          name: cloudnative-pg
+          key: AWS_SECRET_ACCESS_KEY
