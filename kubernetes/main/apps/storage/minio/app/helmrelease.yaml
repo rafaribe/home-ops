@@ -99,7 +99,7 @@ spec:
           gethomepage.dev/icon: sh-minio.svg
           gethomepage.dev/name: Minio
           gethomepage.dev/app: minio
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+
         hostnames: ["minio.rafaribe.com"]
         parentRefs:
           - name: internal
@@ -111,7 +111,6 @@ spec:
                 port: 9001
       s3:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/enable: "false"
           nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"

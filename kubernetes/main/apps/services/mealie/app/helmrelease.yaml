@@ -71,7 +71,7 @@ spec:
           hajimari.io/icon: "food"
           hajimari.io/appName: "Mealie"
           hajimari.io/group: "Home"
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+
         hostnames: ["mealie.rafaribe.com"]
         parentRefs:
           - name: internal

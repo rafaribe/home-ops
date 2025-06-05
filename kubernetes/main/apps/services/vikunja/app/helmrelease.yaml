@@ -72,7 +72,6 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           hajimari.io/icon: mdi:format-list-checks
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: Vikunja

@@ -136,7 +136,6 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/enable: "true"
           hajimari.io/icon: mdi:barcode-scan
           hajimari.io/appName: "Paperless"

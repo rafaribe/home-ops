@@ -59,7 +59,6 @@ spec:
     route:
       main:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/enable: "true"
           hajimari.io/appName: "Netboot.xyz"
           hajimari.io/info: "Network boot system"

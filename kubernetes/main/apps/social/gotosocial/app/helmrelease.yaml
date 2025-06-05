@@ -79,7 +79,7 @@ spec:
     route:
       main:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+
         hostnames: ["social.rafaribe.com"]
         parentRefs:
           - name: external

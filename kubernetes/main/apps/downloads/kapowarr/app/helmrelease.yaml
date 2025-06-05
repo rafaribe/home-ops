@@ -59,7 +59,7 @@ spec:
           gethomepage.dev/name: Kapowarr
           gethomepage.dev/icon: https://repository-images.githubusercontent.com/521043428/4bc67940-e94d-4672-ab0c-674e8fed16ce
           gethomepage.dev/description: Comic Downloads
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+
         hostnames: ["{{ .Release.Name }}.rafaribe.com"]
         parentRefs:
           - name: internal

@@ -98,7 +98,6 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           hajimari.io/icon: mdi:chef-hat
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: Tandoor

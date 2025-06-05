@@ -104,7 +104,6 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
           nginx.ingress.kubernetes.io/proxy-body-size: 1000m
           nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"

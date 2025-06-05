@@ -69,7 +69,7 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+
         hostnames: ["movie-roulette.rafaribe.com"]
         parentRefs:
           - name: external

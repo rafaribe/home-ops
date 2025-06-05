@@ -71,7 +71,6 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/icon: mdi-file-pdf
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: PdfDing

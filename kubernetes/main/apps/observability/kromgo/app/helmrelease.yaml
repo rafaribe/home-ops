@@ -86,7 +86,7 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+
         hostnames:
           - "{{ .Release.Name }}.rafaribe.com"
         parentRefs:

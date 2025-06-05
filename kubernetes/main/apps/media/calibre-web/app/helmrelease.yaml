@@ -91,7 +91,6 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/icon: mdi:chart-bar
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media

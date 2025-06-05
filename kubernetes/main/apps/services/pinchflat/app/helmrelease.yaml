@@ -83,7 +83,7 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+
         hostnames: ["pinchflat.rafaribe.com"]
         parentRefs:
           - name: internal

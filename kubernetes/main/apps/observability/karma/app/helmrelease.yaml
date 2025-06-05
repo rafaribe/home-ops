@@ -81,7 +81,7 @@ spec:
           gethomepage.dev/name: Karma
           gethomepage.dev/group: Observability
           gethomepage.dev/description: Alertmanager Quick View
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+
         hostnames: ["karma.rafaribe.com"]
         parentRefs:
           - name: internal

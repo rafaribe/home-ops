@@ -97,7 +97,6 @@ spec:
     route:
       main:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/enable: "true"
           hajimari.io/icon: "weather-sunset"
           hajimari.io/instance: "admin"

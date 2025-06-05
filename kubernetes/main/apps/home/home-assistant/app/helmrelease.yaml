@@ -106,7 +106,6 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           gethomepage.dev/href: "https://hass.rafaribe.com"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/app: Home Assistant
@@ -129,7 +128,6 @@ spec:
                 port: *hass-port
       codeserver:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           gethomepage.dev/href: "https://hass-code.rafaribe.com"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/app: HASS VS Code

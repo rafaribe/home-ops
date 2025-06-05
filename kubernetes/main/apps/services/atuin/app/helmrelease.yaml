@@ -100,7 +100,7 @@ spec:
       app:
         annotations:
           hajimari.io/icon: mdi:powershell
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+
         hostnames: ["sh.rafaribe.com"]
         parentRefs:
           - name: internal

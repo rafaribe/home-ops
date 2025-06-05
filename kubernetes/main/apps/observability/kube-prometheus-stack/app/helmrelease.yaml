@@ -38,7 +38,7 @@ spec:
         main:
           enabled: true
           annotations:
-            external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+
           hostnames: ["alertmanager.rafaribe.com"]
           parentRefs:
             - name: internal
@@ -80,7 +80,7 @@ spec:
         main:
           enabled: true
           annotations:
-            external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+
           hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
           parentRefs:
             - name: internal

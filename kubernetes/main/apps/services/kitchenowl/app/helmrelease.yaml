@@ -96,7 +96,6 @@ spec:
     route:
       frontend:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Shopping list
           gethomepage.dev/group: Home

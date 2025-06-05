@@ -123,7 +123,6 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/appName: syncthing
           hajimari.io/enable: "true"
           hajimari.io/icon: folder-sync
@@ -146,7 +145,7 @@ spec:
       browser:
         annotations:
           hajimari.io/icon: mdi:folder-arrow-up-down-outline
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+
         hostnames: ["sync.rafaribe.com"]
         parentRefs:
           - name: internal

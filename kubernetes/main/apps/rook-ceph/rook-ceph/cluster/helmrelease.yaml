@@ -249,7 +249,7 @@ spec:
           enabled: false
           # ingressClassName: internal
           # annotations:
-          #   external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          #
           # host:
           #   name: rgw.rafaribe.com
           #   path: /

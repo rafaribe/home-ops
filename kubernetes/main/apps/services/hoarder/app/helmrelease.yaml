@@ -136,7 +136,6 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/icon: mdi:archive-outline
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: Hoarder

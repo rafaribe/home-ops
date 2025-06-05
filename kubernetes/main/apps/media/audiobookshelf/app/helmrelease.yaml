@@ -87,7 +87,7 @@ spec:
           gethomepage.dev/widget.type: audiobookshelf
           gethomepage.dev/widget.url: http://audiobookshelf.media:80
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_AUDIOBOOKSHELF_TOKEN}}`}}"
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+
         hostnames: ["audiobookshelf.rafaribe.com"]
         parentRefs:
           - name: internal

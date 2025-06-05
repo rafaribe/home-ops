@@ -88,7 +88,7 @@ spec:
           gethomepage.dev/widget.url: http://jellyseerr.media:80
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_JELLYSEERR_TOKEN}}` }}"
           hajimari.io/icon: mdi:jellyfish-outline
-          external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+
         hostnames: ["requests.rafaribe.com"]
         parentRefs:
           - name: external

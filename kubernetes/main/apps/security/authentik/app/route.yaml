@@ -13,7 +13,7 @@ metadata:
     gethomepage.dev/widget.url: http://authentik-server.security
     gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"
     hajimari.io/icon: simple-icons:authentik
-    external-dns.alpha.kubernetes.io/target: external.rafaribe.com
+
 spec:
   hostnames:
     - sso.rafaribe.com
