@@ -63,7 +63,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8080
+            port: &port 8080
     serviceMonitor:
       app:
         serviceName: *app
@@ -73,9 +73,8 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: https://raw.githubusercontent.com/rafaribe/home-ops/main/docs/src/images/karma.ico
@@ -83,13 +82,15 @@ spec:
           gethomepage.dev/group: Observability
           gethomepage.dev/description: Alertmanager Quick View
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: "karma.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["karma.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         type: emptyDir
