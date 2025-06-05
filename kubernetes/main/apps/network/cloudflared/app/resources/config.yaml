@@ -1,6 +1,6 @@
 ---
 originRequest:
-  originServerName: ${EXTERNAL_DOMAIN}.rafaribe.com
+  originServerName: external.rafaribe.com
 
 ingress:
   - hostname: rafaribe.com
