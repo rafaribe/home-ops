@@ -67,12 +67,10 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: 3000
+                port: *port
 
     persistence:
       space:
-        enabled: true
-        type: hostPath
-        hostPath: /home/player/kube_data/silverbullet
+        existingClaim: *app
         globalMounts:
           - path: /space
