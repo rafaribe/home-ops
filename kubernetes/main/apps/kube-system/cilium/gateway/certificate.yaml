@@ -13,5 +13,5 @@ spec:
   dnsNames: ["rafaribe.com", "*.rafaribe.com"]
   secretTemplate:
     annotations:
-      networking.v1.k8s.emberstack.com/reflection-allowed: "true"
-      networking.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""
