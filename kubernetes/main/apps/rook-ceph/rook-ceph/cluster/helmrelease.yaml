@@ -245,11 +245,3 @@ spec:
           volumeBindingMode: Immediate
           parameters:
             region: us-east-1
-        ingress:
-          enabled: false
-          # ingressClassName: internal
-          # annotations:
-          #   external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-          # host:
-          #   name: rgw.rafaribe.com
-          #   path: /
