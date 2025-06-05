@@ -63,7 +63,6 @@ spec:
           http:
             port: 9093
 
-
     route:
       app:
         hostnames:

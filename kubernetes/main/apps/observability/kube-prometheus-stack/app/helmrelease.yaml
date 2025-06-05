@@ -34,13 +34,16 @@ spec:
       enabled: false
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      ingress:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        enabled: true
-        ingressClassName: internal
-        hosts: ["alertmanager.rafaribe.com"]
-        pathType: Prefix
+      route:
+        main:
+          enabled: true
+          annotations:
+            external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          hostnames: ["alertmanager.rafaribe.com"]
+          parentRefs:
+            - name: internal
+              namespace: kube-system
+              sectionName: https
       alertmanagerSpec:
         alertmanagerConfiguration:
           name: alertmanager
