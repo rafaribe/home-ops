@@ -35,10 +35,9 @@ spec:
       secret.reloader.stakater.com/reload: *secret
     extraArgs:
       - --pihole-server=http://10.0.0.254
-      - --ignore-ingress-tls-spec
-      - --ingress-class=internal
+      - --gateway-name=external
     policy: sync
-    sources: ["ingress", "service"]
+    sources: ["gateway-httproute", "service"]
     triggerLoopOnEvent: true
     domainFilters: ["rafaribe.com"]
     serviceMonitor:
