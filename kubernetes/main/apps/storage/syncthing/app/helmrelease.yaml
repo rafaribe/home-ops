@@ -120,9 +120,8 @@ spec:
         ports:
           http:
             port: *browserPort
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           hajimari.io/appName: syncthing
@@ -135,25 +134,28 @@ spec:
           gethomepage.dev/name: Syncthing
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (syncthing)
-        hosts:
-          - host: syncthing.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["syncthing.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 8384
       browser:
-        className: internal
         annotations:
           hajimari.io/icon: mdi:folder-arrow-up-down-outline
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: sync.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: browser
-                  port: http
+        hostnames: ["sync.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: syncthing-browser
+                port: 80
     persistence:
       config:
         existingClaim: *app
