@@ -77,10 +77,8 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        enabled: true
-        className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           gethomepage.dev/enabled: "true"
@@ -89,13 +87,15 @@ spec:
           gethomepage.dev/icon: si-postgresql
           gethomepage.dev/siteMonitor: http://pgadmin.storage
           gethomepage.dev/description: "PostgreSQL administration"
-        hosts:
-          - host: &host "pg.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["pg.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         enabled: true
