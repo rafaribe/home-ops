@@ -9,9 +9,9 @@ spec:
   addresses:
     - type: IPAddress
       value: ${LB_GATEWAY_EXTERNAL}
-  infrastructure:
-    annotations:
-      external-dns.alpha.kubernetes.io/hostname: *hostname
+  # infrastructure:
+  #   annotations:
+  #     external-dns.alpha.kubernetes.io/hostname: external.rafaribe.com
   listeners:
     - name: http
       protocol: HTTP
