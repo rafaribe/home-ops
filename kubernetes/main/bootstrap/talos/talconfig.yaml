@@ -209,7 +209,7 @@ nodes:
     ipAddress: 10.0.1.8
     nameservers:
       - "10.0.0.254"
-    controlPlane: false
+    controlPlane: true
     installDiskSelector:
       wwid: "eui.6479a73121231918"
     networkInterfaces:
@@ -241,7 +241,7 @@ nodes:
     ipAddress: 10.0.1.10
     nameservers:
       - "10.0.0.254"
-    controlPlane: true
+    controlPlane: false
     installDiskSelector:
       type: "ssd"
       model: UDSS*
@@ -269,7 +269,6 @@ controlPlane:
         - net.ifnames=1 # Enable predictable NIC naming
       systemExtensions:
         officialExtensions:
-          - siderolabs/qemu-guest-agent
           - siderolabs/binfmt-misc
           - siderolabs/util-linux-tools
           - siderolabs/intel-ucode
