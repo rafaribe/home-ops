@@ -92,7 +92,7 @@ spec:
           io.cilium/lb-ipam-ips: ${LB_HASS}
         ports:
           http:
-            port: 8123
+            port: &hass-port 8123
           music-server:
             port: 8095
       codeserver:
@@ -101,11 +101,10 @@ spec:
         ports:
           http:
             enabled: true
-            port: 8080
+            port: &codeserver-port 8080
 
-    ingress:
+    route:
       app:
-        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.rafaribe.com
           gethomepage.dev/href: "https://hass.rafaribe.com"
@@ -118,17 +117,17 @@ spec:
           gethomepage.dev/widget.type: homeassistant
           gethomepage.dev/widget.url: &url http://home-assistant.home:8123
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}` }}"
-
           gethomepage.dev/siteMonitor: *url
-        hosts:
-          - host: hass.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["hass.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: home-assistant
+                port: *hass-port
       codeserver:
-        className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
           gethomepage.dev/href: "https://hass-code.rafaribe.com"
@@ -139,13 +138,15 @@ spec:
           gethomepage.dev/name: HASS VS Code
           gethomepage.dev/description: Code editor for Home Assistant
           gethomepage.dev/siteMonitor: http://home-assistant-codeserver.home:8080
-        hosts:
-          - host: hass-code.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: codeserver
-                  port: http
+        hostnames: ["hass-code.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: home-assistant-codeserver
+                port: *codeserver-port
 
     persistence:
       config:
