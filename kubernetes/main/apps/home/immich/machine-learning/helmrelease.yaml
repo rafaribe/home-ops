@@ -102,3 +102,9 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /tmp
+      external-library:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/immich/external-library
+        globalMounts:
+          - path: /external-library
