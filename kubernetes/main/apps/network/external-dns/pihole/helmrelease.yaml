@@ -38,7 +38,7 @@ spec:
       - --gateway-name=external
       - --registry=noop
     policy: sync
-    sources: ["gateway-httproute", "service"]
+    sources: ["gateway-httproute"]
     triggerLoopOnEvent: true
     domainFilters: ["rafaribe.com"]
     serviceMonitor:
