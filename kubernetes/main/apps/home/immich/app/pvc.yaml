@@ -10,4 +10,4 @@ spec:
       storage: 10Gi
   volumeMode: Filesystem
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
