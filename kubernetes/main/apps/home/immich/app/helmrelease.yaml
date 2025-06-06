@@ -119,7 +119,6 @@ spec:
               tag: v1.134.0
             envFrom: *envFrom
             env:
-              IMMICH_CONFIG_FILE: /config/immich.config.json
               IMMICH_WORKERS_EXCLUDE: api
             resources:
               requests:
@@ -223,16 +222,6 @@ spec:
                 port: *serverport
 
     persistence:
-      config:
-        type: secret
-        name: immich
-        advancedMounts:
-          server:
-            server:
-              - path: /config
-          microservices:
-            microservices:
-              - path: /config
       library:
         type: nfs
         server: truenas.rafaribe.com
@@ -245,7 +234,6 @@ spec:
         path: /mnt/storage-0/immich/external-library
         globalMounts:
           - path: /external-library
-
       geocoding-dump:
         type: emptyDir
         advancedMounts:
