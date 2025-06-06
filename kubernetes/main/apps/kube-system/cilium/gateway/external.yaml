@@ -4,16 +4,16 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: external
-  annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname external.rafaribe.com
+  # annotations:
+  #   external-dns.alpha.kubernetes.io/target: &hostname external.rafaribe.com
 spec:
   gatewayClassName: cilium
   addresses:
     - type: IPAddress
       value: ${LB_GATEWAY_EXTERNAL}
-  infrastructure:
-    annotations:
-      external-dns.alpha.kubernetes.io/hostname: *hostname
+  # infrastructure:
+  #   annotations:
+  #     external-dns.alpha.kubernetes.io/hostname: *hostname
   listeners:
     - name: http
       protocol: HTTP
