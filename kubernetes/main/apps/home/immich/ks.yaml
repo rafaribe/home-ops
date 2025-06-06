@@ -38,14 +38,14 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app immich-server
+  name: &app immich-app
   namespace: flux-system
 spec:
   targetNamespace: home
   dependsOn:
     - name: immich-shared
     - name: immich-database
-  path: ./kubernetes/main/apps/home/immich/server
+  path: ./kubernetes/main/apps/home/immich/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -60,46 +60,3 @@ spec:
       GATUS_SUBDOMAIN: photos
   components:
     - ../../../../../shared/components/gatus/guarded
-
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app immich-microservices
-  namespace: flux-system
-spec:
-  targetNamespace: home
-  dependsOn:
-    - name: immich-server
-    - name: immich-shared
-    - name: immich-database
-  path: ./kubernetes/main/apps/home/immich/microservices
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-ops
-  wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app immich-machine-learning
-  namespace: flux-system
-spec:
-  targetNamespace: home
-  dependsOn:
-    - name: immich-server
-    - name: immich-shared
-    - name: immich-database
-  path: ./kubernetes/main/apps/home/immich/machine-learning
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-ops
-  wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
