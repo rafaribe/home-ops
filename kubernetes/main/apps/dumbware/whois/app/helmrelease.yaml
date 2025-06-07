@@ -44,11 +44,10 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: whois
+        controller: *app
         ports:
           http:
             port: &port 3000
-
     route:
       app:
         hostnames:
@@ -59,5 +58,5 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - identifier: *app
+              - name: *app
                 port: *port
