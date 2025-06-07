@@ -265,14 +265,17 @@ controlPlane:
   schematic:
     customization:
       extraKernelArgs:
-        - apparmor=0 # Less security, more speed
-        - init_on_alloc=0 # Less security, more speed
-        - init_on_free=0 # Less security, more speed
-        - intel_iommu=on # PCI Passthrough
+        - -init_on_alloc # Less security, faster puter
+        - -selinux # Less security, faster puter
+        - apparmor=0 # Less security, faster puter
+        - init_on_alloc=0 # Less security, faster puter
+        - init_on_free=0 # Less security, faster puter
+        - amd_iommu=on # PCI Passthrough
         - iommu=pt # PCI Passthrough
-        - mitigations=off # Less security, more speed
-        - security=none # Less security, more speed
-        - net.ifnames=1 # Enable predictable NIC naming
+        - pcie_aspm=off # Disable PCIe ASPM
+        - mitigations=off # Less security, faster puter
+        - security=none # Less security, faster puter
+        - talos.auditd.disabled=1 # Less security, faster puter
       systemExtensions:
         officialExtensions:
           - siderolabs/binfmt-misc
@@ -386,16 +389,19 @@ controlPlane:
     - &sysctlPatch |-
       machine:
         sysctls:
-          fs.inotify.max_user_instances: 8192    # Watchdog
           fs.inotify.max_user_watches: 1048576   # Watchdog
-          kernel.randomize_va_space: 0
-          net.core.netdev_max_backlog: 30000
-          net.core.rmem_max: 67108864            # Cloudflared / QUIC
-          net.core.wmem_max: 67108864            # Cloudflared / QUIC
-          net.ipv4.tcp_rmem: 4096 87380 33554432
-          net.ipv4.tcp_wmem: 4096 65536 33554432
-          net.ipv4.tcp_tw_reuse: 1
-          net.ipv4.tcp_window_scaling: 1
+          fs.inotify.max_user_instances: 8192    # Watchdog
+          net.core.default_qdisc: fq             # 10Gb/s
+          net.core.rmem_max: 67108864            # 10Gb/s | Cloudflared / QUIC
+          net.core.wmem_max: 67108864            # 10Gb/s | Cloudflared / QUIC
+          net.ipv4.tcp_congestion_control: bbr   # 10Gb/s
+          net.ipv4.tcp_fastopen: 3               # Send and accept data in the opening SYN packet
+          net.ipv4.tcp_mtu_probing: 1            # 10Gb/s | Jumbo frames
+          net.ipv4.tcp_rmem: 4096 87380 33554432 # 10Gb/s
+          net.ipv4.tcp_wmem: 4096 65536 33554432 # 10Gb/s
+          net.ipv4.tcp_window_scaling: 1         # 10Gb/s
+          user.max_user_namespaces: 11255        # User Namespaces
+          vm.nr_hugepages: 1024                  # PostgreSQL
 
     # Cluster configuration
     - |-
@@ -467,14 +473,17 @@ worker:
   noSchematicValidate: true
   schematic:
     extraKernelArgs:
-      - apparmor=0 # Less security, more speed
-      - init_on_alloc=0 # Less security, more speed
-      - init_on_free=0 # Less security, more speed
-      - intel_iommu=on # PCI Passthrough
+      - -init_on_alloc # Less security, faster puter
+      - -selinux # Less security, faster puter
+      - apparmor=0 # Less security, faster puter
+      - init_on_alloc=0 # Less security, faster puter
+      - init_on_free=0 # Less security, faster puter
+      - amd_iommu=on # PCI Passthrough
       - iommu=pt # PCI Passthrough
-      - mitigations=off # Less security, more speed
-      - security=none # Less security, more speed
-      - net.ifnames=1 # Enable predictable NIC namingy
+      - pcie_aspm=off # Disable PCIe ASPM
+      - mitigations=off # Less security, faster puter
+      - security=none # Less security, faster puter
+      - talos.auditd.disabled=1 # Less security, faster puter
     customization:
       systemExtensions:
         officialExtensions:
