@@ -49,7 +49,7 @@ spec:
           main:
             image:
               repository: ghcr.io/project-zot/zot-linux-amd64
-              tag: v2.1.3@sha256:1c639d2755443f43621e74c3b3492da0c08b05e03c779ac470161e34b126bd2e
+              tag: v2.1.4@sha256:90d9e639a6270f69ad6f75868026093d7cba6339863362cd2e27d739894f68a7
             probes:
               liveness: &probe
                 enabled: true
