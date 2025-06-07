@@ -17,6 +17,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-ops
+    namespace: flux-system
   wait: false
   postBuild:
     substitute:
