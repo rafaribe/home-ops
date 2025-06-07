@@ -1,36 +1,45 @@
 ---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: volsync
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 0.12.1
+  url: oci://ghcr.io/home-operations/charts-mirror/volsync
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: volsync
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: volsync
-      version: 0.12.1
-      sourceRef:
-        kind: HelmRepository
-        name: backube
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: volsync
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
-    cleanupOnFail: false
+    cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     metrics:
       disableAuth: true
+    image: &image
+      repository: ghcr.io/home-operations/volsync
+      tag: 0.12.1@:sha256:0483e545f9d9d9bd4bc97e2f7f6eceed1b302bb42d99d506e0bcf3bc6dcc9cc2
+    restic:
+      <<: *image
     podSecurityContext:
       runAsNonRoot: true
       runAsUser: 1000
-      runAsGroup: 1000
-    image: &image
-      repository: ghcr.io/rafaribe/volsync
-      tag: 0.12.1@sha256:3e5b7222aee8bf1b7b65c66636c66a9a605bcc4f41ec0729291e0e381a517e9e
-    restic:
-      <<: *image
+      runAsGroup: 100
+      seccompProfile: { type: RuntimeDefault }
