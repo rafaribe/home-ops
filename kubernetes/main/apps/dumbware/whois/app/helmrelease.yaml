@@ -48,10 +48,11 @@ spec:
         ports:
           http:
             port: &port 3000
+
     route:
       app:
         hostnames:
-          - "{{ .Release.Name }}.rafaribe.com"
+          - "whois.rafaribe.com"
         parentRefs:
           - name: external
             namespace: kube-system

@@ -4,6 +4,9 @@ kind: ConfigMap
 metadata:
   namespace: flux-system
   name: cluster-settings
+  annotations:
+    reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+    reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
 data:
   # Home Network IP's
   # Main 10.0.1.100- 10.0.1.120
