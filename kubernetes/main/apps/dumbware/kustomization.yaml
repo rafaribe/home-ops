@@ -5,6 +5,5 @@ kind: Kustomization
 namespace: dumbware
 components:
   - ../../../shared/components/common
-  - ../../../shared/components/common
 resources:
   - ./whois/ks.yaml
