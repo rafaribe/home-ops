@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app whois
-  namespace: flux-system
 spec:
   path: ./kubernetes/main/apps/dumbware/whois/app
   prune: true
