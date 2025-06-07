@@ -47,7 +47,7 @@ spec:
         controller: whois
         ports:
           http:
-            port: *port
+            port: &port 3000
     route:
       app:
         hostnames:
