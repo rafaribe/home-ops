@@ -6,8 +6,6 @@ namespace: services
 components:
   - ../../../shared/components/common
 resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
   # Flux-Kustomizations
   - ./actual/ks.yaml
   - ./atuin/ks.yaml
