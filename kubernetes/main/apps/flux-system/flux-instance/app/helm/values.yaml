@@ -12,9 +12,10 @@ instance:
     - notification-controller
   sync:
     kind: GitRepository
-    url: https://github.com/rafaribe/home-ops
+    url: "ssh://git@github.com:rafaribe/home-ops.git"
     ref: refs/heads/main
     path: kubernetes/main/flux/cluster
+    pullSecret: "github-ssh-auth"
     interval: 1h
   commonMetadata:
     labels:
