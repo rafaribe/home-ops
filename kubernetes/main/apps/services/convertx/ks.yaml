@@ -4,6 +4,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app convertx
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
 spec:
   commonMetadata:
     labels:
@@ -11,7 +14,6 @@ spec:
   components:
     - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/guarded
-
   interval: 30m
   path: ./kubernetes/main/apps/services/convertx/app/
   postBuild:
