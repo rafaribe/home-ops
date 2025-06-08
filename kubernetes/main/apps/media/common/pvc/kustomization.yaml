@@ -5,4 +5,3 @@ namespace: media
 resources:
   - ./pv.yaml
   - ./pvc.yaml
-  - ../../../../../shared/components/common
