@@ -5,11 +5,13 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
+  - ./common # OCI Repository
   # Flux-Kustomizations
   - ./actual/ks.yaml
   - ./atuin/ks.yaml
   - ./bytestash/ks.yaml
   - ./cyberchef/ks.yaml
+  - ./convertx/ks.yaml
   - ./docmost/ks.yaml
   # - ./fileflows/ks.yaml
   - ./hajimari/ks.yaml
