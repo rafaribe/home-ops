@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app convertx
-  namespace: &namespace services
 spec:
   commonMetadata:
     labels:
@@ -23,5 +22,5 @@ spec:
     kind: GitRepository
     name: home-ops
     namespace: flux-system
-  targetNamespace: *namespace
+  targetNamespace: services
   wait: true
