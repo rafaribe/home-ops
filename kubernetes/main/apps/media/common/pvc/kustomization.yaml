@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./pv.yaml
   - ./pvc.yaml
+  - ../../../../../shared/components/common
