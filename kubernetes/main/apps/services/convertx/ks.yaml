@@ -16,9 +16,6 @@ spec:
     - ../../../../../shared/components/gatus/guarded
   interval: 30m
   path: ./kubernetes/main/apps/services/convertx/app/
-  postBuild:
-    substitute:
-      HOSTNAME: convert.rafaribe.com
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,3 +23,8 @@ spec:
     namespace: flux-system
   targetNamespace: services
   wait: true
+  postBuild:
+    substitute:
+      APP: *app
+      HOSTNAME: convert.rafaribe.com
+      GATUS_SUBDOMAIN: convert
