@@ -5,15 +5,14 @@ kind: HelmRelease
 metadata:
   name: &app homepage
 spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.0.1
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  maxHistory: 3
+  uninstall:
+    keepHistory: false
   install:
     remediation:
       retries: 3
@@ -36,7 +35,7 @@ spec:
               tag: v1.3.2@sha256:4f923bf0e9391b3a8bc5527e539b022e92dcc8a3a13e6ab66122ea9ed030e196
             env:
               TZ: Europe/Lisbon
-              HOMEPAGE_ALLOWED_HOSTS: &hostname homepage.rafaribe.com
+              HOMEPAGE_ALLOWED_HOSTS: homepage.rafaribe.com,home.rafaribe.com
             envFrom:
               - secretRef:
                   name: *app
@@ -57,7 +56,8 @@ spec:
         annotations:
 
         hostnames:
-          - "${APP_SUBDOMAIN:-${APP}}.rafaribe.com"
+          - "homepage.rafaribe.com"
+          - "home.rafaribe.com"
         parentRefs:
           - name: internal
             namespace: kube-system
@@ -65,7 +65,7 @@ spec:
         rules:
           - backendRefs:
               - port: *port
-                name: homepage
+                name: *app
     persistence:
       config:
         type: configMap
@@ -85,3 +85,47 @@ spec:
             path: /app/config/widgets.yaml
     serviceAccount:
       homepage: {}
+    rbac:
+      bindings:
+        homepage:
+          type: ClusterRoleBinding
+          roleRef:
+            kind: ClusterRole
+            name: homepage
+          subjects:
+            - identifier: homepage
+      roles:
+        homepage:
+          type: ClusterRole
+          rules:
+            - apiGroups:
+                - ""
+              resources:
+                - namespaces
+                - pods
+                - nodes
+              verbs:
+                - get
+                - list
+            - apiGroups:
+                - extensions
+                - networking.k8s.io
+              resources:
+                - ingresses
+              verbs:
+                - get
+                - list
+            - apiGroups:
+                - metrics.k8s.io
+              resources:
+                - nodes
+                - pods
+              verbs:
+                - get
+                - list
+            - apiGroups:
+                - apiextensions.k8s.io
+              resources:
+                - customresourcedefinitions/status
+              verbs:
+                - get

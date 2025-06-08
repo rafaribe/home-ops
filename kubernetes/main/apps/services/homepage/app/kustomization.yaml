@@ -6,7 +6,6 @@ namespace: default
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./rbac.yaml
   - ./configuration.yaml
 generatorOptions:
   disableNameSuffixHash: true
