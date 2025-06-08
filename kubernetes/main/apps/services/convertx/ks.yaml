@@ -13,7 +13,7 @@ spec:
     - ../../../../../shared/components/gatus/guarded
 
   interval: 30m
-  path: ./kubernetes/apps/selfhosted/convertx/app
+  path: ./kubernetes/main/apps/services/convertx/app/
   postBuild:
     substitute:
       HOSTNAME: convert.rafaribe.com
