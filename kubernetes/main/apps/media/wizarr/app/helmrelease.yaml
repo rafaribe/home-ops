@@ -51,6 +51,12 @@ spec:
     route:
       app:
         hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Wizarr
+          gethomepage.dev/icon: wizarr.png
+          gethomepage.dev/description: Plex Invite Management
         parentRefs:
           - name: external
             namespace: kube-system
