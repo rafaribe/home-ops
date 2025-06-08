@@ -21,6 +21,14 @@ spec:
       wizarr:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          chown-1000:
+            image:
+              repository: busybox
+              tag: 16
+            envFrom:
+              - secretRef:
+                  name: *app
         containers:
           app:
             image:
