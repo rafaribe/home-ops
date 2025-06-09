@@ -10,7 +10,7 @@ spec:
   gatewayClassName: cilium
   addresses:
     - type: IPAddress
-      value: ${LB_GATEWAY_EXTERNAL}
+      value: 10.0.1.100
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
@@ -18,14 +18,12 @@ spec:
     - name: http
       protocol: HTTP
       port: 80
-      hostname: "*.rafaribe.com"
       allowedRoutes:
         namespaces:
           from: Same
     - name: https
       protocol: HTTPS
       port: 443
-      hostname: "*.rafaribe.com"
       allowedRoutes:
         namespaces:
           from: All
