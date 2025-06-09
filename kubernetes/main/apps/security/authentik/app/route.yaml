@@ -13,14 +13,13 @@ metadata:
     gethomepage.dev/widget.url: http://authentik-server.security
     gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"
     hajimari.io/icon: simple-icons:authentik
-
 spec:
   hostnames:
     - sso.rafaribe.com
   parentRefs:
     - name: external
       namespace: kube-system
-      sectionName: websecure
+      sectionName: https
   rules:
     - backendRefs:
         - name: authentik-server
