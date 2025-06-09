@@ -220,7 +220,16 @@ spec:
           - backendRefs:
               - name: *app
                 port: *serverport
-
+      internal:
+        hostnames: ["immich.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *serverport
     persistence:
       library:
         type: nfs
