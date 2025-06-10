@@ -45,6 +45,8 @@ spec:
                 memory: 200M
               limits:
                 memory: 512Mi
+        serviceAccount:
+          identifier: *app
     service:
       app:
         controller: *app
@@ -53,8 +55,6 @@ spec:
             port: &port 3000
     route:
       app:
-        annotations:
-
         hostnames:
           - "homepage.rafaribe.com"
           - "home.rafaribe.com"
@@ -90,9 +90,9 @@ spec:
         homepage:
           type: ClusterRoleBinding
           roleRef:
-            identifier: homepage
+            identifier: *app
           subjects:
-            - identifier: homepage
+            - identifier: *app
       roles:
         homepage:
           type: ClusterRole
