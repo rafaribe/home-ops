@@ -38,5 +38,6 @@ resources:
   - ./stirling-pdf/ks.yaml
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
+  - ./tududi/ks.yaml
   - ./vikunja/ks.yaml
   #- ./windmill/ks.yaml
