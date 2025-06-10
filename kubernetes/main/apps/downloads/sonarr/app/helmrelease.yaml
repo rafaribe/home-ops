@@ -45,7 +45,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/sonarr-develop
-              tag: 4.0.14@sha256:cd5c97aac9eb177b352c5810006b0ac4150973fa652f503fbca6c56a0b98a244
+              tag: 4.0.15@sha256:c1e5c9949566888ec977d3623411aaff00a38a1ba30a3a41a2195a649bcb2782
             env:
               TZ: Europe/Lisbon
               SONARR__APP__INSTANCENAME: Sonarr
