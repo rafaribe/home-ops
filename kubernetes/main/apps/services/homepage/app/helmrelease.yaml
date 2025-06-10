@@ -129,3 +129,11 @@ spec:
                 - customresourcedefinitions/status
               verbs:
                 - get
+            - apiGroups:
+                - gateway.networking.k8s.io
+              resources:
+                - httproutes
+                - gateways
+              verbs:
+                - get
+                - list
