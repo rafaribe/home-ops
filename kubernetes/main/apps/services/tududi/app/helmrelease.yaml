@@ -1,0 +1,82 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app tududi
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      tududi:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: chrisvel/tududi
+              tag: 0.39@sha256:c6fd9da2959fa8a00ae82bf2cf227c4e76aaf410ba00772c5b3f22b90414aa1b
+            envFrom:
+              - secretRef:
+                  name: *app
+            env:
+              TUDUDI_INTERNAL_SSL_ENABLED: false
+              TUDUDI_ALLOWED_ORIGINS: "https://tududi.rafaribe.com"
+            resources:
+              requests:
+                cpu: 5m
+                memory: 10Mi
+              limits:
+                memory: 100Mi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 8080
+    route:
+      app:
+        annotations:
+          hajimari.io/icon: mdi:format-list-checks
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: tududi
+          gethomepage.dev/description: Tasks and project management platform.
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: tududi.png
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (*app)
+        hostnames: ["tududi.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      data:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /usr/src/app/
