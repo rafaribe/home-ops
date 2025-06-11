@@ -1,0 +1,60 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app 13ft
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  interval: 30m
+  maxHistory: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      13ft:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/wasi-master/13ft
+              tag: 0.3.4@sha256:563ce7794a7173250c25c9162495bf2f510dd714067d74363c9ab2bd0e5a994f
+            env:
+              TZ: Europe/Lisbon
+            resources:
+              requests:
+                cpu: 15m
+                memory: 80M
+              limits:
+                memory: 256M
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 5000
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: 13ft
+          gethomepage.dev/icon: https://i.imgur.com/kxOLAbO.png
+          gethomepage.dev/description: Block ads, paywalls, and other nonsense
+        hostnames: ["13ft.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
