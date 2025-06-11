@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: navidrome
+  name: &app navidrome
 spec:
   chart:
     spec:
@@ -94,13 +94,21 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: navidrome
-                port: 4533
-
+              - name: *app
+                port: *port
+      internal:
+        hostnames: ["music.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       data:
         existingClaim: navidrome
-
       media:
         enabled: true
         type: nfs
