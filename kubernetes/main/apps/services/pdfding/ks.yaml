@@ -30,4 +30,4 @@ spec:
       GATUS_SUBDOMAIN: pdf
   components:
     - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/external
+    - ../../../../../shared/components/gatus/guarded
