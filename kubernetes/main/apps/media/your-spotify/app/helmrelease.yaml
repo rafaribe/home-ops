@@ -103,11 +103,6 @@ spec:
             port: 27017
     route:
       app:
-        annotations:
-          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-          nginx.ingress.kubernetes.io/proxy-body-size: 1000m
-          nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-          nginx.ingress.kubernetes.io/rewrite-target: /$1
         hostnames: ["spotty.rafaribe.com"]
         parentRefs:
           - name: external
