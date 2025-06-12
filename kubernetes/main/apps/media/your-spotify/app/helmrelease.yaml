@@ -121,14 +121,14 @@ spec:
                     type: ReplacePrefixMatch
                     replacePrefixMatch: "/"
             backendRefs:
-              - identifier: your-spotify-server
+              - identifier: server
                 port: *port
           - matches:
               - path:
                   type: PathPrefix
                   value: "/"
             backendRefs:
-              - identifier: your-spotify-web
+              - identifier: web
                 port: *webport
     persistence:
       mongo:
