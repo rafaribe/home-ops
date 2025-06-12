@@ -85,4 +85,4 @@ spec:
         enabled: true
         existingClaim: *app
         globalMounts:
-          - path: /usr/src/app/
+          - path: /usr/src/app/tududi_db
