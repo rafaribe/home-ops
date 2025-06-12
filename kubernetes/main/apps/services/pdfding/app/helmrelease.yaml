@@ -79,7 +79,7 @@ spec:
           gethomepage.dev/icon: https://cdn-icons-png.flaticon.com/512/4208/4208479.png
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (*app)
-        hostnames: ["pdfding.rafaribe.com"]
+        hostnames: ["pdf.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
