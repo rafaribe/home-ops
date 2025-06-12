@@ -119,14 +119,14 @@ spec:
                   type: PathPrefix
                   value: "/"
             backendRefs:
-              - name: web
+              - name: your-spotify-web
                 port: 3000
           - matches:
               - path:
                   type: PathPrefix
                   value: "/api"
             backendRefs:
-              - name: server
+              - name: your-spotify-server
                 port: 8080
     persistence:
       mongo:
