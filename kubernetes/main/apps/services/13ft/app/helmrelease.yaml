@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app 13ft
+  name: &app thirteen-ft
 spec:
   chartRef:
     kind: OCIRepository
@@ -15,7 +15,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      13ft:
+      thirteen-ft:
         containers:
           app:
             image:
@@ -49,7 +49,7 @@ spec:
           gethomepage.dev/name: 13ft
           gethomepage.dev/icon: https://i.imgur.com/kxOLAbO.png
           gethomepage.dev/description: Block ads, paywalls, and other nonsense
-        hostnames: ["13ft.rafaribe.com"]
+        hostnames: ["13ft.rafaribe.com", "thirteen-ft.rafaribe.com"]
         parentRefs:
           - name: external
             namespace: kube-system

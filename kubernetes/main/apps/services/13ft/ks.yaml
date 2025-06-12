@@ -23,5 +23,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      GATUS_SUBDOMAIN: 13ft
   components:
     - ../../../../../shared/components/gatus/external
