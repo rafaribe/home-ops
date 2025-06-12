@@ -55,6 +55,7 @@ spec:
               EMAIL_BACKEND: smtp
               SMTP_HOST: smtp-relay.services.svc.cluster.local.
               SMTP_PORT: "25"
+              ALLOWED_HOSTS: pdfding.rafaribe.com
             resources:
               requests:
                 cpu: 50m

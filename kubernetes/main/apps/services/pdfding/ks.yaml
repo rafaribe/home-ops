@@ -27,7 +27,7 @@ spec:
     substitute:
       APP: *appname
       VOLSYNC_CLAIM: pdfding
-      GATUS_SUBDOMAIN: pdf
+      GATUS_SUBDOMAIN: pdfding
   components:
     - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/guarded
