@@ -24,6 +24,7 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 1Gi
+      GATUS_SUBDOMAIN: paperless-ai
   components:
     - ../../../../../shared/components/gatus/guarded
     - ../../../../../shared/components/volsync
