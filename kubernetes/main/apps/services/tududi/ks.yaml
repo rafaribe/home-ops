@@ -29,4 +29,4 @@ spec:
       VOLSYNC_CLAIM: tududi
   components:
     - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/external
+    - ../../../../../shared/components/gatus/guarded
