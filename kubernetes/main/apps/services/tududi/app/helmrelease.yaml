@@ -37,7 +37,7 @@ spec:
               # repository: chrisvel/tududi
               # tag: 0.39@sha256:c6fd9da2959fa8a00ae82bf2cf227c4e76aaf410ba00772c5b3f22b90414aa1b
               repository: rafaribe/tududi
-              tag: v0.40.0
+              tag: working2
             envFrom:
               - secretRef:
                   name: *app
