@@ -11,7 +11,7 @@ locals {
       authentik_oidc_application_description = "Grafana OAuth application"
     },
     {
-      authentik_oidc_application_name        = "hoarder"
+      authentik_oidc_application_name        = "karakeep"
       authentik_oidc_application_icon_url    = "https://media.invisioncic.com/u329766/monthly_2024_05/hoarder.png.cb75b7347d47989bd0c3e65b9e613700.png"
       authentik_oidc_application_description = "A self-hostable bookmark-everything app (links, notes and images) with AI-based automatic tagging and full text search"
     },

@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: hoarder
+  name: karakeep
 spec:
   interval: 30m
   chart:
@@ -18,15 +18,15 @@ spec:
 
   values:
     controllers:
-      hoarder:
+      karakeep:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: ghcr.io/hoarder-app/hoarder
+              repository: ghcr.io/karakeep-app/karakeep
               #tag: 0.22.0@sha256:e2156f3de4a1eafc53afb6e682f20857be4449d7e9d24240afe6d9ccd280ed3b
-              tag: latest
+              tag: 0.25.0
             env:
               # Meillisearch
               DATA_DIR: /data
@@ -35,14 +35,14 @@ spec:
               MEILI_MASTER_KEY:
                 valueFrom:
                   secretKeyRef:
-                    name: hoarder-secret
+                    name: karakeep-secret
                     key: meilisearch_master_key
               # NextAuth
-              NEXTAUTH_URL: https://hoarder.rafaribe.com
+              NEXTAUTH_URL: https://karakeep.rafaribe.com
               NEXTAUTH_SECRET:
                 valueFrom:
                   secretKeyRef:
-                    name: hoarder-secret
+                    name: karakeep-secret
                     key: encryption_key
               # Crawler
               CRAWLER_DOWNLOAD_BANNER_IMAGE: true
@@ -58,7 +58,7 @@ spec:
               OLLAMA_BASE_URL: "http://ollama.rafaribe.com:11434" # Use Ollama DNS Router to determine the faster Ollama to use.
             envFrom: &envFrom
               - secretRef:
-                  name: hoarder-secret
+                  name: karakeep-secret
             probes:
               liveness:
                 enabled: true
@@ -101,7 +101,7 @@ spec:
               MEILI_MASTER_KEY:
                 valueFrom:
                   secretKeyRef:
-                    name: hoarder-secret
+                    name: karakeep-secret
                     key: meilisearch_master_key
             envFrom: *envFrom
             resources:
@@ -118,7 +118,7 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: &app hoarder
+        controller: &app karakeep
         ports:
           http:
             port: &port 3000
@@ -138,13 +138,13 @@ spec:
         annotations:
           hajimari.io/icon: mdi:archive-outline
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: Hoarder
+          gethomepage.dev/name: Karakeep
           gethomepage.dev/description: The Bookmark Everything app
           gethomepage.dev/group: Services
-          gethomepage.dev/icon: https://media.invisioncic.com/u329766/monthly_2024_05/hoarder.png.cb75b7347d47989bd0c3e65b9e613700.png
+          gethomepage.dev/icon: https://media.invisioncic.com/u329766/monthly_2024_05/karakeep.png.cb75b7347d47989bd0c3e65b9e613700.png
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (*app)
-        hostnames: ["hoarder.rafaribe.com"]
+        hostnames: ["karakeep.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
@@ -156,12 +156,12 @@ spec:
 
     persistence:
       config:
-        existingClaim: hoarder
+        existingClaim: karakeep
         advancedMounts:
-          hoarder:
+          karakeep:
             app:
               - path: /data
-                subPath: hoarder
+                subPath: karakeep
               - path: /meili_data
                 subPath: meilisearch
             meilisearch:
