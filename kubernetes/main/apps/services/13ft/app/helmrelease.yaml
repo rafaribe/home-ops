@@ -20,7 +20,7 @@ spec:
           app:
             image:
               repository: ghcr.io/wasi-master/13ft
-              tag: 0.3.4@sha256:563ce7794a7173250c25c9162495bf2f510dd714067d74363c9ab2bd0e5a994f
+              tag: 1.3.0@sha256:fffe1204b1c8fac520fc456cad64f0ec74702047e7dae54052e1d71e4ff24088
             env:
               TZ: Europe/Lisbon
             resources:
