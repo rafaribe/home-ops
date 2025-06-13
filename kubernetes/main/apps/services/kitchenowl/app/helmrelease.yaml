@@ -55,8 +55,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/ahinko/kitchenowl
-              tag: 0.6.15
+              repository: tombursch/kitchenowl
+              tag: v0.6.15
 
             env:
               TZ: ${TIMEZONE}
