@@ -34,8 +34,10 @@ spec:
         containers:
           app:
             image:
-              repository: chrisvel/tududi
-              tag: 0.39@sha256:c6fd9da2959fa8a00ae82bf2cf227c4e76aaf410ba00772c5b3f22b90414aa1b
+              # repository: chrisvel/tududi
+              # tag: 0.39@sha256:c6fd9da2959fa8a00ae82bf2cf227c4e76aaf410ba00772c5b3f22b90414aa1b
+              repository: rafaribe/tududi
+              tag: v0.40.0
             envFrom:
               - secretRef:
                   name: *app
@@ -48,12 +50,12 @@ spec:
                 memory: 10Mi
               limits:
                 memory: 100Mi
-    # defaultPodOptions:
-    #   securityContext:
-    #     runAsNonRoot: true
-    #     runAsUser: 1000
-    #     runAsGroup: 1000
-    #     seccompProfile: { type: RuntimeDefault }
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
