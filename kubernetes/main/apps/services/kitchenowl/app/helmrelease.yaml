@@ -1,49 +1,63 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app kitchenowl
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.1.1
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  maxHistory: 2
   install:
+    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: storage
+  uninstall:
+    keepHistory: false
   values:
     controllers:
       kitchenowl:
         annotations:
           reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: ${APP_UID}
+            runAsGroup: ${APP_GID}
+            fsGroup: ${APP_GID}
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 65539
+
+          enableServiceLinks: false
+
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
         initContainers:
-          init-db:
+          01-init-db:
             image:
-              repository: ghcr.io/rafaribe/postgres-init
-              tag: 16
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.5.0
             envFrom: &envFrom
               - secretRef:
                   name: *app
         containers:
-          backend:
+          app:
             image:
-              repository: docker.io/tombursch/kitchenowl-backend
-              tag: v0.6.15@sha256:0951ec604520864e48443a59bbeb009d6c559f32f60e13136975af3703249af3
+              repository: ghcr.io/ahinko/kitchenowl
+              tag: 0.6.15
+
             env:
               TZ: ${TIMEZONE}
               COLLECT_METRICS: false
@@ -59,65 +73,32 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 200Mi
+                memory: 100Mi
               limits:
                 memory: 500Mi
-          frontend:
-            image:
-              repository: docker.io/tombursch/kitchenowl-web
-              tag: v0.6.15@sha256:8c1c6cc369e1c148baf6bba069550a510917942b32c9c5e858a14d90cd154fb3
-            env:
-              TZ: ${TIMEZONE}
-              BACK_URL: "kitchenowl-backend.services.svc.cluster.local:5000"
-              FRONT_URL: https://kitchenowl.rafaribe.com
-            resources:
-              requests:
-                cpu: 5m
-                memory: 50Mi
-              limits:
-                memory: 150Mi
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
+
     service:
-      backend:
+      app:
         controller: *app
         ports:
           http:
-            port: &port 5000
-      frontend:
-        controller: *app
-        ports:
-          http:
-            port: &port 80
+            port: &port 8080
+
     route:
-      frontend:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Shopping list
-          gethomepage.dev/group: Home
-          gethomepage.dev/icon: sh-kitchenowl.png
-          gethomepage.dev/name: Kitchen Owl
-        hostnames: ["kitchenowl.rafaribe.com"]
+      app:
+        hostnames: ["{{ .Release.Name }}.rafaribe.com"]
         parentRefs:
           - name: external
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - identifier: app
                 port: *port
+
     persistence:
       data:
-        existingClaim: *app
-        advancedMounts:
-          kitchenowl:
-            backend:
-              - path: /data
-      tmp:
-        type: emptyDir
+        type: persistentVolumeClaim
+        existingClaim: "${VOLSYNC_CLAIM}"
         globalMounts:
-          - path: /tmp
+          - path: /data
