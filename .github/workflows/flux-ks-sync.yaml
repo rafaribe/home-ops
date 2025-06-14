@@ -14,6 +14,10 @@ jobs:
   sync:
     name: Flux Kustomization Sync
     runs-on: ["arc-runner-set-home-ops"]
+    defaults:
+      run:
+        shell: bash -l {0}  # Apply to all steps in this job
+
     strategy:
       matrix:
         cluster: ["main", "utility"]
