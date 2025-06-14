@@ -47,4 +47,14 @@ jobs:
               --context "${{ matrix.cluster }}" \
               --namespace flux-system \
               reconcile ks flux-system \
+              --with-source && \
+          flux \
+              --context "${{ matrix.cluster }}" \
+              --namespace flux-system \
+              reconcile ks cluster \
+              --with-source && \
+          flux \
+              --context "${{ matrix.cluster }}" \
+              --namespace flux-system \
+              reconcile ks cluster-apps \
               --with-source
