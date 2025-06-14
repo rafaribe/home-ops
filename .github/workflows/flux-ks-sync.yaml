@@ -31,9 +31,7 @@ jobs:
           token: "${{ steps.app-token.outputs.token }}"
       - name: Setup Workflow Tools
         shell: bash
-        run: |
-          # Install Flux CLI
-          brew install fluxcd/tap/flux
+        run: brew install fluxcd/tap/flux
 
       - name: Write kubeconfig
         id: kubeconfig
