@@ -39,6 +39,7 @@ jobs:
           fileName: kubeconfig
 
       - name: Sync Kustomization
+        if: matrix.cluster == 'main'
         env:
           KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
         shell: bash
