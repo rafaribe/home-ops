@@ -70,15 +70,6 @@ spec:
           - name: talos
             secret:
               secretName: *name
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: kubernetes.io/arch
-                      operator: In
-                      values:
-                        - amd64
   valuesFrom:
     - kind: Secret
       name: actions-runner-controller-auth-secret
