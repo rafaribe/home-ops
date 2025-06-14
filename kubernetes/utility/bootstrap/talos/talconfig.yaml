@@ -34,10 +34,15 @@ nodes:
       wwid: naa.5002538d7025e8be
       type: ssd
       size: <= 256 GB
-    machineDisks:
-      - device: /dev/disk/by-id/ata-HGST_HTS721075A9E630_JR12006QG0YW5E
-        partitions:
-          - mountpoint: /var/lib/csi-local-hostpath
+    userVolumes:
+      - name: csi-local-hostpath
+        provisioning:
+          diskSelector:
+            match: "disk.size >= 700u * GiB && disk.rotational"
+          minSize: 600GB
+          maxSize: 750GB
+        filesystem:
+          type: xfs
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "10:c3:7b:1d:d6:f4"
@@ -53,8 +58,17 @@ controlPlane:
   schematic:
     customization:
       extraKernelArgs:
-        - net.ifnames=0
-        - mitigations=off
+        - -init_on_alloc # Less security, faster puter
+        - -selinux # Less security, faster puter
+        - apparmor=0 # Less security, faster puter
+        - init_on_alloc=0 # Less security, faster puter
+        - init_on_free=0 # Less security, faster puter
+        - amd_iommu=on # PCI Passthrough
+        - iommu=pt # PCI Passthrough
+        - pcie_aspm=off # Disable PCIe ASPM
+        - mitigations=off # Less security, faster puter
+        - security=none # Less security, faster puter
+        - talos.auditd.disabled=1 # Less security, faster puter
       systemExtensions:
         officialExtensions:
           - siderolabs/binfmt-misc
@@ -242,9 +256,9 @@ controlPlane:
       machine:
         kubelet:
           extraMounts:
-            - destination: /var/lib/csi-local-hostpath
+            - destination: /var/mnt/csi-local-hostpath
               type: bind
-              source: /var/lib/csi-local-hostpath
+              source: /var/mnt/csi-local-hostpath
               options: ["bind", "rshared", "rw"]
 
     # Enable hostDNS:

@@ -3,8 +3,8 @@ originRequest:
   originServerName: external-utility.rafaribe.com
 
 ingress:
-  - hostname: "rafaribe.com"
-    service: https://external-controller.network.svc.cluster.local:443
+  - hostname: rafaribe.com
+    service: https://cilium-gateway-external.kube-system.svc.cluster.local
   - hostname: "*.rafaribe.com"
-    service: https://external-controller.network.svc.cluster.local:443
+    service: https://cilium-gateway-external.kube-system.svc.cluster.local
   - service: http_status:404
