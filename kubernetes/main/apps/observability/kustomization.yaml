@@ -7,6 +7,7 @@ resources:
   # Flux-Kustomizations
   - ./exporters/ks.yaml
   - ./gatus/ks.yaml
+  - ./gotify/ks.yaml
   - ./grafana/ks.yaml
   - ./karma/ks.yaml
   - ./kepler/ks.yaml
@@ -19,4 +20,3 @@ resources:
   - ./redisinsight/ks.yaml
   - ./silence-operator/ks.yaml
   - ./unpoller/ks.yaml
-

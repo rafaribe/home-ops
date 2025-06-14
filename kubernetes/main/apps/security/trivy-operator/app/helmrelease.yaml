@@ -27,14 +27,30 @@ spec:
     remediation:
       retries: 3
   values:
-    excludeNamespaces: "{{ .Release.Namespace }}"
+    excludeNamespaces: "kube-system"
     operator:
-      scanJobsConcurrentLimit: 3
+      replicas: 1
+      scanJobsConcurrentLimit: 5
+      scanJobTTL: 10s
+      builtInTrivyServer: true
       vulnerabilityScannerScanOnlyCurrentRevisions: true
       configAuditScannerScanOnlyCurrentRevisions: true
-    serviceMonitor:
-      enabled: true
+      annotations:
+        reloader.stakater.com/auto: "true"
+      webhookBroadcastURL: trivy.rafaribe.com
     trivy:
+      slow: true # flag is to use less CPU/memory for scanning though it takes more time than normal scanning
       ignoreUnfixed: true
+      mode: ClientServer
+      severity: HIGH,CRITICAL
+      storageClassEnabled: false # ephemeral storage
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1Gi
+    # https://github.com/aquasecurity/trivy-operator/issues/2202
     nodeCollector:
       useNodeSelector: false
+      excludeNodes: kubernetes.io/arch=amd64
+    serviceMonitor:
+      enabled: true
