@@ -50,6 +50,7 @@ spec:
           memory: 1Gi
     trivyOperator:
       excludeImages: "quay.io/backube/*"
+      skipResourceByLabels: "app.kubernetes.io/created-by=volsync"
     # https://github.com/aquasecurity/trivy-operator/issues/2566
     nodeCollector:
       useNodeSelector: false
