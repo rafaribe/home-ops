@@ -97,8 +97,8 @@ spec:
         walCompression: true
         enableFeatures:
           - memory-snapshot-on-shutdown
-        retention: 14d
-        retentionSize: 50GB
+        retention: 17d
+        retentionSize: 20GB
         resources:
           requests:
             cpu: 200m
@@ -110,7 +110,7 @@ spec:
               storageClassName: ceph-block
               resources:
                 requests:
-                  storage: 75Gi
+                  storage: 80Gi
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
