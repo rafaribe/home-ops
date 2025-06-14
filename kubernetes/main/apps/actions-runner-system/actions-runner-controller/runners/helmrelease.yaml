@@ -31,7 +31,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      retries: 2
+      retries: 3
   values:
     runnerScaleSetName: arc-runner-set-home-ops
     githubConfigUrl: https://github.com/rafaribe/home-ops
