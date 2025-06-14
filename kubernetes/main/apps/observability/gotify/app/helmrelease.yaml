@@ -63,6 +63,21 @@ spec:
     route:
       main:
         parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        hostnames:
+          - notifications.rafaribe.com
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+      internal:
+        parentRefs:
           - name: internal
             namespace: kube-system
             sectionName: https
