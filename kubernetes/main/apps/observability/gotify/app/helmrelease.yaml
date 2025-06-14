@@ -62,13 +62,10 @@ spec:
             port: &port 80
     route:
       main:
-        enabled: true
-        kind: HTTPRoute
         parentRefs:
-          - kind: Gateway
-            name: internal
-            namespace: network
-            sectionName: websecure
+          - name: internal
+            namespace: kube-system
+            sectionName: https
         hostnames:
           - gotify.rafaribe.com
         rules:
