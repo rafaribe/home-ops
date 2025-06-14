@@ -47,14 +47,23 @@ jobs:
               --context "${{ matrix.cluster }}" \
               --namespace flux-system \
               reconcile ks flux-system \
-              --with-source || exit 0 && \
+              --with-source || exit 0
+      - name: Sync Kustomization Cluster
+        env:
+          KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
+        shell: bash
+        run: |
           flux \
               --context "${{ matrix.cluster }}" \
               --namespace flux-system \
-              reconcile ks cluster \
-              --with-source && \
+              reconcile ks cluster || exit 0
+      - name: Sync Kustomization Cluster Apps
+        env:
+          KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
+        shell: bash
+        run: |
           flux \
               --context "${{ matrix.cluster }}" \
               --namespace flux-system \
               reconcile ks cluster-apps \
-              --with-source
+              --with-source || exit 0
