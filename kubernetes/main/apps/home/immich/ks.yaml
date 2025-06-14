@@ -56,7 +56,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app
+      APP: immich
       GATUS_SUBDOMAIN: photos
   components:
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../../shared/components/gatus/external

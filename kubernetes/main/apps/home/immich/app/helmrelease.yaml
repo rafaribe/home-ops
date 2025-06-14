@@ -221,7 +221,7 @@ spec:
               - name: &backend immich-server
                 port: *serverport
       internal:
-        hostnames: ["immich.rafaribe.com"]
+        hostnames: ["immich.rafaribe.com", "pics.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
