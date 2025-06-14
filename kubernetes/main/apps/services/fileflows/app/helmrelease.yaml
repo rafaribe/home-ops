@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: revenz/fileflows
-              tag: 25.05
+              tag: 25.06
             env:
               TZ: ${TIMEZONE}
               PUID: 1000
