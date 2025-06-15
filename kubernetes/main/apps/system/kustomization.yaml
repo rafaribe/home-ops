@@ -14,3 +14,4 @@ resources:
   - ./nvidia/ks.yaml
   - ./reflector/ks.yaml
   - ./reloader/ks.yaml
+  # - ./talos-etcd-defrag/ks.yaml
