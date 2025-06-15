@@ -77,7 +77,7 @@ spec:
       app:
         hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
         parentRefs:
-          - name: external
+          - name: internal
             namespace: kube-system
             sectionName: https
         rules:
