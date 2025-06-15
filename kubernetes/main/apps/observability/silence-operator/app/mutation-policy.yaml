@@ -1,56 +1,51 @@
 ---
-apiVersion: admissionregistration.k8s.io/v1alpha1
-kind: MutatingAdmissionPolicy
-metadata:
-  name: add-amd64-node-affinity
-spec:
-  failurePolicy: Fail
-  matchConstraints:
-    resourceRules:
-    - operations: ["CREATE", "UPDATE"]
-      apiGroups: ["apps"]
-      apiVersions: ["v1"]
-      resources: ["deployments"]
-    namespaceSelector:
-      matchLabels:
-        name: observability
-    objectSelector:
-      matchLabels:
-        app.kubernetes.io/name: silence-operator
-  mutations:
-  - patchType: StrategicMerge
-    strategicMerge:
-      expression: |
-        {
-          "spec": {
-            "template": {
-              "spec": {
-                "affinity": {
-                  "nodeAffinity": {
-                    "requiredDuringSchedulingIgnoredDuringExecution": {
-                      "nodeSelectorTerms": [
-                        {
-                          "matchExpressions": [
-                            {
-                              "key": "kubernetes.io/arch",
-                              "operator": "In",
-                              "values": ["amd64"]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
----
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.0/mutatingadmissionpolicybinding-admissionregistration-v1alpha1.json
 apiVersion: admissionregistration.k8s.io/v1alpha1
 kind: MutatingAdmissionPolicyBinding
 metadata:
-  name: add-amd64-node-affinity-binding
+  name: silence-operator-amd64-affinity
 spec:
-  policyName: add-amd64-node-affinity
-  validationActions: [Warn, Audit]
+  policyName: silence-operator-amd64-affinity
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.0/mutatingadmissionpolicy-admissionregistration-v1alpha1.json
+apiVersion: admissionregistration.k8s.io/v1alpha1
+kind: MutatingAdmissionPolicy
+metadata:
+  name: silence-operator-amd64-affinity
+spec:
+  matchConstraints:
+    resourceRules:
+      - apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["deployments"]
+  matchConditions:
+    - name: is-silence-operator
+      expression: >
+        object.metadata.name == "silence-operator" && object.metadata.namespace == "observability"
+  failurePolicy: Fail
+  reinvocationPolicy: IfNeeded
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: >
+          [
+            JSONPatch{
+              op: "add", path: "/spec/template/spec/affinity/nodeAffinity",
+              value: Object.spec.template.spec.affinity.nodeAffinity{
+                requiredDuringSchedulingIgnoredDuringExecution: Object.spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution{
+                  nodeSelectorTerms: [
+                    Object.spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms{
+                      matchExpressions: [
+                        Object.spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms.matchExpressions{
+                          key: "kubernetes.io/arch",
+                          operator: "In",
+                          values: ["amd64"]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]

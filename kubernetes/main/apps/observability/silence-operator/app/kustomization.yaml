@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./mutation-policy.yaml
+  # Alternative: use ./mutation-policy-simple.yaml if the complex version has issues
