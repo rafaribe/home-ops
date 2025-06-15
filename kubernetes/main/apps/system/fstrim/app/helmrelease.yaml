@@ -22,7 +22,7 @@ spec:
 
         cronjob:
           schedule: "0 0 * * 1"
-          parallelism: 3 # Set this to your number of nodes
+          parallelism: 10 # Set this to your number of nodes
 
         pod:
           hostNetwork: true
