@@ -3,8 +3,10 @@ apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
   name: etcd-database-high-fragmentation-ratio
+  namespace: observability
 spec:
   matchers:
     - name: alertname
       value: etcdDatabaseHighFragmentationRatio
       isRegex: false
+      isEqual: true

@@ -1,105 +1,38 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: silence-operator
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 0.16.1
+  url: oci://ghcr.io/home-operations/charts-mirror/silence-operator
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app silence-operator
+  name: silence-operator
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.1.1
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: silence-operator
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
-    controllers:
-      silence-operator:
-        serviceAccount:
-          identifier: *app
-
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsNonRoot: true
-
-        containers:
-          silence-operator:
-            image:
-              repository: quay.io/giantswarm/silence-operator
-              tag: 0.16.1
-            args:
-              - --leader-elect
-              - --metrics-bind-address=:8080
-              - --alertmanager-address=http://alertmanager-operated.observability.svc.cluster.local:9093
-            probes:
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /healthz
-                    port: 8081
-                  initialDelaySeconds: 15
-                  periodSeconds: 20
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
-            resources:
-              requests:
-                cpu: 10m
-                memory: 50Mi
-              limits:
-                memory: 128Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-    defaultPodOptions:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                      - amd64
-    serviceAccount:
-      silence-operator: {}
-    rbac:
-      roles:
-        silence-operator:
-          type: ClusterRole
-          rules:
-            - apiGroups: ["monitoring.giantswarm.io"]
-              resources: ["silences"]
-              verbs: ["*"]
-            - apiGroups: ["coordination.k8s.io"]
-              resources: ["leases"]
-              verbs: ["*"]
-            - apiGroups: [""]
-              resources: ["events"]
-              verbs: ["create"]
-      bindings:
-        silence-operator:
-          type: ClusterRoleBinding
-          roleRef:
-            identifier: *app
-          subjects:
-            - identifier: *app
+    alertmanagerAddress: http://kube-prometheus-stack-alertmanager:9093
+    image:
+      registry: quay.io
+    networkPolicy:
+      enabled: false
