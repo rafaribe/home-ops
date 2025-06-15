@@ -21,7 +21,7 @@ spec:
         type: cronjob
 
         cronjob:
-          schedule: "0 0 * * 1"
+          schedule: "30 4 * * *" # Daily at 4:30 AM
           parallelism: 10 # Set this to your number of nodes
 
         pod:
