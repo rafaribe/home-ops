@@ -16,6 +16,22 @@ spec:
   values:
     controllers:
       alist:
+        initContainers:
+          init-permissions:
+            image:
+              repository: ghcr.io/openlistteam/openlist-git
+              tag: beta-aio
+            command:
+              - /bin/sh
+              - -c
+              - |
+                echo "Setting up permissions..."
+                chown -R 1000:1000 /opt/openlist/data
+                chmod -R 755 /opt/openlist/data
+                echo "Permissions setup complete"
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
         containers:
           app:
             image:
@@ -26,6 +42,15 @@ spec:
               PUID: "1000"
               PGID: "1000"
               UMASK: "022"
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 15m
@@ -38,6 +63,7 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
