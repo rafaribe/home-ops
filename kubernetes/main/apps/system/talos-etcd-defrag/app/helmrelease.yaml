@@ -29,7 +29,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         cronjob:
-          schedule: "58 11 * * *" # Daily at 11:58 PM
+          schedule: "0 4 * * *" # Daily at 4:00 AM
           parallelism: 3 # Set this to your number of nodes
           timeZone: &timeZone Europe/Lisbon
           concurrencyPolicy: Allow # Changed from Forbid to Allow multiple pods
