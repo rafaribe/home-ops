@@ -26,3 +26,4 @@ spec:
       GATUS_SUBDOMAIN: alist
   components:
     - ../../../../../shared/components/gatus/guarded
+    - ../../../../../shared/components/volsync
