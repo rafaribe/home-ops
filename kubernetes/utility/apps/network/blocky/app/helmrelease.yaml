@@ -99,18 +99,17 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
-    ingress:
+    route:
       app:
-        className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
-        hosts:
-          - host: &host "{{ .Release.Name }}.rafaribe.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["{{ .Release.Name }}.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 4000
     persistence:
       config:
         type: configMap

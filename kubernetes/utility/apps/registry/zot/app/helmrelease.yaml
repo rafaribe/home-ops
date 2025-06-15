@@ -70,27 +70,24 @@ spec:
           http:
             port: 5000
 
-    ingress:
+    route:
       main:
-        enabled: true
-        className: external
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/appName: "Zot"
-          hajimari.io/instance: "admin"
-          hajimari.io/group: "networking"
-          hajimari.io/icon: "svg:container-registry"
-          nginx.ingress.kubernetes.io/proxy-body-size: "0"
-          nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-          nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-          external-dns.alpha.kubernetes.io/target: external-utility.rafaribe.com
-        hosts:
-          - host: &host zot.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/app: "Zot"
+          gethomepage.dev/group: "networking"
+          gethomepage.dev/icon: "svg:container-registry"
+          gethomepage.dev/name: "Zot"
+          gethomepage.dev/description: "Container Registry"
+        hostnames: ["zot.rafaribe.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 5000
 
     persistence:
       config-file:

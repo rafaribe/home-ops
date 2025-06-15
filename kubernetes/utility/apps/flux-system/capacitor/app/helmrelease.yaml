@@ -54,19 +54,17 @@ spec:
           http:
             enabled: true
             port: 9000
-    ingress:
+    route:
       app:
-        enabled: true
-        className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal-utility.rafaribe.com
-        hosts:
-          - host: capacitor-utils.rafaribe.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["capacitor-utils.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 9000
     rbac:
       roles:
         capacitor:
