@@ -25,9 +25,14 @@ spec:
               - /bin/sh
               - -c
               - |
-                echo "Setting up permissions..."
-                chown -R 1000:1000 /opt/openlist/data
-                chmod -R 755 /opt/openlist/data
+                echo "Setting up data directory permissions..."
+                if [ -d "/opt/openlist/data" ]; then
+                  chown -R 1000:1000 /opt/openlist/data
+                  chmod -R 755 /opt/openlist/data
+                  echo "Data directory permissions updated"
+                else
+                  echo "Data directory does not exist yet, skipping..."
+                fi
                 echo "Permissions setup complete"
             securityContext:
               runAsUser: 0
@@ -37,11 +42,29 @@ spec:
             image:
               repository: ghcr.io/openlistteam/openlist-git
               tag: beta-aio
+            command:
+              - /bin/sh
+              - -c
+            args:
+              - |
+                echo "Starting OpenList as user $(id -u):$(id -g)..."
+                if [ "$RUN_ARIA2" = "true" ]; then
+                  echo "Starting aria2c in background..."
+                  aria2c \
+                    --enable-rpc \
+                    --rpc-allow-origin-all \
+                    --conf-path=/opt/aria2/.aria2/aria2.conf \
+                    >/dev/null 2>&1 &
+                fi
+                echo "Starting OpenList server..."
+                exec ./openlist server --no-prefix
+            workingDir: /opt/openlist
             env:
               TZ: Europe/Lisbon
               PUID: "1000"
               PGID: "1000"
               UMASK: "022"
+              RUN_ARIA2: "false"
             securityContext:
               runAsUser: 1000
               runAsGroup: 1000
