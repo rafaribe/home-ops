@@ -31,10 +31,10 @@ spec:
         cronjob:
           schedule: "0 2 * * 0" # Weekly on Sunday at 2 AM
           timeZone: &timeZone Europe/Lisbon
-          concurrencyPolicy: Allow  # Changed from Forbid to Allow multiple pods
+          concurrencyPolicy: Allow # Changed from Forbid to Allow multiple pods
           successfulJobsHistory: 3
           failedJobsHistory: 3
-        replicas: 3  # Create 3 pods, one for each control plane
+        replicas: 3 # Create 3 pods, one for each control plane
         containers:
           app:
             image:
@@ -44,30 +44,7 @@ spec:
               - /bin/sh
               - -c
             args:
-              - |
-                set -e
-                echo "Starting etcd defragmentation on local controlplane node..."
-                echo "Timestamp: $(date)"
-                echo "Node: $NODE_NAME"
-                echo "Node IP: $NODE_IP"
-
-                # Verify we have the node IP
-                if [ -z "$NODE_IP" ]; then
-                  echo "ERROR: NODE_IP environment variable not set"
-                  exit 1
-                fi
-
-                echo "Running: talosctl -n $NODE_IP etcd defrag"
-
-                # Run etcd defrag on this node
-                if timeout 300 talosctl -n "$NODE_IP" etcd defrag; then
-                  echo "✅ Successfully defragmented etcd on $NODE_NAME ($NODE_IP)"
-                  echo "Defragmentation completed at: $(date)"
-                else
-                  echo "❌ Failed to defragment etcd on $NODE_NAME ($NODE_IP)"
-                  echo "Defragmentation failed at: $(date)"
-                  exit 1
-                fi
+              - /scripts/defrag.sh
             env:
               TZ: *timeZone
               NODE_NAME:
@@ -92,7 +69,53 @@ spec:
                 drop:
                   - ALL
         serviceAccount:
-          identifier: talos-etcd-defrag
+          identifier: *app
+    serviceAccount:
+      talos-etcd-defrag: {}
+
+    rbac:
+      bindings:
+        cluster-admin-binding:
+          enabled: true
+          type: ClusterRoleBinding
+          roleRef:
+            name: cluster-admin
+            kind: ClusterRole
+            apiGroup: rbac.authorization.k8s.io
+          subjects:
+            - kind: ServiceAccount
+              name: talos-etcd-defrag
+              namespace: "{{ .Release.Namespace }}"
+
+    configMaps:
+      scripts:
+        enabled: true
+        data:
+          defrag.sh: |
+            #!/bin/sh
+            set -e
+            echo "Starting etcd defragmentation on local controlplane node..."
+            echo "Timestamp: $(date)"
+            echo "Node: $NODE_NAME"
+            echo "Node IP: $NODE_IP"
+
+            # Verify we have the node IP
+            if [ -z "$NODE_IP" ]; then
+              echo "ERROR: NODE_IP environment variable not set"
+              exit 1
+            fi
+
+            echo "Running: talosctl -n $NODE_IP etcd defrag"
+
+            # Run etcd defrag on this node
+            if timeout 300 talosctl -n "$NODE_IP" etcd defrag; then
+              echo "✅ Successfully defragmented etcd on $NODE_NAME ($NODE_IP)"
+              echo "Defragmentation completed at: $(date)"
+            else
+              echo "❌ Failed to defragment etcd on $NODE_NAME ($NODE_IP)"
+              echo "Defragmentation failed at: $(date)"
+              exit 1
+            fi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -115,6 +138,13 @@ spec:
               topologyKey: kubernetes.io/hostname
 
     persistence:
+      scripts:
+        type: configMap
+        identifier: scripts
+        defaultMode: 0755
+        globalMounts:
+          - path: /scripts
+            readOnly: true
       talos-secrets:
         type: secret
         name: talos-etcd-defrag-talos-secrets
