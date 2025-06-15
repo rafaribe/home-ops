@@ -2,7 +2,7 @@
 apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
-  name: etcdDatabaseHighFragmentationRatio
+  name: etcd-database-high-fragmentation-ratio
 spec:
   matchers:
     - name: alertname
