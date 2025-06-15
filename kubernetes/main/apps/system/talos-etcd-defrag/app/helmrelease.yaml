@@ -29,12 +29,13 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         cronjob:
-          schedule: "0 2 * * 0" # Weekly on Sunday at 2 AM
+          schedule: "58 11 * * *" # Daily at 11:58 PM
+          parallelism: 3 # Set this to your number of nodes
           timeZone: &timeZone Europe/Lisbon
           concurrencyPolicy: Allow # Changed from Forbid to Allow multiple pods
           successfulJobsHistory: 3
           failedJobsHistory: 3
-        replicas: 3 # Create 3 pods, one for each control plane
+        replicas: 1 # Create 3 pods, one for each control plane
         containers:
           app:
             image:
