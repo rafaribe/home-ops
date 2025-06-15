@@ -2,12 +2,9 @@
 apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
-  name: qbittols-jobs
+  name: etcdDatabaseHighFragmentationRatio
 spec:
   matchers:
     - name: alertname
-      value: KubeJobFailed
+      value: etcdDatabaseHighFragmentationRatio
       isRegex: false
-    - name: job_name
-      value: qbtools.*
-      isRegex: true

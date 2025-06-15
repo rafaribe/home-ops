@@ -1,0 +1,10 @@
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: generic-device-plugin
+spec:
+  matchers:
+    - name: daemonset
+      value: generic-device-plugin
+      isRegex: false
