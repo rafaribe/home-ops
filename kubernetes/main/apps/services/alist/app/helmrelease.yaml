@@ -1,0 +1,87 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app alist
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  interval: 30m
+  maxHistory: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      alist:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/openlistteam/openlist-git
+              tag: beta-aio
+            env:
+              TZ: Europe/Lisbon
+              PUID: "1000"
+              PGID: "1000"
+              UMASK: "022"
+            resources:
+              requests:
+                cpu: 15m
+                memory: 128M
+              limits:
+                memory: 512M
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        fsGroup: 1000
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 5244
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: AList
+          gethomepage.dev/icon: https://cdn.jsdelivr.net/gh/alist-org/logo@main/logo.svg
+          gethomepage.dev/description: File list program that supports multiple storage
+        hostnames: ["alist.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /opt/openlist/data
+      media:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/media
+        globalMounts:
+          - path: /media
+      volsync:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/volsync
+        globalMounts:
+          - path: /volsync
+      backups:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/backups
+        globalMounts:
+          - path: /backups
