@@ -87,7 +87,7 @@ spec:
             apiGroup: rbac.authorization.k8s.io
           subjects:
             - kind: ServiceAccount
-              name: talos-etcd-defrag
+              name: *app
               namespace: "{{ .Release.Namespace }}"
 
     defaultPodOptions:
@@ -108,13 +108,13 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  app.kubernetes.io/name: talos-etcd-defrag
+                  app.kubernetes.io/name: *app
               topologyKey: kubernetes.io/hostname
 
     persistence:
       talos-secrets:
         type: secret
-        name: talos-etcd-defrag-talos-secrets
+        name: *app
         globalMounts:
           - path: /var/run/secrets/talos.dev
             readOnly: true
