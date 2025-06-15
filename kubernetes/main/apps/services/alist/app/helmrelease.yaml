@@ -83,19 +83,19 @@ spec:
           overriden-entrypoint.sh: |
             #!/bin/sh
             set -e
-            
+
             echo "Starting OpenList as user $(id -u):$(id -g)..."
-            
+
             # Set umask if specified
             if [ -n "$UMASK" ]; then
               umask "$UMASK"
             fi
-            
+
             # Handle version command
             if [ "$1" = "version" ]; then
               exec ./openlist version
             fi
-            
+
             # Start aria2 if enabled
             if [ "$RUN_ARIA2" = "true" ]; then
               echo "Starting aria2c in background..."
@@ -105,14 +105,14 @@ spec:
                 --conf-path=/opt/aria2/.aria2/aria2.conf \
                 >/dev/null 2>&1 &
             fi
-            
+
             # Start OpenList server
             echo "Starting OpenList server..."
             exec ./openlist server --no-prefix
     persistence:
       scripts:
         type: configMap
-        name: alist-scripts
+        name: alist
         defaultMode: 0755
         globalMounts:
           - path: /scripts
