@@ -40,11 +40,11 @@ spec:
             image:
               repository: ghcr.io/siderolabs/talosctl
               tag: v1.10.4
-            command:
-              - /bin/sh
-              - -c
             args:
-              - /scripts/defrag.sh
+              - -n
+              - "$(NODE_IP)"
+              - etcd
+              - defrag
             env:
               TZ: *timeZone
               NODE_NAME:
@@ -90,35 +90,6 @@ spec:
               name: talos-etcd-defrag
               namespace: "{{ .Release.Namespace }}"
 
-    configMaps:
-      scripts:
-        enabled: true
-        data:
-          defrag.sh: |
-            #!/bin/sh
-            set -e
-            echo "Starting etcd defragmentation on local controlplane node..."
-            echo "Timestamp: $(date)"
-            echo "Node: $NODE_NAME"
-            echo "Node IP: $NODE_IP"
-
-            # Verify we have the node IP
-            if [ -z "$NODE_IP" ]; then
-              echo "ERROR: NODE_IP environment variable not set"
-              exit 1
-            fi
-
-            echo "Running: talosctl -n $NODE_IP etcd defrag"
-
-            # Run etcd defrag on this node
-            if timeout 300 talosctl -n "$NODE_IP" etcd defrag; then
-              echo "✅ Successfully defragmented etcd on $NODE_NAME ($NODE_IP)"
-              echo "Defragmentation completed at: $(date)"
-            else
-              echo "❌ Failed to defragment etcd on $NODE_NAME ($NODE_IP)"
-              echo "Defragmentation failed at: $(date)"
-              exit 1
-            fi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -141,16 +112,9 @@ spec:
               topologyKey: kubernetes.io/hostname
 
     persistence:
-      scripts:
-        type: configMap
-        identifier: scripts
-        defaultMode: 0755
-        globalMounts:
-          - path: /scripts
-            readOnly: true
-      talos:
+      talos-secrets:
         type: secret
-        name: talos-etcd-defrag
+        name: talos-etcd-defrag-talos-secrets
         globalMounts:
           - path: /var/run/secrets/talos.dev
             readOnly: true
