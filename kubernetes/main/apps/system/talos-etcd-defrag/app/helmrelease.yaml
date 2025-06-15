@@ -71,7 +71,10 @@ spec:
         serviceAccount:
           identifier: *app
     serviceAccount:
-      talos-etcd-defrag: {}
+      talos-etcd-defrag:
+        enabled: true
+        labels: {}
+        annotations: {}
 
     rbac:
       bindings:
@@ -145,9 +148,9 @@ spec:
         globalMounts:
           - path: /scripts
             readOnly: true
-      talos-secrets:
+      talos:
         type: secret
-        name: talos-etcd-defrag-talos-secrets
+        name: talos-etcd-defrag
         globalMounts:
           - path: /var/run/secrets/talos.dev
             readOnly: true
