@@ -1,0 +1,56 @@
+---
+apiVersion: admissionregistration.k8s.io/v1alpha1
+kind: MutatingAdmissionPolicy
+metadata:
+  name: add-amd64-node-affinity
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+    - operations: ["CREATE", "UPDATE"]
+      apiGroups: ["apps"]
+      apiVersions: ["v1"]
+      resources: ["deployments"]
+    namespaceSelector:
+      matchLabels:
+        name: observability
+    objectSelector:
+      matchLabels:
+        app.kubernetes.io/name: silence-operator
+  mutations:
+  - patchType: StrategicMerge
+    strategicMerge:
+      expression: |
+        {
+          "spec": {
+            "template": {
+              "spec": {
+                "affinity": {
+                  "nodeAffinity": {
+                    "requiredDuringSchedulingIgnoredDuringExecution": {
+                      "nodeSelectorTerms": [
+                        {
+                          "matchExpressions": [
+                            {
+                              "key": "kubernetes.io/arch",
+                              "operator": "In",
+                              "values": ["amd64"]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+---
+apiVersion: admissionregistration.k8s.io/v1alpha1
+kind: MutatingAdmissionPolicyBinding
+metadata:
+  name: add-amd64-node-affinity-binding
+spec:
+  policyName: add-amd64-node-affinity
+  validationActions: [Warn, Audit]
