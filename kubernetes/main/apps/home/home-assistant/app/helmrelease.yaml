@@ -145,7 +145,16 @@ spec:
           - backendRefs:
               - name: home-assistant-codeserver
                 port: *codeserver-port
-
+      local:
+        hostnames: ["hass-internal.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: home-assistant
+                port: *hass-port
     persistence:
       config:
         existingClaim: *app
