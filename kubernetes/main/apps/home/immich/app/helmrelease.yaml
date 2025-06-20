@@ -56,7 +56,7 @@ spec:
           server:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.134.0
+              tag: v1.135.3
             envFrom: &envFrom
               - configMapRef:
                   name: immich
@@ -116,7 +116,7 @@ spec:
           microservices:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.134.0
+              tag: v1.135.3
             envFrom: *envFrom
             env:
               IMMICH_WORKERS_EXCLUDE: api
