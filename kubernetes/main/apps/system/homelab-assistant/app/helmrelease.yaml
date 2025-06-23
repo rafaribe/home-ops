@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: homelab-assistant
+  name: &app homelab-assistant
 spec:
   chartRef:
     kind: OCIRepository
@@ -18,8 +18,6 @@ spec:
         type: deployment
         replicas: 1
         strategy: Recreate
-        serviceAccount:
-          identifier: homelab-assistant
 
         containers:
           app:
@@ -85,117 +83,123 @@ spec:
           type: RuntimeDefault
 
     serviceAccount:
-      homelab-assistant:
-        create: true
+      homelab-assistant: {}
 
-    # RBAC configuration for app-template v4.x
     rbac:
-      homelab-assistant:
-        create: true
-        rules:
-        - apiGroups:
-            - homelab.rafaribe.com
-          resources:
-            - volsyncmonitors
-            - volsyncunlocks
-          verbs:
-            - create
-            - delete
-            - get
-            - list
-            - patch
-            - update
-            - watch
-        - apiGroups:
-            - homelab.rafaribe.com
-          resources:
-            - volsyncmonitors/finalizers
-            - volsyncunlocks/finalizers
-          verbs:
-            - update
-        - apiGroups:
-            - homelab.rafaribe.com
-          resources:
-            - volsyncmonitors/status
-            - volsyncunlocks/status
-          verbs:
-            - get
-            - patch
-            - update
-        - apiGroups:
-            - batch
-          resources:
-            - jobs
-          verbs:
-            - create
-            - delete
-            - get
-            - list
-            - patch
-            - update
-            - watch
-        - apiGroups:
-            - ""
-          resources:
-            - events
-          verbs:
-            - create
-            - patch
-        - apiGroups:
-            - ""
-          resources:
-            - namespaces
-          verbs:
-            - get
-            - list
-            - watch
-        - apiGroups:
-            - ""
-          resources:
-            - pods
-          verbs:
-            - get
-            - list
-            - watch
-        - apiGroups:
-            - ""
-          resources:
-            - pods/log
-          verbs:
-            - get
-            - list
-        - apiGroups:
-            - ""
-          resources:
-            - secrets
-          verbs:
-            - get
-            - list
-            - watch
-        - apiGroups:
-            - coordination.k8s.io
-          resources:
-            - leases
-          verbs:
-            - get
-            - list
-            - watch
-            - create
-            - update
-            - patch
-            - delete
-        - apiGroups:
-            - ""
-          resources:
-            - configmaps
-          verbs:
-            - get
-            - list
-            - watch
-            - create
-            - update
-            - patch
-            - delete
+      bindings:
+        homelab-assistant:
+          type: ClusterRoleBinding
+          roleRef:
+            identifier: *app
+          subjects:
+            - identifier: *app
+      roles:
+        homelab-assistant:
+          type: ClusterRole
+          rules:
+            - apiGroups:
+                - homelab.rafaribe.com
+              resources:
+                - volsyncmonitors
+                - volsyncunlocks
+              verbs:
+                - create
+                - delete
+                - get
+                - list
+                - patch
+                - update
+                - watch
+            - apiGroups:
+                - homelab.rafaribe.com
+              resources:
+                - volsyncmonitors/finalizers
+                - volsyncunlocks/finalizers
+              verbs:
+                - update
+            - apiGroups:
+                - homelab.rafaribe.com
+              resources:
+                - volsyncmonitors/status
+                - volsyncunlocks/status
+              verbs:
+                - get
+                - patch
+                - update
+            - apiGroups:
+                - batch
+              resources:
+                - jobs
+              verbs:
+                - create
+                - delete
+                - get
+                - list
+                - patch
+                - update
+                - watch
+            - apiGroups:
+                - ""
+              resources:
+                - events
+              verbs:
+                - create
+                - patch
+            - apiGroups:
+                - ""
+              resources:
+                - namespaces
+              verbs:
+                - get
+                - list
+                - watch
+            - apiGroups:
+                - ""
+              resources:
+                - pods
+              verbs:
+                - get
+                - list
+                - watch
+            - apiGroups:
+                - ""
+              resources:
+                - pods/log
+              verbs:
+                - get
+                - list
+            - apiGroups:
+                - ""
+              resources:
+                - secrets
+              verbs:
+                - get
+                - list
+                - watch
+            - apiGroups:
+                - coordination.k8s.io
+              resources:
+                - leases
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - update
+                - patch
+                - delete
+            - apiGroups:
+                - ""
+              resources:
+                - configmaps
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - update
+                - patch
+                - delete
 
     service:
       app:
