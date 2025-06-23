@@ -6,9 +6,11 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./common/ks.yaml
   - ./descheduler/ks.yaml
   - ./fstrim/ks.yaml
   - ./generic-device-plugin/ks.yaml
+  - ./homelab-assistant/ks.yaml
   - ./intel-device-plugin/ks.yaml
   - ./node-feature-discovery/ks.yaml
   - ./nvidia/ks.yaml

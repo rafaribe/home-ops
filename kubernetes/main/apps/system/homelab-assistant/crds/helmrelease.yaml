@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: homelab-assistant-crds
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: oci://ghcr.io/rafaribe/homelab-assistant-crds
+  ref:
+    semver: "0.1.x"
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: homelab-assistant-crds
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: homelab-assistant-crds
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    installCRDs: true
