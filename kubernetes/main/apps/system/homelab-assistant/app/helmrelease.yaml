@@ -18,6 +18,8 @@ spec:
         type: deployment
         replicas: 1
         strategy: Recreate
+        serviceAccount:
+          identifier: *app
 
         containers:
           app:
