@@ -9,7 +9,7 @@ spec:
   interval: 30m
   url: oci://ghcr.io/rafaribe/homelab-assistant-crds
   ref:
-    semver: "0.1.x"
+    semver: "0.2.x"
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
