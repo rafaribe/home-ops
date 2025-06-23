@@ -18,6 +18,8 @@ spec:
         type: deployment
         replicas: 1
         strategy: Recreate
+        serviceAccount:
+          identifier: homelab-assistant
 
         containers:
           app:
@@ -83,13 +85,14 @@ spec:
           type: RuntimeDefault
 
     serviceAccount:
-      create: true
-      name: homelab-assistant
+      homelab-assistant:
+        create: true
 
-    # RBAC is handled by app-template
+    # RBAC configuration for app-template v4.x
     rbac:
-      create: true
-      rules:
+      homelab-assistant:
+        create: true
+        rules:
         - apiGroups:
             - homelab.rafaribe.com
           resources:
