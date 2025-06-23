@@ -24,8 +24,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/rafaribe/homelab-assistant
-              tag: latest
+              repository: hcr.io/rafaribe/homelab-assistant
+              tag: 2025.06.23@sha256:b959c3a05adafbcd14aef33b6241a93b9dde1cb59a20798acd4f9279fa6fe415
               pullPolicy: IfNotPresent
 
             command: ["/manager"]
