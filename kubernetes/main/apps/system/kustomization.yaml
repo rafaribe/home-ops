@@ -5,8 +5,9 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
+  # OCI Repository
+  - ./common
   # Flux-Kustomizations
-  - ./common/ks.yaml
   - ./descheduler/ks.yaml
   - ./fstrim/ks.yaml
   - ./generic-device-plugin/ks.yaml
