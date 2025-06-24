@@ -32,17 +32,18 @@ spec:
         containers:
           app:
             image:
-              repository: b3log/siyuan
-              tag: v3.1.32
+              repository: docker.io/b3log/siyuan
+              tag: v3.1.32@sha256:5faa0457fc0f2acc6925d6018a9b760abfade1341f5c7f04d0da0a224adc9bac
             env:
               # SiYuan specific environment variables
               SIYUAN_WORKSPACE: /siyuan/workspace
-              SIYUAN_ACCESS_AUTH_CODE: ""
               SIYUAN_LANG: en_US
               TZ: ${TIMEZONE}
+            envFrom:
+              - secretRef:
+                  name: siyuan-secret
             args:
               - --workspace=/siyuan/workspace
-              - --accessAuthCode=""
               - --lang=en_US
             probes:
               liveness:
