@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/homelab-assistant
-              tag: fix-cross-namespace
+              tag: rolling
               pullPolicy: Always
 
             command: ["/manager"]
