@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: clusterzx/paperless-ai
-              tag: 3.0.7@sha256:25e1c501891e2d409f1df92e64e4e20b379a0197b7cd35cf98b49184d9da6814
+              tag: 3.0.7
             env:
               PAPERLESS_API_URL: http://paperless.services.svc.cluster.local:8000/api
               AI_PROVIDER: ollama
