@@ -49,7 +49,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/rafaribe/lidarr-develop
+              repository: ghcr.io/home-operations/lidarr
               tag: 2.13.0.4664@sha256:01d9bd52aabb582c815a355c4368236c3cbd9cb422e17f7eddbf2d8f34e5c87f
             env:
               TZ: Europe/Lisbon

@@ -44,8 +44,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/rafaribe/radarr-develop
-              tag: 5.27.0@sha256:3e03b2313318139c3ede04bf689f53be2f9e58509e4577bd4e4876ed654aba2f
+              repository: ghcr.io/home-operations/radarr
+              tag: 5.27.0.10101@sha256:3e03b2313318139c3ede04bf689f53be2f9e58509e4577bd4e4876ed654aba2f
             env:
               TZ: Europe/Lisbon
               RADARR__APP__INSTANCENAME: Radarr

@@ -30,8 +30,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/corentinth/it-tools
-              tag: 2023.12.21-5ed3693
+              repository: ghcr.io/home-operations/it-tools
+              tag: v2024.10.22-7ca5933@sha256:f1a47717f5792d82becbe278c9502d756b898d63b2c637da131172c4adf1ffc7
             env:
               TZ: Europe/Lisbon
             probes:

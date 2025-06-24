@@ -40,7 +40,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/rafaribe/prowlarr-develop
+              repository: ghcr.io/home-operations/prowlarr
               tag: 1.37.0.5076@sha256:a0bbd593ffd1b341f7fc864d9786e58ac1702ef67241e2285e264920a88b6759
             env:
               TZ: Europe/Lisbon

@@ -33,7 +33,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/tautulli
+              repository: ghcr.io/home-operations/tautulli
               tag: 2.15.2@sha256:bb643e8ca5573e3aaa6e407d32efb045ee1b873bab44ffc3953f9a6f3a60a784
             env:
               TZ: ${TZ}

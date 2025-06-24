@@ -33,7 +33,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/rafaribe/sabnzbd
+              repository: ghcr.io/home-operations/sabnzbd
               tag: 4.5.1@sha256:5f6e7765f7c3d933a5de291a473424481de170cd7822dae9e51f41538016d67b
             env:
               TZ: "Europe/Lisbon"

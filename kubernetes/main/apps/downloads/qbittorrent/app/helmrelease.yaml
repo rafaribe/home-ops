@@ -69,7 +69,7 @@ spec:
           app:
             nameOverride: qbittorrent
             image:
-              repository: ghcr.io/rafaribe/qbittorrent-beta
+              repository: ghcr.io/home-operations/qbittorrent
               tag: 5.1.1@sha256:0f7f6a43d60c3a45eb4d5ba3e307b9dd325d608f62b3f0d4f19517165d52cf96
             env:
               UMASK: "022"
