@@ -144,14 +144,14 @@ spec:
           gethomepage.dev/icon: https://media.invisioncic.com/u329766/monthly_2024_05/karakeep.png.cb75b7347d47989bd0c3e65b9e613700.png
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (*app)
-        hostnames: ["karakeep.rafaribe.com"]
+        hostnames: ["karakeep.rafaribe.com", "hoarder.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: karakeep-app
                 port: *port
 
     persistence:
