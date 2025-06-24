@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: b3log/siyuan
-              tag: v3.1.17
+              tag: v3.1.32
             env:
               # SiYuan specific environment variables
               SIYUAN_WORKSPACE: /siyuan/workspace
