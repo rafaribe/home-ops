@@ -30,8 +30,8 @@ spec:
         containers:
           app:
             image:
-              repository: clusterzx/paperless-ai
-              tag: 3.0.7
+              repository: ghcr.io/rafaribe/paperless-ai
+              tag: 3.0.7@sha256:ebf5b272fe9e3d5f925fbd95f43abf0c5777fdc74b81ead369b25cf97731aef7
             env:
               PAPERLESS_API_URL: http://paperless.services.svc.cluster.local:8000/api
               AI_PROVIDER: ollama
