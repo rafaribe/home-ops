@@ -36,7 +36,6 @@ resources:
   #- ./radicale/ks.yaml
   - ./searxng/ks.yaml
   - ./silverbullet/ks.yaml
-  - ./siyuan/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./stirling-pdf/ks.yaml
   - ./tandoor/ks.yaml
