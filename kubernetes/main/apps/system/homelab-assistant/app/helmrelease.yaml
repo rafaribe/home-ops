@@ -25,8 +25,8 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/homelab-assistant
-              tag: 2025.06.24@sha256:2494088c51cf54ffc7eb55b2af2dead56e56029ef9def4002743bd8de86f98e6
-              pullPolicy: IfNotPresent
+              tag: main
+              pullPolicy: Always
 
             command: ["/manager"]
             args:
@@ -83,6 +83,15 @@ spec:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
 
     serviceAccount:
       homelab-assistant: {}
