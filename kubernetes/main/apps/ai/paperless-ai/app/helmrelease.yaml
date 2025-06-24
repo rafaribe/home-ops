@@ -30,7 +30,7 @@ spec:
         containers:
           app:
             image:
-              repository: clusterzx/paperless-ai
+              repository: docker.io/clusterzx/paperless-ai
               tag: 3.0.7@sha256:25e1c501891e2d409f1df92e64e4e20b379a0197b7cd35cf98b49184d9da6814
             env:
               PAPERLESS_API_URL: http://paperless.services.svc.cluster.local:8000/api
@@ -60,6 +60,16 @@ spec:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
+      affinity:
+        # Image not yet built for arm64
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
     service:
       app:
         controller: paperless-ai
@@ -87,7 +97,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: paperless-ai
         globalMounts:
           - path: /app/data
       logs:
