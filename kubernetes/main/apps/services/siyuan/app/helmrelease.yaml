@@ -1,0 +1,95 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: siyuan
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.1.2
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      siyuan:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        containers:
+          app:
+            image:
+              repository: b3log/siyuan
+              tag: v3.1.17
+            env:
+              # SiYuan specific environment variables
+              SIYUAN_WORKSPACE: /siyuan/workspace
+              SIYUAN_ACCESS_AUTH_CODE: ""
+              SIYUAN_LANG: en_US
+              TZ: ${TIMEZONE}
+            args:
+              - --workspace=/siyuan/workspace
+              - --accessAuthCode=""
+              - --lang=en_US
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 6806
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256M
+              limits:
+                memory: 1Gi
+
+    service:
+      app:
+        controller: siyuan
+        ports:
+          http:
+            port: *port
+
+    route:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        hostnames: ["siyuan.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: siyuan
+                port: *port
+
+    persistence:
+      workspace:
+        existingClaim: siyuan
+        advancedMounts:
+          siyuan:
+            app:
+              - path: /siyuan/workspace
