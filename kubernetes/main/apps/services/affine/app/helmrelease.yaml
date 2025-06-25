@@ -95,7 +95,7 @@ spec:
                 port: *port
     persistence:
       data:
-        existingClaim: actual
+        existingClaim: *app
         globalMounts:
           - path: /data
           - path: /app
