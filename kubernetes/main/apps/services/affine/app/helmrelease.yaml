@@ -96,11 +96,6 @@ spec:
     persistence:
       data:
         existingClaim: actual
-        advancedMounts:
-          actual:
-            app:
-              - path: /data
-      app:
-        type: emptyDir
         globalMounts:
+          - path: /data
           - path: /app
