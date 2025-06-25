@@ -30,10 +30,8 @@ spec:
         containers:
           app:
             image:
-              # repository: ghcr.io/rafaribe/paperless-ai
-              # tag: 3.0.7@sha256:ebf5b272fe9e3d5f925fbd95f43abf0c5777fdc74b81ead369b25cf97731aef7
-              repository: clusterzx/paperless-ai
-              tag: 3.0.7@sha256:25e1c501891e2d409f1df92e64e4e20b379a0197b7cd35cf98b49184d9da6814
+              repository: ghcr.io/rafaribe/paperless-ai
+              tag: 3.0.7@sha256:ebf5b272fe9e3d5f925fbd95f43abf0c5777fdc74b81ead369b25cf97731aef7
             env:
               PAPERLESS_API_URL: http://paperless.services.svc.cluster.local:8000/api
               AI_PROVIDER: ollama
@@ -53,13 +51,13 @@ spec:
                 cpu: 700m
                 memory: 2Gi
     defaultPodOptions:
-      # securityContext:
-      #   runAsNonRoot: true
-      #   runAsUser: 1000
-      #   runAsGroup: 1000
-      #   fsGroup: 1000
-      #   fsGroupChangePolicy: OnRootMismatch
-      #   seccompProfile: { type: RuntimeDefault }
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: Always
+        seccompProfile: { type: RuntimeDefault }
       affinity:
         # Image not yet built for arm64
         nodeAffinity:
