@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/tautulli
-              tag: 2.15.2@sha256:bb643e8ca5573e3aaa6e407d32efb045ee1b873bab44ffc3953f9a6f3a60a784
+              tag: 2.15.2@sha256:4e7d75c9fe8f96ae766269fb451fc5ad215451b30a463c11142c492512c021cd
             env:
               TZ: ${TZ}
               TAUTULLI__PORT: &port 80
