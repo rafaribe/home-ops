@@ -1,0 +1,30 @@
+apiVersion: homelab.rafaribe.com/v1alpha1
+kind: VolSyncMonitor
+metadata:
+  name: volsync-monitor
+  namespace: system
+spec:
+  enabled: true
+  jobSelector:
+    namePrefix: volsync-
+  removeFailedJobs: true
+  scanInterval: 10s
+  ttlSecondsAfterFinished: 3600
+  unlockJobTemplate:
+    args:
+      - -c
+      - |
+        echo "Unlocking repository for failed job: $FAILED_JOB_NAME"
+        echo "Lock error detected: $LOCK_ERROR"
+        restic unlock --remove-all
+        echo "Repository unlocked successfullyx"
+    command:
+      - /bin/sh
+    image: restic/restic:latest
+    resources:
+      limits:
+        cpu: 200m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
