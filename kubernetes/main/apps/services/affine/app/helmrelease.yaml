@@ -29,7 +29,7 @@ spec:
               # Redis configuration
               REDIS_SERVER_HOST: dragonfly.storage.svc.cluster.local
               REDIS_SERVER_PORT: "6379"
-              REDIS_SERVER_DATABASE: "34"
+              REDIS_SERVER_DATABASE: "0"
               # Server configuration
               PORT: &port "80"
               AFFINE_INDEXER_ENABLED: true
