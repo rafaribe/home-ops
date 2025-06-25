@@ -24,10 +24,10 @@ spec:
               PAPERLESS_PUBLIC_URL: https://paperless.rafaribe.com
               LLM_PROVIDER: ollama
               LLM_MODEL: cnmoro/mistral_7b_portuguese:q2_K
-              LLM_LANGUAGE: German
+              LLM_LANGUAGE: Portuguese
               OCR_PROVIDER: llm
               VISION_LLM_PROVIDER: ollama
-              VISION_LLM_MODEL: gpt-4o
+              VISION_LLM_MODEL: minicpm-v:8b
               OCR_LIMIT_PAGES: 5
               OCR_PROCESS_MODE: image
               PDF_SKIP_EXISTING_OCR: false
@@ -35,12 +35,12 @@ spec:
               PDF_UPLOAD: true
               PDF_COPY_METADATA: true
               AUTO_GENERATE_TAGS: false
-              AUTO_TAG: AI-Auto
-              AUTO_OCR_TAG: AI-OCR-Auto
-              MANUAL_TAG: AI
+              AUTO_TAG: ai-auto
+              AUTO_OCR_TAG: ai-ocr
+              MANUAL_TAG: ai
             envFrom:
               - secretRef:
-                  name: paperless-gpt-secret
+                  name: *app
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -68,11 +68,11 @@ spec:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Home
-          gethomepage.dev/name: Paperless AI
+          gethomepage.dev/name: Paperless GPT
           gethomepage.dev/icon: paperless.png
           gethomepage.dev/description: AI Setup for Paperless
-          gethomepage.dev/siteMonitor: http://paperless-ai.ai:3000
-        hostnames: ["paperless-ai.rafaribe.com"]
+          gethomepage.dev/siteMonitor: http://paperless-gpt.ai:8080
+        hostnames: ["paperless-gpt.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system

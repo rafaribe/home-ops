@@ -8,4 +8,5 @@ resources:
   # Flux-Kustomizations
   - ./open-webui/ks.yaml
   - ./ollama/ks.yaml
-  - ./paperless/ks.yaml
+  - ./paperless-ai/ks.yaml
+  - ./paperless-gpt/ks.yaml
