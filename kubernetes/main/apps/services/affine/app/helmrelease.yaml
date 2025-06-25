@@ -18,6 +18,14 @@ spec:
       affine:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/rafaribe/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
         containers:
           app:
             image:
@@ -39,9 +47,7 @@ spec:
               DB_DATA_LOCATION: /data/database
               UPLOAD_LOCATION: /data/uploads
               CONFIG_LOCATION: /data/config
-            envFrom:
-              - secretRef:
-                  name: *app
+            envFrom: *envFrom
             probes:
               liveness:
                 enabled: true
