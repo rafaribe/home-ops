@@ -58,6 +58,7 @@ spec:
                 memory: 512Mi
               limits:
                 memory: 2Gi
+      # Ask for rootless container
     defaultPodOptions:
       securityContext:
         runAsUser: 1000
@@ -94,6 +95,12 @@ spec:
                 port: *port
     persistence:
       data:
+        existingClaim: actual
+        advancedMounts:
+          actual:
+            app:
+              - path: /data
+      app:
         type: emptyDir
         globalMounts:
-          - path: /data
+          - path: /app
