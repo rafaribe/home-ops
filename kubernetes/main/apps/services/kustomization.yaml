@@ -9,6 +9,7 @@ resources:
   # Flux-Kustomizations
   - ./13ft/ks.yaml
   - ./actual/ks.yaml
+  - ./affine/ks.yaml
   - ./alist/ks.yaml
   - ./atuin/ks.yaml
   - ./bytestash/ks.yaml
