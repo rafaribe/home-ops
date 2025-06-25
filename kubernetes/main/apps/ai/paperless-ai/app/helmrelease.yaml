@@ -51,13 +51,13 @@ spec:
                 cpu: 700m
                 memory: 2Gi
     defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: Always
-        seccompProfile: { type: RuntimeDefault }
+      # securityContext:
+      #   runAsNonRoot: true
+      #   runAsUser: 1000
+      #   runAsGroup: 1000
+      #   fsGroup: 1000
+      #   fsGroupChangePolicy: Always
+      #   seccompProfile: { type: RuntimeDefault }
       affinity:
         # Image not yet built for arm64
         nodeAffinity:
