@@ -49,8 +49,8 @@ spec:
     policy: sync
     triggerLoopOnEvent: true
     sources: ["crd", "gateway-httproute"]
-    txtOwnerId: main
-    txtPrefix: main.
+    txtOwnerId: utility
+    txtPrefix: utility.
     domainFilters: ["rafaribe.com"]
     serviceMonitor:
       enabled: true
