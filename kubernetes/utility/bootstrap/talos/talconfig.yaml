@@ -126,20 +126,22 @@ controlPlane:
         network:
           disableSearchDomain: true
 
-    # Enable cluster discovery
+    # Disable cluster discovery
     - &discoveryPatch |-
       cluster:
         discovery:
           registries:
             kubernetes:
-              disabled: false
-            service:
               disabled: true
+            service:
+              disabled: false
 
     # Configure kubelet
     - &kubeletPatch |-
       machine:
         kubelet:
+          extraConfig:
+            maxPods: 150
           extraArgs:
             rotate-server-certificates: true
           nodeIP:
@@ -169,7 +171,7 @@ controlPlane:
               nodiratime=True
               rsize=131072
               wsize=131072
-              nconnect=8
+              nconnect=16
 
     # Configure NTP
     - &ntpPatch |-
@@ -186,27 +188,30 @@ controlPlane:
           extraHostEntries:
             - ip: ${clusterEndpointIP}
               aliases:
-                - shared.${clusterDNSSuffix}
+                - main.${clusterDNSSuffix}
 
     # Custom sysctl settings
     - &sysctlPatch |-
       machine:
         sysctls:
-          fs.inotify.max_user_instances: 8192    # Watchdog
           fs.inotify.max_user_watches: 1048576   # Watchdog
-          kernel.randomize_va_space: 0
-          net.core.netdev_max_backlog: 30000
-          net.core.rmem_max: 67108864            # Cloudflared / QUIC
-          net.core.wmem_max: 67108864            # Cloudflared / QUIC
-          net.ipv4.tcp_rmem: 4096 87380 33554432
-          net.ipv4.tcp_wmem: 4096 65536 33554432
-          net.ipv4.tcp_tw_reuse: 1
-          net.ipv4.tcp_window_scaling: 1
+          fs.inotify.max_user_instances: 8192    # Watchdog
+          net.core.default_qdisc: fq             # 10Gb/s
+          net.core.rmem_max: 67108864            # 10Gb/s | Cloudflared / QUIC
+          net.core.wmem_max: 67108864            # 10Gb/s | Cloudflared / QUIC
+          net.ipv4.tcp_congestion_control: bbr   # 10Gb/s
+          net.ipv4.tcp_fastopen: 3               # Send and accept data in the opening SYN packet
+          net.ipv4.tcp_mtu_probing: 1            # 10Gb/s | Jumbo frames
+          net.ipv4.tcp_rmem: 4096 87380 33554432 # 10Gb/s
+          net.ipv4.tcp_wmem: 4096 65536 33554432 # 10Gb/s
+          net.ipv4.tcp_window_scaling: 1         # 10Gb/s
+          user.max_user_namespaces: 11255        # User Namespaces
+          vm.nr_hugepages: 1024                  # PostgreSQL
 
     # Cluster configuration
     - |-
       cluster:
-        allowSchedulingOnMasters: true
+        allowSchedulingOnControlPlanes: true
         controllerManager:
           extraArgs:
             bind-address: 0.0.0.0
@@ -244,6 +249,7 @@ controlPlane:
               - kube-system
               - system
               - system-upgrade
+              - actions-runner-system
     # Mount openebs-hostpath in kubelet
     - &openebs-hostpath |-
       machine:
@@ -253,9 +259,8 @@ controlPlane:
               type: bind
               source: /var/openebs/local
               options: ["bind", "rshared", "rw"]
-
     # Mount Democratic CSI Storage in Kubelet
-    - |-
+    - &democractic-csi |-
       machine:
         kubelet:
           extraMounts:
@@ -263,12 +268,18 @@ controlPlane:
               type: bind
               source: /var/mnt/csi-local-hostpath
               options: ["bind", "rshared", "rw"]
-
     # Enable hostDNS:
     - &hostdns |-
       machine:
         features:
           hostDNS:
             enabled: true
-            forwardKubeDNSToHost: false
             resolveMemberNames: true
+            forwardKubeDNSToHost: false
+    # Enable MutatingAdmissionPolicy
+    - |-
+      cluster:
+        apiServer:
+          extraArgs:
+            runtime-config: admissionregistration.k8s.io/v1alpha1=true
+            feature-gates: MutatingAdmissionPolicy=true
