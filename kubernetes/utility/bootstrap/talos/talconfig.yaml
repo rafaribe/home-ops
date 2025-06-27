@@ -126,7 +126,7 @@ controlPlane:
         network:
           disableSearchDomain: true
 
-    # Disable cluster discovery
+R    # Disable cluster discovery
     - &discoveryPatch |-
       cluster:
         discovery:

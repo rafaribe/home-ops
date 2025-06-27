@@ -68,7 +68,7 @@ spec:
         controller: main
         ports:
           http:
-            port: 5000
+            port: &port 5000
 
     route:
       main:
@@ -81,13 +81,13 @@ spec:
           gethomepage.dev/description: "Container Registry"
         hostnames: ["zot.rafaribe.com"]
         parentRefs:
-          - name: external
+          - name: internal
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
               - identifier: main
-                port: 5000
+                port: *port
 
     persistence:
       config-file:
