@@ -31,6 +31,7 @@ nodes:
     ipAddress: 10.0.0.3
     nameservers:
       - "10.0.0.254"
+      - "1.1.1.1"
     controlPlane: true
     installDiskSelector:
       wwid: naa.5002538d7025e8be
