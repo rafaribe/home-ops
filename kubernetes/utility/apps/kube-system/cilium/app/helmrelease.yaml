@@ -60,12 +60,6 @@ spec:
       ui:
         enabled: true
         rollOutPods: true
-        ingress:
-          enabled: true
-          annotations:
-            external-dns.alpha.kubernetes.io/target: internal-utils.rafaribe.com
-          className: internal
-          hosts: ["hubble-utils.rafaribe.com"]
     operator:
       prometheus:
         enabled: true
