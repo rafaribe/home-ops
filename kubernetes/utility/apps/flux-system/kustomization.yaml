@@ -7,6 +7,5 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./addons/ks.yaml
-  - ./capacitor/ks.yaml
   - ./flux-operator/ks.yaml
   - ./flux-instance/ks.yaml
