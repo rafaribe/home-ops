@@ -30,10 +30,12 @@ spec:
         containers:
           trilium:
             image:
-              repository: triliumnext/notes
-              tag: "stable"
+              repository: zadam/trilium
+              tag: "0.63.7"
             env:
               TZ: ${TZ}
+              TRILIUM_DATA_DIR: /home/node/trilium-data
+              TRILIUM_PORT: 8080
             resources:
               requests:
                 cpu: 100m
