@@ -30,8 +30,8 @@ spec:
         containers:
           trilium:
             image:
-              repository: zadam/trilium
-              tag: "0.63.7"
+              repository: ghcr.io/triliumnext/trilium
+              tag: "main"
             env:
               TZ: ${TZ}
               TRILIUM_DATA_DIR: /home/node/trilium-data
