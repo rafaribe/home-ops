@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app silverbullet
+  name: &app trilium
   namespace: default
 spec:
   chartRef:
@@ -29,37 +29,57 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          silverbullet:
+          trilium:
             image:
-              repository: docker.io/zefhemel/silverbullet
-              tag: "0.10.4"
+              repository: ghcr.io/triliumnext/trilium
+              tag: "v0.95.0-alpine.rootless"
             env:
               TZ: ${TZ}
-              PUID: 1000
-              GUID: 1000
-              SB_NAME: "rafaribe's notes"
-            envFrom:
-              - secretRef:
-                  name: *app
+              USER_UID: 1000
+              USER_GID: 1000
             resources:
               requests:
                 cpu: 100m
-                memory: 400Mi
+                memory: 512Mi
               limits:
-                cpu: 500m
-                memory: 850Mi
+                cpu: 1000m
+                memory: 1Gi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health-check
+                    port: &port 8080
+                  initialDelaySeconds: 30
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health-check
+                    port: *port
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
 
     service:
       main:
         controller: main
         ports:
           http:
-            port: &port 3000
+            port: *port
+
     route:
       main:
         annotations:
-
-        hostnames: ["notes.rafaribe.com"]
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+        hostnames: ["trilium.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
@@ -70,7 +90,7 @@ spec:
                 port: *port
 
     persistence:
-      space:
+      data:
         existingClaim: *app
         globalMounts:
-          - path: /space
+          - path: /home/trilium/trilium-data
