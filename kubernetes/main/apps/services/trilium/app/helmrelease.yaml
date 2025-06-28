@@ -29,11 +29,9 @@ spec:
           trilium:
             image:
               repository: triliumnext/notes
-              tag: "v0.95.0"
+              tag: "latest"
             env:
               TZ: ${TZ}
-              USER_UID: 1000
-              USER_GID: 1000
             resources:
               requests:
                 cpu: 100m
