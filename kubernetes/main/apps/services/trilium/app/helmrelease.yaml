@@ -17,8 +17,6 @@ spec:
   values:
     defaultPodOptions:
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
@@ -38,16 +36,16 @@ spec:
               - |
                 chown -R 1000:1000 /home/node/trilium-data
                 chmod -R 755 /home/node/trilium-data
+            volumeMounts:
+              - name: data
+                mountPath: /home/node/trilium-data
         containers:
           trilium:
             image:
               repository: ghcr.io/triliumnext/trilium
-              tag: "v0.95.0"
+              tag: "main"
             env:
               TZ: ${TZ}
-              TRILIUM_UID: "1000"
-              TRILIUM_GID: "1000"
-              TRILIUM_DATA_DIR: /home/node/trilium-data
             resources:
               requests:
                 cpu: 100m
