@@ -32,7 +32,7 @@ spec:
           trilium:
             image:
               repository: triliumnext/notes
-              tag: "0.95.0"
+              tag: "v0.95.0"
             env:
               TZ: ${TZ}
               USER_UID: 1000
