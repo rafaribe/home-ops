@@ -7,29 +7,38 @@ bpf:
   datapathMode: netkit
   masquerade: true
   preallocateMaps: true
-  tproxy: true
+  # tproxy: true
+bpfClockProbe: true
+bgpControlPlane:
+  enabled: true
 cgroup:
   automount:
     enabled: false
   hostRoot: /sys/fs/cgroup
 cluster:
   id: 2
-  name: shared
-enableRuntimeDeviceDetection: true
+  name: utility
+cni:
+  exclusive: false
+dashboards:
+  enabled: true
+devices: eth+,en+
+enableIPv4BIGTCP: true
 endpointRoutes:
   enabled: true
 envoy:
-  enabled: false
-hubble:
+  rollOutPods: true
+  prometheus:
+    serviceMonitor:
+      enabled: true
+gatewayAPI:
   enabled: true
-  relay:
-    enabled: true
+  enableAlpn: true
+  xffNumTrustedHops: 1
+hubble:
+  enabled: false
 ipam:
   mode: kubernetes
-bgpControlPlane:
-  enabled: false
-#ipv4NativeRoutingCIDR: 10.44.0.0/16 temp disabled
-# Experiment with Cilium Clustermesh https://docs.cilium.io/en/stable/network/clustermesh/clustermesh/#setting-up-cluster-mesh
 ipv4NativeRoutingCIDR: 10.42.0.0/13
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
@@ -42,8 +51,19 @@ loadBalancer:
   mode: dsr
 localRedirectPolicy: true
 operator:
+  dashboards:
+    enabled: true
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  replicas: 2
   rollOutPods: true
-  replicas: 1
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    trustCRDsExist: true
 rollOutCiliumPods: true
 routingMode: native
 securityContext:
@@ -56,6 +76,8 @@ securityContext:
       - IPC_LOCK
       - SYS_ADMIN
       - SYS_RESOURCE
+      - PERFMON
+      - BPF
       - DAC_OVERRIDE
       - FOWNER
       - SETGID
