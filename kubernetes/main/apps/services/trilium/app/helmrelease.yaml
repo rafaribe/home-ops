@@ -36,9 +36,6 @@ spec:
               - |
                 chown -R 1000:1000 /home/node/trilium-data
                 chmod -R 755 /home/node/trilium-data
-            volumeMounts:
-              - name: data
-                mountPath: /home/node/trilium-data
         containers:
           trilium:
             image:
