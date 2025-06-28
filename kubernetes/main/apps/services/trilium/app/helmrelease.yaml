@@ -17,8 +17,6 @@ spec:
   values:
     defaultPodOptions:
       securityContext:
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     controllers:
       main:
@@ -32,10 +30,6 @@ spec:
               tag: "main"
             env:
               TZ: ${TZ}
-              USER_UID: "1000"
-              USER_GID: "1000"
-              TRILIUM_DATA_DIR: /home/node/trilium-data
-              TRILIUM_PORT: 8080
             resources:
               requests:
                 cpu: 100m
