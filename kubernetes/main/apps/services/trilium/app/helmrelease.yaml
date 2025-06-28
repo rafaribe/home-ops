@@ -31,8 +31,8 @@ spec:
         containers:
           trilium:
             image:
-              repository: ghcr.io/triliumnext/trilium
-              tag: "v0.95.0-alpine.rootless"
+              repository: triliumnext/notes
+              tag: "0.95.0"
             env:
               TZ: ${TZ}
               USER_UID: 1000
@@ -93,4 +93,4 @@ spec:
       data:
         existingClaim: *app
         globalMounts:
-          - path: /home/trilium/trilium-data
+          - path: /home/node/trilium-data

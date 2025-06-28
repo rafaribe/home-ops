@@ -39,7 +39,7 @@ spec:
               REDIS_SERVER_PORT: "6379"
               REDIS_SERVER_DATABASE: "0"
               # Server configuration
-              PORT: &port "80"
+              PORT: &port "3010"
               AFFINE_INDEXER_ENABLED: true
               # Authentication
               OAUTH_EMAIL_LOGIN: "false"
