@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sysadminsmedia/homebox
-              tag: 0.20.0-rootless@sha256:30cfcbcd102fa884875f79292bc9dfae4d730f9d3e986d96ff23e02d8a292169
+              tag: 0.20-rootless
             env:
               TZ: Europe/Lisbon
               HBOX_LOG_LEVEL: info
@@ -57,6 +57,10 @@ spec:
                 memory: 80M
               limits:
                 memory: 256M
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -64,7 +68,6 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
