@@ -18,6 +18,7 @@ resources:
   - ./docmost/ks.yaml
   # - ./fileflows/ks.yaml
   - ./hajimari/ks.yaml
+  - ./homebox/ks.yaml
   - ./karakeep/ks.yaml
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
