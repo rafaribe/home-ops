@@ -15,7 +15,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  targetNamespace: services
+  targetNamespace: network
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
