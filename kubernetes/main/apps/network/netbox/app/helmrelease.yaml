@@ -36,7 +36,7 @@ spec:
               - |
                 echo "Creating Unit directories and setting permissions..."
                 mkdir -p /opt/unit/state/certs /opt/unit/state/scripts
-                chown -R 999:999 /opt/unit/state
+                chown -R 1000:1000 /opt/unit/state
                 chmod -R 755 /opt/unit/state
                 echo "Permissions set successfully"
             securityContext:
@@ -91,9 +91,9 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 999
-        runAsGroup: 999
-        fsGroup: 999
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
