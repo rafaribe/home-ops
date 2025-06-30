@@ -131,7 +131,7 @@ spec:
             subPath: configuration.py
             readOnly: true
       data:
-        existingClaim: netbox
+        existingClaim: netbox-media
         globalMounts:
           - path: /opt/netbox/netbox/media
       reports:
