@@ -31,17 +31,17 @@ spec:
   
   backup:
     retentionPolicy: 15d
-    # Use volume snapshots for fast data backups
-    volumeSnapshot:
-      className: ceph-block
-    # Keep WAL archiving to S3 for point-in-time recovery
+    # Use barmanObjectStore with file:// for NFS backups (includes WAL)
     barmanObjectStore: &barmanObjectStore
+      data:
+        compression: bzip2
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://cnpg-immich/
-      endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
+      # All backups (data + WAL) go to NFS mount via mutation policy
+      destinationPath: file:///nfs-backups/immich-db
       serverName: &currentCluster immich-v4
+      # Dummy credentials required for validation (not used with file://)
       s3Credentials:
         accessKeyId:
           name: immich-bucket
