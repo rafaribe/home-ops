@@ -26,30 +26,27 @@ spec:
             envFrom:
               - secretRef:
                   name: *app
-          init-dirs:
+          init-permissions:
             image:
-              repository: docker.io/library/busybox
-              tag: 1.36.1
+              repository: ghcr.io/home-operations/busybox
+              tag: "1.37"
             command:
               - /bin/sh
               - -c
               - |
-                echo "Creating required directories..."
-                mkdir -p /opt/netbox/netbox/media /opt/netbox/netbox/reports /opt/netbox/netbox/scripts
-                echo "Directories created successfully"
+                echo "Creating Unit directories and setting permissions..."
+                mkdir -p /opt/unit/state/certs /opt/unit/state/scripts
+                chown -R 1000:1000 /opt/unit/state
+                chmod -R 755 /opt/unit/state
+                echo "Permissions set successfully"
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
         containers:
           app:
             image:
               repository: quay.io/tgenannt/netbox
               tag: v4.2.7
-            command:
-              - /bin/sh
-              - -c
-              - |
-                # Create Unit directories with proper permissions
-                mkdir -p /opt/unit/state/certs /opt/unit/state/scripts
-                # Start netbox normally
-                exec /opt/netbox/docker-entrypoint.sh /opt/netbox/launch-netbox.sh
             env:
               TZ: Europe/Lisbon
               CORS_ORIGIN_ALLOW_ALL: "True"
@@ -147,3 +144,11 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /opt/netbox/netbox/scripts
+      unit-state:
+        type: emptyDir
+        globalMounts:
+          - path: /opt/unit/state
+      unit-state:
+        type: emptyDir
+        globalMounts:
+          - path: /opt/unit/state
