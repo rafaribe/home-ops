@@ -24,6 +24,4 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: netbox
-  components:
-    - ../../../../../shared/components/gatus/external
     - ../../../../../shared/components/gatus/external
