@@ -32,23 +32,13 @@ spec:
   backup:
     retentionPolicy: 15d
     barmanObjectStore: &barmanObjectStore
-      # Data backups go to NFS (will be mounted via MutatingAdmissionPolicy)
       data:
         compression: bzip2
-        destinationPath: file:///nfs-backups/immich-db/data
-      # WAL files go to S3
       wal:
         compression: bzip2
         maxParallel: 8
-        destinationPath: s3://cnpg-immich/wal
-        endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
-        s3Credentials:
-          accessKeyId:
-            name: immich-bucket
-            key: AWS_ACCESS_KEY_ID
-          secretAccessKey:
-            name: immich-bucket
-            key: AWS_SECRET_ACCESS_KEY
+      # All backups (data + WAL) go to NFS via mutation policy mount
+      destinationPath: file:///nfs-backups/immich-db
       serverName: &currentCluster immich-v4
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
