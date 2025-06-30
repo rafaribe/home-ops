@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: docker.io/digitalocean/netbox-ip-controller
-              tag: v0.3.0
+              tag: v0.4.2
             env:
               TZ: Europe/Lisbon
               NETBOX_API_URL: "http://netbox.network:8080/api"
