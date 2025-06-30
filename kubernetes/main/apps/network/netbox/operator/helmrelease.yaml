@@ -33,7 +33,7 @@ spec:
     # NetBox connection configuration
     host: "http://netbox.network:8080"
     https: false
-    
+    restorationHashFieldName: "restoration_hash"
     # Authentication
     auth:
       existingSecret: "netbox-operator"
