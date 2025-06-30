@@ -5,8 +5,7 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./pvc.yaml
 configMapGenerator:
   - name: netbox-config
     files:
-      - configuration.py
+      - ./config/configuration.py
