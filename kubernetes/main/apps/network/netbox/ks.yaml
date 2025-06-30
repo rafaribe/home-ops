@@ -23,7 +23,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CLAIM: netbox-media
+      VOLSYNC_CLAIM: netbox
+      VOLSYNC_CAPACITY: 5Gi
   components:
     - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/guarded

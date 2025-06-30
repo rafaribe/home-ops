@@ -10,6 +10,7 @@ resources:
   - ./backube.yaml
   - ./bitnami.yaml
   - ./bjw-s.yaml
+  - ./bootc.yaml
   - ./cilium.yaml
   - ./cloudflare.yaml
   - ./cloudnative-pg.yaml

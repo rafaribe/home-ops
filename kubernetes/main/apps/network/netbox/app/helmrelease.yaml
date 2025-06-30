@@ -1,154 +1,84 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app netbox
+  name: netbox
+  namespace: network
 spec:
-  chartRef:
-    kind: OCIRepository
-    name: app-template
-    namespace: flux-system
-  interval: 30m
-  maxHistory: 3
-  uninstall:
-    keepHistory: false
+  interval: 5m
+  chart:
+    spec:
+      chart: netbox
+      version: 4.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: bootc-charts
+        namespace: flux-system
+      interval: 5m
   values:
-    controllers:
-      netbox:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16
-            envFrom:
-              - secretRef:
-                  name: *app
-          init-permissions:
-            image:
-              repository: ghcr.io/home-operations/busybox
-              tag: "1.37"
-            command:
-              - /bin/sh
-              - -c
-              - |
-                echo "Creating Unit directories and setting permissions..."
-                mkdir -p /opt/unit/state/certs /opt/unit/state/scripts
-                chown -R 1000:1000 /opt/unit/state
-                chmod -R 755 /opt/unit/state
-                echo "Permissions set successfully"
-            securityContext:
-              runAsUser: 0
-              runAsGroup: 0
-        containers:
-          app:
-            image:
-              repository: quay.io/tgenannt/netbox
-              tag: v4.2.7
-            env:
-              TZ: Europe/Lisbon
-              CORS_ORIGIN_ALLOW_ALL: "True"
-              DB_WAIT_DEBUG: "1"
-              HOUSEKEEPING_INTERVAL: "86400"
-              MEDIA_ROOT: /opt/netbox/netbox/media
-              REPORTS_ROOT: /opt/netbox/netbox/reports
-              SCRIPTS_ROOT: /opt/netbox/netbox/scripts
-              WEBHOOKS_ENABLED: "true"
-              # Disable superuser creation in favor of remote auth
-              SKIP_SUPERUSER: "true"
-            envFrom:
-              - secretRef:
-                  name: *app
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api/
-                    port: &port 8080
-                  initialDelaySeconds: 60
-                  periodSeconds: 10
-                  timeoutSeconds: 5
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: true
-                spec:
-                  httpGet:
-                    path: /api/
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 5
-                  failureThreshold: 30
-            resources:
-              requests:
-                cpu: 10m
-                memory: 512Mi
-              limits:
-                memory: 2Gi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
-    service:
-      app:
-        controller: *app
-        ports:
-          http:
-            port: *port
-    route:
-      app:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Network
-          gethomepage.dev/name: Netbox
-          gethomepage.dev/icon: https://raw.githubusercontent.com/netbox-community/netbox/develop/netbox/project-static/img/netbox_logo.svg
-          gethomepage.dev/description: Network infrastructure management
-          gethomepage.dev/widget.type: netbox
-          gethomepage.dev/widget.url: "http://netbox.network:8080"
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_NETBOX_API_TOKEN}}` }}"
-        hostnames: ["netbox.rafaribe.com"]
-        parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+    image:
+      repository: quay.io/tgenannt/netbox
+      pullPolicy: IfNotPresent
+      tag: "v4.2.7"
+    superuser:
+      name: rafaribe
+      email: rafaribe@rafaribe.com
+    admins:
+      - ["rafaribe", "rafaribe@rafaribe.com"]
+    logging:
+      disable_existing_loggers: false
+      handlers:
+        console:
+          class: logging.StreamHandler
+      loggers:
+        netbox.authentication.*:
+          handlers:
+            - console
+          level: DEBUG
+      version: 1
+    remoteAuth:
+      enabled: false
+      header: HTTP_X_AUTH_REQUEST_EMAIL
+      groupHeader: HTTP_X_AUTH_REQUEST_GROUPS
+      defaultPermissions: None
+      groupSyncEnabled: false
+      groupSeparator: ','
+      autoCreateUser: false
+      superuserGroups: []
+      staffGroups: []
+    loginRequired: false
+    metricsEnabled: true
+    existingSecret: "netbox"
+    postgresql:
+      enabled: false
+    redis:
+      enabled: false
+    tasksRedis:
+      host: dragonfly.storage.svc.cluster.local
+    cachingRedis:
+      host: dragonfly.storage.svc.cluster.local
+    externalDatabase:
+      host: home-ops-storage-rw.storage.svc.cluster.local
+      port: 5432
+      database: netbox
+      username: netbox
+      existingSecretName: "netbox"
+      existingSecretKey: "DB_PASSWORD"
     persistence:
-      config:
-        type: configMap
-        name: netbox-config
-        globalMounts:
-          - path: /etc/netbox/config/configuration.py
-            subPath: configuration.py
-            readOnly: true
-      data:
-        existingClaim: netbox-media
-        globalMounts:
-          - path: /opt/netbox/netbox/media
-      reports:
-        type: emptyDir
-        globalMounts:
-          - path: /opt/netbox/netbox/reports
-      scripts:
-        type: emptyDir
-        globalMounts:
-          - path: /opt/netbox/netbox/scripts
-      unit-state:
-        type: emptyDir
-        globalMounts:
-          - path: /opt/unit/state
-      unit-state:
-        type: emptyDir
-        globalMounts:
-          - path: /opt/unit/state
+      enabled: true
+      existingClaim: netbox
+    reportsPersistence:
+      enabled: false
+    ingress:
+      enabled: false
+    init:
+      image:
+        repository: ghcr.io/home-operations/busybox
+        tag: "1.37"
+        pullPolicy: IfNotPresent
+    updateStrategy:
+      type: RollingUpdate
+    worker:
+      enabled: true
+      updateStrategy:
+        type: RollingUpdate
