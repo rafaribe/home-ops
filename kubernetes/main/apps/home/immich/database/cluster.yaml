@@ -29,22 +29,10 @@ spec:
   monitoring:
     enablePodMonitor: true
   
-  # NFS Volume Mount for backups
-  additionalVolumes:
-    - name: nfs-backup-volume
-      nfs:
-        server: truenas.rafaribe.com
-        path: /mnt/storage-0/volsync/immich-db-backups
-  
-  additionalVolumeMounts:
-    - name: nfs-backup-volume
-      mountPath: /nfs-backups
-      readOnly: false
-  
   backup:
     retentionPolicy: 15d
     barmanObjectStore: &barmanObjectStore
-      # Data backups go to NFS
+      # Data backups go to NFS (will be mounted via MutatingAdmissionPolicy)
       data:
         compression: bzip2
         destinationPath: file:///nfs-backups/immich-db/data
