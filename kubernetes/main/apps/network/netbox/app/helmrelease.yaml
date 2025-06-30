@@ -41,7 +41,7 @@ spec:
           app:
             image:
               repository: quay.io/tgenannt/netbox
-              tag: v3.3.1
+              tag: v4.1.8
             env:
               TZ: Europe/Lisbon
               CORS_ORIGIN_ALLOW_ALL: "True"
