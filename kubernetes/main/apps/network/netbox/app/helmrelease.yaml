@@ -26,6 +26,22 @@ spec:
             envFrom:
               - secretRef:
                   name: *app
+          init-permissions:
+            image:
+              repository: docker.io/netboxcommunity/netbox
+              tag: v4.1.8
+            command:
+              - /bin/sh
+              - -c
+              - |
+                echo "Creating Unit directories and setting permissions..."
+                mkdir -p /opt/unit/state/certs /opt/unit/state/scripts
+                chown -R 999:999 /opt/unit/state
+                chmod -R 755 /opt/unit/state
+                echo "Permissions set successfully"
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
         containers:
           app:
             image:
@@ -74,9 +90,10 @@ spec:
                 memory: 2Gi
     defaultPodOptions:
       securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
+        runAsNonRoot: true
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
@@ -125,3 +142,7 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /opt/netbox/netbox/scripts
+      unit-state:
+        type: emptyDir
+        globalMounts:
+          - path: /opt/unit/state
