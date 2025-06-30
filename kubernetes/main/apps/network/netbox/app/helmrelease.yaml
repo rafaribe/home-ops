@@ -64,8 +64,8 @@ spec:
                   httpGet:
                     path: /api/
                     port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 5
+                  initialDelaySeconds: 60
+                  periodSeconds: 25
                   timeoutSeconds: 5
                   failureThreshold: 30
             resources:
