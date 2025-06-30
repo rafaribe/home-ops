@@ -25,7 +25,7 @@ spec:
               tag: v0.4.2
             env:
               TZ: Europe/Lisbon
-              NETBOX_API_URL: "http://netbox.network:8080/api"
+              NETBOX_API_URL: "http://netbox.network.svc.cluster.local:8080/api"
               NETBOX_TOKEN:
                 valueFrom:
                   secretKeyRef:
