@@ -122,11 +122,7 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /opt/netbox/netbox/reports
-      scripts:
-        type: emptyDir
+      data:
+        existingClaim: *app
         globalMounts:
-          - path: /opt/netbox/netbox/scripts
-      media:
-        existingClaim: netbox-media
-        globalMounts:
-          - path: /opt/netbox/netbox/media
+          - path: /opt/netbox/netbox
