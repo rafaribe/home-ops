@@ -37,7 +37,7 @@ spec:
               POD_PUBLISH_LABELS: "app,k8s-app,app.kubernetes.io/name"
               SERVICE_PUBLISH_LABELS: "app,k8s-app,app.kubernetes.io/name"
               DUAL_STACK_IP: "false"
-              DEBUG: "false"
+              DEBUG: "true"
               METRICS_ADDR: ":8001"
               READY_CHECK_ADDR: ":5001"
               NETBOX_QPS: "100"
