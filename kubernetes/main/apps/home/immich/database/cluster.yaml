@@ -31,24 +31,9 @@ spec:
   
   backup:
     retentionPolicy: 15d
-    # Use barmanObjectStore with file:// for NFS backups (includes WAL)
-    barmanObjectStore: &barmanObjectStore
-      data:
-        compression: bzip2
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      # All backups (data + WAL) go to NFS mount via mutation policy
-      destinationPath: file:///nfs-backups/immich-db
-      serverName: &currentCluster immich-v4
-      # Dummy credentials required for validation (not used with file://)
-      s3Credentials:
-        accessKeyId:
-          name: immich-bucket
-          key: AWS_ACCESS_KEY_ID
-        secretAccessKey:
-          name: immich-bucket
-          key: AWS_SECRET_ACCESS_KEY
+    # Use volume snapshots for fast, efficient backups
+    volumeSnapshot:
+      className: ceph-block
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
