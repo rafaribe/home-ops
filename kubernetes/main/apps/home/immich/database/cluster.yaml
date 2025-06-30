@@ -31,15 +31,12 @@ spec:
   
   backup:
     retentionPolicy: 15d
-    # Volume snapshots for data backups (local/fast)
-    volumeSnapshot:
-      className: ceph-block
-    # WAL files to S3 for point-in-time recovery
+    # Primary configuration: WAL files to S3 for continuous archiving
     barmanObjectStore: &barmanObjectStore
       wal:
         compression: bzip2
         maxParallel: 8
-      # Only WAL files go to S3
+      # WAL files go to S3
       destinationPath: s3://cnpg-immich/
       endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
       serverName: &currentCluster immich-v4

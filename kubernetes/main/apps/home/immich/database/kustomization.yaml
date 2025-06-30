@@ -6,3 +6,5 @@ resources:
   - ./externalsecret.yaml
   - ./scheduledbackup.yaml
   - ./objectbucketclaim.yaml
+  - ./cnpg-nfs-mutation.yaml
+  - ./nfs-backup.yaml

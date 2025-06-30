@@ -1,0 +1,28 @@
+---
+# Separate backup configuration for NFS data backups
+# This creates data backups on NFS while WAL files go to S3
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: immich-nfs-backup
+spec:
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  backupOwnerReference: self
+  cluster:
+    name: immich-db
+  method: barmanObjectStore
+  # Override barmanObjectStore for NFS data backups
+  barmanObjectStore:
+    data:
+      compression: bzip2
+    # Data backups go to NFS (no WAL section = no WAL archiving)
+    destinationPath: file:///nfs-backups/immich-db
+    serverName: immich-v4-nfs
+    # Dummy credentials required for validation (not used with file://)
+    s3Credentials:
+      accessKeyId:
+        name: immich-bucket
+        key: AWS_ACCESS_KEY_ID
+      secretAccessKey:
+        name: immich-bucket
+        key: AWS_SECRET_ACCESS_KEY
