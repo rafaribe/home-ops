@@ -17,7 +17,7 @@ spec:
   postgresql:
     parameters:
       max_connections: "600"
-      max_slot_wal_keep_size: 10GB
+      max_slot_wal_keep_size: 15GB
       shared_buffers: 512MB
     shared_preload_libraries:
       - "vectors.so"
@@ -29,7 +29,7 @@ spec:
   monitoring:
     enablePodMonitor: true
   backup:
-    retentionPolicy: 30d
+    retentionPolicy: 15d
     barmanObjectStore: &barmanObjectStore
       data:
         compression: bzip2
