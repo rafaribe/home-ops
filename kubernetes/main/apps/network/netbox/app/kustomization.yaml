@@ -8,4 +8,6 @@ resources:
 configMapGenerator:
   - name: netbox-config
     files:
-      - ./config/configuration.py
+      - configuration.py=./config/configuration.py
+generatorOptions:
+  disableNameSuffixHash: true
