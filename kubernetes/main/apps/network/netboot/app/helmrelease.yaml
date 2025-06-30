@@ -63,6 +63,11 @@ spec:
           hajimari.io/appName: "Netboot.xyz"
           hajimari.io/info: "Network boot system"
           hajimari.io/icon: "refresh-auto"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: "Services"
+          gethomepage.dev/name: "Netboot.xyz"
+          gethomepage.dev/icon: "https://netboot.xyz/img/netboot.xyz.gif"
+          gethomepage.dev/description: "Network boot system for various operating systems"
         hostnames: ["netboot.rafaribe.com"]
         parentRefs:
           - name: internal
