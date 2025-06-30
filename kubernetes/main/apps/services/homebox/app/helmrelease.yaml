@@ -36,7 +36,7 @@ spec:
               HBOX_LOG_LEVEL: info
               HBOX_LOG_FORMAT: text
               HBOX_WEB_PORT: &port 7745
-              HBOX_OPTIONS_ALLOW_REGISTRATION: "false"
+            #  HBOX_OPTIONS_ALLOW_REGISTRATION: "false"
               HBOX_WEB_HOST: 0.0.0.0
             envFrom:
               - secretRef:
