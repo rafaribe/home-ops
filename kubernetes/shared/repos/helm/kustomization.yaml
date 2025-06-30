@@ -48,7 +48,7 @@ resources:
   - ./mojo2600.yaml
   - ./node-feature-discovery.yaml
   - ./nfs-provisioner.yaml
-  . ./netbox-community.yaml
+  - ./netbox-community.yaml
   - ./nginx-gateway-fabric.yaml
   - ./nvidia.yaml
   - ./openebs.yaml
