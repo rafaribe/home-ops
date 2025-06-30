@@ -29,8 +29,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/netbox-community/netbox
-              tag: v4.3.3-3.3.0
+              repository: docker.io/netboxcommunity/netbox
+              tag: v4.1.8
             env:
               TZ: Europe/Lisbon
               CORS_ORIGIN_ALLOW_ALL: "True"
@@ -40,8 +40,6 @@ spec:
               REPORTS_ROOT: /opt/netbox/netbox/reports
               SCRIPTS_ROOT: /opt/netbox/netbox/scripts
               WEBHOOKS_ENABLED: "true"
-              # Skip superuser creation during startup
-              SKIP_SUPERUSER: "false"
             envFrom:
               - secretRef:
                   name: *app
@@ -53,7 +51,7 @@ spec:
                   httpGet:
                     path: /api/
                     port: &port 8080
-                  initialDelaySeconds: 30
+                  initialDelaySeconds: 60
                   periodSeconds: 10
                   timeoutSeconds: 5
                   failureThreshold: 3
@@ -64,8 +62,8 @@ spec:
                   httpGet:
                     path: /api/
                     port: *port
-                  initialDelaySeconds: 60
-                  periodSeconds: 25
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
                   timeoutSeconds: 5
                   failureThreshold: 30
             resources:
@@ -75,13 +73,11 @@ spec:
               limits:
                 memory: 2Gi
     defaultPodOptions:
-      nodeSelector:
-        kubernetes.io/arch: amd64
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
@@ -118,6 +114,10 @@ spec:
           - path: /etc/netbox/config/configuration.py
             subPath: configuration.py
             readOnly: true
+      data:
+        existingClaim: netbox-media
+        globalMounts:
+          - path: /opt/netbox/netbox/media
       reports:
         type: emptyDir
         globalMounts:
@@ -126,7 +126,3 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /opt/netbox/netbox/scripts
-      media:
-        existingClaim: netbox-media
-        globalMounts:
-          - path: /opt/netbox/netbox/media
