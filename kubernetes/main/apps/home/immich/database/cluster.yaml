@@ -28,24 +28,40 @@ spec:
       memory: 4Gi
   monitoring:
     enablePodMonitor: true
+  
+  # NFS Volume Mount for backups
+  additionalVolumes:
+    - name: nfs-backup-volume
+      nfs:
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/volsync/immich-db-backups
+  
+  additionalVolumeMounts:
+    - name: nfs-backup-volume
+      mountPath: /nfs-backups
+      readOnly: false
+  
   backup:
     retentionPolicy: 15d
     barmanObjectStore: &barmanObjectStore
+      # Data backups go to NFS
       data:
         compression: bzip2
+        destinationPath: file:///nfs-backups/immich-db/data
+      # WAL files go to S3
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://cnpg-immich/
-      endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
+        destinationPath: s3://cnpg-immich/wal
+        endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
+        s3Credentials:
+          accessKeyId:
+            name: immich-bucket
+            key: AWS_ACCESS_KEY_ID
+          secretAccessKey:
+            name: immich-bucket
+            key: AWS_SECRET_ACCESS_KEY
       serverName: &currentCluster immich-v4
-      s3Credentials:
-        accessKeyId:
-          name: immich-bucket
-          key: AWS_ACCESS_KEY_ID
-        secretAccessKey:
-          name: immich-bucket
-          key: AWS_SECRET_ACCESS_KEY
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
