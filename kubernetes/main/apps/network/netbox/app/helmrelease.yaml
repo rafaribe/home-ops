@@ -45,8 +45,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/netbox-community/netbox
-              tag: v4.3.3-3.3.0
+              repository:  quay.io/tgenannt/netbox
+              tag: v4.2.7
             env:
               TZ: Europe/Lisbon
               CORS_ORIGIN_ALLOW_ALL: "True"
