@@ -23,6 +23,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CLAIM: netbox-media
   components:
     - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/guarded
