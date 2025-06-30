@@ -28,3 +28,27 @@ spec:
   components:
     - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/guarded
+---
+# yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &ipcontroller netbox-ip-controller
+  namespace: flux-system
+spec:
+  targetNamespace: network
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *ipcontroller
+  dependsOn:
+    - name: netbox
+  path: ./kubernetes/main/apps/network/netbox/ip-controller
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops
+    namespace: flux-system
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
