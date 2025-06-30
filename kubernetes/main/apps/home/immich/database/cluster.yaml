@@ -31,16 +31,18 @@ spec:
   
   backup:
     retentionPolicy: 15d
+    # Volume snapshots for data backups (local/fast)
+    volumeSnapshot:
+      className: ceph-block
+    # WAL files to S3 for point-in-time recovery
     barmanObjectStore: &barmanObjectStore
-      data:
-        compression: bzip2
       wal:
         compression: bzip2
         maxParallel: 8
-      # All backups (data + WAL) go to NFS via mutation policy mount
-      destinationPath: file:///nfs-backups/immich-db
+      # Only WAL files go to S3
+      destinationPath: s3://cnpg-immich/
+      endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
       serverName: &currentCluster immich-v4
-      # Required by CNPG validation even for file:// backups (not actually used)
       s3Credentials:
         accessKeyId:
           name: immich-bucket
