@@ -22,7 +22,7 @@ spec:
   matchConditions:
     - name: is-cnpg-immich-pod
       expression: >
-        object.metadata.labels["postgresql"] == "immich-db"
+        object.metadata.labels["cnpg.io/cluster"] == "immich-db"
     - name: is-in-home-namespace
       expression: >
         object.metadata.namespace == "home"
