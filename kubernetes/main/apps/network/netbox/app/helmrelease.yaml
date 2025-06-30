@@ -93,9 +93,7 @@ spec:
           gethomepage.dev/name: Netbox
           gethomepage.dev/icon: https://raw.githubusercontent.com/netbox-community/netbox/develop/netbox/project-static/img/netbox_logo.svg
           gethomepage.dev/description: Network infrastructure management
-          gethomepage.dev/widget.type: netbox
-          gethomepage.dev/widget.url: "http://netbox.network:8080"
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_NETBOX_API_TOKEN}}` }}"
+          gethomepage.dev/siteMonitor: http://netbox.network:8080
         hostnames: ["netbox.rafaribe.com"]
         parentRefs:
           - name: external
