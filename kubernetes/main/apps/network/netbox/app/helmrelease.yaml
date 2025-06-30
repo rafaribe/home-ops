@@ -29,8 +29,8 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/netboxcommunity/netbox
-              tag: v4.2.7
+              repository: ghcr.io/rafaribe/netbox
+              tag: v4.3.3@sha256:0c552188836dcc98ae479611d22b050a635bea63d82f5dcce7e8b54b19bb4f5b
             env:
               TZ: Europe/Lisbon
               CORS_ORIGIN_ALLOW_ALL: "True"
