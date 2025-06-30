@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sysadminsmedia/homebox
-              tag: 0.19.0-rootless
+              tag: 0.20.0-rootless
             env:
               TZ: Europe/Lisbon
               HBOX_LOG_LEVEL: info
