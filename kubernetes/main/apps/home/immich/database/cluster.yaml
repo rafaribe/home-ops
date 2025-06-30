@@ -31,9 +31,24 @@ spec:
   
   backup:
     retentionPolicy: 15d
-    # Use volume snapshots for fast, efficient backups
+    # Use volume snapshots for fast data backups
     volumeSnapshot:
       className: ceph-block
+    # Keep WAL archiving to S3 for point-in-time recovery
+    barmanObjectStore: &barmanObjectStore
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      destinationPath: s3://cnpg-immich/
+      endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
+      serverName: &currentCluster immich-v4
+      s3Credentials:
+        accessKeyId:
+          name: immich-bucket
+          key: AWS_ACCESS_KEY_ID
+        secretAccessKey:
+          name: immich-bucket
+          key: AWS_SECRET_ACCESS_KEY
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
