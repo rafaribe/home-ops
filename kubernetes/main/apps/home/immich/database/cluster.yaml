@@ -40,6 +40,14 @@ spec:
       # All backups (data + WAL) go to NFS via mutation policy mount
       destinationPath: file:///nfs-backups/immich-db
       serverName: &currentCluster immich-v4
+      # Required by CNPG validation even for file:// backups (not actually used)
+      s3Credentials:
+        accessKeyId:
+          name: immich-bucket
+          key: AWS_ACCESS_KEY_ID
+        secretAccessKey:
+          name: immich-bucket
+          key: AWS_SECRET_ACCESS_KEY
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
