@@ -45,9 +45,9 @@ spec:
     copyMethod: "Snapshot"
     enableFileDeletion: true
     moverSecurityContext:
-      fsGroup: 999  # PostgreSQL user
-      runAsGroup: 999
-      runAsUser: 999
+      fsGroup: 1000  # PostgreSQL user
+      runAsGroup: 1000
+      runAsUser: 1000
     repository: "immich-db-volsync-nfs"
     storageClassName: "ceph-block"
     volumeSnapshotClassName: "csi-ceph-blockpool"
