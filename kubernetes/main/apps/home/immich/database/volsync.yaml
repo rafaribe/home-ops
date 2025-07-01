@@ -1,0 +1,53 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: immich-db-nfs
+spec:
+  sourcePVC: immich-db-1  # The PVC used by the primary PostgreSQL pod
+  trigger:
+    schedule: "0 4 * * *"  # Run at 04:00, 1 hour after database backup
+  restic:
+    accessModes: ["ReadWriteOnce"]
+    cacheAccessModes: ["ReadWriteOnce"]
+    cacheCapacity: "8Gi"
+    cacheStorageClassName: "ceph-block"
+    copyMethod: "Snapshot"  # Use volume snapshots for consistency
+    moverSecurityContext:
+      fsGroup: 999  # PostgreSQL user
+      runAsGroup: 999
+      runAsUser: 999
+    pruneIntervalDays: 14
+    repository: "immich-db-volsync-nfs"
+    retain:
+      daily: 7
+      weekly: 4
+    storageClassName: "ceph-block"
+    volumeSnapshotClassName: "csi-ceph-blockpool"
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: immich-db-dst
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    accessModes: ["ReadWriteOnce"]
+    cacheAccessModes: ["ReadWriteOnce"]
+    cacheCapacity: "8Gi"
+    cacheStorageClassName: "ceph-block"
+    capacity: "100Gi"  # Match the database PVC size
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    copyMethod: "Snapshot"
+    enableFileDeletion: true
+    moverSecurityContext:
+      fsGroup: 999  # PostgreSQL user
+      runAsGroup: 999
+      runAsUser: 999
+    repository: "immich-db-volsync-nfs"
+    storageClassName: "ceph-block"
+    volumeSnapshotClassName: "csi-ceph-blockpool"
