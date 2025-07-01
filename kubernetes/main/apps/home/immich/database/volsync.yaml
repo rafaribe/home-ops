@@ -15,9 +15,9 @@ spec:
     cacheStorageClassName: "ceph-block"
     copyMethod: "Snapshot"  # Use volume snapshots for consistency
     moverSecurityContext:
-      fsGroup: 999  # PostgreSQL user
-      runAsGroup: 999
-      runAsUser: 999
+      fsGroup: 1000  # PostgreSQL user
+      runAsGroup: 1000
+      runAsUser: 1000
     pruneIntervalDays: 14
     repository: "immich-db-volsync-nfs"
     retain:
