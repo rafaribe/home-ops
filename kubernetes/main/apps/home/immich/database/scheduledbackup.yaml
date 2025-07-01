@@ -8,5 +8,6 @@ spec:
   schedule: "@daily"
   immediate: true
   backupOwnerReference: self
+  method: volumeSnapshot
   cluster:
     name: immich-db
