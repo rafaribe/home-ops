@@ -11,3 +11,4 @@ resources:
   - ./ollama/ks.yaml
   - ./paperless-ai/ks.yaml
   - ./paperless-gpt/ks.yaml
+  - ./amazon-q/ks.yaml
