@@ -22,13 +22,17 @@ spec:
   matchConditions:
     - name: is-cnpg-immich-pod
       expression: >
+        has(object.metadata.labels) && 
+        has(object.metadata.labels["cnpg.io/cluster"]) && 
         object.metadata.labels["cnpg.io/cluster"] == "immich-db"
     - name: is-in-home-namespace
       expression: >
+        has(object.metadata.namespace) && 
         object.metadata.namespace == "home"
     - name: nfs-backup-volume-does-not-exist
       expression: >
-        !object.spec.volumes.exists(item, item.name == "nfs-backup-volume")
+        !has(object.spec.volumes) || 
+        !object.spec.volumes.exists(v, v.name == "nfs-backup-volume")
   failurePolicy: Fail
   reinvocationPolicy: IfNeeded
   mutations:
@@ -36,20 +40,22 @@ spec:
       jsonPatch:
         expression: >
           [
-            JSONPatch{
-              op: "add", path: "/spec/containers/0/volumeMounts/-",
-              value: Object.spec.containers.volumeMounts{
-                name: "nfs-backup-volume",
-                mountPath: "/nfs-backups"
+            {
+              "op": "add", 
+              "path": "/spec/containers/0/volumeMounts/-",
+              "value": {
+                "name": "nfs-backup-volume",
+                "mountPath": "/nfs-backups"
               }
             },
-            JSONPatch{
-              op: "add", path: "/spec/volumes/-",
-              value: Object.spec.volumes{
-                name: "nfs-backup-volume",
-                nfs: Object.spec.volumes.nfs{
-                  server: "truenas.rafaribe.com",
-                  path: "/mnt/storage-0/volsync/immich-db-backups"
+            {
+              "op": "add", 
+              "path": "/spec/volumes/-",
+              "value": {
+                "name": "nfs-backup-volume",
+                "nfs": {
+                  "server": "truenas.rafaribe.com",
+                  "path": "/mnt/storage-0/volsync/immich-db-backups"
                 }
               }
             }
