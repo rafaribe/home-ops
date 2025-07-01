@@ -5,7 +5,7 @@ kind: ScheduledBackup
 metadata:
   name: immich-daily-backup
 spec:
-  schedule: "@daily"
+  schedule: "0 3 * * *"  # Run at 03:00 every night
   immediate: true
   backupOwnerReference: self
   method: volumeSnapshot
