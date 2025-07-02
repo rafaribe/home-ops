@@ -6,5 +6,3 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   - ./common # OCI Repository
-  # Flux-Kustomizations
-  - ./chartdb/ks.yaml
