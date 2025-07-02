@@ -42,9 +42,8 @@ spec:
         ports:
           http:
             port: &port 80
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Development
@@ -52,10 +51,12 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chartdb/chartdb/main/src/assets/logo-light.png
           gethomepage.dev/description: Database diagrams editor
           gethomepage.dev/siteMonitor: http://chartdb.development:80
-        hosts:
-          - host: chartdb.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["chartdb.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
