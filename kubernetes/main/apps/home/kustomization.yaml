@@ -9,3 +9,4 @@ resources:
   - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
   - ./node-red/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
