@@ -30,23 +30,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
             resources:
               requests:
                 cpu: 25m
                 memory: 64M
               limits:
                 memory: 128M
-        pod:
-          securityContext:
-            runAsUser: 0
-            runAsGroup: 0
-            fsGroup: 0
-            fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: chartdb
