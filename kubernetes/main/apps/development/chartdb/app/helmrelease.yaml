@@ -30,6 +30,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 25m
@@ -38,10 +44,10 @@ spec:
                 memory: 128M
         pod:
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
+            runAsUser: 568
+            runAsGroup: 568
             runAsNonRoot: true
-            fsGroup: 1000
+            fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -49,8 +55,9 @@ spec:
         ports:
           http:
             port: &port 80
-    route:
+    ingress:
       app:
+        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Development
@@ -58,12 +65,25 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chartdb/chartdb/main/src/assets/logo-light.png
           gethomepage.dev/description: Database diagrams editor
           gethomepage.dev/siteMonitor: http://chartdb.development:80
-        hostnames: ["chartdb.rafaribe.com"]
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+        hosts:
+          - host: chartdb.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      nginx-conf:
+        type: emptyDir
+        globalMounts:
+          - path: /etc/nginx/conf.d
+      nginx-cache:
+        type: emptyDir
+        globalMounts:
+          - path: /var/cache/nginx
+      nginx-run:
+        type: emptyDir
+        globalMounts:
+          - path: /var/run
+      tmp:
+        type: emptyDir
