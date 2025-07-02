@@ -1,0 +1,118 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: scrypted
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      scrypted:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/koush/scrypted
+              tag: 18-jammy-full-v0.115.0
+            env:
+              SCRYPTED_WEBHOOK_UPDATE_AUTHORIZATION: Bearer ${SCRYPTED_WEBHOOK_UPDATE_AUTHORIZATION}
+              SCRYPTED_WEBHOOK_UPDATE: http://scrypted.home.svc.cluster.local:11080/v1/update
+            envFrom:
+              - secretRef:
+                  name: scrypted
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 1Gi
+              limits:
+                memory: 8Gi
+        pod:
+          nodeSelector:
+            google.feature.node.kubernetes.io/coral: "true"
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups:
+              - 44 # video
+              - 105 # render
+    service:
+      app:
+        controller: scrypted
+        ports:
+          http:
+            port: 11080
+          rebroadcast:
+            port: 34135
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: scrypted.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      server-volume:
+        type: persistentVolumeClaim
+        existingClaim: ${VOLSYNC_CLAIM}
+        globalMounts:
+          - path: /server/volume
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /.cache
+      cache-npm:
+        type: emptyDir
+        globalMounts:
+          - path: /.npm
+      dev-dri:
+        type: hostPath
+        hostPath: /dev/dri
+        globalMounts:
+          - path: /dev/dri
+      sys-bus-usb:
+        type: hostPath
+        hostPath: /sys/bus/usb
+        globalMounts:
+          - path: /sys/bus/usb
+      tmp:
+        type: emptyDir
