@@ -32,7 +32,6 @@ spec:
                 enabled: true
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
               capabilities:
                 drop:
                   - ALL
@@ -44,10 +43,9 @@ spec:
                 memory: 128M
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            runAsNonRoot: true
-            fsGroup: 568
+            runAsUser: 0
+            runAsGroup: 0
+            fsGroup: 0
             fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -72,18 +70,3 @@ spec:
                 service:
                   identifier: app
                   port: http
-    persistence:
-      nginx-conf:
-        type: emptyDir
-        globalMounts:
-          - path: /etc/nginx/conf.d
-      nginx-cache:
-        type: emptyDir
-        globalMounts:
-          - path: /var/cache/nginx
-      nginx-run:
-        type: emptyDir
-        globalMounts:
-          - path: /var/run
-      tmp:
-        type: emptyDir
