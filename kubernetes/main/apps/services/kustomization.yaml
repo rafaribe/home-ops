@@ -13,6 +13,7 @@ resources:
   - ./alist/ks.yaml
   - ./atuin/ks.yaml
   - ./bytestash/ks.yaml
+  - ./chartdb/ks.yaml
   - ./cyberchef/ks.yaml
   - ./convertx/ks.yaml
   - ./docmost/ks.yaml
