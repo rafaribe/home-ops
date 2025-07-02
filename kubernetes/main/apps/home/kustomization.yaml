@@ -11,4 +11,4 @@ resources:
   - ./immich/ks.yaml
   - ./node-red/ks.yaml
   - ./scrypted/ks.yaml
-  - ./zigbee2mqtt/ks.yaml
+#  - ./zigbee2mqtt/ks.yaml Will enable once EMQX is gone and vernemq MQTT is deployed
