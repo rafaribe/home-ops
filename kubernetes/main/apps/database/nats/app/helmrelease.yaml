@@ -42,8 +42,8 @@ spec:
         write_deadline: "10s"
     container:
       image:
-        repository: nats
-        tag: 2.10.20-alpine
+        repository: ghcr.io/appscode-images/nats
+        tag: 2.10.29-alpine
       merge:
         resources:
           requests:
