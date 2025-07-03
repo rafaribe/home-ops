@@ -103,6 +103,6 @@ spec:
         metadata:
           annotations:
             external-dns.alpha.kubernetes.io/hostname: nats.rafaribe.com
-            io.cilium/lb-ipam-ips: ${LB_HASS}
+            io.cilium/lb-ipam-ips: ${LB_NATS}
           loadBalancerIP: ${LB_NATS}
         type: LoadBalancer

@@ -20,7 +20,7 @@ spec:
       retries: 3
   values:
     controllers:
-      *app :
+      vernemq :
         type: statefulset
         strategy: RollingUpdate
         replicas: 2
