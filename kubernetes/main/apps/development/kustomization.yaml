@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ./common # OCI Repository
+  # OCI Repository
+  - ./common
   # Flux-Kustomizations
   - ./chartdb/ks.yaml
