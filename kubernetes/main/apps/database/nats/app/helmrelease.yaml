@@ -1,0 +1,107 @@
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app nats
+spec:
+  chart:
+    spec:
+      chart: nats
+      version: 1.2.5
+      sourceRef:
+        kind: HelmRepository
+        name: nats
+        namespace: flux-system
+  interval: 30m
+  maxHistory: 3
+  uninstall:
+    keepHistory: false
+  values:
+    config:
+      cluster:
+        enabled: true
+        replicas: 3
+      jetstream:
+        enabled: true
+        fileStore:
+          pvc:
+            size: 10Gi
+            storageClassName: longhorn
+        memStore:
+          enabled: true
+          maxSize: 1Gi
+      merge:
+        debug: false
+        trace: false
+        logtime: true
+        max_connections: 65536
+        max_control_line: 4096
+        max_payload: 65536
+        max_pending: 67108864
+        write_deadline: "10s"
+    container:
+      image:
+        repository: nats
+        tag: 2.10.20-alpine
+      merge:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+    headlessService:
+      enabled: true
+    natsBox:
+      enabled: true
+      container:
+        image:
+          repository: natsio/nats-box
+          tag: 0.14.3
+        merge:
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              memory: 128Mi
+    podTemplate:
+      merge:
+        spec:
+          securityContext:
+            fsGroup: 1000
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: nats
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
+    reloader:
+      enabled: true
+      image:
+        repository: natsio/nats-server-config-reloader
+        tag: 0.15.0
+      merge:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            memory: 128Mi
+    service:
+      enabled: true
+      merge:
+        spec:
+          type: LoadBalancer
+          loadBalancerIP: 192.168.1.221
+        metadata:
+          annotations:
+            external-dns.alpha.kubernetes.io/hostname: nats.rafaribe.com
+            io.cilium/lb-ipam-ips: 192.168.1.221

@@ -7,3 +7,5 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   - ./common # OCI Repository
+  - ./nats
+  - ./vernemq
