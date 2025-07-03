@@ -9,7 +9,7 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   dependsOn:
-    - name: external-secrets-operator
+    - name: external-secrets
   path: ./kubernetes/main/apps/home/scrypted/app
   prune: true
   sourceRef:
@@ -33,5 +33,4 @@ spec:
       VOLSYNC_CAPACITY: 5Gi
       GATUS_SUBDOMAIN: scrypted
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/external
+    - ../../../../../shared/components/gatus/guarded
