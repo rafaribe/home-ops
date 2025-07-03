@@ -8,8 +8,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: external-secrets-operator
   path: ./kubernetes/main/apps/home/esphome/app
   prune: true
   sourceRef:
