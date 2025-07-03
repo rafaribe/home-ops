@@ -29,9 +29,9 @@ spec:
             #     "mac": "76:fa:11:c0:c9:84"
             #   }]
           securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            fsGroup: 2000
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
             supplementalGroups:
               - 44
@@ -69,7 +69,7 @@ spec:
 
     persistence:
       config:
-        existingClaim: scrypted-config
+        existingClaim: scrypted
         advancedMounts:
           scrypted:
             app:
