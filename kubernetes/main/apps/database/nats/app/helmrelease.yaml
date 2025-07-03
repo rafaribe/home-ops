@@ -87,7 +87,7 @@ spec:
       enabled: true
       image:
         repository: natsio/nats-server-config-reloader
-        tag: 0.15.0
+        tag: 0.18.2
       merge:
         resources:
           requests:
