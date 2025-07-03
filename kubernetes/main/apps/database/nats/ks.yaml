@@ -23,6 +23,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: links
+      GATUS_SUBDOMAIN: nats
   components:
     - ../../../../../shared/components/gatus/guarded

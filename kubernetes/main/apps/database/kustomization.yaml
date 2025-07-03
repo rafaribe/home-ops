@@ -10,4 +10,4 @@ resources:
   - ./common
   # Flux-Kustomizations
   - ./nats/ks.yaml
-  # - ./vernemq
+  - ./vernemq/ks.yaml
