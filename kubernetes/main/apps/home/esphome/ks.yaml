@@ -32,4 +32,4 @@ spec:
       GATUS_SUBDOMAIN: esphome
   components:
     - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/external
+    - ../../../../../shared/components/gatus/guarded
