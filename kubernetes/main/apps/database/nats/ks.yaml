@@ -11,7 +11,7 @@ spec:
     kind: GitRepository
     name: home-ops
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: nats
       namespace: database
