@@ -100,8 +100,9 @@ spec:
       merge:
         spec:
           type: LoadBalancer
-          loadBalancerIP: 192.168.1.221
         metadata:
           annotations:
             external-dns.alpha.kubernetes.io/hostname: nats.rafaribe.com
-            io.cilium/lb-ipam-ips: 192.168.1.221
+            io.cilium/lb-ipam-ips: ${LB_HASS}
+          loadBalancerIP: ${LB_NATS}
+        type: LoadBalancer
