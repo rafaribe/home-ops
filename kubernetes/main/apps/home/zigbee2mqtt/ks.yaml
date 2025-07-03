@@ -9,17 +9,12 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   dependsOn:
-    - name: external-secrets-operator
+    - name: external-secrets
   path: ./kubernetes/main/apps/home/zigbee2mqtt/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-ops
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: zigbee2mqtt
-      namespace: home
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -34,4 +29,4 @@ spec:
       GATUS_SUBDOMAIN: zigbee2mqtt
   components:
     - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/external
+    - ../../../../../shared/components/gatus/guarded
