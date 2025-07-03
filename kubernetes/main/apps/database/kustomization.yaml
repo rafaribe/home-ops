@@ -9,5 +9,5 @@ resources:
   # OCI Repository
   - ./common
   # Flux-Kustomizations
-  - ./nats
+  - ./nats/ks.yaml
   # - ./vernemq
