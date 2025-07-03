@@ -58,7 +58,7 @@ spec:
       container:
         image:
           repository: natsio/nats-box
-          tag: 0.14.3
+          tag: 0.18.0
         merge:
           resources:
             requests:
