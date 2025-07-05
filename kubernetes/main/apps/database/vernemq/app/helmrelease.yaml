@@ -140,7 +140,7 @@ spec:
           - 'mqtt.rafaribe.com'
         parentRefs:
           - name: internal
-            namespace: network
+            namespace: kube-system
             sectionName: https
         rules:
           - matches:
