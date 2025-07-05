@@ -20,7 +20,7 @@ spec:
       retries: 3
   values:
     controllers:
-      vernemq :
+      *app :
         type: statefulset
         strategy: RollingUpdate
         replicas: 2
@@ -119,7 +119,6 @@ spec:
         type: LoadBalancer
         sessionAffinity: ClientIP # vernemq docs note that hopping between pods causes a significate data replication/sync cost
         annotations:
-
           lbipam.cilium.io/ips: ${LB_MQTT}
         ports: &ports
           mqtt:
@@ -138,7 +137,7 @@ spec:
     route:
       app:
         hostnames:
-          - '{{ .Release.Name }}.rafaribe.com'
+          - 'mqtt.rafaribe.com'
         parentRefs:
           - name: internal
             namespace: network
@@ -167,8 +166,6 @@ spec:
                     type: ReplacePrefixMatch
                     replacePrefixMatch: /status
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: 'mqtt.rafaribe.com'
-          external-dns.alpha.kubernetes.io/target: ${LB_MQTT}
           gethomepage.dev/enabled: 'true'
           gethomepage.dev/name: VerneMQ
           gethomepage.dev/group: Infrastructure
