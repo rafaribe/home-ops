@@ -25,7 +25,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_CAPACITY: 5Gi
       GATUS_SUBDOMAIN: scrypted
   components:
     - ../../../../../shared/components/gatus/guarded
