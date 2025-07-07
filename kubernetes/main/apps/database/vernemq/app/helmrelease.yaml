@@ -132,44 +132,7 @@ spec:
       http:
         ports:
           http:
-            port: *http
-
-    route:
-      app:
-        hostnames:
-          - 'mqtt.rafaribe.com'
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - matches:
-              - path:
-                  value: /status.json
-            backendRefs: &backendRefs
-              - identifier: http
-                port: *http
-          - matches:
-              - path:
-                  type: PathPrefix
-                  value: /status
-            backendRefs: *backendRefs
-          - matches:
-              - path:
-                  type: PathPrefix
-                  value: /
-            backendRefs: *backendRefs
-            filters:
-              - type: URLRewrite
-                urlRewrite:
-                  path:
-                    type: ReplacePrefixMatch
-                    replacePrefixMatch: /status
-        annotations:
-          gethomepage.dev/enabled: 'true'
-          gethomepage.dev/name: VerneMQ
-          gethomepage.dev/group: Infrastructure
-          gethomepage.dev/icon: mqtt.svg
+            port: *httpmqtt
 
     persistence:
       tmpfs:
