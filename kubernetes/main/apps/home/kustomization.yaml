@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ./common.yaml
+  - ./common
   # Flux-Kustomizations
   - ./go2rtc/ks.yaml
   - ./home-assistant/ks.yaml
