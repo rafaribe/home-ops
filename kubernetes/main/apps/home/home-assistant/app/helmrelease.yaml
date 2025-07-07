@@ -36,8 +36,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/rafaribe/home-assistant
-              tag: 2025.7.1@sha256:1937789466f24db8ca5036ea7ba4582771c9bba1d48acdd6d8291bcfa8415a5c
+              repository: ghcr.io/home-operations/home-assistant
+              tag: 2025.7.1@sha256:5ed76e1de666b3522dcbef5d23e41283c925dd707dbcaa2fc0ecef981c0bc881
             env:
               TZ: Europe/Lisbon
               HOME_ASSISTANT__HACS_INSTALL: "true"
