@@ -25,8 +25,8 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/rafaribe/postgres-init
-              tag: 16
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.5.0
             envFrom: &envFrom
               - secretRef:
                   name: *app
@@ -34,19 +34,23 @@ spec:
           app:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 1.5.35
+              tag: 1.5.35@sha256:188da7487f777101c6abe996284df7966d9dd58c9b676447d5f880a5268a4393
             env:
-              COMMENT_PREF_DEFAULT: 0
-              DEBUG: 1
+              TZ: ${TZ}
+              ALLOWED_HOSTS: "*"
+              COMMENT_PREF_DEFAULT: 1
+              DB_ENGINE: django.db.backends.postgresql_psycopg2
+              DEBUG: 0
+              MAX_OWNED_SPACES_PREF_DEFAULT: 1000
+              EMAIL_PORT: 2525
               ENABLE_SIGNUP: 0
               FRACTION_PREF_DEFAULT: 0
-              GUNICORN_MEDIA: 0
-              MAX_OWNED_SPACES_PREF_DEFAULT: 1000
+              GUNICORN_MEDIA: 0h
               SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
               TANDOOR_PORT: &tandoorPort 8000
             envFrom:
               - secretRef:
-                  name: tandoor
+                  name: *app
             probes:
               liveness: &probes
                 enabled: true
@@ -72,13 +76,19 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 500Mi
+                memory: 256Mi
               limits:
-                memory: 750Mi
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
           nginx:
             image:
               repository: ghcr.io/nginxinc/nginx-unprivileged
-              tag: 1.27.4-alpine
+              tag: 1.27.4
     defaultPodOptions:
       affinity:
         nodeAffinity:
