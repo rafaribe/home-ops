@@ -45,7 +45,7 @@ spec:
               EMAIL_PORT: 2525
               ENABLE_SIGNUP: 0
               FRACTION_PREF_DEFAULT: 0
-              GUNICORN_MEDIA: 0h
+              GUNICORN_MEDIA: 0
               SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
               TANDOOR_PORT: &tandoorPort 8000
             envFrom:
