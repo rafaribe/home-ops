@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/amazon-q
-              tag: 2025.07.06@sha256:344b74aeb0b7b840afff910e0ed86cdc0b661255533bbc55d81b8c51aa29d226
+              tag: 2025.07.08@sha256:807819cc9107096914e40128809996e2119d94e60db11da1dd0e9094ecb74a4a
             env:
             securityContext:
               allowPrivilegeEscalation: false
