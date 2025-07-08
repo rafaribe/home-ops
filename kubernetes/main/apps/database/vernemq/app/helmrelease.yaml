@@ -68,7 +68,7 @@ spec:
                 spec:
                   httpGet:
                     path: /health/ping
-                    port: &http 8888
+                    port: 8888
                   periodSeconds: 10
                   timeoutSeconds: 5
               readiness: *probes
@@ -119,8 +119,9 @@ spec:
         type: LoadBalancer
         sessionAffinity: ClientIP # vernemq docs note that hopping between pods causes a significate data replication/sync cost
         annotations:
-          lbipam.cilium.io/ips: ${LB_MQTT}
-        ports: &ports
+          external-dns.alpha.kubernetes.io/hostname: "mqtt.rafaribe.com"
+          lbipam.cilium.io/ips: 10.0.1.106
+        ports:
           mqtt:
             port: 1883
           ws:
@@ -128,11 +129,17 @@ spec:
       headless:
         publishNotReadyAddresses: true
         clusterIP: None
-        ports: *ports
-      http:
+        ports:
+          mqtt:
+            port: 1883
+          metrics:
+            port: 8888
+          ws:
+            port: 8080
+      metrics:
         ports:
           http:
-            port: *httpmqtt
+            port: 8888
 
     persistence:
       tmpfs:
@@ -147,7 +154,8 @@ spec:
 
     serviceMonitor:
       app:
-        serviceName: '{{ .Release.Name }}-http'
+        service:
+          identifier: metrics
         endpoints:
           - port: http
             scheme: http
