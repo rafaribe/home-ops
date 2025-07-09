@@ -40,7 +40,6 @@ spec:
               tag: 2025.7.1@sha256:5ed76e1de666b3522dcbef5d23e41283c925dd707dbcaa2fc0ecef981c0bc881
             env:
               TZ: Europe/Lisbon
-              HOME_ASSISTANT__HACS_INSTALL: "true"
             envFrom:
               - secretRef:
                   name: home-assistant
@@ -178,6 +177,7 @@ spec:
             app:
               - path: /venv
                 subPath: hass-venv
+              - path: /config/.venv
       tmpfs:
         type: emptyDir
         advancedMounts:
@@ -185,6 +185,10 @@ spec:
             app:
               - path: /tmp
                 subPath: hass-tmp
+              - path: /config/logs
+                subPath: logs
+              - path: /config/tts
+                subPath: tts
             codeserver:
               - path: /tmp
                 subPath: code-server-tmp
