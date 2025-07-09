@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app alist
+  name: &app openlist
 spec:
   chartRef:
     kind: OCIRepository
@@ -15,12 +15,12 @@ spec:
     keepHistory: false
   values:
     controllers:
-      alist:
+      openlist:
         containers:
           app:
             image:
               repository: ghcr.io/openlistteam/openlist-git
-              tag: beta-aio
+              tag: v4.0.8-lite-ffmpeg
             command:
               - /bin/sh
               - /scripts/overriden-entrypoint.sh
@@ -65,10 +65,10 @@ spec:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Services
-          gethomepage.dev/name: AList
-          gethomepage.dev/icon: https://cdn.jsdelivr.net/gh/alist-org/logo@main/logo.svg
+          gethomepage.dev/name: OpenList
+          gethomepage.dev/icon: https://raw.githubusercontent.com/OpenListTeam/Logo/main/logo.svg
           gethomepage.dev/description: File list program that supports multiple storage
-        hostnames: ["alist.rafaribe.com"]
+        hostnames: ["openlist.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
@@ -112,7 +112,7 @@ spec:
     persistence:
       scripts:
         type: configMap
-        name: alist
+        name: openlist
         defaultMode: 0755
         globalMounts:
           - path: /scripts
