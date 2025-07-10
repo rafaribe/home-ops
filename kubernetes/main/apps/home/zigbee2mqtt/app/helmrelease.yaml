@@ -38,7 +38,7 @@ spec:
               ZIGBEE2MQTT_CONFIG_ADVANCED_EXT_PAN_ID:
                 valueFrom:
                   secretKeyRef:
-                    name: zigbee2mqtt-secret
+                    name: zigbee2mqtt
                     key: zigbee_ext_pan_id
               ZIGBEE2MQTT_CONFIG_ADVANCED_LAST_SEEN: ISO_8601
               ZIGBEE2MQTT_CONFIG_ADVANCED_LEGACY_API: false
@@ -49,12 +49,12 @@ spec:
               ZIGBEE2MQTT_CONFIG_ADVANCED_NETWORK_KEY:
                 valueFrom:
                   secretKeyRef:
-                    name: zigbee2mqtt-secret
+                    name: zigbee2mqtt
                     key: zigbee_network_key
               ZIGBEE2MQTT_CONFIG_ADVANCED_PAN_ID:
                 valueFrom:
                   secretKeyRef:
-                    name: zigbee2mqtt-secret
+                    name: zigbee2mqtt
                     key: zigbee_pan_id
               ZIGBEE2MQTT_CONFIG_AVAILABILITY_ACTIVE_TIMEOUT: 60
               ZIGBEE2MQTT_CONFIG_AVAILABILITY_PASSIVE_TIMEOUT: 2000
