@@ -20,7 +20,7 @@ terraform {
 
     sops = {
       source  = "carlpett/sops"
-      version = "1.2.0"
+      version = "1.2.1"
     }
     # To Automatically create OIDC Secrets into akeyless
     akeyless = {
