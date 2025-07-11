@@ -116,6 +116,12 @@ spec:
           - name: srv-05
             devices:
               - name: /dev/disk/by-id/usb-Samsung_PSSD_T7_S6XDNS0W566278X-0:0
+          - name: srv-06
+            devices:
+              - name: /dev/disk/by-id/ata-SanDisk_SSD_PLUS_1000GB_25202A4A6X07
+          - name: srv-07
+            devices:
+              - name: /dev/disk/by-id/ata-SanDisk_SSD_PLUS_1000GB_25202A4A2F04
           - name: tpi-1
             devices:
               - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_24175J806474
