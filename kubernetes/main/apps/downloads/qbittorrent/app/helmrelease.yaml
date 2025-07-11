@@ -195,7 +195,7 @@ spec:
       media:
         type: nfs
         server: truenas.rafaribe.com
-        path: /mnt/storage-0/media
+        path: /mnt/tank/media
         advancedMounts:
           qbittorrent:
             app:

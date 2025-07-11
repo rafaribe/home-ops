@@ -122,7 +122,7 @@ spec:
         enabled: true
         type: nfs
         server: truenas.rafaribe.com
-        path: /mnt/storage-0/media/books
+        path: /mnt/tank/media/books
         advancedMounts:
           calibre-web:
             app:

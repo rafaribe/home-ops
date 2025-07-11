@@ -77,6 +77,6 @@ spec:
       data:
         type: nfs
         server: truenas.rafaribe.com
-        path: /mnt/storage-0/media
+        path: /mnt/tank/media
         globalMounts:
           - path: /data
