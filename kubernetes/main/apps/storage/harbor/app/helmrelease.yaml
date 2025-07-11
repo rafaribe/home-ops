@@ -119,7 +119,7 @@ spec:
           app:
             image:
               repository: goharbor/registry-photon
-              tag: v2.12.0
+              tag: v2.13.1
             env:
               TZ: "Europe/Lisbon"
             envFrom:
