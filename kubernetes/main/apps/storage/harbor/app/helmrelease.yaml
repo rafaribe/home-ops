@@ -86,7 +86,7 @@ spec:
           app:
             image:
               repository: goharbor/harbor-portal
-              tag: v2.12.0
+              tag: v2.13.1
             env:
               TZ: "Europe/Lisbon"
             probes:
