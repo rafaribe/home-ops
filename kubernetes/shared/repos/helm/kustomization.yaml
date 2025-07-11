@@ -28,6 +28,7 @@ resources:
   - ./falco.yaml
   - ./grafana.yaml
   - ./hajimari.yaml
+  - ./harbor.yaml
   - ./infracloudio.yaml
   - ./ingress-nginx.yaml
   - ./intel.yaml
