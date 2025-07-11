@@ -91,7 +91,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Network
           gethomepage.dev/name: Netbox
-          gethomepage.dev/icon: https://raw.githubusercontent.com/netbox-community/netbox/develop/netbox/project-static/img/netbox_logo.svg
+          gethomepage.dev/icon: https://pbs.twimg.com/profile_images/1820890639346610176/hSao1x_Q_400x400.jpg
           gethomepage.dev/description: Network infrastructure management
           gethomepage.dev/siteMonitor: http://netbox.network:8080
         hostnames: ["netbox.rafaribe.com"]

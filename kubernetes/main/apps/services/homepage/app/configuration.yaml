@@ -53,9 +53,9 @@ data:
         - bjw-s-home-ops:
             - icon: github.png
               href: "https://github.com/bjw-s/home-ops"
-        - bjw-s-helm-charts:
+        - bjw-s-charts:
             - icon: github.png
-              href: "https://github.com/bjw-s/helm-charts"
+              href: "https://github.com/bjw-s-labs/helm-charts"
   docker.yaml: ""
   kubernetes.yaml: |
     mode: cluster
@@ -97,7 +97,7 @@ data:
           description: TrueNAS Scale
           widget:
             type: truenas
-            url: http://truenas.rafaribe.com # Internal Only
+            url: http://truenas.rafaribe.com
             key: {{HOMEPAGE_VAR_TRUENAS_APIKEY}}
             enablePools: true
       - Pihole:
@@ -109,7 +109,7 @@ data:
           widget:
             type: pihole
             url: http://pihole.rafaribe.com/
-            #version: 6
+            version: 6
             key: {{HOMEPAGE_VAR_PIHOLE_API_KEY}}
       - Proxmox:
           href: https://10.0.0.2:8006
