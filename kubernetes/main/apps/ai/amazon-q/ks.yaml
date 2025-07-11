@@ -10,8 +10,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: paperless
   path: ./kubernetes/main/apps/ai/amazon-q/app
   prune: true
   sourceRef:
