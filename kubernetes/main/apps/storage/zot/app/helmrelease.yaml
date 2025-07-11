@@ -50,6 +50,10 @@ spec:
             image:
               repository: ghcr.io/project-zot/zot
               tag: v2.1.5@sha256:3497efd2ffb428d0463bae3d99f003097d7c4854c2d63506e9149ad73c80ce85
+              pullPolicy: IfNotPresent
+            args:
+              - serve
+              - /etc/zot/config.yaml
             probes:
               liveness: &probe
                 enabled: true
