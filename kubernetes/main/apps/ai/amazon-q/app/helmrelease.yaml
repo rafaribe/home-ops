@@ -42,38 +42,12 @@ spec:
         ports:
           http:
             port: &port 8080
-    route:
-      app:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Home
-          gethomepage.dev/name: Paperless GPT
-          gethomepage.dev/icon: paperless.png
-          gethomepage.dev/description: AI Setup for Paperless
-          gethomepage.dev/siteMonitor: http://paperless-gpt.ai:8080
-        hostnames: ["paperless-gpt.rafaribe.com"]
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
     persistence:
       data:
         existingClaim: *app
-        advancedMounts:
-          paperless-gpt:
-            app:
-              - path: /app/db
-                subPath: db
-              - path: /app/prompts
-                subPath: prompts
+        globalMounts:
+          - path: /home/dev/src
       tmpfs:
         type: emptyDir
-        advancedMounts:
-          paperless-gpt:
-            app:
-              - path: /tmp
-                subPath: tmp
+        globalMounts:
+          - path: /tmp

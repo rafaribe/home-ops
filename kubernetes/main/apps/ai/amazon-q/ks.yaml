@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: paperless
-  path: ./kubernetes/main/apps/ai/paperless-gpt/app
+  path: ./kubernetes/main/apps/ai/amazon-q/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -24,7 +24,6 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 3Gi
-      GATUS_SUBDOMAIN: paperless-gpt
+      GATUS_SUBDOMAIN: amazon-q
   components:
-    - ../../../../../shared/components/gatus/guarded
     - ../../../../../shared/components/volsync
