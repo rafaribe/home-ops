@@ -48,7 +48,11 @@ spec:
     monitoring:
       enabled: true
     resources:
-      requests: {}
-      limits: {}
+      requests:
+        cpu: 200m # unchangable
+        memory: 512Mi # unchangable
+      limits: 
+        cpu: 500m # unchangable
+        memory: 1Gi
     image:
       repository: ghcr.io/rook/ceph
