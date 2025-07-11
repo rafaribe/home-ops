@@ -31,9 +31,9 @@ locals {
       authentik_oidc_application_description = "Manage your ever growing recipe collection online"
     },
     {
-      authentik_oidc_application_name        = "windmill"
-      authentik_oidc_application_icon_url    = "https://avatars.githubusercontent.com/u/98025271?s=200&v=4"
-      authentik_oidc_application_description = "OSS developer platform to build multistep automations and internal apps from minimal Typescript and Python scripts"
+      authentik_oidc_application_name        = "zot"
+      authentik_oidc_application_icon_url    = "https://landscape.cncf.io/logos/e247ac93d0f20080fee02573fef04d5b1c5914cf07bbed0cbcd2b9ec1e0419ed.svg"
+      authentik_oidc_application_description = "Zot is an OCI-native container registry for distributing container images and OCI artifacts."
     },
   ]
 }
