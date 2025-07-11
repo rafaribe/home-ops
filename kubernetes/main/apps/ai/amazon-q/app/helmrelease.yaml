@@ -48,6 +48,13 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /home/dev/src
+            subPath: src
+          - path: /home/dev/.aws
+            subPath: aws
+          - path: /home/dev/.local/share/amazon-q
+            subPath: amazon-q-share
+          - path: /home/dev/.cache/amazon-q
+            subPath: amazon-q-cache
       tmpfs:
         type: emptyDir
         globalMounts:
