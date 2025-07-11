@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: goharbor/harbor-core
-              tag: v2.12.0
+              tag: v2.13.1
             env:
               TZ: "Europe/Lisbon"
               EXT_ENDPOINT: "https://harbor.rafaribe.com"
