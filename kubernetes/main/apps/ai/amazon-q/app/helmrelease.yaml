@@ -10,7 +10,7 @@ spec:
     name: app-template
   values:
     controllers:
-      paperless-gpt:
+      amazonq:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -18,7 +18,6 @@ spec:
             image:
               repository: ghcr.io/rafaribe/amazon-q
               tag: 2025.07.09@sha256:79a349d111f84e1742524da70858a63d56440ac59a07326200d097311daafead
-            env:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
