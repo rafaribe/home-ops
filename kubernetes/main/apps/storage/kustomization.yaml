@@ -8,6 +8,7 @@ resources:
   # Flux-Kustomizations
   - ./cloudnative-pg/ks.yaml
   - ./dragonfly/ks.yaml
+  - ./harbor/ks.yaml
   - ./minio/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./syncthing/ks.yaml

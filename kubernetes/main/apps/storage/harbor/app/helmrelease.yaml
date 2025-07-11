@@ -1,0 +1,532 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app harbor
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      # Harbor Core - Main API and Web UI
+      core:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: goharbor/harbor-core
+              tag: v2.12.0
+            env:
+              TZ: "Europe/Lisbon"
+              EXT_ENDPOINT: "https://harbor.rafaribe.com"
+              DATABASE_TYPE: "postgresql"
+              POSTGRESQL_HOST: "harbor-database"
+              POSTGRESQL_PORT: "5432"
+              POSTGRESQL_DATABASE: "registry"
+              POSTGRESQL_USERNAME: "postgres"
+              REDIS_HOST: "harbor-redis"
+              REDIS_PORT: "6379"
+              CORE_URL: "http://harbor-core:8080"
+              JOBSERVICE_URL: "http://harbor-jobservice:8080"
+              REGISTRY_URL: "http://harbor-registry:5000"
+              PORTAL_URL: "http://harbor-portal:8080"
+              TOKEN_SERVICE_URL: "http://harbor-core:8080/service/token"
+              REGISTRY_STORAGE_PROVIDER_NAME: "filesystem"
+              WITH_NOTARY: "false"
+              WITH_TRIVY: "true"
+              TRIVY_ADAPTER_URL: "http://harbor-trivy:8080"
+              REGISTRY_CREDENTIAL_USERNAME: "harbor_registry_user"
+            envFrom:
+              - secretRef:
+                  name: harbor
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v2.0/ping
+                    port: 8080
+                  initialDelaySeconds: 300
+                  periodSeconds: 10
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v2.0/ping
+                    port: 8080
+                  initialDelaySeconds: 20
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+      
+      # Harbor Portal (Web UI)
+      portal:
+        containers:
+          app:
+            image:
+              repository: goharbor/harbor-portal
+              tag: v2.12.0
+            env:
+              TZ: "Europe/Lisbon"
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8080
+                  initialDelaySeconds: 300
+                  periodSeconds: 10
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8080
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+      
+      # Harbor Registry
+      registry:
+        containers:
+          app:
+            image:
+              repository: goharbor/registry-photon
+              tag: v2.12.0
+            env:
+              TZ: "Europe/Lisbon"
+            envFrom:
+              - secretRef:
+                  name: harbor
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 5000
+                  initialDelaySeconds: 300
+                  periodSeconds: 10
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 5000
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+      
+      # Harbor Job Service
+      jobservice:
+        containers:
+          app:
+            image:
+              repository: goharbor/harbor-jobservice
+              tag: v2.12.0
+            env:
+              TZ: "Europe/Lisbon"
+              CORE_URL: "http://harbor-core:8080"
+              REGISTRY_URL: "http://harbor-registry:5000"
+              REGISTRY_CREDENTIAL_USERNAME: "harbor_registry_user"
+            envFrom:
+              - secretRef:
+                  name: harbor
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v1/stats
+                    port: 8080
+                  initialDelaySeconds: 300
+                  periodSeconds: 10
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v1/stats
+                    port: 8080
+                  initialDelaySeconds: 20
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+      
+      # Harbor Trivy (Vulnerability Scanner)
+      trivy:
+        containers:
+          app:
+            image:
+              repository: goharbor/trivy-adapter-photon
+              tag: v2.12.0
+            env:
+              TZ: "Europe/Lisbon"
+              SCANNER_LOG_LEVEL: "info"
+              SCANNER_TRIVY_CACHE_DIR: "/home/scanner/.cache/trivy"
+              SCANNER_TRIVY_REPORTS_DIR: "/home/scanner/.cache/reports"
+              SCANNER_TRIVY_DEBUG_MODE: "false"
+              SCANNER_TRIVY_VULN_TYPE: "os,library"
+              SCANNER_TRIVY_TIMEOUT: "5m0s"
+              SCANNER_TRIVY_GITHUB_TOKEN: ""
+              SCANNER_TRIVY_SEVERITY: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+              SCANNER_TRIVY_IGNORE_UNFIXED: "false"
+              SCANNER_TRIVY_SKIP_UPDATE: "false"
+              SCANNER_TRIVY_OFFLINE_SCAN: "false"
+              SCANNER_TRIVY_SECURITY_CHECKS: "vuln"
+              SCANNER_TRIVY_INSECURE: "false"
+              SCANNER_API_SERVER_ADDR: ":8080"
+              SCANNER_REDIS_URL: "redis://harbor-redis:6379"
+              SCANNER_STORE_REDIS_URL: "redis://harbor-redis:6379"
+              SCANNER_JOB_QUEUE_REDIS_URL: "redis://harbor-redis:6379"
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /probe/healthy
+                    port: 8080
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                  successThreshold: 1
+                  failureThreshold: 10
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /probe/ready
+                    port: 8080
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                  successThreshold: 1
+                  failureThreshold: 3
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+      
+      # PostgreSQL Database
+      database:
+        containers:
+          app:
+            image:
+              repository: goharbor/harbor-db
+              tag: v2.12.0
+            env:
+              TZ: "Europe/Lisbon"
+              POSTGRES_USER: "postgres"
+              POSTGRES_DB: "postgres"
+              PGDATA: "/var/lib/postgresql/data/pgdata"
+            envFrom:
+              - secretRef:
+                  name: harbor
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - /bin/sh
+                      - -c
+                      - exec pg_isready -U "postgres" -h 127.0.0.1 -p 5432
+                  initialDelaySeconds: 120
+                  timeoutSeconds: 20
+                  periodSeconds: 10
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - /bin/sh
+                      - -c
+                      - exec pg_isready -U "postgres" -h 127.0.0.1 -p 5432
+                  initialDelaySeconds: 30
+                  timeoutSeconds: 5
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+      
+      # Redis Cache
+      redis:
+        containers:
+          app:
+            image:
+              repository: goharbor/redis-photon
+              tag: v2.12.0
+            env:
+              TZ: "Europe/Lisbon"
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 6379
+                  initialDelaySeconds: 30
+                  timeoutSeconds: 5
+                  periodSeconds: 10
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 6379
+                  initialDelaySeconds: 5
+                  timeoutSeconds: 1
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+
+    service:
+      core:
+        controller: core
+        ports:
+          http:
+            port: 8080
+      portal:
+        controller: portal
+        ports:
+          http:
+            port: 8080
+      registry:
+        controller: registry
+        ports:
+          http:
+            port: 5000
+      jobservice:
+        controller: jobservice
+        ports:
+          http:
+            port: 8080
+      trivy:
+        controller: trivy
+        ports:
+          http:
+            port: 8080
+      database:
+        controller: database
+        ports:
+          postgres:
+            port: 5432
+      redis:
+        controller: redis
+        ports:
+          redis:
+            port: 6379
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+
+    route:
+      main:
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/appName: "Harbor Registry"
+          hajimari.io/group: "storage"
+          hajimari.io/icon: mdi:docker
+          hajimari.io/instance: "admin"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Container Registry
+          gethomepage.dev/group: Storage
+          gethomepage.dev/icon: harbor.svg
+          gethomepage.dev/name: Harbor
+          gethomepage.dev/app: harbor
+        hostnames: ["harbor.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /api/
+            backendRefs:
+              - name: harbor-core
+                port: 8080
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /service/
+            backendRefs:
+              - name: harbor-core
+                port: 8080
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /v2/
+            backendRefs:
+              - name: harbor-registry
+                port: 5000
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /chartrepo/
+            backendRefs:
+              - name: harbor-core
+                port: 8080
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /c/
+            backendRefs:
+              - name: harbor-portal
+                port: 8080
+          - backendRefs:
+              - name: harbor-portal
+                port: 8080
+
+    persistence:
+      # Registry data storage - Main NFS mount for container images
+      registry-data:
+        enabled: true
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/registry
+        advancedMounts:
+          registry:
+            app:
+              - path: /storage
+                subPath: registry
+      
+      # Database storage
+      database-data:
+        enabled: true
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/registry
+        advancedMounts:
+          database:
+            app:
+              - path: /var/lib/postgresql/data
+                subPath: database
+      
+      # Redis data
+      redis-data:
+        enabled: true
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/registry
+        advancedMounts:
+          redis:
+            app:
+              - path: /var/lib/redis
+                subPath: redis
+      
+      # Trivy cache
+      trivy-cache:
+        enabled: true
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/registry
+        advancedMounts:
+          trivy:
+            app:
+              - path: /home/scanner/.cache
+                subPath: trivy-cache
+      
+      # Job service logs
+      jobservice-logs:
+        enabled: true
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/registry
+        advancedMounts:
+          jobservice:
+            app:
+              - path: /var/log/jobs
+                subPath: jobservice-logs
+
+    configMaps:
+      registry-config:
+        enabled: true
+        data:
+          config.yml: |
+            version: 0.1
+            log:
+              level: info
+              fields:
+                service: registry
+            storage:
+              filesystem:
+                rootdirectory: /storage
+              maintenance:
+                uploadpurging:
+                  enabled: false
+              delete:
+                enabled: true
+            http:
+              addr: :5000
+              relativeurls: false
+              draintimeout: 60s
+            auth:
+              htpasswd:
+                realm: harbor-registry-basic-realm
+                path: /etc/registry/passwd
+            validation:
+              disabled: true
+            compatibility:
+              schema1:
+                enabled: true
+        advancedMounts:
+          registry:
+            app:
+              - path: /etc/registry/config.yml
+                subPath: config.yml
+                readOnly: true
+
+    resources:
+      requests:
+        memory: 1Gi
+        cpu: 200m
+      limits:
+        memory: 2Gi
