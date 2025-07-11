@@ -102,7 +102,7 @@ data:
             enablePools: true
       - Pihole:
           href: http://pihole.rafaribe.com/admin
-          icon: https://static-00.iconduck.com/assets.00/pihole-icon-174x256-w2exgm2v.png
+          icon: https://upload.wikimedia.org/wikipedia/commons/0/00/Pi-hole_Logo.png
           description: DNS Server
           ping: 10.0.0.254
           siteMonitor: http://10.0.0.254
