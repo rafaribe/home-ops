@@ -85,10 +85,25 @@ spec:
           gethomepage.dev/description: "Container Registry"
         hostnames: ["zot.rafaribe.com"]
         parentRefs:
-          - name: external
+          - name: internal
             namespace: kube-system
             sectionName: https
         rules:
+          # Redirect /metrics to /
+          - matches:
+              - path:
+                  type: Exact
+                  value: /metrics
+            filters:
+              - type: RequestRedirect
+                requestRedirect:
+                  scheme: https
+                  hostname: zot.rafaribe.com
+                  path:
+                    type: ReplaceFullPath
+                    replaceFullPath: /
+                  statusCode: 302
+          # Default route for all other paths
           - backendRefs:
               - identifier: main
                 port: *port
