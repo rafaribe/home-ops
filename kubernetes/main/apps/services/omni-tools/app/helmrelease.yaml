@@ -41,7 +41,7 @@ spec:
           app:
             image:
               repository: ghcr.io/iib0011/omni-tools
-              tag: latest
+              tag: 0.5@sha256:9d494a4d8d64f34a87ebbf5bc5e1a5f02b5b9796f7ddbc9e3aacda5996e76b61
             env:
               TZ: Europe/Lisbon
             resources:
