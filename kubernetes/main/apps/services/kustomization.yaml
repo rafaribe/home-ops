@@ -30,6 +30,7 @@ resources:
   - ./mealie/ks.yaml
   - ./miniflux/ks.yaml
   - ./n8n/ks.yaml
+  - ./omni-tools/ks.yaml
   - ./openlist/ks.yaml
   - ./paperless/ks.yaml
   - ./pdfding/ks.yaml
