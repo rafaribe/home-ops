@@ -35,6 +35,11 @@ locals {
       authentik_oidc_application_icon_url    = "https://landscape.cncf.io/logos/e247ac93d0f20080fee02573fef04d5b1c5914cf07bbed0cbcd2b9ec1e0419ed.svg"
       authentik_oidc_application_description = "Zot is an OCI-native container registry for distributing container images and OCI artifacts."
     },
+    {
+      authentik_oidc_application_name        = "filebrowser"
+      authentik_oidc_application_icon_url    = "https://i.imgur.com/Z6fTRV3.png"
+      authentik_oidc_application_description = "FileBrowser Quantum provides an easy way to access and manage your files from the web"
+    },
   ]
 }
 

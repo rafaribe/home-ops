@@ -1,0 +1,151 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app media-browser
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      media-browser:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/gtsteffaniak/filebrowser
+              tag: 0.7.14-beta@sha256:a5c30380ff1d39dfe97ddd259d4d8d009938a31334a18b0000b9cb53120f54c1
+            args:
+              - --config
+              - /tmp/config/config.yaml
+            env:
+              TZ: "Europe/Lisbon"
+            envFrom:
+              - secretRef:
+                  name: filebrowser-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 80
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+
+    route:
+      app:
+        annotations:
+          hajimari.io/icon: mdi:folder-play-outline
+        hostnames: ["media.rafaribe.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: media-browser
+                port: 80
+
+    configMaps:
+      config:
+        data:
+          config.yaml: |
+            server:
+              port: 80
+              database: "/config/filebrowser.db"
+              cacheDir: "/config/cache"
+              sources:
+                - path: "/media"
+                  name: "Media"
+                  config:
+                    defaultEnabled: true
+                - path: "/media-ceph"
+                  name: "Media Ceph"
+                  config:
+                    defaultEnabled: true
+            auth:
+              methods:
+                oidc:
+                  enabled: true
+                  issuerUrl: "https://sso.rafaribe.com/application/o/filebrowser/"
+                  scopes: "openid email profile"
+                  createUser: true
+            frontend:
+              name: "Media Browser"
+
+    persistence:
+      config:
+        existingClaim: *app
+        globalMounts:
+          - path: /config
+      
+      config-file:
+        type: configMap
+        name: media-browser-config
+        globalMounts:
+          - path: /tmp/config
+            readOnly: true
+      
+      media:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/media
+        globalMounts:
+          - path: /media
+      
+      media-ceph:
+        existingClaim: ceph-media
+        globalMounts:
+          - path: /media-ceph
+      
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

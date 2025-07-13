@@ -30,13 +30,16 @@ resources:
   - ./mealie/ks.yaml
   - ./miniflux/ks.yaml
   - ./n8n/ks.yaml
+  # - ./observer/ks.yaml  # Disabled for manual review
   - ./omni-tools/ks.yaml
   - ./openlist/ks.yaml
   - ./paperless/ks.yaml
   - ./pdfding/ks.yaml
+  - ./personal-accounter/ks.yaml
   - ./pinchflat/ks.yaml
   - ./postiz/ks.yaml
   #- ./radicale/ks.yaml
+  - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
   - ./silverbullet/ks.yaml
   - ./smtp-relay/ks.yaml
