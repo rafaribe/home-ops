@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app media-browser
+  name: &app media-browser-quantum
 spec:
   interval: 30m
   chart:
@@ -27,7 +27,6 @@ spec:
       media-browser:
         annotations:
           reloader.stakater.com/auto: "true"
-
         containers:
           app:
             image:
@@ -35,12 +34,12 @@ spec:
               tag: 0.7.14-beta@sha256:a5c30380ff1d39dfe97ddd259d4d8d009938a31334a18b0000b9cb53120f54c1
             args:
               - --config
-              - /tmp/config/config.yaml
+              - /config/config.json
             env:
               TZ: "Europe/Lisbon"
             envFrom:
               - secretRef:
-                  name: filebrowser-secret
+                  name: *app
             probes:
               liveness: &probes
                 enabled: true
@@ -83,42 +82,38 @@ spec:
       app:
         annotations:
           hajimari.io/icon: mdi:folder-play-outline
-        hostnames: ["media.rafaribe.com"]
+        hostnames: ["mbq.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
-              - name: media-browser
-                port: 80
+              - name: *app
+                port: *port
 
     configMaps:
       config:
         data:
-          config.yaml: |
-            server:
-              port: 80
-              database: "/config/filebrowser.db"
-              cacheDir: "/config/cache"
-              sources:
-                - path: "/media"
-                  name: "Media"
-                  config:
-                    defaultEnabled: true
-                - path: "/media-ceph"
-                  name: "Media Ceph"
-                  config:
-                    defaultEnabled: true
-            auth:
-              methods:
-                oidc:
-                  enabled: true
-                  issuerUrl: "https://sso.rafaribe.com/application/o/filebrowser/"
-                  scopes: "openid email profile"
-                  createUser: true
-            frontend:
-              name: "Media Browser"
+          config.json: |
+            {
+              "port": 80,
+              "database": "/config/filebrowser.db",
+              "root": "/media",
+              "log": "stdout",
+              "auth": {
+                "method": "oidc",
+                "oidc": {
+                  "issuer": "https://sso.rafaribe.com/application/o/filebrowser/",
+                  "redirect_url": "https://media.rafaribe.com/auth/oidc/callback",
+                  "scopes": ["openid", "profile", "email"],
+                  "auto_create_user": true
+                }
+              },
+              "branding": {
+                "name": "Media Browser"
+              }
+            }
 
     persistence:
       config:
@@ -130,7 +125,7 @@ spec:
         type: configMap
         name: media-browser-config
         globalMounts:
-          - path: /tmp/config
+          - path: /config/config.json
             readOnly: true
       
       media:
