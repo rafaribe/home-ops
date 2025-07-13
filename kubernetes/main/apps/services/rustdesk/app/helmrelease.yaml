@@ -32,7 +32,7 @@ spec:
         containers:
           app:
             image:
-              repository: rustdesk/rustdesk-server
+              repository: ghcr.io/rustdesk/rustdesk-server
               tag: 1.1.12@sha256:9b1197d116f7bb4d3ad93a50bc1bc59ddb388de267df221a351f5ce10fac3dcf
             command: ["hbbs"]
             args: ["-r", "rustdesk.rafaribe.com:21117"]
@@ -57,7 +57,7 @@ spec:
         containers:
           app:
             image:
-              repository: rustdesk/rustdesk-server
+              repository: ghcr.io/rustdesk/rustdesk-server
               tag: 1.1.12@sha256:9b1197d116f7bb4d3ad93a50bc1bc59ddb388de267df221a351f5ce10fac3dcf
             command: ["hbbr"]
             resources:
