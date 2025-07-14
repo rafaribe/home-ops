@@ -95,8 +95,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/defenseunicorns/packages/uds/valkey
-              tag: 8.1.2-uds.0-upstream
+              repository: docker.io/valkey/valkey
+              tag: 8.1.3
 
     service:
       server:
