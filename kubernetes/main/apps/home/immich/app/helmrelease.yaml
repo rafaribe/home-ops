@@ -27,8 +27,6 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           enableServiceLinks: false
-          nodeSelector:
-            kubernetes.io/hostname: s01
         initContainers:
           01-init-db:
             image:
@@ -72,8 +70,6 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           enableServiceLinks: false
-          nodeSelector:
-            kubernetes.io/hostname: s01
 
         containers:
           main:
@@ -90,6 +86,7 @@ spec:
                 memory: 274M
               limits:
                 memory: 3949M
+                gpu.intel.com/i915: 1
 
       valkey:
         containers:
