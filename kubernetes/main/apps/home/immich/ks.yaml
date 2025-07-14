@@ -58,5 +58,7 @@ spec:
     substitute:
       APP: immich
       GATUS_SUBDOMAIN: photos
+      VOLSYNC_CLAIM: immich-library
+      VOLSYNC_CAPACITY: 500Gi
   components:
     - ../../../../../shared/components/gatus/external

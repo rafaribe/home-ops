@@ -232,15 +232,19 @@ spec:
                 port: *serverport
     persistence:
       library:
-        type: nfs
-        server: truenas.rafaribe.com
-        path: /mnt/storage-0/immich
+        existingClaim: immich-library
         globalMounts:
           - path: /usr/src/app/upload
       external-library:
         type: nfs
         server: truenas.rafaribe.com
-        path: /mnt/storage-0/immich/external-library
+        path: /mnt/tank/immich/
+        globalMounts:
+          - path: /external-library
+      backup:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/photos-backup/
         globalMounts:
           - path: /external-library
       geocoding-dump:
