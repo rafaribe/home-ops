@@ -233,8 +233,10 @@ spec:
     persistence:
       library:
         existingClaim: immich-library
-        globalMounts:
-          - path: /usr/src/app/upload
+        advancedMounts:
+          server:
+            server:
+            - path: /usr/src/app/upload
       external-library:
         type: nfs
         server: truenas.rafaribe.com
