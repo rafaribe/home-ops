@@ -156,9 +156,13 @@ spec:
       library:
         type: persistentVolumeClaim
         existingClaim: immich-library
-        globalMounts:
-          - path: *mediaLocation
-
+        advancedMounts:
+          server:
+            main:
+              - path: *mediaLocation
+          machine-learning:
+            main:
+              - path: *mediaLocation
       cache:
         type: persistentVolumeClaim
         existingClaim: immich-ml-cache
