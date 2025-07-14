@@ -61,4 +61,5 @@ spec:
       VOLSYNC_CLAIM: immich-library
       VOLSYNC_CAPACITY: 500Gi
   components:
+    - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/external
