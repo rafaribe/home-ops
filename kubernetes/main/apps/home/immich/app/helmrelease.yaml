@@ -166,11 +166,13 @@ spec:
       cache:
         type: persistentVolumeClaim
         existingClaim: immich-ml-cache
-        globalMounts:
-          - path: /cache
-            subPath: cache
-          - path: /.cache
-            subPath: dotCache
+        advancedMounts:
+          machine-learning:
+            main:
+              - path: /cache
+                subPath: cache
+              - path: /.cache
+                subPath: dotCache
 
       tmpfs:
         type: emptyDir
