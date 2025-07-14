@@ -6,7 +6,7 @@ metadata:
   name: immich-db
 spec:
   instances: 3
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.10-v0.2.0
+  imageName: ghcr.io/ahinko/postgres17:17.5.1@sha256:5f246168bcbbc5aaef2b3b5f00566d18a6d412ae8baa25fdf88e8061fe448e34
   primaryUpdateStrategy: unsupervised
   storage:
     size: 100Gi
@@ -20,7 +20,7 @@ spec:
       max_slot_wal_keep_size: 15GB
       shared_buffers: 512MB
     shared_preload_libraries:
-      - "vectors.so"
+      - "vchord.so
   resources:
     requests:
       cpu: 500m
@@ -38,11 +38,6 @@ spec:
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
     initdb:
-      postInitSQL:
-        - ALTER SYSTEM SET search_path TO "$user", public, vectors;
-        - CREATE EXTENSION IF NOT EXISTS "vectors";
-        - CREATE EXTENSION IF NOT EXISTS "cube";
-        - CREATE EXTENSION IF NOT EXISTS "earthdistance";
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   # externalClusters:
   #   - name: *previousCluster

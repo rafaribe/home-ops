@@ -1,20 +1,22 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-4.0.1/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app immich
+  name: immich
 spec:
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
-    namespace: flux-system
-  install:
-    timeout: 30m
-  interval: 30m
   maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
   upgrade:
-    timeout: 30m
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   uninstall:
     keepHistory: false
   values:
@@ -22,8 +24,11 @@ spec:
       server:
         strategy: RollingUpdate
         annotations:
-          secret.reloader.stakater.com/reload: &secret immich
-          configmap.reloader.stakater.com/reload: &configmap immich
+          reloader.stakater.com/auto: "true"
+        pod:
+          enableServiceLinks: false
+          nodeSelector:
+            kubernetes.io/hostname: s01
         initContainers:
           01-init-db:
             image:
@@ -38,25 +43,14 @@ spec:
               tag: 17.5.0
               pullPolicy: IfNotPresent
             envFrom: *dbEnvFrom
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/instance: *app
-                  app.kubernetes.io/controller: server
         containers:
-          server:
+          main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.135.3
+              tag: v1.135.3@sha256:df5bbf4e29eff4688063a005708f8b96f13073200b4a7378f7661568459b31e9
+            env:
+              IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
+
             envFrom: &envFrom
               - configMapRef:
                   name: immich
@@ -64,140 +58,63 @@ spec:
                   name: immich
               - secretRef:
                   name: immich-db
-            env:
-              IMMICH_LOG_LEVEL: verbose
-              # IMMICH_WORKERS_INCLUDE: api
-              IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
-              IMMICH_PORT: &port 2283
-              IMMICH_WORKERS_INCLUDE: api
+
             resources:
               requests:
                 cpu: 100m
-                memory: 250Mi
+                memory: 256Mi
               limits:
-                memory: 2000Mi
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api/server/ping
-                    port: &serverport 2283
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 5
-              readiness: *probes
-              startup:
-                enabled: false
-      microservices:
-        strategy: RollingUpdate
-        annotations:
-          secret.reloader.stakater.com/reload: *secret
-          configmap.reloader.stakater.com/reload: *configmap
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/instance: *app
-                  app.kubernetes.io/controller: microservices
-          nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
-        containers:
-          microservices:
-            image:
-              repository: ghcr.io/immich-app/immich-server
-              tag: v1.135.3
-            envFrom: *envFrom
-            env:
-              IMMICH_WORKERS_EXCLUDE: api
-            resources:
-              requests:
-                gpu.intel.com/i915: 1
-                cpu: 100m
-                memory: 250Mi
-              limits:
-                gpu.intel.com/i915: 1
-                memory: 2500Mi
+                memory: 4096Mi
+
       machine-learning:
         strategy: RollingUpdate
         annotations:
-          configmap.reloader.stakater.com/reload: *configmap
+          reloader.stakater.com/auto: "true"
         pod:
           enableServiceLinks: false
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/instance: *app
-                  app.kubernetes.io/controller: machine-learning
+          nodeSelector:
+            kubernetes.io/hostname: s01
+
         containers:
-          machine-learning:
+          main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.135.3
-            env:
-              MACHINE_LEARNING_PRELOAD__CLIP__TEXTUAL: ViT-B-16-SigLIP__webli
-              MACHINE_LEARNING_PRELOAD__CLIP__VISUAL: ViT-B-16-SigLIP__webli
-              MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__RECOGNITION: buffalo_l
-              MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__DETECTION: buffalo_l
+              tag: v1.135.3@sha256:9f2f61d86af82d04926f9b896c995c502303052905517c5485dd26bf1e42a44e
             envFrom: *envFrom
+            env:
+              MPLCONFIGDIR: "/cache/matplotlib"
+              IMMICH_MEDIA_LOCATION: *mediaLocation
             resources:
               requests:
                 cpu: 100m
-                memory: 250Mi
+                memory: 274M
               limits:
-                memory: 4000Mi
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /ping
-                    port: &mlport 3003
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 5
-              readiness: *probes
-              startup:
-                enabled: false
+                memory: 3949M
+
+      valkey:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/ahinko/valkey
+              tag: 8.1.2
 
     service:
       server:
         controller: server
         ports:
           http:
-            port: *serverport
-          metrics:
-            port: 8081
-      microservices:
-        controller: microservices
-        ports:
-          metrics:
-            port: 8081
+            port: &port 2283
       machine-learning:
         controller: machine-learning
         ports:
           http:
-            port: *mlport
+            port: 3003
+      valkey:
+        controller: valkey
+        ports:
+          http:
+            port: 6379
+
     route:
       app:
         annotations:
@@ -230,61 +147,36 @@ spec:
           - backendRefs:
               - name: *backend
                 port: *serverport
+
     persistence:
-      library:
-        existingClaim: immich-library
-        advancedMounts:
-          server:
-            server:
-            - path: /usr/src/app/upload
-      external-library:
-        type: nfs
-        server: truenas.rafaribe.com
-        path: /mnt/tank/immich/
-        globalMounts:
-          - path: /external-library
-      backup:
-        type: nfs
-        server: truenas.rafaribe.com
-        path: /mnt/tank/photos-backup/
-        globalMounts:
-          - path: /external-library
-      geocoding-dump:
-        type: emptyDir
-        advancedMounts:
-          server:
-            server:
-              - path: /usr/src/app/.reverse-geocoding-dump
-          microservices:
-            microservices:
-              - path: /usr/src/app/.reverse-geocoding-dump
-      geoname-dump:
-        type: emptyDir
-        advancedMounts:
-          microservices:
-            microservices:
-              - path: /usr/src/app/node_modules/local-reverse-geocoder/geonames_dump
-      transformers-cache:
-        type: emptyDir
-        advancedMounts:
-          server:
-            server:
-              - path: /usr/src/app/.transformers_cache
-          microservices:
-            microservices:
-              - path: /usr/src/app/.transformers_cache
-      model-cache:
-        existingClaim: immich-ml-cache
-        advancedMounts:
-          machine-learning:
-            machine-learning:
-              - path: /cache
-                subPath: cache
-              - path: /.cache
-                subPath: dotCache
       matplotlib:
         type: emptyDir
         advancedMounts:
           server:
-            server:
+            main:
               - path: /config/matplotlib
+
+      library:
+        type: persistentVolumeClaim
+        existingClaim: immich-library
+        globalMounts:
+          - path: *mediaLocation
+
+      cache:
+        type: persistentVolumeClaim
+        existingClaim: immich-ml-cache
+        globalMounts:
+          - path: /cache
+            subPath: cache
+          - path: /.cache
+            subPath: dotCache
+
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          server:
+            main:
+              - path: /usr/src/app/.reverse-geocoding-dump
+                subPath: geocoding
+              - path: /usr/src/app/.transformers_cache
+                subPath: transformers
