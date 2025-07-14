@@ -59,7 +59,10 @@ spec:
       APP: immich
       GATUS_SUBDOMAIN: photos
       VOLSYNC_CLAIM: immich-library
-      VOLSYNC_CAPACITY: 500Gi
+      VOLSYNC_CAPACITY: 1Ti
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   components:
     - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/external
