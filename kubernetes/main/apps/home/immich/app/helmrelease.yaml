@@ -136,7 +136,7 @@ spec:
         rules:
           - backendRefs:
               - name: &backend immich-server
-                port: *serverport
+                port: *port
       internal:
         hostnames: ["immich.rafaribe.com", "pics.rafaribe.com"]
         parentRefs:
@@ -146,7 +146,7 @@ spec:
         rules:
           - backendRefs:
               - name: *backend
-                port: *serverport
+                port: *port
 
     persistence:
       matplotlib:
