@@ -20,7 +20,7 @@ spec:
       max_slot_wal_keep_size: 15GB
       shared_buffers: 512MB
     shared_preload_libraries:
-      - "vchord.so
+      - "vchord.so"
   resources:
     requests:
       cpu: 500m
