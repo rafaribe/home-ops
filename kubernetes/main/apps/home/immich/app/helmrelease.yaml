@@ -282,3 +282,9 @@ spec:
                 subPath: cache
               - path: /.cache
                 subPath: dotCache
+      matplotlib:
+        type: emptyDir
+        advancedMounts:
+          server:
+            server:
+              - path: /config/matplotlib
