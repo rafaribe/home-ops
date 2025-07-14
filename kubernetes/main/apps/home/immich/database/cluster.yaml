@@ -6,7 +6,7 @@ metadata:
   name: immich-db
 spec:
   instances: 3
-  imageName: ghcr.io/ahinko/postgres17:17.5.12
+  imageName: ghcr.io/rafaribe/postgres17:17.5-12-bookworm
   primaryUpdateStrategy: unsupervised
   storage:
     size: 100Gi
