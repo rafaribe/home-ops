@@ -6,7 +6,7 @@ metadata:
   name: immich-db
 spec:
   instances: 3
-  imageName: ghcr.io/ahinko/postgres17:17.5.10
+  imageName: ghcr.io/ahinko/postgres17:17.5.12
   primaryUpdateStrategy: unsupervised
   storage:
     size: 100Gi
@@ -14,7 +14,7 @@ spec:
   superuserSecret:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
-  
+
   postgresql:
     shared_preload_libraries:
       - "vchord.so"
