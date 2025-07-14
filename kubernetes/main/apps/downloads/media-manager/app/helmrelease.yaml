@@ -68,7 +68,7 @@ spec:
       app:
         annotations:
 
-        hostnames: ["mm.rafaribe.com", media-manager.rafaribe.com"]
+        hostnames: ["mm.rafaribe.com", "media-manager.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
