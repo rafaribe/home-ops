@@ -108,7 +108,7 @@ data:
           siteMonitor: http://10.0.0.254
           widget:
             type: pihole
-            url: http://pihole.rafaribe.com/
+            url: http://10.0.0.254
             version: 6
             key: {{HOMEPAGE_VAR_PIHOLE_API_KEY}}
       - Proxmox:
