@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     controllers:
-      media-browser:
+      media-browser-quantum:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -123,7 +123,7 @@ spec:
       
       config-file:
         type: configMap
-        name: media-browser-config
+        name: media-browser-quantum-config
         globalMounts:
           - path: /config/config.json
             readOnly: true
