@@ -9,10 +9,10 @@ spec:
        resources:
          limits:
            squat.ai/tun: "1"
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
-            add:
-              - NET_ADMIN
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+          add:
+            - NET_ADMIN
