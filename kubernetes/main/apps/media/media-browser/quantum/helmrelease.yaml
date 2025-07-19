@@ -95,25 +95,23 @@ spec:
     configMaps:
       config:
         data:
-          config.json: |
-            {
-              "port": 80,
-              "database": "/config/filebrowser.db",
-              "root": "/media",
-              "log": "stdout",
-              "auth": {
-                "method": "oidc",
-                "oidc": {
-                  "issuer": "https://sso.rafaribe.com/application/o/filebrowser/",
-                  "redirect_url": "https://media.rafaribe.com/auth/oidc/callback",
-                  "scopes": ["openid", "profile", "email"],
-                  "auto_create_user": true
-                }
-              },
-              "branding": {
-                "name": "Media Browser"
-              }
-            }
+          config.yaml: |
+            port: 80
+            database: /config/filebrowser.db
+            root: /media
+            log: stdout
+            auth:
+              method: oidc
+              oidc:
+                issuer: https://sso.rafaribe.com/application/o/filebrowser/
+                redirect_url: https://media.rafaribe.com/auth/oidc/callback
+                scopes:
+                  - openid
+                  - profile
+                  - email
+                auto_create_user: true
+            branding:
+              name: Media Browser
 
     persistence:
       config:
@@ -125,7 +123,8 @@ spec:
         type: configMap
         name: media-browser-quantum
         globalMounts:
-          - path: /.filebrowser.json
+          - path: /config.yaml
+            subPath: config.yaml
             readOnly: true
       
       media:
