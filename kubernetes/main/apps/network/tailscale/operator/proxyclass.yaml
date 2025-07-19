@@ -1,3 +1,4 @@
+# proxy-class.yaml
 apiVersion: tailscale.com/v1alpha1
 kind: ProxyClass
 metadata:
@@ -6,13 +7,13 @@ spec:
   statefulSet:
     pod:
       tailscaleContainer:
-       resources:
-         limits:
-           squat.ai/tun: "1"
-      securityContext:
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop:
-            - ALL
-          add:
-            - NET_ADMIN
+        resources:
+          limits:
+            squat.ai/tun: "1"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+            add:
+              - NET_ADMIN
