@@ -25,5 +25,5 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: homebox
   components:
-    - ../../../../../shared/components/gatus/external
+    - ../../../../../shared/components/gatus/guarded
     - ../../../../../shared/components/volsync

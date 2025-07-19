@@ -59,7 +59,7 @@ spec:
           gethomepage.dev/icon: https://cdn-icons-png.flaticon.com/512/868/868784.png
           gethomepage.dev/description: Useful tools for developers
           gethomepage.dev/siteMonitor: http://it-tools.services:80
-        hostnames: ["it-tools.rafaribe.com"]
+        hostnames: ["tools.rafaribe.com"]
         parentRefs:
           - name: external
             namespace: kube-system
