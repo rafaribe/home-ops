@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/amazon-q
-              tag: 2025.07.18@sha256:5d0a1913042102552e849ffd77e142d036d6aa8bbc14ea27ce8b1bb3f2cf38e9
+              tag: 2025.07.19@sha256:d8a61d2496b76d143a4083468af38f28f7c351fdb8afb6436d59294c03bb8602
             command: ["/bin/bash"]
             args: ["-c", "while true; do sleep 30; done"]
             securityContext:
