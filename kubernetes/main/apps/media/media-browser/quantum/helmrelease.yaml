@@ -117,7 +117,7 @@ spec:
 
     persistence:
       config:
-        existingClaim: *app
+        existingClaim: quantum
         globalMounts:
           - path: /config
       
