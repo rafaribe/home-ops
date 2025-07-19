@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gtsteffaniak/filebrowser
-              tag: 0.7.14-beta@sha256:a5c30380ff1d39dfe97ddd259d4d8d009938a31334a18b0000b9cb53120f54c1
+              tag: 0.7.15-beta@sha256:472ceb53d70b3b716a5f2c90515bafdb9efb85e10a3bab9bb92425f70631df08
             # args:
             #   - --config
             #   - /config/config.json
