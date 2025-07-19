@@ -59,6 +59,7 @@ spec:
         retention_period: 14d
       serviceLabels:
         tailscale.com/expose: "true"
+        taiscale.com/hostname: "loki"
     singleBinary:
       replicas: 1
       persistence:

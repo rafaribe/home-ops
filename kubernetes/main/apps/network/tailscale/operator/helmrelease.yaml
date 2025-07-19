@@ -22,6 +22,8 @@ spec:
         - "tag:k8s"
     apiServerProxyConfig:
       mode: "true"
+    proxyClass:
+      defaultProxyClass: "tailscale-tun"
   valuesFrom:
     - kind: Secret
       name: tailscale-operator
