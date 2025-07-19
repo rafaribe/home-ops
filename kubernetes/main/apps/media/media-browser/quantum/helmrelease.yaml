@@ -37,6 +37,16 @@ spec:
             #   - /config/config.json
             env:
               TZ: "Europe/Lisbon"
+              FILEBROWSER_PORT: "80"
+              FILEBROWSER_DATABASE: "/config/filebrowser.db"
+              FILEBROWSER_ROOT: "/media"
+              FILEBROWSER_LOG: "stdout"
+              FILEBROWSER_AUTH_METHOD: "oidc"
+              FILEBROWSER_OIDC_ISSUER: "https://sso.rafaribe.com/application/o/filebrowser/"
+              FILEBROWSER_OIDC_REDIRECT_URL: "https://mbq.rafaribe.com/auth/oidc/callback"
+              FILEBROWSER_OIDC_SCOPES: "openid,profile,email"
+              FILEBROWSER_OIDC_AUTO_CREATE_USER: "true"
+              FILEBROWSER_BRANDING_NAME: "Media Browser"
             envFrom:
               - secretRef:
                   name: *app
