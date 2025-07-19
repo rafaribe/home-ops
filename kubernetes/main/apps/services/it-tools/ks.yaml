@@ -26,6 +26,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: tools
   components:
-    - ../../../../../shared/components/gatus/external
+    - ../../../../../shared/components/gatus/guarded
