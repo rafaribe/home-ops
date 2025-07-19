@@ -73,7 +73,7 @@ spec:
 
     service:
       app:
-        controller: *app
+        controller: media-browser-quantum
         ports:
           http:
             port: *port

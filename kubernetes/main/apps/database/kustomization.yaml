@@ -8,5 +8,4 @@ resources:
   # OCI Repository
   - ./common
   # Flux-Kustomizations
- # - ./nats/ks.yaml
- # - ./vernemq/ks.yaml
+  #- ./rabbitmq/ks.yaml
