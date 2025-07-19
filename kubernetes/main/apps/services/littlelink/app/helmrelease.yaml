@@ -54,7 +54,7 @@ spec:
               TWITTER: https://x.com/rafaribe10
               EMAIL: rafaribe@rafaribe.com
               EMAIL_TEXT: Email me!
-              FOOTER: Rafael Ribeiro © 2024
+              FOOTER: Rafael Ribeiro © 2025
             resources:
               requests:
                 memory: 64M
