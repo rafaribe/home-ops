@@ -1,0 +1,11 @@
+---
+apiVersion: tailscale.com/v1alpha1
+kind: Connector
+metadata:
+  name: app-connector
+spec:
+  appConnector:
+    routes:
+      - 10.0.0.0/22
+      - 10.0.0.4/24
+  hostname: homelab-ingress

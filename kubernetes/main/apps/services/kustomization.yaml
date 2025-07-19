@@ -10,7 +10,6 @@ resources:
   - ./13ft/ks.yaml
   - ./actual/ks.yaml
   - ./affine/ks.yaml
-
   - ./atuin/ks.yaml
   - ./bytestash/ks.yaml
   - ./cyberchef/ks.yaml
