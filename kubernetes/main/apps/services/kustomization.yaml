@@ -36,6 +36,7 @@ resources:
   - ./pdfding/ks.yaml
   - ./pinchflat/ks.yaml
   - ./postiz/ks.yaml
+  - ./radicale/ks.yaml
   - ./searxng/ks.yaml
   - ./silverbullet/ks.yaml
   - ./smtp-relay/ks.yaml
