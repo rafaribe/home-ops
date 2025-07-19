@@ -5,6 +5,7 @@ namespace: observability
 resources:
   - ./helmrelease.yaml
   # - ./objectbucketclaim.yaml
+  - ./route.yaml
 configMapGenerator:
   - name: loki-alerting-rules
     files:

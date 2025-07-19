@@ -80,7 +80,6 @@ spec:
         main:
           enabled: true
           annotations:
-
           hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
           parentRefs:
             - name: internal

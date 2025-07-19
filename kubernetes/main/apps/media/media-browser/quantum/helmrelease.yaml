@@ -41,6 +41,7 @@ spec:
               FILEBROWSER_DATABASE: "/config/filebrowser.db"
               FILEBROWSER_ROOT: "/media"
               FILEBROWSER_LOG: "stdout"
+              FILEBROWSER_CONFIG: "/app/config.yaml"
               FILEBROWSER_AUTH_METHOD: "oidc"
               FILEBROWSER_OIDC_ISSUER: "https://sso.rafaribe.com/application/o/filebrowser/"
               FILEBROWSER_OIDC_REDIRECT_URL: "https://mbq.rafaribe.com/auth/oidc/callback"
