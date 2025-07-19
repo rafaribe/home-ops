@@ -32,9 +32,6 @@ spec:
             image:
               repository: ghcr.io/gtsteffaniak/filebrowser
               tag: 0.7.14-beta@sha256:a5c30380ff1d39dfe97ddd259d4d8d009938a31334a18b0000b9cb53120f54c1
-            args:
-              - --config
-              - /config.yaml
             # args:
             #   - --config
             #   - /config/config.json
@@ -126,7 +123,7 @@ spec:
         type: configMap
         name: media-browser-quantum
         globalMounts:
-          - path: /config.yaml
+          - path: /app/config.yaml
             subPath: config.yaml
             readOnly: true
       
