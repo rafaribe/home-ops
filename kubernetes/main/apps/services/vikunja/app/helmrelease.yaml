@@ -79,7 +79,7 @@ spec:
           gethomepage.dev/group: Services
           gethomepage.dev/icon: vikunja.png
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (*app)
+            app.kubernetes.io/name in (vikunja)
         hostnames: ["vikunja.rafaribe.com"]
         parentRefs:
           - name: external

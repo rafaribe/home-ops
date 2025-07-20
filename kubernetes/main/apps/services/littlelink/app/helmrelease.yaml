@@ -76,7 +76,7 @@ spec:
           gethomepage.dev/description: Linktree Alternative
           gethomepage.dev/siteMonitor: http://littlelink.services:3000
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (*app)
+            app.kubernetes.io/name in (littlelink)
         hostnames: ["link.rafaribe.com"]
         parentRefs:
           - name: external

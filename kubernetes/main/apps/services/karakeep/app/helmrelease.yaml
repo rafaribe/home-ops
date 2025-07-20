@@ -143,7 +143,7 @@ spec:
           gethomepage.dev/group: Services
           gethomepage.dev/icon: https://media.invisioncic.com/u329766/monthly_2024_05/karakeep.png.cb75b7347d47989bd0c3e65b9e613700.png
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (*app)
+            app.kubernetes.io/name in (karakeep)
         hostnames: ["karakeep.rafaribe.com", "hoarder.rafaribe.com"]
         parentRefs:
           - name: internal

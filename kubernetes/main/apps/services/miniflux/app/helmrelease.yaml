@@ -107,7 +107,7 @@ spec:
           gethomepage.dev/icon: "miniflux.png"
           gethomepage.dev/href: &host "http://miniflux.services"
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (*app)
+            app.kubernetes.io/name in (miniflux)
           gethomepage.dev/widget.type: miniflux
           gethomepage.dev/widget.url: *host
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_MINIFLUX_API_KEY}}` }}"

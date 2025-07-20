@@ -115,7 +115,7 @@ spec:
           gethomepage.dev/group: Home
           gethomepage.dev/icon: tandoor-recipes.png
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (*app)
+            app.kubernetes.io/name in (tandoor)
           gethomepage.dev/href: https://tandoor.rafaribe.com
           gethomepage.dev/widget.type: tandoor
           gethomepage.dev/widget.url: http://tandoor.services:8080

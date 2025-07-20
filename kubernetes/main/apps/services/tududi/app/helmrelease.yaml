@@ -72,7 +72,7 @@ spec:
           gethomepage.dev/group: Services
           gethomepage.dev/icon: tududi.png
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (*app)
+            app.kubernetes.io/name in (tududi)
         hostnames: ["tududi.rafaribe.com"]
         parentRefs:
           - name: internal
