@@ -365,6 +365,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: grafana.png
           gethomepage.dev/name: Grafana
+          gethomepage.dev/version: "2"
           gethomepage.dev/group: Observability
           gethomepage.dev/description: Monitoring Dashboards
           gethomepage.dev/widget.type: grafana
