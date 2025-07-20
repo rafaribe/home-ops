@@ -3,17 +3,6 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: loki
-  annotations:
-    # Homepage
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/group: Infrastructure
-    gethomepage.dev/name: Loki
-    gethomepage.dev/icon: https://image.senjianlu.com/blog/2024-09-29/logo-grafana-loki.png
-    gethomepage.dev/description: Loki is a log aggregation system designed to store and query logs from various sources.
-    gethomepage.dev/siteMonitor: http://loki.observability:3100
-    gethomepage.dev/pod-selector: >-
-      app.kubernetes.io/name in (loki)
 spec:
   hostnames: ["loki.rafaribe.com"]
   parentRefs:
