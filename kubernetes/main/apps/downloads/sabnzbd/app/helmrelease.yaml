@@ -120,6 +120,7 @@ spec:
           gethomepage.dev/description: NZB Download Client
           gethomepage.dev/widget.type: sabnzbd
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SABNZBD_TOKEN}}` }}"
+          gethomepage.dev/widget.url: http://sabnzbd.downloads:80
           external-dns.alpha.kubernetes.io/target: &target internal.rafaribe.com
         hostnames: ["sab.rafaribe.com"]
         parentRefs:
