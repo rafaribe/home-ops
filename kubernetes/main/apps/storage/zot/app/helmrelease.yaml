@@ -83,7 +83,6 @@ spec:
           gethomepage.dev/icon: "svg:container-registry"
           gethomepage.dev/name: "Zot"
           gethomepage.dev/description: "Container Registry"
-          gethomepage.dev/
         hostnames: ["zot.rafaribe.com"]
         parentRefs:
           - name: internal
