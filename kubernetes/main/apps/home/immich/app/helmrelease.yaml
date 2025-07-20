@@ -25,10 +25,11 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-        labels:
-          gethomepage.dev/name: immich-server
+
         pod:
           enableServiceLinks: false
+          labels:
+            gethomepage.dev/name: immich-server
         initContainers:
           01-init-db:
             image:
