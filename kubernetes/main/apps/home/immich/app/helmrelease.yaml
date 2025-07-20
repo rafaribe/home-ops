@@ -25,6 +25,8 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
+        labels:
+          gethomepage.dev/name: immich-server
         pod:
           enableServiceLinks: false
         initContainers:
@@ -126,7 +128,8 @@ spec:
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_IMMICH_API_KEY}}` }}"
           gethomepage.dev/widget.version: "2"
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/service in (immich-server)
+            app.kubernetes.io/name in (immich)
+
         hostnames: ["photos.rafaribe.com"]
         parentRefs:
           - name: external

@@ -79,10 +79,11 @@ spec:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/app: "Zot"
-          gethomepage.dev/group: "networking"
+          gethomepage.dev/group: "servestorage"
           gethomepage.dev/icon: "svg:container-registry"
           gethomepage.dev/name: "Zot"
           gethomepage.dev/description: "Container Registry"
+          gethomepage.dev/
         hostnames: ["zot.rafaribe.com"]
         parentRefs:
           - name: internal
