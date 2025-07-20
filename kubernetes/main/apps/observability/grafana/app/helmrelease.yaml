@@ -48,6 +48,17 @@ spec:
       GF_SECURITY_ALLOW_EMBEDDING: true
       GF_SECURITY_COOKIE_SAMESITE: grafana
       VAR_BLOCKY_URL: "http://blocky.network-system.svc.cluster.local:4000"
+      # Use external secret credentials instead of Helm-generated ones
+      GF_SECURITY_ADMIN_USER:
+        valueFrom:
+          secretKeyRef:
+            key: GF_SECURITY_ADMIN_USER
+            name: *secret
+      GF_SECURITY_ADMIN_PASSWORD:
+        valueFrom:
+          secretKeyRef:
+            key: GF_SECURITY_ADMIN_PASSWORD
+            name: *secret
     grafana.ini:
       analytics:
         check_for_updates: false
