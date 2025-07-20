@@ -38,6 +38,13 @@ spec:
               # tag: 0.39@sha256:c6fd9da2959fa8a00ae82bf2cf227c4e76aaf410ba00772c5b3f22b90414aa1b
               repository: chrisvel/tududi
               tag: 0.72.2@sha256:5bad11bf86ff4c0d96c6a1522b37ebd76da83d79d419ed50cfa424aa1408d662
+            command:
+              - /bin/sh
+              - -c
+              - |
+                cd /app/backend
+                mkdir -p db certs || true
+                exec /app/backend/cmd/start.sh
             envFrom:
               - secretRef:
                   name: *app
