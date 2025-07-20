@@ -98,7 +98,7 @@ spec:
           gethomepage.dev/group: Services
           gethomepage.dev/icon: https://cdn-icons-png.flaticon.com/512/4208/4208479.png
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in stirling-pdf)
+            app.kubernetes.io/name in (stirling-pdf)
         hostnames: ["pdf.rafaribe.com"]
         parentRefs:
           - name: internal
@@ -106,5 +106,5 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: stirling-pdf
                 port: *port
