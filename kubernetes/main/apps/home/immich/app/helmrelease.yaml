@@ -126,7 +126,7 @@ spec:
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_IMMICH_API_KEY}}` }}"
           gethomepage.dev/widget.version: "2"
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (immich-server)
+            app.kubernetes.io/service in (immich-server)
         hostnames: ["photos.rafaribe.com"]
         parentRefs:
           - name: external
