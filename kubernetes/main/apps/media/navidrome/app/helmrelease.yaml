@@ -87,11 +87,11 @@ spec:
           gethomepage.dev/group: Media
           gethomepage.dev/icon: sh-navidrome.png
           gethomepage.dev/name: Navidrome
-          gethomepage.dev/widget.type: navidrome
-          gethomepage.dev/widget.url: "https://music.rafaribe.com"
-          gethomepage.dev/widget.token: "{{`{{HOMEPAGE_VAR_NAVIDROME_API_KEY}}`}}"
-          gethomepage.dev/widget.salt: "{{`{{HOMEPAGE_VAR_NAVIDROME_SALT}}`}}"
-          gethomepage.dev/widget.username: "{{`{{HOMEPAGE_VAR_NAVIDROME_USERNAME}}`}}"
+          # gethomepage.dev/widget.type: navidrome
+          # gethomepage.dev/widget.url: "https://music.rafaribe.com"
+          # gethomepage.dev/widget.token: "{{`{{HOMEPAGE_VAR_NAVIDROME_API_KEY}}`}}"
+          # gethomepage.dev/widget.salt: "{{`{{HOMEPAGE_VAR_NAVIDROME_SALT}}`}}"
+          # gethomepage.dev/widget.username: "{{`{{HOMEPAGE_VAR_NAVIDROME_USERNAME}}`}}"
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (navidrome)
           gethomepage.dev/siteMonitor: http://navidrome.media.svc.cluster.local:4533
