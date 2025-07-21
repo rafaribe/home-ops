@@ -25,7 +25,7 @@ spec:
       retries: 3
   values:
     controllers:
-      sparkyfitness:
+      server:
         strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -40,7 +40,7 @@ spec:
                   name: *app
 
         containers:
-          server:
+          app:
             image:
               repository: codewithcj/sparkyfitness_server
               tag: latest
@@ -89,7 +89,13 @@ spec:
               limits:
                 memory: 512Mi
 
-          frontend:
+      frontend:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
             image:
               repository: codewithcj/sparkyfitness
               tag: latest
@@ -101,7 +107,7 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /
+                    path: /health
                     port: &frontend-port 80
                   initialDelaySeconds: 30
                   periodSeconds: 10
@@ -112,7 +118,7 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /
+                    path: /health
                     port: *frontend-port
                   initialDelaySeconds: 5
                   periodSeconds: 5
@@ -123,7 +129,7 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /
+                    path: /health
                     port: *frontend-port
                   initialDelaySeconds: 10
                   periodSeconds: 5
@@ -146,14 +152,17 @@ spec:
         seccompProfile: { type: RuntimeDefault }
 
     service:
-      app:
-        controller: *app
+      server:
+        controller: server
+        ports:
+          http:
+            port: *server-port
+      frontend:
+        controller: frontend
+        primary: true
         ports:
           http:
             port: *frontend-port
-            primary: true
-          server:
-            port: *server-port
 
     route:
       app:
@@ -165,7 +174,7 @@ spec:
           gethomepage.dev/icon: mdi-dumbbell
           gethomepage.dev/name: SparkyFitness
           gethomepage.dev/description: Self-hosted fitness tracking alternative to MyFitnessPal
-          gethomepage.dev/siteMonitor: &url http://sparkyfitness.home:80
+          gethomepage.dev/siteMonitor: &url http://sparkyfitness-frontend.home:80
         hostnames: ["sparkyfitness.rafaribe.com"]
         parentRefs:
           - name: internal
@@ -173,14 +182,22 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: sparkyfitness-frontend
                 port: *frontend-port
 
     persistence:
       data:
         existingClaim: *app
         advancedMounts:
-          sparkyfitness:
-            server:
+          server:
+            app:
               - path: /app/data
                 subPath: server-data
+      nginx-config:
+        type: configMap
+        name: sparkyfitness-nginx-config
+        advancedMounts:
+          frontend:
+            app:
+              - path: /etc/nginx/conf.d/default.conf
+                subPath: default.conf
