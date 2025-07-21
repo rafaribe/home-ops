@@ -65,6 +65,13 @@ spec:
       mgr:
         count: 2
         allowMultiplePerNode: false
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+          limits:
+            cpu: 1000m # added CPU limit for better resource management
+            memory: 2Gi # increased from 1Gi for better performance
         modules:
           - name: "pg_autoscaler"
             enabled: true

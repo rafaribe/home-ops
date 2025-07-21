@@ -52,7 +52,7 @@ spec:
         cpu: 200m # unchangable
         memory: 512Mi # unchangable
       limits: 
-        cpu: 500m # unchangable
-        memory: 1Gi
+        cpu: 1000m # increased from 500m for better performance
+        memory: 2Gi # increased from 1Gi for better performance
     image:
       repository: ghcr.io/rook/ceph
