@@ -48,3 +48,4 @@ upgrade2.sh
 .pytest_cache/
 immich-restore.sh
 restore/backupfile.sql.gz
+.archive/
