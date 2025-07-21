@@ -108,7 +108,7 @@ spec:
                 spec:
                   httpGet:
                     path: /health
-                    port: &frontend-port 80
+                    port: &frontend-port 8080
                   initialDelaySeconds: 30
                   periodSeconds: 10
                   timeoutSeconds: 5
@@ -141,12 +141,13 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 256Mi
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+              runAsNonRoot: false
 
     defaultPodOptions:
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
