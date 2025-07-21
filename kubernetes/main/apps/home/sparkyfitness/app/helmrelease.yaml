@@ -195,7 +195,7 @@ spec:
                 subPath: server-data
       nginx-config:
         type: configMap
-        name: sparkyfitness-nginx-config
+        name: sparkyfitness
         defaultMode: 0644
         advancedMounts:
           frontend:
