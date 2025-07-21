@@ -47,7 +47,7 @@ spec:
             envFrom: *envFrom
             env:
               SPARKY_FITNESS_SERVER_HOST: "0.0.0.0"
-              SPARKY_FITNESS_SERVER_PORT: &server-port "3010"
+              SPARKY_FITNESS_SERVER_PORT: &server-port 3010
             probes:
               liveness:
                 enabled: true
