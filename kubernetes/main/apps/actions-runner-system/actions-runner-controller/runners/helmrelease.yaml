@@ -52,7 +52,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/rafaribe/actions-runner:2.326.0@sha256:0d7c9b294997f829093a9d6c989877ebc25a3bed584b7c16f80c67c7bd1be100
+            image: ghcr.io/rafaribe/actions-runner:2.327.0@sha256:0ad94b2e527b82174e1de3f7b53ac6627b1aefea350f61b4d11444fd315a6149
             command: ["/home/runner/run.sh"]
             env:
               - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
