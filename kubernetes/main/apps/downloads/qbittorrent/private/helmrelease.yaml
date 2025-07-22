@@ -30,7 +30,7 @@ spec:
             nameOverride: *app
             image:
               repository: ghcr.io/rafaribe/qbittorrent-beta
-              tag: 5.1.2@sha256:bcd559f86a2e6c4ae7c9507e18103a0910a422da936e69a739d2ca54d691d6f0
+              tag: 5.1.2@sha256:d24fee78aca49f498c58ad13ceac4f1b44969f4919e794b361b5a4b4a579ffdd
             env:
               UMASK: "022"
               QBT_WEBUI_PORT: &port 8080
