@@ -118,7 +118,7 @@ spec:
     redis:
       type: external
       external:
-        addr: dragonfly.storage.svc.cluster.local:6379
+        addr: dragonfly.database.svc.cluster.local:6379
         coreDatabaseIndex: "0"
         jobServiceDatabaseIndex: "1"
         registryDatabaseIndex: "2"
