@@ -43,7 +43,7 @@ spec:
           app:
             image:
               repository: codewithcj/sparkyfitness_server
-              tag: latest
+              tag: v0.14.9
             envFrom: *envFrom
             env:
               SPARKY_FITNESS_SERVER_HOST: "0.0.0.0"
@@ -98,7 +98,7 @@ spec:
           app:
             image:
               repository: codewithcj/sparkyfitness
-              tag: latest
+              tag: v0.14.9
             env:
               TZ: Europe/Lisbon
             probes:
@@ -108,7 +108,7 @@ spec:
                 spec:
                   httpGet:
                     path: /health
-                    port: &frontend-port 8080
+                    port: &frontend-port 80
                   initialDelaySeconds: 30
                   periodSeconds: 10
                   timeoutSeconds: 5
