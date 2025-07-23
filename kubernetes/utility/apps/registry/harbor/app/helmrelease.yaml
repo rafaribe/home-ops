@@ -22,11 +22,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  valuesFrom:
-    - targetPath: harborAdminPassword
-      kind: Secret
-      name: &secret harbor
-      valuesKey: HARBOR_ADMIN_PASSWORD
   values:
     expose:
       type: ingress
@@ -67,7 +62,8 @@ spec:
       type: Recreate
     logLevel: warning
     # The secret key used for encryption. Must be a string of 16 chars.
-    existingSecretSecretKey: *secret
+    existingSecretAdminPassword: harbor
+    existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
 
     portal:
       image:
@@ -80,7 +76,7 @@ spec:
         tag: v2.13.0
       revisionHistoryLimit: 3
       podAnnotations:
-        secret.reloader.stakater.com/reload: harbor-secret, harbor-initdb-secret, harbor-pguser-secret
+        secret.reloader.stakater.com/reload: harbor, harbor-initdb-secret, harbor-pguser-secret
     jobservice:
       image:
         repository: ghcr.io/octohelm/harbor/harbor-jobservice
