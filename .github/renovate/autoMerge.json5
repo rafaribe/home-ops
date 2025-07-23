@@ -7,7 +7,7 @@
       automerge: true,
       automergeType: "pr",
       matchUpdateTypes: ["digest"],
-      matchPackageNames: ["/home-operations/"],
+      matchPackageNames: ["/home-operations/","/rafaribe/", "/onedr0p/", "/allenporter/"],
       ignoreTests: false,
     },
     {
