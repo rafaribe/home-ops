@@ -5,6 +5,6 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
+  - ./common # OCI Repository
   # Flux-Kustomizations
-  - ./harbor/ks.yaml
-  - ./zot/ks.yaml
+  - ./dragonfly/ks.yaml
