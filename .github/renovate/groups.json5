@@ -1,86 +1,214 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  packageRules: [
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    // Kube Prometheus Stack Group
     {
-      description: "Actions Runner Controller Group",
-      groupName: "Actions Runner Controller",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/gha-runner-scale-set-controller/", "/gha-runner-scale-set/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
+      "description": "Group kube-prometheus-stack related updates",
+      "groupName": "kube-prometheus-stack",
+      "matchPackagePatterns": [
+        "^kube-prometheus-stack$",
+        "^prometheus-operator-crds$"
+      ],
+      "matchDatasources": ["helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
       },
+      "separateMinorPatch": true,
+      "separateMajorMinor": true
     },
+    
+    // Flux System Group
     {
-      description: "Cert-Manager Group",
-      groupName: "Cert-Manager",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/cert-manager/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
+      "description": "Group Flux system components",
+      "groupName": "flux-system",
+      "matchPackagePatterns": [
+        "^source-controller$",
+        "^kustomize-controller$",
+        "^helm-controller$",
+        "^notification-controller$",
+        "^image-reflector-controller$",
+        "^image-automation-controller$"
+      ],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
     },
+
+    // Ingress Controllers Group
     {
-      description: "Cilium Group",
-      groupName: "Cilium",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/cilium/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
+      "description": "Group ingress controller updates",
+      "groupName": "ingress-controllers",
+      "matchPackagePatterns": [
+        "^ingress-nginx$",
+        "^traefik$",
+        "^cert-manager$"
+      ],
+      "matchDatasources": ["helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
     },
+
+    // Storage Group
     {
-      description: "CoreDNS Group",
-      groupName: "CoreDNS",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/coredns/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
+      "description": "Group storage related updates",
+      "groupName": "storage",
+      "matchPackagePatterns": [
+        "^democratic-csi$",
+        "^snapshot-controller$",
+        "^external-snapshotter$",
+        "^csi-.*"
+      ],
+      "matchDatasources": ["helm", "docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
     },
+
+    // Security Group
     {
-      description: "External Secrets Operator Group",
-      groupName: "External Secrets Operator",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/external-secrets/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
+      "description": "Group security related updates",
+      "groupName": "security",
+      "matchPackagePatterns": [
+        "^falco$",
+        "^external-secrets$",
+        "^sealed-secrets$",
+        "^vault$",
+        "^oauth2-proxy$"
+      ],
+      "matchDatasources": ["helm", "docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
     },
+
+    // Networking Group
     {
-      description: "Flux Operator Group",
-      groupName: "Flux Operator",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/flux-operator/", "/flux-instance/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
+      "description": "Group networking related updates",
+      "groupName": "networking",
+      "matchPackagePatterns": [
+        "^cilium$",
+        "^metallb$",
+        "^external-dns$",
+        "^coredns$"
+      ],
+      "matchDatasources": ["helm", "docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
     },
+
+    // Media Stack Group
     {
-      description: "Intel Device Plugins Group",
-      groupName: "Intel-Device-Plugins",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/intel-device-plugins-operator/", "/intel-device-plugins-gpu/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
+      "description": "Group media applications",
+      "groupName": "media-stack",
+      "matchPackagePatterns": [
+        "^sonarr$",
+        "^radarr$",
+        "^prowlarr$",
+        "^bazarr$",
+        "^jellyfin$",
+        "^plex$",
+        "^tautulli$",
+        "^overseerr$",
+        "^jellyseerr$"
+      ],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
       },
+      "schedule": ["on saturday"]
     },
+
+    // Home Automation Group
     {
-      description: "Rook-Ceph Group",
-      groupName: "Rook-Ceph",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/rook-ceph/", "/rook-ceph-cluster/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
+      "description": "Group home automation applications",
+      "groupName": "home-automation",
+      "matchPackagePatterns": [
+        "^home-assistant$",
+        "^node-red$",
+        "^mosquitto$",
+        "^zigbee2mqtt$",
+        "^zwavejs2mqtt$"
+      ],
+      "matchDatasources": ["docker", "helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
     },
+
+    // System Utilities Group
     {
-      description: "Spegel Group",
-      groupName: "Spegel",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/spegel/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
+      "description": "Group system utility applications",
+      "groupName": "system-utilities",
+      "matchPackagePatterns": [
+        "^node-exporter$",
+        "^kube-state-metrics$",
+        "^metrics-server$",
+        "^reloader$",
+        "^descheduler$"
+      ],
+      "matchDatasources": ["helm", "docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
     },
-  ],
+
+    // Database Group
+    {
+      "description": "Group database related updates",
+      "groupName": "databases",
+      "matchPackagePatterns": [
+        "^postgresql$",
+        "^redis$",
+        "^mariadb$",
+        "^mysql$",
+        "^mongodb$",
+        "^influxdb$"
+      ],
+      "matchDatasources": ["helm", "docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+
+    // Talos System Group
+    {
+      "description": "Group Talos system updates",
+      "groupName": "talos-system",
+      "matchPackagePatterns": [
+        "^ghcr.io/siderolabs/talos$",
+        "^ghcr.io/siderolabs/installer$",
+        "^ghcr.io/siderolabs/kubelet$"
+      ],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
+    },
+
+    // GitHub Actions Group
+    {
+      "description": "Group GitHub Actions updates",
+      "groupName": "github-actions",
+      "matchManagers": ["github-actions"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "pinDigests": true
+    },
+
+    // Container Image Digests
+    {
+      "description": "Group container image digest updates",
+      "groupName": "container-digests",
+      "matchUpdateTypes": ["digest"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "schedule": ["on sunday"]
+    }
+  ]
 }
