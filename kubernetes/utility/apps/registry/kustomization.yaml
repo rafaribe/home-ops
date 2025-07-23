@@ -7,4 +7,3 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./harbor/ks.yaml
-  - ./zot/ks.yaml
