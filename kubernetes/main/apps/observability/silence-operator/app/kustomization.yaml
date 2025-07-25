@@ -4,5 +4,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./helmrelease.yaml
-  - ./mutation-policy.yaml
-  # Alternative: use ./mutation-policy-simple.yaml if the complex version has issues
+  # Removed mutation-policy.yaml as affinity is now configured directly in HelmRelease values
+  # The new chart version (0.18.0) supports affinity configuration through values
