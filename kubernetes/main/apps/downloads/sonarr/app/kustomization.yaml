@@ -6,3 +6,4 @@ namespace: media
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./pvc.yaml

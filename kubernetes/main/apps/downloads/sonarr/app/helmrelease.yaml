@@ -88,7 +88,6 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [10000, 568]
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
@@ -126,3 +125,9 @@ spec:
         existingClaim: ceph-media
         globalMounts:
           - path: /media-ceph
+      tmp:
+        type: emptyDir
+      cache:
+        existingClaim: sonarr-cache
+        globalMounts:
+          - path: /config/MediaCover
