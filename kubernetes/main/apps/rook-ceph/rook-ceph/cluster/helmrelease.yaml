@@ -34,7 +34,7 @@ spec:
   values:
     toolbox:
       enabled: true
-      image: quay.io/ceph/ceph:v19.2.2
+      image: quay.io/ceph/ceph:v19.2.3
     monitoring:
       enabled: true
       createPrometheusRules: true
