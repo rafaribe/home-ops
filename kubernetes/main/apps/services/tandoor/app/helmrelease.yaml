@@ -36,75 +36,44 @@ spec:
               repository: ghcr.io/tandoorrecipes/recipes
               tag: 2.0.1@sha256:b95f7b3e3df000cd39a152be0ddff7139c6d7c5f59cd306f325da44c50a81d05
             env:
-              TZ: ${TZ}
+              TZ: ${TIMEZONE}
               ALLOWED_HOSTS: "*"
+              AI_MODEL_NAME: openai/gpt-4o
               COMMENT_PREF_DEFAULT: 1
               DB_ENGINE: django.db.backends.postgresql_psycopg2
               DEBUG: 0
-              MAX_OWNED_SPACES_PREF_DEFAULT: 1000
+              DEFAULT_FROM_EMAIL: recipes@${SECRET_DOMAIN}
+              EMAIL_HOST: smtp-relay.networking.svc.cluster.local
               EMAIL_PORT: 2525
               ENABLE_SIGNUP: 0
               FRACTION_PREF_DEFAULT: 0
               GUNICORN_MEDIA: 0
               SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
-              TANDOOR_PORT: &tandoorPort 8000
-            envFrom:
-              - secretRef:
-                  name: *app
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /accounts/login/
-                    port: *tandoorPort
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /accounts/login/
-                    port: *tandoorPort
-                  failureThreshold: 30
-                  periodSeconds: 10
+              SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
+              TANDOOR_PORT: &port 8000
+            envFrom: *envFrom
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
                 memory: 256Mi
               limits:
-                memory: 512Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-          nginx:
-            image:
-              repository: ghcr.io/nginxinc/nginx-unprivileged
-              tag: 1.27.4
+                memory: 1024Mi
     defaultPodOptions:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                      - amd64
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: &app tandoor
         ports:
           http:
-            port: &port 8080
+            port: *port
     route:
       app:
         annotations:
@@ -118,7 +87,7 @@ spec:
             app.kubernetes.io/name in (tandoor)
           gethomepage.dev/href: https://tandoor.rafaribe.com
           gethomepage.dev/widget.type: tandoor
-          gethomepage.dev/widget.url: http://tandoor.services:8080
+          gethomepage.dev/widget.url: http://tandoor.services:8000
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TANDOOR_API_KEY}}` }}"
         hostnames: ["tandoor.rafaribe.com"]
         parentRefs:
@@ -131,7 +100,7 @@ spec:
                 port: *port
 
     persistence:
-      files:
+      data:
         existingClaim: *app
         advancedMounts:
           tandoor:
@@ -140,26 +109,16 @@ spec:
                 subPath: mediafiles
               - path: /opt/recipes/staticfiles
                 subPath: staticfiles
-            nginx:
-              - path: /media
-                subPath: mediafiles
-              - path: /static
-                subPath: staticfiles
-      nginx-config:
-        type: configMap
-        name: tandoor-nginx
-        advancedMounts:
-          tandoor:
-            nginx:
-              - path: /etc/nginx/nginx.conf
-                subPath: nginx-config
-                readOnly: true
-      temp:
+      tmpfs:
         type: emptyDir
         advancedMounts:
           tandoor:
             app:
-              - path: /tmp
-                subPath: app-tmp
               - path: /opt/recipes/cookbook/static/django_js_reverse
                 subPath: django_js_reverse
+              - path: /var/lib/nginx/logs
+                subPath: nginx_logs
+              - path: /var/lib/nginx/tmp
+                subPath: nginx_tmp
+              - path: /tmp
+                subPath: tmp
