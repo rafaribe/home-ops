@@ -70,17 +70,19 @@ spec:
         existingClaim: stirling-pdf
         globalMounts:
           - path: /configs
-      logs:
-        enabled: true
+      tmpfs:
         type: emptyDir
-      tmp:
-        enabled: true
-        type: emptyDir
-      tessdata:
-        enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /usr/share/tessdata
+        advancedMounts:
+          app:
+            app:
+              - path: /logs
+                subPath: logs
+              - path: /pipeline
+                subPath: pipeline
+              - path: /usr/share/tessdata
+                subPath: tessdata
+              - path: /tmp
+                subPath: tmp
 
     service:
       app:
