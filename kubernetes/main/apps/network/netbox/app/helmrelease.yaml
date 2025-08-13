@@ -96,7 +96,7 @@ spec:
           gethomepage.dev/siteMonitor: http://netbox.network.svc.cluster.local:8080
         hostnames: ["netbox.rafaribe.com"]
         parentRefs:
-          - name: external
+          - name: internal
             namespace: kube-system
             sectionName: https
         rules:
