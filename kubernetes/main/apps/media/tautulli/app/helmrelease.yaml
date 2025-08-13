@@ -92,7 +92,7 @@ spec:
                 port: 80
     persistence:
       config:
-        existingClaim: *app
+        existingClaim: tautulli
       cache:
         existingClaim: tautulli-cache
         globalMounts:
