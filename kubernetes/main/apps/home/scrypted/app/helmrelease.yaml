@@ -86,7 +86,7 @@ spec:
       recs:
         type: nfs
         server: truenas.rafaribe.com
-        path: /mnt/media-non-critical/scrypted
+        path: /mnt/tank/scrypted
         globalMounts:
           - path: /recs
 
