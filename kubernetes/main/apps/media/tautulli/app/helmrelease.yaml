@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: tautulli
+  name: &app tautulli
 spec:
   interval: 1h
   chartRef:
@@ -30,9 +30,6 @@ spec:
               TZ: ${TIMEZONE:=Europe/Lisbon}
               TAUTULLI_HTTP_BASE_URL: https://tautulli.rafaribe.com
               TAUTULLI_HTTP_PORT: &port 80
-            envFrom:
-              - secretRef:
-                  name: "{{ .Release.Name }}-secret"
             probes:
               liveness: &probes
                 enabled: true
@@ -46,15 +43,29 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-            securityContext:
+            securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
+                memory: 512Mi
+          jbops:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.4.2@sha256:3089d9787b89bdc5af01d9f6e8d515aefb9672e8aea3972d7ff67478112bacb3
+            env:
+              GITSYNC_REPO: https://github.com/blacktwin/JBOPS
+              GITSYNC_REF: master
+              GITSYNC_PERIOD: 24h
+              GITSYNC_ROOT: /scripts
+            securityContext: *securityContext
+            resources:
+              requests:
+                cpu: 10m
               limits:
-                memory: 1Gi
+                memory: 128Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -64,8 +75,6 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        # tautulli container does not support IPv6
-        ipFamilyPolicy: SingleStack
         ports:
           http:
             port: *port
@@ -92,14 +101,26 @@ spec:
                 port: 80
     persistence:
       config:
-        existingClaim: tautulli
+        existingClaim: *app
+        globalMounts:
+          - path: /config
       cache:
         existingClaim: tautulli-cache
         globalMounts:
           - path: /config/cache
-      logs:
+      tmpfs:
         type: emptyDir
-        globalMounts:
-          - path: /config/logs
-      tmp:
-        type: emptyDir
+        advancedMounts:
+          tautulli:
+            app:
+              - path: /config/logs
+                subPath: logs
+              - path: /scripts
+                subPath: scripts
+              - path: /tmp
+                subPath: tmp
+            jbops:
+              - path: /scripts
+                subPath: scripts
+              - path: /tmp
+                subPath: tmp
