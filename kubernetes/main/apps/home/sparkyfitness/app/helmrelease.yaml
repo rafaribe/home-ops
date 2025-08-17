@@ -208,6 +208,13 @@ spec:
             app:
               - path: /tmp/nginx
                 readOnly: false
+      nginx-run:
+        type: emptyDir
+        advancedMounts:
+          frontend:
+            app:
+              - path: /run
+                readOnly: false
     #   nginx-config:
     #     type: configMap
     #     name: sparkyfitness
