@@ -28,23 +28,24 @@ spec:
               tag: 2025.8.3
             env:
               TZ: Europe/Lisbon
+              PUID: &uid 1000
+              PGID: &gid 1000
             resources:
               requests:
                 cpu: 15m
                 memory: 180M
               limits:
                 memory: 300M
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: &uid 1000
-        runAsGroup: *uid
-        fsGroup: *uid
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: true
+    #     runAsUser: *uid
+    #     runAsGroup: *gid
+    #     fsGroup: *gid
+    #     fsGroupChangePolicy: OnRootMismatch
+    #     seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: *app
         ports:
           http:
             port: &port 5690
