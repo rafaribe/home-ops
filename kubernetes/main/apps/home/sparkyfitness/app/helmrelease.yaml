@@ -42,8 +42,8 @@ spec:
         containers:
           app:
             image:
-              repository: codewithcj/sparkyfitness_server
-              tag: v0.15.2
+              repository: ghcr.io/codewithcj/sparkyfitness-server
+              tag: v0.15.1
             envFrom: *envFrom
             env:
               SPARKY_FITNESS_SERVER_HOST: "0.0.0.0"
@@ -93,11 +93,10 @@ spec:
         strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
-
         containers:
           app:
             image:
-              repository: codewithcj/sparkyfitness
+              repository: ghcr.io/codewithcj/sparkyfitness-frontend
               tag: v0.15.1
             env:
               TZ: Europe/Lisbon
