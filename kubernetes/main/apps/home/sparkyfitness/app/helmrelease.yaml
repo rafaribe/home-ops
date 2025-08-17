@@ -141,9 +141,10 @@ spec:
               limits:
                 memory: 256Mi
             securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
-              fsGroup: 1000
+            # Nginx container, needs to run as root
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
               runAsNonRoot: false
 
     defaultPodOptions:
