@@ -36,7 +36,6 @@ spec:
 
             command: ["/manager"]
             args:
-              - --run-once
               - --health-probe-bind-address=:8081
               - --metrics-bind-address=:8080
 
