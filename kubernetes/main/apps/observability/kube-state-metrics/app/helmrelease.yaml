@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kube-state-metrics
-      version: 6.1.4
+      version: 6.1.5
       interval: 30m
       sourceRef:
         kind: HelmRepository
