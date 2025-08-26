@@ -1,33 +1,22 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app home-assistant
+  name: home-assistant
 spec:
-  interval: 30m
-  timeout: 15m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.2.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  dependsOn: []
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
-  #dependsOn:
-  # - name: rook-ceph-cluster
-  #   namespace: rook-ceph
-  # - name: volsync
-  #   namespace: volsync-system
   values:
     controllers:
       home-assistant:
@@ -36,72 +25,64 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-operations/home-assistant
-              tag: 2025.8.3@sha256:7ef14f513e487add292b43306cccb4f1cd9dbcbd5eaf85d6438f98b197f930a4
+              repository: ghcr.io/joryirving/home-assistant
+              tag: 2025.8.3@sha256:59a2a81a3a0f46c0f78f8206a2e1c840287cbc6a5135ffb27d245bd6eafc595d
             env:
-              TZ: Europe/Lisbon
-            envFrom:
-              - secretRef:
-                  name: home-assistant
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
+              TZ: America/Edmonton
+              HASS_HTTP_TRUSTED_PROXY_1: 10.69.1.0/24
+              HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 47m
-                memory: 2Gi
+                cpu: 10m
+                memory: 250Mi
               limits:
                 memory: 2Gi
-
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.103.2
+              tag: 4.103.2@sha256:f9ed058d6b1a4aa80846f77902d344bd97e450aec69201a0f8939baf58b18a5f
             env:
-              TZ: Europe/Lisbon
+              TZ: America/Edmonton
             args:
-              - "/config"
-              - --auth
-              - "none"
-              - --user-data-dir
-              - "/config/.vscode"
-              - --extensions-dir
-              - "/config/.vscode"
+              [
+                "--auth",
+                "none",
+                "--user-data-dir",
+                "/config/.vscode",
+                "--extensions-dir",
+                "/config/.vscode",
+                "--port",
+                "12321",
+                "/config",
+              ]
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 512Mi
     defaultPodOptions:
+
+      hostUsers: false
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
-      hostNetwork: true
-
     service:
       app:
-        primary: true
-        forceRename: home-assistant
-        controller: *app
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${LB_HASS}
+          io.cilium/lb-ipam-ips: 10.0.1.107
         ports:
           http:
-            port: &hass-port 8123
-          music-server:
-            port: 8095
-      codeserver:
-        controller: *app
-        type: ClusterIP
-        ports:
-          http:
-            enabled: true
-            port: &codeserver-port 8080
-
+            port: &port 8123
+          codeserver:
+            port: &codeserverPort 12321
     route:
       app:
         annotations:
@@ -116,15 +97,15 @@ spec:
           gethomepage.dev/widget.url: &url http://home-assistant.home:8123
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}` }}"
           gethomepage.dev/siteMonitor: *url
-        hostnames: ["hass.rafaribe.com"]
+        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
         parentRefs:
           - name: external
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
-              - name: home-assistant
-                port: *hass-port
+              - name: "{{ .Release.Name }}"
+                port: *port
       codeserver:
         annotations:
           gethomepage.dev/href: "https://hass-code.rafaribe.com"
@@ -135,34 +116,47 @@ spec:
           gethomepage.dev/name: HASS VS Code
           gethomepage.dev/description: Code editor for Home Assistant
           gethomepage.dev/siteMonitor: http://home-assistant-codeserver.home:8080
-        hostnames: ["hass-code.rafaribe.com"]
+        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-code.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
-              - name: home-assistant-codeserver
-                port: *codeserver-port
+              - name: "{{ .Release.Name }}"
+                port: *codeserverPort
       local:
-        hostnames: ["hass-internal.rafaribe.com"]
+        hostnames: ["hass-local.rafaribe.com", "home-assistant-local.rafaribe.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
-              - name: home-assistant
-                port: *hass-port
+              - name: "{{ .Release.Name }}"
+                port: *port
     persistence:
       config:
-        existingClaim: *app
+        existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /config
+      config-cache:
+        existingClaim: "{{ .Release.Name }}-cache"
+        globalMounts:
+          - path: /config/.venv
+      tmpfs:
+        type: emptyDir
         advancedMounts:
           home-assistant:
             app:
-              - path: /config
-            codeserver:
-              - path: /config
+              - path: /config/.venv
+                subPath: .venv
+              - path: /config/logs
+                subPath: logs
+              - path: /config/tts
+                subPath: tts
+              - path: /tmp
+                subPath: tmp
       deploy-key:
         type: secret
         name: git-keys
@@ -170,35 +164,3 @@ spec:
         globalMounts:
           - path: /home/coder/.ssh/
             readOnly: true
-      hass-cache:
-        existingClaim: hass-cache
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /venv
-                subPath: hass-venv
-              - path: /config/.venv
-      tmpfs:
-        type: emptyDir
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /tmp
-                subPath: hass-tmp
-              - path: /config/logs
-                subPath: logs
-              - path: /config/tts
-                subPath: tts
-            codeserver:
-              - path: /tmp
-                subPath: code-server-tmp
-              - path: /nonexistent
-                subPath: nonexistent
-      # logs:
-      #   type: emptyDir
-      #   globalMounts:
-      #     - path: /config/logs
-      # tts:
-      #   type: emptyDir
-      #   globalMounts:
-      #     - path: /config/tts
