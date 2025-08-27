@@ -28,8 +28,8 @@ spec:
               repository: ghcr.io/joryirving/home-assistant
               tag: 2025.8.3@sha256:59a2a81a3a0f46c0f78f8206a2e1c840287cbc6a5135ffb27d245bd6eafc595d
             env:
-              TZ: America/Edmonton
-              HASS_HTTP_TRUSTED_PROXY_1: 10.69.1.0/24
+              TZ: Europe/Lisbon
+              HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/22
               HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
             securityContext:
               allowPrivilegeEscalation: false
