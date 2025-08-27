@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/n8n-io/n8n
-              tag: 1.109.0@sha256:f4d4c22a1a1fa51bbe6e23e0d181b87c9201648657c0d6b0e682d8e198276999
+              tag: 1.109.1@sha256:0257f3f0a5aef5edbe137972afc1915152d7e25fd5f596a28fd32d2622381156
             env:
               GENERIC_TIMEZONE: ${TIMEZONE}
               N8N_PORT: &port 80
