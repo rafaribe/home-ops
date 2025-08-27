@@ -10,7 +10,7 @@ spec:
   gatewayClassName: cilium
   addresses:
     - type: IPAddress
-      value: 10.0.1.101
+      value: 10.0.2.254
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
