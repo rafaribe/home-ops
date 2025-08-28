@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/netbox
-              tag: v4.3.6@sha256:0a69950e10d42d97f91a9ba2fb96ea8d0568b525abc3ddb4e9b29232de3931d0
+              tag: v4.3.7@sha256:486025b523f8fae8db456b78517a0e3159a0fad3aa081abe67e2c03556bc9003
             env:
               TIME_ZONE: Europe/Lisbon
               CORS_ORIGIN_ALLOW_ALL: "True"
