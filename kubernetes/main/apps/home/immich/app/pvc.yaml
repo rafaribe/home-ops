@@ -7,7 +7,7 @@ spec:
   storageClassName: ceph-block
   resources:
     requests:
-      storage: 10Gi
+      storage: 20Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
