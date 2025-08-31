@@ -62,7 +62,7 @@ spec:
           proxy:
             image:
               repository: caddy
-              tag: 2.10.2-alpine@sha256:22ee08d42987c0fce9d9fe8922faed0d6f20cce5d464e8370dbab73b229af969
+              tag: 2.10.2-alpine@sha256:a4180db0805b3725ddf936d2e6290553745c7339c003565da717ee612fd8a888
     service:
       app:
         controller: *app
