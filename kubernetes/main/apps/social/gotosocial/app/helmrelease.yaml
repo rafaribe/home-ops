@@ -31,7 +31,7 @@ spec:
           main:
             image:
               repository: "docker.io/superseriousbusiness/gotosocial"
-              tag: "0.19.1@sha256:765305021db73e4f4101f7de2700032678a2e52a129742f9ddba437ff6ca0abd"
+              tag: "0.19.2@sha256:1aa074861fdb9913950ea9ee8923f342a1593b4c66dd9c3a1592140ac9164966"
             env:
               TZ: "Europe/Lisbon"
               GTS_HOST: &host social.rafaribe.com
