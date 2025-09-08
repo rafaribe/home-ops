@@ -95,7 +95,7 @@ spec:
           meilisearch:
             image:
               repository: docker.io/getmeili/meilisearch
-              tag: v1.19.1
+              tag: v1.20.0
             env:
               MEILI_NO_ANALYTICS: true
               MEILI_MASTER_KEY:
