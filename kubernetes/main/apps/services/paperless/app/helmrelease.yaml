@@ -102,7 +102,7 @@ spec:
           tika:
             image:
               repository: docker.io/apache/tika
-              tag: 3.2.2.0-full
+              tag: 3.2.3.0-full
               pullPolicy: IfNotPresent
             ports:
               - containerPort: 9998
