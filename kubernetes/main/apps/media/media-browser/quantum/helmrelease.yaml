@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gtsteffaniak/filebrowser
-              tag: 0.8.4-beta@sha256:f3b7261576b0f6362809f8faaea19f06586c180eff641e5093caff8bed2ceff3
+              tag: 0.8.6-beta@sha256:2d3bf4bd4365c6f64e7b4280b1c457c0f7d6f7b96489ff29021cf5e8301268a6
             env:
               TZ: "Europe/Lisbon"
               FILEBROWSER_PORT: "80"
