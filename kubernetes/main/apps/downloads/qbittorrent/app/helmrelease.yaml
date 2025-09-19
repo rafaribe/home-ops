@@ -33,7 +33,7 @@ spec:
           dnsdist:
             image:
               repository: docker.io/powerdns/dnsdist-19
-              tag: 1.9.10
+              tag: 1.9.11
             restartPolicy: Always
 
           gluetun:
