@@ -42,7 +42,7 @@ spec:
     image:
       registry: ghcr.io
       repository: netbox-community/netbox-operator
-      tag: "0.2.15"
+      tag: "0.2.16"
       pullPolicy: IfNotPresent
     
     # Resource configuration
