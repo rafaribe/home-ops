@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: opentelemetry-operator
-      version: 0.93.1
+      version: 0.95.2
       sourceRef:
         kind: HelmRepository
         name: open-telemetry
