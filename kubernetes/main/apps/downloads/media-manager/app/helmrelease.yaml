@@ -105,7 +105,7 @@ spec:
           db:
             image:
               repository: postgres
-              tag: "16-alpine"
+              tag: "18-alpine"
             env:
               POSTGRES_USER: MediaManager
               POSTGRES_DB: MediaManager
