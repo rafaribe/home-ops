@@ -254,7 +254,7 @@ spec:
         node-exporter-freebsd:
           # renovate: depName="Node Exporter FreeBSD"
           gnetId: 4260
-          revision: 15
+          revision: 16
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
