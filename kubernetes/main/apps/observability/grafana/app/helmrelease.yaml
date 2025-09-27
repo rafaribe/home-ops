@@ -205,7 +205,7 @@ spec:
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
-          revision: 41
+          revision: 42
           datasource: Prometheus
         proxmox-prometheus:
           # renovate: depName="Proxmox via Prometheus"
