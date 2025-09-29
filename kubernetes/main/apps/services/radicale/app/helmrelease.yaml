@@ -38,7 +38,7 @@ spec:
           app:
             image:
               repository: ghcr.io/bjw-s-labs/radicale
-              tag: 3.5.6
+              tag: 3.5.7
 
             resources:
               requests:
