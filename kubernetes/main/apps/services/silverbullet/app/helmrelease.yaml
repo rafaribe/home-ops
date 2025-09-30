@@ -32,7 +32,7 @@ spec:
           silverbullet:
             image:
               repository: docker.io/zefhemel/silverbullet
-              tag: "2.1.5"
+              tag: "2.1.6"
             env:
               TZ: ${TZ}
               PUID: 1000
