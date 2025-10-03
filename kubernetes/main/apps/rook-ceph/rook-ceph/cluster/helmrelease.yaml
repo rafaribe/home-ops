@@ -36,12 +36,11 @@ spec:
       enabled: true
     monitoring:
       enabled: true
-      createPrometheusRules: false
+      createPrometheusRules: true
     network:
       provider: host
       connections:
         requireMsgr2: true
-    cephClusterSpec:
     route:
       annotations:
         # Hajimari
@@ -66,6 +65,7 @@ spec:
             namespace: kube-system
             sectionName: https
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
+    cephClusterSpec:
       cephConfig:
         global:
           bdev_enable_discard: true
