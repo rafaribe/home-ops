@@ -61,7 +61,7 @@ spec:
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       cephVersion:
         # workaround https://github.com/rook/rook/issues/14502 : replacing v18.2.4 by v18.2.2
-        image: quay.io/ceph/ceph:v18.2.2
+        image: quay.io/ceph/ceph:v20.1.0
       mgr:
         count: 2
         allowMultiplePerNode: false
