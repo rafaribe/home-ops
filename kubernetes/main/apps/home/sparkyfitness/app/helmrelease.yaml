@@ -97,7 +97,7 @@ spec:
           app:
             image:
               repository: ghcr.io/codewithcj/sparkyfitness-frontend
-              tag: v0.15.4
+              tag: v0.15.5
             env:
               TZ: Europe/Lisbon
             probes:
