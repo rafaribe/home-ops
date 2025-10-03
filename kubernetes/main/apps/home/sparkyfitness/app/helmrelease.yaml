@@ -43,7 +43,7 @@ spec:
           app:
             image:
               repository: ghcr.io/codewithcj/sparkyfitness-server
-              tag: v0.15.4
+              tag: v0.15.5
             envFrom: *envFrom
             env:
               SPARKY_FITNESS_SERVER_HOST: "0.0.0.0"
