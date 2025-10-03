@@ -66,6 +66,7 @@ spec:
           - name: internal
             namespace: kube-system
             sectionName: https
+        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       cephConfig:
         global:
           bdev_enable_discard: true
@@ -82,11 +83,6 @@ spec:
       csi:
         readAffinity:
           enabled: true
-      dashboard:
-        enabled: true
-        urlPrefix: /
-        ssl: false
-        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       mgr:
         count: 2
         allowMultiplePerNode: false
