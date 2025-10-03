@@ -36,7 +36,7 @@ spec:
       enabled: true
     monitoring:
       enabled: true
-      createPrometheusRules: true
+      createPrometheusRules: false
     network:
       provider: host
       connections:
