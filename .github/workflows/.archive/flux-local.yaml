@@ -64,7 +64,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Run flux-local test
-        uses: docker://ghcr.io/allenporter/flux-local:v7.10.0@sha256:af0e9be64b5a3384a8f4140d59bf8be876fcc6168091371b98b5e40e111c13d8
+        uses: docker://ghcr.io/allenporter/flux-local:v7.10.1@sha256:eea3ef015803ce58ca7331c94f7a8dac65faa925a3ff4d72f39c94b3096ca2fe
         with:
           args: >-
             test
@@ -100,7 +100,7 @@ jobs:
           path: default
 
       - name: Run flux-local diff
-        uses: docker://ghcr.io/allenporter/flux-local:v7.10.0@sha256:af0e9be64b5a3384a8f4140d59bf8be876fcc6168091371b98b5e40e111c13d8
+        uses: docker://ghcr.io/allenporter/flux-local:v7.10.1@sha256:eea3ef015803ce58ca7331c94f7a8dac65faa925a3ff4d72f39c94b3096ca2fe
         with:
           args: >-
             diff ${{ matrix.resource }}
