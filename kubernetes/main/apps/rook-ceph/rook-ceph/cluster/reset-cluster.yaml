@@ -1,0 +1,18 @@
+---
+# Temporary patch to force complete cluster reset
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rook-ceph-reset
+  namespace: rook-ceph
+data:
+  reset.sh: |
+    #!/bin/bash
+    # Force delete all OSD resources
+    kubectl delete jobs -n rook-ceph -l app=rook-ceph-osd-prepare --force --grace-period=0
+    kubectl delete configmaps -n rook-ceph -l app=rook-ceph-osd --force --grace-period=0
+    kubectl delete pods -n rook-ceph -l app=rook-ceph-osd --force --grace-period=0
+    kubectl delete deployments -n rook-ceph -l app=rook-ceph-osd --force --grace-period=0
+    
+    # Delete cluster and recreate
+    kubectl delete cephcluster rook-ceph -n rook-ceph --force --grace-period=0
