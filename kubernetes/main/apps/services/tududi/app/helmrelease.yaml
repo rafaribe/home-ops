@@ -37,7 +37,7 @@ spec:
               # repository: chrisvel/tududi
               # tag: 0.39@sha256:c6fd9da2959fa8a00ae82bf2cf227c4e76aaf410ba00772c5b3f22b90414aa1b
               repository: chrisvel/tududi
-              tag: 0.72.2@sha256:5bad11bf86ff4c0d96c6a1522b37ebd76da83d79d419ed50cfa424aa1408d662
+              tag: 0.83.2@sha256:e05863e1d49dd9f64f0be87dc6f03215c5f94a1ea93e89833f0e01e0bc84d733
             command:
               - /bin/sh
               - -c
