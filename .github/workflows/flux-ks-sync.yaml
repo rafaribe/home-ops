@@ -5,7 +5,7 @@ name: "Flux Kustomization Sync"
 on:
   push:
     branches: ["main"]
-    paths: ["kubernetes/main/**", "kubernetes/utility/**"]
+    paths: ["kubernetes/**"]
 
 permissions:
   contents: read

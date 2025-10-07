@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: flux-system
+  name: cluster-settings
+  annotations:
+    reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+    reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+data:
+  # Home Network IP's
+  # Main 10.0.1.100- 10.0.1.120
+  LB_GATEWAY_EXTERNAL: 10.0.2.253
+  LB_GATEWAY_INTERNAL: 10.0.2.254
+  LB_QBITTORRENT: 10.0.1.102
+  LB_POSTGRES: 10.0.1.103
+  LB_NETBOOT_XYZ: 10.0.1.104
+  LB_JELLYFIN: 10.0.1.105
+  LB_VERNEMQ: 10.0.1.106
+  LB_HASS: 10.0.1.107
+  LB_SMTP_RELAY: 10.0.1.108
+  LB_PIHOLE: 10.0.1.109
+  LB_PLEX: 10.0.1.111
+  LB_SYNCTHING: 10.0.1.112
+  LB_MINIO: 10.0.1.113
+  LB_SMTP_RELAY_NOREPLY: 10.0.1.114
+  LB_OLLAMA: 10.0.1.115
+  LB_GO2RTC: 10.0.1.116
+  LB_POSTGRES_DB: 10.0.1.117
+  LB_NATS: 10.0.1.118
+  LB_MOSQUITTO: 10.0.1.119
+  # Utility IP Range 10.0.1.121 - 10.0.1.130
+  LB_NGINX_INTERNAL_UTILITY: 10.0.1.121
+  LB_NGINX_EXTERNAL_UTILITY: 10.0.1.122
+  LB_ADGUARD_HOME_UTILITY: 10.0.1.123
+
+  LB_BLOCKY: 10.0.1.124
+  # Tailscale Network IPs
+  LB_TAILSCALE_CIRDS: 10.0.4.0/24,10.0.1.0/24
+  TAILNET_PUBLIC_PORT: "41642"
+  # Cloudflare Tunnel
+  CLUSTER_CLOUDFLARE_TUNNEL_ID: 86615e3e-8339-4559-a45b-01fd0cd07293
+  TZ: Europe/Lisbon
+  TIMEZONE: Europe/Lisbon
