@@ -1,7 +1,0 @@
-releases:
-  - name: cilium
-    namespace: kube-system
-    chart: cilium/cilium
-    version: 1.18.2
-    values:
-      - ./templates/test.yaml.gotmpl
