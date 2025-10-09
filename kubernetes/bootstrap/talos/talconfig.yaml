@@ -18,7 +18,6 @@ additionalApiServerCertSans: &sans
   - ${clusterName}.${clusterDNSSuffix}
   - 127.0.0.1 # KubePrism
   - "*.${clusterDNSSuffix}"
-  - 10.0.0.1 # IP for gateway, port 6443 forwarded to cluster endpoint IPs
 
 additionalMachineCertSans: *sans
 
@@ -189,6 +188,7 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
+
   - hostname: srv-03.${clusterDNSSuffix}
     ipAddress: 10.0.1.4
     nameservers: *nameservers
@@ -234,6 +234,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
+        vip:
+          ip: ${clusterEndpointIP}
   - hostname: srv-06.${clusterDNSSuffix}
     ipAddress: 10.0.1.9
     nameservers: *nameservers
