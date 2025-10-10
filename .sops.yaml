@@ -1,5 +1,11 @@
 ---
 creation_rules:
+  - path_regex: kubernetes/bootstrap/talos/talsecret.sops.yaml
+    age: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+
+  - path_regex: kubernetes/talsecret.sops.yaml
+    age: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+
   - path_regex: .*sops.ya?ml
     encrypted_regex: ^(data|stringData)$
     age: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
@@ -14,7 +20,7 @@ creation_rules:
   - path_regex: kubernetes/.+\.sops\.yaml
     encrypted_regex: ^(data|stringData)$
     mac_only_encrypted: true
-    age: aage13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+    age: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
 
 stores:
   yaml:

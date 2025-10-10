@@ -1,7 +1,7 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 clusterName: &cluster ${clusterName}
-endpoint: "https://${clusterEndpointIP}:6443"
+endpoint: "https://10.0.1.6:6443"
 
 clusterPodNets:
   - 10.42.0.0/16
@@ -13,13 +13,6 @@ talosVersion: v1.11.2
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
 kubernetesVersion: v1.34.1
 
-additionalApiServerCertSans: &sans
-  - ${clusterEndpointIP}
-  - ${clusterName}.${clusterDNSSuffix}
-  - 127.0.0.1 # KubePrism
-  - "*.${clusterDNSSuffix}"
-
-additionalMachineCertSans: *sans
 
 cniConfig:
   name: none
@@ -157,7 +150,7 @@ nodes:
   # x86_64 NUC / Server Nodes
   # If I decide to scrap the utility cluster, this node comes back here.
   - hostname: srv-01.${clusterDNSSuffix}
-    ipAddress: 10.0.0.3
+    ipAddress: 10.0.1.2
     nameservers: &nameservers
       - "10.0.0.254"
       - "1.1.1.1"
@@ -175,7 +168,7 @@ nodes:
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
         vip:
-          ip: ${clusterEndpointIP}
+          ip: 10.0.1.6
   # - hostname: srv-02.${clusterDNSSuffix}
   #   ipAddress: 10.0.1.3
   #   nameservers: *nameservers
