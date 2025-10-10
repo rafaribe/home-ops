@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/joryirving/home-assistant
-              tag: 2025.10.0@sha256:5b80c1506370c420dd61c08480c1aaf97b72dded06096ea53527d331aef41c69
+              tag: 2025.10.2@sha256:87b08a26e02e17d99a8a14c5498eed1adfd6ee74e672dc28b4916d37f7909dac
             env:
               TZ: Europe/Lisbon
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/22
