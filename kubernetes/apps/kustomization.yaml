@@ -4,5 +4,5 @@ kind: Kustomization
 resources:
  # - ./cert-manager
  # - ./system
-  - ./kube-system
-  - ./external-secrets/external-secrets/ks.yaml
+  - ./kube-systems
+  - ./external-secrets
