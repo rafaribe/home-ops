@@ -6,7 +6,7 @@ metadata:
   name: &app audiobookshelf
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/media/audiobookshelf/app
+  path: ./kubernetes/apps/media/audiobookshelf/app
   prune: true
   sourceRef:
     kind: GitRepository

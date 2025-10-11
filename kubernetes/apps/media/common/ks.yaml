@@ -9,7 +9,7 @@ spec:
   targetNamespace: media
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/main/apps/media/common/pvc"
+  path: "./kubernetes/apps/media/common/pvc"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -29,7 +29,7 @@ spec:
   targetNamespace: media
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/main/apps/media/common/common"
+  path: "./kubernetes/apps/media/common/common"
   prune: true
   sourceRef:
     kind: GitRepository

@@ -6,7 +6,7 @@ metadata:
   name: &app calibre-web
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/media/calibre-web/app
+  path: ./kubernetes/apps/media/calibre-web/app
   prune: true
   sourceRef:
     kind: GitRepository

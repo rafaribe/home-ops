@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./kubernetes/main/apps/home/sparkyfitness/app
+  path: ./kubernetes/apps/home/sparkyfitness/app
   prune: true
   sourceRef:
     kind: GitRepository

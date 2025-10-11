@@ -6,7 +6,7 @@ metadata:
   name: &app silverbullet
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/services/silverbullet/app"
+  path: "./kubernetes/apps/services/silverbullet/app"
   targetNamespace: services
   sourceRef:
     kind: GitRepository

@@ -4,7 +4,7 @@ metadata:
   name: &app cilium
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/kube-system/cilium/app
+  path: ./kubernetes/apps/kube-system/cilium/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -32,7 +32,7 @@ spec:
 #   name: &app cilium-config
 #   namespace: flux-system
 # spec:
-#   path: ./kubernetes/main/apps/kube-system/cilium/config
+#   path: ./kubernetes/apps/kube-system/cilium/config
 #   prune: true
 #   sourceRef:
 #     kind: GitRepository
@@ -61,7 +61,7 @@ spec:
 #   name: &app cilium-gateway
 #   namespace: flux-system
 # spec:
-#   path: ./kubernetes/main/apps/kube-system/cilium/gateway
+#   path: ./kubernetes/apps/kube-system/cilium/gateway
 #   prune: true
 #   sourceRef:
 #     kind: GitRepository

@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: "./kubernetes/main/apps/services/kubernetes-schemas/app/"
+  path: "./kubernetes/apps/services/kubernetes-schemas/app/"
   prune: true
   sourceRef:
     kind: GitRepository

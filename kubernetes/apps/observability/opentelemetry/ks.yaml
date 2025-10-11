@@ -6,7 +6,7 @@ metadata:
   name: &app opentelemetry-operator
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/observability/opentelemetry/operator
+  path: ./kubernetes/apps/observability/opentelemetry/operator
   prune: true
   targetNamespace: observability
   commonMetadata:
@@ -26,7 +26,7 @@ metadata:
   name: &app opentelemetry-collector
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/observability/opentelemetry/collector
+  path: ./kubernetes/apps/observability/opentelemetry/collector
   prune: true
   targetNamespace: observability
   commonMetadata:

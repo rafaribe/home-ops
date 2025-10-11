@@ -6,7 +6,7 @@ metadata:
   name: &app sonarr
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/downloads/sonarr/app
+  path: ./kubernetes/apps/downloads/sonarr/app
   prune: true
   sourceRef:
     kind: GitRepository

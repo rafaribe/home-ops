@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/security/tetragon/app
+  path: ./kubernetes/apps/security/tetragon/app
   prune: true
   sourceRef:
     kind: GitRepository

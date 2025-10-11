@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/security/glauth/app
+  path: ./kubernetes/apps/security/glauth/app
   prune: true
   sourceRef:
     kind: GitRepository

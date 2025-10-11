@@ -6,7 +6,7 @@ metadata:
   name: &app chartdb
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/development/chartdb/app"
+  path: "./kubernetes/apps/development/chartdb/app"
   targetNamespace: development
   sourceRef:
     kind: GitRepository

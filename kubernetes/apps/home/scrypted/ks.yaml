@@ -10,7 +10,7 @@ metadata:
 spec:
   dependsOn:
     - name: external-secrets
-  path: ./kubernetes/main/apps/home/scrypted/app
+  path: ./kubernetes/apps/home/scrypted/app
   prune: true
   sourceRef:
     kind: GitRepository

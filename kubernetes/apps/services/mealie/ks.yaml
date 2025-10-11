@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 10m
-  path: "./kubernetes/main/apps/services/mealie/app"
+  path: "./kubernetes/apps/services/mealie/app"
   prune: true
   sourceRef:
     kind: GitRepository

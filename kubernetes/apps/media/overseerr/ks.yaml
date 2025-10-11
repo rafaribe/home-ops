@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: volsync
-  path: ./kubernetes/main/apps/media/overseerr/app
+  path: ./kubernetes/apps/media/overseerr/app
   prune: true
   sourceRef:
     kind: GitRepository

@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: volsync
     - name: rook-ceph-cluster
-  path: ./kubernetes/main/apps/social/gotosocial/app
+  path: ./kubernetes/apps/social/gotosocial/app
   prune: true
   sourceRef:
     kind: GitRepository

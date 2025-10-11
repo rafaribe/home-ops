@@ -6,7 +6,7 @@ metadata:
   name: &app radicale
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/services/radicale/app"
+  path: "./kubernetes/apps/services/radicale/app"
   targetNamespace: services
   sourceRef:
     kind: GitRepository

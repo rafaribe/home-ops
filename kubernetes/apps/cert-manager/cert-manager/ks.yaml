@@ -4,7 +4,7 @@ metadata:
   name: cert-manager
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/cert-manager/cert-manager/app
+  path: ./kubernetes/apps/cert-manager/cert-manager/app
   prune: true
   targetNamespace: cert-manager
   sourceRef:
@@ -27,7 +27,7 @@ metadata:
 spec:
   dependsOn:
     - name: cert-manager
-  path: ./kubernetes/main/apps/cert-manager/cert-manager/issuers
+  path: ./kubernetes/apps/cert-manager/cert-manager/issuers
   prune: true
   targetNamespace: cert-manager
   sourceRef:

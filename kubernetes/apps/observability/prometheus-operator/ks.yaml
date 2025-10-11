@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/observability/prometheus-operator/crds
+  path: ./kubernetes/apps/observability/prometheus-operator/crds
   prune: false # never should be deleted
   sourceRef:
     kind: GitRepository

@@ -5,7 +5,7 @@ metadata:
   name: refector
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/system/reflector/app
+  path: ./kubernetes/apps/system/reflector/app
   prune: true
   sourceRef:
     kind: GitRepository

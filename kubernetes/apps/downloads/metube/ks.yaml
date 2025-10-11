@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: volsync
-  path: ./kubernetes/main/apps/downloads/metube/app
+  path: ./kubernetes/apps/downloads/metube/app
   prune: true
   sourceRef:
     kind: GitRepository

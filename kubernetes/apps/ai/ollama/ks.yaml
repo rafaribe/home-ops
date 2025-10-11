@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: volsync
     - name: rook-ceph-cluster
-  path: ./kubernetes/main/apps/ai/ollama/app
+  path: ./kubernetes/apps/ai/ollama/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -43,7 +43,7 @@ spec:
   dependsOn:
     - name: volsync
     - name: rook-ceph-cluster
-  path: ./kubernetes/main/apps/ai/ollama/dns-router
+  path: ./kubernetes/apps/ai/ollama/dns-router
   prune: true
   sourceRef:
     kind: GitRepository

@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: "./kubernetes/main/apps/downloads/readarr/app"
+  path: "./kubernetes/apps/downloads/readarr/app"
   prune: true
   sourceRef:
     kind: GitRepository

@@ -6,7 +6,7 @@ metadata:
   name: &app pinchflat
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/services/pinchflat/app"
+  path: "./kubernetes/apps/services/pinchflat/app"
   targetNamespace: services
   sourceRef:
     kind: GitRepository

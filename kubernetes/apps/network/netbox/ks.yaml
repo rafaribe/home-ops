@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/network/netbox/app
+  path: ./kubernetes/apps/network/netbox/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -42,7 +42,7 @@ spec:
       app.kubernetes.io/name: *ipcontroller
   dependsOn:
     - name: netbox
-  path: ./kubernetes/main/apps/network/netbox/ip-controller
+  path: ./kubernetes/apps/network/netbox/ip-controller
   prune: true
   sourceRef:
     kind: GitRepository
@@ -66,7 +66,7 @@ spec:
       app.kubernetes.io/name: *operator
   dependsOn:
     - name: netbox
-  path: ./kubernetes/main/apps/network/netbox/operator
+  path: ./kubernetes/apps/network/netbox/operator
   prune: true
   sourceRef:
     kind: GitRepository

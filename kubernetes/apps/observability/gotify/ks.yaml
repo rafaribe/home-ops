@@ -5,7 +5,7 @@ metadata:
   name: &app gotify
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/observability/gotify/app
+  path: ./kubernetes/apps/observability/gotify/app
   prune: true
   sourceRef:
     kind: GitRepository

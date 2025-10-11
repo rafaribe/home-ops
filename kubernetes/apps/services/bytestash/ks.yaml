@@ -6,7 +6,7 @@ metadata:
   name: &app bytestash
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/services/bytestash/app"
+  path: "./kubernetes/apps/services/bytestash/app"
   targetNamespace: services
   sourceRef:
     kind: GitRepository

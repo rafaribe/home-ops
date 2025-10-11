@@ -6,7 +6,7 @@ metadata:
   name: &app pihole-exporter
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/observability/exporters/pihole
+  path: ./kubernetes/apps/observability/exporters/pihole
   prune: true
   sourceRef:
     kind: GitRepository
@@ -27,7 +27,7 @@ metadata:
   name: &app x509-certificate-exporter
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/observability/exporters/x509-certificate
+  path: ./kubernetes/apps/observability/exporters/x509-certificate
   prune: true
   sourceRef:
     kind: GitRepository
@@ -48,7 +48,7 @@ metadata:
   name: &app smartctl-exporter
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/observability/exporters/smartctl
+  path: ./kubernetes/apps/observability/exporters/smartctl
   prune: true
   sourceRef:
     kind: GitRepository
@@ -69,7 +69,7 @@ metadata:
   name: &app speedtest-exporter
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/observability/exporters/speedtest
+  path: ./kubernetes/apps/observability/exporters/speedtest
   prune: true
   sourceRef:
     kind: GitRepository

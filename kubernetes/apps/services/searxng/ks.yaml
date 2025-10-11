@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/main/apps/services/searxng/app/"
+  path: "./kubernetes/apps/services/searxng/app/"
   prune: true
   sourceRef:
     kind: GitRepository

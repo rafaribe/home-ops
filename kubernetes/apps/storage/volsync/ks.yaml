@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: snapshot-controller
-  path: ./kubernetes/main/apps/storage/volsync/app
+  path: ./kubernetes/apps/storage/volsync/app
   prune: true
   sourceRef:
     kind: GitRepository

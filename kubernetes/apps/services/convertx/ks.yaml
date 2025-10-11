@@ -15,7 +15,7 @@ spec:
     - ../../../../../shared/components/volsync
     - ../../../../../shared/components/gatus/guarded
   interval: 30m
-  path: ./kubernetes/main/apps/services/convertx/app/
+  path: ./kubernetes/apps/services/convertx/app/
   prune: true
   sourceRef:
     kind: GitRepository

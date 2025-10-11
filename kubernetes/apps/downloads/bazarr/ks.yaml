@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *appname
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/main/apps/downloads/bazarr/app"
+  path: "./kubernetes/apps/downloads/bazarr/app"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -41,7 +41,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/downloads/bazarr/whisper
+  path: ./kubernetes/apps/downloads/bazarr/whisper
   prune: true
   sourceRef:
     kind: GitRepository

@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/main/apps/services/postiz/app"
+  path: "./kubernetes/apps/services/postiz/app"
   prune: true
   sourceRef:
     kind: GitRepository

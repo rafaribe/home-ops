@@ -4,7 +4,7 @@ metadata:
   name: &app qbittorrent
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/downloads/qbittorrent/app
+  path: ./kubernetes/apps/downloads/qbittorrent/app
   prune: true
   targetNamespace: downloads
   commonMetadata:
@@ -35,7 +35,7 @@ metadata:
   name: &app qbittorrent-private
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/downloads/qbittorrent/private
+  path: ./kubernetes/apps/downloads/qbittorrent/private
   prune: true
   targetNamespace: downloads
   commonMetadata:
@@ -64,7 +64,7 @@ metadata:
   name: downloads-qbittorrent-tools
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/downloads/qbittorrent/tools
+  path: ./kubernetes/apps/downloads/qbittorrent/tools
   prune: true
   targetNamespace: downloads
   sourceRef:

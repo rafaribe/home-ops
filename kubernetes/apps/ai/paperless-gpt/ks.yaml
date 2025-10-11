@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: paperless
-  path: ./kubernetes/main/apps/ai/paperless-gpt/app
+  path: ./kubernetes/apps/ai/paperless-gpt/app
   prune: true
   sourceRef:
     kind: GitRepository

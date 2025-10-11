@@ -6,7 +6,7 @@ metadata:
   name: &app smtp-relay
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/services/smtp-relay/app"
+  path: "./kubernetes/apps/services/smtp-relay/app"
   targetNamespace: services
   sourceRef:
     kind: GitRepository
@@ -32,7 +32,7 @@ metadata:
   name: &app smtp-relay-noreply
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/services/smtp-relay/noreply"
+  path: "./kubernetes/apps/services/smtp-relay/noreply"
   targetNamespace: services
   sourceRef:
     kind: GitRepository

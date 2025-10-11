@@ -6,7 +6,7 @@ metadata:
   name: &app docmost
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/services/docmost/app"
+  path: "./kubernetes/apps/services/docmost/app"
   targetNamespace: services
   sourceRef:
     kind: GitRepository

@@ -6,7 +6,7 @@ metadata:
   name: &app media-browser
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/media/media-browser/app
+  path: ./kubernetes/apps/media/media-browser/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -35,7 +35,7 @@ metadata:
   name: &app media-browser-quantum
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/media/media-browser/quantum 
+  path: ./kubernetes/apps/media/media-browser/quantum 
   prune: true
   sourceRef:
     kind: GitRepository

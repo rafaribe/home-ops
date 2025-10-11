@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *appname
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/main/apps/services/vikunja/app"
+  path: "./kubernetes/apps/services/vikunja/app"
   prune: true
   sourceRef:
     kind: GitRepository

@@ -6,7 +6,7 @@ metadata:
   name: &app navidrome
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/media/navidrome/app
+  path: ./kubernetes/apps/media/navidrome/app
   prune: true
   sourceRef:
     kind: GitRepository

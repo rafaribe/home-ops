@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: plex
     - name: volsync
-  path: ./kubernetes/main/apps/media/wizarr/app
+  path: ./kubernetes/apps/media/wizarr/app
   prune: true
   sourceRef:
     kind: GitRepository

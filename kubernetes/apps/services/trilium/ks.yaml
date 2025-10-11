@@ -6,7 +6,7 @@ metadata:
   name: &app trilium
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/services/trilium/app"
+  path: "./kubernetes/apps/services/trilium/app"
   targetNamespace: services
   sourceRef:
     kind: GitRepository

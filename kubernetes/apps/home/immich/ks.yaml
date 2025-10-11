@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: home
-  path: ./kubernetes/main/apps/home/immich/shared
+  path: ./kubernetes/apps/home/immich/shared
   prune: true
   sourceRef:
     kind: GitRepository
@@ -25,7 +25,7 @@ spec:
   targetNamespace: home
   dependsOn:
     - name: immich-shared
-  path: ./kubernetes/main/apps/home/immich/database
+  path: ./kubernetes/apps/home/immich/database
   prune: true
   sourceRef:
     kind: GitRepository
@@ -45,7 +45,7 @@ spec:
   dependsOn:
     - name: immich-shared
     - name: immich-database
-  path: ./kubernetes/main/apps/home/immich/app
+  path: ./kubernetes/apps/home/immich/app
   prune: true
   sourceRef:
     kind: GitRepository

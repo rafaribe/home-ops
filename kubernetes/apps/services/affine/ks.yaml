@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/main/apps/services/affine/app"
+  path: "./kubernetes/apps/services/affine/app"
   prune: true
   sourceRef:
     kind: GitRepository

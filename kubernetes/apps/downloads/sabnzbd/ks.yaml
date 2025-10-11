@@ -4,7 +4,7 @@ metadata:
   name: &app sabnzbd
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/downloads/sabnzbd/app
+  path: ./kubernetes/apps/downloads/sabnzbd/app
   prune: true
   targetNamespace: downloads
   commonMetadata:

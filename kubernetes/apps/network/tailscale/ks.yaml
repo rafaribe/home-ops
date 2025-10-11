@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/main/apps/network/tailscale/operator/"
+  path: "./kubernetes/apps/network/tailscale/operator/"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -31,7 +31,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/main/apps/network/tailscale/configs/"
+  path: "./kubernetes/apps/network/tailscale/configs/"
   prune: true
   sourceRef:
     kind: GitRepository

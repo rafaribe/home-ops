@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/downloads/flaresolverr/app
+  path: ./kubernetes/apps/downloads/flaresolverr/app
   prune: true
   sourceRef:
     kind: GitRepository

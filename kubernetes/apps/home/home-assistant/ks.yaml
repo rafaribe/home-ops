@@ -12,7 +12,7 @@ spec:
   # - name: external-secrets-provider
   # - name: external-secrets-operator
   # - name: cluster-apps-volsync
-  path: ./kubernetes/main/apps/home/home-assistant/app
+  path: ./kubernetes/apps/home/home-assistant/app
   prune: true
   sourceRef:
     kind: GitRepository

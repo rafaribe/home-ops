@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  path: "./kubernetes/main/apps/system/generic-device-plugin/app"
+  path: "./kubernetes/apps/system/generic-device-plugin/app"
   sourceRef:
     kind: GitRepository
     name: flux-system

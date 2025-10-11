@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/services/openlist/app
+  path: ./kubernetes/apps/services/openlist/app
   prune: true
   sourceRef:
     kind: GitRepository

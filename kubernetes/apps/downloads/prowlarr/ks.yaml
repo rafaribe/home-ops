@@ -6,7 +6,7 @@ metadata:
   name: &app prowlarr
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/downloads/prowlarr/app
+  path: ./kubernetes/apps/downloads/prowlarr/app
   prune: true
   sourceRef:
     kind: GitRepository

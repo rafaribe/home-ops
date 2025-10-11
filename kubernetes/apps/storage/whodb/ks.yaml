@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: snapshot-controller
-  path: ./kubernetes/main/apps/storage/whodb/app
+  path: ./kubernetes/apps/storage/whodb/app
   prune: true
   sourceRef:
     kind: GitRepository

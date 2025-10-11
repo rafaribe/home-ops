@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 10m
-  path: "./kubernetes/main/apps/storage/syncthing/app"
+  path: "./kubernetes/apps/storage/syncthing/app"
   prune: true
   sourceRef:
     kind: GitRepository

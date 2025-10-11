@@ -6,7 +6,7 @@ metadata:
   name: &app external-dns-cloudflare
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/network/external-dns/cloudflare
+  path: ./kubernetes/apps/network/external-dns/cloudflare
   prune: false
   sourceRef:
     kind: GitRepository
@@ -30,7 +30,7 @@ metadata:
 spec:
   dependsOn:
     - name: external-secrets-stores
-  path: ./kubernetes/main/apps/network/external-dns/pihole
+  path: ./kubernetes/apps/network/external-dns/pihole
   prune: false
   sourceRef:
     kind: GitRepository
@@ -53,7 +53,7 @@ spec:
 # spec:
 #   dependsOn:
 #     - name: external-secrets-stores
-#   path: ./kubernetes/main/apps/network/external-dns/bind
+#   path: ./kubernetes/apps/network/external-dns/bind
 #   prune: true
 #   sourceRef:
 #     kind: GitRepository
@@ -76,7 +76,7 @@ spec:
 # spec:
 #   dependsOn:
 #     - name: external-secrets-stores
-#   path: ./kubernetes/main/apps/network/external-dns/adguard
+#   path: ./kubernetes/apps/network/external-dns/adguard
 #   prune: true
 #   sourceRef:
 #     kind: GitRepository
