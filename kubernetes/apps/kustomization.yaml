@@ -5,3 +5,4 @@ resources:
  # - ./cert-manager
  # - ./system
   - ./kube-system
+  - ./external-secrets/ks.yaml
