@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/helmfile
+
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubeVersion: v1.33.5
+
+helmDefaults:
+  force: true
+  recreatePods: true
+  timeout: 600
+  wait: true
+  waitForJobs: true
+
+releases:
+  - name: prometheus-operator-crds
+    namespace: observability
+    chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
+    version: 24.0.0

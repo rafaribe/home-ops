@@ -10,7 +10,7 @@ clusterSvcNets:
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
 talosVersion: v1.11.2
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
-kubernetesVersion: v1.34.1
+kubernetesVersion: v1.33.5
 
 
 cniConfig:
@@ -58,6 +58,7 @@ nodes:
         mtu: 1500
         routes: *defaultRoutes
         vip: &vip
+ 
   - hostname: srv-03.${clusterDNSSuffix}
     ipAddress: 10.0.1.3
     nameservers: *nameservers
@@ -101,9 +102,9 @@ nodes:
         routes: *defaultRoutes
 
   - hostname: srv-06.${clusterDNSSuffix}
-    ipAddress: 10.0.1.6
+    ipAddress: 10.0.1.12
     nameservers: *nameservers
-    controlPlane: true
+    controlPlane: false
     installDiskSelector:
       type: "ssd"
       model: UDSS*
@@ -129,6 +130,7 @@ nodes:
         dhcp: true
         mtu: 1500
         routes: *defaultRoutes
+ 
   - hostname: tpi-1.${clusterDNSSuffix}
     ipAddress: 10.0.1.8
     nameservers: *nameservers
@@ -163,6 +165,7 @@ nodes:
               rotate-server-certificates: true
               image-gc-high-threshold: 75
               image-gc-low-threshold: 70
+ 
   - hostname: tpi-2.${clusterDNSSuffix}
     ipAddress: 10.0.1.9
     nameservers: *nameservers
@@ -191,6 +194,7 @@ nodes:
             - siderolabs/util-linux-tools
     patches:
       - *kubelet-gc
+ 
   - hostname: tpi-3.${clusterDNSSuffix}
     ipAddress: 10.0.1.10
     nameservers: *nameservers
@@ -219,6 +223,7 @@ nodes:
             - siderolabs/util-linux-tools
     patches:
       - *kubelet-gc
+ 
   - hostname: tpi-4.${clusterDNSSuffix}
     ipAddress: 10.0.1.11
     nameservers: *nameservers

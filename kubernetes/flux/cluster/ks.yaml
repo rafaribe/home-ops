@@ -7,11 +7,11 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  path: ./kubernetes/main/apps
+  path: ./kubernetes/apps
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   decryption:
     provider: sops
     secretRef:
