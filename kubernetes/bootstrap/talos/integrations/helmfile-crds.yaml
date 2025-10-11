@@ -1,17 +1,28 @@
 ---
-# yaml-language-server: $schema=https://json.schemastore.org/helmfile
-
-# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubeVersion: v1.33.5
+# This helmfile is for installing Custom Resource Definitions (CRDs) from Helm charts.
+# It is not intended to be used with helmfile apply or sync.
 
 helmDefaults:
-  force: true
-  recreatePods: true
-  timeout: 600
-  wait: true
-  waitForJobs: true
+  args: ['--include-crds', '--no-hooks'] # Prevent helmfile apply or sync
+  postRenderer: bash
+  postRendererArgs: [-c, "yq ea --exit-status 'select(.kind == \"CustomResourceDefinition\")'"]
 
 releases:
+  - name: external-secrets
+    namespace: external-secrets
+    chart: oci://ghcr.io/external-secrets/charts/external-secrets
+    version: 0.20.2
+
+  - name: envoy-gateway
+    namespace: networking
+    chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
+    version: 1.5.2
+
+  - name: keda
+    namespace: observability
+    chart: oci://ghcr.io/home-operations/charts-mirror/keda
+    version: 2.18.0
+    
   - name: prometheus-operator-crds
     namespace: observability
     chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds

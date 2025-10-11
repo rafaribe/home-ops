@@ -1,6 +1,6 @@
 #! /usr/bin/env fish
 
-helmfile apply -f helmfile-crds.yaml
+helmfile template --quiet helmfile-crds.yaml | kubectl apply --server-side --filename -
 sleep 2
 helmfile apply
 sleep 30
