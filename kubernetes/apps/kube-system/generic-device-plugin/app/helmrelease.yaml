@@ -5,7 +5,6 @@ kind: HelmRelease
 metadata:
   name: generic-device-plugin
 spec:
-  interval: 30m
   chart:
     spec:
       chart: app-template
