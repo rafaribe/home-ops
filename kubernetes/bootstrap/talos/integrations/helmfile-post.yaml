@@ -18,3 +18,4 @@ releases:
     version: 0.30.0
     values:
       - ./templates/values.yaml.gotmpl
+

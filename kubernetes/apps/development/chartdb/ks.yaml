@@ -10,7 +10,7 @@ spec:
   targetNamespace: development
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
     namespace: flux-system
   commonMetadata:
     labels:

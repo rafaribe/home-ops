@@ -10,7 +10,7 @@ spec:
   targetNamespace: services
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
     namespace: flux-system
   commonMetadata:
     labels:
@@ -36,7 +36,7 @@ spec:
   targetNamespace: services
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
     namespace: flux-system
   commonMetadata:
     labels:

@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   interval: 30m
   retryInterval: 1m
   timeout: 3m

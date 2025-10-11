@@ -9,7 +9,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   interval: 30m
   timeout: 3m
   targetNamespace: system

@@ -17,7 +17,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   wait: false # no flux ks dependents
   interval: 30m
   timeout: 5m
@@ -53,7 +53,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   wait: false # no flux ks dependents
   interval: 30m
   timeout: 5m
@@ -107,7 +107,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   wait: false # no flux ks dependents
   interval: 30m
   timeout: 5m
@@ -130,7 +130,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   wait: false # no flux ks dependents
   interval: 30m
   timeout: 5m

@@ -13,7 +13,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   wait: false
   dependsOn:
     - name: rook-ceph-cluster
@@ -33,7 +33,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   wait: false
   dependsOn:
     - name: rook-ceph-cluster

@@ -14,7 +14,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   wait: false
   interval: 30m
   retryInterval: 1m
@@ -36,7 +36,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   dependsOn:
     - name: homelab-assistant-crds
   wait: false
@@ -59,7 +59,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   dependsOn:
     - name: homelab-assistant-crds
   wait: false
@@ -82,7 +82,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
   dependsOn:
     - name: homelab-assistant-crds
   wait: false

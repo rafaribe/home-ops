@@ -14,7 +14,7 @@ spec:
   path: ./kubernetes/main/apps/services/kitchenowl/app
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: flux-system
     namespace: flux-system
   dependsOn:
     #    - name: cloudnative-pg-cluster

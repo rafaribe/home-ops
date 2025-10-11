@@ -21,3 +21,4 @@ echo "Applying config"
 kubectl apply -k config/
 echo "Applying apps"
 kubectl apply -f apps.yaml
+kubectl apply -f "https://raw.githubusercontent.com/external-secrets/external-secrets/v0.20.3/deploy/crds/bundle.yaml" --server-side
