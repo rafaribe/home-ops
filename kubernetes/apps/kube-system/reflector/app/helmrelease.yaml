@@ -12,7 +12,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: emberstack
-        namespace: flux-system
       interval: 5m
   install:
     createNamespace: true
