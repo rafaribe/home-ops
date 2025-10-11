@@ -1,8 +1,7 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 clusterName: &cluster ${clusterName}
-endpoint: "https://10.0.1.6:6443"
-
+endpoint: "https://${clusterEndpointIP}:6443"
 clusterPodNets:
   - 10.42.0.0/16
 clusterSvcNets:
@@ -11,146 +10,23 @@ clusterSvcNets:
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
 talosVersion: v1.11.2
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
-kubernetesVersion: v1.34.1
+kubernetesVersion: v1.31.1
 
 
 cniConfig:
   name: none
 
+additionalApiServerCertSans: &sans
+  - ${clusterEndpointIP}
+  - ${clusterName}.${clusterDNSSuffix}
+  - 127.0.0.1 # KubePrism
+  - "*.${clusterDNSSuffix}"
+
+additionalMachineCertSans: *sans
+
 nodes:
-  # # Turing Pi Arm64 Nodes
-  # - hostname: tpi-1.${clusterDNSSuffix}
-  #   ipAddress: 10.0.1.12
-  #   nameservers: &nameservers
-  #     - "10.0.0.254"
-  #     - "1.1.1.1"
-  #   controlPlane: false
-  #   installDiskSelector:
-  #     type: sd
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: "ca:d1:4d:b4:f9:bd"
-  #       dhcp: true
-  #       mtu: 1500
-  #       routes:
-  #         - network: 0.0.0.0/0
-  #           gateway: 10.0.0.1
-  #   machineSpec:
-  #     mode: metal
-  #     arch: arm64
-  #   schematic:
-  #     overlay:
-  #       name: turingrk1
-  #       image: siderolabs/sbc-rockchip
-  #     customization:
-  #       extraKernelArgs:
-  #         - net.ifnames=0
-  #       systemExtensions:
-  #         officialExtensions:
-  #           - siderolabs/binfmt-misc
-  #           - siderolabs/util-linux-tools
-  #   patches:
-  #     - &kubelet-gc |-
-  #       machine:
-  #         kubelet:
-  #           extraArgs:
-  #             rotate-server-certificates: true
-  #             image-gc-high-threshold: 75
-  #             image-gc-low-threshold: 70
-  # - hostname: tpi-2.${clusterDNSSuffix}
-  #   ipAddress: 10.0.1.13
-  #   nameservers: *nameservers
-  #   controlPlane: false
-  #   installDiskSelector:
-  #     type: sd
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: "1e:66:39:1d:77:c0"
-  #       dhcp: true
-  #       mtu: 1500
-  #       routes:
-  #         - network: 0.0.0.0/0
-  #           gateway: 10.0.0.1
-  #   machineSpec:
-  #     mode: metal
-  #     arch: arm64
-  #   schematic:
-  #     overlay:
-  #       name: turingrk1
-  #       image: siderolabs/sbc-rockchip
-  #     customization:
-  #       extraKernelArgs:
-  #         - net.ifnames=0
-  #       systemExtensions:
-  #         officialExtensions:
-  #           - siderolabs/binfmt-misc
-  #           - siderolabs/util-linux-tools
-  #   patches:
-  #     - *kubelet-gc
-  # - hostname: tpi-3.${clusterDNSSuffix}
-  #   ipAddress: 10.0.1.14
-  #   nameservers: *nameservers
-  #   controlPlane: false
-  #   installDiskSelector:
-  #     type: sd
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: "8e:56:66:61:bf:36"
-  #       dhcp: true
-  #       mtu: 1500
-  #       routes:
-  #         - network: 0.0.0.0/0
-  #           gateway: 10.0.0.1
-  #   machineSpec:
-  #     mode: metal
-  #     arch: arm64
-  #   schematic:
-  #     overlay:
-  #       name: turingrk1
-  #       image: siderolabs/sbc-rockchip
-  #     customization:
-  #       extraKernelArgs:
-  #         - net.ifnames=0
-  #       systemExtensions:
-  #         officialExtensions:
-  #           - siderolabs/binfmt-misc
-  #           - siderolabs/util-linux-tools
-  #   patches:
-  #     - *kubelet-gc
-  # - hostname: tpi-4.${clusterDNSSuffix}
-  #   ipAddress: 10.0.1.15
-  #   nameservers: *nameservers
-  #   controlPlane: false
-  #   installDiskSelector:
-  #     type: sd
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: "8e:a1:08:d0:12:5c"
-  #       dhcp: true
-  #       mtu: 1500
-  #       routes:
-  #         - network: 0.0.0.0/0
-  #           gateway: 10.0.0.1
-  #   machineSpec:
-  #     mode: metal
-  #     arch: arm64
-  #   schematic:
-  #     overlay:
-  #       name: turingrk1
-  #       image: siderolabs/sbc-rockchip
-  #     customization:
-  #       extraKernelArgs:
-  #         - net.ifnames=0
-  #       systemExtensions:
-  #         officialExtensions:
-  #           - siderolabs/binfmt-misc
-  #           - siderolabs/util-linux-tools
-  #   patches:
-  #     - *kubelet-gc
-  # x86_64 NUC / Server Nodes
-  # If I decide to scrap the utility cluster, this node comes back here.
   - hostname: srv-01.${clusterDNSSuffix}
-    ipAddress: 10.0.1.2
+    ipAddress: 10.0.1.1
     nameservers: &nameservers
       - "10.0.0.254"
       - "1.1.1.1"
@@ -164,106 +40,211 @@ nodes:
           hardwareAddr: "10:c3:7b:1d:d6:f4"
         dhcp: true
         mtu: 1500
-        routes:
+        routes: &defaultRoutes
           - network: 0.0.0.0/0
             gateway: 10.0.0.1
-        vip:
-          ip: 10.0.1.6
-  # - hostname: srv-02.${clusterDNSSuffix}
-  #   ipAddress: 10.0.1.3
-  #   nameservers: *nameservers
-  #   controlPlane: false
-  #   installDiskSelector:
-  #     wwid: naa.502b2a201d1c1b1a
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: "18:66:da:29:9f:9d"
-  #       dhcp: true
-  #       mtu: 1500
-  #       routes:
-  #         - network: 0.0.0.0/0
-  #           gateway: 10.0.0.1
+        # vip:
+        #   ip: 10.0.1.6
+  - hostname: srv-02.${clusterDNSSuffix}
+    ipAddress: 10.0.1.2
+    nameservers: *nameservers
+    controlPlane: true
+    installDiskSelector:
+      wwid: naa.502b2a201d1c1b1a
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "18:66:da:29:9f:9d"
+        dhcp: true
+        mtu: 1500
+        routes: *defaultRoutes
+  - hostname: srv-03.${clusterDNSSuffix}
+    ipAddress: 10.0.1.3
+    nameservers: *nameservers
+    controlPlane: true
+    installDiskSelector:
+      wwid: "naa.502b2a201d1c1b1a"
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "18:66:da:3c:a4:86"
+        dhcp: true
+        mtu: 1500
+        routes: *defaultRoutes
 
-  # - hostname: srv-03.${clusterDNSSuffix}
-  #   ipAddress: 10.0.1.4
-  #   nameservers: *nameservers
-  #   controlPlane: false
-  #   installDiskSelector:
-  #     wwid: "naa.502b2a201d1c1b1a"
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: "18:66:da:3c:a4:86"
-  #       dhcp: true
-  #       mtu: 1500
-  #       routes:
-  #         - network: 0.0.0.0/0
-  #           gateway: 10.0.0.1
+  - hostname: srv-04.${clusterDNSSuffix}
+    ipAddress: 10.0.1.4
+    nameservers: *nameservers
+    controlPlane: true
+    installDiskSelector:
+      type: "ssd"
+      model: WDC*
+      size: <= 250 GB
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "50:7b:9d:d3:95:a3"
+        dhcp: true
+        mtu: 1500
+        routes: *defaultRoutes
 
-  # - hostname: srv-04.${clusterDNSSuffix}
-  #   ipAddress: 10.0.1.5
-  #   nameservers: *nameservers
-  #   controlPlane: false
-  #   installDiskSelector:
-  #     type: "ssd"
-  #     model: WDC*
-  #     size: <= 250 GB
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: "50:7b:9d:d3:95:a3"
-  #       dhcp: true
-  #       mtu: 1500
-  #       routes:
-  #         - network: 0.0.0.0/0
-  #           gateway: 10.0.0.1
-  # - hostname: srv-05.${clusterDNSSuffix}
-  #   ipAddress: 10.0.1.8
-  #   nameservers: *nameservers
-  #   controlPlane: true
-  #   installDiskSelector:
-  #     wwid: "eui.6479a73121231918"
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: "00:1e:06:45:43:3e"
-  #       dhcp: true
-  #       mtu: 1500
-  #       routes:
-  #         - network: 0.0.0.0/0
-  #           gateway: 10.0.0.1
+  - hostname: srv-05.${clusterDNSSuffix}
+    ipAddress: 10.0.1.5
+    nameservers: *nameservers
+    controlPlane: false
+    installDiskSelector:
+      wwid: "eui.6479a73121231918"
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "00:1e:06:45:43:3e"
+        dhcp: true
+        mtu: 1500
+        routes: *defaultRoutes
 
-  # - hostname: srv-06.${clusterDNSSuffix}
-  #   ipAddress: 10.0.1.9
-  #   nameservers: *nameservers
-  #   controlPlane: true
-  #   installDiskSelector:
-  #     type: "ssd"
-  #     model: UDSS*
-  #     size: <= 520 GB
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: "00:e0:4c:2f:6b:76"
-  #       dhcp: true
-  #       mtu: 1500
-  #       routes:
-  #         - network: 0.0.0.0/0
-  #           gateway: 10.0.0.1
-  #       vip:
-  #         ip: ${clusterEndpointIP}
-  # - hostname: srv-07.${clusterDNSSuffix}
-  #   ipAddress: 10.0.1.10
-  #   nameservers: *nameservers
-  #   controlPlane: false
-  #   installDiskSelector:
-  #     type: "ssd"
-  #     model: UDSS*
-  #     size: <= 520 GB
-  #   networkInterfaces:
-  #     - deviceSelector:
-  #         hardwareAddr: "00:e0:4c:2f:6b:41"
-  #       dhcp: true
-  #       mtu: 1500
-  #       routes:
-  #         - network: 0.0.0.0/0
-  #           gateway: 10.0.0.1
+  - hostname: srv-06.${clusterDNSSuffix}
+    ipAddress: 10.0.1.6
+    nameservers: *nameservers
+    controlPlane: true
+    installDiskSelector:
+      type: "ssd"
+      model: UDSS*
+      size: <= 520 GB
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "00:e0:4c:2f:6b:76"
+        dhcp: true
+        mtu: 1500
+        routes: *defaultRoutes
+
+  - hostname: srv-07.${clusterDNSSuffix}
+    ipAddress: 10.0.1.7
+    nameservers: *nameservers
+    controlPlane: false
+    installDiskSelector:
+      type: "ssd"
+      model: UDSS*
+      size: <= 520 GB
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "00:e0:4c:2f:6b:41"
+        dhcp: true
+        mtu: 1500
+        routes: *defaultRoutes
+  - hostname: tpi-1.${clusterDNSSuffix}
+    ipAddress: 10.0.1.8
+    nameservers: *nameservers
+    controlPlane: false
+    installDiskSelector:
+      type: sd
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "ca:d1:4d:b4:f9:bd"
+        dhcp: true
+        mtu: 1500
+        routes: *defaultRoutes
+    machineSpec:
+      mode: metal
+      arch: arm64
+    schematic:
+      overlay:
+        name: turingrk1
+        image: siderolabs/sbc-rockchip
+      customization:
+        extraKernelArgs:
+          - net.ifnames=0
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/binfmt-misc
+            - siderolabs/util-linux-tools
+    patches:
+      - &kubelet-gc |-
+        machine:
+          kubelet:
+            extraArgs:
+              rotate-server-certificates: true
+              image-gc-high-threshold: 75
+              image-gc-low-threshold: 70
+  - hostname: tpi-2.${clusterDNSSuffix}
+    ipAddress: 10.0.1.9
+    nameservers: *nameservers
+    controlPlane: false
+    installDiskSelector:
+      type: sd
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "1e:66:39:1d:77:c0"
+        dhcp: true
+        mtu: 1500
+        routes: *defaultRoutes
+    machineSpec:
+      mode: metal
+      arch: arm64
+    schematic:
+      overlay:
+        name: turingrk1
+        image: siderolabs/sbc-rockchip
+      customization:
+        extraKernelArgs:
+          - net.ifnames=0
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/binfmt-misc
+            - siderolabs/util-linux-tools
+    patches:
+      - *kubelet-gc
+  - hostname: tpi-3.${clusterDNSSuffix}
+    ipAddress: 10.0.1.10
+    nameservers: *nameservers
+    controlPlane: false
+    installDiskSelector:
+      type: sd
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "8e:56:66:61:bf:36"
+        dhcp: true
+        mtu: 1500
+        routes: *defaultRoutes
+    machineSpec:
+      mode: metal
+      arch: arm64
+    schematic:
+      overlay:
+        name: turingrk1
+        image: siderolabs/sbc-rockchip
+      customization:
+        extraKernelArgs:
+          - net.ifnames=0
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/binfmt-misc
+            - siderolabs/util-linux-tools
+    patches:
+      - *kubelet-gc
+  - hostname: tpi-4.${clusterDNSSuffix}
+    ipAddress: 10.0.1.11
+    nameservers: *nameservers
+    controlPlane: false
+    installDiskSelector:
+      type: sd
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "c4:ff:84:10:05:98"
+        dhcp: true
+        mtu: 1500
+        routes: *defaultRoutes
+    machineSpec:
+      mode: metal
+      arch: arm64
+    schematic:
+      overlay:
+        name: turingrk1
+        image: siderolabs/sbc-rockchip
+      customization:
+        extraKernelArgs:
+          - net.ifnames=0
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/binfmt-misc
+            - siderolabs/util-linux-tools
+    patches:
+      - *kubelet-gc
 controlPlane:
   noSchematicValidate: true
   schematic:
