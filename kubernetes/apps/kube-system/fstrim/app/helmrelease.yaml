@@ -9,12 +9,11 @@ spec:
   chartRef:
     kind: OCIRepository
     name: app-template
-  interval: 30m
   values:
     controllers:
       fstrim:
         type: cronjob
-
+ 
         cronjob:
           schedule: "30 4 * * *" # Daily at 4:30 AM
           parallelism: 10 # Set this to your number of nodes
