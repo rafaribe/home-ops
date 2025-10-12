@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  path: "./kubernetes/apps/system/fstrim/app"
+  path: "./kubernetes/apps/kube-system/fstrim/app"
   sourceRef:
     kind: GitRepository
     name: flux-system
