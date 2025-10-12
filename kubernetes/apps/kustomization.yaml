@@ -6,3 +6,4 @@ resources:
  # - ./system
   - ./kube-system
   - ./external-secrets
+  - ./rook-ceph
