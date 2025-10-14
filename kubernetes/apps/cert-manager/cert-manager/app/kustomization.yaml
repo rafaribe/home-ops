@@ -9,4 +9,4 @@ resources:
   - ./helmrelease.yaml
 
   - ./prometheusrule.yaml
-  - ./clusterissuer.yaml
+ # - ./clusterissuer.yaml
