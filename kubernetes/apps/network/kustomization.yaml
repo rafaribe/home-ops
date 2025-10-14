@@ -9,6 +9,7 @@ replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
   # Flux-Kustomizations
+  - ./certificates/ks.yaml
   - ./cloudflare-tunnel/ks.yaml
   - ./external-dns/ks.yaml
   - ./envoy-gateway/ks.yaml
