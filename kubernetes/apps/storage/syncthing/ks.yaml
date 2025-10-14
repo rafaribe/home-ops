@@ -22,5 +22,5 @@ spec:
     substitute:
       APP: *app
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/nfs-scaler
+    - ../../../../components/volsync

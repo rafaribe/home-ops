@@ -3,17 +3,19 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: snapshot-controller
-  namespace: flux-system
+  name: kopia
 spec:
-  path: ./kubernetes/apps/storage/snapshot-controller/app
+  components:
+    - ../../../../components/nfs-scaler
+  interval: 1h
+  path: ./kubernetes/apps/storage/kopia/app
+  postBuild:
+    substitute:
+      APP: kopia
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
-  targetNamespace: storage
+  targetNamespace: volsync-system
+  wait: false

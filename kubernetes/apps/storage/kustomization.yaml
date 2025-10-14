@@ -2,14 +2,15 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: storage
+components:
+  - ../../components/alerts
+  - ../../components/repos/app-template
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./cloudnative-pg/ks.yaml
-  - ./dragonfly/ks.yaml
-  - ./snapshot-controller/ks.yaml
+  - ./openebs/ks.yaml
   - ./syncthing/ks.yaml
   - ./volsync/ks.yaml
-  - ./whodb/ks.yaml
-  - ./zot/ks.yaml
+  
