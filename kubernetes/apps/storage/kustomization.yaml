@@ -11,6 +11,7 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./openebs/ks.yaml
+  - ./observability/ks.yaml
   - ./syncthing/ks.yaml
   - ./volsync/ks.yaml
   
