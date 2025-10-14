@@ -14,8 +14,8 @@ resources:
   - ./csi-driver-nfs/ks.yaml
   - ./descheduler/ks.yaml
   - ./fstrim/ks.yaml
-#  - ./generic-device-plugin/ks.yaml
-  - ./intel-gpu-resource-driver/ks.yaml
+  - ./generic-device-plugin/ks.yaml
+  #- ./intel-gpu-resource-driver/ks.yaml
   - ./kubelet-csr-approver/ks.yaml
   - ./metrics-server/ks.yaml
   - ./node-feature-discovery/ks.yaml
