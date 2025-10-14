@@ -13,7 +13,7 @@ resources:
   # - ./exporters/ks.yaml
   # - ./gatus/ks.yaml
   # - ./gotify/ks.yaml
-  # - ./grafana/ks.yaml
+  - ./grafana/ks.yaml
   # - ./karma/ks.yaml
   # - ./kepler/ks.yaml
   # - ./kromgo/ks.yaml

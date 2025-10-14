@@ -5,10 +5,6 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./dnsendpoint.yaml
+  - ./grafanadashboard.yaml
   - ./helmrelease.yaml
-configMapGenerator:
-  - name: cloudflared-configmap
-    files:
-      - config.yaml=./resources/config.yaml
-generatorOptions:
-  disableNameSuffixHash: true
+  - ./ocirepository.yaml
