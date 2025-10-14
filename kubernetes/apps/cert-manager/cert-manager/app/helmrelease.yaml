@@ -4,22 +4,10 @@ kind: HelmRelease
 metadata:
   name: cert-manager
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: cert-manager
-      version: v1.18.2
-      sourceRef:
-        kind: OCIRepository
-        name: cert-manager
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
+  chartRef:
+    kind: OCIRepository
+    name: cert-manager
+  interval: 1h
   values:
     crds:
       enabled: true
