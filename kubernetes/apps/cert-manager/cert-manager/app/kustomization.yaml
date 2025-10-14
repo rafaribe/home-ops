@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./ocirepository.yaml
   - ./externalsecret.yaml
-  - ./grafanadashboard.yaml
+ # - ./grafanadashboard.yaml
   - ./helmrelease.yaml
 
   - ./prometheusrule.yaml
