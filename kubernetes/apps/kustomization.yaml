@@ -9,3 +9,4 @@ resources:
   - ./rook-ceph
   - ./storage
   - ./observability
+  - ./network
