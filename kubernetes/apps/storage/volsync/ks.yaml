@@ -8,6 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: snapshot-controller
+      namespace: kube-system
   path: ./kubernetes/apps/storage/volsync/app
   prune: true
   sourceRef:
