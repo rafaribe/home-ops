@@ -6,6 +6,9 @@ metadata:
   name: &app external-dns-cloudflare
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets-stores
   path: ./kubernetes/apps/network/external-dns/cloudflare
   prune: false
   sourceRef:
@@ -31,6 +34,7 @@ metadata:
 spec:
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets-stores
   path: ./kubernetes/apps/network/external-dns/pihole
   prune: false
   sourceRef:
