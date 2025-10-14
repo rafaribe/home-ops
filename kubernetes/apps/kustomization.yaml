@@ -8,4 +8,4 @@ resources:
   - ./external-secrets
   - ./rook-ceph
   - ./storage
-  - /observability
+  - ./observability
