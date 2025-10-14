@@ -76,7 +76,7 @@ nodes:
   - hostname: srv-04.${clusterDNSSuffix}
     ipAddress: 10.0.1.4
     nameservers: *nameservers
-    controlPlane: true
+    controlPlane: false
     installDiskSelector:
       type: "ssd"
       model: WDC*
@@ -102,7 +102,7 @@ nodes:
         routes: *defaultRoutes
 
   - hostname: srv-06.${clusterDNSSuffix}
-    ipAddress: 10.0.1.12
+    ipAddress: 10.0.1.6
     nameservers: *nameservers
     controlPlane: false
     installDiskSelector:
@@ -307,8 +307,9 @@ controlPlane:
                 discard_unpacked_layers = false
               [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
                 discard_unpacked_layers = false
-
-    # Disable search domain everywhere
+              [plugins."io.containerd.cri.v1.runtime"]
+                cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
+                device_ownership_from_security_context = true
     - &disableSearchDomainPatch |-
       machine:
         network:
@@ -329,7 +330,11 @@ controlPlane:
       machine:
         kubelet:
           extraConfig:
-            maxPods: 150
+            maxPods: 300
+            serializeImagePulls: false
+            featureGates:
+              ImageVolume: true
+              ResourceHealthStatus: true
           extraArgs:
             rotate-server-certificates: true
           nodeIP:
@@ -460,8 +465,22 @@ controlPlane:
       cluster:
         apiServer:
           extraArgs:
-            runtime-config: admissionregistration.k8s.io/v1alpha1=true
-            feature-gates: MutatingAdmissionPolicy=true
+            enable-aggregator-routing: true
+            feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true,ResourceHealthStatus=true
+            runtime-config: admissionregistration.k8s.io/v1beta1=true
+    # Spegel
+    - |
+      cluster:
+        scheduler:
+          config:
+            apiVersion: kubescheduler.config.k8s.io/v1
+            kind: KubeSchedulerConfiguration
+            profiles:
+              - schedulerName: default-scheduler
+                plugins:
+                  score:
+                    disabled:
+                      - name: ImageLocality
 worker:
   noSchematicValidate: true
   schematic:
