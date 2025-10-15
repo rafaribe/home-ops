@@ -10,3 +10,4 @@ resources:
   - ./storage
   - ./observability
   - ./network
+  - ./database
