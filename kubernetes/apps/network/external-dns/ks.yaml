@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: external-secrets-stores
-      namespace: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/apps/network/external-dns/cloudflare
   prune: false
   sourceRef:
@@ -34,7 +34,7 @@ metadata:
 spec:
   dependsOn:
     - name: external-secrets-stores
-      namespace: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/apps/network/external-dns/pihole
   prune: false
   sourceRef:
