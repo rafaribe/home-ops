@@ -10,19 +10,13 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  # - ./exporters/ks.yaml
-  # - ./gatus/ks.yaml
-  # - ./gotify/ks.yaml
+  - ./exporters/ks.yaml
+  - ./fluent-bit/ks.yaml
+  - ./gatus/ks.yaml
   - ./grafana/ks.yaml
-  # - ./karma/ks.yaml
-  # - ./kepler/ks.yaml
-  # - ./kromgo/ks.yaml
-  # - ./kube-prometheus-stack/ks.yaml
-  # - ./node-exporter/ks.yaml
-  # - ./loki/ks.yaml
-  # - ./prometheus-operator/ks.yaml
-  # - ./promtail/ks.yaml
-  # - ./redisinsight/ks.yaml
-  # - ./silence-operator/ks.yaml
-  # - ./unpoller/ks.yaml
+  - ./kromgo/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
+  - ./silence-operator/ks.yaml
+  - ./unpoller/ks.yaml
+  - ./victoria-logs/ks.yaml
   - ./keda/ks.yaml

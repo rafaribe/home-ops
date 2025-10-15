@@ -3,19 +3,17 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app kepler
-  namespace: flux-system
+  name: victoria-logs
 spec:
-  targetNamespace: observability
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/observability/kepler/app
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  interval: 1h
+  path: ./kubernetes/apps/observability/victoria-logs/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: observability
   wait: false
-  interval: 6h
-  timeout: 5m

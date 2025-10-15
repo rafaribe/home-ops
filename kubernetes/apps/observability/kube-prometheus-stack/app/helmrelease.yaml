@@ -5,33 +5,11 @@ kind: HelmRelease
 metadata:
   name: kube-prometheus-stack
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: kube-prometheus-stack
-      version: 77.12.1
-      sourceRef:
-        kind: HelmRepository
-        name: prometheus-community
-        namespace: flux-system
-  install:
-    crds: Skip
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    crds: Skip
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: prometheus-operator-crds
-      namespace: observability
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+  chartRef:
+    kind: OCIRepository
+    name: kube-prometheus-stack
+  interval: 1h
   values:
-    crds:
-      enabled: false
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       route:
@@ -41,8 +19,8 @@ spec:
 
           hostnames: ["alertmanager.rafaribe.com"]
           parentRefs:
-            - name: internal
-              namespace: kube-system
+            - name: envoy-internal
+              namespace: network
               sectionName: https
       alertmanagerSpec:
         alertmanagerConfiguration:
@@ -94,22 +72,24 @@ spec:
         serviceMonitorSelectorNilUsesHelmValues: false
         enableAdminAPI: true
         walCompression: true
-        enableFeatures:
-          - memory-snapshot-on-shutdown
-        retention: 17d
-        retentionSize: 20GB
+        retention: 14d
+        retentionSize: 50GB
         resources:
           requests:
-            cpu: 200m
+            cpu: 100m
           limits:
-            memory: 7Gi
+            memory: 2000Mi
         storageSpec:
           volumeClaimTemplate:
             spec:
               storageClassName: ceph-block
               resources:
                 requests:
-                  storage: 80Gi
+                  storage: 50Gi
+        image:
+          registry: docker.io
+          repository: prompp/prompp
+          tag: 0.6.0
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
