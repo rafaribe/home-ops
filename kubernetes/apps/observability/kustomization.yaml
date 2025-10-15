@@ -12,7 +12,7 @@ resources:
   # Flux-Kustomizations
   - ./exporters/ks.yaml
   - ./fluent-bit/ks.yaml
-  - ./gatus/ks.yaml
+#  - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml

@@ -15,6 +15,7 @@ spec:
   dependsOn:
     #   - name: cloudnative-pg-cluster
     - name: external-secrets-stores
+      namespace: external-secrets
   wait: false
   interval: 30m
   retryInterval: 1m
