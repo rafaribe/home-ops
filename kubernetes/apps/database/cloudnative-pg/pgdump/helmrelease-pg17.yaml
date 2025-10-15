@@ -5,27 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app cloudnative-pg-postgres17-pgdump
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-  maxHistory: 2
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  uninstall:
-    keepHistory: false
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   values:
     defaultPodOptions:
       securityContext:
