@@ -5,6 +5,7 @@ namespace: observability
 
 components:
   - ../../components/alerts
+  - ../../components/repos/app-template
 
 resources:
   # Pre Flux-Kustomizations
