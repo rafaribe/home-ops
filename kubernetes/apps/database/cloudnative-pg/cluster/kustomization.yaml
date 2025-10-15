@@ -6,8 +6,6 @@ resources:
   - ./cluster.yaml
   - ./scheduledbackup.yaml
   - ./prometheusrule.yaml
-  - ./service.yaml
+  #- ./service.yaml
   - ./externalsecret.yaml
   - ./gatus.yaml
-  - ./objectbucketclaim.yaml
-  - ./externalservice.yaml

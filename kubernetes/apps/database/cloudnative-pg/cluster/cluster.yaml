@@ -35,8 +35,8 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://cloudnative-pg/
-      endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
-      serverName: &currentCluster home-ops-storage-v4
+      endpointURL: http://truenas.rafaribe.com:9000
+      serverName: &currentCluster home-ops-storage-v2
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-bucket
@@ -45,17 +45,21 @@ spec:
           name: cloudnative-pg-bucket
           key: AWS_SECRET_ACCESS_KEY
   bootstrap:
-    recovery:
-      source: &previousCluster home-ops-storage-v3
-  externalClusters:
-    - name: *previousCluster
-      barmanObjectStore:
-        destinationPath: s3://cloudnative-pg/
-        endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg-bucket
-            key: AWS_ACCESS_KEY_ID
-          secretAccessKey:
-            name: cloudnative-pg-bucket
-            key: AWS_SECRET_ACCESS_KEY
+    initdb:
+      database: app
+      owner: app
+      secret:
+        name: cloudnative-pg-secret
+  #     source: &previousCluster home-ops-storage-1
+  # externalClusters:
+  #   - name: *previousCluster
+  #     barmanObjectStore:
+  #       destinationPath: s3://cloudnative-pg/
+  #       endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
+  #       s3Credentials:
+  #         accessKeyId:
+  #           name: cloudnative-pg-bucket
+  #           key: AWS_ACCESS_KEY_ID
+  #         secretAccessKey:
+  #           name: cloudnative-pg-bucket
+  #           key: AWS_SECRET_ACCESS_KEY
