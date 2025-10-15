@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/siderolabs/talosctl
-              tag: v1.11.2
+              tag: v1.11.3
             args:
               - -n
               - "$(NODE_IP)"
