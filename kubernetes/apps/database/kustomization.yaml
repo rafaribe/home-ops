@@ -2,6 +2,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: database
 components:
   - ../../components/alerts
   - ../../components/repos/app-template
@@ -10,3 +11,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./cloudnative-pg/ks.yaml
+  - ./pgadmin/ks.yaml
