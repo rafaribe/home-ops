@@ -1,0 +1,20 @@
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: minio-store
+  namespace: database
+spec:
+  retentionPolicy: "30d"
+  configuration:
+    destinationPath: s3://cloudnative-pg/
+    endpointURL: https://truenas.rafaribe.com:9000
+    s3Credentials:
+      accessKeyId:
+        name: cloudnative-pg-secret
+        key: ACCESS_KEY_ID
+      secretAccessKey:
+        name: cloudnative-pg-secret
+        key: ACCESS_SECRET_KEY
+    wal:
+      compression: gzip
