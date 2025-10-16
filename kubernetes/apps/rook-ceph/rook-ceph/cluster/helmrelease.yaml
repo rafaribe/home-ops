@@ -130,9 +130,20 @@ spec:
         useAllNodes: false
         useAllDevices: false
         nodes:
+          - name: srv-01
+            devices:
+              - name: /dev/disk/by-id/ata-Samsung_SSD_750_EVO_250GB_S32LNWAH606933X
+            resources:
+              requests:
+                cpu: "1"
+                memory: 3Gi
+              limits:
+                cpu: "2"
+                memory: 5Gi
+            priorityClassName: system-node-critical
           - name: srv-02
             devices:
-              - name: /dev/sda
+              - name: /dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0
             resources:
               requests:
                 cpu: "1"
