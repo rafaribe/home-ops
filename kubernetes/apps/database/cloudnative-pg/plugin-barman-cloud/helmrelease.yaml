@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: plugin-barman-cloud
+spec:
+  interval: 1h
+  maxHistory: 1
+  chartRef:
+    kind: OCIRepository
+    name: plugin-barman-cloud
+    namespace: flux-system
+  install:
+    timeout: 2m
+    remediation:
+      retries: 1
+  upgrade:
+    timeout: 2m
+    remediation:
+      retries: 1
+  values:
+    namespaceOverride: ${NS}
+    image:
+      registry: ghcr.io
+      repository: cloudnative-pg/plugin-barman-cloud
+      tag: v0.7.0@sha256:641877c4dc6b879542bf7c6997ac4ae5db57e7543fc6ccced78b5b20e144880d
+    sidecarImage:
+      registry: ghcr.io
+      repository: cloudnative-pg/plugin-barman-cloud-sidecar
+      tag: v0.7.0@sha256:6c0023cce6a21cabbf3019c0a53f66dab18617871e63c38afbb9bef87e4daf62

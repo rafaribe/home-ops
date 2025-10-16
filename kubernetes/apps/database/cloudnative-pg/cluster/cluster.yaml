@@ -3,11 +3,12 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: home-ops-storage
+  name: &name home-ops
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.2-26
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.6
   primaryUpdateStrategy: unsupervised
+  primaryUpdateMethod: switchover
   storage:
     size: 100Gi
     storageClass: ceph-block
@@ -26,40 +27,16 @@ spec:
       memory: 4Gi
   monitoring:
     enablePodMonitor: true
-  backup:
-    retentionPolicy: 30d
-    barmanObjectStore: &barmanObjectStore
-      data:
-        compression: bzip2
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      destinationPath: s3://cloudnative-pg/
-      endpointURL: http://truenas.rafaribe.com:9000
-      serverName: &currentCluster home-ops-storage-v2
-      s3Credentials:
-        accessKeyId:
-          name: cloudnative-pg-bucket
-          key: AWS_ACCESS_KEY_ID
-        secretAccessKey:
-          name: cloudnative-pg-bucket
-          key: AWS_SECRET_ACCESS_KEY
+  plugins:
+    - enabled: true
+      isWALArchiver: true
+      name: barman-cloud.cloudnative-pg.io
+      parameters: &barmanParameters
+        barmanObjectName: minio
+        serverName: home-ops-v2
   bootstrap:
     initdb:
       database: app
-      owner: app
+      owner: postgres
       secret:
         name: cloudnative-pg-secret
-  #     source: &previousCluster home-ops-storage-1
-  # externalClusters:
-  #   - name: *previousCluster
-  #     barmanObjectStore:
-  #       destinationPath: s3://cloudnative-pg/
-  #       endpointURL: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
-  #       s3Credentials:
-  #         accessKeyId:
-  #           name: cloudnative-pg-bucket
-  #           key: AWS_ACCESS_KEY_ID
-  #         secretAccessKey:
-  #           name: cloudnative-pg-bucket
-  #           key: AWS_SECRET_ACCESS_KEY
