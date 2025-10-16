@@ -5,7 +5,7 @@ metadata:
   name: &app pgadmin
   namespace: flux-system
 spec:
-  targetnamespace: database
+  targetNamespace: database
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
