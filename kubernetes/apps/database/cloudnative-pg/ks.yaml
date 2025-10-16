@@ -6,7 +6,7 @@ metadata:
   name: &app cloudnative-pg-operator
   namespace: flux-system
 spec:
-  targetnamespace: database
+  targetNamespace: database
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
