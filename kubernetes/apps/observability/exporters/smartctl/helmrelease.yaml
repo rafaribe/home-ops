@@ -20,7 +20,6 @@ spec:
         - /dev/sdb
         - /dev/sdc
         - /dev/nvme0n1
-
     serviceMonitor:
       enabled: true
       relabelings:
