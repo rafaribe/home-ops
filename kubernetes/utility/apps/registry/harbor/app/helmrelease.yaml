@@ -133,7 +133,7 @@ spec:
       revisionHistoryLimit: 3
       image:
         repository: ghcr.io/octohelm/harbor/harbor-exporter
-        tag: v2.13.0
+        tag: v2.14.0
     metrics:
       enabled: true
       core:
