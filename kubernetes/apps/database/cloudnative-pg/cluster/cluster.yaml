@@ -6,7 +6,7 @@ metadata:
   name: &name home-ops
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.6
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.0
   primaryUpdateStrategy: unsupervised
   primaryUpdateMethod: switchover
   storage:

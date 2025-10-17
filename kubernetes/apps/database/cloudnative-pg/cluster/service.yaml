@@ -5,7 +5,7 @@ metadata:
   name: postgres-lb
   annotations:
     external-dns.alpha.kubernetes.io/hostname: postgres.rafaribe.com
-    io.cilium/lb-ipam-ips: ${LB_POSTGRES}
+    io.cilium/lb-ipam-ips: 10.0.1.15
 spec:
   type: LoadBalancer
   ports:
@@ -14,5 +14,5 @@ spec:
       protocol: TCP
       targetPort: 5432
   selector:
-    cnpg.io/cluster: home-ops-storage
-    role: primary
+    cnpg.io/cluster: home-ops
+    cnpg.io/instanceRole: primary
