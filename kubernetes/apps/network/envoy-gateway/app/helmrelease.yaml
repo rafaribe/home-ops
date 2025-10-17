@@ -1,5 +1,5 @@
----
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -10,8 +10,6 @@ spec:
     name: envoy-gateway
   interval: 15m
   values:
-    global:
-      imageRegistry: mirror.gcr.io
     config:
       envoyGateway:
         provider:
@@ -19,3 +17,5 @@ spec:
           kubernetes:
             deploy:
               type: GatewayNamespace
+    global:
+      imageRegistry: mirror.gcr.io
