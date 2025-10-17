@@ -1,14 +1,13 @@
-# ---
-# # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumloadbalancerippool_v2.json
-# apiVersion: cilium.io/v2
-# kind: CiliumLoadBalancerIPPool
-# metadata:
-#   name: pool
-# spec:
-#   allowFirstLastIPs: "No"
-#   blocks:
-#     - cidr: 10.0.1.0/24
-#     - cidr: 10.0.2.0/24
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumloadbalancerippool_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: pool
+spec:
+  allowFirstLastIPs: "No"
+  blocks:
+    - cidr: 10.0.1.0/24
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgpadvertisement_v2.json
 apiVersion: cilium.io/v2
@@ -25,7 +24,10 @@ spec:
           - LoadBalancerIP
       selector:
         matchExpressions:
-          - { key: somekey, operator: NotIn, values: ["never-used-value"] }
+          - key: fakeSelector
+            operator: NotIn
+            values:
+              - will-match-and-announce-all-services
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgppeerconfig_v2.json
 apiVersion: cilium.io/v2
