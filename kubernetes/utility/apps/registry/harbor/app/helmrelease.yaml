@@ -73,7 +73,7 @@ spec:
     core:
       image:
         repository: ghcr.io/octohelm/harbor/harbor-core
-        tag: v2.13.0
+        tag: v2.14.0
       revisionHistoryLimit: 3
       podAnnotations:
         secret.reloader.stakater.com/reload: harbor, harbor-initdb-secret, harbor-pguser-secret
