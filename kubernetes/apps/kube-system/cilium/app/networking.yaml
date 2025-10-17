@@ -25,7 +25,7 @@ spec:
           - LoadBalancerIP
       selector:
         matchExpressions:
-          - {key: somekey, operator: NotIn, values: ["never-used-value"]}
+          - { key: somekey, operator: NotIn, values: ["never-used-value"] }
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgppeerconfig_v2.json
 apiVersion: cilium.io/v2
@@ -51,10 +51,10 @@ spec:
       kubernetes.io/os: linux
   bgpInstances:
     - name: cilium
-      localASN: 64514
+      localASN: 64513
       peers:
         - name: opnsense
-          peerASN: 64513
+          peerASN: 65555
           peerAddress: 10.0.0.1
           peerConfigRef:
             name: l3-bgp-peer-config
@@ -65,7 +65,7 @@ metadata:
   name: kube-api
   annotations:
     external-dns.alpha.kubernetes.io/hostname: k8s.rafaribe.com
-    lbipam.cilium.io/ips: 10.0.1.6
+    lbipam.cilium.io/ips: 10.0.1.20
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local

@@ -59,7 +59,7 @@ spec:
       app:
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Services
+          gethomepage.dev/group: Databases
           gethomepage.dev/name: *app
           gethomepage.dev/icon: si-postgresql
           gethomepage.dev/siteMonitor: http://pgadmin.database
