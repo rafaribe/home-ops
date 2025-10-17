@@ -22,7 +22,7 @@ spec:
               repository: ghcr.io/chartdb/chartdb
               tag: 1.16.0
             env:
-              TZ: "${TIMEZONE:=Etc/UTC}"
+              TZ: "Europe/Lisbon"
               # Optional: Uncomment and configure if you want AI features
               # OPENAI_API_KEY: "your-openai-api-key"
             probes:
@@ -50,11 +50,11 @@ spec:
           gethomepage.dev/name: ChartDB
           gethomepage.dev/icon: https://raw.githubusercontent.com/chartdb/chartdb/main/src/assets/logo-light.png
           gethomepage.dev/description: Database diagrams editor
-          gethomepage.dev/siteMonitor: http://chartdb.development:80
+          gethomepage.dev/siteMonitor: http://chartdb.database:80
         hostnames: ["chartdb.rafaribe.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

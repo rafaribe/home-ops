@@ -11,4 +11,6 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./cloudnative-pg/ks.yaml
+  - ./chartdb/ks.yaml
   - ./pgadmin/ks.yaml
+  
