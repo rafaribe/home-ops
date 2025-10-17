@@ -90,6 +90,13 @@ spec:
           pgadmin:
             app:
               - path: /var/lib/pgadmin
+      backups:
+        enabled: true
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/backups/postgres
+        globalMounts:
+          - path: /backups
       oauth:
         enabled: true
         type: secret
