@@ -75,6 +75,9 @@ spec:
     service:
       app:
         controller: syncthing
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.0.1.18
         primary: true
         ports:
           http:
