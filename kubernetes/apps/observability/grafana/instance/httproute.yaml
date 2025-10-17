@@ -6,7 +6,7 @@ metadata:
   name: grafana
 spec:
   hostnames:
-    - grafana.turbo.ac
+    - grafana.rafaribe.com
   parentRefs:
     - name: envoy-internal
       namespace: network
