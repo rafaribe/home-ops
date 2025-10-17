@@ -8,7 +8,7 @@ spec:
   allowFirstLastIPs: "No"
   blocks:
     - start: 10.0.1.12
-      stop: 10.0.1.19
+      stop: 10.0.1.30
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgpadvertisement_v2.json
 apiVersion: cilium.io/v2
