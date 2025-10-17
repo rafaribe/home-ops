@@ -10,7 +10,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: plugin-barman-cloud
-    namespace: flux-system
   install:
     timeout: 2m
     remediation:
