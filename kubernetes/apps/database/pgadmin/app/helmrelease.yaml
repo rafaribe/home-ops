@@ -87,7 +87,7 @@ spec:
         server: truenas.rafaribe.com
         path: /mnt/storage-0/backups/postgres
         globalMounts:
-          - path: /backups
+          - path: /pgadmin4/backups
       oauth:
         enabled: true
         type: secret
