@@ -96,7 +96,7 @@ spec:
       controller:
         image:
           repository: ghcr.io/octohelm/harbor/harbor-registryctl
-          tag: v2.13.0
+          tag: v2.14.0
       upload_purging:
         enabled: true
         # remove files in _upload directories which exist for a period of time, default is one week.
