@@ -5,6 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app chartdb
 spec:
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
