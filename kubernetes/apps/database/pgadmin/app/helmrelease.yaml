@@ -62,12 +62,12 @@ spec:
           gethomepage.dev/group: Services
           gethomepage.dev/name: *app
           gethomepage.dev/icon: si-postgresql
-          gethomepage.dev/siteMonitor: http://pgadmin.storage
+          gethomepage.dev/siteMonitor: http://pgadmin.database
           gethomepage.dev/description: "PostgreSQL administration"
         hostnames: ["pg.rafaribe.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
