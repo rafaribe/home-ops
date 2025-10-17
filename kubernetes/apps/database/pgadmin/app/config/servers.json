@@ -3,7 +3,7 @@
     "1": {
       "Name": "home-ops",
       "Group": "Servers",
-      "Host": "home-ops-storage-rw.database.svc.cluster.local",
+      "Host": "home-ops-rw.database.svc.cluster.local",
       "Port": 5432,
       "MaintenanceDB": "postgres",
       "Username": "postgres",
