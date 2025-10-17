@@ -14,7 +14,7 @@ spec:
       envoyDeployment:
         replicas: 2
         container:
-          image: mirror.gcr.io/envoyproxy/envoy:v1.35.4
+          image: mirror.gcr.io/envoyproxy/envoy:v1.36.0
           resources:
             requests:
               cpu: 100m
@@ -84,7 +84,7 @@ kind: Gateway
 metadata:
   name: envoy-internal
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname internal.turbo.ac
+    external-dns.alpha.kubernetes.io/target: &hostname internal.rafaribe.com
     gatus.home-operations.com/endpoint: |-
       group: internal
       guarded: true
