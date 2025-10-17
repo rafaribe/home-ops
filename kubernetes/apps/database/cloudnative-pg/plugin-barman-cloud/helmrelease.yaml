@@ -19,7 +19,7 @@ spec:
     remediation:
       retries: 1
   values:
-    namespaceOverride: ${NS}
+    namespaceOverride: database
     image:
       registry: ghcr.io
       repository: cloudnative-pg/plugin-barman-cloud
