@@ -80,7 +80,7 @@ spec:
     jobservice:
       image:
         repository: ghcr.io/octohelm/harbor/harbor-jobservice
-        tag: v2.13.0
+        tag: v2.14.0
       revisionHistoryLimit: 3
     registry:
       initContainers:
