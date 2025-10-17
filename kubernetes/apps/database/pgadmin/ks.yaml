@@ -26,6 +26,7 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
+      CLAIM: pgadmin-data
       GATUS_SUBDOMAIN: pg
   components:
     - ../../../../components/volsync

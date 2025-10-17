@@ -74,9 +74,9 @@ spec:
               - name: *app
                 port: *port
     persistence:
-      config:
+      data:
         enabled: true
-        existingClaim: pgadmin
+        existingClaim: pgadmin-data
         advancedMounts:
           pgadmin:
             app:
