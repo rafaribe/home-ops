@@ -10,68 +10,57 @@ spec:
     - start: 10.0.1.12
       stop: 10.0.1.30
 ---
-apiVersion: cilium.io/v2alpha1
-kind: CiliumL2AnnouncementPolicy
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgpadvertisement_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumBGPAdvertisement
 metadata:
-  name: l2-policy
+  name: l3-bgp-advertisement
+  labels:
+    advertise: bgp
 spec:
-  loadBalancerIPs: true
+  advertisements:
+    - advertisementType: Service
+      service:
+        addresses:
+          - LoadBalancerIP
+      selector:
+        matchExpressions:
+          - key: fakeSelector
+            operator: NotIn
+            values:
+              - will-match-and-announce-all-services
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgppeerconfig_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumBGPPeerConfig
+metadata:
+  name: l3-bgp-peer-config
+spec:
+  families:
+    - afi: ipv4
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: bgp
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgpclusterconfig_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumBGPClusterConfig
+metadata:
+  name: l3-bgp-cluster-config
+spec:
   nodeSelector:
     matchLabels:
       kubernetes.io/os: linux
-#### BGP L3 Advertisement Configuration ####
-# # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgpadvertisement_v2.json
-# apiVersion: cilium.io/v2
-# kind: CiliumBGPAdvertisement
-# metadata:
-#   name: l3-bgp-advertisement
-#   labels:
-#     advertise: bgp
-# spec:
-#   advertisements:
-#     - advertisementType: Service
-#       service:
-#         addresses:
-#           - LoadBalancerIP
-#       selector:
-#         matchExpressions:
-#           - key: fakeSelector
-#             operator: NotIn
-#             values:
-#               - will-match-and-announce-all-services
-# ---
-# # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgppeerconfig_v2.json
-# apiVersion: cilium.io/v2
-# kind: CiliumBGPPeerConfig
-# metadata:
-#   name: l3-bgp-peer-config
-# spec:
-#   families:
-#     - afi: ipv4
-#       safi: unicast
-#       advertisements:
-#         matchLabels:
-#           advertise: bgp
-# ---
-# # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgpclusterconfig_v2.json
-# apiVersion: cilium.io/v2
-# kind: CiliumBGPClusterConfig
-# metadata:
-#   name: l3-bgp-cluster-config
-# spec:
-#   nodeSelector:
-#     matchLabels:
-#       kubernetes.io/os: linux
-#   bgpInstances:
-#     - name: cilium
-#       localASN: 64513
-#       peers:
-#         - name: opnsense
-#           peerASN: 65555
-#           peerAddress: 10.0.0.1
-#           peerConfigRef:
-#             name: l3-bgp-peer-config
-#### BGP L3 Advertisement Configuration ####
+  bgpInstances:
+    - name: cilium
+      localASN: 64513
+      peers:
+        - name: opnsense
+          peerASN: 65555
+          peerAddress: 10.0.0.1
+          peerConfigRef:
+            name: l3-bgp-peer-config
 ---
 apiVersion: v1
 kind: Service
