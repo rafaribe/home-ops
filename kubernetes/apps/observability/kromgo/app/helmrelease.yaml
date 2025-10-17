@@ -84,8 +84,8 @@ spec:
         hostnames:
           - "{{ .Release.Name }}.rafaribe.com"
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
