@@ -22,7 +22,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-
   postBuild:
     substitute:
       GATEWAY_MANAGEMENT: 10.0.0.1
