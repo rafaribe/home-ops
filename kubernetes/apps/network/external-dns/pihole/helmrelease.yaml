@@ -8,10 +8,24 @@ spec:
   chartRef:
     kind: OCIRepository
     name: pihole-dns
+  driftDetection:
+    mode: enabled
+    ignore:
+      - paths: [/spec/replicas]
+  install:
+    disableSchemaValidation: true # Ref: https://github.com/kubernetes-sigs/external-dns/issues/5206
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    disableSchemaValidation: true # Ref: https://github.com/kubernetes-sigs/external-dns/issues/5206
+    remediation:
+      retries: 3
   interval: 1h
   values:
     fullnameOverride: *app
-    provider: pihole
+    provider: 
+      name: pihole
     env:
       - name: &name EXTERNAL_DNS_PIHOLE_PASSWORD
         valueFrom:
