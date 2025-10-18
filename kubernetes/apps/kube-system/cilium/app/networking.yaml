@@ -36,6 +36,7 @@ kind: CiliumBGPPeerConfig
 metadata:
   name: l3-bgp-peer-config
 spec:
+  ebgpMultihop: 1
   families:
     - afi: ipv4
       safi: unicast
