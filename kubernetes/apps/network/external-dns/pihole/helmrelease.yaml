@@ -18,8 +18,6 @@ spec:
           secretKeyRef:
             name: &secret external-dns-pihole
             key: *name
-      - name: EXTERNAL_DNS_PIHOLE_API_VERSION
-        value: "6"
       - name: EXTERNAL_DNS_PIHOLE_TLS_SKIP_VERIFY
         value: "true"
     podAnnotations:
@@ -27,6 +25,7 @@ spec:
     extraArgs:
       - --pihole-server=http://10.0.0.254
       - --gateway-name=internal
+      - --pihole-api-version=6  
     registry: noop
     policy: sync
     sources: ["gateway-httproute"]
