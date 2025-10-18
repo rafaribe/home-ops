@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: rook-ceph
 resources:
   - ./helmrelease.yaml
-  - ./route.yaml
+  #- ./route.yaml
   #- ./dashboards
   - ./externalsecret.yaml
   - ./cephobjectstoreuser.yaml
