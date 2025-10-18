@@ -49,7 +49,7 @@ spec:
           main:
             image:
               repository: ghcr.io/project-zot/zot
-              tag: v2.1.8@sha256:cd2aea942f428630bcb4190542be6abd35e14177aab84fc7ccad0dca8ecb363d
+              tag: v2.1.10@sha256:5d8fb04dd0592f7d7edf42d3cbe925478e75e1cb7b3d9d96f2a596e68f7c1a50
               pullPolicy: IfNotPresent
             args:
               - serve
