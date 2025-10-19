@@ -11,6 +11,8 @@ spec:
   interval: 1h
   values:
     autoDirectNodeRoutes: true
+    directRoutingSkipUnreachable: true
+    annotateK8sNode: true
     bandwidthManager:
       enabled: true
       bbr: true
