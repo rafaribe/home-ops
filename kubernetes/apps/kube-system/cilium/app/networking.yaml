@@ -12,67 +12,18 @@ spec:
     - start: 10.0.3.0/24
       stop: 10.0.3.254
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliuml2announcementpolicy_v2alpha1.json
 apiVersion: cilium.io/v2alpha1
-kind: CiliumBGPAdvertisement
+kind: CiliumL2AnnouncementPolicy
 metadata:
-  name: bgp-advertisements
-  labels:
-    advertise: bgp
+  name: l2-policy
 spec:
-  advertisements:
-    - advertisementType: PodCIDR
-    - advertisementType: Service
-      selector:
-        matchExpressions:
-          - key: somekey
-            operator: NotIn
-            values:
-              - never-used-value
-      service:
-        addresses:
-          - ClusterIP
-          - ExternalIP
-          - LoadBalancerIP
-    - advertisementType: "CiliumPodIPPool"
-      selector:
-        matchExpressions:
-          - key: somekey
-            operator: NotIn
-            values:
-              - never-used-value
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgppeerconfig_v2.json
-apiVersion: cilium.io/v2
-kind: CiliumBGPPeerConfig
-metadata:
-  name: l3-bgp-peer-config
-spec:
-  ebgpMultihop: 1
-  families:
-    - afi: ipv4
-      safi: unicast
-      advertisements:
-        matchLabels:
-          advertise: bgp
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgpclusterconfig_v2.json
-apiVersion: cilium.io/v2
-kind: CiliumBGPClusterConfig
-metadata:
-  name: l3-bgp-cluster-config
-spec:
+  loadBalancerIPs: true
+  # interfaces:
+  #   - ^eth[0-9]+
   nodeSelector:
     matchLabels:
       kubernetes.io/os: linux
-  bgpInstances:
-    - name: cilium
-      localASN: 64513
-      peers:
-        - name: opnsense
-          peerASN: 65555
-          peerAddress: 10.0.0.1
-          peerConfigRef:
-            name: l3-bgp-peer-config
 ---
 apiVersion: v1
 kind: Service
