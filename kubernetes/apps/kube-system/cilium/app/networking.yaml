@@ -12,35 +12,27 @@ spec:
     - start: 10.0.3.0/24
       stop: 10.0.3.254
 ---
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgpadvertisement_v2.json
-apiVersion: cilium.io/v2
+apiVersion: cilium.io/v2alpha1
 kind: CiliumBGPAdvertisement
 metadata:
-  name: l3-bgp-advertisement
+  name: bgp-advertisements
   labels:
     advertise: bgp
 spec:
   advertisements:
-    - advertisementType: Service
-      service:
-        addresses:
-          - ClusterIP
-          - ExternalIP
-          - LoadBalancerIP
-      selector:
-        matchExpressions:
-          - key: fakeSelector
-            operator: NotIn
-            values:
-              - will-match-and-announce-all-services      
     - advertisementType: PodCIDR
+    - advertisementType: Service
       selector:
         matchExpressions:
           - key: somekey
             operator: NotIn
             values:
               - never-used-value
+      service:
+        addresses:
+          - ClusterIP
+          - ExternalIP
+          - LoadBalancerIP
     - advertisementType: "CiliumPodIPPool"
       selector:
         matchExpressions:
