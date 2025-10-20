@@ -24,7 +24,6 @@ spec:
   advertisements:
     - advertisementType: Service
       service:
-      service:
         addresses:
           - ClusterIP
           - ExternalIP
