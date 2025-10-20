@@ -25,23 +25,13 @@ spec:
     - advertisementType: Service
       service:
         addresses:
-          - ClusterIP
-          - ExternalIP
           - LoadBalancerIP
       selector:
         matchExpressions:
           - key: fakeSelector
             operator: NotIn
             values:
-              - will-match-and-announce-all-services      
-    - advertisementType: PodCIDR
-    - advertisementType: "CiliumPodIPPool"
-      selector:
-        matchExpressions:
-          - key: somekey
-            operator: NotIn
-            values:
-              - never-used-value
+              - will-match-and-announce-all-services
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgppeerconfig_v2.json
 apiVersion: cilium.io/v2
