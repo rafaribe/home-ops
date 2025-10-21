@@ -61,7 +61,7 @@ spec:
       localASN: 64513
       peers:
         - name: opnsense
-          peerASN: 65555
+          peerASN: 64515
           peerAddress: 10.0.0.1
           peerConfigRef:
             name: l3-bgp-peer-config
