@@ -28,14 +28,16 @@ spec:
       automount:
         enabled: false
       hostRoot: /sys/fs/cgroup
-    cluster:
-      id: 1
-      name: main
-      exclusive: false
+    cni:
+      # Required for pairing with Multus CNI
+      exclusive: true
     dashboards:
       enabled: true
+      annotations:
+        grafana_folder: Infrastructure
     devices: eth+,en+
     enableIPv4BIGTCP: true
+    enableIPv6BIGTCP: true
     endpointRoutes:
       enabled: true
     envoy:
@@ -44,13 +46,19 @@ spec:
       enabled: false
     ipam:
       mode: kubernetes
+    ipv4:
+      enabled: true
+    ipv6:
+      enabled: true
+    enableIPv4BIGTCP: true
+    enableIPv6BIGTCP: true
     ipv4NativeRoutingCIDR: 10.42.0.0/16
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 7445
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     l2announcements:
-      enabled: false
+      enabled: true
     loadBalancer:
       algorithm: maglev
       mode: dsr
@@ -72,6 +80,8 @@ spec:
       serviceMonitor:
         enabled: true
         trustCRDsExist: true
+      annotations:
+        grafana_folder: Infrastructure
     rollOutCiliumPods: true
     routingMode: native
     securityContext:
