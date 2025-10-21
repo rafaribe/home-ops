@@ -12,6 +12,21 @@ spec:
     - start: 10.0.3.0/24
       stop: 10.0.3.254
 ---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cilium.io/ciliuml2announcementpolicy_v2alpha1.json
+apiVersion: cilium.io/v2alpha1
+kind: CiliumL2AnnouncementPolicy
+metadata:
+  name: l2-policy
+spec:
+  loadBalancerIPs: true
+  # NOTE: interfaces might need to be set if you have more than one active NIC on your hosts
+  # interfaces:
+  #   - ^eno[0-9]+
+  #   - ^enp[0-9]+
+  #   - ^eth[0-9]+
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/os: linux
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgpadvertisement_v2.json
 apiVersion: cilium.io/v2
@@ -80,4 +95,7 @@ spec:
     k8s-app: kube-apiserver
     tier: control-plane
   ports:
-    - port: 6443
+    - name: https
+      port: 6443
+      protocol: TCP
+      targetPort: 6443
