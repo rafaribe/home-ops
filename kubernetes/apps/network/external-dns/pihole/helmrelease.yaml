@@ -41,7 +41,7 @@ spec:
       - --gateway-name=internal
       - --pihole-api-version=6  
     registry: noop
-    policy: sync
+    policy: upsert-only
     sources: ["gateway-httproute"]
     triggerLoopOnEvent: true
     domainFilters: ["rafaribe.com"]
