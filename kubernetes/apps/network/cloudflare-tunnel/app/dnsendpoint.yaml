@@ -9,4 +9,4 @@ spec:
     - dnsName: external.rafaribe.com
       recordType: CNAME
       targets:
-        - ${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com
+        - 82d69b26-2b5e-42fe-87af-4bd714012d1c.cfargotunnel.com
