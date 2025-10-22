@@ -30,7 +30,7 @@ spec:
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
       - --zone-id-filter=8e078bd77e3643a24748a69840650169
-      - --gateway-name=external
+      - --gateway-name=envoy-external
     policy: sync
     triggerLoopOnEvent: true
     sources: ["crd", "gateway-httproute"]
