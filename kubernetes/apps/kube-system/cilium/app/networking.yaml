@@ -5,10 +5,11 @@ kind: CiliumLoadBalancerIPPool
 metadata:
   name: pool
 spec:
-  allowFirstLastIPs: "No"
+  allowFirstLastIPs: "Yes"
   blocks:
-    - start: 10.0.1.12
-      stop: 10.0.1.30
+    - start: "10.0.1.13"
+      stop: "10.0.1.99"
+
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cilium.io/ciliuml2announcementpolicy_v2alpha1.json
 apiVersion: cilium.io/v2alpha1
@@ -41,10 +42,7 @@ spec:
           - LoadBalancerIP
       selector:
         matchExpressions:
-          - key: fakeSelector
-            operator: NotIn
-            values:
-              - will-match-and-announce-all-services
+          - {key: somekey, operator: NotIn, values: ["never-used-value"]}
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgppeerconfig_v2.json
 apiVersion: cilium.io/v2
