@@ -11,4 +11,4 @@ spec:
     operation: copy
   ref:
     tag: 7.1.14
-  url: ghcr.io/netbox-community/netbox-chart/netbox
+  url:  oci://ghcr.io/netbox-community/netbox-chart/netbox
