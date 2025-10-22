@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    cnpg.io/cluster: home-ops-storage
+  name: home-ops-storage-rw-external
+  namespace: storage
+  annotations:
+    io.cilium/lb-ipam-ips: 10.0.1.24
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: postgres
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    cnpg.io/cluster: home-ops-storage
+    cnpg.io/instanceRole: primary
+  type: LoadBalancer

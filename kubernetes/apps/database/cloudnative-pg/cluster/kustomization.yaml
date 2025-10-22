@@ -7,6 +7,6 @@ resources:
   - ./objectstore.yaml
   - ./scheduledbackup.yaml
   - ./prometheusrule.yaml
-  #- ./service.yaml
+  - ./externalservice.yaml
   - ./externalsecret.yaml
   - ./gatus.yaml
