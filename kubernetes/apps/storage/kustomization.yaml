@@ -10,6 +10,7 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./minio/ks.yaml
   - ./openebs/ks.yaml
   - ./syncthing/ks.yaml
   - ./volsync/ks.yaml
