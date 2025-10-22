@@ -3,7 +3,7 @@ kind: Kustomization
 metadata:
   name: &app minio
 spec:
-  path: ./kubernetes/main/apps/storage/minio/app
+  path: ./kubernetes/apps/storage/minio/app
   prune: false
   sourceRef:
     kind: GitRepository
