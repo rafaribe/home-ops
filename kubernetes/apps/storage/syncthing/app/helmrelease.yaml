@@ -87,7 +87,7 @@ spec:
         controller: syncthing
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.0.1.14
+          lbipam.cilium.io/ips: 10.0.1.22
         externalTrafficPolicy: Local
         ports:
           listen:
