@@ -89,7 +89,7 @@ spec:
 
         hostnames: ["minio.rafaribe.com"]
         parentRefs:
-          - name: internal
+          - name: envoy-internal
             namespace: network
             sectionName: https
         rules:
