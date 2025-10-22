@@ -6,8 +6,8 @@ spec:
   configuration:
     data:
       compression: bzip2
-    destinationPath: s3://cloudnative-pg/
-    endpointURL: http://truenas.rafaribe.com:9000
+    destinationPath: s3://cloudnative-pg-v2/
+    endpointURL: https://minio.rafaribe.com
     s3Credentials:
       accessKeyId:
         name: cloudnative-pg-secret
