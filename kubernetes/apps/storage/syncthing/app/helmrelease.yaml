@@ -77,7 +77,7 @@ spec:
         controller: syncthing
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.0.1.18
+          lbipam.cilium.io/ips: 10.0.1.21
         primary: true
         ports:
           http:
