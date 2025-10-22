@@ -9,4 +9,3 @@ resources:
   - ./prometheusrule.yaml
   - ./externalservice.yaml
   - ./externalsecret.yaml
-  - ./gatus.yaml
