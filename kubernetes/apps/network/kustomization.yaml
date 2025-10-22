@@ -13,6 +13,6 @@ resources:
   - ./cloudflare-tunnel/ks.yaml
   - ./external-dns/ks.yaml
   - ./envoy-gateway/ks.yaml
-  # - ./netbox/ks.yaml
-  # - ./netboot/ks.yaml
-  # - ./tailscale/ks.yaml
+  - ./netbox/ks.yaml
+  - ./netboot/ks.yaml
+  - ./tailscale/ks.yaml
