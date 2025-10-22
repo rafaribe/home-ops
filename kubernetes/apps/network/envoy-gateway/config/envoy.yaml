@@ -150,6 +150,7 @@ spec:
     alpnProtocols:
       - h2
       - http/1.1
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.networking.k8s.io/httproute_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
