@@ -7,7 +7,7 @@ spec:
     data:
       compression: bzip2
     destinationPath: s3://cloudnative-pg/
-    endpointURL: https://minio.rafaribe.com
+    endpointURL: http://minio.storage.svc.cluster.local:9000
     s3Credentials:
       accessKeyId:
         name: cloudnative-pg-secret
