@@ -110,7 +110,7 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
+           # sectionName: https
         rules:
           - backendRefs:
               - identifier: app
@@ -120,7 +120,7 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
+            #sectionName: https
         rules:
           - backendRefs:
               - identifier: browser
