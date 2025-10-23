@@ -83,12 +83,5 @@ spec:
       image:
         registry: ghcr.io/democratic-csi/csi-grpc-proxy
         tag: v0.5.6
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                      - amd64
+    nodeSelector:
+      kubernetes.io/arch: amd64
