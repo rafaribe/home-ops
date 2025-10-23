@@ -3,15 +3,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: kopia
+  name: &app democratic-csi
 spec:
-  components:
-    - ../../../../components/nfs-scaler
   interval: 1h
-  path: ./kubernetes/apps/storage/kopia/app
+  path: ./kubernetes/apps/storage/democratic-csi/app
   postBuild:
     substitute:
-      APP: kopia
+      APP: democratic-csi
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,3 +17,6 @@ spec:
     namespace: flux-system
   targetNamespace: storage
   wait: false
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
