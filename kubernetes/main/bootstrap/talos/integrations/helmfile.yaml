@@ -30,14 +30,14 @@ releases:
   - name: cilium
     namespace: kube-system
     chart: cilium/cilium
-    version: 1.18.2
+    version: 1.18.3
     values: ["../../../apps/kube-system/cilium/app/values.yaml"]
     needs: ["observability/prometheus-operator-crds"]
 
   - name: coredns
     namespace: kube-system
     chart: coredns/coredns
-    version: 1.44.3
+    version: 1.45.0
     values: ["../../../apps/kube-system/coredns/app/helm-values.yaml"]
     needs: ["kube-system/cilium"]
 
