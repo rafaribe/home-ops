@@ -40,18 +40,18 @@ spec:
           - --leader-election=false
           - --node-deployment=true
     csiDriver:
-      name: local-hostpath.cluster.local
+      name: local
       attachRequired: false
       storageCapacity: true
       fsGroupPolicy: File
     storageClasses:
-      - name: local-hostpath
+      - name: local
         defaultClass: true
         reclaimPolicy: Delete
         volumeBindingMode: WaitForFirstConsumer
         allowVolumeExpansion: true
     volumeSnapshotClasses:
-      - name: csi-local-hostpath
+      - name: csi-local
         annotations:
           snapshot.storage.kubernetes.io/is-default-class: "true"
         deletionPolicy: Delete

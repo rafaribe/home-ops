@@ -452,6 +452,15 @@ controlPlane:
               type: bind
               source: /var/openebs/local
               options: ["bind", "rshared", "rw"]
+    # Mount openebs-hostpath in kubelet
+    - &csi-local-hostpath |-
+      machine:
+        kubelet:
+          extraMounts:
+            - destination: /var/csi-local-hostpath
+              type: bind
+              source: /var/csi-local-hostpath
+              options: ["bind", "rshared", "rw"]
     # Enable hostDNS:
     - &hostdns |-
       machine:
@@ -521,3 +530,4 @@ worker:
     - *udev
     - *openebs-hostpath
     - *hostdns
+    - *csi-local-hostpath
