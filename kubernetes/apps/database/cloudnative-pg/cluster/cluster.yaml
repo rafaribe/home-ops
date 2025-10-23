@@ -11,7 +11,7 @@ spec:
   primaryUpdateMethod: switchover
   storage:
     size: 100Gi
-    storageClass: ceph-block
+    storageClass: local
   superuserSecret:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
