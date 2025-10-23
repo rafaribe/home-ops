@@ -39,6 +39,15 @@ spec:
         extraArgs:
           - --leader-election=false
           - --node-deployment=true
+      affinity: &affinity
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64
     csiDriver:
       name: local
       attachRequired: false
@@ -79,9 +88,8 @@ spec:
           hostPath:
             path: *storagePath
             type: DirectoryOrCreate
+      affinity: *affinity
     csiProxy:
       image:
         registry: ghcr.io/democratic-csi/csi-grpc-proxy
         tag: v0.5.6
-    nodeSelector:
-      kubernetes.io/arch: amd64
