@@ -9,13 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: app-template
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
   values:
     controllers:
       mosquitto:
@@ -49,7 +42,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: mqtt.rafaribe.com
-          lbipam.cilium.io/ips: 10.0.1.119
+          lbipam.cilium.io/ips: 10.0.1.26
         ports:
           http:
             port: 1883

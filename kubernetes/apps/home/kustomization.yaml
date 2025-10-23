@@ -2,16 +2,17 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: storage
+components:
+  - ../../components/alerts
+  - ../../components/repos/app-template
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ./common/
   # Flux-Kustomizations
   - ./go2rtc/ks.yaml
   - ./home-assistant/ks.yaml
-  - ./immich/ks.yaml
+ # - ./immich/ks.yaml
   - ./mosquitto/ks.yaml
-  - ./node-red/ks.yaml
-  - ./scrypted/ks.yaml
   - ./sparkyfitness/ks.yaml
   - ./zigbee2mqtt/ks.yaml
