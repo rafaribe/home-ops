@@ -9,9 +9,35 @@ spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:18.0
   primaryUpdateStrategy: unsupervised
   primaryUpdateMethod: switchover
+  affinity:
+    # OpenEBS HostPath don't want it scheduled on tpi nodes due to lack of storage
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                  - amd64
   storage:
-    size: 100Gi
-    storageClass: local
+    size: 20Gi
+    storageClass: ceph-block
+    pvcTemplate:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+        storageClassName: ceph-block
+        # dataSourceRef:
+        #   kind: ReplicationDestination
+        #   apiGroup: volsync.backube
+        #   name: home-ops-dst
+        # dataSource:
+        #   kind: ReplicationDestination
+        #   apiGroup: volsync.backube
+        #   name: home-ops-dst
   superuserSecret:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
