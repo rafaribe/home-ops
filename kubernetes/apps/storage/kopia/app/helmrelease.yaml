@@ -22,7 +22,7 @@ spec:
             env:
               KOPIA_WEB_ENABLED: true
               KOPIA_WEB_PORT: &port 80
-              TZ: America/New_York
+              TZ: Europe/Lisbon
             envFrom:
               - secretRef:
                   name: kopia-secret
@@ -65,7 +65,7 @@ spec:
     route:
       app:
         hostnames:
-          - "{{ .Release.Name }}.rafaribe.com"
+          - "kopia.rafaribe.com"
         parentRefs:
           - name: envoy-internal
             namespace: network
