@@ -21,7 +21,9 @@ spec:
   wait: false
   dependsOn:
     - name: rook-ceph-cluster
+      namespace: rook-ceph
     - name: volsync
+      namespace: storage
   postBuild:
     substitute:
       APP: *appname
@@ -29,5 +31,4 @@ spec:
       APP_GID: "1000"
       VOLSYNC_CLAIM: mosquitto
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync
