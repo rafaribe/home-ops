@@ -63,9 +63,6 @@ spec:
       GATUS_SUBDOMAIN: photos
       VOLSYNC_CLAIM: immich-library
       VOLSYNC_CAPACITY: 1Ti
-      VOLSYNC_ACCESSMODES: ReadWriteMany
-      VOLSYNC_STORAGECLASS: ceph-filesystem
-      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
       VOLSYNC_CRON_EXPRESSION: 0 3 * * *
   components:
     - ../../../../components/volsync
