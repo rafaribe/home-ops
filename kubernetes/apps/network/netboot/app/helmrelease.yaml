@@ -29,7 +29,7 @@ spec:
         primary: false
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${LB_NETBOOT_XYZ}
+          io.cilium/lb-ipam-ips: 10.0.1.27
         controller: *app
         ports:
           web:
@@ -64,8 +64,8 @@ spec:
           gethomepage.dev/description: "Network boot system for various operating systems"
         hostnames: ["netboot.rafaribe.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
