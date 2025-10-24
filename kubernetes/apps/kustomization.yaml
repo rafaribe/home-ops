@@ -11,3 +11,4 @@ resources:
   - ./observability
   - ./network
   - ./database
+  - ./home
