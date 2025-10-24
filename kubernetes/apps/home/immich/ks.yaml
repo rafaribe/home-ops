@@ -68,5 +68,4 @@ spec:
       VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
       VOLSYNC_CRON_EXPRESSION: 0 3 * * *
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/external
+    - ../../../../components/volsync
