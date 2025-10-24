@@ -38,7 +38,7 @@ spec:
               repository: ghcr.io/coder/code-server
               tag: 4.104.2@sha256:6edc8e2d2849749c1a1a5eff8e76563b96db407e68899c143473a6004d0a6b5a
             env:
-              TZ: America/Edmonton
+              TZ: Europe/Lisbon
             args:
               [
                 "--auth",
@@ -69,7 +69,7 @@ spec:
       app:
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: 10.0.1.107
+          io.cilium/lb-ipam-ips: 10.0.1.28
         ports:
           http:
             port: &port 8123
@@ -91,8 +91,8 @@ spec:
           gethomepage.dev/siteMonitor: *url
         hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -110,8 +110,8 @@ spec:
           gethomepage.dev/siteMonitor: http://home-assistant-codeserver.home:8080
         hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-code.rafaribe.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -120,8 +120,8 @@ spec:
       local:
         hostnames: ["hass-local.rafaribe.com", "home-assistant-local.rafaribe.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -151,7 +151,7 @@ spec:
                 subPath: tmp
       deploy-key:
         type: secret
-        name: git-keys
+        name: home-assistant-git-ssh
         defaultMode: 256
         globalMounts:
           - path: /home/coder/.ssh/
