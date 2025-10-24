@@ -78,7 +78,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.144.1@sha256:21b6a0bf02426336f456e8dca43c55b6a79b8e01ee2c25f91bc817fc3a745e52
+              tag: v2.1.0@sha256:72a9b9de6c6abfa7a9c9cdc244ae4d2bd9fea2ae00997f194cbd10aca72ea210
             envFrom: *envFrom
             env:
               MPLCONFIGDIR: "/cache/matplotlib"
@@ -95,8 +95,8 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/valkey/valkey
-              tag: 8.1.3
+              repository: ghcr.io/valkey-io/valkey
+              tag: 9.0.0-trixie
 
     service:
       server:
