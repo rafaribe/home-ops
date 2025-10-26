@@ -48,7 +48,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.144.1@sha256:f34203f6c2db130c26480ff21c412c6f0c37c24ee5261f6a6e4fe1eecaa921c0
+              tag: v2.1.0@sha256:72a9b9de6c6abfa7a9c9cdc244ae4d2bd9fea2ae00997f194cbd10aca72ea210
             env:
               IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
 
@@ -78,7 +78,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v2.1.0@sha256:72a9b9de6c6abfa7a9c9cdc244ae4d2bd9fea2ae00997f194cbd10aca72ea210
+              tag: v2.1.0@sha256:24bfef29bc5c0923c64c98810931eda1449a4b237e6704a715605761bc107ae4
             envFrom: *envFrom
             env:
               MPLCONFIGDIR: "/cache/matplotlib"
@@ -95,7 +95,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/valkey-io/valkey
+              repository: docker.io/valkey/valkey
               tag: 9.0.0-trixie
 
     service:
@@ -143,8 +143,8 @@ spec:
       internal:
         hostnames: ["immich.rafaribe.com", "pics.rafaribe.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -160,15 +160,11 @@ spec:
               - path: /config/matplotlib
 
       library:
-        type: persistentVolumeClaim
-        existingClaim: immich-library
-        advancedMounts:
-          server:
-            main:
-              - path: *mediaLocation
-          machine-learning:
-            main:
-              - path: *mediaLocation
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/immich
+        globalMounts:
+          - path: /usr/src/app/upload
       cache:
         type: persistentVolumeClaim
         existingClaim: immich-ml-cache
