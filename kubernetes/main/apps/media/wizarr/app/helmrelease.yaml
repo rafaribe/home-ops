@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/wizarrrr/wizarr
-              tag: v2025.10.0
+              tag: v2025.10.7
             env:
               TZ: Europe/Lisbon
               PUID: &uid 1000
