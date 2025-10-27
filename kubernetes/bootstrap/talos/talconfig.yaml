@@ -44,10 +44,7 @@ nodes:
             gateway: 10.0.0.1
         vip: &vip
           ip: ${clusterEndpointIP}
-    extensionService:
-      - name: tailscale
-        environment:
-        - TS_AUTH_KEY=${tailscaleAuthKey}
+
   - hostname: srv-02.${clusterDNSSuffix}
     ipAddress: 10.0.1.2
     nameservers: *nameservers
@@ -165,7 +162,6 @@ nodes:
           officialExtensions:
             - siderolabs/binfmt-misc
             - siderolabs/util-linux-tools
-            - siderolabs/tailscale
             - siderolabs/nfsrahead
     patches:
       - &kubelet-gc |-
@@ -261,7 +257,6 @@ controlPlane:
           - siderolabs/binfmt-misc
           - siderolabs/util-linux-tools
           - siderolabs/nfsrahead
-          - siderolabs/tailscale
     nodeLabels:
       topology.kubernetes.io/region: *cluster
       topology.kubernetes.io/zone: m
@@ -506,7 +501,6 @@ worker:
           - siderolabs/binfmt-misc
           - siderolabs/util-linux-tools
           - siderolabs/iscsi-tools
-          - siderolabs/tailscale
   nodeLabels:
     topology.kubernetes.io/region: *cluster
     topology.kubernetes.io/zone: w
@@ -525,7 +519,3 @@ worker:
     - *openebs-hostpath
     - *hostdns
     - *csi-local-hostpath
-  extensionServices:
-    - name: tailscale
-      environment:
-      - TS_AUTH_KEY=${tailscaleAuthKey}
