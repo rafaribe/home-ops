@@ -129,7 +129,7 @@ spec:
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_IMMICH_API_KEY}}` }}"
           gethomepage.dev/widget.version: "2"
           gethomepage.dev/pod-selector: >-
-             gethomepage.dev/name in (immich-server)
+            gethomepage.dev/name in (immich-server)
 
         hostnames: ["photos.rafaribe.com"]
         parentRefs:
