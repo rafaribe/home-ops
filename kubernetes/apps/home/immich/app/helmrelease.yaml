@@ -54,7 +54,7 @@ spec:
 
             envFrom: &envFrom
               - configMapRef:
-                  name: immich-config
+                  name: immich
               - secretRef:
                   name: immich
               - secretRef:
