@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: immich-ml-cache
 spec:
-  storageClassName: ceph-block
+  storageClassName: ceph-filesystem
   resources:
     requests:
       storage: 20Gi
