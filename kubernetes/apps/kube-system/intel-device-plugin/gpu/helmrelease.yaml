@@ -5,16 +5,10 @@ kind: HelmRelease
 metadata:
   name: intel-device-plugins-gpu
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: intel-device-plugins-gpu
-      version: 0.34.0
-      interval: 30m
-      sourceRef:
-        kind: HelmRepository
-        name: intel
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: intel-device-plugins-gpu
   values:
     name: intel-gpu-plugin
     sharedDevNum: 3
