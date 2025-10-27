@@ -1,3 +1,19 @@
-clusterName: main
-clusterDNSSuffix: home.arpa
-clusterEndpointIP: 10.0.1.20
+clusterName: ENC[AES256_GCM,data:Rm9LXA==,iv:exOrHHADI8pDAnXRxDQ/6UiO2e9wCj1s5nizm28ldSo=,tag:i5eXrjkzz/5RPLCBRE9+mA==,type:str]
+clusterDNSSuffix: ENC[AES256_GCM,data:qDyyJy77jgzZ,iv:C4D1mCSAW2IjFgRY5Tr5M46aac9iSvV7FjADM9vi1XA=,tag:dULHaEdCfRR1H6yxwOOlwg==,type:str]
+clusterEndpointIP: ENC[AES256_GCM,data:Dx2w+jd8rLLs,iv:3NNdmblmlEdiiEqLsqv+6i9EXA8ikf1x69Cn8Kv0w1k=,tag:WC7goxbl0oB7AQzVkXTPHw==,type:str]
+tailscaleAuthKey: ENC[AES256_GCM,data:7chFtecV/s+dvs1/67qcJU/GLNeVBKxKvKHFwJBh/rOVvBrZhwnYtzGHF6KU2ArLekXM1iAO3FdcHCh+CtA=,iv:+kvibJANw+yRZd58B60P0Obf4GerjF4BG4iAI1nDbVI=,tag:O+18zwxNxfaE0vBhLqQ3Sw==,type:str]
+sops:
+    age:
+        - recipient: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBXWlhaUGJEaGdLeW5qZUNV
+            V1ZjSytxcUtZcTBCVlFHVnR1ck12VThDbFFVCi9IZS83M0J4RGhZRmJCTzhlWmlN
+            Zm5kSUQrdW82MmdUZW9ONnp0UE45ZjQKLS0tIEdZZ0ZYTTlLYTBVR1RTek1PYktB
+            QzdXa2s4YWpkK2xaWGlnUmNPVFgveXcK/lwa2ip3ALXsvJ+e/s0U6SHIBjR5Pz2Y
+            bIg8JiN3CFwwvLCiSxl1gwPuPjL57huhg1jFFdWk8EZZ3gkPPgftVw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-10-26T22:45:15Z"
+    mac: ENC[AES256_GCM,data:UKkO1V0cFqyaaYjuJjvCNUN/Q/z4TPtBh7+AhOjtfiMee7Vfy2AVog4GNSymgOjiQwMHcCaDx42sb2V/7502Q2Fr+wTveRjYvhwN6+AadrtcQh2go3BvBrGsYzfOgtb6TdRWQKVUnx/VKuY7lhraRo1UntmZ/0pfPQor6ix4THk=,iv:dzvxY0QL1UR1qVxgvMbsNoeryuqGXZVEHEjtfh0bMZg=,tag:jph/bS4UNtw2F6UYld/tRg==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.11.0

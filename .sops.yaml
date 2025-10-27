@@ -3,6 +3,9 @@ creation_rules:
   - path_regex: kubernetes/bootstrap/talos/talsecret.sops.yaml
     age: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
 
+  - path_regex: kubernetes/bootstrap/talos/talenv.sops.yaml
+    age: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
+    
   - path_regex: kubernetes/talsecret.sops.yaml
     age: age13c3lp878r5pt8lagcmewv6djmqac576gussyhwgv2h3a0nw9k5dq4p8erj
 
