@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.84.1"
+      version = "0.86.0"
     }
     tls = {
       source  = "hashicorp/tls"
