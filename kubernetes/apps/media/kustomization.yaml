@@ -9,7 +9,6 @@ resources:
   - ./namespace.yaml
   - ./audiobookshelf/ks.yaml
   - ./calibre-web/ks.yaml
-  - ./common/ks.yaml
   - ./jellyseerr/ks.yaml
   - ./kavita/ks.yaml
   - ./komga/ks.yaml

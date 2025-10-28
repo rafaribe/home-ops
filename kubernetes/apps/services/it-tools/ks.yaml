@@ -5,7 +5,7 @@ metadata:
   name: &app it-tools
   namespace: flux-system
 spec:
-  path: "./kubernetes/apps/services/it-tools/app/"
+  path: "./kubernetes/apps/services/it-tools/app"
   prune: true
   sourceRef:
     kind: GitRepository

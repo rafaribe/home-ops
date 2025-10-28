@@ -3,18 +3,19 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &appname alertmanager
+  name: &appname fstrim
   namespace: flux-system
 spec:
-  targetNamespace: observability
+  targetNamespace: system-controllers
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  interval: 10m
-  path: "./kubernetes/apps/observability/alertmanager/app"
-  prune: true
+  path: "./kubernetes/apps/system-controllers/fstrim/app"
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: true
+  interval: 30m
+  timeout: 5m
+  prune: true
+  wait: false

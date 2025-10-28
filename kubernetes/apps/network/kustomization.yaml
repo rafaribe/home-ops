@@ -1,18 +1,15 @@
 ---
-# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: network
 components:
-  - ../../components/namespace
-replacements:
-  - path: ../../components/replacements/ks.yaml
+  - ../../components/alerts
+  - ../../components/repos/app-template
 resources:
-  # Flux-Kustomizations
+  - ./namespace.yaml
   - ./certificates/ks.yaml
   - ./cloudflare-tunnel/ks.yaml
-  - ./external-dns/ks.yaml
   - ./envoy-gateway/ks.yaml
-#  - ./netbox/ks.yaml # Can be commented out
+  - ./external-dns/ks.yaml
   - ./netboot/ks.yaml
- # - ./tailscale/ks.yaml
+  - ./netbox/ks.yaml

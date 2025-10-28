@@ -2,13 +2,22 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - ./actions-runner-system
+  - ./ai
   - ./cert-manager
- # - ./system
-  - ./kube-system
-  - ./external-secrets
-  - ./rook-ceph
-  - ./storage
-  - ./observability
-  - ./network
   - ./database
+  - ./development
+  - ./downloads
+  - ./external-secrets
+  - ./flux-system
   - ./home
+  - ./kube-system
+  - ./media
+  - ./network
+  - ./observability
+  - ./rook-ceph
+  - ./security
+  - ./services
+  - ./social
+  - ./storage
+  - ./system-controllers

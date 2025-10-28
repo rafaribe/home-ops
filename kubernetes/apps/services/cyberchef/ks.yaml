@@ -7,7 +7,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/apps/services/cyberchef/app/"
+  path: "./kubernetes/apps/services/cyberchef/app"
   prune: true
   sourceRef:
     kind: GitRepository
