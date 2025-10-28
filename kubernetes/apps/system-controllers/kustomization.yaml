@@ -8,7 +8,7 @@ components:
 resources:
   - ./namespace.yaml
   - ./fstrim/ks.yaml
-  - ./homelab-assistant/ks.yaml
+#  - ./homelab-assistant/ks.yaml
   - ./nvidia/ks.yaml
   - ./reflector/ks.yaml
   - ./reloader/ks.yaml
