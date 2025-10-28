@@ -142,8 +142,8 @@ spec:
         globalMounts:
           - path: /config/log
       scripts:
-        type: configMap
-        name: bazarr-scripts
+        type: secret
+        name: *app
         defaultMode: 0775
         globalMounts:
           - readOnly: true
