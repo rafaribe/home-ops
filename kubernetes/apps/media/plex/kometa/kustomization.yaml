@@ -5,9 +5,5 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-configMapGenerator:
-  - name: kometa-configmap
-    files:
-      - ./configs/config.yml
 generatorOptions:
   disableNameSuffixHash: true

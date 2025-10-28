@@ -6,10 +6,6 @@ namespace: monitoring
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-configMapGenerator:
-  - name: alertmanager-configmap
-    files:
-      - ./config/alertmanager.yml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

@@ -5,10 +5,6 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-configMapGenerator:
-  - name: radicale-configmap
-    files:
-      - resources/config.cfg
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
