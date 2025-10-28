@@ -139,7 +139,7 @@ spec:
                 subPath: pgpass
       servers:
         type: configMap
-        name: pgadmin-servers
+        name: pgadmin
         globalMounts:
           - path: /pgadmin4/servers.json
             subPath: servers.json
