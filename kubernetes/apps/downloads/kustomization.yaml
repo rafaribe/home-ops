@@ -9,8 +9,6 @@ resources:
   - ./namespace.yaml
   - ./autobrr/ks.yaml
   - ./bazarr/ks.yaml
-  - ./cross-seed/ks.yaml
-  - ./dashbrr/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./kapowarr/ks.yaml
   - ./lidarr/ks.yaml

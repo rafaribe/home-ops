@@ -63,8 +63,8 @@ spec:
         runAsGroup: 1000
     persistence:
       config:
-        type: configMap
-        name: omegabrr-configmap
+        type: secret
+        name: *app
         globalMounts:
           - path: /config/config.yaml
             subPath: config.yaml
