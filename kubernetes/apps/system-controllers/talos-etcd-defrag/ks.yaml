@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/system/talos-etcd-defrag/app
+  path: ./kubernetes/apps/system-controllers/talos-etcd-defrag/app
   prune: true
   sourceRef:
     kind: GitRepository

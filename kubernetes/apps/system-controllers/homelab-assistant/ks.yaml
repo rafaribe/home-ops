@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/system/homelab-assistant/crds
+  path: ./kubernetes/apps/system-controllers/homelab-assistant/crds
   prune: true
   sourceRef:
     kind: GitRepository
@@ -33,7 +33,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/system/homelab-assistant/app
+  path: ./kubernetes/apps/system-controllers/homelab-assistant/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -57,7 +57,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/system/homelab-assistant/cronjob
+  path: ./kubernetes/apps/system-controllers/homelab-assistant/cronjob
   prune: true
   sourceRef:
     kind: GitRepository
@@ -81,7 +81,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/system/homelab-assistant/volsync-monitor
+  path: ./kubernetes/apps/system-controllers/homelab-assistant/volsync-monitor
   prune: true
   sourceRef:
     kind: GitRepository
