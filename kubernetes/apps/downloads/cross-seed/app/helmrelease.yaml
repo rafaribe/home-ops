@@ -6,15 +6,9 @@ metadata:
   name: &app cross-seed
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      interval: 30m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   dependsOn:
     - name: qbittorrent
       namespace: downloads
