@@ -73,6 +73,44 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+    configMaps:
+      servers:
+        data:
+          servers.json: |
+            {
+              "Servers": {
+                "1": {
+                  "Name": "home-ops",
+                  "Group": "Servers",
+                  "Host": "home-ops-rw.database.svc.cluster.local",
+                  "Port": 5432,
+                  "MaintenanceDB": "postgres",
+                  "Username": "postgres",
+                  "PassFile": "/pgadmin4/pgpass",
+                  "SSLMode": "prefer",
+                  "SSLCompression": 0,
+                  "Timeout": 10,
+                  "UseSSHTunnel": 0,
+                  "TunnelPort": "22",
+                  "TunnelAuthentication": 0
+                },
+                "2": {
+                  "Name": "immich",
+                  "Group": "Servers",
+                  "Host": "immich-rw.database.svc.cluster.local",
+                  "Port": 5432,
+                  "MaintenanceDB": "postgres",
+                  "Username": "postgres",
+                  "PassFile": "/pgadmin4/pgpass",
+                  "SSLMode": "prefer",
+                  "SSLCompression": 0,
+                  "Timeout": 10,
+                  "UseSSHTunnel": 0,
+                  "TunnelPort": "22",
+                  "TunnelAuthentication": 0
+                }
+              }
+            }
     persistence:
       data:
         enabled: true
@@ -99,10 +137,9 @@ spec:
                 subPath: config_local.py
               - path: /pgadmin4/pgpass
                 subPath: pgpass
-      server-json:
-        enabled: true
+      servers:
         type: configMap
-        name: servers-json
+        name: pgadmin-servers
         globalMounts:
           - path: /pgadmin4/servers.json
             subPath: servers.json
