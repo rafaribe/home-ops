@@ -85,10 +85,26 @@ spec:
           - backendRefs:
               - identifier: app
                 port: *port
+    configMaps:
+      config:
+        data:
+          go2rtc.yaml: |
+            api:
+              listen: :80
+            rtsp:
+              listen: :554
+            webrtc:
+              listen: :8555
+              candidates:
+                - 10.0.1.116:8555
+                - stun:8555
+              ice_servers:
+                - urls:
+                    - stun:stun.cloudflare.com:3478
     persistence:
       config-file:
         type: configMap
-        name: go2rtc-configmap
+        name: go2rtc
         globalMounts:
           - path: /config/go2rtc.yaml
             subPath: go2rtc.yaml
