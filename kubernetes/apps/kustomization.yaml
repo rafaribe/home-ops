@@ -6,7 +6,6 @@ resources:
   - ./ai
   - ./cert-manager
   - ./database
-  - ./development
   - ./downloads
   - ./external-secrets
   - ./flux-system
