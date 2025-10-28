@@ -10,6 +10,5 @@ resources:
   - ./fstrim/ks.yaml
 #  - ./homelab-assistant/ks.yaml
   - ./nvidia/ks.yaml
-  - ./reflector/ks.yaml
   - ./reloader/ks.yaml
   - ./talos-etcd-defrag/ks.yaml
