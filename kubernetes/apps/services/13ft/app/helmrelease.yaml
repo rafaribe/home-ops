@@ -51,8 +51,8 @@ spec:
           gethomepage.dev/description: Block ads, paywalls, and other nonsense
         hostnames: ["13ft.rafaribe.com", "thirteen-ft.rafaribe.com"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

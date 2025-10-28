@@ -140,8 +140,8 @@ spec:
             app.kubernetes.io/name in (karakeep)
         hostnames: ["karakeep.rafaribe.com", "hoarder.rafaribe.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

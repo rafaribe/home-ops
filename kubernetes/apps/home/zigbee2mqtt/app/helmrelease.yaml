@@ -130,8 +130,8 @@ spec:
         hostnames:
         - zigbee2mqtt.rafaribe.com
         parentRefs:
-        - name: internal
-          namespace: kube-system
+        - name: envoy-internal
+          namespace: network
           sectionName: https
         rules:
         - matches:

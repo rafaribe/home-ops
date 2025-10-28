@@ -105,8 +105,8 @@ spec:
 
         hostnames: ["plex.rafaribe.com"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -127,8 +127,8 @@ spec:
         annotations:
         hostnames: ["plex-local.rafaribe.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

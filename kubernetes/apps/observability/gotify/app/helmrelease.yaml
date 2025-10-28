@@ -63,8 +63,8 @@ spec:
     route:
       main:
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         hostnames:
           - notifications.rafaribe.com
@@ -78,8 +78,8 @@ spec:
                   value: /
       internal:
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         hostnames:
           - gotify.rafaribe.com

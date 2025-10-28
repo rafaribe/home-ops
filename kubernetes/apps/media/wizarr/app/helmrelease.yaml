@@ -59,8 +59,8 @@ spec:
           gethomepage.dev/icon: wizarr.png
           gethomepage.dev/description: Plex Invite Management
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

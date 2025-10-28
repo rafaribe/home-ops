@@ -92,8 +92,8 @@ spec:
           gethomepage.dev/description: Knowledge Management Platform
         hostnames: ["affine.rafaribe.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

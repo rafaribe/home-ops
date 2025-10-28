@@ -73,8 +73,8 @@ spec:
           gethomepage.dev/siteMonitor: http://omni-tools.services:80
         hostnames: ["omni-tools.rafaribe.com"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

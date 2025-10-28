@@ -75,8 +75,8 @@ spec:
           gethomepage.dev/description: Snippet manager
         hostnames: ["bytestash.rafaribe.com"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

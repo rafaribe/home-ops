@@ -101,8 +101,8 @@ spec:
           external-dns.alpha.kubernetes.io/target: &target internal.rafaribe.com
         hostnames: ["radarr.rafaribe.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

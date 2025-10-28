@@ -106,8 +106,8 @@ spec:
       app:
         hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - matches:

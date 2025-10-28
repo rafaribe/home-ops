@@ -87,8 +87,8 @@ spec:
           nginx.ingress.kubernetes.io/custom-http-errors: "400,404,500,502,503,504"
         hostnames: ["requests-legacy.rafaribe.com"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

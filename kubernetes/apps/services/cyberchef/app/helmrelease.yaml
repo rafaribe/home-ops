@@ -73,8 +73,8 @@ spec:
           gethomepage.dev/siteMonitor: http://cyberchef.services:8000
         hostnames: ["cyberchef.rafaribe.com"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

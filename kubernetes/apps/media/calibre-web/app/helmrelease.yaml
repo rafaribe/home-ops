@@ -102,8 +102,8 @@ spec:
           gethomepage.dev/widget.password: "{{`{{HOMEPAGE_VAR_CALIBRE_PASSWORD}}`}}"
         hostnames: ["calibre.rafaribe.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

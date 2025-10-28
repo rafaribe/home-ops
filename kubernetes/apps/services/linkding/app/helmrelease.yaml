@@ -88,8 +88,8 @@ spec:
           gethomepage.dev/siteMonitor: http://linkding.services:9090
         hostnames: ["links.rafaribe.com"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
