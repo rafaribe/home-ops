@@ -12,4 +12,3 @@ resources:
   - ./envoy-gateway/ks.yaml
   - ./external-dns/ks.yaml
   - ./netboot/ks.yaml
-  - ./netbox/ks.yaml
