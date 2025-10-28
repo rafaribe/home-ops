@@ -7,7 +7,6 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./namespace.yaml
-  - ./common/kustomization.yaml
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
   - ./paperless-ai/ks.yaml
