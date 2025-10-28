@@ -1,25 +1,24 @@
 ---
-# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: services
+components:
+  - ../../components/alerts
+  - ../../components/repos/app-template
 resources:
-  # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ./common # OCI Repository
-  # Flux-Kustomizations
   - ./13ft/ks.yaml
   - ./actual/ks.yaml
   - ./affine/ks.yaml
   - ./atuin/ks.yaml
   - ./bytestash/ks.yaml
   - ./cyberchef/ks.yaml
-  - ./convertx/ks.yaml
   - ./docmost/ks.yaml
   - ./homebox/ks.yaml
-  - ./karakeep/ks.yaml
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
-  #- ./kitchenowl/ks.yaml
+  - ./karakeep/ks.yaml
+  - ./kitchenowl/ks.yaml
   - ./kubernetes-schemas/ks.yaml
   - ./linkding/ks.yaml
   - ./littlelink/ks.yaml
@@ -28,19 +27,10 @@ resources:
   - ./miniflux/ks.yaml
   - ./n8n/ks.yaml
   - ./omni-tools/ks.yaml
-  - ./openlist/ks.yaml
   - ./paperless/ks.yaml
-  - ./pdfding/ks.yaml
-  - ./pinchflat/ks.yaml
- # - ./postiz/ks.yaml
- # - ./radicale/ks.yaml
+  - ./radicale/ks.yaml
   - ./searxng/ks.yaml
-  - ./silverbullet/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./stirling-pdf/ks.yaml
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
-  - ./trilium/ks.yaml
-  - ./tududi/ks.yaml
-  - ./vikunja/ks.yaml
-  #- ./windmill/ks.yaml

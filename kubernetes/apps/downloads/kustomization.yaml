@@ -1,20 +1,21 @@
 ---
-# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: downloads
+components:
+  - ../../components/alerts
+  - ../../components/repos/app-template
 resources:
-  # Pre Flux-Kustomizations
   - ./namespace.yaml
-  # Flux-Kustomizations
-  - ./common/ks.yaml
-  # - ./cross-seed/ks.yaml
   - ./autobrr/ks.yaml
   - ./bazarr/ks.yaml
+  - ./common/ks.yaml
+  - ./cross-seed/ks.yaml
   - ./dashbrr/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./kapowarr/ks.yaml
   - ./lidarr/ks.yaml
- # - ./media-manager/ks.yaml
+  - ./media-manager/ks.yaml
   - ./metube/ks.yaml
   - ./omegabrr/ks.yaml
   - ./prowlarr/ks.yaml
@@ -24,4 +25,3 @@ resources:
   - ./recyclarr/ks.yaml
   - ./sabnzbd/ks.yaml
   - ./sonarr/ks.yaml
-# Investigate https://github.com/joryirving/home-ops/tree/main/kubernetes/main/apps/downloads

@@ -15,4 +15,3 @@ resources:
   - ./immich/ks.yaml
   - ./mosquitto/ks.yaml
  #- ./sparkyfitness/ks.yaml
-  - ./zigbee2mqtt/ks.yaml

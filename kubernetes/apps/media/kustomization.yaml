@@ -1,21 +1,22 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: media
+components:
+  - ../../components/alerts
+  - ../../components/repos/app-template
 resources:
-  # Pre Flux-Kustomizations
   - ./namespace.yaml
-  # Flux-Kustomizations
   - ./audiobookshelf/ks.yaml
- # - ./booklore/ks.yaml
-  - ./common/ks.yaml
   - ./calibre-web/ks.yaml
-  #  - ./jellyfin/ks.yaml
+  - ./common/ks.yaml
   - ./jellyseerr/ks.yaml
   - ./kavita/ks.yaml
   - ./komga/ks.yaml
-  - ./media-browser/ks.yaml
   - ./maintainerr/ks.yaml
+  - ./media-browser/ks.yaml
   - ./navidrome/ks.yaml
+  - ./pinchflat/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
   - ./wizarr/ks.yaml
