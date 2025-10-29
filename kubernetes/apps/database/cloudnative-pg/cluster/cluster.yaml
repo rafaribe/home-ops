@@ -12,9 +12,6 @@ spec:
   storage:
     size: 20Gi
     storageClass: ceph-block
-  walStorage:
-    storageClass: ceph-block
-    size: 20Gi
   superuserSecret:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
