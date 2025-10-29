@@ -8,7 +8,7 @@ spec:
     data:
       compression: bzip2
     destinationPath: s3://cnpg-home-ops/
-    endpointURL: http://s3.storage.svc.cluster.local:3900
+    endpointURL: http://garage.storage.svc.cluster.local:3900
     s3Credentials:
       accessKeyId:
         name: cloudnative-pg-secret
