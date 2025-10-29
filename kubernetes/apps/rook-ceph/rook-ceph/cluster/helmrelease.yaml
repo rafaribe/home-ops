@@ -96,8 +96,6 @@ spec:
             enabled:
           - name: "pg_autoscaler"
             enabled: true
-          - name: "diskprediction_local"
-            enabled: true
           - name: prometheus
             enabled: true
           - name: nfs

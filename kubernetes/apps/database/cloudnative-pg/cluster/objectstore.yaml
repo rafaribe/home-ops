@@ -2,6 +2,7 @@ apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
   name: garage
+  namespace: database
 spec:
   configuration:
     data:
