@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cloudnative-pg-operator
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -29,7 +28,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cloudnative-pg-plugin-barman-cloud
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -54,7 +52,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cloudnative-pg-cluster
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -78,7 +75,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cloudnative-pg-cluster-immich
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -102,7 +98,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cloudnative-pg-pgdump
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
