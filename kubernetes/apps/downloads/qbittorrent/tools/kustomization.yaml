@@ -5,6 +5,3 @@ kind: Kustomization
 namespace: downloads
 resources:
   - ./helmrelease.yaml
-  - ./secret.yaml
-generatorOptions:
-  disableNameSuffixHash: true
