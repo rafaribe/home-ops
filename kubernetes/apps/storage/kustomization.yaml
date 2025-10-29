@@ -16,4 +16,4 @@ resources:
   - ./volsync/ks.yaml
   - ./kopia/ks.yaml
   - ./democratic-csi/ks.yaml
-  
+  - ./garage/ks.yaml
