@@ -99,7 +99,7 @@ spec:
       s3:
         annotations:
           hajimari.io/enable: "false"
-        hostnames: ["s3.rafaribe.com"]
+        hostnames: ["s3-old.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
             namespace: network
