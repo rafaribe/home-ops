@@ -12,3 +12,4 @@ resources:
   - ./network
   - ./database
   - ./home
+  - ./downloads
