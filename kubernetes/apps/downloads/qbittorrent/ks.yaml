@@ -2,7 +2,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app qbittorrent
-  namespace: flux-system
 spec:
   path: ./kubernetes/apps/downloads/qbittorrent/app
   prune: true
@@ -27,14 +26,13 @@ spec:
       VOLSYNC_STORAGECLASS: ceph-filesystem
       VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync
+
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app qbittorrent-private
-  namespace: flux-system
 spec:
   path: ./kubernetes/apps/downloads/qbittorrent/private
   prune: true
@@ -57,14 +55,13 @@ spec:
       VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_ACCESSMODES: ReadWriteOnce
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync
+
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: downloads-qbittorrent-tools
-  namespace: flux-system
 spec:
   path: ./kubernetes/apps/downloads/qbittorrent/tools
   prune: true

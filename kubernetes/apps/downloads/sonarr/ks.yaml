@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app sonarr
-  namespace: flux-system
 spec:
   path: ./kubernetes/apps/downloads/sonarr/app
   prune: true
@@ -24,5 +23,4 @@ spec:
     substitute:
       APP: *app
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync

@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &appname bazarr
-  namespace: flux-system
 spec:
   targetNamespace: downloads
   commonMetadata:
@@ -21,22 +20,24 @@ spec:
   wait: false
   dependsOn:
     - name: rook-ceph-cluster
+      namespace: rook-ceph
     - name: volsync
+      namespace: storage
     - name: external-secrets-stores
+      namespace: external-secrets
   postBuild:
     substitute:
       APP: *appname
       VOLSYNC_CLAIM: bazarr
   components:
-    - ../../../../../shared/components/gatus/guarded
-    - ../../../../../shared/components/volsync
+    - ../../../../components/volsync
+
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app whisper
-  namespace: flux-system
 spec:
   targetNamespace: downloads
   commonMetadata:

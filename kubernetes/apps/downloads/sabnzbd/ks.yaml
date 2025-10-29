@@ -2,7 +2,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app sabnzbd
-  namespace: flux-system
 spec:
   path: ./kubernetes/apps/downloads/sabnzbd/app
   prune: true
@@ -22,5 +21,4 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync
