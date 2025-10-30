@@ -63,6 +63,8 @@ spec:
         enabled: true
         labels: {}
         annotations: {}
+        spec:
+          roles: ["os:admin"]
 
     rbac:
       bindings:
