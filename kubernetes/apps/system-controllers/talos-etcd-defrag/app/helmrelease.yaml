@@ -58,13 +58,6 @@ spec:
                   - ALL
         serviceAccount:
           identifier: *app
-    serviceAccount:
-      talos-etcd-defrag:
-        enabled: true
-        labels: {}
-        annotations: {}
-        spec:
-          roles: ["os:admin"]
 
     rbac:
       bindings:
