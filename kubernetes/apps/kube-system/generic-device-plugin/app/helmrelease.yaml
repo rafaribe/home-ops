@@ -47,7 +47,7 @@ spec:
     persistence:
       config:
         type: configMap
-        name: generic-device-plugin-configmap
+        name: generic-device-plugin
         globalMounts:
           - path: /config/config.yaml
             subPath: config.yaml
@@ -68,3 +68,14 @@ spec:
       var-lib-kubelet-device-plugins:
         type: hostPath
         hostPath: /var/lib/kubelet/device-plugins
+
+    configMaps:
+      servers:
+        data:
+          config.yaml: |
+            devices:
+            - name: tun
+              groups:
+                - count: 1000
+                  paths:
+                    - path: /dev/net/tun
