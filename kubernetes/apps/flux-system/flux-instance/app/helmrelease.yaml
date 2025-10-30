@@ -32,7 +32,7 @@ spec:
       sync:
         kind: GitRepository
         url: ssh://git@github.com/rafaribe/home-ops
-        ref: refs/heads/feat/autumn-2025-cleanup
+        ref: refs/heads/main
         path: kubernetes/flux/cluster
         pullSecret: "github-deploy-key"
         interval: 1h
