@@ -14,3 +14,4 @@ resources:
   - ./home
   - ./downloads
   - ./security
+  - ./actions-runner-system
