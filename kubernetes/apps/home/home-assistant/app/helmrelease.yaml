@@ -97,7 +97,7 @@ spec:
               - path: /data
                 subPath: code-server
       hass-cache:
-        existingClaim: hass-cache
+        existingClaim: home-assistant-cache
         advancedMounts:
           home-assistant:
             app:
