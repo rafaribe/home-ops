@@ -9,7 +9,7 @@ spec:
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.6-0.5.3
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 50Gi
+    size: 100Gi
     storageClass: ceph-block
   superuserSecret:
     name: cloudnative-pg-secret
