@@ -14,4 +14,5 @@ resources:
   - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
   - ./mosquitto/ks.yaml
+  - ./zigbee2mqtt/ks.yaml 
  #- ./sparkyfitness/ks.yaml
