@@ -1,0 +1,76 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app sparkyfitness-server
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+
+  maxHistory: 3
+
+  install:
+    remediation:
+      retries: 3
+
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+
+  uninstall:
+    keepHistory: false
+
+  values:
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.6.0@sha256:86a1992d46273c58fd4ad95b626081dfaabfe16bd56944675169e406d1a660dd
+
+            envFrom:
+              - secretRef:
+                  name: sparkyfitness-initdb
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/codewithcj/sparkyfitness-server
+              tag: v0.15.7.3@sha256:9db835140262cd8380779fcdc190c79237176c888c2f8bde3c3a660ef29d151f
+
+            env:
+              SPARKY_FITNESS_LOG_LEVEL: debug
+              SPARKY_FITNESS_DB_HOST: home-ops-rw.database.svc.cluster.local
+              SPARKY_FITNESS_DB_PORT: 5432
+              SPARKY_FITNESS_FRONTEND_URL: fitness.rafaribe.com
+              SPARKY_FITNESS_DISABLE_SIGNUP: false
+              #SPARKY_FITNESS_ADMIN_EMAIL: ${SPARKY_FITNESS_ADMIN_EMAIL}  #User with this email can access the admin panel
+              #GARMIN_MICROSERVICE_URL: http://sparkyfitness-garmin:8000 # Add Garmin microservice URL
+
+            envFrom:
+              - secretRef:
+                  name: sparkyfitness
+
+            resources:
+              requests:
+                cpu: 15m
+                memory: 128M
+              limits:
+                memory: 128M
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: &port 3010

@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: rafaribe-com
+spec:
+  secretName: rafaribe-com-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: rafaribe.com
+  dnsNames: ["rafaribe.com", "*.rafaribe.com"]

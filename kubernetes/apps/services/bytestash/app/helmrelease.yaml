@@ -1,0 +1,89 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app bytestash
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.3.0
+      sourceRef:
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      bytestash:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/jordan-dalby/bytestash
+              tag: 1.5.8@sha256:f57d694a727bfbe1daf72acd3d98620b2ff9b1e4f4aafbacc5cda89c31da3512
+            env:
+              TZ: "${TIMEZONE:=Etc/UTC}"
+              # See https://github.com/jordan-dalby/ByteStash/wiki/FAQ#environment-variables
+              TOKEN_EXPIRY: 24h
+              ALLOW_NEW_ACCOUNTS: "true"
+              DEBUG: "true"
+              DISABLE_ACCOUNTS: "false"
+              DISABLE_INTERNAL_ACCOUNTS: "false"
+            envFrom:
+              - secretRef:
+                  name: *app
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 25m
+                memory: 105M
+              limits:
+                cpu: 50m
+                memory: 250Mi
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 5000
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: Bytestash
+          gethomepage.dev/icon: https://raw.githubusercontent.com/jordan-dalby/ByteStash/refs/heads/main/client/public/logo512.png
+          gethomepage.dev/description: Snippet manager
+        hostnames: ["bytestash.rafaribe.com"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /data/snippets

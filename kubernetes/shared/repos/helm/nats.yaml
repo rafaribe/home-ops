@@ -1,9 +1,0 @@
----
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: nats
-spec:
-  interval: 2h
-  url: https://nats-io.github.io/k8s/helm/charts/

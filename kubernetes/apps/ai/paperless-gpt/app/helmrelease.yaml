@@ -1,0 +1,100 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app paperless-gpt
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  values:
+    controllers:
+      paperless-gpt:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/icereed/paperless-gpt
+              tag: v0.23.0@sha256:90766d15d541162129d0fa47dad5ffb33a02a0c77cbc4cee9007b24b656ba6ce
+            env:
+              TZ: ${TIMEZONE}
+              PAPERLESS_BASE_URL: http://paperless.services.svc.cluster.local:8000
+              PAPERLESS_PUBLIC_URL: https://paperless.rafaribe.com
+              LLM_PROVIDER: ollama
+              LLM_MODEL: cnmoro/mistral_7b_portuguese:q2_K
+              LLM_LANGUAGE: Portuguese
+              OCR_PROVIDER: llm
+              VISION_LLM_PROVIDER: ollama
+              VISION_LLM_MODEL: minicpm-v:8b
+              OCR_LIMIT_PAGES: 5
+              OCR_PROCESS_MODE: image
+              PDF_SKIP_EXISTING_OCR: false
+              PDF_OCR_TAGGING: false
+              PDF_UPLOAD: true
+              PDF_COPY_METADATA: true
+              AUTO_GENERATE_TAGS: false
+              AUTO_TAG: ai-auto
+              AUTO_OCR_TAG: ai-ocr
+              MANUAL_TAG: ai
+            envFrom:
+              - secretRef:
+                  name: *app
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        ports:
+          http:
+            port: &port 8080
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Home
+          gethomepage.dev/name: Paperless GPT
+          gethomepage.dev/icon: paperless.png
+          gethomepage.dev/description: AI Setup for Paperless
+          gethomepage.dev/siteMonitor: http://paperless-gpt.ai:8080
+        hostnames: ["paperless-gpt.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      data:
+        existingClaim: *app
+        advancedMounts:
+          paperless-gpt:
+            app:
+              - path: /app/db
+                subPath: db
+              - path: /app/prompts
+                subPath: prompts
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          paperless-gpt:
+            app:
+              - path: /tmp
+                subPath: tmp

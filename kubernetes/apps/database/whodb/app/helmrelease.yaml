@@ -1,0 +1,74 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app whodb
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.3.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      whodb:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          whodb:
+            image:
+              repository: docker.io/clidey/whodb
+              tag: 0.61.0@sha256:ee5324a4bf95a6d8cfe62cc949c5f39a7f8b66f905b05681ce7a367298fe329b
+            envFrom:
+              - secretRef:
+                  name: whodb
+            resources:
+              requests:
+                cpu: 30m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+    service:
+      whodb:
+        controller: whodb
+        ports:
+          http:
+            port: 8080
+    route:
+      main:
+        annotations:
+
+        hostnames: ["whodb.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: whodb
+                port: 8080

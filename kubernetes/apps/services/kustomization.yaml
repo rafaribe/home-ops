@@ -1,0 +1,36 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: services
+components:
+  - ../../components/alerts
+  - ../../components/repos/app-template
+resources:
+  - ./namespace.yaml
+  - ./13ft/ks.yaml
+  - ./actual/ks.yaml
+  - ./affine/ks.yaml
+  - ./atuin/ks.yaml
+  - ./bytestash/ks.yaml
+  - ./cyberchef/ks.yaml
+  - ./docmost/ks.yaml
+  - ./homebox/ks.yaml
+  - ./homepage/ks.yaml
+  - ./it-tools/ks.yaml
+  - ./karakeep/ks.yaml
+  - ./kitchenowl/ks.yaml
+  - ./kubernetes-schemas/ks.yaml
+  - ./linkding/ks.yaml
+  - ./littlelink/ks.yaml
+  - ./lubelog/ks.yaml
+  - ./mealie/ks.yaml
+  - ./miniflux/ks.yaml
+  - ./n8n/ks.yaml
+  - ./omni-tools/ks.yaml
+  - ./paperless/ks.yaml
+  - ./radicale/ks.yaml
+  - ./searxng/ks.yaml
+  - ./smtp-relay/ks.yaml
+  - ./stirling-pdf/ks.yaml
+  - ./tandoor/ks.yaml
+  - ./thelounge/ks.yaml

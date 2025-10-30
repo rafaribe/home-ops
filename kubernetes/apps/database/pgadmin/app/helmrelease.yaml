@@ -1,0 +1,145 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app pgadmin
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  values:
+    controllers:
+      pgadmin:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: dpage/pgadmin4
+              tag: "9.8"
+            env:
+              PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
+              PGADMIN_DISABLE_POSTFIX: "true"
+              PGADMIN_LISTEN_PORT: &port 80
+              PGADMIN_DEFAULT_EMAIL:
+                valueFrom:
+                  secretKeyRef:
+                    name: pgadmin-secret
+                    key: PGADMIN_DEFAULT_EMAIL
+              PGADMIN_DEFAULT_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: pgadmin-secret
+                    key: PGADMIN_DEFAULT_PASSWORD
+            probes:
+              liveness: &probes
+                enabled: false
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 50m
+                memory: 100Mi
+              limits:
+                memory: 500Mi
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 5050
+        runAsGroup: 5050
+        fsGroup: 5050
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Databases
+          gethomepage.dev/name: *app
+          gethomepage.dev/icon: si-postgresql
+          gethomepage.dev/siteMonitor: http://pgadmin.database
+          gethomepage.dev/description: "PostgreSQL administration"
+        hostnames: ["pg.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    configMaps:
+      servers:
+        data:
+          servers.json: |
+            {
+              "Servers": {
+                "1": {
+                  "Name": "home-ops",
+                  "Group": "Servers",
+                  "Host": "home-ops-rw.database.svc.cluster.local",
+                  "Port": 5432,
+                  "MaintenanceDB": "postgres",
+                  "Username": "postgres",
+                  "PassFile": "/pgadmin4/pgpass",
+                  "SSLMode": "prefer",
+                  "SSLCompression": 0,
+                  "Timeout": 10,
+                  "UseSSHTunnel": 0,
+                  "TunnelPort": "22",
+                  "TunnelAuthentication": 0
+                },
+                "2": {
+                  "Name": "immich",
+                  "Group": "Servers",
+                  "Host": "immich-rw.database.svc.cluster.local",
+                  "Port": 5432,
+                  "MaintenanceDB": "postgres",
+                  "Username": "postgres",
+                  "PassFile": "/pgadmin4/pgpass",
+                  "SSLMode": "prefer",
+                  "SSLCompression": 0,
+                  "Timeout": 10,
+                  "UseSSHTunnel": 0,
+                  "TunnelPort": "22",
+                  "TunnelAuthentication": 0
+                }
+              }
+            }
+    persistence:
+      data:
+        enabled: true
+        existingClaim: pgadmin-data
+        advancedMounts:
+          pgadmin:
+            app:
+              - path: /var/lib/pgadmin
+      backups:
+        enabled: true
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/backups/postgres
+        globalMounts:
+          - path: /pgadmin4/backups
+      oauth:
+        enabled: true
+        type: secret
+        name: pgadmin-secret-auth
+        advancedMounts:
+          pgadmin:
+            app:
+              - path: /pgadmin4/config_local.py
+                subPath: config_local.py
+              - path: /pgadmin4/pgpass
+                subPath: pgpass
+      servers:
+        type: configMap
+        name: pgadmin
+        globalMounts:
+          - path: /pgadmin4/servers.json
+            subPath: servers.json

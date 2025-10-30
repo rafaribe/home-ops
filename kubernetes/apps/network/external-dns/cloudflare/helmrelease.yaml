@@ -1,0 +1,53 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app cloudflare-dns
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: cloudflare-dns
+  interval: 1h
+  values:
+    fullnameOverride: *app
+    provider:
+      name: cloudflare
+    env:
+      - name: &email CF_API_EMAIL
+        valueFrom:
+          secretKeyRef:
+            name: &secret external-dns-cloudflare
+            key: *email
+      - name: &key CF_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: *secret
+            key: *key
+    extraArgs:
+      - --cloudflare-dns-records-per-page=1000
+      - --cloudflare-proxied
+      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+      - --crd-source-kind=DNSEndpoint
+      - --zone-id-filter=8e078bd77e3643a24748a69840650169
+      - --gateway-name=envoy-external
+    policy: sync
+    triggerLoopOnEvent: true
+    sources: ["crd", "gateway-httproute"]
+    txtOwnerId: main
+    txtPrefix: main.
+    domainFilters: ["rafaribe.com"]
+    serviceMonitor:
+      enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *secret
+    resources:
+      requests:
+        cpu: 25m
+        memory: 50Mi
+      limits:
+        cpu: 50m
+        memory: 100Mi
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"

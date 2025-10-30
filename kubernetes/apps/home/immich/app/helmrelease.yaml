@@ -1,0 +1,202 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      server:
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          enableServiceLinks: false
+          labels:
+            gethomepage.dev/name: immich-server
+        initContainers:
+          01-init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.6.0
+            envFrom: &dbEnvFrom
+              - secretRef:
+                  name: immich-db
+          02-init-extensions:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.6.0
+              pullPolicy: IfNotPresent
+            envFrom: *dbEnvFrom
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v2.1.0@sha256:72a9b9de6c6abfa7a9c9cdc244ae4d2bd9fea2ae00997f194cbd10aca72ea210
+            env:
+              IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
+
+            envFrom: &envFrom
+              - configMapRef:
+                  name: immich
+              - secretRef:
+                  name: immich
+              - secretRef:
+                  name: immich-db
+
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 4096Mi
+
+      machine-learning:
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          enableServiceLinks: false
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-machine-learning
+              tag: v2.1.0@sha256:24bfef29bc5c0923c64c98810931eda1449a4b237e6704a715605761bc107ae4
+            envFrom: *envFrom
+            env:
+              MPLCONFIGDIR: "/cache/matplotlib"
+              IMMICH_MEDIA_LOCATION: *mediaLocation
+            resources:
+              requests:
+                cpu: 100m
+                memory: 274M
+              limits:
+                memory: 3949M
+
+      valkey:
+        containers:
+          app:
+            image:
+              repository: docker.io/valkey/valkey
+              tag: 9.0.0-trixie
+
+    service:
+      server:
+        controller: server
+        ports:
+          http:
+            port: &port 2283
+      machine-learning:
+        controller: machine-learning
+        ports:
+          http:
+            port: 3003
+      valkey:
+        controller: valkey
+        ports:
+          http:
+            port: 6379
+
+    route:
+      app:
+        annotations:
+          #Homepage
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: Immich
+          gethomepage.dev/description: "Photo library and management"
+          gethomepage.dev/icon: immich
+          gethomepage.dev/widget.type: immich
+          gethomepage.dev/widget.url: "http://immich-server.home:2283"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_IMMICH_API_KEY}}` }}"
+          gethomepage.dev/widget.version: "2"
+          gethomepage.dev/pod-selector: >-
+            gethomepage.dev/name in (immich-server)
+
+        hostnames: ["photos.rafaribe.com"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: &backend immich-server
+                port: *port
+      internal:
+        hostnames: ["immich.rafaribe.com", "pics.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *backend
+                port: *port
+    configMaps:
+      config:
+        data:
+          # URLS
+          IMMICH_SERVER_URL: http://immich-server.home.svc.cluster.local:2283
+          IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.home.svc.cluster.local:3003
+          PUBLIC_IMMICH_SERVER_URL: https://immich.rafaribe.com
+          # SETTINGS
+          DISABLE_REVERSE_GEOCODING: "true"
+          ENABLE_MAPBOX: "false"
+          LOG_LEVEL: log
+          NODE_ENV: production
+          UPLOAD_LOCATION: /usr/src/app/upload
+          # REDIS
+          REDIS_HOSTNAME: "immich-valkey.home"
+          REDIS_PORT: "6379"
+
+    persistence:
+      matplotlib:
+        type: emptyDir
+        advancedMounts:
+          server:
+            main:
+              - path: /config/matplotlib
+
+      library:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/immich
+        globalMounts:
+          - path: /usr/src/app/upload
+      cache:
+        type: persistentVolumeClaim
+        existingClaim: immich-ml-cache
+        advancedMounts:
+          machine-learning:
+            main:
+              - path: /cache
+                subPath: cache
+              - path: /.cache
+                subPath: dotCache
+
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          server:
+            main:
+              - path: /usr/src/app/.reverse-geocoding-dump
+                subPath: geocoding
+              - path: /usr/src/app/.transformers_cache
+                subPath: transformers

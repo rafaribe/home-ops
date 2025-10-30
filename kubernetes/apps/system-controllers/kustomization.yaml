@@ -1,0 +1,14 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: system-controllers
+components:
+  - ../../components/alerts
+  - ../../components/repos/app-template
+resources:
+  - ./namespace.yaml
+  - ./fstrim/ks.yaml
+#  - ./homelab-assistant/ks.yaml
+  - ./nvidia/ks.yaml
+  - ./reloader/ks.yaml
+  - ./talos-etcd-defrag/ks.yaml

@@ -1,6 +1,0 @@
----
-providerRegex: |
-  ^.*$
-
-bypassDnsResolution: true
-replicas: 1

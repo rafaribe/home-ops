@@ -1,0 +1,163 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: karakeep
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+
+  values:
+    controllers:
+      karakeep:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/karakeep-app/karakeep
+              #tag: 0.22.0@sha256:e2156f3de4a1eafc53afb6e682f20857be4449d7e9d24240afe6d9ccd280ed3b
+              tag: 0.27.1
+            env:
+              # Meillisearch
+              DATA_DIR: /data
+              MEILI_ADDR: http://localhost:7700
+              BROWSER_WEB_URL: http://localhost:9222
+              MEILI_MASTER_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: karakeep-secret
+                    key: meilisearch_master_key
+              # NextAuth
+              NEXTAUTH_URL: https://karakeep.rafaribe.com
+              NEXTAUTH_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: karakeep-secret
+                    key: encryption_key
+              # Crawler
+              CRAWLER_DOWNLOAD_BANNER_IMAGE: true
+              CRAWLER_ENABLE_ADBLOCKER: true
+              CRAWLER_STORE_SCREENSHOT: true
+              # OAuth
+              DISABLE_PASSWORD_AUTH: false
+              DISABLE_NEW_RELEASE_CHECK: true
+              # Ai
+              INFERENCE_IMAGE_MODEL: "llava"
+              INFERENCE_TEXT_MODEL: "llama3.2:3b"
+              INFERENCE_JOB_TIMEOUT_SEC: 600 # 10 Minutes
+              OLLAMA_BASE_URL: "http://10.0.0.70:11434" # Use Ollama DNS Router to determine the faster Ollama to use.
+            envFrom: &envFrom
+              - secretRef:
+                  name: karakeep-secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+          chrome:
+            image:
+              repository: gcr.io/zenika-hub/alpine-chrome
+              tag: 124
+            command:
+              - chromium-browser
+            args:
+              - --headless
+              - --no-sandbox
+              - --disable-gpu
+              - --disable-dev-shm-usage
+              - --remote-debugging-address=0.0.0.0
+              - --remote-debugging-port=9222
+              - --hide-scrollbars
+            securityContext:
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+          meilisearch:
+            image:
+              repository: docker.io/getmeili/meilisearch
+              tag: v1.22.2
+            env:
+              MEILI_NO_ANALYTICS: true
+              MEILI_MASTER_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: karakeep-secret
+                    key: meilisearch_master_key
+            envFrom: *envFrom
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: &app karakeep
+        ports:
+          http:
+            port: &port 3000
+      chrome:
+        controller: *app
+        ports:
+          http:
+            port: 9222
+      meilisearch:
+        controller: *app
+        ports:
+          http:
+            port: 7700
+
+    route:
+      app:
+        annotations:
+          hajimari.io/icon: mdi:archive-outline
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Karakeep
+          gethomepage.dev/description: The Bookmark Everything app
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: https://media.invisioncic.com/u329766/monthly_2024_05/karakeep.png.cb75b7347d47989bd0c3e65b9e613700.png
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (karakeep)
+        hostnames: ["karakeep.rafaribe.com", "hoarder.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: karakeep-app
+                port: *port
+
+    persistence:
+      config:
+        existingClaim: hoarder # Use the same claim as Hoarder, since Karakeep is Hoarder
+        advancedMounts:
+          karakeep:
+            app:
+              - path: /data
+                subPath: karakeep
+              - path: /meili_data
+                subPath: meilisearch
+            meilisearch:
+              - path: /meili_data
+                subPath: meilisearch

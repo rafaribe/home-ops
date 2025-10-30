@@ -1,0 +1,51 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app sparkyfitness-frontend
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  values:
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/codewithcj/sparkyfitness-frontend
+              tag: v0.15.7.3@sha256:c78e3ec294aa5c1983bd418c898e966c7bf45ba5017214ff88538073819a32b8
+
+            env:
+              SPARKY_FITNESS_LOG_LEVEL: debug
+              SPARKY_FITNESS_SERVER_HOST: sparkyfitness-server.home
+              SPARKY_FITNESS_SERVER_PORT: 3010
+
+            resources:
+              requests:
+                cpu: 15m
+                memory: 64M
+              limits:
+                memory: 64M
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: &httpPort 80
+
+    route:
+      app:
+        hostnames:
+          - fitness.rafaribe.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https

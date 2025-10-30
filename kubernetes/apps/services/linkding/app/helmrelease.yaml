@@ -1,0 +1,97 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app linkding
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.3.0
+      sourceRef:
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      linkding:
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.6@sha256:86a1992d46273c58fd4ad95b626081dfaabfe16bd56944675169e406d1a660dd
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
+        containers:
+          app:
+            image:
+              repository: ghcr.io/sissbruecker/linkding
+              tag: 1.43.0@sha256:b2cbcc02915d176fcd7aeff39c2905d0d95fb31c559aa5bcd3d32164488f25af
+            envFrom: *envFrom
+            env:
+              OIDC_VERIFY_SSL: "True"
+              OIDC_USE_NONCE: "False"
+
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 9090
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 9090
+    route:
+      app:
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "link"
+          hajimari.io/appName: "Linkding"
+          hajimari.io/group: "Home"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Linkding
+          gethomepage.dev/description: Bookmark manager that is designed be to be minimal and fast
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: linkding.png
+          gethomepage.dev/siteMonitor: http://linkding.services:9090
+        hostnames: ["links.rafaribe.com"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port

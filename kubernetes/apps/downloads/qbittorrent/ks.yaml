@@ -1,0 +1,58 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app qbittorrent
+spec:
+  path: ./kubernetes/apps/downloads/qbittorrent/app
+  prune: true
+  targetNamespace: downloads
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: qb
+      VOLSYNC_CLAIM: qbittorrent
+      VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
+  components:
+    - ../../../../components/volsync
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app qbittorrent-private
+spec:
+  path: ./kubernetes/apps/downloads/qbittorrent/private
+  prune: true
+  targetNamespace: downloads
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: qbp
+      VOLSYNC_CLAIM: qbittorrent-private
+      VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_ACCESSMODES: ReadWriteOnce
+  components:
+    - ../../../../components/volsync

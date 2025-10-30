@@ -1,0 +1,298 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app sabnzbd
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  values:
+    controllers:
+      sabnzbd:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/sabnzbd
+              tag: 4.5.3@sha256:ecb57bd6257fbfbd9aee70d8ef3df8814b7270ae793fd1f44219ae73cacd519a
+            env:
+              TZ: "Europe/Lisbon"
+              SABNZBD__PORT: &port 80
+              SABNZBD__HOST_WHITELIST_ENTRIES: >-
+                sabnzbd,
+                sabnzbd.downloads,
+                sabnzbd.downloads.svc,
+                sabnzbd.downloads.svc.cluster,
+                sabnzbd.downloads.svc.cluster.local,
+                sab.rafaribe.com
+              #  CROSS_SEED_ENABLED: false
+              #  CROSS_SEED_HOST: cross-seed.downloads.svc.cluster.local
+              #CROSS_SEED_PORT: 80
+              # CROSS_SEED_SLEEP_INTERVAL: 30
+              PUSHOVER_ENABLED: true
+            envFrom:
+              - secretRef:
+                  name: *app
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api?mode=version
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                memory: 100Mi
+              limits:
+                memory: 8Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000]
+        seccompProfile: { type: RuntimeDefault }
+      affinity:
+        # Turing Pi eMMC isn't nearly enough for a sabnzbd hostpath
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values: ["qbittorrent"]
+                topologyKey: kubernetes.io/hostname
+    service:
+      app:
+        controller: sabnzbd
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: SABnzbd
+          gethomepage.dev/icon: sabnzbd.png
+          gethomepage.dev/description: NZB Download Client
+          gethomepage.dev/widget.type: sabnzbd
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SABNZBD_TOKEN}}` }}"
+          gethomepage.dev/widget.url: http://sabnzbd.downloads:80
+          external-dns.alpha.kubernetes.io/target: &target internal.rafaribe.com
+        hostnames: ["sab.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      config:
+        existingClaim: sabnzbd
+        advancedMounts:
+          sabnzbd:
+            app:
+              - path: /config
+      media:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/media
+        globalMounts:
+          - path: /media
+      
+      temp:
+        type: emptyDir
+        advancedMounts:
+          sabnzbd:
+            app:
+              - path: /tmp
+      ephemeral:
+        type: custom
+        volumeSpec:
+          ephemeral:
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                storageClassName: "openebs-hostpath"
+                resources:
+                  requests:
+                    storage: 100Gi
+        advancedMounts:
+          sabnzbd:
+            app:
+              - path: /incomplete
+                subPath: incomplete
+      scripts:
+        type: configMap
+        name: sabnzbd
+        defaultMode: 0775
+        advancedMounts:
+          sabnzbd:
+            app:
+              - path: /config/scripts
+    configMaps:
+      scripts:
+        data:
+          post-process.sh: |
+            #!/usr/bin/env bash
+            # shellcheck disable=SC2154
+
+            set -euo pipefail
+
+            # User-defined variables
+            CROSS_SEED_ENABLED="${CROSS_SEED_ENABLED:-false}"
+            CROSS_SEED_HOST="${CROSS_SEED_HOST:-required}"
+            CROSS_SEED_PORT="${CROSS_SEED_PORT:-required}"
+            CROSS_SEED_API_KEY="${CROSS_SEED_API_KEY:-required}"
+            CROSS_SEED_SLEEP_INTERVAL="${CROSS_SEED_SLEEP_INTERVAL:-30}"
+            PUSHOVER_ENABLED="${PUSHOVER_ENABLED:-false}"
+            PUSHOVER_USER_KEY="${PUSHOVER_USER_KEY:-required}"
+            PUSHOVER_TOKEN="${PUSHOVER_TOKEN:-required}"
+
+            # Function to set release variables from SABnzbd
+            set_sab_vars() {
+                RELEASE_NAME="${SAB_FILENAME:-}"
+                RELEASE_DIR="${SAB_COMPLETE_DIR:-}"
+                RELEASE_CAT="${SAB_CAT:-}"
+                RELEASE_SIZE="${SAB_BYTES:-}"
+                RELEASE_STATUS="${SAB_PP_STATUS:-}"
+                RELEASE_INDEXER="${SAB_URL:-}"
+                RELEASE_TYPE="NZB"
+            }
+
+            # Function to set release variables from qBittorrent
+            set_qb_vars() {
+                RELEASE_NAME="$1"      # %N
+                RELEASE_DIR="$2"       # %F
+                RELEASE_CAT="$3"       # %L
+                RELEASE_SIZE="$4"      # %Z
+                RELEASE_INDEXER="$5"   # %T
+                RELEASE_STATUS=0       # Always 0 for qBittorrent
+                RELEASE_TYPE="Torrent"
+            }
+
+            # Function to send pushover notification
+            send_pushover_notification() {
+                local pushover_message status_code json_data
+                printf -v pushover_message \
+                    "<b>%s</b><small>\n<b>Category:</b> %s</small><small>\n<b>Indexer:</b> %s</small><small>\n<b>Size:</b> %s</small>" \
+                        "${RELEASE_NAME%.*}" \
+                        "${RELEASE_CAT}" \
+                        "$(trurl --url "${RELEASE_INDEXER}" --get '{idn:host}')" \
+                        "$(numfmt --to iec --format "%8.2f" "${RELEASE_SIZE}")"
+
+                json_data=$(jo \
+                    token="${PUSHOVER_TOKEN}" \
+                    user="${PUSHOVER_USER_KEY}" \
+                    title="${RELEASE_TYPE} Downloaded" \
+                    message="${pushover_message}" \
+                    priority="-2" \
+                    html="1"
+                )
+
+                status_code=$(curl \
+                    --silent \
+                    --write-out "%{http_code}" \
+                    --output /dev/null \
+                    --request POST  \
+                    --header "Content-Type: application/json" \
+                    --data-binary "${json_data}" \
+                    "https://api.pushover.net/1/messages.json"
+                )
+
+                printf "pushover notification returned with HTTP status code %s and payload: %s\n" \
+                    "${status_code}" \
+                    "$(echo "${json_data}" | jq --compact-output)" >&2
+            }
+
+            # Function to search for cross-seed
+            search_cross_seed() {
+                local status_code
+                status_code=$(curl \
+                    --silent \
+                    --output /dev/null \
+                    --write-out "%{http_code}" \
+                    --request POST \
+                    --data-urlencode "path=${RELEASE_DIR}" \
+                    --header "X-Api-Key: ${CROSS_SEED_API_KEY}" \
+                    "http://${CROSS_SEED_HOST}:${CROSS_SEED_PORT}/api/webhook"
+                )
+
+                printf "cross-seed search returned with HTTP status code %s and path %s\n" \
+                    "${status_code}" \
+                    "${RELEASE_DIR}" >&2
+
+                sleep "${CROSS_SEED_SLEEP_INTERVAL}"
+            }
+
+            main() {
+                # Determine the source and set release variables accordingly
+                if env | grep -q "^SAB_"; then
+                    set_sab_vars
+                else
+                    set_qb_vars "$@"
+                fi
+
+                # Check if post-processing was successful
+                if [[ "${RELEASE_STATUS}" -ne 0 ]]; then
+                    printf "post-processing failed with sabnzbd status code %s\n" \
+                        "${RELEASE_STATUS}" >&2
+                    exit 1
+                fi
+
+                # Update permissions on the release directory
+                chmod -R 750 "${RELEASE_DIR}"
+
+                # Send pushover notification
+                if [[ "${PUSHOVER_ENABLED}" == "true" ]]; then
+                    send_pushover_notification
+                fi
+
+                # Search for cross-seed
+                if [[ "${CROSS_SEED_ENABLED}" == "true" ]]; then
+                    search_cross_seed
+                fi
+            }
+
+            main "$@"

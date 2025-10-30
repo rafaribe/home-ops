@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app smartctl-exporter
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: smartctl-exporter
+  interval: 1h
+  values:
+    fullnameOverride: *app
+    image:
+      repository: ghcr.io/joryirving/smartctl_exporter
+      tag: 0.14.0@sha256:b949a82e665df554a19d1b788fed50bec6a8e93f1c3e8b63b56c39541d81d718
+    config:
+      devices:
+        - /dev/sda
+        - /dev/sdb
+        - /dev/sdc
+        - /dev/nvme0n1
+    serviceMonitor:
+      enabled: true
+      relabelings:
+        - action: labeldrop
+          regex: (pod)
+        - action: replace
+          regex: (.*)
+          replacement: $1.rafaribe.internal
+          sourceLabels:
+            - __meta_kubernetes_endpoint_node_name
+          targetLabel: instance
+    prometheusRules:
+      enabled: false
+    tolerations: {}

@@ -1,0 +1,62 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/helmfile
+
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubeVersion: v1.33.5
+
+helmDefaults:
+  force: true
+  recreatePods: true
+  timeout: 600
+  wait: true
+  waitForJobs: true
+
+repositories:
+  - name: cilium
+    url: https://helm.cilium.io
+
+  - name: coredns
+    url: https://coredns.github.io/helm
+
+  - name: postfinance
+    url: https://postfinance.github.io/kubelet-csr-approver
+
+releases:
+  - name: cilium
+    namespace: kube-system
+    chart: cilium/cilium
+    version: 1.18.2
+    values:
+      - ./templates/values.yaml.gotmpl
+
+  - name: coredns
+    namespace: kube-system
+    chart: coredns/coredns
+    version: 1.44.3
+    values:
+      - ./templates/values.yaml.gotmpl
+    needs: ["kube-system/cilium"]
+
+  - name: kubelet-csr-approver
+    namespace: kube-system
+    chart: postfinance/kubelet-csr-approver
+    version: 1.2.11
+    values:
+      - ./templates/values.yaml.gotmpl
+    needs: ["kube-system/coredns"]
+
+  - name: spegel
+    namespace: kube-system
+    chart: oci://ghcr.io/spegel-org/helm-charts/spegel
+    version: 0.4.0
+    values:
+      - ./templates/values.yaml.gotmpl
+    needs: ["kube-system/kubelet-csr-approver"]
+
+  - name: flux-operator
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+    version: 0.30.0
+    values:
+      - ./templates/values.yaml.gotmpl
+    needs: ["kube-system/spegel"]

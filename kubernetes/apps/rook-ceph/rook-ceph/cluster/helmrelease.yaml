@@ -1,0 +1,393 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: rook-ceph-cluster
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: v1.18.2
+  url: oci://ghcr.io/rook/rook-ceph-cluster
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rook-ceph-cluster
+spec:
+  interval: 1h
+  timeout: 15m
+  chartRef:
+    kind: OCIRepository
+    name: rook-ceph-cluster
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    toolbox:
+      enabled: true
+    monitoring:
+      enabled: true
+      createPrometheusRules: true
+    network:
+      provider: host
+      connections:
+        requireMsgr2: true
+    route:
+      annotations:
+        # Hajimari
+        hajimari.io/appName: "Rook"
+        hajimari.io/icon: mdi:chess-rook
+        # Homepage
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/group: Infrastructure
+        gethomepage.dev/name: Ceph
+        gethomepage.dev/icon: https://miro.medium.com/v2/resize:fit:820/1*gJQ7_l2Q03aX7cYeCYpiFQ.png
+        gethomepage.dev/description: Ceph Dashboard
+        gethomepage.dev/siteMonitor: http://rook-ceph-mgr-dashboard.rook-ceph:7000
+        gethomepage.dev/pod-selector: >-
+          app.kubernetes.io/name in (ceph-mgr)
+      dashboard:
+        host:
+          name: rook.rafaribe.com
+          path: /
+          pathType: PathPrefix
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
+    cephClusterSpec:
+      cephConfig:
+        global:
+          bdev_enable_discard: "true"
+          bdev_async_discard: "true"
+          osd_class_update_on_start: "false"
+          osd_pool_default_size: "3"
+          osd_pool_default_min_size: "2"
+          mon_data_avail_warn: "10"
+          device_failure_prediction_mode: local # requires mgr module
+
+      crashCollector:
+        disable: false
+      csi:
+        readAffinity:
+          enabled: true
+      mgr:
+        count: 2
+        allowMultiplePerNode: false
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+          limits:
+            cpu: 1000m # added CPU limit for better resource management
+            memory: 2Gi # increased from 1Gi for better performance
+        modules:
+          - name: "rook"
+            enabled:
+          - name: "pg_autoscaler"
+            enabled: true
+          - name: prometheus
+            enabled: true
+          - name: nfs
+            enabled: true
+          - name: insights
+            enabled: true
+          - name: localpool
+            enabled: true
+          - name: alerts
+            enabled: true
+          - name: rgw
+            enabled: true
+          - name: progress
+            enabled: true
+      placement:
+        all:
+          tolerations:
+            - key: "node-role.kubernetes.io/control-plane"
+              operator: "Exists"
+        mon:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64 # Don't place mons on turing pi nodes because eMMC doesn't have a big disk to avoid MON_DISK_LOW
+      storage:
+        useAllNodes: false
+        useAllDevices: false
+        nodes:
+          - name: srv-01
+            devices:
+              - name: /dev/disk/by-id/ata-Samsung_SSD_750_EVO_250GB_S32LNWAH606933X
+            resources:
+              requests:
+                cpu: "1"
+                memory: 3Gi
+              limits:
+                cpu: "2"
+                memory: 5Gi
+            priorityClassName: system-node-critical
+          - name: srv-02
+            devices:
+              - name: /dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0
+            resources:
+              requests:
+                cpu: "1"
+                memory: 4Gi
+              limits:
+                cpu: "2"
+                memory: 8Gi
+            priorityClassName: system-node-critical
+          - name: srv-03
+            devices:
+              - name: /dev/disk/by-id/usb-SanDisk_Portable_SSD_32333231454C343030363335-0:0
+            resources:
+              requests:
+                cpu: "1"
+                memory: 4Gi
+              limits:
+                cpu: "2"
+                memory: 8Gi
+            priorityClassName: system-node-critical
+          - name: srv-04
+            devices:
+              - name: /dev/disk/by-id/ata-SanDisk_Portable_SSD_23163H445813
+              - name: /dev/disk/by-id/ata-WDC_WD10SPCX-24HWST1_WD-WXK1AA5P94JV
+            resources:
+              requests:
+                cpu: "1"
+                memory: 4Gi
+              limits:
+                cpu: "2"
+                memory: 8Gi
+            priorityClassName: system-node-critical
+          - name: srv-05
+            devices:
+              - name: /dev/disk/by-id/usb-Samsung_PSSD_T7_S6XDNS0W566278X-0:0
+            resources:
+              requests:
+                cpu: "1"
+                memory: 4Gi
+              limits:
+                cpu: "2"
+                memory: 8Gi
+            priorityClassName: system-node-critical
+          - name: srv-06
+            devices:
+              - name: /dev/disk/by-id/ata-SanDisk_SSD_PLUS_1000GB_25202A4A6X07
+            resources:
+              requests:
+                cpu: "1"
+                memory: 4Gi
+              limits:
+                cpu: "2"
+                memory: 8Gi
+            priorityClassName: system-node-critical
+          - name: srv-07
+            devices:
+              - name: /dev/disk/by-id/ata-SanDisk_SSD_PLUS_1000GB_25202A4A2F04
+            resources:
+              requests:
+                cpu: "1"
+                memory: 4Gi
+              limits:
+                cpu: "2"
+                memory: 8Gi
+            priorityClassName: system-node-critical
+          - name: tpi-1
+            devices:
+              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_24175J806474
+            resources:
+              requests:
+                cpu: "1"
+                memory: 4Gi
+              limits:
+                cpu: "2"
+                memory: 8Gi
+            priorityClassName: system-node-critical
+          - name: tpi-2
+            devices:
+              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_241766801325
+            resources:
+              requests:
+                cpu: "1"
+                memory: 4Gi
+              limits:
+                cpu: "2"
+                memory: 8Gi
+            priorityClassName: system-node-critical
+          - name: tpi-3
+            devices:
+              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_24175J802694
+            resources:
+              requests:
+                cpu: "1"
+                memory: 4Gi
+              limits:
+                cpu: "2"
+                memory: 8Gi
+            priorityClassName: system-node-critical
+          - name: tpi-4
+            devices:
+              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_24175J806480
+            resources:
+              requests:
+                cpu: "1"
+                memory: 4Gi
+              limits:
+                cpu: "2"
+                memory: 8Gi
+            priorityClassName: system-node-critical
+      # resources:
+    cephBlockPools:
+      - name: ceph-blockpool
+        spec:
+          failureDomain: host
+          replicated:
+            size: 3
+        storageClass:
+          enabled: true
+          name: ceph-block
+          isDefault: true
+          reclaimPolicy: Delete
+          allowVolumeExpansion: true
+          mountOptions: ["discard"]
+          volumeBindingMode: Immediate
+          parameters:
+            compression_mode: aggressive
+            compression_algorithm: zstd
+            imageFormat: "2"
+            imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
+            csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
+            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
+            csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+            csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+            csi.storage.k8s.io/fstype: ext4
+      - name: builtin-mgr
+        spec:
+          name: .mgr
+          failureDomain: host
+          replicated:
+            size: 3
+            requireSafeReplicaSize: false
+          parameters:
+            min_size: "2"
+            compression_mode: none
+        storageClass:
+          enabled: false
+    cephBlockPoolsVolumeSnapshotClass:
+      enabled: true
+      name: csi-ceph-blockpool
+      isDefault: false
+      deletionPolicy: Delete
+    cephFileSystems:
+      - name: &cephFileSystemName ceph-filesystem
+        spec:
+          metadataPool:
+            replicated:
+              size: 3
+          dataPools:
+            - failureDomain: host
+              replicated:
+                size: 3
+              name: data0
+          metadataServer:
+            activeCount: 1
+            activeStandby: true
+            priorityClassName: system-cluster-critical
+            placement:
+              topologySpreadConstraints:
+                - maxSkew: 1
+                  topologyKey: kubernetes.io/hostname
+                  whenUnsatisfiable: DoNotSchedule
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: ceph-mds
+                      app.kubernetes.io/part-of: *cephFileSystemName
+        storageClass:
+          enabled: true
+          isDefault: false
+          name: ceph-filesystem
+          pool: data0
+          reclaimPolicy: Delete
+          allowVolumeExpansion: true
+          volumeBindingMode: Immediate
+          parameters:
+            csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+            csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
+            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
+            csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
+            csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+            csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+            csi.storage.k8s.io/fstype: ext4
+    cephFileSystemVolumeSnapshotClass:
+      enabled: true
+      name: csi-ceph-filesystem
+      isDefault: false
+      deletionPolicy: Delete
+    cephObjectStores:
+      - name: ceph-objectstore
+        spec:
+          metadataPool:
+            failureDomain: host
+            replicated:
+              size: 3
+          dataPool:
+            failureDomain: host
+            erasureCoded:
+              dataChunks: 2
+              codingChunks: 1
+          preservePoolsOnDelete: true
+          gateway:
+            hostNetwork: false
+            port: 80
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
+            instances: 2
+            priorityClassName: system-cluster-critical
+          healthCheck:
+            bucket:
+              interval: 60s
+        route:
+          enabled: true
+          annotations:
+            gatus.home-operations.com/enabled: "true"
+            gatus.home-operations.com/endpoint: |-
+              conditions: ["len([BODY]) == 0"]
+              dns:
+                query-name: rgw.rafaribe.com
+                query-type: A
+              url: 1.1.1.1
+          host:
+            name: rgw.rafaribe.com
+            path: /
+            pathType: PathPrefix
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
+              sectionName: https
+        storageClass:
+          enabled: true
+          name: ceph-bucket
+          reclaimPolicy: Delete
+          volumeBindingMode: Immediate
+          parameters:
+            region: us-east-1

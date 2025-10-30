@@ -1,0 +1,156 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: home-assistant
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  values:
+    controllers:
+      home-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/joryirving/home-assistant
+              tag: 2025.10.0@sha256:5b80c1506370c420dd61c08480c1aaf97b72dded06096ea53527d331aef41c69
+            env:
+              TZ: Europe/Lisbon
+              HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/22
+              HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 2Gi
+          codeserver:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.104.2@sha256:6edc8e2d2849749c1a1a5eff8e76563b96db407e68899c143473a6004d0a6b5a
+            env:
+              TZ: Europe/Lisbon
+            args:
+              [
+                "--auth",
+                "none",
+                "--user-data-dir",
+                "/config/.vscode",
+                "--extensions-dir",
+                "/config/.vscode",
+                "--port",
+                "12321",
+                "/config",
+              ]
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+
+      hostUsers: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: 10.0.1.28
+        ports:
+          http:
+            port: &port 8123
+          codeserver:
+            port: &codeserverPort 12321
+    route:
+      app:
+        annotations:
+          gethomepage.dev/href: "https://hass.rafaribe.com"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/app: Home Assistant
+          gethomepage.dev/group: Home
+          gethomepage.dev/icon: home-assistant
+          gethomepage.dev/name: Home Assistant
+          gethomepage.dev/description: Home Automation
+          gethomepage.dev/widget.type: homeassistant
+          gethomepage.dev/widget.url: &url http://home-assistant.home:8123
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}` }}"
+          gethomepage.dev/siteMonitor: *url
+        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: "{{ .Release.Name }}"
+                port: *port
+      codeserver:
+        annotations:
+          gethomepage.dev/href: "https://hass-code.rafaribe.com"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/app: HASS VS Code
+          gethomepage.dev/group: Home
+          gethomepage.dev/icon: sh-visual-studio-code.svg
+          gethomepage.dev/name: HASS VS Code
+          gethomepage.dev/description: Code editor for Home Assistant
+          gethomepage.dev/siteMonitor: http://home-assistant-codeserver.home:8080
+        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-code.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: "{{ .Release.Name }}"
+                port: *codeserverPort
+      local:
+        hostnames: ["hass-local.rafaribe.com", "home-assistant-local.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: "{{ .Release.Name }}"
+                port: *port
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /config
+      config-cache:
+        existingClaim: "{{ .Release.Name }}-cache"
+        globalMounts:
+          - path: /config/.venv
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config/logs
+                subPath: logs
+              - path: /config/tts
+                subPath: tts
+              - path: /tmp
+                subPath: tmp
+      deploy-key:
+        type: secret
+        name: home-assistant-git-ssh
+        defaultMode: 256
+        globalMounts:
+          - path: /home/coder/.ssh/
+            readOnly: true

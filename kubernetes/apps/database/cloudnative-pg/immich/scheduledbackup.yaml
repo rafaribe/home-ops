@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/postgresql.cnpg.io/scheduledbackup_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: &cluster immich
+spec:
+  backupOwnerReference: self
+  cluster:
+    name: *cluster
+  immediate: true
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
+  schedule: "0 0 5 * * *" # at 5 AM every day
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/postgresql.cnpg.io/scheduledbackup_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: immich-cold-backup
+spec:
+  schedule: "0 0 3 * * *" # at 4 AM every day
+  backupOwnerReference: self
+  cluster:
+    name: immich
+  method: volumeSnapshot
+  online: false

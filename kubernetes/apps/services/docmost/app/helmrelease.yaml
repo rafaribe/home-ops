@@ -1,0 +1,97 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app docmost
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.3.0
+      sourceRef:
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      docmost:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.6@sha256:86a1992d46273c58fd4ad95b626081dfaabfe16bd56944675169e406d1a660dd
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
+        containers:
+          app:
+            image:
+              repository: docmost/docmost
+              tag: 0.23.2
+            env:
+              TZ: "${TIMEZONE:=Etc/UTC}"
+              APP_URL: "https://docmost.rafaribe.com"
+              MAIL_DRIVER: smtp
+              MAIL_FROM_ADDRESS: docmost@rafaribe.com
+              MAIL_FROM_NAME: Docmost
+              PORT: &port 3000
+              REDIS_URL: "redis://dragonfly.storage:6379"
+              SMTP_HOST: smtp-relay.services.svc.cluster.local
+              SMTP_PORT: 25
+            envFrom: *envFrom
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 25m
+                memory: 105M
+        #              limits:
+        #                memory: 105M
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 3000
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Home
+          gethomepage.dev/name: Docmost
+          gethomepage.dev/icon: https://avatars.githubusercontent.com/u/150462874?s=200&v=4
+          gethomepage.dev/description: Wiki
+          gethomepage.dev/siteMonitor: http://docmost.services:3000
+        hostnames: ["docmost.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /app/data/storage

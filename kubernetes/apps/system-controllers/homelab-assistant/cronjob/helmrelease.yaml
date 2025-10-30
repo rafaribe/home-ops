@@ -1,0 +1,223 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app homelab-assistant-cronjob
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 30m
+  maxHistory: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      homelab-assistant-cronjob:
+        type: cronjob
+        annotations:
+          reloader.stakater.com/auto: "true"
+        cronjob:
+          schedule: "0 */3 * * *"  # Every 3 hours
+          timeZone: &timeZone Europe/Lisbon
+          concurrencyPolicy: Forbid
+          successfulJobsHistory: 3
+          failedJobsHistory: 3
+        serviceAccount:
+          identifier: *app
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/rafaribe/homelab-assistant
+              tag: 2025.06.24@sha256:871d15995cd55650cd73b7e58a332929b84a3f680abcefdd6ff3fcc7cdb873ed
+              pullPolicy: Always
+
+            command: ["/manager"]
+            args:
+              - --health-probe-bind-address=:8081
+              - --metrics-bind-address=:8080
+
+            env:
+              TZ: *timeZone
+              METRICS_BIND_ADDRESS: ":8080"
+              HEALTH_PROBE_BIND_ADDRESS: ":8081"
+              LEADER_ELECT: "false"  # Disable leader election for cronjob
+              RUN_ONCE: "true"
+
+            resources:
+              limits:
+                cpu: 500m
+                memory: 256Mi
+              requests:
+                cpu: 10m
+                memory: 64Mi
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+
+    serviceAccount:
+      homelab-assistant-cronjob: {}
+
+    rbac:
+      bindings:
+        homelab-assistant-cronjob:
+          type: ClusterRoleBinding
+          roleRef:
+            identifier: *app
+          subjects:
+            - identifier: *app
+      roles:
+        homelab-assistant-cronjob:
+          type: ClusterRole
+          rules:
+            - apiGroups:
+                - homelab.rafaribe.com
+              resources:
+                - volsyncmonitors
+                - volsyncunlocks
+              verbs:
+                - create
+                - delete
+                - get
+                - list
+                - patch
+                - update
+                - watch
+            - apiGroups:
+                - homelab.rafaribe.com
+              resources:
+                - volsyncmonitors/finalizers
+                - volsyncunlocks/finalizers
+              verbs:
+                - update
+            - apiGroups:
+                - homelab.rafaribe.com
+              resources:
+                - volsyncmonitors/status
+                - volsyncunlocks/status
+              verbs:
+                - get
+                - patch
+                - update
+            - apiGroups:
+                - batch
+              resources:
+                - jobs
+                - cronjobs
+              verbs:
+                - create
+                - delete
+                - get
+                - list
+                - patch
+                - update
+                - watch
+            - apiGroups:
+                - ""
+              resources:
+                - events
+              verbs:
+                - create
+                - patch
+            - apiGroups:
+                - ""
+              resources:
+                - namespaces
+              verbs:
+                - get
+                - list
+                - watch
+            - apiGroups:
+                - ""
+              resources:
+                - pods
+              verbs:
+                - get
+                - list
+                - watch
+                - delete
+            - apiGroups:
+                - ""
+              resources:
+                - pods/log
+              verbs:
+                - get
+                - list
+            - apiGroups:
+                - ""
+              resources:
+                - secrets
+              verbs:
+                - get
+                - list
+                - watch
+            - apiGroups:
+                - coordination.k8s.io
+              resources:
+                - leases
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - update
+                - patch
+                - delete
+            - apiGroups:
+                - ""
+              resources:
+                - configmaps
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - update
+                - patch
+                - delete
+            - apiGroups:
+                - apps
+              resources:
+                - deployments
+                - replicasets
+              verbs:
+                - get
+                - list
+                - watch
+                - delete
+            - apiGroups:
+                - ""
+              resources:
+                - services
+              verbs:
+                - get
+                - list
+                - watch
+                - delete
