@@ -13,3 +13,4 @@ resources:
   - ./database
   - ./home
   - ./downloads
+  - ./security
