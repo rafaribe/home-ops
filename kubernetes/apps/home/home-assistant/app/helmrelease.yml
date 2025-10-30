@@ -1,0 +1,147 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: home-assistant
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: home-assistant
+  interval: 30m
+  values:
+    controllers:
+      home-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsUser: 1000
+            fsGroupChangePolicy: OnRootMismatch
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/home-assistant
+              tag: 2025.10.4
+            env:
+              VENV_FOLDER: /venv
+            resources:
+              requests:
+                cpu: 100m
+                memory: 2Gi
+              limits:
+                memory: 2Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+          code-server:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.105.1@sha256:2d48970bd2084aa34a522d772b6a437981ea80407465b3bf7958553985c570e1
+            args:
+              - --auth
+              - none
+              - --disable-telemetry
+              - --disable-update-check
+              - --user-data-dir
+              - /data/user-data
+              - --extensions-dir
+              - /data/extensions
+              - --port
+              - "12321"
+              - /config
+            env:
+              HASS_SERVER: https://hass.rafaribe.com
+              HASS_TOKEN:
+                secretKeyRef:
+                  name: home-assistant-secret
+                  key: vscode_hass_token
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
+    service:
+      app:
+        ports:
+          http:
+            appProtocol: kubernetes.io/wss
+            port: 8123
+        primary: true
+      code-server:
+        ports:
+          code-server:
+            port: 12321
+    persistence:
+      config:
+        existingClaim: home-assistant
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config
+                subPath: config
+            code-server:
+              - path: /config
+                subPath: config
+              - path: /data
+                subPath: code-server
+      hass-cache:
+        existingClaim: hass-cache
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /venv
+                subPath: hass-venv
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /tmp
+                subPath: hass-tmp
+            code-server:
+              - path: /tmp
+                subPath: code-server-tmp
+              - path: /nonexistent
+                subPath: nonexistent
+    route:
+      # External Route
+      app:
+        hostnames:
+          - hass.rafaribe.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 8123
+
+      app-internal:
+        hostnames:
+          - hass-internal.rafaribe.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 8123
+                
+      code:
+        hostnames:
+          - hass-code.rafaribe.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+
+        rules:
+          - backendRefs:
+              - identifier: code-server
+                port: 12321
