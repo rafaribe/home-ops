@@ -40,4 +40,4 @@ spec:
     namespace: flux-system
   dependsOn:
     - name: actions-runner-controller
-      namespace: flux-system
+      namespace: actions-runner-system
