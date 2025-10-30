@@ -34,13 +34,12 @@ spec:
             name: *secret
     authentik:
       redis:
-        host: dragonfly.storage.svc.cluster.local
-        db: 1
+        host: localhost:6379
     server:
       replicas: 3
       initContainers:
         - name: init-db
-          image: ghcr.io/rafaribe/postgres-init:16
+          image: ghcr.io/home-operations/postgres-init7.6@sha256:86a1992d46273c58fd4ad95b626081dfaabfe16bd56944675169e406d1a660dd
           envFrom:
             - secretRef:
                 name: *secret
@@ -53,3 +52,6 @@ spec:
     prometheus:
       rules:
         enabled: false
+    extraContainers:
+      - name: valkey
+        image: docker.io/valkey/valkey:9.0.0-trixie
