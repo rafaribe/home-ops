@@ -24,7 +24,7 @@ spec:
     server:
       initContainers:
         - name: init-db
-          image: ghcr.io/home-operations/postgres-init7.6@sha256:86a1992d46273c58fd4ad95b626081dfaabfe16bd56944675169e406d1a660dd
+          image: ghcr.io/home-operations/postgres-init:17.6.0@sha256:86a1992d46273c58fd4ad95b626081dfaabfe16bd56944675169e406d1a660dd
           envFrom:
             - secretRef:
                 name: *secret
