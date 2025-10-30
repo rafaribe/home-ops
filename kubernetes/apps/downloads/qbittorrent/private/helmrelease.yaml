@@ -87,8 +87,6 @@ spec:
             protocol: TCP
     route:
       app:
-        annotations:
-
         hostnames: ["qbp.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
