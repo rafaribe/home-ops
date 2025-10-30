@@ -131,7 +131,4 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /cache
-      media-ceph:
-        existingClaim: ceph-media
-        globalMounts:
-          - path: /media-ceph
+      

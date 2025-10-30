@@ -83,7 +83,4 @@ spec:
         path: /mnt/tank/media
         globalMounts:
           - path: /media
-      media-ceph:
-        existingClaim: ceph-media
-        globalMounts:
-          - path: /media-ceph
+      
