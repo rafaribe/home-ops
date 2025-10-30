@@ -1,7 +1,7 @@
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
-  name: garage-home-ops
+  name: garage-immich
 spec:
   configuration:
     data:
