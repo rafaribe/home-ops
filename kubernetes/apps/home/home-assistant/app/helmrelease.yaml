@@ -59,10 +59,6 @@ spec:
               - /config
             env:
               HASS_SERVER: https://hass.rafaribe.com
-              HASS_TOKEN:
-                secretKeyRef:
-                  name: home-assistant
-                  key: vscode_hass_token
             resources:
               requests:
                 cpu: 100m
