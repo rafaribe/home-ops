@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dragonfly-operator
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: dragonfly-operator
+  dependsOn: []
+  interval: 15m
+  values:
+    manager:
+      image:
+        repository: ghcr.io/dragonflydb/operator
+    grafanaDashboard:
+      enabled: true
+      folder: database
