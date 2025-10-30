@@ -56,24 +56,9 @@ spec:
               capabilities:
                 drop:
                   - ALL
-        serviceAccount:
-          identifier: *app
-
-    rbac:
-      bindings:
-        cluster-admin-binding:
-          enabled: true
-          type: ClusterRoleBinding
-          roleRef:
-            name: cluster-admin
-            kind: ClusterRole
-            apiGroup: rbac.authorization.k8s.io
-          subjects:
-            - kind: ServiceAccount
-              name: *app
-              namespace: "{{ .Release.Namespace }}"
 
     defaultPodOptions:
+      serviceAccountName: talos-etcd-defrag
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000 # nobody user
