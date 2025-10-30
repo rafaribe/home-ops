@@ -48,7 +48,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
@@ -77,7 +77,7 @@ spec:
                 originRequest:
                   http2Origin: true
                   originServerName: external.rafaribe.com
-                service: https://envoy-external.{{ .Release.Namespace }}.svc.cluster.local:443
+                service: https://envoy-external.network.svc.cluster.local:443
               - service: http_status:404
     persistence:
       config-file:
