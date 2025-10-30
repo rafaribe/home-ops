@@ -61,7 +61,7 @@ spec:
               HASS_SERVER: https://hass.rafaribe.com
               HASS_TOKEN:
                 secretKeyRef:
-                  name: home-assistant-secret
+                  name: home-assistant
                   key: vscode_hass_token
             resources:
               requests:
