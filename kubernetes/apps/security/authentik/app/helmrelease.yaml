@@ -20,7 +20,7 @@ spec:
             name: *secret
     authentik:
       redis:
-        host: localhost:6379
+        host: authentik-dragonfly
     server:
       replicas: 3
       initContainers:
@@ -29,6 +29,13 @@ spec:
           envFrom:
             - secretRef:
                 name: *secret
+      route:
+        main:
+          enabled: true
+          hostnames: ["sso.rafaribe.com"]
+          parentRefs:
+            - name: envoy-external
+              namespace: network
       metrics:
         enabled: false
         serviceMonitor:
@@ -38,6 +45,3 @@ spec:
     prometheus:
       rules:
         enabled: false
-    extraContainers:
-      - name: valkey
-        image: docker.io/valkey/valkey:9.0.0-trixie
