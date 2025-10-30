@@ -36,7 +36,7 @@ spec:
     runnerScaleSetName: arc-runner-set-home-ops
     githubConfigUrl: https://github.com/rafaribe/home-ops
     minRunners: 1
-    maxRunners: 15
+    maxRunners: 30
     containerMode:
       type: kubernetes
       kubernetesModeWorkVolumeClaim:
