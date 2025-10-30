@@ -9,7 +9,7 @@ spec:
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.6-0.5.3
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 100Gi
+    size: 50Gi
     storageClass: ceph-block
   superuserSecret:
     name: cloudnative-pg-secret
@@ -19,7 +19,8 @@ spec:
     shared_preload_libraries:
       - "vchord.so"
     parameters:
-      max_connections: "300"
+      max_connections: "600"
+      max_slot_wal_keep_size: 30GB
       shared_buffers: 512MB
   resources:
     requests:
@@ -29,6 +30,13 @@ spec:
   monitoring:
     enablePodMonitor: true
   
+  plugins:
+    - enabled: true
+      isWALArchiver: true
+      name: barman-cloud.cloudnative-pg.io
+      parameters: &barmanParameters
+        barmanObjectName: garage-immich
+        serverName: immich
   backup:
     retentionPolicy: 15d
     # Use volume snapshots for fast, efficient backups

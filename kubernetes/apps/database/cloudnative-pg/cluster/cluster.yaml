@@ -37,7 +37,7 @@ spec:
       isWALArchiver: true
       name: barman-cloud.cloudnative-pg.io
       parameters: &barmanParameters
-        barmanObjectName: garage
+        barmanObjectName: garage-home-ops
         serverName: home-ops-v2
   bootstrap:
     initdb:

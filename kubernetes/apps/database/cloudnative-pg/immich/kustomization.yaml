@@ -5,4 +5,4 @@ resources:
   - ./cluster.yaml
   - ./externalsecret.yaml
   - ./scheduledbackup.yaml
-  - ./objectbucketclaim.yaml
+  - ./objectstore.yaml

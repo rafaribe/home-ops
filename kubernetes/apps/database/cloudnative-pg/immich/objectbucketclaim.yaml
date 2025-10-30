@@ -1,9 +1,0 @@
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/objectbucket.io/objectbucketclaim_v1alpha1.json
-apiVersion: objectbucket.io/v1alpha1
-kind: ObjectBucketClaim
-metadata:
-  name: immich-bucket
-spec:
-  bucketName: cnpg-immich
-  storageClassName: ceph-bucket

@@ -2,12 +2,11 @@ apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
   name: garage-home-ops
-  namespace: database
 spec:
   configuration:
     data:
       compression: bzip2
-    destinationPath: s3://cnpg-home-ops/
+    destinationPath: s3://cnpg-immich/
     endpointURL: http://garage.storage.svc.cluster.local:3900
     s3Credentials:
       accessKeyId:
