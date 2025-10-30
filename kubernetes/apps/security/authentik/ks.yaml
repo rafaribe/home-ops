@@ -21,7 +21,7 @@ spec:
   retryInterval: 1m
   timeout: 5m
   components:
-    - ../../components/dragonfly
+    - ../../../../components/dragonfly
   healthCheckExprs:
     - apiVersion: dragonflydb.io/v1alpha1
       kind: Dragonfly
