@@ -295,7 +295,7 @@ spec:
             subPath: pgdata
       config:
         type: configMap
-        name: media-manager-config
+        name: media-manager
         globalMounts:
           - path: /app/config.toml
             subPath: config.toml
