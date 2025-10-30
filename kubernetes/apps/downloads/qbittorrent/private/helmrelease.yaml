@@ -77,7 +77,7 @@ spec:
         controller: qbittorrent
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: ${LB_QBITTORRENT}
+          lbipam.cilium.io/ips: 10.0.1.30
         ports:
           http:
             port: *port
