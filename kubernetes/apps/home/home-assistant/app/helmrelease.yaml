@@ -5,66 +5,70 @@ kind: HelmRelease
 metadata:
   name: home-assistant
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
-    name: app-template
+    name: home-assistant
+  interval: 30m
   values:
     controllers:
       home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsUser: 1000
+            fsGroupChangePolicy: OnRootMismatch
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/home-assistant
-              tag: 2025.10.0@sha256:5b80c1506370c420dd61c08480c1aaf97b72dded06096ea53527d331aef41c69
+              repository: ghcr.io/home-operations/home-assistant
+              tag: 2025.10.4
             env:
-              TZ: Europe/Lisbon
+              VENV_FOLDER: /venv
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/22
               HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
+            resources:
+              requests:
+                cpu: 100m
+                memory: 2Gi
+              limits:
+                memory: 2Gi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 10m
-                memory: 250Mi
-              limits:
-                memory: 2Gi
-          codeserver:
+              capabilities:
+                drop:
+                  - ALL
+          code-server:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.104.2@sha256:6edc8e2d2849749c1a1a5eff8e76563b96db407e68899c143473a6004d0a6b5a
-            env:
-              TZ: Europe/Lisbon
+              tag: 4.105.1@sha256:2d48970bd2084aa34a522d772b6a437981ea80407465b3bf7958553985c570e1
             args:
-              [
-                "--auth",
-                "none",
-                "--user-data-dir",
-                "/config/.vscode",
-                "--extensions-dir",
-                "/config/.vscode",
-                "--port",
-                "12321",
-                "/config",
-              ]
+              - --auth
+              - none
+              - --disable-telemetry
+              - --disable-update-check
+              - --user-data-dir
+              - /data/user-data
+              - --extensions-dir
+              - /data/extensions
+              - --port
+              - "12321"
+              - /config
+            env:
+              HASS_SERVER: https://hass.rafaribe.com
+              HASS_TOKEN:
+                secretKeyRef:
+                  name: home-assistant-secret
+                  key: vscode_hass_token
             resources:
               requests:
-                cpu: 10m
+                cpu: 100m
+                memory: 1Gi
               limits:
-                memory: 512Mi
-    defaultPodOptions:
-
-      hostUsers: false
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
+                memory: 2Gi
     service:
       app:
         type: LoadBalancer
@@ -72,10 +76,63 @@ spec:
           io.cilium/lb-ipam-ips: 10.0.1.28
         ports:
           http:
-            port: &port 8123
-          codeserver:
-            port: &codeserverPort 12321
+            appProtocol: kubernetes.io/wss
+            port: 8123
+        primary: true
+      code-server:
+        ports:
+          code-server:
+            port: 12321
+    persistence:
+      config:
+        existingClaim: home-assistant
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config
+                subPath: config
+            code-server:
+              - path: /config
+                subPath: config
+              - path: /data
+                subPath: code-server
+      hass-cache:
+        existingClaim: hass-cache
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /venv
+                subPath: hass-venv
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /tmp
+                subPath: hass-tmp
+            code-server:
+              - path: /tmp
+                subPath: code-server-tmp
+              - path: /nonexistent
+                subPath: nonexistent
+      deploy-key:
+        type: secret
+        name: home-assistant-git-ssh
+        defaultMode: 256
+        globalMounts:
+          - path: /home/coder/.ssh/
+            readOnly: true
+
+    defaultPodOptions:
+      hostUsers: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     route:
+      # External Route
       app:
         annotations:
           gethomepage.dev/href: "https://hass.rafaribe.com"
@@ -89,68 +146,37 @@ spec:
           gethomepage.dev/widget.url: &url http://home-assistant.home:8123
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}` }}"
           gethomepage.dev/siteMonitor: *url
-        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.rafaribe.com"]
+        hostnames:
+          - hass.rafaribe.com
         parentRefs:
           - name: envoy-external
             namespace: network
             sectionName: https
         rules:
           - backendRefs:
-              - name: "{{ .Release.Name }}"
-                port: *port
-      codeserver:
-        annotations:
-          gethomepage.dev/href: "https://hass-code.rafaribe.com"
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/app: HASS VS Code
-          gethomepage.dev/group: Home
-          gethomepage.dev/icon: sh-visual-studio-code.svg
-          gethomepage.dev/name: HASS VS Code
-          gethomepage.dev/description: Code editor for Home Assistant
-          gethomepage.dev/siteMonitor: http://home-assistant-codeserver.home:8080
-        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-code.rafaribe.com"]
+              - identifier: app
+                port: 8123
+
+      app-internal:
+        hostnames:
+          - hass-internal.rafaribe.com
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
         rules:
           - backendRefs:
-              - name: "{{ .Release.Name }}"
-                port: *codeserverPort
-      local:
-        hostnames: ["hass-local.rafaribe.com", "home-assistant-local.rafaribe.com"]
+              - identifier: app
+                port: 8123
+                sectionName: https
+      code:
+        hostnames:
+          - hass-code.rafaribe.com
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
+
         rules:
           - backendRefs:
-              - name: "{{ .Release.Name }}"
-                port: *port
-    persistence:
-      config:
-        existingClaim: "{{ .Release.Name }}"
-        globalMounts:
-          - path: /config
-      config-cache:
-        existingClaim: "{{ .Release.Name }}-cache"
-        globalMounts:
-          - path: /config/.venv
-      tmpfs:
-        type: emptyDir
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /config/logs
-                subPath: logs
-              - path: /config/tts
-                subPath: tts
-              - path: /tmp
-                subPath: tmp
-      deploy-key:
-        type: secret
-        name: home-assistant-git-ssh
-        defaultMode: 256
-        globalMounts:
-          - path: /home/coder/.ssh/
-            readOnly: true
+              - identifier: code-server
+                port: 12321
+                sectionName: https
