@@ -49,3 +49,4 @@ upgrade2.sh
 immich-restore.sh
 restore/backupfile.sql.gz
 .archive/
+restic-to-kopia-migrate.sh
