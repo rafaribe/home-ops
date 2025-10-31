@@ -10,7 +10,7 @@ spec:
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
-    name: "home-assistant-bootstrap"
+    name: "home-assistant-dst"
   resources:
     requests:
       storage: "${VOLSYNC_CAPACITY:-20Gi}"
