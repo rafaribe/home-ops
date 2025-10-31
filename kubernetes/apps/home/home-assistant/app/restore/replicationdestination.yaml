@@ -11,7 +11,6 @@ spec:
     manual: restore-once
   restic:
     copyMethod: "${VOLSYNC_COPYMETHOD:=Snapshot}"
-    pruneIntervalDays: 14
     repository: "home-assistant-volsync-nfs"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-blockpool}"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:=2Gi}"
