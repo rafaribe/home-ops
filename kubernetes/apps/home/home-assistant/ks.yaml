@@ -36,4 +36,4 @@ spec:
       VOLSYNC_CAPACITY: 20Gi
       GATUS_SUBDOMAIN: hass
   components:
-    - ../../../../components/volsync
+   # - ../../../../components/volsync
