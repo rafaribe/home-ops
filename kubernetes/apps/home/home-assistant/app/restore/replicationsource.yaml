@@ -25,7 +25,7 @@ kind: ReplicationSource
 metadata:
   name: "home-assistant-nfs"
 spec:
-  sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
+  sourcePVC: "${VOLSYNC_CLAIM:-home-assistant}"
   trigger:
     schedule: "${VOLSYNC_CRONEXPRESSION:=22 * * * *}"
   restic:
