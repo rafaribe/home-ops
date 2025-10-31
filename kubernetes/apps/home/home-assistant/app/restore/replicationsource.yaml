@@ -1,24 +1,4 @@
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
-apiVersion: external-secrets.io/v1
-kind: ExternalSecret
-metadata:
-  name: "home-assistant-volsync-nfs"
-spec:
-  secretStoreRef:
-    kind: ClusterSecretStore
-    name: akeyless-secret-store
-  target:
-    name: "${APP}-volsync-nfs"
-    template:
-      engineVersion: v2
-      data:
-        RESTIC_REPOSITORY: "/repository-restic/${APP}"
-        RESTIC_PASSWORD: "{{ .RESTIC_PASSWORD }}"
-  dataFrom:
-    - extract:
-        key: /volsync
----
+
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
