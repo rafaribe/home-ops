@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://schemas.tholinka.dev/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: &name bitwarden-tls-certs
+spec:
+  secretName: *name
+  dnsNames:
+    - bitwarden-sdk-server.external-secrets.svc.cluster.local
+    - localhost
+  ipAddresses:
+    - 127.0.0.1
+    - ::1
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+    rotationPolicy: Always
+  duration: 168h # 7d
+  renewBefore: 24h # 1d
+  issuerRef:
+    name: cluster-signed-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io

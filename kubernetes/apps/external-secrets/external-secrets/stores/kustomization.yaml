@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
  # - ./secret.sops.yaml # apply manually
   - ./clustersecretstore.yaml
+  - ./certificate.yaml
