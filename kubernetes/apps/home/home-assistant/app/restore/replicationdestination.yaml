@@ -9,24 +9,19 @@ metadata:
 spec:
   trigger:
     manual: restore-once
-  kopia:
-    accessModes:
-      - ${VOLSYNC_ACCESSMODES:=ReadWriteOnce}
-    cacheAccessModes:
-      - ${VOLSYNC_CACHE_ACCESSMODES:=ReadWriteOnce}
-    cacheCapacity: ${VOLSYNC_CAPACITY:=5Gi}
-    cacheStorageClassName: ${VOLSYNC_CACHE_SNAPSHOTCLASS:=openebs-hostpath}
-    capacity: ${VOLSYNC_CAPACITY:=5Gi}
-    cleanupCachePVC: true
-    cleanupTempPVC: true
-    copyMethod: Snapshot
-    enableFileDeletion: true
+  restic:
+    copyMethod: "${VOLSYNC_COPYMETHOD:=Snapshot}"
+    pruneIntervalDays: 14
+    repository: "home-assistant-volsync-nfs"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-blockpool}"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:=2Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:=ceph-block}"
+    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:=ReadWriteOnce}"]
+    storageClassName: "${VOLSYNC_STORAGECLASS:=ceph-block}"
+    accessModes: ["${VOLSYNC_SNAP_ACCESSMODES:=ReadWriteOnce}"]
     moverSecurityContext:
       runAsUser: ${VOLSYNC_PUID:=1000}
       runAsGroup: ${VOLSYNC_PGID:=1000}
       fsGroup: ${VOLSYNC_PGID:=1000}
-    repository: home-assistant-volsync-secret
-    sourceIdentity:
-      sourceName: home-assistant
-    storageClassName: ${VOLSYNC_STORAGECLASS:=ceph-block}
-    volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-blockpool}
+    retain:
+      daily: 7

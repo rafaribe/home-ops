@@ -8,3 +8,4 @@ resources:
   - ./externalsecret.yaml
   - ./podmonitor.yaml
   - ./restore
+  - ./pvc.yaml
