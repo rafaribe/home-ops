@@ -36,7 +36,7 @@ metadata:
     kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
   trigger:
-    manual: restore-once
+    schedule: "${VOLSYNC_CRONEXPRESSION:=22 * * * *}"
   kopia:
     accessModes:
       - ${VOLSYNC_ACCESSMODES:=ReadWriteOnce}
