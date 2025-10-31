@@ -33,7 +33,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 7Gi
+      VOLSYNC_CAPACITY: 20Gi
       GATUS_SUBDOMAIN: hass
   components:
     - ../../../../components/volsync
