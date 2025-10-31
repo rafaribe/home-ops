@@ -7,14 +7,15 @@ metadata:
   labels:
     kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
+  sourcePVC: "home-assistant"
   trigger:
-    manual: restore-once
+    schedule: "15 */8 * * *"
   restic:
     copyMethod: "${VOLSYNC_COPYMETHOD:=Snapshot}"
     repository: "home-assistant-volsync-nfs"
-    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-blockpool}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-block}"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:=2Gi}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:=ceph-block}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_STORAGECLASS:=openebs-hostpath}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:=ReadWriteOnce}"]
     storageClassName: "${VOLSYNC_STORAGECLASS:=ceph-block}"
     accessModes: ["${VOLSYNC_SNAP_ACCESSMODES:=ReadWriteOnce}"]
@@ -23,4 +24,5 @@ spec:
       runAsGroup: ${VOLSYNC_PGID:=1000}
       fsGroup: ${VOLSYNC_PGID:=1000}
     retain:
+      hourly: 24
       daily: 7
