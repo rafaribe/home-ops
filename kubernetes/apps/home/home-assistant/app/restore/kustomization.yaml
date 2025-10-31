@@ -6,3 +6,4 @@ resources:
   - ./pvc.yaml
   - ./replicationsource.yaml
   - ./replicationdestination.yaml
+  - ./externalsecret.yaml

@@ -10,7 +10,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: "home-assistant-restic-secret"
+    repository: "home-assistant-volsync-nfs"
     copyMethod: Snapshot
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-block}"
     cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:=openebs-hostpath}"
