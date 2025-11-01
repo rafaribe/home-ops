@@ -32,4 +32,4 @@ spec:
     grafanaDashboard:
       enabled: true
     bitwarden-sdk-server:
-      enabled: true
+      enabled: false
