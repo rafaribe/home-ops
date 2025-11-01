@@ -57,7 +57,7 @@ spec:
                 - name: REQ_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: grafana-admin-password-secret
+                      name: grafana-secret
                       key: GF_SECURITY_ADMIN_PASSWORD
                 - name: REQ_URL
                   value: http://localhost:3000/api/admin/provisioning/dashboards/reload
@@ -81,7 +81,7 @@ spec:
                 - name: GF_SECURITY_ADMIN_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: grafana-admin-password-secret
+                      name: grafana-secret
                       key: GF_SECURITY_ADMIN_PASSWORD
               securityContext:
                 allowPrivilegeEscalation: false
