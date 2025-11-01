@@ -152,9 +152,9 @@ spec:
               - identifier: app
                 port: 8123
                 sectionName: https
-      internal:
+      local:
         hostnames:
-          - hass-internal.rafaribe.com
+          - hass-local.rafaribe.com
         parentRefs:
           - name: envoy-internal
             namespace: network
