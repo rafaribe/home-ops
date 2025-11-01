@@ -27,9 +27,5 @@ terraform {
       version = ">= 1.0.0"
       source  = "akeyless-community/akeyless"
     }
-    bitwarden-secrets = {
-      source  = "sebastiaan-dev/bitwarden-secrets"
-      version = ">=0.1.2"
-    }
   }
 }
