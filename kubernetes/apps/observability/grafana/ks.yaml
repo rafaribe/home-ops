@@ -33,9 +33,9 @@ spec:
     namespace: flux-system
   targetNamespace: observability
   wait: false
-  components:
-    - ../../../../components/volsync
+  # components:
+  #   - ../../../../components/volsync
   postBuild:
     substitute:
-      CLAIM: grafana-pvc
+      #CLAIM: grafana-pvc
       APP: grafana
