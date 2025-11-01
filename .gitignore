@@ -50,4 +50,5 @@ immich-restore.sh
 restore/backupfile.sql.gz
 .archive/
 restic-to-kopia-migrate.sh
-infrastructure/terraform/garage.sh
+terraform/garage.sh
+*lock.hcl
