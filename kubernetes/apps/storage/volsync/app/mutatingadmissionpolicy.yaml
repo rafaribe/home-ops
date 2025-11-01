@@ -128,7 +128,7 @@ spec:
             JSONPatch{
               op: "add", path: "/spec/template/spec/volumes/-",
               value: Object.spec.template.spec.volumes{
-                name: "repository",
+                name: "repository-restic",
                 nfs: Object.spec.template.spec.volumes.nfs{
                   server: "truenas.rafaribe.com",
                   path: "/mnt/storage-0/volsync"
