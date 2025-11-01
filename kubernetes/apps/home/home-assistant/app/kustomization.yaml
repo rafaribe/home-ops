@@ -7,5 +7,5 @@ resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
   - ./podmonitor.yaml
-  - ./restore
+#  - ./restore
   - ./pvc.yaml
