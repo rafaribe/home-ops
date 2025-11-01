@@ -27,5 +27,4 @@ spec:
       GATUS_SUBDOMAIN: jellyfin
       VOLSYNC_CACHE_CAPACITY: 5Gi
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync

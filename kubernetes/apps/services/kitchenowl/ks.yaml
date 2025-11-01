@@ -33,5 +33,4 @@ spec:
   interval: 30m
   timeout: 5m
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/external
+    - ../../../../components/volsync

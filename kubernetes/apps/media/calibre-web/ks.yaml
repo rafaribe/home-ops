@@ -25,5 +25,4 @@ spec:
       APP: *app
       VOLSYNC_CLAIM: calibre-web
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync

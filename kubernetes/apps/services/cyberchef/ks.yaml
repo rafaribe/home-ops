@@ -31,4 +31,3 @@ spec:
       HOSTNAME: cyberchef.rafaribe.com
       GATUS_SUBDOMAIN: cyberchef
   components:
-    - ../../../../../shared/components/gatus/external

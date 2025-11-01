@@ -25,5 +25,4 @@ spec:
       VOLSYNC_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: audiobookshelf
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync

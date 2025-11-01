@@ -24,5 +24,4 @@ spec:
       GATUS_SUBDOMAIN: mealie
       VOLSYNC_CAPACITY: 2Gi
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync

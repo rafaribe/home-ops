@@ -26,5 +26,4 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: requests
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/external
+    - ../../../../components/volsync

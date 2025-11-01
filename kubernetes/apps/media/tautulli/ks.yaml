@@ -25,5 +25,4 @@ spec:
     substitute:
       APP: *app
   components:
-    - ../../../../../shared/components/gatus/external
-    - ../../../../../shared/components/volsync
+    - ../../../../components/volsync

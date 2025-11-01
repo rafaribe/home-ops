@@ -21,8 +21,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../../shared/components/gatus/external
-    - ../../../../../shared/components/volsync
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app

@@ -28,5 +28,4 @@ spec:
       VOLSYNC_CAPACITY: 5Gi
       GATUS_SUBDOMAIN: spotty
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/external
+    - ../../../../components/volsync

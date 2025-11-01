@@ -26,4 +26,3 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: miniflux
   components:
-    - ../../../../../shared/components/gatus/guarded

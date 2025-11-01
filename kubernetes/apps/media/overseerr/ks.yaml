@@ -26,5 +26,4 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: overseerr
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/external
+    - ../../../../components/volsync

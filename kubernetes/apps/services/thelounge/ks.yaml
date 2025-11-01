@@ -32,5 +32,4 @@ spec:
       VOLSYNC_CAPACITY: 1Gi
       GATUS_SUBDOMAIN: tl
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync

@@ -28,5 +28,4 @@ spec:
       APP: *appname
       VOLSYNC_CLAIM: actual
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync

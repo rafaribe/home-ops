@@ -24,8 +24,7 @@ spec:
     - name: volsync
     - name: external-secrets-stores
   components:
-    - ../../../../../shared/components/gatus/guarded
-    - ../../../../../shared/components/volsync
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app

@@ -23,5 +23,4 @@ spec:
       VOLSYNC_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: pdf
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync

@@ -34,5 +34,4 @@ spec:
       VOLSYNC_CLAIM: affine
       VOLSYNC_CAPACITY: 15Gi
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync

@@ -25,4 +25,4 @@ spec:
       APP_UID: "1000"
       APP_GID: "1000"
   components:
-    - ../../../../../shared/components/volsync
+    - ../../../../components/volsync

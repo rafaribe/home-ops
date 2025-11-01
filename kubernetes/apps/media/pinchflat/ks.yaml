@@ -22,4 +22,4 @@ spec:
     substitute:
       APP: *app
   components:
-    - ../../../../../shared/components/volsync
+    - ../../../../components/volsync
