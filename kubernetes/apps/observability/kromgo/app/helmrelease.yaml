@@ -101,8 +101,7 @@ spec:
             readOnly: true
     configMaps:
       config:
-        metadata:
-          name: kromgo-config
+        identifier: kromgo-config
         data:
           config.yaml: |
             badge:
