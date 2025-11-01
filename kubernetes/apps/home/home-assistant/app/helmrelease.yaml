@@ -151,7 +151,7 @@ spec:
           - backendRefs:
               - identifier: app
                 port: 8123
-
+                sectionName: https
       internal:
         hostnames:
           - hass-internal.rafaribe.com
@@ -162,6 +162,7 @@ spec:
           - backendRefs:
               - identifier: app
                 port: 8123
+                sectionName: https
       code:
         hostnames:
           - hass-code.rafaribe.com
@@ -173,3 +174,4 @@ spec:
           - backendRefs:
               - identifier: code-server
                 port: 12321
+                sectionName: https
