@@ -47,7 +47,15 @@ spec:
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
-    initdb:
+    recovery:
+      source: immich-backup
+  externalClusters:
+    - name: immich-backup
+      barmanObjectStore:
+        <<: *barmanParameters
+        wal:
+          compression: gzip
+          maxParallel: 8
 
   #  recovery:
   #    source: &previousCluster postgres16-003

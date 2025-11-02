@@ -40,8 +40,12 @@ spec:
         barmanObjectName: garage-home-ops
         serverName: home-ops-v2
   bootstrap:
-    initdb:
-      database: app
-      owner: postgres
-      secret:
-        name: cloudnative-pg-secret
+    recovery:
+      source: home-ops-backup
+  externalClusters:
+    - name: home-ops-backup
+      barmanObjectStore:
+        <<: *barmanParameters
+        wal:
+          compression: gzip
+          maxParallel: 8
