@@ -5,11 +5,11 @@ resources:
   - ./actions-runner-system
   - ./cert-manager
   - ./database
- # - ./downloads
+  - ./downloads
   - ./external-secrets
   - ./home
   - ./kube-system
- # - ./media
+  - ./media
   - ./network
   - ./observability
   - ./rook-ceph
