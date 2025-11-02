@@ -7,7 +7,7 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./namespace.yaml
-  # - ./ollama/ks.yaml  # DISABLED: Uses ceph PVC
+  - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
   - ./paperless-ai/ks.yaml
   - ./paperless-gpt/ks.yaml

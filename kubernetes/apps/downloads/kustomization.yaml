@@ -8,7 +8,7 @@ components:
 resources:
   - ./namespace.yaml
   - ./autobrr/ks.yaml
-  # - ./bazarr/ks.yaml  # DISABLED: Uses ceph PVC
+  - ./bazarr/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./kapowarr/ks.yaml
   - ./metube/ks.yaml
@@ -19,4 +19,4 @@ resources:
   - ./readarr/ks.yaml
   - ./recyclarr/ks.yaml
   - ./sabnzbd/ks.yaml
-  # - ./sonarr/ks.yaml  # DISABLED: Uses ceph PVC
+  - ./sonarr/ks.yaml

@@ -13,11 +13,11 @@ resources:
   # Flux-Kustomizations
   - ./exporters/ks.yaml
   - ./fluent-bit/ks.yaml
-#  - ./gatus/ks.yaml  # Already commented
-  # - ./grafana/ks.yaml  # DISABLED: Uses ceph PVC
+#  - ./gatus/ks.yaml
+  - ./grafana/ks.yaml
   - ./kromgo/ks.yaml
-  # - ./kube-prometheus-stack/ks.yaml  # DISABLED: Uses ceph PVC
+  - ./kube-prometheus-stack/ks.yaml
   - ./silence-operator/ks.yaml
   - ./unpoller/ks.yaml
-  # - ./victoria-logs/ks.yaml  # DISABLED: Uses ceph PVC
+  - ./victoria-logs/ks.yaml
   - ./keda/ks.yaml
