@@ -10,8 +10,8 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-#  - ./go2rtc/ks.yaml
- # - ./home-assistant/ks.yaml
+  - ./go2rtc/ks.yaml
+  - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
   - ./mosquitto/ks.yaml
   - ./zigbee2mqtt/ks.yaml 
