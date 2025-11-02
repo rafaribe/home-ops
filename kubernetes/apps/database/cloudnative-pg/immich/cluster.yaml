@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: immich
+  name: immich-db
 spec:
   instances: 3
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.6-0.5.3
@@ -34,7 +34,7 @@ spec:
     - enabled: true
       isWALArchiver: true
       name: barman-cloud.cloudnative-pg.io
-      parameters:
+      parameters: &barmanParameters
         barmanObjectName: garage-immich
         serverName: immich
   backup:
@@ -42,23 +42,26 @@ spec:
     # Use volume snapshots for fast, efficient backups
     volumeSnapshot:
       className: csi-ceph-blockpool
+  # Note: previousCluster needs to be set to the name of the previous
+  # cluster when recovering from an existing cnpg cluster
+  # Note: previousCluster needs to be set to the name of the previous
+  # cluster when recovering from an existing cnpg cluster
   bootstrap:
     recovery:
       source: immich-backup
-      database: immich
-      owner: immich
   externalClusters:
     - name: immich-backup
-      barmanObjectStore:
-        destinationPath: s3://cnpg-immich/immich
-        serverName: immich
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg-secret
-            key: aws-access-key-id
-          secretAccessKey:
-            name: cloudnative-pg-secret
-            key: aws-secret-access-key
-        endpointURL: http://garage.storage.svc.cluster.local:3900
-        wal:
-          compression: gzip
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: garage-immich
+          serverName: immich
+
+  #  recovery:
+  #    source: &previousCluster postgres16-003
+  # Note: externalClusters is needed when recovering from an existing cnpg cluster
+  #externalClusters:
+  #  - name: *previousCluster
+  #    barmanObjectStore:
+  #      <<: *barmanObjectStore
+  #      serverName: *previousCluster
