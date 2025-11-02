@@ -36,7 +36,7 @@ spec:
       name: barman-cloud.cloudnative-pg.io
       parameters: &barmanParameters
         barmanObjectName: garage-immich
-        serverName: immich
+        serverName: immich-v2
   backup:
     retentionPolicy: 15d
     # Use volume snapshots for fast, efficient backups
@@ -47,15 +47,12 @@ spec:
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
-    initdb:
-      database: immich
-      owner: immich
-
-  #  recovery:
-  #    source: &previousCluster postgres16-003
-  # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  #externalClusters:
-  #  - name: *previousCluster
-  #    barmanObjectStore:
-  #      <<: *barmanObjectStore
-  #      serverName: *previousCluster
+    recovery:
+      source: immich-backup
+  externalClusters:
+    - name: immich-backup
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: garage-immich
+          serverName: immich-v1
