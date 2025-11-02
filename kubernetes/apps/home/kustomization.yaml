@@ -11,8 +11,8 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./go2rtc/ks.yaml
-  - ./home-assistant/ks.yaml
-  - ./immich/ks.yaml
+  # - ./home-assistant/ks.yaml  # DISABLED: Uses ceph PVC
+  # - ./immich/ks.yaml  # DISABLED: Uses ceph PVC
   - ./mosquitto/ks.yaml
   - ./zigbee2mqtt/ks.yaml 
  #- ./sparkyfitness/ks.yaml

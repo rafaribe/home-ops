@@ -66,6 +66,13 @@ spec:
             sectionName: https
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
     cephClusterSpec:
+      cleanupPolicy:
+        confirmation: "yes-really-destroy-data"
+        sanitizeDisks:
+          method: quick
+          dataSource: zero
+          iteration: 1
+        allowUninstallWithVolumes: true
       cephConfig:
         global:
           bdev_enable_discard: "true"

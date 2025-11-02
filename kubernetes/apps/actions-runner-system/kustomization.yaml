@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: actions-runner-system
 resources:
   - ./namespace.yaml
-  - ./actions-runner-controller/ks.yaml
+  # - ./actions-runner-controller/ks.yaml  # DISABLED: Uses ceph PVC
