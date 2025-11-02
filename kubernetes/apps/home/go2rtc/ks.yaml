@@ -29,5 +29,3 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: go2rtc
-  components:
-    - ../../../../components/volsync
