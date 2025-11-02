@@ -43,9 +43,22 @@ spec:
     volumeSnapshot:
       className: csi-ceph-blockpool
   bootstrap:
-    initdb:
+    recovery:
+      source: immich-backup
       database: immich
       owner: immich
-      encoding: UTF8
-      localeCollate: C
-      localeCType: C
+  externalClusters:
+    - name: immich-backup
+      barmanObjectStore:
+        destinationPath: s3://cnpg-immich/immich
+        serverName: immich
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg-secret
+            key: aws-access-key-id
+          secretAccessKey:
+            name: cloudnative-pg-secret
+            key: aws-secret-access-key
+        endpointURL: http://garage.storage.svc.cluster.local:3900
+        wal:
+          compression: gzip
