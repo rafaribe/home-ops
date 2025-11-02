@@ -41,9 +41,9 @@ spec:
         serverName: home-ops-v3
   bootstrap:
     recovery:
-      source: home-ops-backup
+      source:  source
   externalClusters:
-    - name: home-ops-backup
+    - name: source
       plugin:
         name: barman-cloud.cloudnative-pg.io
         parameters:
