@@ -38,7 +38,7 @@ spec:
       name: barman-cloud.cloudnative-pg.io
       parameters: &barmanParameters
         barmanObjectName: garage-home-ops
-        serverName: home-ops-v2
+        serverName: home-ops
   bootstrap:
     recovery:
       source: home-ops-backup
@@ -48,4 +48,4 @@ spec:
         name: barman-cloud.cloudnative-pg.io
         parameters:
           barmanObjectName: garage-home-ops
-          serverName: home-ops-v2
+          serverName: home-ops
