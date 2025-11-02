@@ -37,15 +37,14 @@ spec:
       isWALArchiver: true
       name: barman-cloud.cloudnative-pg.io
       parameters: &barmanParameters
-        barmanObjectName: garage-home-ops
         serverName: home-ops-v2
   bootstrap:
     recovery:
       source: home-ops-backup
   externalClusters:
     - name: home-ops-backup
-      barmanObjectStore:
-        <<: *barmanParameters
-        wal:
-          compression: gzip
-          maxParallel: 8
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: garage-home-ops
+          serverName: home-ops-v2

@@ -51,11 +51,11 @@ spec:
       source: immich-backup
   externalClusters:
     - name: immich-backup
-      barmanObjectStore:
-        <<: *barmanParameters
-        wal:
-          compression: gzip
-          maxParallel: 8
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: garage-immich
+          serverName: immich
 
   #  recovery:
   #    source: &previousCluster postgres16-003
