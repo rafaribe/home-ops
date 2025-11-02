@@ -46,8 +46,25 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 4
-      serverName: home-ops-v3
+      serverName: home-ops-v2
   bootstrap:
-    initdb:
-      database: app
-      owner: app
+    recovery:
+      source: home-ops-backup
+      recoveryTarget:
+        backupID: latest
+  externalClusters:
+    - name: home-ops-backup
+      barmanObjectStore:
+        destinationPath: s3://cnpg-home-ops/
+        endpointURL: http://garage.storage.svc.cluster.local:3900
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg-secret
+            key: AWS_ACCESS_KEY_ID
+          secretAccessKey:
+            name: cloudnative-pg-secret
+            key: AWS_SECRET_ACCESS_KEY
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        serverName: home-ops-v2
