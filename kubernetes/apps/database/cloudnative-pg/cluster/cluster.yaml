@@ -31,20 +31,38 @@ spec:
     volumeSnapshot:
        className: csi-ceph-blockpool
        snapshotOwnerReference: cluster
-
-  plugins:
-    - enabled: true
-      isWALArchiver: true
-      name: barman-cloud.cloudnative-pg.io
-      parameters: &barmanParameters
-        serverName: home-ops-v2
+    barmanObjectStore:
+      destinationPath: s3://cnpg-home-ops/
+      endpointURL: http://garage.storage.svc.cluster.local:3900
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg-secret
+          key: AWS_ACCESS_KEY_ID
+        secretAccessKey:
+          name: cloudnative-pg-secret
+          key: AWS_SECRET_ACCESS_KEY
+      data:
+        compression: bzip2
+      wal:
+        compression: bzip2
+        maxParallel: 4
+      serverName: home-ops-v2
   bootstrap:
     recovery:
       source: home-ops-backup
   externalClusters:
     - name: home-ops-backup
-      plugin:
-        name: barman-cloud.cloudnative-pg.io
-        parameters:
-          barmanObjectName: garage-home-ops
-          serverName: home-ops-v2
+      barmanObjectStore:
+        destinationPath: s3://cnpg-home-ops/
+        endpointURL: http://garage.storage.svc.cluster.local:3900
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg-secret
+            key: AWS_ACCESS_KEY_ID
+          secretAccessKey:
+            name: cloudnative-pg-secret
+            key: AWS_SECRET_ACCESS_KEY
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        serverName: home-ops-v2
