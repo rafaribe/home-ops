@@ -3,11 +3,11 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: &cluster immich
+  name: immich
 spec:
   backupOwnerReference: self
   cluster:
-    name: *cluster
+    name: immich
   immediate: true
   method: plugin
   pluginConfiguration:
