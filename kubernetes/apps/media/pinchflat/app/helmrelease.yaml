@@ -5,23 +5,10 @@ kind: HelmRelease
 metadata:
   name: pinchflat
 spec:
+  chartRef:
+    kind: OCIRepository
+    name: pinchflat
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      sourceRef:
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   values:
     controllers:
       pinchflat:
@@ -40,7 +27,6 @@ spec:
               liveness: &probes
                 enabled: true
                 custom: true
-                spec:
                   httpGet:
                     path: /healthcheck
                     port: *port

@@ -5,27 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app navidrome
 spec:
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      interval: 30m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: navidrome
   interval: 30m
-  maxHistory: 2
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
       navidrome:
@@ -61,7 +44,6 @@ spec:
                 enabled: true
               startup:
                 enabled: true
-                spec:
                   failureThreshold: 30
                   periodSeconds: 5
 

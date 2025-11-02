@@ -5,23 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app media-browser-quantum
 spec:
+  chartRef:
+    kind: OCIRepository
+    name: media-browser-quantum
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
   values:
     controllers:
       media-browser-quantum:
@@ -52,7 +39,6 @@ spec:
               liveness: &probes
                 enabled: true
                 custom: true
-                spec:
                   httpGet:
                     path: /health
                     port: &port 80

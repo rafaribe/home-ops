@@ -5,15 +5,9 @@ kind: HelmRelease
 metadata:
   name: jellyfin
 spec:
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      interval: 30m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: jellyfin
   interval: 30m
   values:
     controllers:
@@ -31,7 +25,6 @@ spec:
               liveness: &probes
                 enabled: true
                 custom: true
-                spec:
                   httpGet:
                     path: /health
                     port: &port 8096
@@ -42,7 +35,6 @@ spec:
               readiness: *probes
               startup:
                 enabled: true
-                spec:
                   failureThreshold: 30
                   periodSeconds: 10
             securityContext:

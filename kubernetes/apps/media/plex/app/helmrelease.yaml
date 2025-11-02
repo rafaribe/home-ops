@@ -5,28 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app plex
 spec:
+  chartRef:
+    kind: OCIRepository
+    name: plex
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: intel-device-plugins-gpu
-      namespace: system
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   values:
     controllers:
       plex:
@@ -45,7 +27,6 @@ spec:
               liveness: &probes
                 enabled: true
                 custom: true
-                spec:
                   httpGet:
                     path: /identity
                     port: 32400
@@ -56,7 +37,6 @@ spec:
               readiness: *probes
               startup:
                 enabled: true
-                spec:
                   failureThreshold: 30
                   periodSeconds: 10
             securityContext:
