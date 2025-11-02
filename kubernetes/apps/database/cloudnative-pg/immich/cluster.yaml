@@ -47,15 +47,9 @@ spec:
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
-    recovery:
-      source: immich-backup
-  externalClusters:
-    - name: immich-backup
-      plugin:
-        name: barman-cloud.cloudnative-pg.io
-        parameters:
-          barmanObjectName: garage-immich
-          serverName: immich
+    initdb:
+      database: immich
+      owner: immich
 
   #  recovery:
   #    source: &previousCluster postgres16-003
