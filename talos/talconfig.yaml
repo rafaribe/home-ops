@@ -417,6 +417,7 @@ controlPlane:
               - system
               - system-upgrade
               - actions-runner-system
+              - system-controllers
     # Mount openebs-hostpath in kubelet
     - &openebs-hostpath |-
       machine:
