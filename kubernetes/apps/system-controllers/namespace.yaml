@@ -8,3 +8,5 @@ metadata:
     pod-security.kubernetes.io/enforce: &ps restricted
     pod-security.kubernetes.io/audit: *ps
     pod-security.kubernetes.io/warn: *ps
+  labels:
+    resource.kubernetes.io/admin-access: "true"
