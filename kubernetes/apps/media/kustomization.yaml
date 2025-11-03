@@ -8,14 +8,13 @@ components:
 resources:
   - ./namespace.yaml
   - ./audiobookshelf/ks.yaml
-  - ./calibre-web-automated/ks.yaml
+  #- ./calibre-web-automated/ks.yaml
   - ./jellyseerr/ks.yaml
   - ./kavita/ks.yaml
   - ./komga/ks.yaml
   - ./maintainerr/ks.yaml
   - ./media-browser/ks.yaml
   - ./navidrome/ks.yaml
-  - ./pinchflat/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
   - ./wizarr/ks.yaml
