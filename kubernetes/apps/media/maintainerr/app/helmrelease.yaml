@@ -20,7 +20,7 @@ spec:
               repository: ghcr.io/jorenn92/maintainerr
               tag: 2.19.0@sha256:bee84707edaf589cda3d18b6813cbfe3a137b52786210c3a28190e10910c1240
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
             probes:
               liveness:
                 enabled: true
@@ -28,6 +28,7 @@ spec:
                 enabled: true
               startup:
                 enabled: true
+                spec:
                   failureThreshold: 30
                   periodSeconds: 5
             resources:
