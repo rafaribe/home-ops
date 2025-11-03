@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: tuppr.home-operations.com/v1alpha1
+kind: TalosUpgrade
+metadata:
+  name: talos
+  namespace: system-controllers
+spec:
+  talos:
+    # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+    version: v1.11.3
+  policy:
+    rebootMode: powercycle
+  healthChecks:
+    - apiVersion: volsync.backube/v1alpha1
+      kind: ReplicationSource
+      expr: |-
+        status.conditions.filter(c, c.type == "Synchronizing").all(c, c.status == "False")
