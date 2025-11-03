@@ -6,9 +6,22 @@ metadata:
   name: &app talos-etcd-defrag
 spec:
   interval: 30m
-  chartRef:
-    kind: OCIRepository
-    name: app-template
+  chart:
+    spec:
+      chart: app-template
+      version: 4.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     controllers:
       talos-etcd-defrag:
@@ -16,23 +29,45 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         cronjob:
-          schedule: "0 4 * * *" # Daily at 4:00 AM
-          parallelism: 3 # Set this to your number of nodes
+          schedule: "0 2 * * 0" # Weekly on Sunday at 2 AM
           timeZone: &timeZone Europe/Lisbon
-          concurrencyPolicy: Allow # Changed from Forbid to Allow multiple pods
+          concurrencyPolicy: Allow  # Changed from Forbid to Allow multiple pods
           successfulJobsHistory: 3
           failedJobsHistory: 3
-        replicas: 1 # Create 3 pods, one for each control plane
+        replicas: 3  # Create 3 pods, one for each control plane
         containers:
           app:
             image:
               repository: ghcr.io/siderolabs/talosctl
-              tag: v1.11.2
+              tag: v1.10.4
+            command:
+              - /bin/sh
+              - -c
             args:
-              - -n
-              - "$(NODE_IP)"
-              - etcd
-              - defrag
+              - |
+                set -e
+                echo "Starting etcd defragmentation on local controlplane node..."
+                echo "Timestamp: $(date)"
+                echo "Node: $NODE_NAME"
+                echo "Node IP: $NODE_IP"
+
+                # Verify we have the node IP
+                if [ -z "$NODE_IP" ]; then
+                  echo "ERROR: NODE_IP environment variable not set"
+                  exit 1
+                fi
+
+                echo "Running: talosctl -n $NODE_IP etcd defrag"
+
+                # Run etcd defrag on this node
+                if timeout 300 talosctl -n "$NODE_IP" etcd defrag; then
+                  echo "✅ Successfully defragmented etcd on $NODE_NAME ($NODE_IP)"
+                  echo "Defragmentation completed at: $(date)"
+                else
+                  echo "❌ Failed to defragment etcd on $NODE_NAME ($NODE_IP)"
+                  echo "Defragmentation failed at: $(date)"
+                  exit 1
+                fi
             env:
               TZ: *timeZone
               NODE_NAME:
@@ -57,22 +92,7 @@ spec:
                 drop:
                   - ALL
         serviceAccount:
-          identifier: *app
-
-    rbac:
-      bindings:
-        cluster-admin-binding:
-          enabled: true
-          type: ClusterRoleBinding
-          roleRef:
-            name: cluster-admin
-            kind: ClusterRole
-            apiGroup: rbac.authorization.k8s.io
-          subjects:
-            - kind: ServiceAccount
-              name: *app
-              namespace: "{{ .Release.Namespace }}"
-
+          identifier: talos-etcd-defrag
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -91,13 +111,13 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  app.kubernetes.io/name: *app
+                  app.kubernetes.io/name: talos-etcd-defrag
               topologyKey: kubernetes.io/hostname
 
     persistence:
       talos-secrets:
         type: secret
-        name: *app
+        name: talos-etcd-defrag-talos-secrets
         globalMounts:
           - path: /var/run/secrets/talos.dev
             readOnly: true
