@@ -13,6 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
     - name: volsync
+      namespace: storage
   path: ./kubernetes/apps/media/your-spotify/app
   prune: true
   sourceRef:

@@ -27,6 +27,7 @@ spec:
               liveness: &probes
                 enabled: true
                 custom: true
+                spec:
                   httpGet:
                     path: /health
                     port: &port 80

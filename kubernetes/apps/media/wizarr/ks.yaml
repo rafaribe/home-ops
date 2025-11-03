@@ -13,6 +13,7 @@ spec:
   dependsOn:
     - name: plex
     - name: volsync
+      namespace: storage
   path: ./kubernetes/apps/media/wizarr/app
   prune: true
   sourceRef:
