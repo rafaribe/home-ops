@@ -7,6 +7,7 @@ resources:
   - ./database
   - ./downloads
   - ./external-secrets
+  - ./flux-system
   - ./home
   - ./kube-system
   - ./media
