@@ -46,10 +46,15 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: plex
+      namespace: media
     - name: tautulli
+      namespace: media
     - name: radarr
+      namespace: downloads
     - name: sonarr
+      namespace: downloads
     - name: external-secrets-stores
+      namespace: external-secrets
     - name: volsync
       namespace: storage
   path: ./kubernetes/apps/media/plex/kometa
@@ -131,6 +136,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: plex
+      namespace: media
     - name: external-secrets-stores
       namespace: external-secrets
   path: ./kubernetes/apps/media/plex/plex-image-cleanup
