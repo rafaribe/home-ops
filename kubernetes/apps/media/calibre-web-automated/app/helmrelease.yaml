@@ -72,13 +72,6 @@ spec:
         ports:
           http:
             port: *port
-
-    service:
-      app:
-        controller: calibre-web
-        ports:
-          http:
-            port: 8083
     route:
       app:
         annotations:
