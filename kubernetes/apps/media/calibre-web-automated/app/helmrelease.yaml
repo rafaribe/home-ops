@@ -1,0 +1,134 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app calibre-web-automated
+  namespace: default
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: calibre-web-automated
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        runAsNonRoot: false
+        seccompProfile: { type: RuntimeDefault }
+    controllers:
+      ${APP}:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/crocodilestick/calibre-web-automated
+              tag: V3.1.4@sha256:577e846f104fd21453ef306eefb4a95dd95b3b9ddd2463a150944494284da0fd
+            env:
+              CACHE_DIR: /cache
+              # Skips/soft fail on privileged actions that shouldn't exist anyways
+              NETWORK_SHARE_MODE: true
+              S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES: 1
+              S6_READ_ONLY_ROOT: 1
+            securityContext:
+              allowPrivilegeEscalation: true
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop:
+                  - ALL
+                add:
+                  # S6
+                  - CHOWN
+                  - SETUID
+                  - SETGID
+                  - FOWNER
+                  - DAC_OVERRIDE
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    port: &port 8083
+                    path: /login
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 50m
+                memory: 200Mi
+              limits:
+                memory: 600Mi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+
+    service:
+      app:
+        controller: calibre-web
+        ports:
+          http:
+            port: 8083
+    route:
+      app:
+        annotations:
+          hajimari.io/icon: mdi:chart-bar
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: Calibre
+          gethomepage.dev/icon: calibre.png
+          gethomepage.dev/widget.type: calibreweb
+          gethomepage.dev/widget.url: http://calibre-web-automated.media:8083
+          gethomepage.dev/widget.username: "{{`{{HOMEPAGE_VAR_CALIBRE_USERNAME}}`}}"
+          gethomepage.dev/widget.password: "{{`{{HOMEPAGE_VAR_CALIBRE_PASSWORD}}`}}"
+        hostnames: ["calibre.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: calibre-web
+                port: 8083
+
+    persistence:
+      config:
+        existingClaim: calibre-web
+        advancedMounts:
+          calibre-web:
+            app:
+              - path: /config
+      ingest:
+        enabled: true
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/media/books/incoming
+        globalMounts:
+          - path: /cwa-book-ingest
+      library:
+        enabled: true
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/media/books/library
+        globalMounts:
+          - path: /calibre-library
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /cache
+            subPath: cache
+          - path: /tmp
+            subPath: tmp
+          - path: /run
+            subPath: run
+      

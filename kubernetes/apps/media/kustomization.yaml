@@ -8,7 +8,7 @@ components:
 resources:
   - ./namespace.yaml
   - ./audiobookshelf/ks.yaml
-  - ./calibre-web/ks.yaml
+  - ./calibre-web-automated/ks.yaml
   - ./jellyseerr/ks.yaml
   - ./kavita/ks.yaml
   - ./komga/ks.yaml
