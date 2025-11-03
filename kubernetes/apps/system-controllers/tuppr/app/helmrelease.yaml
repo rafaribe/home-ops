@@ -10,4 +10,4 @@ spec:
     name: tuppr
   interval: 15m
   values:
-    replicaCount: ${REPLICAS:=1}
+    replicaCount: 1
