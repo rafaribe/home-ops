@@ -44,7 +44,6 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                gpu.intel.com/i915: 1
                 memory: 2Gi
     defaultPodOptions:
       securityContext:
@@ -55,8 +54,6 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [44]
         seccompProfile: { type: RuntimeDefault }
-      nodeSelector:
-        intel.feature.node.kubernetes.io/gpu: "true"
 
     service:
       app:
@@ -72,7 +69,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
         rules:
           - backendRefs:
               - name: *app
