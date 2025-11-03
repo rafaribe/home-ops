@@ -172,4 +172,3 @@ spec:
           - backendRefs:
               - identifier: code-server
                 port: 12321
-                sectionName: https
