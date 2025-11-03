@@ -125,7 +125,7 @@ spec:
     persistence:
       talos-secrets:
         type: secret
-        name: talos-etcd-defrag-talos-secrets
+        name: talos-etcd-defrag
         globalMounts:
           - path: /var/run/secrets/talos.dev
             readOnly: true
