@@ -79,11 +79,32 @@ spec:
                 drop:
                   - ALL
         serviceAccount:
-          identifier: talos-etcd-defrag
+          identifier: *app
+    serviceAccount:
+      talos-etcd-defrag:
+        enabled: true
+        labels: {}
+        annotations: {}
+
+
+    rbac:
+      bindings:
+        cluster-admin-binding:
+          enabled: true
+          type: ClusterRoleBinding
+          roleRef:
+            name: cluster-admin
+            kind: ClusterRole
+            apiGroup: rbac.authorization.k8s.io
+          subjects:
+            - kind: ServiceAccount
+              name: *app
+              namespace: "{{ .Release.Namespace }}"
+
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000 # nobody user
+        runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
@@ -98,7 +119,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  app.kubernetes.io/name: talos-etcd-defrag
+                  app.kubernetes.io/name: *app
               topologyKey: kubernetes.io/hostname
 
     persistence:
