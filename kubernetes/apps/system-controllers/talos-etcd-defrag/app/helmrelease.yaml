@@ -21,6 +21,7 @@ spec:
           concurrencyPolicy: Allow  # Changed from Forbid to Allow multiple pods
           successfulJobsHistory: 3
           failedJobsHistory: 3
+          parallelism: 10 # Set this to your number of nodes
         replicas: 3  # Create 3 pods, one for each control plane
         containers:
           app:
