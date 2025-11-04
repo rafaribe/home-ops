@@ -4,10 +4,10 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app whodb
-  namespace: flux-system
 spec:
   dependsOn:
     - name: snapshot-controller
+      namespace: storage
   path: ./kubernetes/apps/storage/whodb/app
   prune: true
   sourceRef:
