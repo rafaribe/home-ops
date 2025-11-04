@@ -26,4 +26,3 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: miniflux
-  components:

@@ -30,4 +30,3 @@ spec:
       APP: *app
       HOSTNAME: cyberchef.rafaribe.com
       GATUS_SUBDOMAIN: cyberchef
-  components:
