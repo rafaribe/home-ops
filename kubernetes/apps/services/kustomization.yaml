@@ -7,7 +7,6 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./namespace.yaml
-  - ./13ft/ks.yaml
   - ./actual/ks.yaml
   - ./affine/ks.yaml
   - ./atuin/ks.yaml
