@@ -60,7 +60,7 @@ spec:
               PAPERLESS_TIKA_ENDPOINT: http://127.0.0.1:9998
               PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://127.0.0.1:3000
               # Configure redis integration
-              PAPERLESS_REDIS: redis://dragonfly.storage.svc.cluster.local:6379
+              PAPERLESS_REDIS: redis://dragonfly-paperless.services.svc.cluster.local:6379
               # Configure user permissions
               USERMAP_UID: "1000"
               USERMAP_GID: "1000"

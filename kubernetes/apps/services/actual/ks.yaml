@@ -32,3 +32,4 @@ spec:
       VOLSYNC_CLAIM: actual
   components:
     - ../../../../components/volsync
+    - ../../../../components/dragonfly
