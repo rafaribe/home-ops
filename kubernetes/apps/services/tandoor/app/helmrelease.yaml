@@ -36,7 +36,7 @@ spec:
               COMMENT_PREF_DEFAULT: 1
               DB_ENGINE: django.db.backends.postgresql_psycopg2
               DEBUG: 0
-              DEFAULT_FROM_EMAIL: recipes@${SECRET_DOMAIN}
+              DEFAULT_FROM_EMAIL: recipes@rafaribe.com
               EMAIL_HOST: smtp-relay.networking.svc.cluster.local
               EMAIL_PORT: 2525
               ENABLE_SIGNUP: 0
