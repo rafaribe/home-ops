@@ -15,6 +15,6 @@ resources:
   - ./observability
   - ./rook-ceph
   - ./security
- # - ./services
+  - ./services
   - ./storage
   - ./system-controllers
