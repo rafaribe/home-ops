@@ -30,7 +30,7 @@ spec:
       APP: *app
       APP_UID: "1000"
       APP_GID: "1000"
-      CLAIM:: affine-data
+      CLAIM:: affine
       VOLSYNC_CAPACITY: 15Gi
   components:
     - ../../../../components/volsync
