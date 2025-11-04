@@ -85,9 +85,6 @@ spec:
             scrapeTimeout: 10s
     route:
       app:
-        annotations:
-          hajimari.io/icon: mdi:powershell
-
         hostnames: ["sh.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
