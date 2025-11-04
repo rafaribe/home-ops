@@ -92,6 +92,6 @@ spec:
                 port: *port
     persistence:
       data:
-        existingClaim: *app
+        existingClaim: affine-data
         globalMounts:
           - path: /data
