@@ -29,7 +29,7 @@ spec:
   postBuild:
     substitute:
       APP: *appname
-      VOLSYNC_CLAIM: actual
+      VOLSYNC_CLAIM: actual-data
   components:
     - ../../../../components/volsync
     - ../../../../components/dragonfly
