@@ -19,7 +19,6 @@ spec:
   postBuild:
     substitute:
       APP: immich
-      GATUS_SUBDOMAIN: photos
       VOLSYNC_CLAIM: immich-library
       VOLSYNC_CAPACITY: 1Ti
       VOLSYNC_CRON_EXPRESSION: 0 3 * * *

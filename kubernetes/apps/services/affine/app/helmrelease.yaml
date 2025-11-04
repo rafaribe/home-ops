@@ -30,12 +30,12 @@ spec:
           app:
             image:
               repository: ghcr.io/toeverything/affine-graphql
-              tag: stable
+              tag: stable-e98f035
             env:
-              TZ: "${TIMEZONE:=Etc/UTC}"
+              TZ: "Europe/Lisbon"
               NODE_ENV: production
               # Redis configuration
-              REDIS_SERVER_HOST: dragonfly.storage.svc.cluster.local
+              REDIS_SERVER_HOST: affine-dragonfly.services.svc.cluster.local
               REDIS_SERVER_PORT: "6379"
               REDIS_SERVER_DATABASE: "0"
               # Server configuration
@@ -81,10 +81,6 @@ spec:
     route:
       app:
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: mdi:note-edit-outline
-          hajimari.io/appName: "Affine"
-          hajimari.io/group: "Productivity"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Productivity
           gethomepage.dev/name: Affine
@@ -94,7 +90,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
         rules:
           - backendRefs:
               - name: *app
