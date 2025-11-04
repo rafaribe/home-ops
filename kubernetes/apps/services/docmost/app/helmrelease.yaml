@@ -6,19 +6,9 @@ metadata:
   name: &app docmost
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      sourceRef:
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
+  chartRef:
+    kind: OCIRepository
+    name: docmost
   values:
     controllers:
       docmost:
@@ -38,13 +28,13 @@ spec:
               repository: docmost/docmost
               tag: 0.23.2
             env:
-              TZ: "${TIMEZONE:=Etc/UTC}"
+              TZ: "Europe/Lisbon"
               APP_URL: "https://docmost.rafaribe.com"
               MAIL_DRIVER: smtp
               MAIL_FROM_ADDRESS: docmost@rafaribe.com
               MAIL_FROM_NAME: Docmost
               PORT: &port 3000
-              REDIS_URL: "redis://dragonfly.storage:6379"
+              REDIS_URL: "redis://docmost-dragonfly.services.svc.cluster.local:6379"
               SMTP_HOST: smtp-relay.services.svc.cluster.local
               SMTP_PORT: 25
             envFrom: *envFrom

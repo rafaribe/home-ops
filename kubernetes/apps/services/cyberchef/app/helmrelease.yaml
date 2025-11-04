@@ -5,32 +5,15 @@ kind: HelmRelease
 metadata:
   name: &app cyberchef
 spec:
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      sourceRef:
-  interval: 15m
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  driftDetection:
-    mode: enabled
-    ignore:
-      - paths:
-          - /spec/containers/resources/limits
-        target:
-          kind: Pod
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: cyberchef
   values:
     defaultPodOptions:
       securityContext:
-        runAsGroup: 65534
-        runAsUser: 65534
+        runAsGroup: 1000
+        runAsUser: 1000
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault

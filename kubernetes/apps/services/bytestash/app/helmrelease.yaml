@@ -6,19 +6,9 @@ metadata:
   name: &app bytestash
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      sourceRef:
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
+  chartRef:
+    kind: OCIRepository
+    name: bytestash
   values:
     controllers:
       bytestash:
@@ -30,7 +20,7 @@ spec:
               repository: ghcr.io/jordan-dalby/bytestash
               tag: 1.5.9@sha256:9c17b5510ca45c976fe23b0d4705ad416aa58d4bf756a70e03ef1f08cf7801fd
             env:
-              TZ: "${TIMEZONE:=Etc/UTC}"
+              TZ: "Europe/Lisbon"
               # See https://github.com/jordan-dalby/ByteStash/wiki/FAQ#environment-variables
               TOKEN_EXPIRY: 24h
               ALLOW_NEW_ACCOUNTS: "true"
