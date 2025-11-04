@@ -24,6 +24,6 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_CLAIM: lubelog-v2
+      CLAIM:: lubelog-v2
   components:
     - ../../../../components/volsync

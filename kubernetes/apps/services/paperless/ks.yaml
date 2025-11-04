@@ -29,7 +29,7 @@ spec:
       APP: *app
       APP_UID: "1000"
       APP_GID: "1000"
-      VOLSYNC_CLAIM: paperless
+      CLAIM:: paperless
       VOLSYNC_CAPACITY: 15Gi
   components:
     - ../../../../components/volsync

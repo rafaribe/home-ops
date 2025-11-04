@@ -28,7 +28,7 @@ spec:
   postBuild:
     substitute:
       APP: *appname
-      VOLSYNC_CLAIM: bazarr
+      CLAIM:: bazarr
   components:
     - ../../../../components/volsync
 

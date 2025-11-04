@@ -29,6 +29,6 @@ spec:
       APP: *appname
       APP_UID: "1000"
       APP_GID: "1000"
-      VOLSYNC_CLAIM: mosquitto
+      CLAIM:: mosquitto
   components:
     - ../../../../components/volsync

@@ -22,7 +22,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CLAIM: media-browser
+      CLAIM:: media-browser
       GATUS_SUBDOMAIN: media
   components:
     - ../../../../components/volsync

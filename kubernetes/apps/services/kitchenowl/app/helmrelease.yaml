@@ -8,7 +8,7 @@ spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: app-template
+    name: kitchenowl
   maxHistory: 2
   install:
     createNamespace: true
@@ -28,12 +28,10 @@ spec:
 
         pod:
           securityContext:
-            runAsUser: ${APP_UID}
-            runAsGroup: ${APP_GID}
-            fsGroup: ${APP_GID}
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
-            supplementalGroups:
-              - 65539
 
           enableServiceLinks: false
 
@@ -98,6 +96,6 @@ spec:
     persistence:
       data:
         type: persistentVolumeClaim
-        existingClaim: "${VOLSYNC_CLAIM}"
+        existingClaim: kitchenowl-data
         globalMounts:
           - path: /data

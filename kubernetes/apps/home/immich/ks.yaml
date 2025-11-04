@@ -19,7 +19,7 @@ spec:
   postBuild:
     substitute:
       APP: immich
-      VOLSYNC_CLAIM: immich-library
+      CLAIM:: immich-library
       VOLSYNC_CAPACITY: 1Ti
       VOLSYNC_CRON_EXPRESSION: 0 3 * * *
   components:

@@ -21,7 +21,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CLAIM: "radicale-data-v2"
+      CLAIM:: "radicale-data-v2"
       APP_UID: "1000"
       APP_GID: "1000"
   components:
