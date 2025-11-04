@@ -8,8 +8,7 @@ spec:
   interval: 30m
   chartRef:
     kind: OCIRepository
-    name: app-template
-
+    name: karakeep
   values:
     controllers:
       karakeep:
