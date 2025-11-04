@@ -5,9 +5,6 @@ kind: Kustomization
 metadata:
   name: &app whodb
 spec:
-  dependsOn:
-    - name: snapshot-controller
-      namespace: storage
   path: ./kubernetes/apps/storage/whodb/app
   prune: true
   sourceRef:
