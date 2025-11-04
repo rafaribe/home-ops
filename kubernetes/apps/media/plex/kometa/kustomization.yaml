@@ -8,3 +8,7 @@ resources:
   - ./helmrelease.yaml
 generatorOptions:
   disableNameSuffixHash: true
+configMapGenerator:
+  - name: kometa-configmap
+    files:
+      - ./configs/config.yml
