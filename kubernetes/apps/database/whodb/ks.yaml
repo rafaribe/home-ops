@@ -5,7 +5,7 @@ kind: Kustomization
 metadata:
   name: &app whodb
 spec:
-  path: ./kubernetes/apps/storage/whodb/app
+  path: ./kubernetes/apps/database/whodb/app
   prune: true
   sourceRef:
     kind: GitRepository
