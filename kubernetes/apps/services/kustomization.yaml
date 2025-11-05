@@ -30,5 +30,5 @@ resources:
 #  - ./searxng/ks.yaml
  # - ./smtp-relay/ks.yaml
   #- ./stirling-pdf/ks.yaml
-  - ./tandoor/ks.yaml
-  - ./thelounge/ks.yaml
+  #- ./tandoor/ks.yaml
+ # - ./thelounge/ks.yaml
