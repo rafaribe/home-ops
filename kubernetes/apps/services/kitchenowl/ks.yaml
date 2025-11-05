@@ -3,7 +3,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app kitchenowl
-  namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
