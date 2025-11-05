@@ -21,6 +21,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      DRAGONFLY_EXTRA_ARGS: |- 
+        - --default_lua_flags=allow-undeclared-keys
   components:
     - ../../../../components/volsync
     - ../../../../components/dragonfly
