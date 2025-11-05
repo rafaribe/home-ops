@@ -17,7 +17,7 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: rook-ceph-clusterq
+    - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
       namespace: storage

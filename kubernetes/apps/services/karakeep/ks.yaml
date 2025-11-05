@@ -31,5 +31,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      CLAIM:: hoarder
+      CLAIM: hoarder
       VOLSYNC_CRONEXPRESSION: "28 * * * *"
