@@ -5,25 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app stirling-pdf
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      sourceRef:
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: storage
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: stirling-pdf
   values:
     controllers:
       app:

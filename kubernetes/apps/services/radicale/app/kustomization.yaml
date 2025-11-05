@@ -6,7 +6,12 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./externalsecret.yaml
+configMapGenerator:
+  - name: radicale-configmap
+    files:
+      - resources/config.cfg
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
+
