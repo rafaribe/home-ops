@@ -22,6 +22,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      CLAIM:: omegabrr
+      CLAIM: omegabrr
   components:
     - ../../../../components/volsync

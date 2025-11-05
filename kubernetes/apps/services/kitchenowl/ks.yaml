@@ -27,7 +27,7 @@ spec:
       APP: *app
       APP_UID: "1000"
       APP_GID: "1000"
-      CLAIM:: kitchenowl-data
+      CLAIM: kitchenowl-data
       VOLSYNC_CAPACITY: 2Gi
   prune: true
   wait: true

@@ -28,6 +28,6 @@ spec:
   postBuild:
     substitute:
       APP: *appname
-      CLAIM:: recyclarr
+      CLAIM: recyclarr
   components:
     - ../../../../components/volsync

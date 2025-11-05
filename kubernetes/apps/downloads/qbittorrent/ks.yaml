@@ -20,7 +20,7 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: qb
-      CLAIM:: qbittorrent
+      CLAIM: qbittorrent
       VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_ACCESSMODES: ReadWriteMany
       VOLSYNC_STORAGECLASS: ceph-filesystem
@@ -51,7 +51,7 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: qbp
-      CLAIM:: qbittorrent-private
+      CLAIM: qbittorrent-private
       VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_ACCESSMODES: ReadWriteOnce
   components:

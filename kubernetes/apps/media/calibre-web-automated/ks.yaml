@@ -23,6 +23,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      CLAIM:: calibre-web-automated
+      CLAIM: calibre-web-automated
   components:
     - ../../../../components/volsync
