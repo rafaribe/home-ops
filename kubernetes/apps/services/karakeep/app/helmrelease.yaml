@@ -149,7 +149,7 @@ spec:
 
     persistence:
       config:
-        existingClaim: hoarder # Use the same claim as Hoarder, since Karakeep is Hoarder
+        existingClaim: karakeep # Use the same claim as Hoarder, since Karakeep is Hoarder
         advancedMounts:
           karakeep:
             app:
