@@ -16,8 +16,8 @@ resources:
   - ./homebox/ks.yaml
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
-  - ./karakeep/ks.yaml
-  - ./kitchenowl/ks.yaml
+ # - ./karakeep/ks.yaml
+  #- ./kitchenowl/ks.yaml
  # - ./linkding/ks.yaml
   - ./littlelink/ks.yaml
  # - ./lubelog/ks.yaml
@@ -28,7 +28,7 @@ resources:
  # - ./paperless/ks.yaml
  # - ./radicale/ks.yaml
 #  - ./searxng/ks.yaml
-  - ./smtp-relay/ks.yaml
-  - ./stirling-pdf/ks.yaml
+ # - ./smtp-relay/ks.yaml
+  #- ./stirling-pdf/ks.yaml
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
