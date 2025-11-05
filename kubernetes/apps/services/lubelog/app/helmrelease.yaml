@@ -6,24 +6,9 @@ metadata:
   name: &app lubelog
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      sourceRef:
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: storage
+  chartRef:
+    kind: OCIRepository
+    name: lubelog
   values:
     controllers:
       lubelog:

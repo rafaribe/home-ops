@@ -6,23 +6,9 @@ metadata:
   namespace: collab
 spec:
   interval: 30m
-  releaseName: *app
-  chart:
-    spec:
-      chart: app-template
-      version: 4.0.1
-      sourceRef:
-      interval: 5m
-  maxHistory: 2
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
+  chartRef:
+    kind: OCIRepository
+    name: littlelink
   values:
     controllers:
       *app:

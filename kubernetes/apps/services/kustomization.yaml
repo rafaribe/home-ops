@@ -18,7 +18,6 @@ resources:
   - ./it-tools/ks.yaml
   - ./karakeep/ks.yaml
   - ./kitchenowl/ks.yaml
-  - ./kubernetes-schemas/ks.yaml
   - ./linkding/ks.yaml
   - ./littlelink/ks.yaml
   - ./lubelog/ks.yaml
