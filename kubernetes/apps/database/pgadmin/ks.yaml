@@ -8,9 +8,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: cloudnative-pg-operator
-    - name: cloudnative-pg-cluster
   path: ./kubernetes/apps/database/pgadmin/app
   prune: true
   sourceRef:
