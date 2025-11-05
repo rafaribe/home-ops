@@ -34,7 +34,7 @@ spec:
               MAIL_FROM_ADDRESS: docmost@rafaribe.com
               MAIL_FROM_NAME: Docmost
               PORT: &port 3000
-              REDIS_URL: "redis://docmost-dragonfly.services.svc.cluster.local:6379"
+              REDIS_URL: "redis://docmost-dragonfly:6379"
               SMTP_HOST: smtp-relay.services.svc.cluster.local
               SMTP_PORT: 25
             envFrom: *envFrom
