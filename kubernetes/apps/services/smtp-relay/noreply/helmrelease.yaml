@@ -6,19 +6,10 @@ metadata:
   name: &app smtp-relay-noreply
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      sourceRef:
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
+  chartRef:
+    kind: OCIRepository
+    name: smtp-relay-noreply
+
   values:
     controllers:
       smtp-relay-noreply:
@@ -80,7 +71,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: smtp-relay-noreply.rafaribe.com
-          io.cilium/lb-ipam-ips: ${LB_SMTP_RELAY_NOREPLY}
+          io.cilium/lb-ipam-ips: 10.0.1.33
         ports:
           http:
             primary: true
