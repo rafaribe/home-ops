@@ -7,9 +7,9 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./namespace.yaml
-  #- ./actual/ks.yaml
-  #- ./affine/ks.yaml
- # - ./atuin/ks.yaml
+  - ./actual/ks.yaml
+  - ./affine/ks.yaml
+  - ./atuin/ks.yaml
 #  - ./bytestash/ks.yaml
   - ./cyberchef/ks.yaml
   - ./docmost/ks.yaml
