@@ -126,16 +126,13 @@ spec:
               - identifier: browser
                 port: *browserPort
     persistence:
-      # TODO: volsync
-      config:
-        type: persistentVolumeClaim
-        suffix: config
-        accessMode: ReadWriteOnce
-        size: 1Gi
+      data:
+        existingClaim: volsync
         advancedMounts:
           browser:
             app:
               - path: /config
+
       data:
         enabled: true
         type: nfs
