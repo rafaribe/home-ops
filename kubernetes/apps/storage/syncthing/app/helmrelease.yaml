@@ -127,7 +127,7 @@ spec:
                 port: *browserPort
     persistence:
       config:
-        existingClaim: volsync
+        existingClaim: syncthing
         advancedMounts:
           browser:
             app:
