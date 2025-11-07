@@ -10,7 +10,7 @@ resources:
   - ./actual/ks.yaml
   - ./affine/ks.yaml
   - ./atuin/ks.yaml
-#  - ./bytestash/ks.yaml
+  - ./bytestash/ks.yaml
   - ./cyberchef/ks.yaml
   - ./docmost/ks.yaml
  # - ./homebox/ks.yaml
