@@ -126,7 +126,7 @@ spec:
               - identifier: browser
                 port: *browserPort
     persistence:
-      data:
+      config:
         existingClaim: volsync
         advancedMounts:
           browser:
