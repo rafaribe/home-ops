@@ -21,7 +21,7 @@ spec:
               repository: ghcr.io/tandoorrecipes/recipes
               tag: 2.3.3@sha256:af6bd76e703d644748a93d581da05c25159d742b94b2da9eddadaaec93555858
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
               ALLOWED_HOSTS: "*"
               AI_MODEL_NAME: openai/gpt-4o
               COMMENT_PREF_DEFAULT: 1
