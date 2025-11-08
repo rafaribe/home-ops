@@ -40,6 +40,11 @@ locals {
       authentik_oidc_application_icon_url    = "https://i.imgur.com/Z6fTRV3.png"
       authentik_oidc_application_description = "FileBrowser Quantum provides an easy way to access and manage your files from the web"
     },
+    {
+      authentik_oidc_application_name        = "linkding"
+      authentik_oidc_application_icon_url    = "https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_60/https%3A%2F%2Fdashboard.snapcraft.io%2Fsite_media%2Fappmedia%2F2024%2F02%2Fapple-touch-icon.png"
+      authentik_oidc_application_description = "Linkding is a self-hosted bookmark manager that is easy to use and deploy."
+    },
   ]
 }
 
