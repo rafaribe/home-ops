@@ -29,9 +29,7 @@ spec:
               TANDOOR_PORT: &tandoorPort 8888
               SOCIAL_DEFAULT_ACCESS: 1
               SOCIAL_DEFAULT_GROUP: user
-              POSTGRES_PORT: 5432
-              POSTGRES_DB: tandoor
-              POSTGRES_USER: "tandoor"
+              
               AI_MODEL_NAME: openai/gpt-4o
             envFrom: &envFrom
               - secretRef:
