@@ -38,8 +38,10 @@ spec:
               HBOX_MAILER_HOST: smtp-relay-noreply.services.svc.cluster.local
               HBOX_MAILER_PORT: "25"
               HBOX_MAILER_FROM: noreply@rafaribe.com
-            #  HBOX_OPTIONS_ALLOW_REGISTRATION: "false"
+              HBOX_DATABASE_DRIVER: sqlite3
+              HBOX_MODE: production
               HBOX_WEB_HOST: 0.0.0.0
+              HBOX_WEB_MAX_UPLOAD_SIZE: "25"
             envFrom:
               - secretRef:
                   name: *app
