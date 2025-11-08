@@ -35,7 +35,7 @@ spec:
               AI_MODEL_NAME: openai/gpt-4o
             envFrom: &envFrom
               - secretRef:
-                  name: tandoor-secret
+                  name: tandoor
             command:
               - sh
               - -c
