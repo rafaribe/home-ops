@@ -45,6 +45,11 @@ locals {
       authentik_oidc_application_icon_url    = "https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_60/https%3A%2F%2Fdashboard.snapcraft.io%2Fsite_media%2Fappmedia%2F2024%2F02%2Fapple-touch-icon.png"
       authentik_oidc_application_description = "Linkding is a self-hosted bookmark manager that is easy to use and deploy."
     },
+    {
+      authentik_oidc_application_name        = "kitchenowl"
+      authentik_oidc_application_icon_url    = "https://play-lh.googleusercontent.com/mKkzAj1XJpItjC2BatkuYiompPnK0F0u9xD5F2p7KtCNoDF11wyu-Jcn8iQ7Z49QZ8Q=w240-h480-rw"
+      authentik_oidc_application_description = "KitchenOwl is a self-hosted recipe management tool."
+    },
   ]
 }
 
