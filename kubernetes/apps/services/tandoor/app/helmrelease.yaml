@@ -95,6 +95,8 @@ spec:
                 subPath: mediafiles
               - path: /opt/recipes/staticfiles
                 subPath: staticfiles
+              - path: /opt/recipes/staticfiles
+                subPath: staticfiles
       tmpfs:
         type: emptyDir
         advancedMounts:
@@ -102,8 +104,14 @@ spec:
             app:
               - path: /opt/recipes/cookbook/static/django_js_reverse
                 subPath: django_js_reverse
+              - path: /var/lib/nginx/logs
+                subPath: nginx_logs
+              - path: /var/lib/nginx/tmp
+                subPath: nginx_tmp
               - path: /tmp
                 subPath: tmp
+              - path: /run
+                subPath: tandoor.sock
     configMaps:
       config:
         data:
