@@ -3,7 +3,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: smtp-relay-app
+  name: smtp-relay
 spec:
   interval: 15m
   layerSelector:
