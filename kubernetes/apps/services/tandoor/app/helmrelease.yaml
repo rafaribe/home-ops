@@ -34,11 +34,10 @@ spec:
               ALLOWED_HOSTS: "*"
               AI_MODEL_NAME: openai/gpt-4o
               COMMENT_PREF_DEFAULT: 1
-              DB_ENGINE: django.db.backends.postgresql_psycopg2
               DEBUG: 0
-              DEFAULT_FROM_EMAIL: recipes@rafaribe.com
-              EMAIL_HOST: smtp-relay.networking.svc.cluster.local
-              EMAIL_PORT: 2525
+              DEFAULT_FROM_EMAIL: noreply@rafaribe.com
+              EMAIL_HOST: smtp-relay-noreply.services.svc.cluster.local
+              EMAIL_PORT: 25
               ENABLE_SIGNUP: 0
               FRACTION_PREF_DEFAULT: 0
               GUNICORN_MEDIA: 0
@@ -94,7 +93,7 @@ spec:
                 port: *port
 
     persistence:
-      data:
+      files:
         existingClaim: *app
         advancedMounts:
           tandoor:
@@ -110,9 +109,44 @@ spec:
             app:
               - path: /opt/recipes/cookbook/static/django_js_reverse
                 subPath: django_js_reverse
-              - path: /var/lib/nginx/logs
-                subPath: nginx_logs
-              - path: /var/lib/nginx/tmp
-                subPath: nginx_tmp
               - path: /tmp
                 subPath: tmp
+    configMaps:
+      config:
+        data:
+          nginx-config: |-
+            pid /tmp/nginx.pid;
+            events {
+              worker_connections 1024;
+            }
+            http {
+              client_body_temp_path /tmp/client_temp;
+              proxy_temp_path       /tmp/proxy_temp_path;
+              fastcgi_temp_path     /tmp/fastcgi_temp;
+              uwsgi_temp_path       /tmp/uwsgi_temp;
+              scgi_temp_path        /tmp/scgi_temp;
+
+              include mime.types;
+              server {
+                listen 8080;
+                server_name _;
+                client_max_body_size 128M;
+                # serve static files
+                location /static/ {
+                  alias /static/;
+                }
+                # serve media files
+                location /media/ {
+                  alias /media//;
+                }
+                location ^~ /accounts/signup {
+                  return 401;
+                }
+                # pass requests for dynamic content to gunicorn
+                location / {
+                proxy_set_header Host $host;
+                proxy_pass http://localhost:8000;
+                }
+              }
+            }
+            
