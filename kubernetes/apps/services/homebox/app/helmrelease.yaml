@@ -34,9 +34,9 @@ spec:
               HBOX_MODE: production
               HBOX_WEB_HOST: 0.0.0.0
               HBOX_WEB_MAX_UPLOAD_SIZE: "25"
-            envFrom:
-              - secretRef:
-                  name: *app
+            # envFrom:
+            #   - secretRef:
+            #       name: *app
             probes:
               liveness: &probes
                 enabled: true
