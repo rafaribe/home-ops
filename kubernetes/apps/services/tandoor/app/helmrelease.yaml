@@ -35,7 +35,9 @@ spec:
               SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
               SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
               TANDOOR_PORT: &port 8000
-            envFrom: *envFrom
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
