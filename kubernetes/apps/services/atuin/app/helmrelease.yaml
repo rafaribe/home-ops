@@ -36,6 +36,8 @@ spec:
               ATUIN_METRICS__HOST: 0.0.0.0
               ATUIN_METRICS__PORT: &metricsPort 8080
               ATUIN_TLS__ENABLE: "false"
+              ATUIN_DB_URI: sqlite:///config/atuin.db
+              TZ: Europe/Lisbon
             envFrom: *envFrom
             args: ["server", "start"]
             probes:
@@ -96,4 +98,4 @@ spec:
                 port: *port
     persistence:
       config:
-        type: emptyDir
+        existingClaim: "atuin"

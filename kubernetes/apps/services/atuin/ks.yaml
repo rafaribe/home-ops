@@ -23,3 +23,5 @@ spec:
       HOSTNAME: atuin.rafaribe.com
       DB_NAME: atuin
       DB_USER: atuin
+  components:
+    - ../../../../components/volsync
