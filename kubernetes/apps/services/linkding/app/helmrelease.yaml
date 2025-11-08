@@ -33,7 +33,6 @@ spec:
             env:
               OIDC_VERIFY_SSL: "True"
               OIDC_USE_NONCE: "False"
-
             probes:
               liveness: &probes
                 enabled: true
