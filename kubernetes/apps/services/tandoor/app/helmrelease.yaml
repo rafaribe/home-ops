@@ -108,3 +108,5 @@ spec:
                 subPath: nginx_tmp
               - path: /tmp
                 subPath: tmp
+              - path: /run
+                subPath: tandoor.sock
