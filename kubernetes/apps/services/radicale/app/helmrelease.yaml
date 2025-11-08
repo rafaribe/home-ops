@@ -26,8 +26,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/bjw-s-labs/radicale
-              tag: 3.5.7
+              repository: ghcr.io/kozea/radicale
+              tag: 3.5.8
 
             resources:
               requests:
@@ -58,7 +58,7 @@ spec:
     persistence:
       config:
         type: configMap
-        name: radicale-configmap
+        name: radicale
         globalMounts:
           - path: /config/config
             subPath: config.cfg
@@ -77,3 +77,78 @@ spec:
           - path: /config/users
             subPath: users
             readOnly: true
+    configMaps:
+      servers:
+        data:
+          config.cfg: |-
+            [server]
+            # CalDAV server hostnames separated by a comma
+            # IPv4 syntax: address:port
+            # IPv6 syntax: [address]:port
+            # For example: 0.0.0.0:9999, [::]:9999
+            #hosts = localhost:5232
+            hosts = 0.0.0.0:5232
+            [encoding]
+
+            [auth]
+
+            # Authentication method
+            # Value: none | htpasswd | remote_user | http_x_remote_user
+            type = htpasswd
+
+            # Htpasswd filename
+            htpasswd_filename = /config/users
+
+            # Htpasswd encryption method
+            # Value: plain | bcrypt | md5
+            # bcrypt requires the installation of radicale[bcrypt].
+            htpasswd_encryption = plain
+
+            # Incorrect authentication delay (seconds)
+            #delay = 1
+
+            # Message displayed in the client when a password is needed
+            realm = Radicale - Password Required
+
+            [rights]
+
+            # Rights backend
+            # Value: none | authenticated | owner_only | owner_write | from_file
+            #type = owner_only
+
+            # File for rights management from_file
+            #file = /etc/radicale/rights
+
+            [storage]
+
+            # Storage backend
+            # Value: multifilesystem | multifilesystem_nolock
+            #type = multifilesystem
+
+            # Folder for storing local collections, created if not present
+            #filesystem_folder = /var/lib/radicale/collections
+            filesystem_folder = /data/collections
+
+            # Delete sync token that are older (seconds)
+            #max_sync_token_age = 2592000
+
+            # Command that is run after changes to storage
+            # Example: ([ -d .git ] || git init) && git add -A && (git diff --cached --quiet || git commit -m "Changes by "%(user)s)
+            #hook =
+
+            [web]
+
+            # Web interface backend
+            # Value: none | internal
+            #type = internal
+
+            [logging]
+
+            # Threshold for the logger
+            # Value: debug | info | warning | error | critical
+            level = info
+
+            # Don't include passwords in logs
+            mask_passwords = True
+
+            [headers]
