@@ -3,51 +3,103 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app tandoor
+  name: tandoor
 spec:
-  interval: 30m
+  interval: 1h
   chartRef:
     kind: OCIRepository
-    name: app-template
-
+    name: tandoor
   values:
     controllers:
       tandoor:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          migrations:
+            image:
+              repository: ghcr.io/tandoorrecipes/recipes
+              tag: 2.3.3
+            env: &env
+              COMMENT_PREF_DEFAULT: 0
+              ENABLE_SIGNUP: 0
+              FRACTION_PREF_DEFAULT: 0
+              MAX_OWNED_SPACES_PREF_DEFAULT: 0
+              SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
+              GUNICORN_MEDIA: "0"
+              TANDOOR_PORT: &tandoorPort 8888
+              SOCIAL_DEFAULT_ACCESS: 1
+              SOCIAL_DEFAULT_GROUP: user
+              POSTGRES_PORT: 5432
+              POSTGRES_DB: tandoor
+              POSTGRES_USER: "tandoor"
+              AI_MODEL_NAME: openai/gpt-4o
+            envFrom: &envFrom
+              - secretRef:
+                  name: tandoor-secret
+            command:
+              - sh
+              - -c
+              - |
+                set -e
+                source /opt/recipes/venv/bin/activate
+                echo "Updating database"
+                python3 /opt/recipes/manage.py migrate
+                python3 /opt/recipes/manage.py collectstatic --noinput
         containers:
           app:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 2.3.3@sha256:af6bd76e703d644748a93d581da05c25159d742b94b2da9eddadaaec93555858
-            env:
-              TZ: Europe/Lisbon
-              ALLOWED_HOSTS: "*"
-              AI_MODEL_NAME: openai/gpt-4o
-              COMMENT_PREF_DEFAULT: 1
-              DEBUG: 0
-              DEFAULT_FROM_EMAIL: recipes@rafaribe.com
-              EMAIL_HOST: smtp-relay.networking.svc.cluster.local
-              EMAIL_PORT: 2525
-              ENABLE_SIGNUP: 0
-              FRACTION_PREF_DEFAULT: 0
-              GUNICORN_MEDIA: 0
-              SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
-              SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
-              TANDOOR_PORT: &port 8000
-            envFrom: &envFrom
-              - secretRef:
-                  name: *app
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              tag: 2.3.3
+            env: *env
+            command:
+              - /opt/recipes/venv/bin/gunicorn
+              - -b
+              - :8888
+              - --access-logfile
+              - "-"
+              - --error-logfile
+              - "-"
+              - --log-level
+              - INFO
+              - recipes.wsgi
+            envFrom: *envFrom
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /accounts/login/
+                    port: *tandoorPort
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /accounts/login/
+                    port: *tandoorPort
+                  failureThreshold: 30
+                  periodSeconds: 10
             resources:
               requests:
                 cpu: 10m
-                memory: 256Mi
+                memory: 512Mi
               limits:
-                memory: 1024Mi
+                memory: 768Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+          nginx:
+            image:
+              repository: nginxinc/nginx-unprivileged
+              tag: 1.29.2-alpine@sha256:2cddd18b805962549f850a5f6f1f4b3ccb667343e3c6ba42e8ce6a6f7e389709
+
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -55,13 +107,68 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
+
     service:
-      app:
+      nginx:
+        controller: tandoor
         ports:
           http:
-            port: *port
+            port: 8080
+
+    persistence:
+      files:
+        existingClaim: tandoor
+        advancedMounts:
+          tandoor:
+            app:
+              - path: /opt/recipes/mediafiles
+                subPath: mediafiles
+              - path: /opt/recipes/staticfiles
+                subPath: staticfiles
+            nginx:
+              - path: /media
+                subPath: mediafiles
+              - path: /static
+                subPath: staticfiles
+            migrations:
+              - path: /opt/recipes/staticfiles
+                subPath: staticfiles
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          tandoor:
+            app:
+              - path: /opt/recipes/cookbook/static/django_js_reverse
+                subPath: django_js_reverse
+              - path: /tmp
+                subPath: tmp
+            migrations:
+              - path: /opt/recipes/cookbook/static/django_js_reverse
+                subPath: django_js_reverse
+            nginx:
+              - path: /var/cache/nginx
+                subPath: nginx-cache
+      nginx-config:
+        type: configMap
+        name: tandoor-nginx-configmap
+        advancedMounts:
+          tandoor:
+            nginx:
+              - path: /etc/nginx/nginx.conf
+                subPath: nginx-config
+
     route:
-      app:
+      nginx:
+        hostnames:
+          - &host tandoor.rafaribe.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: nginx
+                port: 8080
         annotations:
           hajimari.io/icon: mdi:chef-hat
           gethomepage.dev/enabled: "true"
@@ -75,38 +182,3 @@ spec:
           gethomepage.dev/widget.type: tandoor
           gethomepage.dev/widget.url: http://tandoor.services:8000
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TANDOOR_API_KEY}}` }}"
-        hostnames: ["tandoor.rafaribe.com"]
-        parentRefs:
-          - name: envoy-external
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
-
-    persistence:
-      data:
-        existingClaim: *app
-        advancedMounts:
-          tandoor:
-            app:
-              - path: /opt/recipes/mediafiles
-                subPath: mediafiles
-              - path: /opt/recipes/staticfiles
-                subPath: staticfiles
-      tmpfs:
-        type: emptyDir
-        advancedMounts:
-          tandoor:
-            app:
-              - path: /opt/recipes/cookbook/static/django_js_reverse
-                subPath: django_js_reverse
-              - path: /var/lib/nginx/logs
-                subPath: nginx_logs
-              - path: /var/lib/nginx/tmp
-                subPath: nginx_tmp
-              - path: /tmp
-                subPath: tmp
-              - path: /run
-                subPath: tandoor.sock

@@ -6,3 +6,9 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./externalsecret.yaml
+configMapGenerator:
+  - name: tandoor-nginx-configmap
+    files:
+      - ./config/nginx.conf
+generatorOptions:
+  disableNameSuffixHash: true
