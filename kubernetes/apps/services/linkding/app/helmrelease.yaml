@@ -16,20 +16,14 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 17.6@sha256:86a1992d46273c58fd4ad95b626081dfaabfe16bd56944675169e406d1a660dd
-            envFrom: &envFrom
-              - secretRef:
-                  name: *app
         containers:
           app:
             image:
               repository: ghcr.io/sissbruecker/linkding
               tag: 1.44.1@sha256:e4fbafee44388d8555e34ffdc507224302989265009fc82f5f2762b789f0385a
-            envFrom: *envFrom
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
             env:
               OIDC_VERIFY_SSL: "True"
               OIDC_USE_NONCE: "False"
