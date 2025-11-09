@@ -117,7 +117,32 @@ spec:
         ports:
           http:
             port: 8080
-
+    route:
+      nginx:
+        hostnames:
+          - &host tandoor.rafaribe.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: nginx
+                port: 8080
+        annotations:
+          hajimari.io/icon: mdi:chef-hat
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Tandoor
+          gethomepage.dev/description: Managing recipes, planned meals, shopping lists.
+          gethomepage.dev/group: Home
+          gethomepage.dev/icon: tandoor-recipes.png
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (tandoor)
+          gethomepage.dev/href: https://tandoor.rafaribe.com
+          gethomepage.dev/widget.type: tandoor
+          gethomepage.dev/widget.url: http://tandoor.services:8000
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TANDOOR_API_KEY}}` }}"
+          
     persistence:
       files:
         existingClaim: tandoor
@@ -160,28 +185,3 @@ spec:
               - path: /etc/nginx/nginx.conf
                 subPath: nginx.conf
 
-    route:
-      nginx:
-        hostnames:
-          - &host tandoor.rafaribe.com
-        parentRefs:
-          - name: envoy-external
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: nginx
-                port: 8080
-        annotations:
-          hajimari.io/icon: mdi:chef-hat
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: Tandoor
-          gethomepage.dev/description: Managing recipes, planned meals, shopping lists.
-          gethomepage.dev/group: Home
-          gethomepage.dev/icon: tandoor-recipes.png
-          gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (tandoor)
-          gethomepage.dev/href: https://tandoor.rafaribe.com
-          gethomepage.dev/widget.type: tandoor
-          gethomepage.dev/widget.url: http://tandoor.services:8000
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TANDOOR_API_KEY}}` }}"
