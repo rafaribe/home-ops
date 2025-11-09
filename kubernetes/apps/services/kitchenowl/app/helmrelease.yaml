@@ -15,19 +15,23 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
 
-        # pod:
-        #   # securityContext:
-        #   #   runAsUser: 1000
-        #   #   runAsGroup: 1000
-        #   #   fsGroup: 1000
-        #   #   fsGroupChangePolicy: "OnRootMismatch"
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
 
-        # initContainers:
-        #   01-init-db:
-        #     image:
-        #       repository: ghcr.io/home-operations/postgres-init
-        #       tag: 17.6.0
-        #     envFrom: 
+        initContainers:
+          chown-data:
+            image:
+              repository: ghcr.io/home-operations/busybox
+              tag: 1.37@sha256:026ed7273270ec08f6902b4ae8334c23b473e5394bec3bbbdbfe580c710d50bc
+            command: ["sh", "-c", "chown -R 1000:1000 /data"]
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
         containers:
           app:
             image:
