@@ -15,12 +15,12 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
 
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
+        # pod:
+        #   # securityContext:
+        #   #   runAsUser: 1000
+        #   #   runAsGroup: 1000
+        #   #   fsGroup: 1000
+        #   #   fsGroupChangePolicy: "OnRootMismatch"
 
           enableServiceLinks: false
 
@@ -97,8 +97,3 @@ spec:
         existingClaim: kitchenowl-data
         globalMounts:
           - path: /data
-
-      tmp:
-        type: emptyDir
-        globalMounts:
-          - path: /usr/src/kitchenowl
