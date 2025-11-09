@@ -117,7 +117,7 @@ nodes:
   - hostname: srv-07.${clusterDNSSuffix}
     ipAddress: 10.0.1.7
     nameservers: *nameservers
-    controlPlane: false
+    controlPlane: true
     installDiskSelector:
       type: "ssd"
       model: UDSS*
