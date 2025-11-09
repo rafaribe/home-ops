@@ -94,23 +94,16 @@ spec:
                 subPath: code-server
       hass-cache:
         existingClaim: home-assistant-cache
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /venv
-                subPath: hass-venv
-      tmpfs:
-        type: emptyDir
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /tmp
-                subPath: hass-tmp
-            code-server:
-              - path: /tmp
-                subPath: code-server-tmp
-              - path: /nonexistent
-                subPath: nonexistent
+        globalMounts:
+          - path: /tmp
+            subPath: hass-tmp
+          - path: /tmp
+            subPath: code-server-tmp
+          - path: /nonexistent
+            subPath: nonexistent
+          - path: /venv
+            subPath: hass-venv
+
       deploy-key:
         type: secret
         name: home-assistant-git-ssh
