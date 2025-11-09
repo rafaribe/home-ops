@@ -26,7 +26,6 @@ spec:
       readarr:
         labels:
           nfsMount: "true"
-          postgres: "true"
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -44,7 +43,9 @@ spec:
               READARR__SERVER__PORT: &port 80
               READARR__UPDATE__BRANCH: develop
               TZ: Europe/Lisbon
-            envFrom: *envFrom
+            envFrom:  &envFrom
+              - secretRef:
+                  name: readarr
             resources:
               requests:
                 cpu: 100m

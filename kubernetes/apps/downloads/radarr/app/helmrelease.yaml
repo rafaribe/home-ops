@@ -44,7 +44,9 @@ spec:
               RADARR__LOG__LEVEL: info
               RADARR__SERVER__PORT: &port 80
               RADARR__UPDATE__BRANCH: develop
-            envFrom: *envFrom
+            envFrom: &envFrom
+              - secretRef:
+                  name: radarr
             probes:
               liveness: &probes
                 enabled: true
