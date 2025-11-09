@@ -158,7 +158,7 @@ spec:
           tandoor:
             nginx:
               - path: /etc/nginx/nginx.conf
-                subPath: nginx-config
+                subPath: nginx.conf
 
     route:
       nginx:
