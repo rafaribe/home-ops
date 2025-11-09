@@ -31,19 +31,19 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: *app
-        initContainers:
-          01-init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 17.6.0
-            envFrom: &envFrom
-              - secretRef:
-                  name: *app
+        # initContainers:
+        #   01-init-db:
+        #     image:
+        #       repository: ghcr.io/home-operations/postgres-init
+        #       tag: 17.6.0
+        #     envFrom: &envFrom
+        #       - secretRef:
+        #           name: *app
         containers:
           app:
             image:
-              repository: tombursch/kitchenowl
-              tag: v0.7.4@sha256:9d5e4402c2abc734e1536586caa103840a7ebe961fdce1570e31b956abeba70b
+              repository: ghcr.io/ahinko/kitchenowl
+              tag: v0.7.4@sha256:1b28b834a83b10639c703e45fb24208c54533fbe5eeb0d8b2aef1e6bf518dbff
             env:
               TZ: Europe/Lisbon
               COLLECT_METRICS: false
@@ -62,7 +62,16 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 500Mi
-
+    defaultPodOptions: # Docker image is too big for my turing pi's disk, dont want to get into diskpressure errors.
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
     service:
       app:
         controller: *app
