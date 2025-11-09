@@ -22,15 +22,6 @@ spec:
         #   #   fsGroup: 1000
         #   #   fsGroupChangePolicy: "OnRootMismatch"
 
-          enableServiceLinks: false
-
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
         # initContainers:
         #   01-init-db:
         #     image:
@@ -45,7 +36,6 @@ spec:
             env:
               TZ: Europe/Lisbon
               COLLECT_METRICS: false
-              DB_DRIVER: sqlite
               EMAIL_MANDATORY: false
               FRONT_URL: https://kitchenowl.rafaribe.com
               OPEN_REGISTRATION: false
