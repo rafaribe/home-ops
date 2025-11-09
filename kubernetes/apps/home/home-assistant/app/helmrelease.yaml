@@ -32,7 +32,7 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 2Gi
+                memory: 1Gi
               limits:
                 memory: 2Gi
             securityContext:
@@ -62,9 +62,9 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 1Gi
+                memory: 756Gi
               limits:
-                memory: 2Gi
+                memory: 1Gi
     service:
       app:
         type: LoadBalancer
