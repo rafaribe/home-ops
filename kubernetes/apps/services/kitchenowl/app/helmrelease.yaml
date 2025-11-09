@@ -97,3 +97,9 @@ spec:
         existingClaim: kitchenowl-data
         globalMounts:
           - path: /data
+
+      tmp:
+        type: emptyDir
+        medium: disk
+        globalMounts:
+          - path: /usr/src/kitchenowl
