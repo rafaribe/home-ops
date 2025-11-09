@@ -127,7 +127,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: nginx
+              - name: tandoor
                 port: 8080
         annotations:
           hajimari.io/icon: mdi:chef-hat
@@ -142,7 +142,7 @@ spec:
           gethomepage.dev/widget.type: tandoor
           gethomepage.dev/widget.url: http://tandoor.services:8000
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TANDOOR_API_KEY}}` }}"
-          
+
     persistence:
       files:
         existingClaim: tandoor
