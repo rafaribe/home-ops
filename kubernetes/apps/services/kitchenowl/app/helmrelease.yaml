@@ -36,9 +36,7 @@ spec:
         #     image:
         #       repository: ghcr.io/home-operations/postgres-init
         #       tag: 17.6.0
-        #     envFrom: &envFrom
-        #       - secretRef:
-        #           name: *app
+        #     envFrom: 
         containers:
           app:
             image:
@@ -55,7 +53,9 @@ spec:
               SMTP_HOST: smtp-relay-noreply.services.svc.cluster.local
               SMTP_FROM: noreply@rafaribe.com
               STORAGE_PATH: "/data"
-            envFrom: *envFrom
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
             resources:
               requests:
                 cpu: 10m
