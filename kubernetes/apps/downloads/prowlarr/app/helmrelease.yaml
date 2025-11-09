@@ -24,14 +24,14 @@ spec:
       prowlarr:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 17.6@sha256:86a1992d46273c58fd4ad95b626081dfaabfe16bd56944675169e406d1a660dd
-            envFrom: &envFrom
-              - secretRef:
-                  name: prowlarr
+        # initContainers:
+        #   init-db:
+        #     image:
+        #       repository: ghcr.io/home-operations/postgres-init
+        #       tag: 17.6@sha256:86a1992d46273c58fd4ad95b626081dfaabfe16bd56944675169e406d1a660dd
+        #     envFrom: &envFrom
+        #       - secretRef:
+        #           name: prowlarr
         containers:
           app:
             image:
@@ -71,15 +71,14 @@ spec:
     route:
       app:
         annotations:
-          # gethomepage.dev/enabled: "true"
-          # gethomepage.dev/group: Downloads
-          # gethomepage.dev/name: Prowlarr
-          # gethomepage.dev/icon: prowlarr.png
-          # gethomepage.dev/description: Torrent/NZB Indexer Management
-          # gethomepage.dev/widget.type: prowlarr
-          # gethomepage.dev/widget.url: http://prowlarr.downloads
-          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PROWLARR_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: &target internal.rafaribe.com
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Prowlarr
+          gethomepage.dev/icon: prowlarr.png
+          gethomepage.dev/description: Torrent/NZB Indexer Management
+          gethomepage.dev/widget.type: prowlarr
+          gethomepage.dev/widget.url: http://prowlarr.downloads
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PROWLARR_TOKEN}}` }}"
         hostnames: ["prowlarr.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
