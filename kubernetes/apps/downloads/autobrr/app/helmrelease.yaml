@@ -38,7 +38,9 @@ spec:
               AUTOBRR__HOST: 0.0.0.0
               AUTOBRR__PORT: &port 7474
               AUTOBRR__LOG_LEVEL: DEBUG
-            envFrom: *envFrom
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
             probes:
               liveness:
                 enabled: true
