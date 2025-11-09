@@ -22,7 +22,7 @@ spec:
               repository: ghcr.io/kareadita/kavita
               tag: 0.8.8@sha256:22c42f3cc83fb98b98a6d6336200b615faf2cfd2db22dab363136744efda1bb0
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
             resources:
               requests:
                 cpu: 15m

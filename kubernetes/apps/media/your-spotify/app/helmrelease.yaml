@@ -24,7 +24,7 @@ spec:
               repository: yooooomi/your_spotify_server
               tag: 1.14.0
             env:
-              TIMEZONE: ${TIMEZONE}
+              TIMEZONE: Europe/Lisbon
               # Caveat if it includes Spotify in name: https://github.com/Yooooomi/your_spotify/pull/254
               API_ENDPOINT: &api_endpoint https://spotty.rafaribe.com/api
               CLIENT_ENDPOINT: &client https://spotty.rafaribe.com
@@ -55,7 +55,7 @@ spec:
               repository: yooooomi/your_spotify_client
               tag: 1.14.0
             env:
-              TIMEZONE: ${TIMEZONE}
+              TIMEZONE: Europe/Lisbon
               API_ENDPOINT: *api_endpoint
             probes: *probes
             securityContext: *securityContext
@@ -70,7 +70,7 @@ spec:
               repository: docker.io/library/mongo
               tag: 6.0.4-focal
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
             probes: *probes
     service:
       server:

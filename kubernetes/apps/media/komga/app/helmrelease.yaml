@@ -22,7 +22,7 @@ spec:
               repository: gotson/komga
               tag: "1.23.5@sha256:85f0be8920742341217f2b2bdafef64da1f6062ae472dcf74426a9fa549c8a05"
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
               SERVER_PORT: &port 8080
             resources:
               requests:

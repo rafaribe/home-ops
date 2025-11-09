@@ -19,7 +19,7 @@ spec:
               repository: ghcr.io/icereed/paperless-gpt
               tag: v0.23.0@sha256:90766d15d541162129d0fa47dad5ffb33a02a0c77cbc4cee9007b24b656ba6ce
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
               PAPERLESS_BASE_URL: http://paperless.services.svc.cluster.local:8000
               PAPERLESS_PUBLIC_URL: https://paperless.rafaribe.com
               LLM_PROVIDER: ollama

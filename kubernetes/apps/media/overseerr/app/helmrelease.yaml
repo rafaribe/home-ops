@@ -20,7 +20,7 @@ spec:
               repository: ghcr.io/sct/overseerr
               tag: 1.34.0
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
               LOG_LEVEL: "info"
               PORT: &port 80
             resources:

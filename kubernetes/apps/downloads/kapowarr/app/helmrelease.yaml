@@ -33,7 +33,7 @@ spec:
               repository: mrcas/kapowarr
               tag: v1.2.0@sha256:484f7decc7cc7af77542aba5516f48a62b17f72116ac7309d1709b72bb7d0ba2
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
             resources:
               requests:
                 cpu: 15m

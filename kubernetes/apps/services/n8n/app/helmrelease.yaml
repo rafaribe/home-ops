@@ -26,7 +26,7 @@ spec:
               repository: ghcr.io/n8n-io/n8n
               tag: 1.119.0@sha256:8f6834c399b5a764d5b0165db5d52d757652edb8f6b938b30b0cdf70fdfd3df1
             env:
-              GENERIC_TIMEZONE: ${TIMEZONE}
+              GENERIC_TIMEZONE: Europe/Lisbon
               N8N_PORT: &port 80
               N8N_HOST: &host "n8n.rafaribe.com"
               WEBHOOK_URL: "https://n8n.rafaribe.com"

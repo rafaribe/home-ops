@@ -20,7 +20,7 @@ spec:
               repository: remirigal/plex-auto-languages
               tag: v1.2.3
             env:
-              TZ: ${TZ}
+              TZ: Europe/Lisbon
               PLEX_URL: "http://plex.media.svc.cluster.local:32400"
             envFrom:
               - secretRef:

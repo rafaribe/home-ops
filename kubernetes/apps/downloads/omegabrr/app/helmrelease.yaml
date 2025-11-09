@@ -28,7 +28,7 @@ spec:
               tag: v1.16.0@sha256:fe529c331217e0624c505a1aa47d2a089314e8a284d38a621135b848eeef64ad
             env:
               OMEGABRR_PORT: &port 80
-              TZ: ${TIMEZONE}
+              TZ: Europe/Lisbon
             envFrom:
               - secretRef:
                   name: *app
