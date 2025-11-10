@@ -129,7 +129,7 @@ spec:
                   - key: kubernetes.io/arch
                     operator: In
                     values:
-                      - amd64
+                      - arm64
     route:
       # External Route
       app:
