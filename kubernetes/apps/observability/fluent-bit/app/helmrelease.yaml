@@ -92,5 +92,5 @@ spec:
       enabled: true
     image:
       repository: ghcr.io/fluent/fluent-bit
-      tag: 4.1.1
+      tag: 4.2.0
       digest: sha256:2a5cb41f99b7c5f3386bb34d42ce3b19eb47fbef6d93b64c0bd4afe9e6ec389c
