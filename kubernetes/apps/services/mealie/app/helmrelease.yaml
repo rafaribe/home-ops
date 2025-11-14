@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/mealie-recipes/mealie
-              tag: v3.4.0
+              tag: v3.5.0
               pullPolicy: IfNotPresent
             envFrom: *envFrom # All values are created on the externalsecret
 
