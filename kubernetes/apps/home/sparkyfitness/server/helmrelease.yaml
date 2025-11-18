@@ -46,7 +46,7 @@ spec:
           main:
             image:
               repository: ghcr.io/codewithcj/sparkyfitness-server
-              tag: v0.15.9.1@sha256:9252f6a1b5c23f6058d5b510cae9e8ae3ed14f38de951e1d9160c38a1fba9a55
+              tag: v0.15.9.3@sha256:e88095520ab99f1ea44261a1ca8a68b03be5e7d04098ad3382dcfa309dcc5fc5
 
             env:
               SPARKY_FITNESS_LOG_LEVEL: debug
