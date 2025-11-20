@@ -83,7 +83,7 @@ spec:
           gethomepage.dev/icon: https://homebox.software/lilbox.svg
           gethomepage.dev/description: Home inventory management system
           gethomepage.dev/widget.type: homebox
-          gethomepage.dev/widget.url: &url "http://homebox.home:7745"
+          gethomepage.dev/widget.url: &url "http://homebox.services:7745"
           gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_HOMEBOX_USERNAME}}`}}"
           gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_HOMEBOX_PASSWORD}}`}}"
           gethomepage.dev/siteMonitor: *url
