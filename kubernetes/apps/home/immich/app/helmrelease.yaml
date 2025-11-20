@@ -117,8 +117,7 @@ spec:
           gethomepage.dev/widget.version: "2"
           gethomepage.dev/siteMonitor: *url
           gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/name in (immich)
-            app.kubernetes.io/controller in (server)
+            gethomepage.dev/name in (immich-server)
 
         hostnames: ["photos.rafaribe.com"]
         parentRefs:
