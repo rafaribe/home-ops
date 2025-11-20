@@ -25,7 +25,7 @@ spec:
           migrations:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 2.3.4
+              tag: 2.3.5
             env: &env
               COMMENT_PREF_DEFAULT: 0
               ENABLE_SIGNUP: 0
@@ -52,7 +52,7 @@ spec:
           app:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 2.3.4
+              tag: 2.3.5
             env: *env
             command:
               - /opt/recipes/venv/bin/gunicorn
