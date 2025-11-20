@@ -142,7 +142,7 @@ spec:
           gethomepage.dev/name: Home Assistant
           gethomepage.dev/description: Home Automation
           gethomepage.dev/widget.type: homeassistant
-          gethomepage.dev/widget.url: &url http://home-assistant.home:8123
+          gethomepage.dev/widget.url: &url http://home-assistant-app.home:8123
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}` }}"
           gethomepage.dev/siteMonitor: *url
         hostnames:
