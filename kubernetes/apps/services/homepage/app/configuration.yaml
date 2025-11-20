@@ -110,7 +110,7 @@ data:
             type: pihole
             url: http://10.0.0.254
             version: 6
-            key: {{HOMEPAGE_VAR_PIHOLE_API_KEY}}
+            key: {{HOMEPAGE_VAR_PIHOLE_PASSWORD}}
       - Proxmox:
           href: https://10.0.0.2:8006
           icon: https://www.45drives.com/solutions/proxmox/img/proxmox_Logo.png
