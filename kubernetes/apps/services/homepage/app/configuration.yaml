@@ -106,11 +106,11 @@ data:
           description: DNS Server
           ping: 10.0.0.254
           siteMonitor: http://10.0.0.254
-          # widget:
-          #   type: pihole
-          #   url: http://10.0.0.254
-          #   version: 6
-          #   key: {{HOMEPAGE_VAR_PIHOLE_PASSWORD}}
+          widget:
+            type: pihole
+            url: http://10.0.0.254
+            version: 6
+            key: {{HOMEPAGE_VAR_PIHOLE_PASSWORD}}
       - Proxmox:
           href: https://10.0.0.2:8006
           icon: https://www.45drives.com/solutions/proxmox/img/proxmox_Logo.png
