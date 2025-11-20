@@ -112,9 +112,10 @@ spec:
           gethomepage.dev/description: "Photo library and management"
           gethomepage.dev/icon: immich
           gethomepage.dev/widget.type: immich
-          gethomepage.dev/widget.url: "http://immich-server.home:2283"
+          gethomepage.dev/widget.url: &url "http://immich-server.home:2283"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_IMMICH_API_KEY}}`}}"
           gethomepage.dev/widget.version: "2"
+          gethomepage.dev/siteMonitor: *url
 
         hostnames: ["photos.rafaribe.com"]
         parentRefs:
