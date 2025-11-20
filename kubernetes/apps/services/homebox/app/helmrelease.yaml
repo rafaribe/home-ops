@@ -80,8 +80,13 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Services
           gethomepage.dev/name: Homebox
-          gethomepage.dev/icon: https://raw.githubusercontent.com/sysadminsmedia/homebox/main/docs/docs/assets/img/lilbox.svg
+          gethomepage.dev/icon: https://homebox.software/lilbox.svg
           gethomepage.dev/description: Home inventory management system
+          gethomepage.dev/widget.type: homebox
+          gethomepage.dev/widget.url: &url "http://homebox.home:7745"
+          gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_HOMEBOX_USERNAME}}`}}"
+          gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_HOMEBOX_PASSWORD}}`}}"
+          gethomepage.dev/siteMonitor: *url
         hostnames: ["homebox.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
