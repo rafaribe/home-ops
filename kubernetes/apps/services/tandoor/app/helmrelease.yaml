@@ -139,9 +139,10 @@ spec:
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (tandoor)
           gethomepage.dev/href: https://tandoor.rafaribe.com
-          gethomepage.dev/widget.type: tandoor
-          gethomepage.dev/widget.url: http://tandoor.services:8000
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TANDOOR_API_KEY}}` }}"
+          # Widget is disabled until v2 is integrated into HOMEPAGE
+          # gethomepage.dev/widget.type: tandoor
+          # gethomepage.dev/widget.url: http://tandoor.services:8000
+          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TANDOOR_API_KEY}}` }}"
 
     persistence:
       files:
