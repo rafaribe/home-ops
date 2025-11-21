@@ -19,5 +19,5 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./silence-operator/ks.yaml
   - ./unpoller/ks.yaml
-  - ./victoria-logs/ks.yaml
+  - ./victoria/ks.yaml
   - ./keda/ks.yaml

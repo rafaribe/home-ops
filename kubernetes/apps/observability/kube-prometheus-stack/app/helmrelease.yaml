@@ -47,8 +47,8 @@ spec:
       service:
         selector:
           k8s-app: kube-controller-manager
-    kubeEtcd:
-      <<: *kubeControllerManager # etcd runs on control plane nodes
+    kube-state-metrics:
+      fullnameOverride: kube-state-metrics
     kubeProxy:
       enabled: false
     nodeExporter:
@@ -64,6 +64,16 @@ spec:
               namespace: network
               sectionName: https
       prometheusSpec:
+        version: v2.55.1 # override 'unsupported Prometheus version' error
+        image:
+          registry: docker.io
+          repository: prompp/prompp
+          tag: 0.6.4
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 1000
+          fsGroup: 1000
         scrapeInterval: 1m # Must match interval in Grafana Helm chart
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
@@ -86,10 +96,6 @@ spec:
               resources:
                 requests:
                   storage: 50Gi
-        image:
-          registry: docker.io
-          repository: prompp/prompp
-          tag: 0.6.4
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
