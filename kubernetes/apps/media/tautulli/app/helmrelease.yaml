@@ -80,9 +80,9 @@ spec:
           gethomepage.dev/icon: tautulli.png
           gethomepage.dev/description: Plex Stream Monitoring
           # TODO: Not working, check later
-          # gethomepage.dev/widget.type: tautulli
-          # gethomepage.dev/widget.url: http://tautulli.media
-          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TAUTULLI_API_KEY}}` }}"
+          gethomepage.dev/widget.type: tautulli
+          gethomepage.dev/widget.url: http://tautulli.media
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TAUTULLI_API_KEY}}` }}"
 
         hostnames: ["tautulli.rafaribe.com"]
         parentRefs:
