@@ -134,9 +134,12 @@ spec:
           gethomepage.dev/name: Karakeep
           gethomepage.dev/description: The Bookmark Everything app
           gethomepage.dev/group: Services
-          gethomepage.dev/icon: https://media.invisioncic.com/u329766/monthly_2024_05/karakeep.png.cb75b7347d47989bd0c3e65b9e613700.png
+          gethomepage.dev/icon: https://play-lh.googleusercontent.com/95d3e2a2-m4WVn7RYmdlOpdXJditxSpj4iVCF70aWPxJUQEP1HOdbiUg6L2GDOHfFV8=w600-h300-pc0xffffff-pd
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (karakeep)
+          gethomepage.dev/widget.type: karakeep
+          gethomepage.dev/widget.url: http://karakeep-app.services:3000
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_KARAKEEP_API_KEY}}` }}"
         hostnames: ["karakeep.rafaribe.com", "hoarder.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
