@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: yooooomi/your_spotify_server
-              tag: 1.14.0
+              tag: 1.15.0
             env:
               TIMEZONE: Europe/Lisbon
               # Caveat if it includes Spotify in name: https://github.com/Yooooomi/your_spotify/pull/254
