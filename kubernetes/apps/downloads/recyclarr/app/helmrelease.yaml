@@ -53,7 +53,16 @@ spec:
               capabilities:
                 drop:
                   - ALL
-
+    defaultPodOptions: # Docker image is too big for my turing pi's disk, dont want to get into diskpressure errors.
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
     persistence:
       config:
         existingClaim: recyclarr
