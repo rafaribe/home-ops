@@ -12,10 +12,8 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
-
         containers:
           main:
             image:
@@ -23,17 +21,16 @@ spec:
               tag: v0.15.9.5@sha256:b8dace2936d512dac4756c860477385020ac70851d068d2c1456d18015058baa
 
             env:
+              PROMETHEUS_ENABLED: "true"
               SPARKY_FITNESS_LOG_LEVEL: debug
               SPARKY_FITNESS_SERVER_HOST: sparkyfitness-server.home
               SPARKY_FITNESS_SERVER_PORT: 3010
-
             resources:
               requests:
                 cpu: 15m
                 memory: 64M
               limits:
                 memory: 64M
-
     service:
       main:
         controller: main
