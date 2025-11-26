@@ -44,6 +44,7 @@ spec:
         containers:
           main:
             image:
+              # renovate: datasource=docker depName=ghcr.io/codewithcj/sparkyfitness-server
               repository: ghcr.io/codewithcj/sparkyfitness-server
               tag: v0.15.9.5@sha256:3d53d9b408577ede7bd7df92945843047e325bb0ea9bf7b2db0b6e1d9a92fe3e
 
