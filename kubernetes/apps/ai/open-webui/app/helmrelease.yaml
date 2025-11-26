@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: 0.6.38
+              tag: 0.6.40
             env:
               - name: OLLAMA_BASE_URL
                 value: http://ollama.rafaribe.com:11434
