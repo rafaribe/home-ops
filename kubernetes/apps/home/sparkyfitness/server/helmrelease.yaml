@@ -79,6 +79,6 @@ spec:
           - path: /backup
       config:
         enabled: true
-        existingClaim: sparkyfitness
+        existingClaim: sparkyfitness-server
         globalMounts:
           - path: /uploads
