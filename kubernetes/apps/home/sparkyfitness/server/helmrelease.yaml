@@ -28,7 +28,6 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
 
@@ -40,7 +39,7 @@ spec:
 
             envFrom:
               - secretRef:
-                  name: sparkyfitness-initdb
+                  name: sparkyfitness
 
         containers:
           main:
@@ -56,21 +55,30 @@ spec:
               SPARKY_FITNESS_DISABLE_SIGNUP: false
               #SPARKY_FITNESS_ADMIN_EMAIL: ${SPARKY_FITNESS_ADMIN_EMAIL}  #User with this email can access the admin panel
               #GARMIN_MICROSERVICE_URL: http://sparkyfitness-garmin:8000 # Add Garmin microservice URL
-
             envFrom:
               - secretRef:
                   name: sparkyfitness
-
             resources:
               requests:
                 cpu: 15m
                 memory: 128M
               limits:
                 memory: 128M
-
     service:
       main:
         controller: main
         ports:
           http:
             port: &port 3010
+    persistence:
+      backup:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/storage-0/backups/sparkyfitness
+        globalMounts:
+          - path: /backup
+      config:
+        enabled: true
+        existingClaim: sparkyfitness
+        globalMounts:
+          - path: /uploads
