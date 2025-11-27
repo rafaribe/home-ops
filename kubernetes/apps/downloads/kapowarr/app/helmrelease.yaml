@@ -72,6 +72,6 @@ spec:
       media:
         type: nfs
         server: truenas.rafaribe.com
-        path: /mnt/tank/media
+        path: /mnt/tank/media/comics
         globalMounts:
           - path: /media
