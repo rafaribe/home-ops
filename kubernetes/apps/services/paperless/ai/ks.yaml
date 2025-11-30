@@ -1,39 +1,34 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://ks.hsn.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app paperless
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
+  name: &app paperless-ai
 spec:
-  path: "./kubernetes/apps/services/paperless/app"
+  targetNamespace: services
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: paperless
+  path: ./kubernetes/apps/services/paperless/ai  
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  wait: false
   interval: 30m
-  retryInterval: 1m
-  timeout: 3m
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2
-      kind: HelmRelease
-      name: paperless
-  targetNamespace: services
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  timeout: 5m
   postBuild:
     substitute:
       APP: *app
-      APP_UID: "1000"
-      APP_GID: "1000"
-      CLAIM: paperless
-      VOLSYNC_CAPACITY: 15Gi
+      VOLSYNC_CAPACITY: 1Gi
+      CLAIM: paperless-ai
+      GATUS_SUBDOMAIN: paperless-ai
   components:
-    - ../../../../components/volsync
-    - ../../../../components/dragonfly
+    - ../../../../../shared/components/volsync
+---
 ---
 # yaml-language-server: $schema=https://ks.hsn.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1

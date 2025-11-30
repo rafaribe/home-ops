@@ -1,0 +1,95 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app paperless-ai
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: paperless-ai
+  values:
+    controllers:
+      paperless-ai:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/rafaribe/paperless-ai
+              tag: 3.0.7@sha256:ebf5b272fe9e3d5f925fbd95f43abf0c5777fdc74b81ead369b25cf97731aef7
+            env:
+              PAPERLESS_API_URL: http://paperless.services.svc.cluster.local:8000/api
+              AI_PROVIDER: ollama
+              SCAN_INTERVAL: "*/31 * * * *"
+              ADD_AI_PROCESSED_TAG: yes
+              AI_PROCESSED_TAG_NAME: ai-processed
+              OLLAMA_API_URL: http://10.0.0.70:11434
+              OLLAMA_MODEL: cnmoro/mistral_7b_portuguese:q2_K
+            envFrom:
+              - secretRef:
+                  name: paperless-ai
+            resources:
+              requests:
+                cpu: 500m
+                memory: 512Mi
+              limits:
+                cpu: 700m
+                memory: 2Gi
+    defaultPodOptions:
+      # securityContext:
+      #   runAsNonRoot: true
+      #   runAsUser: 1000
+      #   runAsGroup: 1000
+      #   fsGroup: 1000
+      #   fsGroupChangePolicy: Always
+      #   seccompProfile: { type: RuntimeDefault }
+      affinity:
+        # Image not yet built for arm64
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+    service:
+      app:
+        controller: paperless-ai
+        ports:
+          http:
+            port: &port 3000
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Home
+          gethomepage.dev/name: Paperless AI
+          gethomepage.dev/icon: paperless.png
+          gethomepage.dev/description: AI Setup for Paperless
+          gethomepage.dev/siteMonitor: http://paperless-ai.services:3000
+        hostnames: ["paperlessai.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: paperless-ai
+                port: 3000
+    persistence:
+      config:
+        enabled: true
+        existingClaim: paperless-ai
+        globalMounts:
+          - path: /app/data
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/logs
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
