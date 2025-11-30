@@ -19,7 +19,7 @@ spec:
             image:
               # renovate: datasource=docker depName=ghcr.io/codewithcj/sparkyfitness-frontend
               repository: ghcr.io/codewithcj/sparkyfitness-frontend
-              tag: v0.15.9.5@sha256:b8dace2936d512dac4756c860477385020ac70851d068d2c1456d18015058baa
+              tag: v0.15.9.5@sha256:8876cc66b17f06d217edc3311b218186c8a344bf8f020d1d09492f81baee3c41
             env:
               PROMETHEUS_ENABLED: "true"
               SPARKY_FITNESS_LOG_LEVEL: debug
