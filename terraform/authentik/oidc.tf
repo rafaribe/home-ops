@@ -50,6 +50,11 @@ locals {
       authentik_oidc_application_icon_url    = "https://play-lh.googleusercontent.com/mKkzAj1XJpItjC2BatkuYiompPnK0F0u9xD5F2p7KtCNoDF11wyu-Jcn8iQ7Z49QZ8Q=w240-h480-rw"
       authentik_oidc_application_description = "KitchenOwl is a self-hosted recipe management tool."
     },
+      {
+      authentik_oidc_application_name        = "romm"
+      authentik_oidc_application_icon_url    = "https://docs.romm.app/latest/resources/romm/isotipo.svg"
+      authentik_oidc_application_description = "ROM manager."
+    },
   ]
 }
 
