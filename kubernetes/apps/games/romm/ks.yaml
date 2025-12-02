@@ -16,7 +16,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  targetNamespace: home
+  targetNamespace: games
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
