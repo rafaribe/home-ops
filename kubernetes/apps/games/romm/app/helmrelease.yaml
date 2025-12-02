@@ -22,7 +22,7 @@ spec:
               tag: 18
             envFrom: &envFrom
               - secretRef:
-                  name: "{{ .Release.Name }}"
+                  name: *name
         containers:
           app:
             image:
@@ -50,7 +50,7 @@ spec:
               TZ: Europe/Lisbon
             envFrom:
               - secretRef:
-                  name: "{{ .Release.Name }}"
+                  name: *name
             resources:
               requests:
                 cpu: 10m
