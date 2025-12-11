@@ -10,7 +10,7 @@ terraform {
     }
     radarr = {
       source = "devopsarr/radarr"
-      version = "2.3.3"
+      version = "2.3.4"
     }
     sops = {
       source = "carlpett/sops"
