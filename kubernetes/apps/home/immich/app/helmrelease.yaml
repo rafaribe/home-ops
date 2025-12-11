@@ -84,7 +84,7 @@ spec:
           app:
             image:
               repository: docker.io/valkey/valkey
-              tag: 9.0.0-trixie
+              tag: 9.0.1-trixie
     service:
       server:
         controller: server
