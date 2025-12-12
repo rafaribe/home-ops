@@ -30,3 +30,12 @@ spec:
       labelSelector:
         matchLabels:
           app.kubernetes.io/part-of: dragonfly
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                  - arm64
