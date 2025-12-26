@@ -53,7 +53,7 @@ spec:
           app:
             image:
               repository: yooooomi/your_spotify_client
-              tag: 1.16.0
+              tag: 1.17.0
             env:
               TIMEZONE: Europe/Lisbon
               API_ENDPOINT: *api_endpoint
