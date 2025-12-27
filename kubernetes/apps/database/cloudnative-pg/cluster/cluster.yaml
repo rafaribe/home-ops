@@ -10,7 +10,7 @@ spec:
   primaryUpdateStrategy: unsupervised
   primaryUpdateMethod: switchover
   storage:
-    size: 20Gi
+    size: 50Gi
     storageClass: ceph-block
   superuserSecret:
     name: cloudnative-pg-secret
