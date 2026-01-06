@@ -36,7 +36,7 @@ spec:
         spec:
           initContainers:
             - name: k8s-sidecar
-              image: ghcr.io/kiwigrid/k8s-sidecar:2.1.4
+              image: ghcr.io/kiwigrid/k8s-sidecar:2.2.3
               env:
                 - name: FOLDER
                   value: /var/lib/grafana/dashboards
