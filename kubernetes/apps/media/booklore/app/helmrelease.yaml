@@ -105,27 +105,18 @@ spec:
               - path: /config
                 subPath: db
       library:
-        enabled: true
         type: nfs
         server: truenas.rafaribe.com
-        path: /books
+        path: /mnt/tank/media/books/library
         advancedMounts:
           booklore:
             app:
-              - path: /mnt/tank/media/books/library
+              - path: /books
       bookdrop:
-        enabled: true
         type: nfs
         server: truenas.rafaribe.com
-        path: /bookdrop
+        path: /mnt/tank/media/books/incoming
         advancedMounts:
           booklore:
             app:
-              - path: /mnt/tank/media/books/incoming
-      tmp:
-        enabled: true
-        type: emptyDir
-        advancedMounts:
-          booklore:
-            app:
-              - path: /tmp
+              - path: /bookdrop
