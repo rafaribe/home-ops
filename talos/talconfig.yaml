@@ -8,9 +8,9 @@ clusterSvcNets:
   - 10.43.0.0/16
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
-talosVersion: v1.12.0
+talosVersion: v1.12.1
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
-kubernetesVersion: v1.34.3
+kubernetesVersion: v1.35.0
 
 cniConfig:
   name: none
@@ -391,8 +391,9 @@ controlPlane:
 
     # Disable default API server admission plugins.
     - &admissionControlPatch |-
-      - op: remove
-        path: /cluster/apiServer/admissionControl
+      cluster:
+        apiServer:
+          admissionControl: null
 
     # Enable K8s Talos API Access
     - &kubernetesTalosAPIAccess |-
