@@ -8,9 +8,9 @@ clusterSvcNets:
   - 10.43.0.0/16
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
-talosVersion: v1.11.3
+talosVersion: v1.12.0
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
-kubernetesVersion: v1.34.1
+kubernetesVersion: v1.34.3
 
 cniConfig:
   name: none
@@ -279,11 +279,6 @@ controlPlane:
               [plugins."io.containerd.cri.v1.runtime"]
                 cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
                 device_ownership_from_security_context = true
-    - &disableSearchDomainPatch |-
-      machine:
-        network:
-          disableSearchDomain: true
-
     # Disable cluster discovery
     - &discoveryPatch |-
       cluster:
@@ -493,7 +488,6 @@ worker:
     node-role.kubernetes.io/worker: ""
   patches:
     - *containerdPatch
-    - *disableSearchDomainPatch
     - *discoveryPatch
     - *kubeletPatch
     - *kubePrismPatch
