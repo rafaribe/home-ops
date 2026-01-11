@@ -43,6 +43,6 @@ spec:
         hostnames:
           - fitness.rafaribe.com
         parentRefs:
-          - name: envoy-internal
+          - name: envoy-external
             namespace: network
             sectionName: https
