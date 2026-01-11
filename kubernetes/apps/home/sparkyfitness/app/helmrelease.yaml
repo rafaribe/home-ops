@@ -46,7 +46,7 @@ spec:
           - name: envoy-external
             namespace: network
             sectionName: https
-      app:
+      internal:
         hostnames:
           - fit.rafaribe.com
         parentRefs:
