@@ -31,24 +31,19 @@ spec:
     enablePodMonitor: true
   backup:
     volumeSnapshot:
-       className: csi-ceph-blockpool
-       snapshotOwnerReference: cluster
+      className: csi-ceph-blockpool
+      snapshotOwnerReference: cluster
 
   plugins:
     - enabled: true
       isWALArchiver: true
       name: barman-cloud.cloudnative-pg.io
       parameters:
-
         barmanObjectName: garage-immich
         serverName: immich-v2
   bootstrap:
-    initdb:
-      database: app
-      owner: postgres
-      secret:
-        name: cloudnative-pg-secret
-
+    recovery:
+      source: source
 
     # recovery:
     #   source:  source

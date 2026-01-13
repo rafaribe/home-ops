@@ -29,9 +29,8 @@ spec:
     enablePodMonitor: true
   backup:
     volumeSnapshot:
-       className: csi-ceph-blockpool
-       snapshotOwnerReference: cluster
-
+      className: csi-ceph-blockpool
+      snapshotOwnerReference: cluster
   plugins:
     - enabled: true
       isWALArchiver: true
@@ -41,7 +40,7 @@ spec:
         serverName: home-ops-v3
   bootstrap:
     recovery:
-      source:  source
+      source: source
   externalClusters:
     - name: source
       plugin:
