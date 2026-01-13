@@ -66,7 +66,7 @@ spec:
           configuration.toml: |
             metadata_dir = "/meta"
             data_dir = "/data"
-            db_engine = "lmdb"
+            db_engine = "sqlite"
             metadata_auto_snapshot_interval = "6h"
 
             replication_factor = 1
