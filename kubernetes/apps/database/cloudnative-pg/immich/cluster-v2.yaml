@@ -5,8 +5,8 @@ kind: Cluster
 metadata:
   name: immich-v2
 spec:
-  instances: 1
-  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.6-0.5.3
+  instances: 3
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.7-1.0.0
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
@@ -45,7 +45,7 @@ spec:
     recovery:
       volumeSnapshots:
         storage:
-          name: immich-cold-backup-20260113030000
+          name: immich-clean-backup-20260113152809
           kind: VolumeSnapshot
           apiGroup: snapshot.storage.k8s.io
 
