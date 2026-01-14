@@ -5,7 +5,7 @@ kind: Cluster
 metadata:
   name: immich-v2
 spec:
-  instances: 1
+  instances: 3
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:18.0-0.5.3
   primaryUpdateStrategy: unsupervised
   storage:
