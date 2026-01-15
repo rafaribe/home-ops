@@ -15,7 +15,7 @@ spec:
   wait: true
   interval: 30m
   retryInterval: 1m
-  timeout: 5m
+  timeout: 10m
   postBuild:
     substitute:
       APP: *app
