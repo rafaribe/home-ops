@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: &cluster immich
+  name: &cluster immich-v3
 spec:
   backupOwnerReference: self
   cluster:
@@ -13,18 +13,18 @@ spec:
   pluginConfiguration:
     name: barman-cloud.cloudnative-pg.io
     parameters:
-      barmanObjectName: garage-home-ops
+      barmanObjectName: garage-immich
   schedule: "0 0 5 * * *" # at 5 AM every day
 ---
 # yaml-language-server: $schema=https://crd.movishell.pl/postgresql.cnpg.io/scheduledbackup_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: immich-cold-backup
+  name: immich-v3-cold-backup
 spec:
-  schedule: "0 0 3 * * *" # at 4 AM every day
+  schedule: "0 0 3 * * *" # at 3 AM every day
   backupOwnerReference: self
   cluster:
-    name: immich
+    name: immich-v3
   method: volumeSnapshot
   online: false
