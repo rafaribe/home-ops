@@ -42,19 +42,17 @@ spec:
         barmanObjectName: garage-immich
         serverName: immich-v3
   bootstrap:
-    #recovery:
-      # volumeSnapshots:
-      #   storage:
-      #     name: immich-clean-backup-20260113152809:p
-      #     kind: VolumeSnapshot
-      #     apiGroup: snapshot.storage.k8s.io
-    recovery:
+    initdb:
       database: app
+      encoding: UTF8
+      localeCType: C
+      localeCollate: C
       owner: app
-      source: source
   externalClusters:
     - name: source
       plugin:
+        enabled: true
+        isWALArchiver: false
         name: barman-cloud.cloudnative-pg.io
         parameters:
           barmanObjectName: garage-immich
