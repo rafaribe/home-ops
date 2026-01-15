@@ -39,10 +39,16 @@ spec:
         barmanObjectName: garage-home-ops
         serverName: home-ops-v3
   bootstrap:
-    recovery:
-      source: source
+    initdb:
+      database: app
+      encoding: UTF8
+      localeCType: C
+      localeCollate: C
+      owner: app
   externalClusters:
     - name: source
       plugin:
+        enabled: true
+        isWALArchiver: false
         name: barman-cloud.cloudnative-pg.io
         parameters: *barmanParameters
