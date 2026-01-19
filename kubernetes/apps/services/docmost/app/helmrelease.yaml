@@ -73,7 +73,7 @@ spec:
           gethomepage.dev/siteMonitor: http://docmost.services:3000
         hostnames: ["docmost.rafaribe.com"]
         parentRefs:
-          - name: envoy-internal
+          - name: envoy-external
             namespace: network
             sectionName: https
         rules:
