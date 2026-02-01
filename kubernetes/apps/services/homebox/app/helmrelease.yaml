@@ -21,7 +21,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sysadminsmedia/homebox
-              tag: 0.22.3-rootless
+              tag: 0.23.1-rootless
             env:
               TZ: Europe/Lisbon
               HBOX_LOG_LEVEL: info
