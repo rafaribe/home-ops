@@ -43,7 +43,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/bazarr
-              tag: 1.5.4@sha256:6e2fab9cca3096714795458aec222da5e2e5cde07ed07e439f9879c9de3b5b94
+              tag: 1.5.5@sha256:0949a30fb6e6703a63aaa9775760b8af820f7871f6a9aa9207e2ea00fd855e2c
             env:
               TZ: Europe/Lisbon
             envFrom: &envFrom
