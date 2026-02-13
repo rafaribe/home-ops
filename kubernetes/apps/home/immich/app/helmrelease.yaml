@@ -23,14 +23,14 @@ spec:
           01-init-db:
             image:
               repository: ghcr.io/home-operations/postgres-init
-              tag: 18.1.0
+              tag: 18.2.0
             envFrom: &dbEnvFrom
               - secretRef:
                   name: immich-db
           02-init-extensions:
             image:
               repository: ghcr.io/home-operations/postgres-init
-              tag: 18.1.0
+              tag: 18.2.0
               pullPolicy: IfNotPresent
             envFrom: *dbEnvFrom
         containers:
