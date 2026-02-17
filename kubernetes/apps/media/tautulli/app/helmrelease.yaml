@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/tautulli
-              tag: 2.16.0@sha256:2a092f86a51f5718111097b0fced33eaa876b5904a543b7504f92357a4f75635
+              tag: 2.16.1@sha256:6983eea603ee230b189f2d32e7d7fc0bb94917df735a71ba20460c4991877645
             env:
               TZ: ${TIMEZONE:=Europe/Lisbon}
               TAUTULLI_HTTP_BASE_URL: https://tautulli.rafaribe.com
