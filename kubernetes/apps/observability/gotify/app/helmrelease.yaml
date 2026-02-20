@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gotify/server
-              tag: 2.8.0@sha256:4702c392ca723d5016fc938c8b22572c3509efca812bdc5221d25158ba0201e3
+              tag: 2.9.0@sha256:4df8c1bb23646b8d8b308e881866474bfae4a9a5b3980e5047f87eb84017e8a0
             env:
               TZ: Europe/Lisbon
               GOTIFY_DATABASE_DIALECT: postgres
