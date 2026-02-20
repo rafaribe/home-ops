@@ -89,7 +89,7 @@ spec:
         image:
           registry: docker.io
           repository: prompp/prompp
-          tag: 0.7.2
+          tag: 0.7.5
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
