@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/chartdb/chartdb
-              tag: 1.19.0@sha256:743ce7c45758200fe0ac9a7ead588dbcbe535994e4d3df0aacee1b2990da0a56
+              tag: 1.20.0@sha256:210f856984a4bfffef95ca6de80bed5b567e631f85564718cbc5301f87499e3c
             env:
               TZ: "Europe/Lisbon"
             probes:
