@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: &cluster immich-v3
+  name: &cluster immich-v4
 spec:
   backupOwnerReference: self
   cluster:
@@ -20,11 +20,11 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: immich-v3-cold-backup
+  name: immich-v4-cold-backup
 spec:
   schedule: "0 0 3 * * *" # at 3 AM every day
   backupOwnerReference: self
   cluster:
-    name: immich-v3
+    name: immich-v4
   method: volumeSnapshot
   online: false
