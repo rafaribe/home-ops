@@ -21,12 +21,15 @@ spec:
     parameters:
       max_connections: "600"
       max_slot_wal_keep_size: 30GB
-      shared_buffers: 512MB
+      shared_buffers: 256MB
+  affinity:
+    nodeSelector:
+      kubernetes.io/arch: amd64
   resources:
     requests:
       cpu: 500m
     limits:
-      memory: 4Gi
+      memory: 2Gi
   monitoring:
     enablePodMonitor: true
   backup:
