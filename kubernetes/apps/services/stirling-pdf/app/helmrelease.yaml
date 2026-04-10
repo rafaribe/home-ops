@@ -6,6 +6,7 @@ metadata:
   name: &app stirling-pdf
 spec:
   interval: 1h
+  timeout: 10m
   chartRef:
     kind: OCIRepository
     name: stirling-pdf
@@ -65,6 +66,8 @@ spec:
                 subPath: tessdata
               - path: /tmp
                 subPath: tmp
+              - path: /customFiles
+                subPath: customFiles
 
     service:
       app:
