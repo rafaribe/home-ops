@@ -68,6 +68,8 @@ spec:
                 subPath: tmp
               - path: /customFiles
                 subPath: customFiles
+              - path: /home/stirlingpdfuser
+                subPath: home
 
     service:
       app:
