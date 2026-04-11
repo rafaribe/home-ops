@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/radarr
-              tag: 6.1.1.10317@sha256:dc191495299b0adf19f4347ffe35f773c56a04d71e38a1f06aa564547b6e799e
+              tag: 6.1.2.10359@sha256:9967e56263a3c67eeaede5824103ee4c1c1f1511abd5965ac1e294bfd9b76dbb
             env:
               TZ: Europe/Lisbon
               RADARR__APP__INSTANCENAME: Radarr
