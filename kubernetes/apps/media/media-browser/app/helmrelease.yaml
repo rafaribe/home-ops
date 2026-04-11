@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: docker.io/filebrowser/filebrowser
-              tag: v2.57.1@sha256:6ef368f5a0730ee1638886e4b77a94503fcc302569f7d2ae980b23d59072a700
+              tag: v2.63.2@sha256:4dce87308b9f9cfbcf8d0a284fc9565d2b515530a6bae2d920b388161e093f26
             env:
               TZ: "Europe/Lisbon"
               FB_DATABASE: /config/filebrowser.db
