@@ -56,6 +56,9 @@ spec:
         memory: 2Gi # increased from 1Gi for better performance
     image:
       repository: ghcr.io/rook/ceph
+    tolerations:
+      - key: "node-role.kubernetes.io/tpi"
+        operator: "Exists"
     env:
       - name: ROOK_CEPH_COMMANDS_TIMEOUT_SECONDS
         value: "30"

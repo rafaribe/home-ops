@@ -8,9 +8,9 @@ clusterSvcNets:
   - 10.43.0.0/16
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
-talosVersion: v1.12.1
+talosVersion: v1.12.6
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
-kubernetesVersion: v1.35.0
+kubernetesVersion: v1.35.3
 
 cniConfig:
   name: none
@@ -30,9 +30,8 @@ nodes:
       - "1.1.1.1"
     controlPlane: false
     installDiskSelector:
-      wwid: naa.5002538d7025e8be
-      type: ssd
-      size: <= 256 GB
+      wwid: naa.5000cca6a8c07027
+      size: <= 750 GB
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "10:c3:7b:1d:d6:f4"
@@ -134,6 +133,8 @@ nodes:
     ipAddress: 10.0.1.8
     nameservers: *nameservers
     controlPlane: false
+    nodeTaints:
+      node-role.kubernetes.io/tpi: "true:NoSchedule"
     installDiskSelector:
       type: sd
     networkInterfaces:
@@ -170,6 +171,8 @@ nodes:
     ipAddress: 10.0.1.9
     nameservers: *nameservers
     controlPlane: false
+    nodeTaints:
+      node-role.kubernetes.io/tpi: "true:NoSchedule"
     installDiskSelector:
       type: sd
     networkInterfaces:
@@ -189,6 +192,8 @@ nodes:
     ipAddress: 10.0.1.10
     nameservers: *nameservers
     controlPlane: false
+    nodeTaints:
+      node-role.kubernetes.io/tpi: "true:NoSchedule"
     installDiskSelector:
       type: sd
     networkInterfaces:
@@ -208,6 +213,8 @@ nodes:
     ipAddress: 10.0.1.11
     nameservers: *nameservers
     controlPlane: false
+    nodeTaints:
+      node-role.kubernetes.io/tpi: "true:NoSchedule"
     installDiskSelector:
       type: sd
     networkInterfaces:
