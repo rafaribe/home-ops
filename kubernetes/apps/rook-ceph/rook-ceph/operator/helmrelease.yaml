@@ -59,6 +59,15 @@ spec:
     tolerations:
       - key: "node-role.kubernetes.io/tpi"
         operator: "Exists"
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          preference:
+            matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                  - amd64
     env:
       - name: ROOK_CEPH_COMMANDS_TIMEOUT_SECONDS
         value: "30"
