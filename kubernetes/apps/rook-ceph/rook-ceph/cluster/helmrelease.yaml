@@ -120,8 +120,6 @@ spec:
           tolerations:
             - key: "node-role.kubernetes.io/control-plane"
               operator: "Exists"
-            - key: "node-role.kubernetes.io/tpi"
-              operator: "Exists"
         mon:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -213,50 +211,7 @@ spec:
                 cpu: "2"
                 memory: 8Gi
             priorityClassName: system-node-critical
-          - name: tpi-1
-            devices:
-              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_24175J806474
-            resources:
-              requests:
-                cpu: "1"
-                memory: 4Gi
-              limits:
-                cpu: "2"
-                memory: 8Gi
-            priorityClassName: system-node-critical
-          - name: tpi-2
-            devices:
-              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_241766801325
-            resources:
-              requests:
-                cpu: "1"
-                memory: 4Gi
-              limits:
-                cpu: "2"
-                memory: 8Gi
-            priorityClassName: system-node-critical
-          - name: tpi-3
-            devices:
-              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_24175J802694
-            resources:
-              requests:
-                cpu: "1"
-                memory: 4Gi
-              limits:
-                cpu: "2"
-                memory: 8Gi
-            priorityClassName: system-node-critical
-          - name: tpi-4
-            devices:
-              - name: /dev/disk/by-id/nvme-WD_BLACK_SN770_1TB_24175J806480
-            resources:
-              requests:
-                cpu: "1"
-                memory: 4Gi
-              limits:
-                cpu: "2"
-                memory: 8Gi
-            priorityClassName: system-node-critical
+
       # resources:
     cephBlockPools:
       - name: ceph-blockpool

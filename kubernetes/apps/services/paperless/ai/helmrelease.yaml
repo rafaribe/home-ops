@@ -45,22 +45,7 @@ spec:
       #   fsGroup: 1000
       #   fsGroupChangePolicy: Always
       #   seccompProfile: { type: RuntimeDefault }
-      affinity:
-        # Image not yet built for arm64
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                      - amd64
     service:
-      app:
-        controller: paperless-ai
-        ports:
-          http:
-            port: &port 3000
     route:
       app:
         annotations:
