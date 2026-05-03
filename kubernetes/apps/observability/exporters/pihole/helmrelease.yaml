@@ -15,8 +15,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/osnabrugge/pihole-exporter
-              tag: v1.2.0@sha256:f20c43161d73848408ef247f0ec7111b19fe58ffebc0cbcaa0d2c8bda4967268
+              repository: docker.io/ekofr/pihole-exporter
+              tag: v1.2.0
             command: ["/pihole_exporter"]
             env:
               PIHOLE_HOSTNAME: 10.0.0.254
