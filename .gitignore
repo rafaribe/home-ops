@@ -52,3 +52,4 @@ restore/backupfile.sql.gz
 restic-to-kopia-migrate.sh
 terraform/garage.sh
 *lock.hcl
+docs/volsync-fix.md

@@ -164,8 +164,8 @@ nodes:
           kubelet:
             extraArgs:
               rotate-server-certificates: true
-              image-gc-high-threshold: 75
-              image-gc-low-threshold: 70
+              image-gc-high-threshold: 65
+              image-gc-low-threshold: 50
 
   - hostname: tpi-2.${clusterDNSSuffix}
     ipAddress: 10.0.1.9

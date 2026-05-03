@@ -31,7 +31,8 @@ spec:
               ATUIN_TLS__ENABLE: "false"
               ATUIN_DB_URI: sqlite:///config/atuin.db
               TZ: Europe/Lisbon
-            args: ["server", "start"]
+            command: ["atuin-server"]
+            args: ["start"]
             probes:
               liveness: &probes
                 enabled: true
