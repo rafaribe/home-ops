@@ -17,7 +17,7 @@ spec:
             image:
               repository: docker.io/ekofr/pihole-exporter
               tag: v1.2.0
-            command: ["/pihole_exporter"]
+            command: ["/root/pihole-exporter"]
             env:
               PIHOLE_HOSTNAME: 10.0.0.254
               PORT: &port 9617
