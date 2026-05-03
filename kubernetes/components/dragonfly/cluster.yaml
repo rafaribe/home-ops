@@ -18,6 +18,7 @@ spec:
     - --proactor_threads=${DRAGONFLY_PROACTOR_THREADS:=2}
     - --cluster_mode=${DRAGONFLY_CLUSTER_MODE:=emulated}
     - --default_lua_flags=allow-undeclared-keys
+    - --force_epoll
   resources:
     requests:
       cpu: 100m
