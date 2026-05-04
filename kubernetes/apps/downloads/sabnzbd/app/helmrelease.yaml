@@ -69,7 +69,7 @@ spec:
               requests:
                 memory: 100Mi
               limits:
-                memory: 8Gi
+                memory: 1Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true

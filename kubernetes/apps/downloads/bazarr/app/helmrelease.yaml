@@ -70,7 +70,7 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 4Gi
+                memory: 512Mi
           subcleaner:
             image:
               repository: registry.k8s.io/git-sync/git-sync

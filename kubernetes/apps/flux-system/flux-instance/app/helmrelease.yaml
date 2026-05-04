@@ -65,7 +65,7 @@ spec:
                       - name: manager
                         resources:
                           limits:
-                            memory: 2Gi
+                            memory: 512Mi
             target:
               kind: Deployment
               name: (kustomize-controller|helm-controller|source-controller)

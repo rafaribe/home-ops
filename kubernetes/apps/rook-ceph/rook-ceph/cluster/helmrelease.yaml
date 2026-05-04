@@ -149,22 +149,22 @@ spec:
               - name: /dev/disk/by-id/usb-SanDisk_Extreme_55AE_32323039444E343033313735-0:0
             resources:
               requests:
-                cpu: "1"
-                memory: 4Gi
+                cpu: "500m"
+                memory: 2Gi
               limits:
                 cpu: "2"
-                memory: 8Gi
+                memory: 4Gi
             priorityClassName: system-node-critical
           - name: srv-03
             devices:
               - name: /dev/disk/by-id/usb-SanDisk_Portable_SSD_32333231454C343030363335-0:0
             resources:
               requests:
-                cpu: "1"
-                memory: 4Gi
+                cpu: "500m"
+                memory: 2Gi
               limits:
                 cpu: "2"
-                memory: 8Gi
+                memory: 4Gi
             priorityClassName: system-node-critical
           - name: srv-04
             devices:
@@ -172,44 +172,44 @@ spec:
               - name: /dev/disk/by-id/ata-WDC_WD10SPCX-24HWST1_WD-WXK1AA5P94JV
             resources:
               requests:
-                cpu: "1"
-                memory: 4Gi
+                cpu: "500m"
+                memory: 2Gi
               limits:
                 cpu: "2"
-                memory: 8Gi
+                memory: 4Gi
             priorityClassName: system-node-critical
           - name: srv-05
             devices:
               - name: /dev/disk/by-id/usb-Samsung_PSSD_T7_S6XDNS0W566278X-0:0
             resources:
               requests:
-                cpu: "1"
-                memory: 4Gi
+                cpu: "500m"
+                memory: 2Gi
               limits:
                 cpu: "2"
-                memory: 8Gi
+                memory: 4Gi
             priorityClassName: system-node-critical
           - name: srv-06
             devices:
               - name: /dev/disk/by-id/ata-SanDisk_SSD_PLUS_1000GB_25202A4A6X07
             resources:
               requests:
-                cpu: "1"
-                memory: 4Gi
+                cpu: "500m"
+                memory: 2Gi
               limits:
                 cpu: "2"
-                memory: 8Gi
+                memory: 4Gi
             priorityClassName: system-node-critical
           - name: srv-07
             devices:
               - name: /dev/disk/by-id/ata-SanDisk_SSD_PLUS_1000GB_25202A4A2F04
             resources:
               requests:
-                cpu: "1"
-                memory: 4Gi
+                cpu: "500m"
+                memory: 2Gi
               limits:
                 cpu: "2"
-                memory: 8Gi
+                memory: 4Gi
             priorityClassName: system-node-critical
 
       resources:
