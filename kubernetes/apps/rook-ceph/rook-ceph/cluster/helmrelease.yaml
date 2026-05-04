@@ -213,7 +213,7 @@ spec:
             priorityClassName: system-node-critical
 
       resources:
-        logCollector:
+        logcollector:
           requests:
             cpu: 10m
             memory: 50Mi
@@ -223,6 +223,12 @@ spec:
           requests:
             cpu: 10m
             memory: 50Mi
+          limits:
+            memory: 128Mi
+        crashcollector:
+          requests:
+            cpu: 10m
+            memory: 60Mi
           limits:
             memory: 128Mi
     cephBlockPools:
