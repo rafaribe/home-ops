@@ -56,6 +56,8 @@ spec:
             matchLabels:
               app.kubernetes.io/name: *app
     service:
+      app:
+        controller: smtp-relay-noreply
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: smtp-relay-noreply.rafaribe.com
