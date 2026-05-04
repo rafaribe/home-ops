@@ -82,7 +82,7 @@ spec:
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
         
       crashCollector:
-        disable: false
+        disable: true
       csi:
         readAffinity:
           enabled: true
