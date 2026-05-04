@@ -39,6 +39,12 @@ spec:
                   periodSeconds: 5
             securityContext:
               readOnlyRootFilesystem: false
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
         pod:
           securityContext:
             fsGroup: 1000
