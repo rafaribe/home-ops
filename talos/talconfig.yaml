@@ -136,7 +136,7 @@ nodes:
     nodeTaints:
       node-role.kubernetes.io/tpi: "true:NoSchedule"
     installDiskSelector:
-      type: sd
+      type: nvme
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "ca:d1:4d:b4:f9:bd"
@@ -174,7 +174,7 @@ nodes:
     nodeTaints:
       node-role.kubernetes.io/tpi: "true:NoSchedule"
     installDiskSelector:
-      type: sd
+      type: nvme
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "1e:66:39:1d:77:c0"
@@ -195,7 +195,7 @@ nodes:
     nodeTaints:
       node-role.kubernetes.io/tpi: "true:NoSchedule"
     installDiskSelector:
-      type: sd
+      type: nvme
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "8e:56:66:61:bf:36"
@@ -215,11 +215,10 @@ nodes:
     controlPlane: false
     nodeTaints:
       node-role.kubernetes.io/tpi: "true:NoSchedule"
-    installDiskSelector:
-      type: sd
+    installDisk: /dev/mmcblk0
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "c4:ff:84:10:05:98"
+          hardwareAddr: "8e:a1:08:d0:12:5c"
         dhcp: true
         mtu: 1500
         routes: *defaultRoutes
