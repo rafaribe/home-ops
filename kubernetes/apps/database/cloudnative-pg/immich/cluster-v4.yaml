@@ -27,9 +27,10 @@ spec:
       kubernetes.io/arch: amd64
   resources:
     requests:
-      cpu: 500m
+      cpu: 250m
+      memory: 256Mi
     limits:
-      memory: 2Gi
+      memory: 1Gi
   monitoring:
     enablePodMonitor: true
   backup:
