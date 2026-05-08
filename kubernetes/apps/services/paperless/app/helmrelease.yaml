@@ -52,7 +52,7 @@ spec:
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
               # Configure OCR
               PAPERLESS_OCR_LANGUAGES: por eng
-              PAPERLESS_OCR_LANGUAGE: por
+              PAPERLESS_OCR_LANGUAGE: eng
               PAPERLESS_OCR_MODE: "redo"
               PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
               # Enable TIKA
