@@ -36,6 +36,7 @@ spec:
               TANDOOR_PORT: &tandoorPort 8888
               SOCIAL_DEFAULT_ACCESS: 1
               SOCIAL_DEFAULT_GROUP: user
+              ALLOWED_HOSTS: "*"
 
               AI_MODEL_NAME: openai/gpt-4o
             envFrom: *envFrom
