@@ -94,15 +94,18 @@ spec:
                 subPath: code-server
       hass-cache:
         existingClaim: home-assistant-cache
-        globalMounts:
-          - path: /tmp
-            subPath: hass-tmp
-          - path: /tmp
-            subPath: code-server-tmp
-          - path: /nonexistent
-            subPath: nonexistent
-          - path: /venv
-            subPath: hass-venv
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /tmp
+                subPath: hass-tmp
+              - path: /nonexistent
+                subPath: nonexistent
+              - path: /venv
+                subPath: hass-venv
+            code-server:
+              - path: /tmp
+                subPath: code-server-tmp
 
       deploy-key:
         type: secret
