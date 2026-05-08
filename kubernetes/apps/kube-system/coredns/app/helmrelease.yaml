@@ -20,7 +20,6 @@ spec:
     servers:
       - zones:
           - zone: .
-            scheme: dns://
             use_tcp: true
         port: 53
         plugins:
@@ -40,9 +39,7 @@ spec:
               pods insecure
               fallthrough in-addr.arpa ip6.arpa
           - name: forward
-            parameters: . 10.0.0.254
-          - name: forward
-            parameters: . 1.1.1.1
+            parameters: . 10.0.0.254 1.1.1.1
           - name: cache
             parameters: 30
           - name: loop
