@@ -114,6 +114,8 @@ spec:
 
     defaultPodOptions:
       hostUsers: false
+      nodeSelector:
+        kubernetes.io/arch: arm64
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
