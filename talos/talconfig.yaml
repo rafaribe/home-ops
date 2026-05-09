@@ -133,8 +133,6 @@ nodes:
     ipAddress: 10.0.1.8
     nameservers: *nameservers
     controlPlane: false
-    nodeTaints:
-      node-role.kubernetes.io/tpi: "true:NoSchedule"
     installDiskSelector:
       type: nvme
     networkInterfaces:
@@ -171,8 +169,6 @@ nodes:
     ipAddress: 10.0.1.9
     nameservers: *nameservers
     controlPlane: false
-    nodeTaints:
-      node-role.kubernetes.io/tpi: "true:NoSchedule"
     installDiskSelector:
       type: nvme
     networkInterfaces:
@@ -192,8 +188,6 @@ nodes:
     ipAddress: 10.0.1.10
     nameservers: *nameservers
     controlPlane: false
-    nodeTaints:
-      node-role.kubernetes.io/tpi: "true:NoSchedule"
     installDiskSelector:
       type: nvme
     networkInterfaces:
@@ -207,15 +201,22 @@ nodes:
       arch: arm64
     schematic: *schematic-tpi
     patches:
-      - *kubelet-gc
+      - |-
+        machine:
+          kubelet:
+            extraArgs:
+              rotate-server-certificates: true
+              image-gc-high-threshold: 50
+              image-gc-low-threshold: 35
+            extraConfig:
+              imageMaximumGCAge: 12h0m0s
 
   - hostname: tpi-4.${clusterDNSSuffix}
     ipAddress: 10.0.1.11
     nameservers: *nameservers
     controlPlane: false
-    nodeTaints:
-      node-role.kubernetes.io/tpi: "true:NoSchedule"
-    installDisk: /dev/mmcblk0
+    installDiskSelector:
+      type: nvme
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "8e:a1:08:d0:12:5c"
@@ -227,7 +228,15 @@ nodes:
       arch: arm64
     schematic: *schematic-tpi
     patches:
-      - *kubelet-gc
+      - |-
+        machine:
+          kubelet:
+            extraArgs:
+              rotate-server-certificates: true
+              image-gc-high-threshold: 50
+              image-gc-low-threshold: 35
+            extraConfig:
+              imageMaximumGCAge: 12h0m0s
 
 controlPlane:
   noSchematicValidate: true
@@ -281,7 +290,7 @@ controlPlane:
             path: /etc/cri/conf.d/20-customization.part
             content: |
               [plugins."io.containerd.cri.v1.images"]
-                discard_unpacked_layers = false
+                discard_unpacked_layers = true
               [plugins."io.containerd.cri.v1.runtime"]
                 cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
                 device_ownership_from_security_context = true
