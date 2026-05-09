@@ -119,6 +119,14 @@ spec:
       hostUsers: false
       nodeSelector:
         kubernetes.io/arch: arm64
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: disk-size
+                    operator: DoesNotExist
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
