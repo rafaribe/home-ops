@@ -64,7 +64,7 @@ spec:
                 cpu: 100m
                 memory: 256Mi
               limits:
-                memory: 500Mi
+                memory: 768Mi
     service:
       app:
         type: LoadBalancer
