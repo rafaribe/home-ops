@@ -10,6 +10,9 @@ spec:
     kind: OCIRepository
     name: kitchenowl
   values:
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
     controllers:
       kitchenowl:
         annotations:
