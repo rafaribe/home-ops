@@ -10,5 +10,4 @@ spec:
       storage: 20Gi
   volumeMode: Filesystem
   accessModes:
-    - ReadWriteOnce
-    
+    - ReadWriteMany
