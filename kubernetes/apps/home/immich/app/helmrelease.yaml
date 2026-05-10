@@ -9,14 +9,22 @@ spec:
     kind: OCIRepository
     name: app-template
   values:
+    defaultPodOptions:
+      enableServiceLinks: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: {type: RuntimeDefault}
+
     controllers:
       server:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-
         pod:
-          enableServiceLinks: false
           labels:
             gethomepage.dev/name: immich-server
         initContainers:
@@ -40,7 +48,7 @@ spec:
               tag: v2.7.5@sha256:c15bff75068effb03f4355997d03dc7e0fc58720c2b54ad6f7f10d1bc57efaa5
             env:
               IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
-
+              IMMICH_WORKERS_INCLUDE: api
             envFrom: &envFrom
               - configMapRef:
                   name: immich
@@ -48,7 +56,10 @@ spec:
                   name: immich
               - secretRef:
                   name: immich-db
-
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: [ALL]}
             resources:
               requests:
                 cpu: 100m
@@ -61,7 +72,6 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
-          enableServiceLinks: false
           affinity:
             nodeAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
@@ -70,29 +80,24 @@ spec:
                       - key: disk-size
                         operator: NotIn
                         values: ["small"]
-
         containers:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: 2.2.1@sha256:590a76bba3d88ccf78b03cde0c0fb8788f7d76ae6caf90ad33a34b5b4cc35f11
-              #tag: v2.2.1@sha256:590a76bba3d88ccf78b03cde0c0fb8788f7d76ae6caf90ad33a34b5b4cc35f11
+              tag: v2.7.5
             envFrom: *envFrom
             env:
-              MPLCONFIGDIR: "/cache/matplotlib"
               IMMICH_MEDIA_LOCATION: *mediaLocation
+              IMMICH_WORKERS_EXCLUDE: api
+              MPLCONFIGDIR: /cache/matplotlib
+            securityContext: *securityContext
             resources:
               requests:
                 cpu: 100m
                 memory: 274M
               limits:
                 memory: 3949M
-      valkey:
-        containers:
-          app:
-            image:
-              repository: docker.io/valkey/valkey
-              tag: 9.0.4-trixie
+
     service:
       server:
         controller: server
@@ -104,16 +109,10 @@ spec:
         ports:
           http:
             port: 3003
-      valkey:
-        controller: valkey
-        ports:
-          http:
-            port: 6379
 
     route:
       app:
         annotations:
-          #Homepage
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media
           gethomepage.dev/name: Immich
@@ -126,7 +125,6 @@ spec:
           gethomepage.dev/siteMonitor: *url
           gethomepage.dev/pod-selector: >-
             gethomepage.dev/name in (immich-server)
-
         hostnames: ["photos.rafaribe.com"]
         parentRefs:
           - name: envoy-external
@@ -144,37 +142,27 @@ spec:
           - backendRefs:
               - name: *backend
                 port: *port
+
     configMaps:
-      config:
+      immich:
         data:
-          # URLS
           IMMICH_SERVER_URL: http://immich-server.home.svc.cluster.local:2283
           IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.home.svc.cluster.local:3003
           PUBLIC_IMMICH_SERVER_URL: https://immich.rafaribe.com
-          # SETTINGS
-          DISABLE_REVERSE_GEOCODING: "true"
-          ENABLE_MAPBOX: "false"
           LOG_LEVEL: log
           NODE_ENV: production
           UPLOAD_LOCATION: /usr/src/app/upload
-          # REDIS
-          REDIS_HOSTNAME: "immich-valkey.home.svc.cluster.local"
+          REDIS_HOSTNAME: immich-dragonfly.home.svc.cluster.local
           REDIS_PORT: "6379"
 
     persistence:
-      matplotlib:
-        type: emptyDir
-        advancedMounts:
-          server:
-            main:
-              - path: /config/matplotlib
-
       library:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/tank/immich
         globalMounts:
           - path: /usr/src/app/upload
+
       cache:
         type: persistentVolumeClaim
         existingClaim: immich-ml-cache
@@ -186,12 +174,19 @@ spec:
               - path: /.cache
                 subPath: dotCache
 
-      tmpfs:
+      tmp:
         type: emptyDir
+        medium: Memory
         advancedMounts:
           server:
             main:
+              - path: /tmp
+                subPath: tmp
               - path: /usr/src/app/.reverse-geocoding-dump
                 subPath: geocoding
               - path: /usr/src/app/.transformers_cache
                 subPath: transformers
+          machine-learning:
+            main:
+              - path: /tmp
+                subPath: tmp
