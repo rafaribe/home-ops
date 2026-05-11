@@ -44,11 +44,6 @@ spec:
                 echo "Updating database"
                 python3 /opt/recipes/manage.py migrate
                 python3 /opt/recipes/manage.py collectstatic --noinput
-                if [ -f /opt/recipes/mediafiles/tandoor-backup.json ]; then
-                  echo "Restoring backup"
-                  python3 /opt/recipes/manage.py loaddata /opt/recipes/mediafiles/tandoor-backup.json && \
-                  mv /opt/recipes/mediafiles/tandoor-backup.json /opt/recipes/mediafiles/tandoor-backup.json.restored
-                fi
         containers:
           app:
             image:
