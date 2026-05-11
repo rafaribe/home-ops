@@ -32,7 +32,9 @@ spec:
               ALLOWED_HOSTS: "*"
 
               AI_MODEL_NAME: openai/gpt-4o
-            envFrom: *envFrom
+            envFrom: &envFrom
+              - secretRef:
+                  name: tandoor
             command:
               - sh
               - -c
