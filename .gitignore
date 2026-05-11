@@ -53,3 +53,6 @@ restic-to-kopia-migrate.sh
 terraform/garage.sh
 *lock.hcl
 docs/volsync-fix.md
+
+.claude/
+docs/
