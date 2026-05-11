@@ -24,22 +24,15 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
 
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 18.3@sha256:6fa1f331cddd2eb0b6afa7b8d3685c864127a81ab01c3d9400bc3ff5263a51cf
-            envFrom: &envFrom
-              - secretRef:
-                  name: *app
-
         containers:
           app:
             image:
               repository: ghcr.io/mealie-recipes/mealie
               tag: v3.17.0
               pullPolicy: IfNotPresent
-            envFrom: *envFrom # All values are created on the externalsecret
+            envFrom:
+              - secretRef:
+                  name: *app # All values are created on the externalsecret
 
     service:
       app:

@@ -15,13 +15,6 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 18.3@sha256:6fa1f331cddd2eb0b6afa7b8d3685c864127a81ab01c3d9400bc3ff5263a51cf
-            envFrom: &envFrom
-              - secretRef:
-                  name: tandoor
           migrations:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
@@ -49,6 +42,11 @@ spec:
                 echo "Updating database"
                 python3 /opt/recipes/manage.py migrate
                 python3 /opt/recipes/manage.py collectstatic --noinput
+                if [ -f /opt/recipes/mediafiles/tandoor-backup.json ]; then
+                  echo "Restoring backup"
+                  python3 /opt/recipes/manage.py loaddata /opt/recipes/mediafiles/tandoor-backup.json && \
+                  mv /opt/recipes/mediafiles/tandoor-backup.json /opt/recipes/mediafiles/tandoor-backup.json.restored
+                fi
         containers:
           app:
             image:

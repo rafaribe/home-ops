@@ -14,14 +14,6 @@ spec:
       jellyseerr:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 18.3@sha256:6fa1f331cddd2eb0b6afa7b8d3685c864127a81ab01c3d9400bc3ff5263a51cf
-            envFrom: &envFrom
-              - secretRef:
-                  name: jellyseerr-secret
         containers:
           app:
             image:
@@ -30,7 +22,9 @@ spec:
             env:
               TZ: Europe/Lisbon
               PORT: &port 80
-            envFrom: *envFrom
+            envFrom:
+              - secretRef:
+                  name: jellyseerr-secret
             resources:
               requests:
                 cpu: 10m
