@@ -163,6 +163,8 @@ spec:
             migrations:
               - path: /opt/recipes/staticfiles
                 subPath: staticfiles
+              - path: /opt/recipes/mediafiles
+                subPath: mediafiles
       tmpfs:
         type: emptyDir
         advancedMounts:
