@@ -11,4 +11,3 @@ resources:
   - ./cloudflare-tunnel/ks.yaml
   - ./envoy-gateway/ks.yaml
   - ./external-dns/ks.yaml
-  - ./netboot/ks.yaml
