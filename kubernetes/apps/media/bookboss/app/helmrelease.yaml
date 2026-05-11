@@ -38,7 +38,7 @@ spec:
               BOOKBOSS__IMPORT__WORKER_POLL_INTERVAL_SECS: 5
             envFrom: []
               - secretRef:
-                  name: bookboss-secret
+                name: bookboss-secret
             probes:
               liveness:
                 enabled: true
