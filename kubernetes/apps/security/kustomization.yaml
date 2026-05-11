@@ -13,4 +13,5 @@ resources:
   # Flux-Kustomizations
   - ./authentik/ks.yaml
   - ./glauth/ks.yaml
+  - ./kguardian/ks.yaml
 #  - ./trivy-operator/ks.yaml
