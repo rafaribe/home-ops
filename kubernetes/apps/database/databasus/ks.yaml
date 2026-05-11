@@ -13,9 +13,15 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: volsync
+      namespace: storage
   prune: true
   wait: false
   interval: 10m
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CAPACITY: 1Gi
+  components:
+    - ../../../../components/volsync
