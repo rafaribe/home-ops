@@ -73,8 +73,7 @@ spec:
                 port: *port
     persistence:
       config:
-        enabled: true
+        type: persistentVolumeClaim
         existingClaim: netboot
       assets:
-        enabled: true
         type: emptyDir

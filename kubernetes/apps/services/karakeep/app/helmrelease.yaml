@@ -152,6 +152,7 @@ spec:
 
     persistence:
       config:
+        type: persistentVolumeClaim
         existingClaim: karakeep # Use the same claim as Hoarder, since Karakeep is Hoarder
         advancedMounts:
           karakeep:
