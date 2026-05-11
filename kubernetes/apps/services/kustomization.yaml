@@ -25,6 +25,7 @@ resources:
   - ./n8n/ks.yaml
   - ./omni-tools/ks.yaml
   - ./paperless/ks.yaml
+  - ./poznote/ks.yaml
   - ./radicale/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./stirling-pdf/ks.yaml
