@@ -35,6 +35,8 @@ spec:
                 memory: 512Mi
         serviceAccount:
           identifier: *app
+    defaultPodOptions:
+      automountServiceAccountToken: true
     service:
       app:
         controller: *app
