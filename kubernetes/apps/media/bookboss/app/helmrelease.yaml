@@ -36,9 +36,9 @@ spec:
               BOOKBOSS__IMPORT__BOOKDROP_PATH: /library/bookdrop
               BOOKBOSS__IMPORT__POLL_INTERVAL_SECS: 60
               BOOKBOSS__IMPORT__WORKER_POLL_INTERVAL_SECS: 5
-            envFrom: []
+            envFrom:
               - secretRef:
-                name: bookboss-secret
+                  name: bookboss-secret
             probes:
               liveness:
                 enabled: true
