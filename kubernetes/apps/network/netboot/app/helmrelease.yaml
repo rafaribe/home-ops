@@ -1,8 +1,9 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: netboot
+  name: &app netboot
 spec:
   interval: 1h
   chartRef:
@@ -10,53 +11,44 @@ spec:
     name: app-template
   values:
     controllers:
-      main:
+      netboot:
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/netbootxyz/netbootxyz
               tag: 0.7.6-nbxyz4
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
     defaultPodOptions:
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
     service:
-      main:
-        controller: &app main
+      app:
+        controller: *app
         ports:
           http:
             port: &port 3000
       web:
-        enabled: true
-        primary: false
+        controller: *app
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: 10.0.1.27
-        controller: *app
         ports:
           web:
-            enabled: true
-            primary: false
             port: 80
-            targetPort: 80
             protocol: HTTP
       tftp:
-        enabled: true
-        primary: false
         controller: *app
         type: NodePort
         ports:
           tftp:
-            enabled: true
-            primary: false
             port: 69
-            targetPort: 69
             protocol: UDP
     route:
-      main:
+      app:
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/appName: "Netboot.xyz"
-          hajimari.io/info: "Network boot system"
-          hajimari.io/icon: "refresh-auto"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: "Services"
           gethomepage.dev/name: "Netboot.xyz"
@@ -69,7 +61,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: netboot-app
                 port: *port
     persistence:
       config:
