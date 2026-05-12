@@ -23,6 +23,7 @@ resources:
   - ./mealie/ks.yaml
   - ./miniflux/ks.yaml
   - ./n8n/ks.yaml
+  - ./obsidian-couchdb/ks.yaml
   - ./omni-tools/ks.yaml
   - ./paperless/ks.yaml
   - ./picoshare/ks.yaml
