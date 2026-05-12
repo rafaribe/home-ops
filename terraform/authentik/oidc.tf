@@ -55,6 +55,11 @@ locals {
       authentik_oidc_application_icon_url    = "https://docs.romm.app/latest/resources/romm/isotipo.svg"
       authentik_oidc_application_description = "ROM manager."
     },
+    {
+      authentik_oidc_application_name        = "nodecast-tv"
+      authentik_oidc_application_icon_url    = "https://raw.githubusercontent.com/technomancer702/nodecast-tv/main/public/favicon.ico"
+      authentik_oidc_application_description = "Web-based IPTV player with Live TV, EPG, Movies and Series support."
+    },
   ]
 }
 

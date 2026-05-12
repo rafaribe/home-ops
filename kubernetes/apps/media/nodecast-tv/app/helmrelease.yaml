@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app nodecast-tv
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: nodecast-tv
+  interval: 30m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      nodecast-tv:
+        annotations:
+          secret.reloader.stakater.com/reload: nodecast-tv-secret
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+        containers:
+          app:
+            image:
+              repository: ghcr.io/technomancer702/nodecast-tv
+              tag: v2.1.1
+            env:
+              NODE_ENV: production
+              PORT: &httpPort 3000
+            envFrom:
+              - secretRef:
+                  name: nodecast-tv-secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: false
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /app/data
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: NodeCast TV
+          gethomepage.dev/icon: https://raw.githubusercontent.com/technomancer702/nodecast-tv/main/public/favicon.ico
+          gethomepage.dev/description: Web-based IPTV player
+        hostnames:
+          - nodecast-tv.rafaribe.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *httpPort
+    service:
+      app:
+        ports:
+          http:
+            port: *httpPort

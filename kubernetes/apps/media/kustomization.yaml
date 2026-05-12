@@ -16,6 +16,7 @@ resources:
   - ./maintainerr/ks.yaml
   - ./media-browser/ks.yaml
   - ./navidrome/ks.yaml
+  - ./nodecast-tv/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
   - ./wizarr/ks.yaml

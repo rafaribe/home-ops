@@ -56,3 +56,6 @@ docs/volsync-fix.md
 
 .claude/
 docs/
+terraform/authentik/import.fish
+terraform/authentik/import.sh
+terraform/authentik/tfplan
