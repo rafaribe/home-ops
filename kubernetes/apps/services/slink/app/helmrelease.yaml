@@ -23,6 +23,8 @@ spec:
               ORIGIN: https://slink.rafaribe.com
               STORAGE_PROVIDER: local
               TZ: Europe/Lisbon
+              USER_ALLOW_GUEST_UPLOADS: "true"
+              IMAGE_MAX_SIZE: 50M
             envFrom:
               - secretRef:
                   name: *app
