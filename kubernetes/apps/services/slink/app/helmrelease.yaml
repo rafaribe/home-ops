@@ -1,0 +1,80 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app slink
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 30m
+  values:
+    controllers:
+      slink:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: anirdev/slink
+              tag: v1.11.1@sha256:4f74ed25da4290ea30d5041b3adc2e563609f4a81590b0164ce9681b63a7f698
+            env:
+              ORIGIN: https://slink.rafaribe.com
+              STORAGE_PROVIDER: local
+              TZ: Europe/Lisbon
+            envFrom:
+              - secretRef:
+                  name: *app
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: false
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /app/var/data
+            subPath: data
+          - path: /app/slink/images
+            subPath: images
+    route:
+      app:
+        hostnames:
+          - slink.rafaribe.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: &port 3000
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 3000
