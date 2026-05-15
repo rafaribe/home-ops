@@ -70,9 +70,9 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/technomancer702/nodecast-tv/main/public/favicon.ico
           gethomepage.dev/description: Web-based IPTV player
         hostnames:
-          - nodecast-tv.rafaribe.com
+          - tv.rafaribe.com
         parentRefs:
-          - name: envoy-external
+          - name: envoy-internal
             namespace: network
             sectionName: https
         rules:
