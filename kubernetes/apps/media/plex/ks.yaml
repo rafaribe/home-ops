@@ -27,6 +27,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      CLAIM: plex-data
       GATUS_PATH: /web/index.html
       VOLSYNC_CAPACITY: 100Gi
       VOLSYNC_CRON_EXPRESSION: "30 3 * * *"
