@@ -71,7 +71,7 @@ spec:
           mariadb:
             image:
               repository: docker.io/library/mariadb
-              tag: "11.4"
+              tag: "11.8"
             env:
               MARIADB_AUTO_UPGRADE: "true"
               MYSQL_LOG_CONSOLE: "true"
