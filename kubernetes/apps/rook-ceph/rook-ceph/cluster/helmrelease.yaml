@@ -78,10 +78,7 @@ spec:
           # Reduce warn lifetime so stale slow-op counters clear within 1h instead of 24h
           bluestore_slow_ops_warn_lifetime: "3600"
         osd.4:
-          # USB-attached SSDs have higher latency than SATA/NVMe; raise thresholds
-          # to avoid persistent HEALTH_WARN from BLUESTORE_SLOW_OP_ALERT and
-          # DB_DEVICE_STALLED_READ_ALERT on this device (SanDisk Portable SSD via USB)
-          bluefs_warn_slow_device_read_threshold: "5"
+          # USB-attached SSD has higher latency; raise slow-op threshold to avoid HEALTH_WARN
           bluestore_slow_ops_warn_threshold: "200"
       dashboard:
         enabled: true
