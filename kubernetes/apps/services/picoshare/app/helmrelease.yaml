@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: mtlynch/picoshare
-              tag: 1.5.1
+              tag: 1.5.2
             env:
               PORT: &port 4001
               PS_BEHIND_PROXY: "true"
