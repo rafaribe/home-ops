@@ -9,7 +9,7 @@
     },
     {
       "description": ["Custom schedule for frequently updated container digests"],
-      "matchDataSources": ["docker"],
+      "matchDatasources": ["docker"],
       "matchPackagePatterns": ["postgresql"],
       "matchUpdateTypes": ["digest"],
       "schedule": ["every 3 months on the first day of the month"]
