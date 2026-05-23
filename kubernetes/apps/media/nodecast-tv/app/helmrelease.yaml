@@ -47,8 +47,10 @@ spec:
             resources:
               requests:
                 cpu: 50m
+                gpu.intel.com/i915: 1
                 memory: 256Mi
               limits:
+                gpu.intel.com/i915: 1
                 memory: 1Gi
             securityContext:
               allowPrivilegeEscalation: false
@@ -61,6 +63,10 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /app/data
+      transcode-cache:
+        type: emptyDir
+        globalMounts:
+          - path: /app/transcode-cache
     route:
       app:
         annotations:
