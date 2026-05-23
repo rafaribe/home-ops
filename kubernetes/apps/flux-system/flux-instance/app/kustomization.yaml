@@ -5,7 +5,8 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./ocirepository.yaml
   - ./httproute.yaml
+  - ./httproute-ui.yaml
+  - ./ocirepository.yaml
   - ./prometheusrule.yaml
   - ./receiver.yaml
