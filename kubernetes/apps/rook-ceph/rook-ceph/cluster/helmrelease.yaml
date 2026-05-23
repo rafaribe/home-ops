@@ -13,14 +13,14 @@ spec:
     tag: v1.19.5
   url: oci://ghcr.io/rook/rook-ceph-cluster
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rook-ceph-cluster
 spec:
   interval: 1h
-  timeout: 15m
+  timeout: 30m
   chartRef:
     kind: OCIRepository
     name: rook-ceph-cluster
@@ -106,7 +106,7 @@ spec:
             memory: 2Gi # increased from 1Gi for better performance
         modules:
           - name: "rook"
-            enabled:
+            enabled: true
           - name: "pg_autoscaler"
             enabled: true
           - name: prometheus
