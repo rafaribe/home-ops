@@ -34,3 +34,26 @@ A personal home lab Kubernetes cluster managed with Flux GitOps. All cluster sta
 - Flux reconciliation: `flux` CLI
 - Task runner: `task` (Taskfile.yml at repo root)
 - Secrets: SOPS-encrypted, managed via External Secrets Operator
+
+## Debugging Cheat Sheet
+
+```bash
+# Flux status
+flux get ks -A                    # All Kustomizations
+flux get hr -A                    # All HelmReleases
+flux logs --kind=HelmRelease --namespace=<ns> --name=<app>
+
+# Pod issues
+kubectl -n <ns> get pods -o wide
+kubectl -n <ns> describe pod <pod>
+kubectl -n <ns> logs <pod> -f
+kubectl -n <ns> get events --sort-by='.metadata.creationTimestamp'
+
+# Force reconciliation
+task reconcile
+flux reconcile kustomization flux-system --with-source
+flux reconcile hr <name> -n <namespace> --force
+
+# Validate manifests
+kustomize build kubernetes/apps/<namespace>/<app>/app
+```
