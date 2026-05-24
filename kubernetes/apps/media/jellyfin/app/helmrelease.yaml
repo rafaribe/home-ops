@@ -84,7 +84,7 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: jellyfin
+        existingClaim: jellyfin-v2
         globalMounts:
           - path: /config
       media:
