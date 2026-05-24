@@ -55,9 +55,7 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                gpu.intel.com/i915: 1
               limits:
-                gpu.intel.com/i915: 1
                 memory: 4Gi
     defaultPodOptions:
       securityContext:
