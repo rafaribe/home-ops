@@ -70,7 +70,7 @@ spec:
         globalMounts:
           - path: /config
       plex-config:
-        existingClaim: plex
+        existingClaim: plex-data
         globalMounts:
           - path: /data/plex_config
       plex-cache:
