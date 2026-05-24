@@ -1,0 +1,95 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app ersatztv
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: ersatztv
+  interval: 30m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      ersatztv:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/ersatztv/legacy
+              tag: latest@sha256:98de4493c5b5039796e692f2cc15b58458d684158295be9a989edae0bcf41cd6
+            env:
+              TZ: Europe/Lisbon
+              XDG_DATA_HOME: /config
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 4Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 8409
+    route:
+      app:
+        hostnames: ["ersatztv.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      config:
+        existingClaim: *app
+        globalMounts:
+          - path: /config
+      media:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/media
+        globalMounts:
+          - path: /data
+            readOnly: true
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          ersatztv:
+            app:
+              - path: /transcode
+                subPath: transcode
+              - path: /tmp
+                subPath: tmp

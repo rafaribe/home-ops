@@ -10,6 +10,7 @@ resources:
   - ./audiobookshelf/ks.yaml
   - ./bookboss/ks.yaml
   #- ./calibre-web-automated/ks.yaml
+  - ./ersatztv/ks.yaml
   - ./jellyfin/ks.yaml
   - ./jellyseerr/ks.yaml
   - ./kavita/ks.yaml
