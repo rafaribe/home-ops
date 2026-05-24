@@ -60,9 +60,6 @@ spec:
     service:
       app:
         controller: jellyfin
-        type: LoadBalancer
-        annotations:
-          io.cilium/lb-ipam-ips: ${LB_JELLYFIN}
         ports:
           http:
             port: *port
