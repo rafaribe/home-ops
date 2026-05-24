@@ -22,18 +22,10 @@ spec:
             env:
               TZ: Europe/Lisbon
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: &port 8096
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+              readiness:
+                enabled: true
               startup:
                 enabled: true
                 spec:
@@ -62,7 +54,7 @@ spec:
         controller: jellyfin
         ports:
           http:
-            port: *port
+            port: &port 8096
     route:
       app:
         hostnames: ["{{ .Release.Name }}.rafaribe.com"]
