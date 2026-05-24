@@ -11,5 +11,6 @@ spec:
     name: intel-device-plugins-gpu
   values:
     name: intel-gpu-plugin
+    bypathMode: none
     sharedDevNum: 3
     nodeFeatureRule: false
