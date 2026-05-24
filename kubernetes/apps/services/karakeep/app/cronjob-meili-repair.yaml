@@ -1,0 +1,74 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: karakeep-meili-repair
+  namespace: services
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: karakeep-meili-repair
+  namespace: services
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "delete"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: karakeep-meili-repair
+  namespace: services
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: karakeep-meili-repair
+subjects:
+  - kind: ServiceAccount
+    name: karakeep-meili-repair
+    namespace: services
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: karakeep-meili-repair
+  namespace: services
+spec:
+  schedule: "0 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: karakeep-meili-repair
+          restartPolicy: OnFailure
+          containers:
+            - name: repair
+              image: bitnami/kubectl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -e
+                  POD=$(kubectl get pod -n services -l app.kubernetes.io/name=karakeep -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
+                  if [ -z "$POD" ]; then
+                    echo "No karakeep pod found, exiting."
+                    exit 0
+                  fi
+                  STATE=$(kubectl get pod -n services "$POD" -o jsonpath='{.status.containerStatuses[?(@.name=="app")].state.waiting.reason}' 2>/dev/null)
+                  if [ "$STATE" != "CrashLoopBackOff" ]; then
+                    echo "Pod $POD is not in CrashLoopBackOff (state: $STATE), exiting."
+                    exit 0
+                  fi
+                  echo "Pod $POD is in CrashLoopBackOff, clearing meili_data..."
+                  kubectl exec -n services "$POD" -c app -- sh -c "rm -rf /meili_data/*"
+                  echo "Deleting pod $POD..."
+                  kubectl delete pod -n services "$POD"
+                  echo "Done."
