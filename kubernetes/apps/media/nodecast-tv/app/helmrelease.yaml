@@ -19,6 +19,7 @@ spec:
   values:
     controllers:
       nodecast-tv:
+        strategy: Recreate
         annotations:
           secret.reloader.stakater.com/reload: nodecast-tv-secret
         pod:
