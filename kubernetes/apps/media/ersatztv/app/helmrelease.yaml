@@ -63,7 +63,7 @@ spec:
             port: &port 8409
     route:
       app:
-        hostnames: ["ersatztv.rafaribe.com"]
+        hostnames: ["tv.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
             namespace: network
