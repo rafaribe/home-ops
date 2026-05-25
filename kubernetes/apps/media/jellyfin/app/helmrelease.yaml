@@ -9,6 +9,12 @@ spec:
     kind: OCIRepository
     name: jellyfin
   interval: 30m
+  timeout: 30m
+  upgrade:
+    timeout: 30m
+    remediation:
+      retries: 3
+      remediateLastFailure: true
   values:
     controllers:
       jellyfin:
