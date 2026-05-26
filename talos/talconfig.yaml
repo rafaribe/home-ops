@@ -201,23 +201,18 @@ nodes:
       arch: arm64
     schematic: *schematic-tpi
     nodeLabels:
-      disk-type: emmc
-      disk-size: small
+      disk-type: nvme
+      disk-size: large
     patches:
-      - &tpi-emmc-kubelet |-
+      - &tpi-nvme-kubelet |-
         machine:
           kubelet:
             extraArgs:
               rotate-server-certificates: true
-              image-gc-high-threshold: 50
-              image-gc-low-threshold: 35
-              eviction-hard: memory.available<256Mi,nodefs.available<15%,imagefs.available<15%
-              eviction-soft: memory.available<512Mi,nodefs.available<20%,imagefs.available<20%
-              eviction-soft-grace-period: memory.available=1m,nodefs.available=1m,imagefs.available=1m
-              eviction-minimum-reclaim: nodefs.available=500Mi,imagefs.available=1Gi
-              system-reserved: cpu=100m,memory=256Mi,ephemeral-storage=2Gi
+              image-gc-high-threshold: 65
+              image-gc-low-threshold: 50
             extraConfig:
-              imageMaximumGCAge: 6h0m0s
+              imageMaximumGCAge: 24h0m0s
               maxPods: 35
 
   - hostname: tpi-4.${clusterDNSSuffix}
@@ -237,10 +232,10 @@ nodes:
       arch: arm64
     schematic: *schematic-tpi
     nodeLabels:
-      disk-type: emmc
-      disk-size: small
+      disk-type: nvme
+      disk-size: large
     patches:
-      - *tpi-emmc-kubelet
+      - *tpi-nvme-kubelet
 
 controlPlane:
   noSchematicValidate: true

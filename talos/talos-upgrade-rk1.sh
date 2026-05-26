@@ -11,3 +11,4 @@ talosctl upgrade --talosconfig=./clusterconfig/talosconfig --nodes=10.0.1.5 --im
 talosctl upgrade --talosconfig=./clusterconfig/talosconfig --nodes=10.0.1.8 --image=factory.talos.dev/metal-installer/fa1c50ea4f64a6b40af4a7d75e3054c040de7f69baba9177dc4960bee0a94bec:v1.10.3;
 talosctl upgrade --talosconfig=./clusterconfig/talosconfig --nodes=10.0.1.9 --image=factory.talos.dev/metal-installer/47c2728442d81a73bf48c821ba1e1fa93e9a65c6ca27b82a74585122fe65899a:v1.10.3;
 talosctl upgrade --talosconfig=./clusterconfig/talosconfig --nodes=10.0.1.10 --image=factory.talos.dev/metal-installer/47c2728442d81a73bf48c821ba1e1fa93e9a65c6ca27b82a74585122fe65899a:v1.10.3;
+talosctl upgrade --talosconfig=./clusterconfig/talosconfig --nodes=10.0.1.11 --image=factory.talos.dev/metal-installer/47c2728442d81a73bf48c821ba1e1fa93e9a65c6ca27b82a74585122fe65899a:v1.10.3;
