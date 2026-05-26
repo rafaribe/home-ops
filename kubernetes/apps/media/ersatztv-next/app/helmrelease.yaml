@@ -9,6 +9,7 @@ spec:
     kind: OCIRepository
     name: ersatztv-next
   interval: 30m
+  timeout: 10m
   install:
     remediation:
       retries: 3
@@ -28,6 +29,7 @@ spec:
       ersatztv-next:
         annotations:
           reloader.stakater.com/auto: "true"
+        strategy: Recreate
         initContainers:
           init-config:
             image:
