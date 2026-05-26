@@ -36,6 +36,8 @@ spec:
               repository: docker.io/ollama/ollama
               tag: 0.24.0@sha256:a6149234667efc71d37766d61c1a16f24c33e4cd7a0bf4125c44a7e47e2419c4
             env:
+              - name: HOME
+                value: /config
               - name: OLLAMA_HOST
                 value: 0.0.0.0
               - name: OLLAMA_ORIGINS
@@ -77,7 +79,7 @@ spec:
         enabled: true
         existingClaim: ollama
         globalMounts:
-          - path: /root/.ollama
+          - path: /config
     route:
       app:
         hostnames: ["ollama.rafaribe.com"]

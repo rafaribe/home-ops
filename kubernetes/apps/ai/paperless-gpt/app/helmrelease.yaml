@@ -88,6 +88,8 @@ spec:
         advancedMounts:
           paperless-gpt:
             app:
+              - path: /app/config
+                subPath: config
               - path: /app/db
                 subPath: db
               - path: /app/prompts
