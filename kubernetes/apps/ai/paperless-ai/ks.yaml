@@ -31,5 +31,4 @@ spec:
       CLAIM: paperless-ai-v2
       GATUS_SUBDOMAIN: paperless-ai
   components:
-    - ../../../../../shared/components/gatus/guarded
-    - ../../../../../shared/components/volsync
+    - ../../../../components/volsync

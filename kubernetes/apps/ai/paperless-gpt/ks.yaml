@@ -30,5 +30,4 @@ spec:
       VOLSYNC_CAPACITY: 3Gi
       GATUS_SUBDOMAIN: paperless-gpt
   components:
-    - ../../../../../shared/components/gatus/guarded
-    - ../../../../../shared/components/volsync
+    - ../../../../components/volsync

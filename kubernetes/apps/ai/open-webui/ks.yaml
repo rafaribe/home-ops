@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cloudnative-pg
+    - name: cloudnative-pg-cluster
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
@@ -32,5 +32,4 @@ spec:
       VOLSYNC_CAPACITY: 5Gi
       GATUS_SUBDOMAIN: chat
   components:
-    - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/gatus/guarded
+    - ../../../../components/volsync
