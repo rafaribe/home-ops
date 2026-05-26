@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: memory-mcp
+  namespace: flux-system
+spec:
+  targetNamespace: ai
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: memory-mcp
+  dependsOn:
+    - name: toolhive-operator-crds
+    - name: volsync
+  path: ./kubernetes/apps/ai/memory-mcp/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  interval: 1h
+  timeout: 5m
+  postBuild:
+    substitute:
+      APP: memory-mcp
+      VOLSYNC_CAPACITY: 1Gi
+  components:
+    - ../../../../components/volsync

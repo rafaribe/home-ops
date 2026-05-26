@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: docmost-mcp
+spec:
+  groupRef:
+    name: mcp-tools
+  image: ghcr.io/rafaribe/docmost-mcp:latest
+  env:
+    - name: DOCMOST_API_URL
+      value: http://docmost.services:3000/api
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: mcp
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmpfs
+      volumes:
+        - name: tmpfs
+          emptyDir:
+            medium: Memory
+  secrets:
+    - name: docmost-mcp-secret
+      key: DOCMOST_EMAIL
+    - name: docmost-mcp-secret
+      key: DOCMOST_PASSWORD
+  transport: stdio

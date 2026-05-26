@@ -11,3 +11,7 @@ resources:
   - ./open-webui/ks.yaml
   - ./paperless-ai/ks.yaml
   - ./paperless-gpt/ks.yaml
+  - ./toolhive/ks.yaml
+  - ./ha-mcp/ks.yaml
+  - ./memory-mcp/ks.yaml
+  - ./docmost-mcp/ks.yaml

@@ -1,0 +1,8 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/toolhive.stacklok.dev/mcpgroup_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPGroup
+metadata:
+  name: mcp-tools
+spec:
+  description: MCP tools for AI assistants
