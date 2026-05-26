@@ -91,6 +91,10 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /app/logs
+      nltk:
+        type: emptyDir
+        globalMounts:
+          - path: /home/node/nltk_data
       tmp:
         type: emptyDir
         globalMounts:
