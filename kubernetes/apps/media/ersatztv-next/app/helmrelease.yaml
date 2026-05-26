@@ -36,10 +36,10 @@ spec:
               repository: ghcr.io/ersatztv/next
               tag: develop@sha256:45f1418ed0c4a52ded6571f1979cd19fb875f9254490d20e5ca668e7f4f4b66d
             command:
-              - /bin/sh
-              - -c
-              - |
-                echo '{"server":{"bind_address":"0.0.0.0:8409"},"output":{"folder":"/config"},"xmltv":{"folder":"/config"},"channels":[]}' > /config/lineup.json
+              - /app/ersatztv
+              - add-lineup
+              - /config/lineup.json
+              - --force
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
