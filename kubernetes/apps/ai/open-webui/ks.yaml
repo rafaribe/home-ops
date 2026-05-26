@@ -11,7 +11,12 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
+    - name: cloudnative-pg
+      namespace: database
+    - name: external-secrets-stores
+      namespace: external-secrets
     - name: volsync
+      namespace: storage
   path: ./kubernetes/apps/ai/open-webui/app
   prune: true
   sourceRef:

@@ -6,6 +6,7 @@ metadata:
   name: tandoor
 spec:
   interval: 1h
+  timeout: 15m
   chartRef:
     kind: OCIRepository
     name: tandoor
@@ -22,6 +23,7 @@ spec:
       tandoor:
         annotations:
           reloader.stakater.com/auto: "true"
+        strategy: Recreate
         initContainers:
           migrations:
             image:

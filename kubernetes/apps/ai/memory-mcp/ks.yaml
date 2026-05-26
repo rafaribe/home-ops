@@ -13,6 +13,7 @@ spec:
   dependsOn:
     - name: toolhive-operator-crds
     - name: volsync
+      namespace: storage
   path: ./kubernetes/apps/ai/memory-mcp/app
   prune: true
   sourceRef:

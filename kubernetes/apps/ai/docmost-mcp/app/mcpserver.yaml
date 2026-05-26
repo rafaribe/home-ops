@@ -7,7 +7,7 @@ metadata:
 spec:
   groupRef:
     name: mcp-tools
-  image: ghcr.io/rafaribe/docmost-mcp:latest
+  image: ghcr.io/rafaribe/docmost-mcp:1.0.1@sha256:9e2e724af21c6fcde818f4e6749c46898629622dc961d252af06cbc789400cf1
   env:
     - name: DOCMOST_API_URL
       value: http://docmost.services:3000/api

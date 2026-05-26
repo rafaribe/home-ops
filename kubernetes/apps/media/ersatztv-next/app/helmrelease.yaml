@@ -28,11 +28,27 @@ spec:
       ersatztv-next:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-config:
+            image:
+              repository: ghcr.io/ersatztv/next
+              tag: develop@sha256:45f1418ed0c4a52ded6571f1979cd19fb875f9254490d20e5ca668e7f4f4b66d
+            command:
+              - /bin/sh
+              - -c
+              - |
+                if [ ! -f /config/lineup.json ]; then
+                  echo '{"version":1,"lineups":[]}' > /config/lineup.json
+                fi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
         containers:
           app:
             image:
               repository: ghcr.io/ersatztv/next
-              tag: develop@sha256:a6f1d357bdc6d130e99ff61c0ccb47ff7d7f4713ffb465005db0f6c4277eaef0
+              tag: develop@sha256:45f1418ed0c4a52ded6571f1979cd19fb875f9254490d20e5ca668e7f4f4b66d
             env:
               TZ: Europe/Lisbon
               XDG_DATA_HOME: /config

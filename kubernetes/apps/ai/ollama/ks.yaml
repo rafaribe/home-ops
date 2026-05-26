@@ -11,8 +11,10 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: volsync
     - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: storage
   path: ./kubernetes/apps/ai/ollama/app
   prune: true
   sourceRef:
@@ -42,8 +44,12 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: volsync
+    - name: external-secrets-stores
+      namespace: external-secrets
     - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: storage
   path: ./kubernetes/apps/ai/ollama/dns-router
   prune: true
   sourceRef:

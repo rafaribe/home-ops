@@ -1,19 +1,14 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app ollama-dns-router
 spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.3.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
   install:
     remediation:
       retries: 3
@@ -26,6 +21,14 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
     controllers:
       ollama-dns-router:
         type: cronjob
@@ -41,7 +44,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/ollama-dns-router
-              tag: v0.1.0
+              tag: v0.1.0@sha256:bedcdbb82303e0d8d65fa081b738f5b7232cea26e7167b71ab3027d16ce2a5d7
             env:
               TZ: *timeZone
               # Instances is a comma-separated string with IP:PORT values"
@@ -64,10 +67,3 @@ spec:
               capabilities:
                 drop:
                   - ALL
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch

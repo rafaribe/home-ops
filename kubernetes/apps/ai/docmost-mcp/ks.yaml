@@ -11,8 +11,11 @@ spec:
     labels:
       app.kubernetes.io/name: docmost-mcp
   dependsOn:
-    - name: toolhive-operator-crds
     - name: docmost
+      namespace: services
+    - name: external-secrets-stores
+      namespace: external-secrets
+    - name: toolhive-operator-crds
   path: ./kubernetes/apps/ai/docmost-mcp/app
   prune: true
   sourceRef:

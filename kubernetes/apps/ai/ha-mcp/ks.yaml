@@ -11,6 +11,8 @@ spec:
     labels:
       app.kubernetes.io/name: ha-mcp
   dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
     - name: toolhive-operator-crds
   path: ./kubernetes/apps/ai/ha-mcp/app
   prune: true
