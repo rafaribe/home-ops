@@ -37,9 +37,7 @@ spec:
               - /bin/sh
               - -c
               - |
-                if [ ! -f /config/lineup.json ]; then
-                  echo '{"server":{"bind_address":"0.0.0.0:8409"},"output":{"folder":"/config"},"xmltv":{"folder":"/config"}}' > /config/lineup.json
-                fi
+                echo '{"server":{"bind_address":"0.0.0.0:8409"},"output":{"folder":"/config"},"xmltv":{"folder":"/config"}}' > /config/lineup.json
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
