@@ -38,8 +38,10 @@ spec:
             command:
               - /app/ersatztv
               - add-lineup
-              - /config/lineup.json
+              - --channels
+              - "1"
               - --force
+              - /config/lineup.json
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
