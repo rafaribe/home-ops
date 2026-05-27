@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: paperless-mcp
+spec:
+  groupRef:
+    name: mcp-tools
+  image: ghcr.io/baruchiro/paperless-mcp:sha-93aa906@sha256:2eb04dff57526faaaecca74027c229f5e5ea7832cd8ad3971f67672c1f36654a
+  env:
+    - name: PAPERLESS_URL
+      value: http://paperless.services.svc.cluster.local:8000
+    - name: PAPERLESS_PUBLIC_URL
+      value: https://paperless.rafaribe.com
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: mcp
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmpfs
+      volumes:
+        - name: tmpfs
+          emptyDir:
+            medium: Memory
+  secrets:
+    - name: paperless-mcp-secret
+      key: PAPERLESS_API_KEY
+  transport: streamable-http

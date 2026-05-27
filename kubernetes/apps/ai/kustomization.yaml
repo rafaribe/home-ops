@@ -16,3 +16,4 @@ resources:
   - ./ha-mcp/ks.yaml
   - ./memory-mcp/ks.yaml
   - ./docmost-mcp/ks.yaml
+  - ./paperless-mcp/ks.yaml
