@@ -1,0 +1,40 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: tailscale-mcp
+spec:
+  groupRef:
+    name: mcp-tools
+  image: docker.io/hexsleeves/tailscale-mcp-server:1.0.0@sha256:2dc0aa6f8752fe6e5d27b7047559827a019ef533e82024695aaaa8f762237f4d
+  env:
+    - name: MCP_TRANSPORT
+      value: http
+    - name: MCP_HTTP_BIND_HOST
+      value: 0.0.0.0
+    - name: MCP_HTTP_PORT
+      value: "3000"
+    - name: TAILSCALE_TAILNET
+      value: "-"
+    - name: TAILSCALE_ALLOWED_TOOL_RISK
+      value: read
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: mcp
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmpfs
+      volumes:
+        - name: tmpfs
+          emptyDir:
+            medium: Memory
+  secrets:
+    - name: tailscale-mcp-secret
+      key: MCP_HTTP_BEARER_TOKEN
+    - name: tailscale-mcp-oauth-id
+      key: TAILSCALE_OAUTH_CLIENT_ID
+    - name: tailscale-mcp-oauth-secret
+      key: TAILSCALE_OAUTH_CLIENT_SECRET
+  transport: streamable-http

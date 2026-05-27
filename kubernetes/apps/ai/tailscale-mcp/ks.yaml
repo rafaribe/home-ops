@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tailscale-mcp
+  namespace: flux-system
+spec:
+  targetNamespace: ai
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: tailscale-mcp
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
+    - name: toolhive-operator-crds
+  path: ./kubernetes/apps/ai/tailscale-mcp/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  interval: 1h
+  timeout: 5m
