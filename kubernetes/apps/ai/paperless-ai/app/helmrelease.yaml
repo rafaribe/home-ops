@@ -49,10 +49,10 @@ spec:
             resources:
               requests:
                 cpu: 500m
-                memory: 512Mi
+                memory: 1Gi
               limits:
                 cpu: 700m
-                memory: 2Gi
+                memory: 4Gi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -95,6 +95,10 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /home/node/nltk_data
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /home/node/.cache
       tmp:
         type: emptyDir
         globalMounts:
