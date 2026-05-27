@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: mcp-tools
+  namespace: ai
+spec:
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+      sectionName: https
+  hostnames:
+    - mcp-tools.rafaribe.com
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /ha-mcp
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /
+      backendRefs:
+        - name: mcp-ha-mcp-proxy
+          port: 8080
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /memory-mcp
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /
+      backendRefs:
+        - name: mcp-memory-mcp-proxy
+          port: 8080
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /docmost-mcp
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /
+      backendRefs:
+        - name: mcp-docmost-mcp-proxy
+          port: 8080
