@@ -5,8 +5,8 @@ metadata:
   name: _
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
-    pod-security.kubernetes.io/enforce: &ps restricted
-    pod-security.kubernetes.io/audit: *ps
-    pod-security.kubernetes.io/warn: *ps
   labels:
+    pod-security.kubernetes.io/audit: privileged
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/warn: privileged
     resource.kubernetes.io/admin-access: "true"
