@@ -10,7 +10,7 @@ spec:
   image: ghcr.io/rafaribe/docmost-mcp:v0.2.1@sha256:58b65bf43bda8624992df6e70c15aad00530daeedf97d8ad638eb2b7280b16c0
   env:
     - name: DOCMOST_BASE_URL
-      value: http://docmost.services:3000/api
+      value: http://docmost.services:3000
   podTemplateSpec:
     spec:
       containers:
