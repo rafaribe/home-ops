@@ -11,12 +11,12 @@ spec:
   interval: 1h
   values:
     fullnameOverride: victoria-logs
-    retentionPeriod: 14d
+    retentionPeriod: 7d
     server:
       persistentVolume:
         enabled: true
         storageClassName: ceph-block
-        size: 40Gi
+        size: 50Gi
       serviceMonitor:
         enabled: true
     dashboards:
