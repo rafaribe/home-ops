@@ -59,3 +59,5 @@ docs/
 terraform/authentik/import.fish
 terraform/authentik/import.sh
 terraform/authentik/tfplan
+scripts/generate-hush-secrets.*
+kubernetes/apps/services/hush

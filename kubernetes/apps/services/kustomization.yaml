@@ -14,6 +14,8 @@ resources:
   - ./docmost/ks.yaml
   - ./homebox/ks.yaml
   - ./homepage/ks.yaml
+  #- ./hush/ks.yaml
+ # - ./hush/livekit/ks.yaml
   - ./it-tools/ks.yaml
   - ./karakeep/ks.yaml
   - ./kitchenowl/ks.yaml
