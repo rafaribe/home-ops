@@ -57,10 +57,14 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /data
-      nginx-body:
+      nginx-lib:
         type: emptyDir
         globalMounts:
-          - path: /var/lib/nginx/body
+          - path: /var/lib/nginx
+      nginx-lock:
+        type: emptyDir
+        globalMounts:
+          - path: /var/lock
       nginx-logs:
         type: emptyDir
         globalMounts:
@@ -68,7 +72,7 @@ spec:
       nginx-run:
         type: emptyDir
         globalMounts:
-          - path: /var/run
+          - path: /run
     route:
       app:
         annotations:
