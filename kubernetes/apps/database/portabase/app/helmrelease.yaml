@@ -40,39 +40,17 @@ spec:
               limits:
                 memory: 1Gi
             securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
-              readOnlyRootFilesystem: false
+              runAsUser: 0
     defaultPodOptions:
       securityContext:
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
+        runAsNonRoot: false
+        seccompProfile:
+          type: RuntimeDefault
     persistence:
       data:
         existingClaim: *app
         globalMounts:
           - path: /data
-      nginx-lib:
-        type: emptyDir
-        globalMounts:
-          - path: /var/lib/nginx
-      nginx-lock:
-        type: emptyDir
-        globalMounts:
-          - path: /var/lock
-      nginx-logs:
-        type: emptyDir
-        globalMounts:
-          - path: /var/log/nginx
-      nginx-run:
-        type: emptyDir
-        globalMounts:
-          - path: /run
     route:
       app:
         annotations:
