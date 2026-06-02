@@ -21,7 +21,6 @@ spec:
               repository: docker.io/portabase/portabase
               tag: 1.16.2@sha256:fd935d327bf9cec3ae079372018e5586b617d3c41cb26f4518a2985cfc03f846
             env:
-              DATABASE_URL: "file:/data/portabase.db"
               NODE_ENV: production
               PROJECT_URL: "https://portabase.rafaribe.com"
               TZ: Europe/Lisbon
