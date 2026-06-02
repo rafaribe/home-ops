@@ -32,7 +32,7 @@ spec:
           init-config:
             image:
               repository: ghcr.io/home-operations/busybox
-              tag: 1.37@sha256:026ed7273270ec08f6902b4ae8334c23b473e5394bec3bbbdbfe580c710d50bc
+              tag: 1.38@sha256:7e2c04dd50ede647bf4a7a4c8dbd629dd4971cd139b9b88fb22bfc3c7a6c13df
             command:
               - "/bin/sh"
               - "-c"
