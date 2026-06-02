@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app musicgrabber
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: musicgrabber
+  interval: 30m
+  values:
+    controllers:
+      musicgrabber:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: docker.io/g33kphr33k/musicgrabber
+              tag: 2.9.0@sha256:99db0158e6e1caf817f57cf54c34ab27ac82b8db99702f63e56ca2625954fd2d
+            env:
+              TZ: Europe/Lisbon
+              MUSIC_DIR: /music
+              DB_PATH: /data/musicgrabber.db
+              ENABLE_MUSICBRAINZ: "true"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+              readOnlyRootFilesystem: false
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /data
+      music:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/media/music
+        globalMounts:
+          - path: /music
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/icon: mdi:music-note
+          gethomepage.dev/name: MusicGrabber
+          gethomepage.dev/description: Grab singles for Navidrome
+          gethomepage.dev/siteMonitor: http://musicgrabber.media:8080
+        hostnames: ["musicgrabber.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 8080
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 8080

@@ -18,6 +18,7 @@ resources:
   - ./komga/ks.yaml
   - ./maintainerr/ks.yaml
   - ./media-browser/ks.yaml
+  - ./musicgrabber/ks.yaml
   - ./navidrome/ks.yaml
   - ./nodecast-tv/ks.yaml
   - ./plex/ks.yaml
