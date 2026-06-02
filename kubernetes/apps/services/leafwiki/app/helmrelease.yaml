@@ -1,0 +1,82 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app leafwiki
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 30m
+  values:
+    controllers:
+      leafwiki:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/perber/leafwiki
+              tag: v0.10.1@sha256:7cf8864b5cce0007b49a9180224266c47164ee3394c2ca5fb63810fe173c23f7
+            env:
+              TZ: Europe/Lisbon
+              LEAFWIKI_PORT: &port 8080
+              LEAFWIKI_DATA_DIR: /app/data
+            envFrom:
+              - secretRef:
+                  name: leafwiki
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+              readOnlyRootFilesystem: false
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /app/data
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: mdi:leaf
+          gethomepage.dev/name: LeafWiki
+          gethomepage.dev/description: Simple wiki with SQLite and Markdown
+          gethomepage.dev/siteMonitor: http://leafwiki.services:8080
+        hostnames: ["leafwiki.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port

@@ -18,6 +18,7 @@ resources:
  # - ./hush/livekit/ks.yaml
   - ./it-tools/ks.yaml
   - ./karakeep/ks.yaml
+  - ./leafwiki/ks.yaml
   - ./kitchenowl/ks.yaml
   - ./linkding/ks.yaml
   - ./littlelink/ks.yaml
