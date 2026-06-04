@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: docker.io/g33kphr33k/musicgrabber
-              tag: 2.9.0@sha256:99db0158e6e1caf817f57cf54c34ab27ac82b8db99702f63e56ca2625954fd2d
+              tag: 2.9.1@sha256:c4ba6b32af1befe0c2ef6f9c1ded47878c9d32a75dd9967c08e215c3c8df9e8b
             env:
               TZ: Europe/Lisbon
               MUSIC_DIR: /music
