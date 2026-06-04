@@ -7,7 +7,7 @@ metadata:
 spec:
   groupRef:
     name: mcp-tools
-  image: docker.io/hexsleeves/tailscale-mcp-server:1.0.0@sha256:2dc0aa6f8752fe6e5d27b7047559827a019ef533e82024695aaaa8f762237f4d
+  image: docker.io/hexsleeves/tailscale-mcp-server:1.2.0@sha256:dcef428e647683330015d33e56bb814481634e784621fb0da2ee2a40ac9b8fbc
   env:
     - name: MCP_TRANSPORT
       value: http
