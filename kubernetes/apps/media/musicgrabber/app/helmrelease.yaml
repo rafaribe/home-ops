@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/musicgrabber
-              tag: 2.9.0
+              tag: 2.9.1@sha256:be4239117910a260eacd6bd2616087995790aad6899e840f0ee2f3d9c53303c3
             env:
               TZ: Europe/Lisbon
               MUSIC_DIR: /music
