@@ -16,6 +16,7 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
+            command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
             image:
               repository: docker.io/g33kphr33k/musicgrabber
               tag: 2.9.0@sha256:99db0158e6e1caf817f57cf54c34ab27ac82b8db99702f63e56ca2625954fd2d
@@ -42,10 +43,10 @@ spec:
               readOnlyRootFilesystem: false
     defaultPodOptions:
       securityContext:
-        runAsNonRoot: false
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
