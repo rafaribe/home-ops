@@ -29,7 +29,7 @@ spec:
             env:
               TZ: Europe/Lisbon
               ASR_MODEL: small # tiny, base, small, medium, large, large-v1, large-v2 and large-v3
-              ASR_ENGINEL: faster_whisper # openai_whisper, faster_whisper
+              ASR_ENGINE: faster_whisper # openai_whisper, faster_whisper
             resources:
               requests:
                 cpu: 500m

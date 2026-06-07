@@ -25,6 +25,8 @@ spec:
       namespace: storage
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: whisper
+      namespace: downloads
   postBuild:
     substitute:
       APP: *appname
