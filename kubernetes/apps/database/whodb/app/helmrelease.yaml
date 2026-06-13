@@ -18,7 +18,7 @@ spec:
           whodb:
             image:
               repository: docker.io/clidey/whodb
-              tag: 0.112.0@sha256:0947d309d9ff586864f053a9bdfbcc2bb7f1600de4505d4bb5e25aafea1d82e7
+              tag: 0.114.0@sha256:b232f53b311b1f5fca1348f843f6324d6273f53dd888029cd5e008e2ee18766c
             envFrom:
               - secretRef:
                   name: whodb
