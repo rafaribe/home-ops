@@ -1,0 +1,150 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app forgejo
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: forgejo
+  interval: 30m
+  values:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        add:
+          - SYS_CHROOT
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    deployment:
+      annotations:
+        reloader.stakater.com/auto: "true"
+    gitea:
+      admin:
+        existingSecret: forgejo-admin-secret
+      config:
+        actions:
+          DEFAULT_ACTIONS_URL: https://github.com
+          ENABLED: true
+          LOG_COMPRESSION: zstd
+        cache:
+          ADAPTER: redis
+          ENABLED: true
+          HOST: redis://forgejo-dragonfly:6379?pool_size=100&idle_timeout=180s
+        cron:
+          ENABLED: true
+        cron.archive_cleanup:
+          ENABLED: true
+          OLDER_THAN: 2h
+          RUN_AT_START: true
+          SCHEDULE: "@every 1h"
+        database:
+          DB_TYPE: sqlite3
+          PATH: /data/gitea/forgejo.db
+        indexer:
+          ISSUE_INDEXER_TYPE: bleve
+          REPO_INDEXER_ENABLED: true
+        mailer:
+          ENABLED: true
+          FROM: forgejo@rafaribe.com
+          PROTOCOL: smtp
+          SMTP_ADDR: smtp-relay.services.svc.cluster.local
+          SMTP_PORT: 25
+        metrics:
+          ENABLED: true
+        openid:
+          ENABLE_OPENID_SIGNIN: false
+          ENABLE_OPENID_SIGNUP: false
+        queue:
+          CONN_STR: redis://forgejo-dragonfly:6379?pool_size=100&idle_timeout=180s
+          TYPE: redis
+        repository:
+          DEFAULT_BRANCH: main
+          DEFAULT_PRIVATE: private
+          DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.actions
+          DISABLED_REPO_UNITS: repo.ext_wiki,repo.ext_issues
+          ENABLE_PUSH_CREATE_USER: true
+          ROOT: /data/git/repositories
+        repository.pull-request:
+          DEFAULT_MERGE_STYLE: squash
+        security:
+          INSTALL_LOCK: true
+          REVERSE_PROXY_TRUSTED_PROXIES: 10.42.0.0/16
+        server:
+          APP_DATA_PATH: /data/gitea
+          DOMAIN: git.rafaribe.com
+          ROOT_URL: https://git.rafaribe.com
+          SSH_DOMAIN: git.rafaribe.com
+          SSH_LISTEN_PORT: &sshPort 2222
+          SSH_PORT: 22
+          SSH_SERVER_HOST_KEYS: ssh/ssh_host_ed25519_key
+          START_SSH_SERVER: true
+        service:
+          DISABLE_REGISTRATION: true
+          ENABLE_NOTIFY_MAIL: true
+          SHOW_REGISTRATION_BUTTON: false
+        service.explore:
+          DISABLE_ORGANIZATIONS_PAGE: true
+          DISABLE_USERS_PAGE: true
+          REQUIRE_SIGNIN_VIEW: false
+        session:
+          PROVIDER: redis
+          PROVIDER_CONFIG: redis://forgejo-dragonfly:6379?pool_size=100&idle_timeout=180s
+          SESSION_LIFE_TIME: "1209600"
+        ui:
+          DEFAULT_THEME: forgejo-dark
+        webhook:
+          ALLOWED_HOST_LIST: "*"
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+    httpRoute:
+      enabled: true
+      hostnames:
+        - git.rafaribe.com
+        - forgejo.rafaribe.com
+      parentRefs:
+        - name: envoy-internal
+          namespace: network
+          sectionName: https
+    image:
+      registry: code.forgejo.org
+      repository: forgejo/forgejo
+      rootless: true
+      tag: 15.0.3-rootless
+    persistence:
+      claimName: forgejo
+      create: false
+    podSecurityContext:
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+    postgresql:
+      enabled: false
+    postgresql-ha:
+      enabled: false
+    redis-cluster:
+      enabled: false
+    resources:
+      limits:
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    service:
+      ssh:
+        annotations:
+          lbipam.cilium.io/ips: 10.0.1.32
+        port: 22
+        type: LoadBalancer
+    strategy:
+      type: Recreate
+    test:
+      enabled: false
+    valkey-cluster:
+      enabled: false
