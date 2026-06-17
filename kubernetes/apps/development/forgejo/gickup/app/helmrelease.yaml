@@ -47,10 +47,10 @@ spec:
               tag: 0.10.44@sha256:5060d8e4cb7ff7bc6cdda4724d979220daf50d6bd8e30aecc0a90797c4ee64f6
             resources:
               limits:
-                memory: 256Mi
+                memory: 3Gi
               requests:
                 cpu: 10m
-                memory: 64Mi
+                memory: 128Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
