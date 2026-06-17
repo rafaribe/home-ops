@@ -82,7 +82,7 @@ spec:
                 echo "Registering runner..."
                 cd /persistent && forgejo-runner register \
                   --instance http://forgejo-http.development.svc.cluster.local:3000 \
-                  --token "${FORGEJO_RUNNER_TOKEN}" \
+                  --token "$${FORGEJO_RUNNER_TOKEN}" \
                   --name k8s-runner \
                   --labels "default:k8spod:/config/podspec-default.yaml,ubuntu-latest:k8spod:/config/podspec-default.yaml,ubuntu-24.04:k8spod:/config/podspec-default.yaml" \
                   --no-interactive
