@@ -15,6 +15,7 @@ resources:
   - ./jellyfin/ks.yaml
   - ./jellyseerr/ks.yaml
   - ./kavita/ks.yaml
+  - ./koito/ks.yaml
   - ./komga/ks.yaml
   - ./maintainerr/ks.yaml
   - ./media-browser/ks.yaml
