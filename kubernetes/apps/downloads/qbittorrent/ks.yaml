@@ -21,10 +21,11 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: qb
       CLAIM: qbittorrent
-      VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_ACCESSMODES: ReadWriteMany
-      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_CACHE_CAPACITY: 8Gi
+      VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
+      VOLSYNC_STORAGECLASS: ceph-filesystem
   components:
     - ../../../../components/volsync
 
