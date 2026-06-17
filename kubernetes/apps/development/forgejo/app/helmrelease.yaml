@@ -139,7 +139,7 @@ spec:
     service:
       ssh:
         annotations:
-          lbipam.cilium.io/ips: 10.0.1.32
+          lbipam.cilium.io/ips: 10.0.1.27
         port: 22
         type: LoadBalancer
     strategy:
