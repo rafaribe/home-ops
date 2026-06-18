@@ -33,3 +33,7 @@ spec:
   targetNamespace: development
   timeout: 5m
   wait: false
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 30Gi
