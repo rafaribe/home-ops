@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: development
 resources:
   - ./namespace.yaml
-  - ./forgejo/gickup/ks.yaml
+#  - ./forgejo/gickup/ks.yaml
   - ./forgejo/ks.yaml
   - ./forgejo/runner/ks.yaml
   - ./konflate/ks.yaml
