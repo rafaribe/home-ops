@@ -216,6 +216,17 @@ spec:
                 cpu: "2"
                 memory: 4Gi
             priorityClassName: system-node-critical
+          - name: srv-08
+            devices:
+              - name: /dev/disk/by-id/nvme-CT1000P310SSD8_253652D191A3
+            resources:
+              requests:
+                cpu: "500m"
+                memory: 2Gi
+              limits:
+                cpu: "2"
+                memory: 4Gi
+            priorityClassName: system-node-critical
 
       resources:
         logcollector:
