@@ -17,4 +17,4 @@ resources:
   - ./memory-mcp/ks.yaml
   - ./docmost-mcp/ks.yaml
   - ./paperless-mcp/ks.yaml
- # - ./tailscale-mcp/ks.yaml
+  - ./tailscale-mcp/ks.yaml
