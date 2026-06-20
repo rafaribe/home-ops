@@ -1,0 +1,104 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app safebucket
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 30m
+  values:
+    controllers:
+      safebucket:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/safebucket/safebucket
+              tag: 0.6.0@sha256:a4b612b84c2f3b4df1201b4af7db82868b862c67c641cf9b617de3fa90ed8a9a
+            env:
+              APP__LOG_LEVEL: info
+              APP__PORT: &port 8080
+              APP__API_URL: https://safebucket.rafaribe.com
+              APP__WEB_URL: https://safebucket.rafaribe.com
+              APP__ALLOWED_ORIGINS: https://safebucket.rafaribe.com
+              APP__STATIC_FILES__ENABLED: "true"
+              APP__TRASH_RETENTION_DAYS: "7"
+              APP__MFA_REQUIRED: "false"
+              APP__MAX_UPLOAD_SIZE: "53687091200"
+              DATABASE__TYPE: sqlite
+              DATABASE__SQLITE__PATH: /app/data/safebucket.db
+              CACHE__TYPE: memory
+              EVENTS__TYPE: memory
+              EVENTS__QUEUES__NOTIFICATIONS__NAME: safebucket-notifications
+              EVENTS__QUEUES__BUCKET_EVENTS__NAME: safebucket-bucket-events
+              EVENTS__QUEUES__OBJECT_DELETION__NAME: safebucket-object-deletion
+              NOTIFIER__TYPE: filesystem
+              NOTIFIER__FILESYSTEM__DIRECTORY: /app/data/notifications
+              ACTIVITY__TYPE: filesystem
+              ACTIVITY__FILESYSTEM__DIRECTORY: /app/data/activity
+              AUTH__PROVIDERS__KEYS: local
+              AUTH__PROVIDERS__LOCAL__NAME: local
+              AUTH__PROVIDERS__LOCAL__TYPE: local
+              AUTH__PROVIDERS__LOCAL__SHARING__ALLOWED: "true"
+              GOGC: "50"
+            envFrom:
+              - secretRef:
+                  name: safebucket
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+              readOnlyRootFilesystem: false
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /app/data
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/icon: mdi:bucket
+          gethomepage.dev/name: SafeBucket
+          gethomepage.dev/description: File sharing platform
+          gethomepage.dev/siteMonitor: http://safebucket.services:8080
+        hostnames: ["safebucket.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port

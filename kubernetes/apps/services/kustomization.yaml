@@ -32,6 +32,7 @@ resources:
   - ./picoshare/ks.yaml
   - ./poznote/ks.yaml
   - ./radicale/ks.yaml
+  - ./safebucket/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./slink/ks.yaml
   - ./stirling-pdf/ks.yaml
