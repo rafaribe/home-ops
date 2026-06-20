@@ -8,7 +8,7 @@ clusterSvcNets:
   - 10.43.0.0/16
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
-talosVersion: v1.12.6
+talosVersion: v1.13.4
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
 kubernetesVersion: v1.35.3
 
@@ -128,6 +128,31 @@ nodes:
         mtu: 1500
         routes: *defaultRoutes
         vip: *vip
+  - hostname: srv-08.${clusterDNSSuffix}
+    ipAddress: 10.0.1.12
+    nameservers: *nameservers
+    controlPlane: false
+    installDiskSelector:
+      type: "ssd"
+      wwid: nvme.1e4b-5942425730303834353954-4739333245332035313247-00000001
+      size: <= 520 GB
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "68:1d:ef:5d:60:18"
+        dhcp: true
+        mtu: 1500
+        routes: *defaultRoutes
+        vip: *vip
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/amd-ucode
+            - siderolabs/binfmt-misc
+            - siderolabs/util-linux-tools
+            - siderolabs/iscsi-tools
+            - siderolabs/nfsrahead
+            - siderolabs/nvme-cli
 
   - hostname: tpi-1.${clusterDNSSuffix}
     ipAddress: 10.0.1.8
