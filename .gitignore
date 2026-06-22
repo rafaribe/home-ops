@@ -63,4 +63,4 @@ scripts/generate-hush-secrets.*
 kubernetes/apps/services/hush
 kubernetes/apps/database/portabase/generate-portabase-secrets.sh
 report.md
-MANUAL_INTERVENTION.md
+MANUAL_INTERVENTION.mdcluster-health-report.md
