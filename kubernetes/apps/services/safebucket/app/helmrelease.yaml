@@ -26,7 +26,7 @@ spec:
               APP__LOG_LEVEL: info
               APP__MAX_UPLOAD_SIZE: "53687091200"
               APP__MFA_REQUIRED: "false"
-              APP__PORT: &port "8080"
+              APP__PORT: "8080"
               APP__PROFILE: default
               APP__STATIC_FILES__ENABLED: "true"
               APP__TRASH_RETENTION_DAYS: "7"
@@ -106,10 +106,10 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: *port
+                port: 8080
     service:
       app:
         controller: *app
         ports:
           http:
-            port: *port
+            port: 8080
