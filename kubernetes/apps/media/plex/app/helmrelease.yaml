@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/joryirving/plex
-              tag: 1.43.2.10687@sha256:99a76a3d3fa097338e83c7a1692c9f54e676faf26b7d7d4c7d9242a9cc4d7daf
+              tag: 1.43.2.10687@sha256:ce2f2437a631b6ff5df5fa8cdb1882b5028bd2eb21c05e2efa3df7b032098f90
             env:
               TZ: Europe/Lisbon
               PLEX_ADVERTISE_URL: https://plex.rafaribe.com:443,http://${LB_PLEX}:32400,https://plex-local.rafaribe.com:443
