@@ -7,4 +7,3 @@ resources:
   - ./ha/ks.yaml
   - ./memory/ks.yaml
   - ./paperless/ks.yaml
-  - ./tailscale/ks.yaml
