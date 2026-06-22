@@ -70,7 +70,7 @@ spec:
           register:
             image:
               repository: code.forgejo.org/forgejo/runner
-              tag: 6.3.1
+              tag: 6.4.0
             command:
               - sh
               - -c
@@ -93,7 +93,7 @@ spec:
           runner:
             image:
               repository: code.forgejo.org/forgejo/runner
-              tag: 6.3.1
+              tag: 6.4.0
             command:
               - /bin/forgejo-runner
               - daemon
