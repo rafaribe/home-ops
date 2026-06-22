@@ -8,7 +8,7 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./namespace.yaml
-  - ./mcp-servers/kustomization.yaml
+  - ./mcp-servers
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
   - ./paperless-ai/ks.yaml
