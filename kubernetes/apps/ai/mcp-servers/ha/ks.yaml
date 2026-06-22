@@ -3,20 +3,18 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: docmost-mcp
+  name: ha-mcp
   namespace: flux-system
 spec:
   targetNamespace: ai
   commonMetadata:
     labels:
-      app.kubernetes.io/name: docmost-mcp
+      app.kubernetes.io/name: ha-mcp
   dependsOn:
-    - name: docmost
-      namespace: services
     - name: external-secrets-stores
       namespace: external-secrets
     - name: toolhive-operator-crds
-  path: ./kubernetes/apps/ai/docmost-mcp/app
+  path: ./kubernetes/apps/ai/mcp-servers/ha
   prune: true
   sourceRef:
     kind: GitRepository

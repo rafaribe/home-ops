@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: paperless-mcp
+  namespace: flux-system
+spec:
+  targetNamespace: ai
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: paperless-mcp
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
+    - name: paperless
+      namespace: services
+    - name: toolhive-operator-crds
+  path: ./kubernetes/apps/ai/mcp-servers/paperless
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  interval: 1h
+  timeout: 5m

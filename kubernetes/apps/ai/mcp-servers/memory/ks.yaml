@@ -14,7 +14,7 @@ spec:
     - name: toolhive-operator-crds
     - name: volsync
       namespace: storage
-  path: ./kubernetes/apps/ai/memory-mcp/app
+  path: ./kubernetes/apps/ai/mcp-servers/memory
   prune: true
   sourceRef:
     kind: GitRepository
@@ -27,4 +27,4 @@ spec:
       APP: memory-mcp
       VOLSYNC_CAPACITY: 1Gi
   components:
-    - ../../../../components/volsync
+    - ../../../../../components/volsync
