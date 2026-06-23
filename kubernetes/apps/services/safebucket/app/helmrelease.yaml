@@ -19,7 +19,7 @@ spec:
           app:
             image:
               repository: ghcr.io/safebucket/safebucket
-              tag: v0.6.0 # TODO: pin with @sha256:digest
+              tag: 0.6.1 # TODO: pin with @sha256:digest
             env:
               APP__ALLOWED_ORIGINS: https://safebucket.rafaribe.com
               APP__API_URL: https://safebucket.rafaribe.com
