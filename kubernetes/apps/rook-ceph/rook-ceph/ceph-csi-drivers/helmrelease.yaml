@@ -1,0 +1,37 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ceph-csi-drivers
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: ceph-csi-drivers
+  interval: 1h
+  values:
+    drivers:
+      cephfs:
+        enabled: true
+        name: rook-ceph.cephfs.csi.ceph.com
+        snapshotPolicy: volumeGroupSnapshot
+      nfs:
+        enabled: false
+      nvmeof:
+        enabled: false
+      rbd:
+        enabled: true
+        name: rook-ceph.rbd.csi.ceph.com
+        snapshotPolicy: volumeSnapshot
+    operatorConfig:
+      driverSpecDefaults:
+        clusterName: rook-ceph
+        controllerPlugin:
+          hostNetwork: true
+          priorityClassName: system-cluster-critical
+          replicas: 2
+        imageSet:
+          name: rook-csi-operator-image-set-configmap
+        nodePlugin:
+          kubeletDirPath: /var/lib/kubelet
+          priorityClassName: system-node-critical
