@@ -10,7 +10,7 @@ clusterSvcNets:
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
 talosVersion: v1.13.4
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
-kubernetesVersion: v1.35.3
+kubernetesVersion: v1.36.2
 
 cniConfig:
   name: none
@@ -195,7 +195,7 @@ nodes:
     nameservers: *nameservers
     controlPlane: false
     installDiskSelector:
-      type: nvme
+      type: sd
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "1e:66:39:1d:77:c0"
@@ -205,16 +205,34 @@ nodes:
     machineSpec:
       mode: metal
       arch: arm64
-    schematic: *schematic-tpi
+    schematic: &schematic-tpi-no-ext
+      overlay:
+        name: turingrk1
+        image: siderolabs/sbc-rockchip
+      customization:
+        extraKernelArgs:
+          - net.ifnames=0
+    nodeLabels:
+      workload-type: memory
+      local-storage: "false"
     patches:
-      - *kubelet-gc
+      - &tpi-aggressive-gc |-
+        machine:
+          kubelet:
+            extraArgs:
+              rotate-server-certificates: true
+              image-gc-high-threshold: 50
+              image-gc-low-threshold: 30
+            extraConfig:
+              imageMaximumGCAge: 12h0m0s
+              imageMinimumGCAge: 2m0s
 
   - hostname: tpi-3.${clusterDNSSuffix}
     ipAddress: 10.0.1.10
     nameservers: *nameservers
     controlPlane: false
     installDiskSelector:
-      type: nvme
+      type: sd
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "8e:56:66:61:bf:36"
@@ -224,28 +242,19 @@ nodes:
     machineSpec:
       mode: metal
       arch: arm64
-    schematic: *schematic-tpi
+    schematic: *schematic-tpi-no-ext
     nodeLabels:
-      disk-type: nvme
-      disk-size: large
+      workload-type: memory
+      local-storage: "false"
     patches:
-      - &tpi-nvme-kubelet |-
-        machine:
-          kubelet:
-            extraArgs:
-              rotate-server-certificates: true
-              image-gc-high-threshold: 65
-              image-gc-low-threshold: 50
-            extraConfig:
-              imageMaximumGCAge: 24h0m0s
-              maxPods: 35
+      - *tpi-aggressive-gc
 
   - hostname: tpi-4.${clusterDNSSuffix}
     ipAddress: 10.0.1.11
     nameservers: *nameservers
     controlPlane: false
     installDiskSelector:
-      type: nvme
+      type: sd
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "8e:a1:08:d0:12:5c"
@@ -255,12 +264,12 @@ nodes:
     machineSpec:
       mode: metal
       arch: arm64
-    schematic: *schematic-tpi
+    schematic: *schematic-tpi-no-ext
     nodeLabels:
-      disk-type: nvme
-      disk-size: large
+      workload-type: memory
+      local-storage: "false"
     patches:
-      - *tpi-nvme-kubelet
+      - *tpi-aggressive-gc
 
 controlPlane:
   noSchematicValidate: true
