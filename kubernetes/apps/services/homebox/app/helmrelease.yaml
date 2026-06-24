@@ -20,7 +20,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/sysadminsmedia/homebox
+              repository: docker.io/sysadminsmedia/homebox
               tag: 0.26.2-rootless
             env:
               TZ: Europe/Lisbon

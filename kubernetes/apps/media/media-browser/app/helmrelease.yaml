@@ -68,7 +68,7 @@ spec:
           - path: /home/filebrowser/data
       config-file:
         type: configMap
-        name: media-browser-config
+        name: media-browser
         globalMounts:
           - path: /home/filebrowser/data/config.yaml
             subPath: config.yaml
