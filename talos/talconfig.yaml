@@ -31,7 +31,6 @@ nodes:
     controlPlane: false
     installDiskSelector:
       wwid: naa.5000cca6a8c07027
-      size: <= 750 GB
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "10:c3:7b:1d:d6:f4"
@@ -142,7 +141,6 @@ nodes:
         dhcp: true
         mtu: 1500
         routes: *defaultRoutes
-        vip: *vip
     schematic:
       customization:
         systemExtensions:
