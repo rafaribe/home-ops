@@ -25,6 +25,7 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 50Gi
+      VOLSYNC_CLAIM: forgejo-data
   prune: true
   retryInterval: 1m
   sourceRef:

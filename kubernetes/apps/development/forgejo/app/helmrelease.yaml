@@ -119,7 +119,7 @@ spec:
       rootless: true
       tag: 15.0.3-rootless
     persistence:
-      claimName: forgejo
+      claimName: forgejo-data
       create: false
     podSecurityContext:
       fsGroup: 1000
