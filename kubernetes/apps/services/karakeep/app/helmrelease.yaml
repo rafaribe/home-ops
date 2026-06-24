@@ -14,6 +14,24 @@ spec:
       karakeep:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          meili-wipe:
+            image:
+              repository: docker.io/library/busybox
+              tag: 1.37.0
+            command:
+              - /bin/sh
+              - -c
+              - |
+                EXPECTED="v1.48.0"
+                VERSION_FILE="/meili_data/.version"
+                if [ -f "$VERSION_FILE" ] && [ "$(cat $VERSION_FILE)" = "$EXPECTED" ]; then
+                  echo "Meilisearch version unchanged ($EXPECTED), skipping wipe."
+                else
+                  echo "Meilisearch version changed to $EXPECTED, wiping index data..."
+                  find /meili_data -mindepth 1 ! -name '.version' -delete
+                  echo "$EXPECTED" > "$VERSION_FILE"
+                fi
         containers:
           app:
             image:
@@ -156,6 +174,9 @@ spec:
         existingClaim: karakeep # Use the same claim as Hoarder, since Karakeep is Hoarder
         advancedMounts:
           karakeep:
+            meili-wipe:
+              - path: /meili_data
+                subPath: meilisearch
             app:
               - path: /data
                 subPath: karakeep
