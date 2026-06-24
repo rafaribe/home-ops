@@ -32,7 +32,18 @@ Use the `question` tool to gather:
 
 Always ask for confirmation before writing files.
 
-### Step 2: Inspect neighboring apps
+### Step 2: Search kubesearch.dev for reference configs
+
+Before generating files, search kubesearch.dev to find real-world HelmRelease examples:
+
+1. Visit `https://kubesearch.dev/` and search for the app name
+2. If results exist, click through to find HelmRelease YAML files from other homelabs
+3. Use these as reference for values structure, env vars, probes, and persistence patterns
+4. Convert GitHub blob URLs to raw URLs to fetch full file contents if needed
+
+Example URL pattern: `https://kubesearch.dev/hr/<registry-path>` (e.g., `https://kubesearch.dev/hr/ghcr.io-johanohly-airtrail`)
+
+### Step 3: Inspect neighboring apps
 
 Before generating files:
 
@@ -40,7 +51,7 @@ Before generating files:
 2. Prefer matching the local patterns for probes, persistence, routes, and secret templates.
 3. If the namespace overlay does not exist for a requested cluster, ask the user how they want to proceed.
 
-### Step 3: Create the base app directory
+### Step 4: Create the base app directory
 
 Create:
 
@@ -57,7 +68,7 @@ Optionally create:
 - other app-specific manifests such as `prometheusrule.yaml`, `configmap.yaml`, or `pvc.yaml`
 - `ocirepository.yaml` if there is no namespace specific app-template
 
-### Step 4: Generate base app files
+### Step 5: Generate base app files
 
 #### `kubernetes/apps/<namespace>/<app>/kustomization.yaml`
 
