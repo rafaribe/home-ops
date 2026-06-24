@@ -12,10 +12,6 @@ spec:
   components:
     - ../../../../components/volsync
   dependsOn:
-    - name: cloudnative-pg-cluster
-      namespace: database
-    - name: external-secrets-stores
-      namespace: external-secrets
     - name: volsync
       namespace: storage
   interval: 30m
