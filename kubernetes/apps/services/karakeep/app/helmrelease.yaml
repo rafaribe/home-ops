@@ -23,15 +23,16 @@ spec:
               - /bin/sh
               - -c
               - |
-                EXPECTED="v1.48.0"
                 VERSION_FILE="/meili_data/.version"
-                if [ -f "$VERSION_FILE" ] && [ "$(cat $VERSION_FILE)" = "$EXPECTED" ]; then
-                  echo "Meilisearch version unchanged ($EXPECTED), skipping wipe."
+                if [ -f "$VERSION_FILE" ] && [ "$(cat $VERSION_FILE)" = "$MEILI_VERSION" ]; then
+                  echo "Meilisearch version unchanged ($MEILI_VERSION), skipping wipe."
                 else
-                  echo "Meilisearch version changed to $EXPECTED, wiping index data..."
+                  echo "Meilisearch version changed to $MEILI_VERSION, wiping index data..."
                   find /meili_data -mindepth 1 ! -name '.version' -delete
-                  echo "$EXPECTED" > "$VERSION_FILE"
+                  echo "$MEILI_VERSION" > "$VERSION_FILE"
                 fi
+            env:
+              MEILI_VERSION: *meili-tag
         containers:
           app:
             image:
@@ -106,7 +107,7 @@ spec:
           meilisearch:
             image:
               repository: docker.io/getmeili/meilisearch
-              tag: v1.48.0
+              tag: &meili-tag v1.48.0
             env:
               MEILI_NO_ANALYTICS: true
               MEILI_MASTER_KEY:
