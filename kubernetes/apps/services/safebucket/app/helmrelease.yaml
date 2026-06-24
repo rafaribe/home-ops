@@ -18,8 +18,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/safebucket/safebucket
-              tag: v0.6.0 # TODO: pin with @sha256:digest
+              repository: docker.io/safebucket/safebucket
+              tag: 0.6.1@sha256:8fd0f3e434c39114b3d976e1bbe7f17757dce2b134c688f3b8279b0e8ad21cfa
             env:
               APP__ALLOWED_ORIGINS: https://safebucket.rafaribe.com
               APP__API_URL: https://safebucket.rafaribe.com
