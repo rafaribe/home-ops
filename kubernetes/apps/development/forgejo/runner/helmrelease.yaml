@@ -41,9 +41,9 @@ spec:
               capacity: 4
               file: /persistent/.runner
               labels:
-                - ubuntu-latest:k8spod:/config/podspec-default.yaml
-                - ubuntu-24.04:k8spod:/config/podspec-default.yaml
-                - default:k8spod:/config/podspec-default.yaml
+                - ubuntu-latest:host
+                - ubuntu-24.04:host
+                - default:host
               timeout: 3h
         suffix: config
     controllers:
@@ -69,8 +69,8 @@ spec:
         initContainers:
           register:
             image:
-              repository: code.forgejo.org/forgejo/runner
-              tag: 12.12.0
+              repository: ghcr.io/bjw-s-labs/forgejo-runner
+              tag: ubuntu-24.04
             command:
               - sh
               - -c
@@ -92,8 +92,8 @@ spec:
         containers:
           runner:
             image:
-              repository: code.forgejo.org/forgejo/runner
-              tag: 12.12.0
+              repository: ghcr.io/bjw-s-labs/forgejo-runner
+              tag: ubuntu-24.04
             command:
               - /bin/forgejo-runner
               - daemon
@@ -101,10 +101,10 @@ spec:
               - /config/runner.yaml
             resources:
               requests:
-                cpu: 5m
-                memory: 32Mi
+                cpu: 100m
+                memory: 256Mi
               limits:
-                memory: 128Mi
+                memory: 2Gi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
