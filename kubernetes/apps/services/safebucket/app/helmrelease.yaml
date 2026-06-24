@@ -19,7 +19,7 @@ spec:
           app:
             image:
               repository: docker.io/safebucket/safebucket
-              tag: 0.6.1@sha256:8fd0f3e434c39114b3d976e1bbe7f17757dce2b134c688f3b8279b0e8ad21cfa
+              tag: 0.6.1@sha256:55c97a1b5d099f9bbd3ec04c15c7d9ba5fc4efdb97efe28828cbc06040077571
             env:
               APP__ALLOWED_ORIGINS: https://safebucket.rafaribe.com
               APP__API_URL: https://safebucket.rafaribe.com
