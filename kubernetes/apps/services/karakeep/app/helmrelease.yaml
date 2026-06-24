@@ -32,7 +32,8 @@ spec:
                   echo "$MEILI_VERSION" > "$VERSION_FILE"
                 fi
             env:
-              MEILI_VERSION: *meili-tag
+              # Must match meilisearch container tag below
+              MEILI_VERSION: v1.48.0
         containers:
           app:
             image:
@@ -107,7 +108,7 @@ spec:
           meilisearch:
             image:
               repository: docker.io/getmeili/meilisearch
-              tag: &meili-tag v1.48.0
+              tag: v1.48.0 # keep in sync with initContainers.meili-wipe MEILI_VERSION
             env:
               MEILI_NO_ANALYTICS: true
               MEILI_MASTER_KEY:
