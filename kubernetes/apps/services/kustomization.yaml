@@ -38,3 +38,4 @@ resources:
   - ./stirling-pdf/ks.yaml
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
+  - ./trek/ks.yaml
