@@ -59,7 +59,8 @@ spec:
                   config:
                     defaultEnabled: true
             auth:
-              method: noauth
+              methods:
+                noauth: true
     persistence:
       config:
         enabled: true

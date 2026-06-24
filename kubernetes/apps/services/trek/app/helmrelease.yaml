@@ -63,9 +63,6 @@ spec:
               limits:
                 memory: 512Mi
             securityContext:
-              capabilities:
-                drop:
-                  - ALL
               readOnlyRootFilesystem: false
     service:
       app:

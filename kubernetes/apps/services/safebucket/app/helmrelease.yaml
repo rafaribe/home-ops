@@ -21,7 +21,8 @@ spec:
               repository: docker.io/safebucket/safebucket
               tag: 0.6.1@sha256:55c97a1b5d099f9bbd3ec04c15c7d9ba5fc4efdb97efe28828cbc06040077571
             env:
-              ACTIVITY__FILESYSTEM__INDEX_DIR: /app/data/activity
+              ACTIVITY__FILESYSTEM__INDEX_DIR: /app/data/activity-index
+              ACTIVITY__FILESYSTEM__DIRECTORY: /app/data/activity
               ACTIVITY__TYPE: filesystem
               APP__ALLOWED_ORIGINS: https://safebucket.rafaribe.com
               APP__API_URL: https://safebucket.rafaribe.com
