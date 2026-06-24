@@ -17,9 +17,11 @@ spec:
         containers:
           app:
             env:
-              DB_URL: file:/data/airtrail.db
               ORIGIN: https://airtrail.rafaribe.com
               UPLOAD_LOCATION: /data/uploads
+            envFrom:
+              - secretRef:
+                  name: airtrail
             image:
               repository: ghcr.io/johanohly/airtrail
               tag: v3.10.0
@@ -40,6 +42,14 @@ spec:
                 drop:
                   - ALL
               readOnlyRootFilesystem: true
+        initContainers:
+          init-db:
+            envFrom:
+              - secretRef:
+                  name: airtrail
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 18.4@sha256:5086f94abc783f1147d7c2a32c01db00ab594820026e4f6a82ac2af3dbde7fc7
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
@@ -53,7 +63,7 @@ spec:
       data:
         existingClaim: airtrail
         globalMounts:
-          - path: /data
+          - path: /data/uploads
       tmp:
         globalMounts:
           - path: /tmp
