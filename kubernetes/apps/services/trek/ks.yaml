@@ -26,6 +26,6 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: trek
       VOLSYNC_CACHE_CAPACITY: 2Gi
-      VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_CAPACITY: 16Gi
   components:
     - ../../../../components/volsync
