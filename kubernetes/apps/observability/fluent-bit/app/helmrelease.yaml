@@ -9,6 +9,7 @@ spec:
     kind: OCIRepository
     name: fluent-bit
   interval: 1h
+  timeout: 10m
   values:
     config:
       service: |-
