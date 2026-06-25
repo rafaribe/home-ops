@@ -90,7 +90,7 @@ spec:
           registry: docker.io
           repository: prompp/prompp
           tag: 0.8.0
-        version: v3.0.1
+        version: v2.54.1
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
