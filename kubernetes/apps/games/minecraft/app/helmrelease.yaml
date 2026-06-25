@@ -1,0 +1,83 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name minecraft
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: minecraft
+  interval: 15m
+  values:
+    controllers:
+      minecraft:
+        containers:
+          app:
+            image:
+              repository: itzg/minecraft-server
+              tag: latest
+            env:
+              EULA: "TRUE"
+              TYPE: VANILLA
+              VERSION: LATEST
+              MEMORY: 4G
+              TZ: Europe/Lisbon
+              ENABLE_RCON: "true"
+              RCON_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: *name
+                    key: RCON_PASSWORD
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - mc-health
+                  initialDelaySeconds: 120
+                  periodSeconds: 60
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - mc-health
+                  initialDelaySeconds: 120
+                  periodSeconds: 10
+            resources:
+              requests:
+                cpu: 500m
+                memory: 4Gi
+              limits:
+                memory: 6Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: {drop: ["ALL"]}
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: minecraft
+        type: LoadBalancer
+        ports:
+          minecraft:
+            port: 25565
+            protocol: TCP
+          rcon:
+            port: 25575
+            protocol: TCP
+    persistence:
+      data:
+        existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /data
