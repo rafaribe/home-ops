@@ -19,9 +19,7 @@ spec:
           - name: alertname
             value: InfoInhibitor
             matchType: =
-      - receiver: heartbeat
-        groupWait: 0s
-        repeatInterval: 2m30s
+      - receiver: "null"
         matchers:
           - name: alertname
             value: Watchdog
@@ -45,15 +43,6 @@ spec:
           matchType: =
   receivers:
     - name: "null"
-    - name: heartbeat
-      webhookConfigs:
-        - httpConfig:
-            bearerTokenSecret:
-              name: &secret alertmanager-secret
-              key: BUDDY_HEARTBEAT_TOKEN
-          urlSecret:
-            name: *secret
-            key: BUDDY_HEARTBEAT_URL
     - name: pushover
       pushoverConfigs:
         - html: true
@@ -84,9 +73,9 @@ spec:
             [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
           ttl: 86400s
           token:
-            name: *secret
+            name: alertmanager-secret
             key: ALERTMANAGER_PUSHOVER_TOKEN
           userKey:
-            name: *secret
+            name: alertmanager-secret
             key: PUSHOVER_USER_KEY
           urlTitle: View in Alertmanager
