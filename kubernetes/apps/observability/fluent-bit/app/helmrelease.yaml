@@ -85,7 +85,6 @@ spec:
           format json_lines
           json_date_format iso8601
           compress gzip
-          Buffer_Size 256k
     dashboards:
       enabled: true
       annotations:
