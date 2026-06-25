@@ -44,7 +44,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/ollama-dns-router
-              tag: v0.1.0@sha256:bedcdbb82303e0d8d65fa081b738f5b7232cea26e7167b71ab3027d16ce2a5d7
+              tag: v0.1.0@sha256:a462e1bed14d5891aa58a6f5adb8d3843bbb5c8b84e4385b0525f9be36af150c
             env:
               TZ: *timeZone
               # Instances is a comma-separated string with IP:PORT values"
