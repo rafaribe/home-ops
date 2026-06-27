@@ -118,15 +118,7 @@ spec:
     defaultPodOptions:
       hostUsers: false
       nodeSelector:
-        kubernetes.io/arch: arm64
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
-                  - key: disk-size
-                    operator: DoesNotExist
+        kubernetes.io/hostname: tpi-1
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
