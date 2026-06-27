@@ -41,6 +41,9 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
+  plugins:
+    - name: victorialogs-datasource
+      version: 0.16.0
   datasource:
     type: victorialogs-datasource
     name: VictoriaLogs

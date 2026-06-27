@@ -120,6 +120,3 @@ spec:
           storage: 10Gi
       storageClassName: ceph-block
   disableDefaultSecurityContext: All
-  plugins:
-    - name: victorialogs-datasource
-      version: 0.16.0
