@@ -9,6 +9,7 @@ spec:
     kind: OCIRepository
     name: homebox
   interval: 30m
+  timeout: 10m
   maxHistory: 3
   uninstall:
     keepHistory: false
