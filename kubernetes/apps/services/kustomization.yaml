@@ -16,6 +16,7 @@ resources:
   - ./homepage/ks.yaml
   #- ./hush/ks.yaml
  # - ./hush/livekit/ks.yaml
+  - ./ignis/ks.yaml
   - ./it-tools/ks.yaml
   - ./karakeep/ks.yaml
   - ./leafwiki/ks.yaml
