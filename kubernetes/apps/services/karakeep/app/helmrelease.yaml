@@ -108,7 +108,7 @@ spec:
           meilisearch:
             image:
               repository: docker.io/getmeili/meilisearch
-              tag: v1.48.0 # keep in sync with initContainers.meili-wipe MEILI_VERSION
+              tag: v1.48.2 # keep in sync with initContainers.meili-wipe MEILI_VERSION
             env:
               MEILI_NO_ANALYTICS: true
               MEILI_MASTER_KEY:
