@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: docker.io/nobbe/ignis
-              tag: 0.8.7@sha256:c18c707777792d98f61512ab5973eca2c478c550bfe01d19858d81576e824927
+              tag: 0.8.7@sha256:48425e3f226b5c10a46a79a23837535a152cdd53fa73dd2d6f9df327799f3d1a
             env:
               OBSIDIAN_VERSION: "1.12.7"
               PGID: "1000"
