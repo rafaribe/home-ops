@@ -26,6 +26,5 @@ spec:
       CLAIM: jellyfin-v2
       VOLSYNC_CAPACITY: 10Gi
       GATUS_SUBDOMAIN: jellyfin
-      VOLSYNC_CACHE_CAPACITY: 5Gi
   components:
     - ../../../../components/volsync

@@ -25,7 +25,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CACHE_CAPACITY: 8Gi
       VOLSYNC_CAPACITY: 5Gi
   components:
     - ../../../../components/volsync
