@@ -79,6 +79,8 @@ spec:
           containers:
             - name: grafana
               env:
+                - name: GF_INSTALL_PLUGINS
+                  value: "https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.29.0/victorialogs-datasource-v0.29.0.zip;victorialogs-datasource"
                 - name: GF_SECURITY_ADMIN_PASSWORD
                   valueFrom:
                     secretKeyRef:
