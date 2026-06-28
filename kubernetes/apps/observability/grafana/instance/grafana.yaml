@@ -37,7 +37,7 @@ spec:
         spec:
           initContainers:
             - name: install-victorialogs-plugin
-              image: docker.io/curlimages/curl:8.14.1
+              image: docker.io/curlimages/curl:8.21.0
               command:
                 - sh
                 - -c
