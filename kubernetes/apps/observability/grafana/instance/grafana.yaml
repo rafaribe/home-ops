@@ -44,11 +44,13 @@ spec:
                 - |
                   apk add --no-cache curl unzip &&
                   curl -fsSL -o /tmp/plugin.zip "https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.29.0/victoriametrics-logs-datasource-v0.29.0.zip" &&
-                  unzip -qo /tmp/plugin.zip -d /var/lib/grafana/plugins/
+                  unzip -qo /tmp/plugin.zip -d /var/lib/grafana/plugins/ &&
+                  chown -R 1000:1000 /var/lib/grafana/plugins/
               securityContext:
+                runAsUser: 0
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: false
-                capabilities: { drop: ["ALL"] }
+                capabilities: { drop: ["ALL"], add: ["CHOWN", "FOWNER"] }
               volumeMounts:
                 - name: grafana-plugins
                   mountPath: /var/lib/grafana/plugins
