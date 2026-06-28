@@ -37,12 +37,13 @@ spec:
         spec:
           initContainers:
             - name: install-victorialogs-plugin
-              image: ghcr.io/home-operations/busybox:1.38
+              image: docker.io/library/alpine:3.24
               command:
                 - sh
                 - -c
                 - |
-                  wget -qO /tmp/plugin.zip "https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.29.0/victorialogs-datasource-v0.29.0.zip" &&
+                  apk add --no-cache curl unzip &&
+                  curl -fsSL -o /tmp/plugin.zip "https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.29.0/victoriametrics-logs-datasource-v0.29.0.zip" &&
                   unzip -qo /tmp/plugin.zip -d /var/lib/grafana/plugins/
               securityContext:
                 allowPrivilegeEscalation: false
