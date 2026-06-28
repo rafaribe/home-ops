@@ -53,11 +53,13 @@ spec:
               limits:
                 memory: 1Gi
             securityContext:
-              allowPrivilegeEscalation: false
+              allowPrivilegeEscalation: true
               capabilities:
                 add:
                   - CHOWN
                   - FOWNER
+                  - SETUID
+                  - SETGID
                 drop:
                   - ALL
               readOnlyRootFilesystem: false
