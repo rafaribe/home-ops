@@ -91,6 +91,9 @@ spec:
         grafana_folder: observability
     serviceMonitor:
       enabled: true
+    tolerations:
+      - key: node-role.kubernetes.io/memory
+        operator: Exists
     image:
       repository: ghcr.io/fluent/fluent-bit
       tag: 5.0.8

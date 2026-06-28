@@ -19,6 +19,16 @@ spec:
       retries: 3
   values:
     defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: workload-type
+                    operator: In
+                    values:
+                      - memory
+              weight: 100
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
@@ -26,6 +36,9 @@ spec:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
+      tolerations:
+        - key: node-role.kubernetes.io/memory
+          operator: Exists
     controllers:
       ollama:
         annotations:

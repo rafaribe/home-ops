@@ -125,6 +125,8 @@ spec:
           tolerations:
             - key: "node-role.kubernetes.io/control-plane"
               operator: "Exists"
+            - key: "node-role.kubernetes.io/memory"
+              operator: "Exists"
         mon:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:

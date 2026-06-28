@@ -35,3 +35,6 @@ spec:
         nodePlugin:
           kubeletDirPath: /var/lib/kubelet
           priorityClassName: system-node-critical
+          tolerations:
+            - key: node-role.kubernetes.io/memory
+              operator: Exists
