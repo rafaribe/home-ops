@@ -36,6 +36,23 @@ spec:
       template:
         spec:
           initContainers:
+            - name: install-victorialogs-plugin
+              image: ghcr.io/home-operations/busybox:1.38
+              command:
+                - sh
+                - -c
+                - |
+                  wget -qO /tmp/plugin.zip "https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.29.0/victorialogs-datasource-v0.29.0.zip" &&
+                  unzip -qo /tmp/plugin.zip -d /var/lib/grafana/plugins/
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: false
+                capabilities: { drop: ["ALL"] }
+              volumeMounts:
+                - name: grafana-plugins
+                  mountPath: /var/lib/grafana/plugins
+                - name: tmpfs
+                  mountPath: /tmp
             - name: k8s-sidecar
               image: ghcr.io/kiwigrid/k8s-sidecar:2.8.0
               env:
@@ -79,8 +96,8 @@ spec:
           containers:
             - name: grafana
               env:
-                - name: GF_INSTALL_PLUGINS
-                  value: "https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.29.0/victorialogs-datasource-v0.29.0.zip;victorialogs-datasource"
+                - name: GF_PATHS_PLUGINS
+                  value: /var/lib/grafana/plugins
                 - name: GF_SECURITY_ADMIN_PASSWORD
                   valueFrom:
                     secretKeyRef:
@@ -91,6 +108,8 @@ spec:
                 readOnlyRootFilesystem: true
                 capabilities: { drop: ["ALL"] }
               volumeMounts:
+                - name: grafana-plugins
+                  mountPath: /var/lib/grafana/plugins
                 - name: grafana-sidecar-provider
                   mountPath: /etc/grafana/provisioning/dashboards/sidecar-provider.yaml
                   subPath: provider.yaml
@@ -106,6 +125,8 @@ spec:
             - name: grafana-data
               persistentVolumeClaim:
                 claimName: grafana-pvc
+            - name: grafana-plugins
+              emptyDir: {}
             - name: grafana-sidecar-provider
               configMap:
                 name: grafana-sidecar-provider
