@@ -95,6 +95,8 @@ spec:
           containers:
             - name: grafana
               env:
+                - name: GF_INSTALL_PLUGINS
+                  value: ""
                 - name: GF_PATHS_PLUGINS
                   value: /var/lib/grafana/plugins
                 - name: GF_SECURITY_ADMIN_PASSWORD
