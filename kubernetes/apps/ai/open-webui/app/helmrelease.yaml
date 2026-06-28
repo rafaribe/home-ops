@@ -27,6 +27,9 @@ spec:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
+      tolerations:
+        - key: node-role.kubernetes.io/memory
+          operator: Exists
     controllers:
       open-webui:
         annotations:

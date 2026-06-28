@@ -210,6 +210,8 @@ nodes:
       customization:
         extraKernelArgs:
           - net.ifnames=0
+    nodeTaints:
+      node-role.kubernetes.io/memory:NoSchedule: ""
     nodeLabels:
       workload-type: memory
       local-storage: "false"
@@ -241,6 +243,8 @@ nodes:
       mode: metal
       arch: arm64
     schematic: *schematic-tpi-no-ext
+    nodeTaints:
+      node-role.kubernetes.io/memory:NoSchedule: ""
     nodeLabels:
       workload-type: memory
       local-storage: "false"
@@ -263,6 +267,8 @@ nodes:
       mode: metal
       arch: arm64
     schematic: *schematic-tpi-no-ext
+    nodeTaints:
+      node-role.kubernetes.io/memory:NoSchedule: ""
     nodeLabels:
       workload-type: memory
       local-storage: "false"

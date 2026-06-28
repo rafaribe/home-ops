@@ -33,4 +33,6 @@ spec:
           targetLabel: instance
     prometheusRules:
       enabled: false
-    tolerations: {}
+    tolerations:
+      - key: node-role.kubernetes.io/memory
+        operator: Exists
