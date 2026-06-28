@@ -55,6 +55,9 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
+                add:
+                  - CHOWN
+                  - FOWNER
                 drop:
                   - ALL
               readOnlyRootFilesystem: false
