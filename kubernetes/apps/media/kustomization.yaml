@@ -23,6 +23,7 @@ resources:
   - ./navidrome/ks.yaml
   - ./nodecast-tv/ks.yaml
   - ./plex/ks.yaml
+  - ./stash/ks.yaml
   - ./tautulli/ks.yaml
   - ./wizarr/ks.yaml
   - ./your-spotify/ks.yaml
