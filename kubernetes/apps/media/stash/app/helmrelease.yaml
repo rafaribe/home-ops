@@ -92,6 +92,8 @@ spec:
               capabilities:
                 drop: ["ALL"]
               readOnlyRootFilesystem: false
+              runAsGroup: 1000
+              runAsUser: 1000
     configMaps:
       uploader-config:
         data:
@@ -100,6 +102,7 @@ spec:
               methods:
                 noauth: true
             server:
+              cacheDir: /home/filebrowser/data/cache
               sources:
                 - path: /media
                   config:
