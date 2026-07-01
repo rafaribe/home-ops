@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: docker.io/mauriceboe/trek
-              tag: 3.1.2@sha256:9a541b6c40fb382ed51f7409a2dad01130075dd69cf7e85ec4963bbabf09512d
+              tag: 3.1.4@sha256:815b19a45b264d1ddfd8f3df394308f9d6307b26de45378630ba8179bc7691ad
             env:
               NODE_ENV: production
               PORT: &port 3000
