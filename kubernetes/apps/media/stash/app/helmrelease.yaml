@@ -85,19 +85,16 @@ spec:
               readOnlyRootFilesystem: false
           uploader:
             image:
-              repository: ghcr.io/adampetrovic/stash-uploader
-              tag: dev-e4c95f3d@sha256:b8abdec93555062fdaa3285be3856803100e6e33362a0d2ac1ddc93730308e66
-            env:
-              PORT: &uploader-port 8080
-              UPLOAD_DIR: /media
+              repository: docker.io/gtstef/filebrowser
+              tag: 1.4.0-stable-slim@sha256:c998b094205179f74dd9c4740af289fa4b2d4f7b0e6fb378eefe677eb14fa9e4
             probes:
               liveness: &uploader-probes
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /healthz
-                    port: *uploader-port
+                    path: /health
+                    port: &uploader-port 80
                   periodSeconds: 10
               readiness: *uploader-probes
             resources:
@@ -111,6 +108,18 @@ spec:
               capabilities:
                 drop: ["ALL"]
               readOnlyRootFilesystem: true
+    configMaps:
+      uploader-config:
+        data:
+          config.yaml: |
+            auth:
+              methods:
+                noauth: true
+            server:
+              sources:
+                - path: /media
+                  config:
+                    defaultEnabled: true
     service:
       app:
         controller: *app
@@ -130,16 +139,19 @@ spec:
             namespace: network
             sectionName: https
         rules:
-          - matches:
-              - path:
-                  type: PathPrefix
-                  value: /upload
-            backendRefs:
-              - identifier: uploader
-                port: http
           - backendRefs:
               - name: *app
                 port: *port
+      uploader:
+        hostnames: ["stash-upload.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: uploader
+                port: http
     persistence:
       config:
         existingClaim: *app
@@ -149,6 +161,21 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /data
+      filebrowser-config:
+        type: configMap
+        name: stash-uploader-config
+        advancedMounts:
+          stash:
+            uploader:
+              - path: /home/filebrowser/data/config.yaml
+                subPath: config.yaml
+                readOnly: true
+      filebrowser-db:
+        type: emptyDir
+        advancedMounts:
+          stash:
+            uploader:
+              - path: /home/filebrowser/data/db
       media:
         type: nfs
         server: truenas.rafaribe.com
