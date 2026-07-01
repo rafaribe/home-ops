@@ -21,11 +21,11 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           securityContext:
-            fsGroup: 1001
+            fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
-            runAsGroup: 1001
+            runAsGroup: 1000
             runAsNonRoot: true
-            runAsUser: 1114
+            runAsUser: 1000
         containers:
           app:
             image:
@@ -92,8 +92,6 @@ spec:
               capabilities:
                 drop: ["ALL"]
               readOnlyRootFilesystem: false
-              runAsGroup: 1000
-              runAsUser: 1000
     configMaps:
       uploader-config:
         data:
