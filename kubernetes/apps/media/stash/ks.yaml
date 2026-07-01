@@ -10,18 +10,18 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/volsync
   interval: 10m
   path: "./kubernetes/apps/media/stash/app"
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CACHE_CAPACITY: 2Gi
+      VOLSYNC_CAPACITY: 10Gi
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   wait: false
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CACHE_CAPACITY: 2Gi
-      VOLSYNC_CAPACITY: 10Gi
-  components:
-    - ../../../../components/volsync

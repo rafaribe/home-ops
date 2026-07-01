@@ -16,34 +16,16 @@ spec:
   values:
     controllers:
       stash:
-        type: statefulset
+        strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
           securityContext:
             fsGroup: 1001
-            fsGroupChangePolicy: Always
+            fsGroupChangePolicy: OnRootMismatch
             runAsGroup: 1001
             runAsNonRoot: true
             runAsUser: 1114
-        initContainers:
-          fix-stash-perms:
-            image:
-              repository: docker.io/library/alpine
-              tag: "3.21"
-            command:
-              - sh
-              - -c
-              - |
-                set -ex
-                chown -R 1114:1001 /.stash
-                chmod -R u=rwX,g=rwX,o= /.stash
-            securityContext:
-              capabilities:
-                add: ["CHOWN", "FOWNER", "DAC_OVERRIDE"]
-                drop: ["ALL"]
-              runAsNonRoot: false
-              runAsUser: 0
         containers:
           app:
             image:
@@ -154,7 +136,7 @@ spec:
                 port: http
     persistence:
       config:
-        existingClaim: *app
+        type: emptyDir
         globalMounts:
           - path: /.stash
       data:
