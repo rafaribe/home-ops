@@ -166,6 +166,6 @@ spec:
       media:
         type: nfs
         server: truenas.rafaribe.com
-        path: /mnt/tank/media
+        path: /mnt/storage-0/porn
         globalMounts:
           - path: /media
