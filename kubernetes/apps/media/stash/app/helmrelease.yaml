@@ -136,7 +136,7 @@ spec:
                 port: http
     persistence:
       config:
-        type: emptyDir
+        existingClaim: *app
         globalMounts:
           - path: /.stash
       data:
@@ -145,7 +145,7 @@ spec:
           - path: /data
       filebrowser-config:
         type: configMap
-        name: stash-uploader-config
+        identifier: uploader-config
         advancedMounts:
           stash:
             uploader:
