@@ -69,6 +69,8 @@ spec:
             image:
               repository: docker.io/gtstef/filebrowser
               tag: 1.4.0-stable-slim@sha256:c998b094205179f74dd9c4740af289fa4b2d4f7b0e6fb378eefe677eb14fa9e4
+            env:
+              FILEBROWSER_CONFIG: /config/config.yaml
             probes:
               liveness: &uploader-probes
                 enabled: true
@@ -89,7 +91,7 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop: ["ALL"]
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
     configMaps:
       uploader-config:
         data:
@@ -149,15 +151,15 @@ spec:
         advancedMounts:
           stash:
             uploader:
-              - path: /home/filebrowser/data/config.yaml
+              - path: /config/config.yaml
                 subPath: config.yaml
                 readOnly: true
-      filebrowser-db:
+      filebrowser-data:
         type: emptyDir
         advancedMounts:
           stash:
             uploader:
-              - path: /home/filebrowser/data/db
+              - path: /home/filebrowser/data
       media:
         type: nfs
         server: truenas.rafaribe.com
