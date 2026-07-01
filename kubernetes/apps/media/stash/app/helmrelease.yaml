@@ -9,27 +9,51 @@ spec:
     kind: OCIRepository
     name: app-template
   interval: 30m
+  install:
+    disableWait: true
+  upgrade:
+    disableWait: true
   values:
-    defaultPodOptions:
-      securityContext:
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
-        seccompProfile:
-          type: RuntimeDefault
     controllers:
       stash:
-        strategy: Recreate
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            fsGroup: 1001
+            fsGroupChangePolicy: Always
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1114
+        initContainers:
+          fix-stash-perms:
+            image:
+              repository: docker.io/library/alpine
+              tag: "3.21"
+            command:
+              - sh
+              - -c
+              - |
+                set -ex
+                chown -R 1114:1001 /.stash
+                chmod -R u=rwX,g=rwX,o= /.stash
+            securityContext:
+              capabilities:
+                add: ["CHOWN", "FOWNER", "DAC_OVERRIDE"]
+                drop: ["ALL"]
+              runAsNonRoot: false
+              runAsUser: 0
         containers:
           app:
             image:
-              repository: ghcr.io/hotio/stash
-              tag: release@sha256:43a08a657e1ffba30028b8e3b091f9d1b856c0fcedb8cdc3d2c3075578f50dee
+              repository: ghcr.io/home-operations/stash
+              tag: 0.31.1@sha256:869f910b26e7605676531e8823fa8c8ea66a329dd1b737e342a1a77ba7b77f22
             env:
-              PUID: "1000"
-              PGID: "1000"
+              STASH_CACHE: /data/cache/
+              STASH_GENERATED: /data/generated/
+              STASH_METADATA: /data/metadata/
+              STASH_STASH: /media/
               TZ: Europe/Lisbon
             probes:
               liveness:
@@ -55,13 +79,49 @@ spec:
               limits:
                 memory: 2Gi
             securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
               readOnlyRootFilesystem: false
+          uploader:
+            image:
+              repository: ghcr.io/adampetrovic/stash-uploader
+              tag: dev-e4c95f3d@sha256:b8abdec93555062fdaa3285be3856803100e6e33362a0d2ac1ddc93730308e66
+            env:
+              PORT: &uploader-port 8080
+              UPLOAD_DIR: /media
+            probes:
+              liveness: &uploader-probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: *uploader-port
+                  periodSeconds: 10
+              readiness: *uploader-probes
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+              readOnlyRootFilesystem: true
     service:
       app:
         controller: *app
         ports:
           http:
             port: *port
+      uploader:
+        controller: *app
+        ports:
+          http:
+            port: *uploader-port
     route:
       app:
         hostnames: ["stash.rafaribe.com"]
@@ -70,6 +130,13 @@ spec:
             namespace: network
             sectionName: https
         rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /upload
+            backendRefs:
+              - identifier: uploader
+                port: http
           - backendRefs:
               - name: *app
                 port: *port
@@ -77,10 +144,14 @@ spec:
       config:
         existingClaim: *app
         globalMounts:
-          - path: /config
+          - path: /.stash
+      data:
+        type: emptyDir
+        globalMounts:
+          - path: /data
       media:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/tank/media
         globalMounts:
-          - path: /data
+          - path: /media
