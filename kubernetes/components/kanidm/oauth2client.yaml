@@ -5,6 +5,8 @@ metadata:
   name: ${APP}
 spec:
   displayname: ${APP}
+  image:
+    url: ${KANIDM_APP_ICON}
   kanidmRef:
     name: kanidm
     namespace: security

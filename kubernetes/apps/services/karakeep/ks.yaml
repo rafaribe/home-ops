@@ -30,22 +30,10 @@ spec:
   components:
     - ../../../../components/kanidm
     - ../../../../components/volsync
-  patches:
-    - patch: |
-        apiVersion: kaniop.rs/v1beta1
-        kind: KanidmOAuth2Client
-        metadata:
-          name: karakeep
-        spec:
-          image:
-            url: https://raw.githubusercontent.com/karakeep-app/karakeep/main/apps/web/public/logo.png
-      target:
-        group: kaniop.rs
-        kind: KanidmOAuth2Client
-        name: karakeep
   postBuild:
     substitute:
       APP: *app
+      KANIDM_APP_ICON: https://raw.githubusercontent.com/karakeep-app/karakeep/main/apps/web/public/logo.png
       KANIDM_CLIENT_ID_KEY: OAUTH_CLIENT_ID
       KANIDM_CLIENT_SECRET_KEY: OAUTH_CLIENT_SECRET
       KANIDM_GROUP: household
