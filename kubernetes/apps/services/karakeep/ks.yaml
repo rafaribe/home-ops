@@ -33,7 +33,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      KANIDM_APP_ICON: https://raw.githubusercontent.com/karakeep-app/karakeep/main/apps/web/public/logo.png
+      KANIDM_APP_ICON: https://docs.karakeep.app/img/logo.png
       KANIDM_CLIENT_ID_KEY: OAUTH_CLIENT_ID
       KANIDM_CLIENT_SECRET_KEY: OAUTH_CLIENT_SECRET
       KANIDM_GROUP: household
