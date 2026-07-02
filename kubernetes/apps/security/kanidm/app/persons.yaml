@@ -10,9 +10,9 @@ spec:
     namespace: security
   personAttributes:
     displayname: Rafael Ribeiro
-    legalName: Rafael Ribeiro
+    legalname: Rafael Ribeiro
     mail:
-      - rafael.ntw@gmail.com
+      - ${KANIDM_RAFARIBE_EMAIL}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kaniop.rs/kanidmpersonaccount_v1beta1.json
 apiVersion: kaniop.rs/v1beta1
@@ -25,6 +25,6 @@ spec:
     namespace: security
   personAttributes:
     displayname: Filipa Trigo
-    legalName: Filipa Trigo
+    legalname: Filipa Trigo
     mail:
-      - claudiaftrigo@gmail.com
+      - ${KANIDM_FILIPA_EMAIL}

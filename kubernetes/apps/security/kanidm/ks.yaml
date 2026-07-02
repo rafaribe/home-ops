@@ -21,6 +21,9 @@ spec:
   postBuild:
     substitute:
       APP: *app
+    substituteFrom:
+      - kind: Secret
+        name: kanidm-persons-secret
   prune: true
   retryInterval: 1m
   sourceRef:
