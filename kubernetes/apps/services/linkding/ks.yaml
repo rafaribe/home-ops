@@ -20,7 +20,7 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: links
-      KANIDM_APP_ICON: https://raw.githubusercontent.com/sissbruecker/linkding/master/linkding/static/logo.svg
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/linkding.png
       KANIDM_CLIENT_ID_KEY: OIDC_RP_CLIENT_ID
       KANIDM_CLIENT_SECRET_KEY: OIDC_RP_CLIENT_SECRET
       KANIDM_GROUP: household

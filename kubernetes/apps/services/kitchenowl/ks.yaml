@@ -28,7 +28,7 @@ spec:
       APP_GID: "1000"
       APP_UID: "1000"
       CLAIM: kitchenowl-data
-      KANIDM_APP_ICON: https://raw.githubusercontent.com/TomBursch/kitchenowl/main/kitchenowl/assets/icon/icon.png
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/kitchenowl.png
       KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
       KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
       KANIDM_GROUP: household

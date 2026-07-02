@@ -23,7 +23,7 @@ spec:
       APP: *app
       CLAIM: pgadmin-v2
       GATUS_SUBDOMAIN: pg
-      KANIDM_APP_ICON: https://www.pgadmin.org/static/COMPILED/assets/img/favicon.ico
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/pgadmin.png
       KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
       KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
       KANIDM_GROUP: household

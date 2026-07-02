@@ -29,7 +29,7 @@ spec:
       HOSTNAME: tandoor.rafaribe.com
       APP_UID: "1000"
       APP_GID: "1000"
-      KANIDM_APP_ICON: https://raw.githubusercontent.com/TandoorRecipes/recipes/develop/docs/logo_color.svg
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/tandoor-recipes.png
       KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
       KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
       KANIDM_DISABLE_PKCE: "true"
