@@ -33,6 +33,10 @@ spec:
                   secretKeyRef:
                     name: pgadmin-secret
                     key: PGADMIN_DEFAULT_PASSWORD
+            envFrom:
+              - secretRef:
+                  name: pgadmin-kanidm-oauth2-credentials
+                  optional: true
             probes:
               liveness: &probes
                 enabled: false

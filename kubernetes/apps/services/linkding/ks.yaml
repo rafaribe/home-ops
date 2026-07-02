@@ -21,8 +21,8 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: links
       KANIDM_APP_ICON: https://raw.githubusercontent.com/sissbruecker/linkding/master/linkding/static/logo.svg
-      KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
-      KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
+      KANIDM_CLIENT_ID_KEY: OIDC_RP_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OIDC_RP_CLIENT_SECRET
       KANIDM_GROUP: household
       KANIDM_ORIGIN_HOST: links.rafaribe.com
       KANIDM_REDIRECT_PATH: oidc/callback/

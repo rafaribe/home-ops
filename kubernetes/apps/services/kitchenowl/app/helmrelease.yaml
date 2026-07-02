@@ -52,6 +52,9 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: *app
+              - secretRef:
+                  name: kitchenowl-kanidm-oauth2-credentials
+                  optional: true
             resources:
               requests:
                 cpu: 10m

@@ -24,6 +24,9 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: *app
+              - secretRef:
+                  name: linkding-kanidm-oauth2-credentials
+                  optional: true
             env:
               OIDC_VERIFY_SSL: "True"
               OIDC_USE_NONCE: "False"

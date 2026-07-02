@@ -23,6 +23,9 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: *name
+              - secretRef:
+                  name: romm-kanidm-oauth2-credentials
+                  optional: true
         containers:
           app:
             image:

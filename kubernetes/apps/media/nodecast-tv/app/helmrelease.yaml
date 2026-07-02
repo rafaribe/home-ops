@@ -40,6 +40,9 @@ spec:
             envFrom:
               - secretRef:
                   name: nodecast-tv-secret
+              - secretRef:
+                  name: nodecast-tv-kanidm-oauth2-credentials
+                  optional: true
             probes:
               liveness:
                 enabled: true
