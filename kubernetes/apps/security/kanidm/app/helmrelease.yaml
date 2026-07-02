@@ -12,18 +12,9 @@ spec:
   values:
     controllers:
       kanidm:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          securityContext:
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
-            runAsGroup: 1000
-            runAsNonRoot: true
-            runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
+        strategy: Recreate
         containers:
           app:
             image:
@@ -63,6 +54,15 @@ spec:
                 drop:
                   - ALL
               readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
     persistence:
       certs:
         type: secret
