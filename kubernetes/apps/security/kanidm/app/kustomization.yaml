@@ -5,5 +5,4 @@ kind: Kustomization
 resources:
   - ./backendtlspolicy.yaml
   - ./certificate.yaml
-  - ./httproute.yaml
-  - ./kanidm.yaml
+  - ./helmrelease.yaml

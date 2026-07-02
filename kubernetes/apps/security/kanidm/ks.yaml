@@ -10,13 +10,18 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/volsync
   dependsOn:
     - name: kaniop
+    - name: volsync
+      namespace: storage
   interval: 30m
   path: ./kubernetes/apps/security/kanidm/app
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CAPACITY: 1Gi
   prune: true
   retryInterval: 1m
   sourceRef:
