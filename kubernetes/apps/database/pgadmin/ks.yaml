@@ -26,7 +26,6 @@ spec:
       KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/pgadmin.png
       KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
       KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
-      KANIDM_DISABLE_PKCE: "true"
       KANIDM_GROUP: household
       KANIDM_ORIGIN_HOST: pg.rafaribe.com
       KANIDM_REDIRECT_PATH: oauth2/authorize
