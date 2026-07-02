@@ -1,0 +1,65 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kaniop.rs/kanidm_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: Kanidm
+metadata:
+  name: kanidm
+spec:
+  domain: idm.rafaribe.com
+  image: docker.io/kanidm/server:1.10.4@sha256:d68cc899542fa494120f4014a76c59d5beacad8ee1673e1e62e95f82a332fb68
+  logLevel: info
+  replicaGroups:
+    - name: default
+      primaryNode: true
+      replicas: 1
+      resources:
+        requests:
+          cpu: 10m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
+      statefulSetAnnotations:
+        reloader.stakater.com/auto: "true"
+  securityContext:
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+    runAsGroup: 1000
+    runAsNonRoot: true
+    runAsUser: 1000
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: kanidm
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        readOnlyRootFilesystem: true
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: ceph-block
+  tlsSecretName: idm-rafaribe-com-tls
+  gateway:
+    parentRefs:
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: envoy-external
+        namespace: network
+        sectionName: https
+    hostnames:
+      - idm.rafaribe.com
+    backendTlsPolicy:
+      validation:
+        hostname: idm.rafaribe.com
+        wellKnownCaCertificates: System
+  groupNamespaceSelector: {}
+  oauth2ClientNamespaceSelector: {}
+  personNamespaceSelector: {}
+  serviceAccountNamespaceSelector: {}
