@@ -52,8 +52,7 @@ spec:
               - /bin/sh
               - -c
               - |
-                set -e
-                export SOCIALACCOUNT_PROVIDERS="{\"openid_connect\":{\"SERVERS\":[{\"id\":\"kanidm\",\"name\":\"Kanidm\",\"server_url\":\"https://idm.rafaribe.com/oauth2/openid/tandoor/.well-known/openid-configuration\",\"token_auth_method\":\"client_secret_basic\",\"APP\":{\"client_id\":\"${OIDC_CLIENT_ID}\",\"secret\":\"${OIDC_CLIENT_SECRET}\"}}]}}"
+                export SOCIALACCOUNT_PROVIDERS="{\"openid_connect\":{\"SERVERS\":[{\"id\":\"kanidm\",\"name\":\"Kanidm\",\"server_url\":\"https://idm.rafaribe.com/oauth2/openid/tandoor/.well-known/openid-configuration\",\"token_auth_method\":\"client_secret_basic\",\"APP\":{\"client_id\":\"$${OIDC_CLIENT_ID}\",\"secret\":\"$${OIDC_CLIENT_SECRET}\"}}]}}"
                 source /opt/recipes/venv/bin/activate
                 echo "Updating database"
                 python3 /opt/recipes/manage.py migrate
@@ -69,7 +68,7 @@ spec:
               - /bin/sh
               - -c
               - |
-                export SOCIALACCOUNT_PROVIDERS="{\"openid_connect\":{\"SERVERS\":[{\"id\":\"kanidm\",\"name\":\"Kanidm\",\"server_url\":\"https://idm.rafaribe.com/oauth2/openid/tandoor/.well-known/openid-configuration\",\"token_auth_method\":\"client_secret_basic\",\"APP\":{\"client_id\":\"${OIDC_CLIENT_ID}\",\"secret\":\"${OIDC_CLIENT_SECRET}\"}}]}}"
+                export SOCIALACCOUNT_PROVIDERS="{\"openid_connect\":{\"SERVERS\":[{\"id\":\"kanidm\",\"name\":\"Kanidm\",\"server_url\":\"https://idm.rafaribe.com/oauth2/openid/tandoor/.well-known/openid-configuration\",\"token_auth_method\":\"client_secret_basic\",\"APP\":{\"client_id\":\"$${OIDC_CLIENT_ID}\",\"secret\":\"$${OIDC_CLIENT_SECRET}\"}}]}}"
                 exec /opt/recipes/venv/bin/gunicorn -b :8888 --access-logfile - --error-logfile - --log-level INFO recipes.wsgi
             probes:
               liveness: &probes
