@@ -19,15 +19,22 @@ spec:
     namespace: flux-system
   wait: false
   dependsOn:
-    - name: rook-ceph-cluster 
+    - name: kanidm
+      namespace: flux-system
+    - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
       namespace: storage
     - name: external-secrets-stores
       namespace: external-secrets
   components:
+    - ../../../../components/kanidm
     - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app
+      KANIDM_CLIENT_ID_KEY: OAUTH_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OAUTH_CLIENT_SECRET
+      KANIDM_ORIGIN_HOST: karakeep.rafaribe.com
+      KANIDM_REDIRECT_PATH: api/auth/callback/kanidm
       VOLSYNC_CRONEXPRESSION: "28 * * * *"

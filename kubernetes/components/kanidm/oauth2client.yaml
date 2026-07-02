@@ -1,0 +1,24 @@
+---
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: ${APP}
+spec:
+  displayname: ${APP}
+  kanidmRef:
+    name: kanidm
+    namespace: security
+  origin: https://${KANIDM_ORIGIN_HOST}
+  redirectUrl:
+    - https://${KANIDM_ORIGIN_HOST}/${KANIDM_REDIRECT_PATH}
+  scopeMap:
+    - group: ${APP}-users
+      scopes:
+        - openid
+        - profile
+        - email
+  secretKeyAliases:
+    clientId:
+      - ${KANIDM_CLIENT_ID_KEY}
+    clientSecret:
+      - ${KANIDM_CLIENT_SECRET_KEY}
