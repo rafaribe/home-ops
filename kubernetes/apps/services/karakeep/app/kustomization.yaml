@@ -6,4 +6,5 @@ resources:
   - ./cronjob-meili-repair.yaml
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./kanidmgroup.yaml
   - ./ocirepository.yaml
