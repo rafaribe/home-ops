@@ -10,7 +10,7 @@ spec:
   duration: 2160h
   issuerRef:
     kind: ClusterIssuer
-    name: letsencrypt-prod
+    name: letsencrypt-production
   privateKey:
     algorithm: ECDSA
     rotationPolicy: Always
