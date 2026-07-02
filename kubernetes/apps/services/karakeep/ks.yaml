@@ -20,7 +20,7 @@ spec:
   wait: false
   dependsOn:
     - name: kanidm
-      namespace: flux-system
+      namespace: security
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync

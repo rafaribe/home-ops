@@ -75,6 +75,7 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: karakeep-kanidm-oauth2-credentials
+                  optional: true
               - secretRef:
                   name: karakeep-secret
             probes:
