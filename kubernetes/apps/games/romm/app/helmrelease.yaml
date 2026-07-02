@@ -54,6 +54,9 @@ spec:
             envFrom:
               - secretRef:
                   name: *name
+              - secretRef:
+                  name: romm-kanidm-oauth2-credentials
+                  optional: true
             resources:
               requests:
                 cpu: 10m
