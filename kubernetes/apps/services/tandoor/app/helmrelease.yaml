@@ -30,26 +30,30 @@ spec:
               repository: ghcr.io/tandoorrecipes/recipes
               tag: 2.6.11
             env: &env
+              ALLOWED_HOSTS: "*"
+              AI_MODEL_NAME: openai/gpt-4o
               COMMENT_PREF_DEFAULT: 0
               ENABLE_SIGNUP: 0
               FRACTION_PREF_DEFAULT: 0
+              GUNICORN_MEDIA: "0"
               MAX_OWNED_SPACES_PREF_DEFAULT: 0
               SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
-              GUNICORN_MEDIA: "0"
-              TANDOOR_PORT: &tandoorPort 8888
               SOCIAL_DEFAULT_ACCESS: 1
               SOCIAL_DEFAULT_GROUP: user
-              ALLOWED_HOSTS: "*"
-
-              AI_MODEL_NAME: openai/gpt-4o
+              SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
+              TANDOOR_PORT: &tandoorPort 8888
             envFrom: &envFrom
               - secretRef:
                   name: tandoor
+              - secretRef:
+                  name: tandoor-kanidm-oauth2-credentials
+                  optional: true
             command:
-              - sh
+              - /bin/sh
               - -c
               - |
                 set -e
+                export SOCIALACCOUNT_PROVIDERS="{\"openid_connect\":{\"SERVERS\":[{\"id\":\"kanidm\",\"name\":\"Kanidm\",\"server_url\":\"https://idm.rafaribe.com/oauth2/openid/tandoor/.well-known/openid-configuration\",\"token_auth_method\":\"client_secret_basic\",\"APP\":{\"client_id\":\"${OIDC_CLIENT_ID}\",\"secret\":\"${OIDC_CLIENT_SECRET}\"}}]}}"
                 source /opt/recipes/venv/bin/activate
                 echo "Updating database"
                 python3 /opt/recipes/manage.py migrate
@@ -60,18 +64,13 @@ spec:
               repository: ghcr.io/tandoorrecipes/recipes
               tag: 2.6.11
             env: *env
-            command:
-              - /opt/recipes/venv/bin/gunicorn
-              - -b
-              - :8888
-              - --access-logfile
-              - "-"
-              - --error-logfile
-              - "-"
-              - --log-level
-              - INFO
-              - recipes.wsgi
             envFrom: *envFrom
+            command:
+              - /bin/sh
+              - -c
+              - |
+                export SOCIALACCOUNT_PROVIDERS="{\"openid_connect\":{\"SERVERS\":[{\"id\":\"kanidm\",\"name\":\"Kanidm\",\"server_url\":\"https://idm.rafaribe.com/oauth2/openid/tandoor/.well-known/openid-configuration\",\"token_auth_method\":\"client_secret_basic\",\"APP\":{\"client_id\":\"${OIDC_CLIENT_ID}\",\"secret\":\"${OIDC_CLIENT_SECRET}\"}}]}}"
+                exec /opt/recipes/venv/bin/gunicorn -b :8888 --access-logfile - --error-logfile - --log-level INFO recipes.wsgi
             probes:
               liveness: &probes
                 enabled: true
@@ -145,10 +144,6 @@ spec:
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (tandoor)
           gethomepage.dev/href: https://tandoor.rafaribe.com
-          # Widget is disabled until v2 is integrated into HOMEPAGE
-          # gethomepage.dev/widget.type: tandoor
-          # gethomepage.dev/widget.url: http://tandoor.services:8000
-          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TANDOOR_API_KEY}}` }}"
 
     persistence:
       files:
