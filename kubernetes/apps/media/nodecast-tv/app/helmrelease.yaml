@@ -36,13 +36,8 @@ spec:
               tag: 2.1.1@sha256:9937173524774d718c998a768d27bb3b7bf9d2575277715c7230307d6e99904a
             env:
               NODE_ENV: production
-              OIDC_CALLBACK_URL: "https://nodecast-tv.rafaribe.com/api/auth/oidc/callback"
-              OIDC_ISSUER_URL: "https://idm.rafaribe.com/oauth2/openid/nodecast-tv"
               PORT: &httpPort 3000
-            envFrom:
-              - secretRef:
-                  name: nodecast-tv-kanidm-oauth2-credentials
-                  optional: true
+            envFrom: []
             probes:
               liveness:
                 enabled: true

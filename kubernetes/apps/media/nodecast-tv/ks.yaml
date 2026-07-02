@@ -11,8 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: kanidm
-      namespace: security
     - name: volsync
       namespace: storage
   interval: 30m
@@ -20,12 +18,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/nodecast-tv.png
-      KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
-      KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
-      KANIDM_GROUP: household
-      KANIDM_ORIGIN_HOST: nodecast-tv.rafaribe.com
-      KANIDM_REDIRECT_PATH: api/auth/oidc/callback
       VOLSYNC_CAPACITY: 5Gi
   prune: true
   sourceRef:
@@ -35,5 +27,4 @@ spec:
   timeout: 5m
   wait: false
   components:
-    - ../../../../components/kanidm
     - ../../../../components/volsync
