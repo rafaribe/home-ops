@@ -7,24 +7,34 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./kubernetes/apps/games/romm/app
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  interval: 30m
-  retryInterval: 1m
-  timeout: 3m
   targetNamespace: games
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: kanidm
+      namespace: security
+  interval: 30m
+  path: ./kubernetes/apps/games/romm/app
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 50Gi
       GATUS_SUBDOMAIN: romm
+      KANIDM_APP_ICON: https://raw.githubusercontent.com/rommapp/romm/release/.github/resources/romm_complete.png
+      KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: romm.rafaribe.com
+      KANIDM_REDIRECT_PATH: api/oauth/openid
+      VOLSYNC_CAPACITY: 50Gi
+  prune: true
+  retryInterval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  timeout: 3m
   components:
+    - ../../../../components/kanidm
     - ../../../../components/volsync
     - ../../../../components/dragonfly

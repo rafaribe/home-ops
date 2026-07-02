@@ -1,3 +1,4 @@
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -8,21 +9,35 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/database/pgadmin/app
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: true
+  dependsOn:
+    - name: kanidm
+      namespace: security
+    - name: external-secrets-stores
+      namespace: external-secrets
+    - name: volsync
+      namespace: storage
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+  path: ./kubernetes/apps/database/pgadmin/app
   postBuild:
     substitute:
       APP: *app
       CLAIM: pgadmin-v2
       GATUS_SUBDOMAIN: pg
+      KANIDM_APP_ICON: https://www.pgadmin.org/static/COMPILED/assets/img/favicon.ico
+      KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: pg.rafaribe.com
+      KANIDM_REDIRECT_PATH: oauth2/authorize
       VOLSYNC_CAPACITY: 2Gi
+  prune: true
+  retryInterval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  timeout: 5m
+  wait: true
   components:
+    - ../../../../components/kanidm
     - ../../../../components/volsync

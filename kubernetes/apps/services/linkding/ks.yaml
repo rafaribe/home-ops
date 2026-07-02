@@ -9,17 +9,30 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: "./kubernetes/apps/services/linkding/app"
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false
+  dependsOn:
+    - name: kanidm
+      namespace: security
+    - name: external-secrets-stores
+      namespace: external-secrets
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+  path: "./kubernetes/apps/services/linkding/app"
   postBuild:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: links
+      KANIDM_APP_ICON: https://raw.githubusercontent.com/sissbruecker/linkding/master/linkding/static/logo.svg
+      KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: links.rafaribe.com
+      KANIDM_REDIRECT_PATH: oidc/callback/
+  prune: true
+  retryInterval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  timeout: 5m
+  wait: false
+  components:
+    - ../../../../components/kanidm

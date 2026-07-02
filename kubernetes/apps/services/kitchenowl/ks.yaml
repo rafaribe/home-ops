@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -10,28 +11,37 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/services/kitchenowl/app
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
   dependsOn:
+    - name: kanidm
+      namespace: security
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
       namespace: storage
     - name: external-secrets-stores
       namespace: external-secrets
+  interval: 30m
+  path: ./kubernetes/apps/services/kitchenowl/app
   postBuild:
     substitute:
       APP: *app
-      APP_UID: "1000"
       APP_GID: "1000"
+      APP_UID: "1000"
       CLAIM: kitchenowl-data
+      KANIDM_APP_ICON: https://raw.githubusercontent.com/TomBursch/kitchenowl/main/kitchenowl/assets/icon/icon.png
+      KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: kitchenowl.rafaribe.com
+      KANIDM_REDIRECT_PATH: signin/redirect
       VOLSYNC_CAPACITY: 2Gi
   prune: true
-  wait: true
-  interval: 30m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
   timeout: 5m
+  wait: true
   components:
+    - ../../../../components/kanidm
     - ../../../../components/volsync

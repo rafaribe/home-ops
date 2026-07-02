@@ -9,7 +9,7 @@ spec:
     name: kanidm
     namespace: security
   members:
-    - rafaribe
+    - ${KANIDM_RAFARIBE_USERNAME}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kaniop.rs/kanidmgroup_v1beta1.json
 apiVersion: kaniop.rs/v1beta1
@@ -21,5 +21,5 @@ spec:
     name: kanidm
     namespace: security
   members:
-    - rafaribe
-    - filipa
+    - ${KANIDM_RAFARIBE_USERNAME}
+    - ${KANIDM_WIFE_USERNAME}
