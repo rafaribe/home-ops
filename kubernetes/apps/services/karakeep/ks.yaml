@@ -35,6 +35,6 @@ spec:
       APP: *app
       KANIDM_CLIENT_ID_KEY: OAUTH_CLIENT_ID
       KANIDM_CLIENT_SECRET_KEY: OAUTH_CLIENT_SECRET
+      KANIDM_GROUP: household
       KANIDM_ORIGIN_HOST: karakeep.rafaribe.com
       KANIDM_REDIRECT_PATH: api/auth/callback/custom
-      VOLSYNC_CRONEXPRESSION: "28 * * * *"

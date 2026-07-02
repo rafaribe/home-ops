@@ -12,7 +12,7 @@ spec:
   redirectUrl:
     - https://${KANIDM_ORIGIN_HOST}/${KANIDM_REDIRECT_PATH}
   scopeMap:
-    - group: ${APP}-users
+    - group: ${KANIDM_GROUP:=${APP}-users}
       scopes:
         - openid
         - profile
