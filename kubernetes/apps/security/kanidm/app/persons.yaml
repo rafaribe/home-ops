@@ -3,28 +3,30 @@
 apiVersion: kaniop.rs/v1beta1
 kind: KanidmPersonAccount
 metadata:
-  name: rafaribe
+  name: ${KANIDM_RAFARIBE_USERNAME}
 spec:
   kanidmRef:
     name: kanidm
     namespace: security
   personAttributes:
-    displayname: Rafael Ribeiro
-    legalname: Rafael Ribeiro
+    displayname: ${KANIDM_RAFARIBE_DISPLAYNAME}
+    legalname: ${KANIDM_RAFARIBE_LEGALNAME}
     mail:
       - ${KANIDM_RAFARIBE_EMAIL}
+      - ${KANIDM_RAFARIBE_EMAIL2}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kaniop.rs/kanidmpersonaccount_v1beta1.json
 apiVersion: kaniop.rs/v1beta1
 kind: KanidmPersonAccount
 metadata:
-  name: filipa
+  name: ${KANIDM_WIFE_USERNAME}
 spec:
   kanidmRef:
     name: kanidm
     namespace: security
   personAttributes:
-    displayname: Filipa Trigo
-    legalname: Filipa Trigo
+    displayname: ${KANIDM_WIFE_DISPLAYNAME}
+    legalname: ${KANIDM_WIFE_LEGALNAME}
     mail:
-      - ${KANIDM_FILIPA_EMAIL}
+      - ${KANIDM_WIFE_EMAIL}
+      - ${KANIDM_WIFE_EMAIL2}
