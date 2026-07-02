@@ -3,6 +3,30 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: kanidm-secrets
+  namespace: flux-system
+spec:
+  targetNamespace: flux-system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: kanidm
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
+  interval: 30m
+  path: ./kubernetes/apps/security/kanidm/secrets
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  timeout: 5m
+  wait: true
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: &app kanidm
   namespace: flux-system
 spec:
@@ -13,6 +37,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: kanidm-secrets
     - name: kaniop
     - name: volsync
       namespace: storage
