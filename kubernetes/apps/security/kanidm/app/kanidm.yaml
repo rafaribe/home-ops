@@ -14,11 +14,12 @@ spec:
           memory: 128Mi
         limits:
           memory: 512Mi
-      storage:
+  storage:
+    volumeClaimTemplate:
+      spec:
         accessModes:
           - ReadWriteOnce
         resources:
           requests:
             storage: 1Gi
-  tls:
-    secretName: idm-rafaribe-com-tls
+  tlsSecretName: idm-rafaribe-com-tls
