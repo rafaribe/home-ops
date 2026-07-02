@@ -30,6 +30,16 @@ spec:
   components:
     - ../../../../components/kanidm
     - ../../../../components/volsync
+  patches:
+    - patch: |
+        - op: add
+          path: /spec/image
+          value:
+            url: https://raw.githubusercontent.com/karakeep-app/karakeep/main/apps/web/public/logo.png
+      target:
+        group: kaniop.rs
+        kind: KanidmOAuth2Client
+        name: karakeep
   postBuild:
     substitute:
       APP: *app
