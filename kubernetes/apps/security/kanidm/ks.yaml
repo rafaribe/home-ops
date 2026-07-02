@@ -6,7 +6,7 @@ metadata:
   name: kanidm-secrets
   namespace: flux-system
 spec:
-  targetNamespace: flux-system
+  targetNamespace: security
   commonMetadata:
     labels:
       app.kubernetes.io/name: kanidm
