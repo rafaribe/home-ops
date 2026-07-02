@@ -5,23 +5,33 @@ kind: Kustomization
 metadata:
   name: &app tandoor
 spec:
-  path: "./kubernetes/apps/services/tandoor/app"
   targetNamespace: services
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  interval: 10m
+  path: "./kubernetes/apps/services/tandoor/app"
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  prune: true
   wait: false
-  interval: 10m
+  dependsOn:
+    - name: kanidm
+      namespace: security
+  components:
+    - ../../../../components/kanidm
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app
       HOSTNAME: tandoor.rafaribe.com
       APP_UID: "1000"
       APP_GID: "1000"
-  components:
-    - ../../../../components/volsync
+      KANIDM_APP_ICON: https://raw.githubusercontent.com/TandoorRecipes/recipes/develop/docs/logo_color.svg
+      KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: tandoor.rafaribe.com
+      KANIDM_REDIRECT_PATH: accounts/oidc/kanidm/login/callback/
