@@ -32,6 +32,7 @@ spec:
       KANIDM_APP_ICON: https://raw.githubusercontent.com/TandoorRecipes/recipes/develop/docs/logo_color.svg
       KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
       KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
+      KANIDM_DISABLE_PKCE: "true"
       KANIDM_GROUP: household
       KANIDM_ORIGIN_HOST: tandoor.rafaribe.com
       KANIDM_REDIRECT_PATH: accounts/oidc/kanidm/login/callback/

@@ -4,6 +4,7 @@ kind: KanidmOAuth2Client
 metadata:
   name: ${APP}
 spec:
+  allowInsecureClientDisablePkce: ${KANIDM_DISABLE_PKCE:=false}
   displayname: ${APP}
   image:
     url: ${KANIDM_APP_ICON}
