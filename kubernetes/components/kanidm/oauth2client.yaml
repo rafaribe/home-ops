@@ -20,6 +20,7 @@ spec:
         - openid
         - profile
         - email
+        - groups
   secretKeyAliases:
     clientId:
       - ${KANIDM_CLIENT_ID_KEY}
