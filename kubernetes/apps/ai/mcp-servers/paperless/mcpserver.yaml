@@ -17,6 +17,7 @@ spec:
     spec:
       containers:
         - name: mcp
+          command: ["node", "build/index.js"]
           volumeMounts:
             - mountPath: /tmp
               name: tmpfs
