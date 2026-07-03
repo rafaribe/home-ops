@@ -38,7 +38,7 @@ spec:
               tag: ab47abaaed@sha256:af1c2ae27d8a1afaf761c7000c30b821e07d78a5b5d8da800f82b6c6cb893fc0
             env:
               SYNC_HOST: "0.0.0.0"
-              SYNC_PORT: &port "8000"
+              SYNC_PORT: "8000"
               SYNC_TOKENSERVER__ENABLED: "true"
               SYNC_TOKENSERVER__RUN_MIGRATIONS: "true"
               SYNC_TOKENSERVER__FXA_EMAIL_DOMAIN: "api.accounts.firefox.com"
@@ -54,7 +54,7 @@ spec:
                 spec:
                   httpGet:
                     path: /__heartbeat__
-                    port: *port
+                    port: 8000
                   initialDelaySeconds: 15
                   periodSeconds: 30
                   timeoutSeconds: 5
@@ -88,10 +88,10 @@ spec:
         rules:
           - backendRefs:
               - name: syncstorage-rs
-                port: *port
+                port: 8000
     service:
       app:
         controller: syncstorage-rs
         ports:
           http:
-            port: *port
+            port: 8000
