@@ -115,6 +115,8 @@ spec:
                 readOnlyRootFilesystem: true
                 capabilities: { drop: ["ALL"] }
               volumeMounts:
+                - name: grafana-data
+                  mountPath: /var/lib/grafana
                 - name: grafana-plugins
                   mountPath: /var/lib/grafana/plugins
                 - name: grafana-sidecar-provider
