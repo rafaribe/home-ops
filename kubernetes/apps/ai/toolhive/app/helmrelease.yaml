@@ -13,10 +13,70 @@ spec:
     operator:
       replicaCount: 1
       gc:
-        gomemlimit: 230MiB
+        gomemlimit: 460MiB
+        gogc: 75
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: health
+        failureThreshold: 5
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        timeoutSeconds: 5
+      readinessProbe:
+        httpGet:
+          path: /readyz
+          port: health
+        failureThreshold: 5
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        timeoutSeconds: 5
       resources:
         limits:
-          memory: 256Mi
+          memory: 512Mi
         requests:
           cpu: 10m
-          memory: 128Mi
+          memory: 256Mi
+      leaderElectionRole:
+        name: toolhive-operator-leader-election-role
+        binding:
+          name: toolhive-operator-leader-election-rolebinding
+        rules:
+          - apiGroups:
+              - ""
+            resources:
+              - configmaps
+            verbs:
+              - get
+              - list
+              - watch
+              - create
+              - update
+              - patch
+              - delete
+          - apiGroups:
+              - coordination.k8s.io
+            resources:
+              - leases
+            verbs:
+              - get
+              - list
+              - watch
+              - create
+              - update
+              - patch
+              - delete
+          - apiGroups:
+              - ""
+            resources:
+              - events
+            verbs:
+              - create
+              - patch
+          - apiGroups:
+              - events.k8s.io
+            resources:
+              - events
+            verbs:
+              - create
+              - patch
