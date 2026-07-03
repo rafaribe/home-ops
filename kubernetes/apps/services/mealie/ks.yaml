@@ -10,18 +10,28 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: kanidm
+      namespace: security
   interval: 10m
   path: "./kubernetes/apps/services/mealie/app"
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: mealie
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/mealie.png
+      KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: mealie.rafaribe.com
+      KANIDM_REDIRECT_PATH: login
+      VOLSYNC_CAPACITY: 2Gi
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   wait: false
-  postBuild:
-    substitute:
-      APP: *app
-      GATUS_SUBDOMAIN: mealie
-      VOLSYNC_CAPACITY: 2Gi
   components:
+    - ../../../../components/kanidm
     - ../../../../components/volsync

@@ -32,7 +32,10 @@ spec:
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
-                  name: *app # All values are created on the externalsecret
+                  name: *app
+              - secretRef:
+                  name: mealie-kanidm-oauth2-credentials
+                  optional: true
 
     service:
       app:

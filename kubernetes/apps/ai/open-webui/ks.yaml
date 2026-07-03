@@ -15,21 +15,30 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: kanidm
+      namespace: security
     - name: volsync
       namespace: storage
+  interval: 30m
   path: ./kubernetes/apps/ai/open-webui/app
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: chat
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/open-webui.png
+      KANIDM_CLIENT_ID_KEY: OAUTH_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OAUTH_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: chat.rafaribe.com
+      KANIDM_REDIRECT_PATH: oauth/oidc/callback
+      VOLSYNC_CAPACITY: 5Gi
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false
-  interval: 30m
   timeout: 5m
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 5Gi
-      GATUS_SUBDOMAIN: chat
+  wait: false
   components:
+    - ../../../../components/kanidm
     - ../../../../components/volsync

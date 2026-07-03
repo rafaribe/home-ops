@@ -42,6 +42,9 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: openwebui
+              - secretRef:
+                  name: open-webui-kanidm-oauth2-credentials
+                  optional: true
         containers:
           app:
             image:

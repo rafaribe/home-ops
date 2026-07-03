@@ -10,10 +10,13 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/dragonfly
+    - ../../../../components/kanidm
     - ../../../../components/volsync
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: kanidm
+      namespace: security
   healthCheckExprs:
     - apiVersion: dragonflydb.io/v1alpha1
       current: status.phase == 'ready'
@@ -24,8 +27,14 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 50Gi
       CLAIM: forgejo-data
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/forgejo.png
+      KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: git.rafaribe.com
+      KANIDM_REDIRECT_PATH: user/oauth2/kanidm/callback
+      VOLSYNC_CAPACITY: 50Gi
   prune: true
   retryInterval: 1m
   sourceRef:

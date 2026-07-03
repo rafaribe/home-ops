@@ -9,19 +9,29 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
+    - name: kanidm
+      namespace: security
   interval: 30m
-  timeout: 5m
   path: "./kubernetes/apps/services/miniflux/app"
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: miniflux
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/miniflux.png
+      KANIDM_CLIENT_ID_KEY: OAUTH2_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OAUTH2_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: miniflux.rafaribe.com
+      KANIDM_REDIRECT_PATH: oauth2/oidc/callback
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  timeout: 5m
   wait: false
-  dependsOn:
-    - name: external-secrets-stores
-      namespace: external-secrets
-  postBuild:
-    substitute:
-      APP: *app
-      GATUS_SUBDOMAIN: miniflux
+  components:
+    - ../../../../components/kanidm

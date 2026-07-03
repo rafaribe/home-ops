@@ -5,21 +5,34 @@ metadata:
   name: &app immich-app
 spec:
   targetNamespace: home
-  path: ./kubernetes/apps/home/immich/app
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: true
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: immich
+  dependsOn:
+    - name: kanidm
+      namespace: security
   interval: 30m
-  retryInterval: 1m
-  timeout: 1m
+  path: ./kubernetes/apps/home/immich/app
   postBuild:
     substitute:
       APP: immich
       CLAIM: immich-library
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/immich.png
+      KANIDM_CLIENT_ID_KEY: OIDC_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: OIDC_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: photos.rafaribe.com
+      KANIDM_REDIRECT_PATH: auth/login
       VOLSYNC_CAPACITY: 1Ti
       VOLSYNC_CRON_EXPRESSION: 0 3 * * *
+  prune: true
+  retryInterval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  timeout: 1m
+  wait: true
   components:
     - ../../../../components/dragonfly
+    - ../../../../components/kanidm

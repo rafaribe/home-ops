@@ -23,6 +23,9 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: miniflux
+              - secretRef:
+                  name: miniflux-kanidm-oauth2-credentials
+                  optional: true
         containers:
           app:
             image:

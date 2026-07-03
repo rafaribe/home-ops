@@ -104,6 +104,12 @@ spec:
                     secretKeyRef:
                       name: grafana-secret
                       key: GF_SECURITY_ADMIN_PASSWORD
+              envFrom:
+                - secretRef:
+                    name: grafana-secret
+                - secretRef:
+                    name: grafana-kanidm-oauth2-credentials
+                    optional: true
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true

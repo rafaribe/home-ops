@@ -5,8 +5,22 @@ kind: Kustomization
 metadata:
   name: grafana-operator
 spec:
+  dependsOn:
+    - name: kanidm
+      namespace: security
+    - name: external-secrets-stores
+      namespace: external-secrets
   interval: 1h
   path: ./kubernetes/apps/observability/grafana/operator
+  postBuild:
+    substitute:
+      APP: grafana
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/grafana.png
+      KANIDM_CLIENT_ID_KEY: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: grafana.rafaribe.com
+      KANIDM_REDIRECT_PATH: login/generic_oauth
   prune: true
   sourceRef:
     kind: GitRepository
@@ -14,6 +28,8 @@ spec:
     namespace: flux-system
   targetNamespace: observability
   wait: true
+  components:
+    - ../../../../components/kanidm
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -33,9 +49,6 @@ spec:
     namespace: flux-system
   targetNamespace: observability
   wait: false
-  # components:
-  #   - ../../../../components/volsync
   postBuild:
     substitute:
-      #CLAIM: grafana-pvc
       APP: grafana
