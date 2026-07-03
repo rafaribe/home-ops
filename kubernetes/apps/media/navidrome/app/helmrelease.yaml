@@ -31,8 +31,8 @@ spec:
               ND_ENABLEEXTERNALSERVICES: "false"
               ND_ENABLESHARING: "false"
               ND_ENABLESTARRATING: "false"
-              ND_LOGLEeEL: info
-              ND_MUSICFOLDER: /media-ceph/music
+              ND_LOGLEVEL: info
+              ND_MUSICFOLDER: /media/music
               ND_PORT: &port 4533
               ND_SCANSCHEDULE: 30m
               ND_BASEURL: https://navidrome.rafaribe.com
@@ -80,7 +80,7 @@ spec:
           gethomepage.dev/siteMonitor: http://navidrome.media.svc.cluster.local:4533
         hostnames: ["music.rafaribe.com"]
         parentRefs:
-          - name:  envoy-internal
+          - name: envoy-internal
             namespace: network
             sectionName: https
         rules:
@@ -97,4 +97,3 @@ spec:
         path: /mnt/tank/media
         globalMounts:
           - path: /media
-      
