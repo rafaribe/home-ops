@@ -26,6 +26,12 @@ spec:
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
               tag: 2.20.15
+            envFrom:
+              - secretRef:
+                  name: paperless
+              - secretRef:
+                  name: paperless-kanidm-oauth2-credentials
+                  optional: true
             env:
               # Configure application
               PAPERLESS_SECRET_KEY:

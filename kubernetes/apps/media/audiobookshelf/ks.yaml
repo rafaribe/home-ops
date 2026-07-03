@@ -16,6 +16,9 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  dependsOn:
+    - name: kanidm
+      namespace: security
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -24,5 +27,12 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: audiobookshelf
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/audiobookshelf.png
+      KANIDM_CLIENT_ID_KEY: CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: audiobookshelf.rafaribe.com
+      KANIDM_REDIRECT_PATH: auth/openid/callback
   components:
     - ../../../../components/volsync
+    - ../../../../components/kanidm

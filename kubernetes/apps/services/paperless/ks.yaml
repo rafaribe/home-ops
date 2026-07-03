@@ -16,6 +16,9 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  dependsOn:
+    - name: kanidm
+      namespace: security
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
@@ -32,6 +35,13 @@ spec:
       APP_GID: "1000"
       CLAIM: paperless
       VOLSYNC_CAPACITY: 15Gi
+      KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/paperless-ngx.png
+      KANIDM_CLIENT_ID_KEY: PAPERLESS_OIDC_CLIENT_ID
+      KANIDM_CLIENT_SECRET_KEY: PAPERLESS_OIDC_CLIENT_SECRET
+      KANIDM_GROUP: household
+      KANIDM_ORIGIN_HOST: paperless.rafaribe.com
+      KANIDM_REDIRECT_PATH: accounts/oidc/kanidm/login/callback/
   components:
     - ../../../../components/volsync
     - ../../../../components/dragonfly
+    - ../../../../components/kanidm
