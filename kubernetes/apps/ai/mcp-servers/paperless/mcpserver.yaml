@@ -5,6 +5,8 @@ kind: MCPServer
 metadata:
   name: paperless-mcp
 spec:
+  args:
+    - "--no-auth"
   groupRef:
     name: mcp-tools
   image: ghcr.io/baruchiro/paperless-mcp:sha-93aa906@sha256:2eb04dff57526faaaecca74027c229f5e5ea7832cd8ad3971f67672c1f36654a
