@@ -37,6 +37,7 @@ resources:
   - ./smtp-relay/ks.yaml
   - ./slink/ks.yaml
   - ./stirling-pdf/ks.yaml
+  - ./syncstorage-rs/ks.yaml
   - ./tandoor/ks.yaml
   - ./thelounge/ks.yaml
   - ./trek/ks.yaml
