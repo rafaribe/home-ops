@@ -23,3 +23,4 @@ resources:
   - ./shelfmark/ks.yaml
   - ./slskd/ks.yaml
   - ./sonarr/ks.yaml
+  - ./soularr/ks.yaml
