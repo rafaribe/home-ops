@@ -46,7 +46,7 @@ spec:
               SLSKD_RETENTION_TRANSFERS_UPLOAD_ERRORED: 1440
               SLSKD_RETENTION_TRANSFERS_UPLOAD_SUCCEEDED: 20160
               SLSKD_SHARE_FILTER: "Thumbs.db$;\\.DS_Store$"
-              SLSKD_SHARED_DIR: /media/downloads/slskd/shared
+              SLSKD_SHARED_DIR: /media/music
               SLSKD_SLSK_LISTEN_PORT: &soulseekPort 50300
               TZ: Europe/Lisbon
             envFrom:
