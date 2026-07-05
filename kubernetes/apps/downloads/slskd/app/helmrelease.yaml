@@ -31,22 +31,11 @@ spec:
             env:
               DOTNET_BUNDLE_EXTRACT_BASE_DIR: /tmp/.net
               SLSKD_APP_DIR: /config
-              SLSKD_DOWNLOADS_DIR: /media/downloads/slskd/complete
               SLSKD_HTTP_PORT: &port 80
-              SLSKD_INCOMPLETE_DIR: /media/downloads/slskd/incomplete
               SLSKD_NO_AUTH: true
               SLSKD_NO_HTTPS: true
               SLSKD_NO_VERSION_CHECK: true
               SLSKD_REMOTE_CONFIGURATION: true
-              SLSKD_RETENTION_LOGS: 1440
-              SLSKD_RETENTION_TRANSFERS_DOWNLOAD_CANCELLED: 5
-              SLSKD_RETENTION_TRANSFERS_DOWNLOAD_ERRORED: 1440
-              SLSKD_RETENTION_TRANSFERS_DOWNLOAD_SUCCEEDED: 20160
-              SLSKD_RETENTION_TRANSFERS_UPLOAD_CANCELLED: 5
-              SLSKD_RETENTION_TRANSFERS_UPLOAD_ERRORED: 1440
-              SLSKD_RETENTION_TRANSFERS_UPLOAD_SUCCEEDED: 20160
-              SLSKD_SHARE_FILTER: "Thumbs.db$;\\.DS_Store$"
-              SLSKD_SHARED_DIR: /media/music
               SLSKD_SLSK_LISTEN_PORT: &soulseekPort 50300
               TZ: Europe/Lisbon
             envFrom:
@@ -63,20 +52,43 @@ spec:
                   failureThreshold: 30
                   periodSeconds: 5
             resources:
-              limits:
-                memory: 1Gi
               requests:
                 cpu: 10m
                 memory: 128Mi
+              limits:
+                memory: 1Gi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
                   - ALL
               readOnlyRootFilesystem: true
+    configMaps:
+      config:
+        data:
+          slskd.yml: |-
+            directories:
+              downloads: /media/downloads/slskd/complete
+              incomplete: /media/downloads/slskd/incomplete
+            permissions:
+              file:
+                mode: 750
+            shares:
+              directories:
+                - /media/music
+              filters:
+                - \.ini$
+                - Thumbs.db$
+                - \.DS_Store$
     persistence:
       config:
         existingClaim: slskd
+      config-file:
+        type: configMap
+        identifier: config
+        globalMounts:
+          - path: /config/slskd.yml
+            subPath: slskd.yml
       media:
         type: nfs
         server: truenas.rafaribe.com
@@ -104,7 +116,13 @@ spec:
         ports:
           http:
             port: *port
-          soulseek:
+      soulseek:
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.0.1.32
+        controller: slskd
+        externalTrafficPolicy: Local
+        ports:
+          soulseek-tcp:
             port: *soulseekPort
             protocol: TCP
-            targetPort: *soulseekPort
