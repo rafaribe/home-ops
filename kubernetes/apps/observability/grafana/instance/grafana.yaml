@@ -143,12 +143,4 @@ spec:
               emptyDir: {}
             - name: tmpfs
               emptyDir: {}
-  persistentVolumeClaim:
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: 10Gi
-      storageClassName: ceph-block
   disableDefaultSecurityContext: All
