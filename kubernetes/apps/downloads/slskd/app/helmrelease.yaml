@@ -108,7 +108,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: slskd-app
                 port: *port
     service:
       app:
