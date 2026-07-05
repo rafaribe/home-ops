@@ -24,11 +24,17 @@ spec:
         - name: envoy-internal
           namespace: network
           sectionName: https
+    nodeSelector:
+      kubernetes.io/hostname: tpi-3
     resources:
       limits:
-        memory: 1Gi
+        memory: 2Gi
       requests:
         cpu: 50m
-        memory: 256Mi
+        memory: 512Mi
     secret:
       existingSecret: konflate-secret
+    tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/memory
+        operator: Exists
