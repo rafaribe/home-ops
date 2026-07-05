@@ -54,8 +54,7 @@ spec:
                 enabled: true
                 custom: true
                 spec:
-                  httpGet:
-                    path: /health
+                  tcpSocket:
                     port: &httpPort 8000
                   initialDelaySeconds: 60
                   periodSeconds: 30
@@ -63,8 +62,7 @@ spec:
                 enabled: true
                 custom: true
                 spec:
-                  httpGet:
-                    path: /health
+                  tcpSocket:
                     port: *httpPort
                   periodSeconds: 10
             resources:
