@@ -1,0 +1,106 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app acestream-scraper
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: acestream-scraper
+  interval: 30m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      acestream-scraper:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 0
+            runAsNonRoot: false
+            runAsUser: 0
+        containers:
+          app:
+            image:
+              repository: docker.io/pipepito/acestream-scraper
+              tag: v1.3.04@sha256:6de85aa3be1240f81430a5bef93d3fe03eaf0b5d493a763456406c797e3825a9
+            env:
+              ACESTREAM_HTTP_HOST: localhost
+              ACESTREAM_HTTP_PORT: "6878"
+              ACEXY_BUFFER_SIZE: 5MiB
+              ACEXY_HOST: localhost
+              ACEXY_LISTEN_ADDR: :8080
+              ACEXY_NO_RESPONSE_TIMEOUT: 15s
+              ACEXY_PORT: "6878"
+              ALLOW_REMOTE_ACCESS: "yes"
+              ENABLE_ACESTREAM_ENGINE: "true"
+              ENABLE_ACEXY: "true"
+              ENABLE_TOR: "false"
+              ENABLE_WARP: "false"
+              FLASK_PORT: "8000"
+              TZ: Europe/Lisbon
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &httpPort 8000
+                  initialDelaySeconds: 60
+                  periodSeconds: 30
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *httpPort
+                  periodSeconds: 10
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: false
+    persistence:
+      config:
+        type: emptyDir
+        globalMounts:
+          - path: /app/config
+    route:
+      app:
+        hostnames:
+          - acestream.rafaribe.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *httpPort
+          acexy:
+            port: 8080
