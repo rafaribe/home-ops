@@ -24,8 +24,6 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           securityContext:
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
             runAsGroup: 0
             runAsNonRoot: false
             runAsUser: 0
@@ -61,9 +59,6 @@ spec:
                 memory: 1Gi
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
               readOnlyRootFilesystem: false
     persistence:
       data:
