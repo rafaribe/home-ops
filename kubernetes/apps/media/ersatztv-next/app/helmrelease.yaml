@@ -34,7 +34,7 @@ spec:
           init-config:
             image:
               repository: ghcr.io/ersatztv/next
-              tag: develop@sha256:86076bc99097abfca5ff219955308ecd16586644a670c95e4f32bad148592727
+              tag: develop@sha256:bc49c40ee6b333e582b357d29891ea66900bc4b7281911131db97b4de57df703
             command:
               - /app/ersatztv
               - add-lineup
@@ -50,7 +50,7 @@ spec:
           app:
             image:
               repository: ghcr.io/ersatztv/next
-              tag: develop@sha256:86076bc99097abfca5ff219955308ecd16586644a670c95e4f32bad148592727
+              tag: develop@sha256:bc49c40ee6b333e582b357d29891ea66900bc4b7281911131db97b4de57df703
             env:
               TZ: Europe/Lisbon
               XDG_DATA_HOME: /config
