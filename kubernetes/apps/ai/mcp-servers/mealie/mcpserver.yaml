@@ -13,6 +13,10 @@ spec:
       value: http://mealie.services:9000
   podTemplateSpec:
     spec:
+      securityContext:
+        fsGroup: 999
+        runAsGroup: 999
+        runAsUser: 999
       containers:
         - name: mcp
           volumeMounts:
