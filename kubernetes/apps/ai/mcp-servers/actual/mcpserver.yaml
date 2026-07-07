@@ -27,4 +27,5 @@ spec:
       key: ACTUAL_PASSWORD
     - name: actual-mcp-secret-sync-id
       key: ACTUAL_SYNC_ID
+      targetEnvName: ACTUAL_BUDGET_SYNC_ID
   transport: stdio
