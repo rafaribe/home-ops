@@ -14,9 +14,10 @@ spec:
   podTemplateSpec:
     spec:
       securityContext:
-        fsGroup: 999
-        runAsGroup: 999
-        runAsUser: 999
+        fsGroup: 0
+        runAsGroup: 0
+        runAsNonRoot: false
+        runAsUser: 0
       containers:
         - name: mcp
           volumeMounts:
@@ -26,6 +27,8 @@ spec:
               name: tmpfs
           securityContext:
             readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
       volumes:
         - name: cache
           emptyDir: {}
