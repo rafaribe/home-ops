@@ -8,6 +8,7 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./namespace.yaml
+  - ./autonomous-grid/ks.yaml
   - ./mcp-servers
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
