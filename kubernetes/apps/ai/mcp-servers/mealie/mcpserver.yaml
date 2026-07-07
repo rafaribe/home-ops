@@ -7,31 +7,18 @@ metadata:
 spec:
   groupRef:
     name: mcp-tools
-  image: ghcr.io/danielpalstra/mealie-mcp-server-docker:main
+  image: ghcr.io/rafaribe/mealie-mcp-server:rolling
   env:
     - name: MEALIE_BASE_URL
       value: http://mealie.services:9000
   podTemplateSpec:
     spec:
-      securityContext:
-        fsGroup: 0
-        runAsGroup: 0
-        runAsNonRoot: false
-        runAsUser: 0
       containers:
         - name: mcp
           volumeMounts:
-            - mountPath: /.cache
-              name: cache
             - mountPath: /tmp
               name: tmpfs
-          securityContext:
-            readOnlyRootFilesystem: false
-            runAsNonRoot: false
-            runAsUser: 0
       volumes:
-        - name: cache
-          emptyDir: {}
         - name: tmpfs
           emptyDir:
             medium: Memory
