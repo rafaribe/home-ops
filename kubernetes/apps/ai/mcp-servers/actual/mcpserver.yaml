@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: actual-mcp
+spec:
+  groupRef:
+    name: mcp-tools
+  image: agigante80/actual-mcp-server:latest
+  env:
+    - name: ACTUAL_SERVER_URL
+      value: http://actual.services:5006
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: mcp
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmpfs
+      volumes:
+        - name: tmpfs
+          emptyDir:
+            medium: Memory
+  secrets:
+    - name: actual-mcp-secret
+      key: ACTUAL_PASSWORD
+    - name: actual-mcp-secret-sync-id
+      key: ACTUAL_SYNC_ID
+  transport: stdio

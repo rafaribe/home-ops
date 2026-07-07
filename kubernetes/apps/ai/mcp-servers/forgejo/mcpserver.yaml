@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://ks.hsn.dev/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: forgejo-mcp
+spec:
+  groupRef:
+    name: mcp-tools
+  image: gitea/gitea-mcp-server:nightly
+  env:
+    - name: GITEA_URL
+      value: http://forgejo.development:3000
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: mcp
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmpfs
+      volumes:
+        - name: tmpfs
+          emptyDir:
+            medium: Memory
+  secrets:
+    - name: forgejo-mcp-secret
+      key: GITEA_TOKEN
+  transport: stdio

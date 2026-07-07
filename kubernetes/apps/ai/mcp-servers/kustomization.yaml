@@ -3,7 +3,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - ./actual/ks.yaml
   - ./docmost/ks.yaml
+  - ./forgejo/ks.yaml
+  - ./grafana/ks.yaml
   - ./ha/ks.yaml
+  - ./kubernetes/ks.yaml
+  - ./mealie/ks.yaml
   - ./memory/ks.yaml
   - ./paperless/ks.yaml
