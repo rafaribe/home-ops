@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-    - name: grafana
+    - name: grafana-operator
       namespace: observability
     - name: toolhive-operator-crds
   interval: 1h
