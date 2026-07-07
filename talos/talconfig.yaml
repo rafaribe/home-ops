@@ -211,7 +211,7 @@ nodes:
         extraKernelArgs:
           - net.ifnames=0
     nodeTaints:
-      node-role.kubernetes.io/memory:NoSchedule: ""
+      node-role.kubernetes.io/memory: "NoSchedule"
     nodeLabels:
       workload-type: memory
       local-storage: "false"
@@ -244,7 +244,7 @@ nodes:
       arch: arm64
     schematic: *schematic-tpi-no-ext
     nodeTaints:
-      node-role.kubernetes.io/memory:NoSchedule: ""
+      node-role.kubernetes.io/memory: "NoSchedule"
     nodeLabels:
       workload-type: memory
       local-storage: "false"
@@ -268,7 +268,7 @@ nodes:
       arch: arm64
     schematic: *schematic-tpi-no-ext
     nodeTaints:
-      node-role.kubernetes.io/memory:NoSchedule: ""
+      node-role.kubernetes.io/memory: "NoSchedule"
     nodeLabels:
       workload-type: memory
       local-storage: "false"
@@ -351,6 +351,14 @@ controlPlane:
             featureGates:
               ImageVolume: true
               ResourceHealthStatus: true
+            systemReserved:
+              cpu: "500m"
+              memory: "1536Mi"
+              ephemeral-storage: "2Gi"
+            kubeReserved:
+              cpu: "500m"
+              memory: "1536Mi"
+              ephemeral-storage: "2Gi"
           extraArgs:
             rotate-server-certificates: true
           nodeIP:
