@@ -18,10 +18,15 @@ spec:
           volumeMounts:
             - mountPath: /.cache
               name: cache
+            - mountPath: /app/mealie_mcp_server.log
+              name: log
+              subPath: mealie_mcp_server.log
             - mountPath: /tmp
               name: tmpfs
       volumes:
         - name: cache
+          emptyDir: {}
+        - name: log
           emptyDir: {}
         - name: tmpfs
           emptyDir:
