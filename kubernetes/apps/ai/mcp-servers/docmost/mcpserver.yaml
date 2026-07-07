@@ -11,6 +11,8 @@ spec:
   env:
     - name: DOCMOST_BASE_URL
       value: http://docmost.services:3000
+    - name: PORT
+      value: "8080"
   podTemplateSpec:
     spec:
       containers:
@@ -27,5 +29,5 @@ spec:
       key: DOCMOST_EMAIL
     - name: docmost-mcp-secret-password
       key: DOCMOST_PASSWORD
-  proxyPort: 3000
+  proxyPort: 8080
   transport: streamable-http
