@@ -11,6 +11,8 @@ spec:
   env:
     - name: ACTUAL_SERVER_URL
       value: http://actual.services:5006
+    - name: MCP_ALLOW_UNAUTHENTICATED
+      value: "true"
   podTemplateSpec:
     spec:
       containers:
