@@ -27,4 +27,5 @@ spec:
       key: DOCMOST_EMAIL
     - name: docmost-mcp-secret-password
       key: DOCMOST_PASSWORD
+  proxyPort: 3000
   transport: streamable-http
