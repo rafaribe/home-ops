@@ -16,9 +16,13 @@ spec:
       containers:
         - name: mcp
           volumeMounts:
+            - mountPath: /.cache
+              name: cache
             - mountPath: /tmp
               name: tmpfs
       volumes:
+        - name: cache
+          emptyDir: {}
         - name: tmpfs
           emptyDir:
             medium: Memory
