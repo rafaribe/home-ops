@@ -7,7 +7,7 @@ metadata:
 spec:
   groupRef:
     name: mcp-tools
-  image: ghcr.io/homeassistant-ai/ha-mcp:7.9.0
+  image: ghcr.io/homeassistant-ai/ha-mcp:7.11.0
   env:
     - name: HOMEASSISTANT_URL
       value: http://home-assistant-app.home:8123
