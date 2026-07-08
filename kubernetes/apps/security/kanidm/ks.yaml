@@ -46,6 +46,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      ###
+      # Fake Placeholders to avoid errors with Flux Local
       KANIDM_RAFARIBE_USERNAME: user1
       KANIDM_RAFARIBE_DISPLAYNAME: User One
       KANIDM_RAFARIBE_LEGALNAME: User One
@@ -56,6 +58,7 @@ spec:
       KANIDM_WIFE_LEGALNAME: User Two
       KANIDM_WIFE_EMAIL: user2@example.com
       KANIDM_WIFE_EMAIL2: user2-alt@example.com
+      ###
     substituteFrom:
       - kind: Secret
         name: kanidm-persons-secret
