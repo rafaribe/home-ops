@@ -15,4 +15,4 @@ spec:
   rules:
     - backendRefs:
         - name: mcp-grafana-mcp-proxy
-          port: 8080
+          port: 8000
