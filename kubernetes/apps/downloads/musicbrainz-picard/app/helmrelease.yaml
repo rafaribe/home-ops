@@ -28,7 +28,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/musicbrainz-picard
-              tag: 2.13.3
+              tag: 3.0.0b5@sha256:43026df0101829772696ce2b42b82d029fe8fb0a7846f7d413bdeb0da7e624da
             env:
               DISPLAY_HEIGHT: "1080"
               DISPLAY_WIDTH: "1920"
