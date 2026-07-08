@@ -15,6 +15,10 @@ spec:
     spec:
       containers:
         - name: mcp
+          command:
+            - /bin/sh
+            - -c
+            - cd /app && pip install -e . --quiet 2>/dev/null; fastmcp run src/server.py
           volumeMounts:
             - mountPath: /tmp
               name: tmpfs

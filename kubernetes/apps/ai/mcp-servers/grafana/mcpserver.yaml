@@ -8,6 +8,7 @@ spec:
   groupRef:
     name: mcp-tools
   image: mcp/grafana:latest
+  mcpPort: 8000
   env:
     - name: GRAFANA_URL
       value: http://grafana.observability:3000
