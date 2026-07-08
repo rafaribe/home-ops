@@ -62,6 +62,10 @@ spec:
         existingClaim: musicbrainz-picard
         globalMounts:
           - path: /config
+      docker-instance:
+        type: emptyDir
+        globalMounts:
+          - path: /.docker-instance
       storage:
         type: nfs
         server: truenas.rafaribe.com
