@@ -18,7 +18,7 @@ spec:
           command:
             - /bin/sh
             - -c
-            - cd /app && pip install -e . --quiet 2>/dev/null; fastmcp run src/server.py
+            - cd /app && /app/.venv/bin/pip install -e . --target /tmp/site-packages --quiet && PYTHONPATH=/tmp/site-packages exec /app/.venv/bin/fastmcp run src/server.py
           volumeMounts:
             - mountPath: /tmp
               name: tmpfs
