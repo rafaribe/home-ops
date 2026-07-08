@@ -18,7 +18,23 @@ spec:
           command:
             - /bin/sh
             - -c
-            - cd /app && pip install . --target /tmp/site-packages --quiet && PYTHONPATH=/tmp/site-packages exec /app/.venv/bin/fastmcp run src/server.py
+            - |
+              cd /app && PYTHONPATH=/app/src exec /app/.venv/bin/python -c "
+              import sys, os
+              sys.path.insert(0, '/app/src')
+              os.chdir('/app')
+              from mcp.server.fastmcp import FastMCP
+              from mealie import MealieFetcher
+              from tools import register_all_tools
+              from prompts import register_prompts
+              mealie_url = os.environ.get('MEALIE_BASE_URL', 'http://localhost:9000')
+              api_key = os.environ.get('MEALIE_API_KEY', '')
+              mealie = MealieFetcher(base_url=mealie_url, api_key=api_key)
+              mcp = FastMCP('mealie-mcp-server')
+              register_all_tools(mcp, mealie)
+              register_prompts(mcp)
+              mcp.run(transport='stdio')
+              "
           volumeMounts:
             - mountPath: /tmp
               name: tmpfs
