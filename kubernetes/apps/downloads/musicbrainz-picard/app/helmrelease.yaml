@@ -21,28 +21,44 @@ spec:
           type: RuntimeDefault
     controllers:
       musicbrainz-picard:
+        annotations:
+          reloader.stakater.com/auto: "true"
         strategy: Recreate
         containers:
           app:
             image:
-              repository: docker.io/jlesage/musicbrainz-picard
-              tag: v26.05.2@sha256:130ab9790d6303c2534dbfcc59d136b010c43d021cfdedf37f76935300698996
+              repository: ghcr.io/rafaribe/musicbrainz-picard
+              tag: 2.13.3
             env:
-              DARK_MODE: "1"
               DISPLAY_HEIGHT: "1080"
               DISPLAY_WIDTH: "1920"
-              KEEP_APP_RUNNING: "1"
               TZ: Europe/Lisbon
-              USER_ID: "1000"
-              GROUP_ID: "1000"
             probes:
               liveness:
                 enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 5800
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
               readiness:
                 enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: *port
+                  initialDelaySeconds: 5
+                  periodSeconds: 5
               startup:
                 enabled: true
+                custom: true
                 spec:
+                  httpGet:
+                    path: /
+                    port: *port
                   failureThreshold: 30
                   periodSeconds: 5
             resources:
@@ -62,16 +78,16 @@ spec:
         existingClaim: musicbrainz-picard
         globalMounts:
           - path: /config
-      docker-instance:
-        type: emptyDir
-        globalMounts:
-          - path: /.docker-instance
       storage:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/tank/media
         globalMounts:
           - path: /storage
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
     route:
       app:
         hostnames: ["picard.rafaribe.com"]
@@ -82,7 +98,7 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: &port 5800
+                port: *port
     service:
       app:
         controller: *app
