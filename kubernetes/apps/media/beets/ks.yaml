@@ -3,28 +3,24 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app musicbrainz-picard
+  name: &app beets
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
-  dependsOn:
-    - name: volsync
-      namespace: storage
   interval: 30m
-  path: ./kubernetes/apps/downloads/musicbrainz-picard/app
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: "1Gi"
+  path: ./kubernetes/apps/media/beets/app
   prune: true
   retryInterval: 1m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: downloads
+  targetNamespace: media
   timeout: 5m
   wait: false
+  postBuild:
+    substitute:
+      APP: *app

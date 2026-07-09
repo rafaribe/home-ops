@@ -3,11 +3,11 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app musicbrainz-picard
+  name: &app beets
 spec:
   chartRef:
     kind: OCIRepository
-    name: app-template
+    name: beets
   interval: 30m
   values:
     defaultPodOptions:
@@ -20,18 +20,16 @@ spec:
         seccompProfile:
           type: RuntimeDefault
     controllers:
-      musicbrainz-picard:
+      beets:
         annotations:
           reloader.stakater.com/auto: "true"
         strategy: Recreate
         containers:
           app:
             image:
-              repository: ghcr.io/rafaribe/musicbrainz-picard
-              tag: 3.0.0b5@sha256:43026df0101829772696ce2b42b82d029fe8fb0a7846f7d413bdeb0da7e624da
+              repository: ghcr.io/mgoltzsche/beets
+              tag: 0.18.2
             env:
-              DISPLAY_HEIGHT: "1080"
-              DISPLAY_WIDTH: "1920"
               TZ: Europe/Lisbon
             probes:
               liveness:
@@ -40,9 +38,9 @@ spec:
                 spec:
                   httpGet:
                     path: /
-                    port: &port 5800
+                    port: &port 8337
                   initialDelaySeconds: 10
-                  periodSeconds: 10
+                  periodSeconds: 30
               readiness:
                 enabled: true
                 custom: true
@@ -51,7 +49,7 @@ spec:
                     path: /
                     port: *port
                   initialDelaySeconds: 5
-                  periodSeconds: 5
+                  periodSeconds: 10
               startup:
                 enabled: true
                 custom: true
@@ -63,10 +61,10 @@ spec:
                   periodSeconds: 5
             resources:
               limits:
-                memory: 1Gi
+                memory: 512Mi
               requests:
                 cpu: 10m
-                memory: 256Mi
+                memory: 128Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -74,23 +72,19 @@ spec:
                   - ALL
               readOnlyRootFilesystem: false
     persistence:
-      config:
-        existingClaim: musicbrainz-picard
+      data:
+        existingClaim: beets
         globalMounts:
-          - path: /config
-      storage:
+          - path: /data
+      media:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/tank/media
         globalMounts:
-          - path: /storage
-      tmp:
-        type: emptyDir
-        globalMounts:
-          - path: /tmp
+          - path: /media
     route:
       app:
-        hostnames: ["picard.rafaribe.com"]
+        hostnames: ["beets.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
             namespace: network

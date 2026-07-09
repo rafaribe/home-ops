@@ -9,6 +9,7 @@ resources:
   - ./namespace.yaml
   - ./acestream-scraper/ks.yaml
   - ./audiobookshelf/ks.yaml
+  - ./beets/ks.yaml
   - ./bookboss/ks.yaml
   #- ./calibre-web-automated/ks.yaml
   - ./dispatcharr/ks.yaml
