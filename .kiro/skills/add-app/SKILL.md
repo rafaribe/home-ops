@@ -152,12 +152,16 @@ spec:
     name: akeyless-secret-store
   target:
     name: *app
+    template:
+      engineVersion: v2
+      data:
+        MYKEY: "{{ .MY_KEY_IN_AKEYLESS_JSON }}"
   dataFrom:
     - extract:
         key: <app>
 ```
 
-If the app needs templated secret data, mirror patterns from similar existing apps instead of forcing a generic template.
+If the app needs templated secret data, mirror patterns from similar existing apps instead of forcing a generic template. Always reference the keys explicitely in the `data` section if possible.
 
 ### Step 5: Generate app flux kustomization ks
 
