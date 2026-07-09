@@ -11,6 +11,12 @@ spec:
   values:
     controllers:
       databasus:
+        annotations:
+          glance/description: Database backup tool
+          glance/icon: mdi:database
+          glance/id: databasus
+          glance/name: Databasus
+          glance/url: https://databasus.rafaribe.com
         containers:
           app:
             image:

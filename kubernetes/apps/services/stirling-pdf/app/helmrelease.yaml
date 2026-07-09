@@ -14,6 +14,11 @@ spec:
     controllers:
       app:
         annotations:
+          glance/description: PDF Viewer and Editor
+          glance/icon: mdi:file-pdf-box
+          glance/id: stirling-pdf
+          glance/name: Stirling PDF
+          glance/url: https://stirling-pdf.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

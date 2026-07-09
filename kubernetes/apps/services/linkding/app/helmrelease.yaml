@@ -15,6 +15,11 @@ spec:
       linkding:
         strategy: RollingUpdate
         annotations:
+          glance/description: Bookmark manager
+          glance/icon: di:linkding
+          glance/id: linkding
+          glance/name: Linkding
+          glance/url: https://links.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

@@ -13,6 +13,11 @@ spec:
     controllers:
       *app:
         annotations:
+          glance/description: Linktree Alternative
+          glance/icon: mdi:link-variant
+          glance/id: littlelink
+          glance/name: Littlelink
+          glance/url: https://link.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           main:

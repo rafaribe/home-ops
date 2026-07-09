@@ -22,6 +22,11 @@ spec:
     controllers:
       aurral:
         annotations:
+          glance/description: Music Discovery for Lidarr
+          glance/icon: mdi:music-box
+          glance/id: aurral
+          glance/name: Aurral
+          glance/url: https://aurral.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

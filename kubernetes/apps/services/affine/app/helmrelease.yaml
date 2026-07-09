@@ -13,6 +13,11 @@ spec:
     controllers:
       affine:
         annotations:
+          glance/description: Knowledge Management Platform
+          glance/icon: di:affine
+          glance/id: affine
+          glance/name: Affine
+          glance/url: https://affine.rafaribe.com
           reloader.stakater.com/auto: "true"
         initContainers:
           migration:

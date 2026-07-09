@@ -19,6 +19,12 @@ spec:
   values:
     controllers:
       poznote:
+        annotations:
+          glance/description: Note-taking app
+          glance/icon: mdi:note-text
+          glance/id: poznote
+          glance/name: Poznote
+          glance/url: https://poznote.rafaribe.com
         strategy: Recreate
         containers:
           app:

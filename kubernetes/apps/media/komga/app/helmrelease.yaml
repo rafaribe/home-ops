@@ -15,6 +15,11 @@ spec:
         labels:
           nfsMount: "true"
         annotations:
+          glance/description: Comic/Ebook Web Reader
+          glance/icon: di:komga
+          glance/id: komga
+          glance/name: Komga
+          glance/url: https://komga.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

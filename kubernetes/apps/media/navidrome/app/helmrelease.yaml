@@ -12,6 +12,12 @@ spec:
   values:
     controllers:
       navidrome:
+        annotations:
+          glance/description: Listen to music
+          glance/icon: di:navidrome
+          glance/id: navidrome
+          glance/name: Navidrome
+          glance/url: https://music.rafaribe.com
         pod:
           securityContext:
             runAsUser: 1000

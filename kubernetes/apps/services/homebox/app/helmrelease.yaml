@@ -17,6 +17,11 @@ spec:
     controllers:
       homebox:
         annotations:
+          glance/description: Home inventory management
+          glance/icon: di:homebox
+          glance/id: homebox
+          glance/name: Homebox
+          glance/url: https://homebox.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

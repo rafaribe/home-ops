@@ -13,6 +13,11 @@ spec:
     controllers:
       leafwiki:
         annotations:
+          glance/description: Simple wiki
+          glance/icon: mdi:leaf
+          glance/id: leafwiki
+          glance/name: LeafWiki
+          glance/url: https://leafwiki.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

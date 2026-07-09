@@ -12,6 +12,12 @@ spec:
   values:
     controllers:
       chartdb:
+        annotations:
+          glance/description: Database diagrams editor
+          glance/icon: mdi:chart-box
+          glance/id: chartdb
+          glance/name: ChartDB
+          glance/url: https://chartdb.rafaribe.com
         containers:
           app:
             image:

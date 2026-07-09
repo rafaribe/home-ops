@@ -15,6 +15,11 @@ spec:
         labels:
           nfsMount: "true"
         annotations:
+          glance/description: Comic/Ebook Web Reader
+          glance/icon: di:kavita
+          glance/id: kavita
+          glance/name: Kavita
+          glance/url: https://comics.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

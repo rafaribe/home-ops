@@ -22,6 +22,11 @@ spec:
     controllers:
       slskd:
         annotations:
+          glance/description: Soulseek Client
+          glance/icon: di:slskd
+          glance/id: slskd
+          glance/name: slskd
+          glance/url: https://slskd.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

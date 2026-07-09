@@ -20,6 +20,12 @@ spec:
 
     controllers:
       cyberchef:
+        annotations:
+          glance/description: The Cyber Swiss Army Knife
+          glance/icon: mdi:chef-hat
+          glance/id: cyberchef
+          glance/name: Cyberchef
+          glance/url: https://cyberchef.rafaribe.com
         containers:
           app:
             image:

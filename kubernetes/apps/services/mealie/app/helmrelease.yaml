@@ -22,6 +22,11 @@ spec:
         strategy: Recreate
 
         annotations:
+          glance/description: Recipe Manager
+          glance/icon: di:mealie
+          glance/id: mealie
+          glance/name: Mealie
+          glance/url: https://mealie.rafaribe.com
           reloader.stakater.com/auto: "true"
 
         containers:

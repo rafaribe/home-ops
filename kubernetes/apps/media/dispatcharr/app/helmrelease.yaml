@@ -21,6 +21,11 @@ spec:
       dispatcharr:
         strategy: Recreate
         annotations:
+          glance/description: Media Dispatcher
+          glance/icon: di:dispatcharr
+          glance/id: dispatcharr
+          glance/name: Dispatcharr
+          glance/url: https://dispatcharr.rafaribe.com
           reloader.stakater.com/auto: "true"
         pod:
           securityContext:

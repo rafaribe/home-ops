@@ -8,24 +8,142 @@ pages:
         widgets:
           - type: calendar
           - type: weather
-            location: Viseu, Portugal
-      - size: full
-        widgets:
-          - type: rss
-            title: News
-            feeds:
-              - url: https://www.techmeme.com/feed.xml
-                title: Techmeme
-              - url: https://news.ycombinator.com/rss
-                title: Hacker News
-          - type: reddit
-            subreddit: selfhosted
-      - size: small
-        widgets:
+            location: Lisbon, Portugal
           - type: monitor
-            title: Services
+            title: Infrastructure
+            cache: 1m
             sites:
               - title: Kanidm
                 url: https://idm.rafaribe.com
+              - title: Ceph Dashboard
+                url: https://rook.rafaribe.com
               - title: Homepage
                 url: https://homepage.rafaribe.com
+              - title: Minio
+                url: https://minio.rafaribe.com
+      - size: full
+        widgets:
+          - type: extension
+            url: http://glance-k8s-extension.services:8080/extension/apps
+            title: Kubernetes Apps
+            allow-potentially-dangerous-html: true
+            cache: 30s
+            parameters:
+              show-if: |
+                namespace != "kube-system" and
+                namespace != "flux-system" and
+                namespace != "network" and
+                namespace != "external-secrets" and
+                ("glance/hide" not in annotations || annotations["glance/hide"] != "true")
+          - type: extension
+            url: http://glance-k8s-extension.services:8080/extension/nodes
+            title: Cluster Nodes
+            allow-potentially-dangerous-html: true
+            cache: 30s
+      - size: small
+        widgets:
+          - type: rss
+            title: Tech News
+            cache: 30m
+            feeds:
+              - url: https://news.ycombinator.com/rss
+                title: Hacker News
+              - url: https://www.techmeme.com/feed.xml
+                title: Techmeme
+
+  - name: Media
+    columns:
+      - size: full
+        widgets:
+          - type: extension
+            url: http://glance-k8s-extension.services:8080/extension/apps
+            title: Media Services
+            allow-potentially-dangerous-html: true
+            cache: 30s
+            parameters:
+              show-if: |
+                namespace == "media"
+      - size: small
+        widgets:
+          - type: monitor
+            title: Media Health
+            cache: 1m
+            sites:
+              - title: Plex
+                url: https://plex.rafaribe.com
+              - title: Navidrome
+                url: https://music.rafaribe.com
+              - title: Audiobookshelf
+                url: https://audiobookshelf.rafaribe.com
+              - title: Kavita
+                url: https://comics.rafaribe.com
+              - title: Komga
+                url: https://komga.rafaribe.com
+              - title: Jellyseerr
+                url: https://requests.rafaribe.com
+              - title: Tautulli
+                url: https://tautulli.rafaribe.com
+
+  - name: Downloads
+    columns:
+      - size: full
+        widgets:
+          - type: extension
+            url: http://glance-k8s-extension.services:8080/extension/apps
+            title: Download Services
+            allow-potentially-dangerous-html: true
+            cache: 30s
+            parameters:
+              show-if: |
+                namespace == "downloads"
+      - size: small
+        widgets:
+          - type: monitor
+            title: Download Health
+            cache: 1m
+            sites:
+              - title: qBittorrent
+                url: https://qb.rafaribe.com
+              - title: SABnzbd
+                url: https://sab.rafaribe.com
+              - title: Prowlarr
+                url: https://prowlarr.rafaribe.com
+              - title: Bazarr
+                url: https://bazarr.rafaribe.com
+              - title: Readarr
+                url: https://readarr.rafaribe.com
+              - title: slskd
+                url: https://slskd.rafaribe.com
+
+  - name: Services
+    columns:
+      - size: full
+        widgets:
+          - type: extension
+            url: http://glance-k8s-extension.services:8080/extension/apps
+            title: Self-hosted Services
+            allow-potentially-dangerous-html: true
+            cache: 30s
+            parameters:
+              show-if: |
+                namespace == "services"
+      - size: small
+        widgets:
+          - type: monitor
+            title: Service Health
+            cache: 1m
+            sites:
+              - title: Paperless
+                url: https://paperless.rafaribe.com
+              - title: Mealie
+                url: https://mealie.rafaribe.com
+              - title: Miniflux
+                url: https://miniflux.rafaribe.com
+              - title: Karakeep
+                url: https://karakeep.rafaribe.com
+              - title: Homebox
+                url: https://homebox.rafaribe.com
+              - title: Linkding
+                url: https://links.rafaribe.com
+              - title: Tandoor
+                url: https://tandoor.rafaribe.com

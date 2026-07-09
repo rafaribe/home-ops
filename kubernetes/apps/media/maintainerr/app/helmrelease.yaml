@@ -13,6 +13,11 @@ spec:
     controllers:
       maintainerr:
         annotations:
+          glance/description: Media Library Management
+          glance/icon: di:maintainerr
+          glance/id: maintainerr
+          glance/name: Maintainerr
+          glance/url: https://maintainerr.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

@@ -22,6 +22,11 @@ spec:
     controllers:
       tandoor:
         annotations:
+          glance/description: Recipe management
+          glance/icon: di:tandoor-recipes
+          glance/id: tandoor
+          glance/name: Tandoor
+          glance/url: https://tandoor.rafaribe.com
           reloader.stakater.com/auto: "true"
         strategy: Recreate
         initContainers:

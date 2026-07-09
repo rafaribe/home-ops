@@ -21,6 +21,11 @@ spec:
       nodecast-tv:
         strategy: Recreate
         annotations:
+          glance/description: Web-based IPTV player
+          glance/icon: mdi:television
+          glance/id: nodecast-tv
+          glance/name: NodeCast TV
+          glance/url: https://nodecast.rafaribe.com
           secret.reloader.stakater.com/reload: nodecast-tv-secret
         pod:
           securityContext:

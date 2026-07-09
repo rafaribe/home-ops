@@ -19,6 +19,12 @@ spec:
   values:
     controllers:
       syncthing:
+        annotations:
+          glance/description: File Sync
+          glance/icon: di:syncthing
+          glance/id: syncthing
+          glance/name: Syncthing
+          glance/url: https://syncthing.rafaribe.com
         containers:
           app:
             image:

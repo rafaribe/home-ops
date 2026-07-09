@@ -26,6 +26,11 @@ spec:
         labels:
           nfsMount: "true"
         annotations:
+          glance/description: Comic Downloads
+          glance/icon: mdi:book-open-variant
+          glance/id: kapowarr
+          glance/name: Kapowarr
+          glance/url: https://kapowarr.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

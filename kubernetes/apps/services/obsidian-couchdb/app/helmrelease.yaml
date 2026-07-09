@@ -20,6 +20,11 @@ spec:
     controllers:
       obsidian-couchdb:
         annotations:
+          glance/description: CouchDB for Obsidian LiveSync
+          glance/icon: di:couchdb
+          glance/id: obsidian-couchdb
+          glance/name: Obsidian CouchDB
+          glance/url: https://obsidian.rafaribe.com
           reloader.stakater.com/auto: "true"
         type: statefulset
         pod:

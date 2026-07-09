@@ -12,6 +12,12 @@ spec:
   values:
     controllers:
       audiobookshelf:
+        annotations:
+          glance/description: Audiobook Library
+          glance/icon: di:audiobookshelf
+          glance/id: audiobookshelf
+          glance/name: AudioBookShelf
+          glance/url: https://audiobookshelf.rafaribe.com
         containers:
           app:
             image:

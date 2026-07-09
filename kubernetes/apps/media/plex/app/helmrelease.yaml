@@ -13,6 +13,11 @@ spec:
     controllers:
       plex:
         annotations:
+          glance/description: Media Player
+          glance/icon: di:plex
+          glance/id: plex
+          glance/name: Plex
+          glance/url: https://plex.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

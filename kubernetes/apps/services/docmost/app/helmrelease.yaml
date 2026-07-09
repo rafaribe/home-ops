@@ -13,6 +13,11 @@ spec:
     controllers:
       docmost:
         annotations:
+          glance/description: Wiki
+          glance/icon: mdi:book-open-page-variant
+          glance/id: docmost
+          glance/name: Docmost
+          glance/url: https://docmost.rafaribe.com
           reloader.stakater.com/auto: "true"
         initContainers:
           init-db:

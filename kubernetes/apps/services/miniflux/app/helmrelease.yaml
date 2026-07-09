@@ -14,6 +14,11 @@ spec:
       miniflux:
         strategy: RollingUpdate
         annotations:
+          glance/description: RSS feed reader
+          glance/icon: di:miniflux
+          glance/id: miniflux
+          glance/name: Miniflux
+          glance/url: https://miniflux.rafaribe.com
           reloader.stakater.com/auto: "true"
         initContainers:
           init-db:

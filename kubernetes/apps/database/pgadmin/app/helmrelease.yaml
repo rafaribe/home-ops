@@ -13,6 +13,11 @@ spec:
     controllers:
       pgadmin:
         annotations:
+          glance/description: PostgreSQL administration
+          glance/icon: si:postgresql
+          glance/id: pgadmin
+          glance/name: pgAdmin
+          glance/url: https://pg.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

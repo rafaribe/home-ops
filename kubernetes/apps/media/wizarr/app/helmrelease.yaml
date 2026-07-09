@@ -13,6 +13,11 @@ spec:
     controllers:
       wizarr:
         annotations:
+          glance/description: Plex Invite Management
+          glance/icon: di:wizarr
+          glance/id: wizarr
+          glance/name: Wizarr
+          glance/url: https://wizarr.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

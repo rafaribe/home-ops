@@ -24,6 +24,11 @@ spec:
     controllers:
       sabnzbd:
         annotations:
+          glance/description: NZB Download Client
+          glance/icon: di:sabnzbd
+          glance/id: sabnzbd
+          glance/name: SABnzbd
+          glance/url: https://sab.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

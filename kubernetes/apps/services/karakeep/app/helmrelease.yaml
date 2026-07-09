@@ -13,6 +13,11 @@ spec:
     controllers:
       karakeep:
         annotations:
+          glance/description: The Bookmark Everything app
+          glance/icon: di:karakeep
+          glance/id: karakeep
+          glance/name: Karakeep
+          glance/url: https://karakeep.rafaribe.com
           reloader.stakater.com/auto: "true"
         initContainers:
           meili-wipe:

@@ -23,6 +23,11 @@ spec:
     controllers:
       prowlarr:
         annotations:
+          glance/description: Torrent/NZB Indexer Management
+          glance/icon: di:prowlarr
+          glance/id: prowlarr
+          glance/name: Prowlarr
+          glance/url: https://prowlarr.rafaribe.com
           reloader.stakater.com/auto: "true"
         # initContainers:
         #   init-db:

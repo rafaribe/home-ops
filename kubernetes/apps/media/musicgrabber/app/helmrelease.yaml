@@ -13,6 +13,11 @@ spec:
     controllers:
       musicgrabber:
         annotations:
+          glance/description: Grab singles for Navidrome
+          glance/icon: mdi:music-note
+          glance/id: musicgrabber
+          glance/name: MusicGrabber
+          glance/url: https://musicgrabber.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

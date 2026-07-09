@@ -13,6 +13,11 @@ spec:
     controllers:
       tautulli:
         annotations:
+          glance/description: Plex Stream Monitoring
+          glance/icon: di:tautulli
+          glance/id: tautulli
+          glance/name: Tautulli
+          glance/url: https://tautulli.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

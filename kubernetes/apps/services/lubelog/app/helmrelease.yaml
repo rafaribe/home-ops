@@ -13,6 +13,11 @@ spec:
     controllers:
       lubelog:
         annotations:
+          glance/description: Car Service Tracking
+          glance/icon: mdi:car
+          glance/id: lubelog
+          glance/name: LubeLog
+          glance/url: https://lubelog.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

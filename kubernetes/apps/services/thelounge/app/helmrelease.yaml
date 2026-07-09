@@ -13,6 +13,11 @@ spec:
     controllers:
       thelounge:
         annotations:
+          glance/description: IRC Web Client
+          glance/icon: di:thelounge
+          glance/id: thelounge
+          glance/name: The Lounge
+          glance/url: https://thelounge.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

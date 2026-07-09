@@ -23,6 +23,11 @@ spec:
       server:
         strategy: RollingUpdate
         annotations:
+          glance/description: Photo library and management
+          glance/icon: di:immich
+          glance/id: immich
+          glance/name: Immich
+          glance/url: https://photos.rafaribe.com
           reloader.stakater.com/auto: "true"
         pod:
           labels:

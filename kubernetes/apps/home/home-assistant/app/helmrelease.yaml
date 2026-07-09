@@ -13,6 +13,11 @@ spec:
     controllers:
       home-assistant:
         annotations:
+          glance/description: Home Automation
+          glance/icon: di:home-assistant
+          glance/id: home-assistant
+          glance/name: Home Assistant
+          glance/url: https://hass.rafaribe.com
           reloader.stakater.com/auto: "true"
         pod:
           securityContext:

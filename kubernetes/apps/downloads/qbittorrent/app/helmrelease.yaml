@@ -14,6 +14,11 @@ spec:
     controllers:
       qbittorrent:
         annotations:
+          glance/description: Torrent Client
+          glance/icon: di:qbittorrent
+          glance/id: qbittorrent
+          glance/name: qBittorrent
+          glance/url: https://qb.rafaribe.com
           configmap.reloader.stakater.com/reload: qbittorrent-scripts
           secret.reloader.stakater.com/reload: qbittorrent
 

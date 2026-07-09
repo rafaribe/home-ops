@@ -30,6 +30,11 @@ spec:
           nfsMount: "true"
           postgres: "true"
         annotations:
+          glance/description: Subtitle Downloads
+          glance/icon: di:bazarr
+          glance/id: bazarr
+          glance/name: Bazarr
+          glance/url: https://bazarr.rafaribe.com
           reloader.stakater.com/auto: "true"
         # initContainers:
         #   init-db:

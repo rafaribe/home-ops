@@ -13,6 +13,11 @@ spec:
     controllers:
       portabase:
         annotations:
+          glance/description: Database Backup Tool
+          glance/icon: mdi:database-export
+          glance/id: portabase
+          glance/name: Portabase
+          glance/url: https://portabase.rafaribe.com
           reloader.stakater.com/auto: "true"
         strategy: Recreate
         containers:

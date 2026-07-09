@@ -14,6 +14,11 @@ spec:
       main:
         replicas: 1
         annotations:
+          glance/description: S3 storage
+          glance/icon: di:minio
+          glance/id: minio
+          glance/name: Minio
+          glance/url: https://minio.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

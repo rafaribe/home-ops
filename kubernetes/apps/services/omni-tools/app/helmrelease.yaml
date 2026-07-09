@@ -35,6 +35,11 @@ spec:
         replicas: 1
         strategy: RollingUpdate
         annotations:
+          glance/description: Useful tools and utilities
+          glance/icon: mdi:toolbox
+          glance/id: omni-tools
+          glance/name: Omni Tools
+          glance/url: https://omni-tools.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

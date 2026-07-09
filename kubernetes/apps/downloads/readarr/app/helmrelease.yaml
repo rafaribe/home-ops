@@ -27,6 +27,11 @@ spec:
         labels:
           nfsMount: "true"
         annotations:
+          glance/description: eBook Downloads
+          glance/icon: di:readarr
+          glance/id: readarr
+          glance/name: Readarr
+          glance/url: https://readarr.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:
