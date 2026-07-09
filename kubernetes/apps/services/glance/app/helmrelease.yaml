@@ -154,7 +154,7 @@ spec:
         rules:
           - backendRefs:
               - name: glance-app
-                port: *port
+                port: 8081
     service:
       app:
         controller: *app
