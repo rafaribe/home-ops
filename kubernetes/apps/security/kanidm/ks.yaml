@@ -36,7 +36,6 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
     - name: kanidm-secrets
-    - name: kaniop
     - name: volsync
       namespace: storage
   interval: 30m
