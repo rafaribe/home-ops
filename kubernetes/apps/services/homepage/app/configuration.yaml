@@ -90,6 +90,39 @@ data:
             url: https://10.0.0.254:8443
             username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
             password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
+    - Downloads:
+      - qBittorrent:
+          href: https://qb.rafaribe.com
+          icon: qbittorrent.png
+          description: Torrent Client
+          widget:
+            type: qbittorrent
+            url: http://qbittorrent.downloads.svc.cluster.local:8080
+      - qBittorrent Files:
+          href: https://qb-files.rafaribe.com
+          icon: filebrowser.png
+          description: qBittorrent File Browser
+      - slskd:
+          href: https://slskd.rafaribe.com
+          icon: slskd.png
+          description: Soulseek Client
+          widget:
+            type: slskd
+            url: http://slskd-app.downloads.svc.cluster.local
+            key: {{HOMEPAGE_VAR_SLSKD_API_KEY}}
+      - slskd Files:
+          href: https://slskd-files.rafaribe.com
+          icon: filebrowser.png
+          description: slskd File Browser
+    - Services:
+      - Syncthing:
+          href: https://syncthing.rafaribe.com
+          icon: syncthing.png
+          description: File Sync
+      - Syncthing Files:
+          href: https://sync.rafaribe.com
+          icon: filebrowser.png
+          description: Syncthing File Browser
     - Infrastructure:
       - TrueNAS:
           href: http://truenas.rafaribe.com
