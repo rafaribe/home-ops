@@ -37,16 +37,14 @@ spec:
               repository: ghcr.io/qdm12/gluetun
               tag: v3.41.1
             env:
-              DOT: "off"
               DNS_ADDRESS: "127.0.0.2"
-              VPN_SERVICE_PROVIDER: custom
-              VPN_TYPE: wireguard
-              VPN_INTERFACE: wg0
-              WIREGUARD_ENDPOINT_PORT: 51820
-              VPN_PORT_FORWARDING: on
-              VPN_PORT_FORWARDING_PROVIDER: protonvpn
+              DOT: "off"
               FIREWALL_INPUT_PORTS: 8080
               FIREWALL_OUTBOUND_SUBNETS: 10.42.0.0/16,10.43.0.0/16 # Allow access to k8s subnets
+              PORT_FORWARD_ONLY: "on"
+              VPN_PORT_FORWARDING: "on"
+              VPN_SERVICE_PROVIDER: protonvpn
+              VPN_TYPE: wireguard
             envFrom:
               - secretRef:
                   name: qbittorrent
@@ -58,7 +56,9 @@ spec:
               capabilities:
                 add:
                   - NET_ADMIN
-              allowPrivilegeEscalation: false
+              runAsUser: 0
+              runAsGroup: 0
+              runAsNonRoot: false
         containers:
           app:
             nameOverride: qbittorrent
