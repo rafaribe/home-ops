@@ -77,6 +77,255 @@ pages:
               - gethomepage/homepage
               - paperless-ngx/paperless-ngx
 
+  - name: Media
+    columns:
+      - size: small
+        widgets:
+          - type: bookmarks
+            groups:
+              - title: Media
+                links:
+                  - title: Plex
+                    url: https://plex.rafaribe.com
+                    icon: di:plex
+                  - title: Jellyfin
+                    url: https://jellyfin.rafaribe.com
+                    icon: di:jellyfin
+                  - title: Navidrome
+                    url: https://music.rafaribe.com
+                    icon: di:navidrome
+                  - title: Audiobookshelf
+                    url: https://audiobookshelf.rafaribe.com
+                    icon: di:audiobookshelf
+                  - title: Kavita
+                    url: https://comics.rafaribe.com
+                    icon: di:kavita
+                  - title: Komga
+                    url: https://komga.rafaribe.com
+                    icon: di:komga
+                  - title: Tautulli
+                    url: https://tautulli.rafaribe.com
+                    icon: di:tautulli
+                  - title: Jellyseerr
+                    url: https://requests.rafaribe.com
+                    icon: di:jellyseerr
+                  - title: Dispatcharr
+                    url: https://dispatcharr.rafaribe.com
+                    icon: mdi:television-play
+                  - title: NodeCast TV
+                    url: https://nodecast.rafaribe.com
+                    icon: mdi:television
+              - title: Downloads
+                links:
+                  - title: qBittorrent
+                    url: https://qb.rafaribe.com
+                    icon: di:qbittorrent
+                  - title: SABnzbd
+                    url: https://sab.rafaribe.com
+                    icon: di:sabnzbd
+                  - title: Prowlarr
+                    url: https://prowlarr.rafaribe.com
+                    icon: di:prowlarr
+                  - title: Radarr
+                    url: https://radarr.rafaribe.com
+                    icon: di:radarr
+                  - title: Sonarr
+                    url: https://sonarr.rafaribe.com
+                    icon: di:sonarr
+                  - title: Lidarr
+                    url: https://lidarr.rafaribe.com
+                    icon: di:lidarr
+                  - title: Readarr
+                    url: https://readarr.rafaribe.com
+                    icon: di:readarr
+                  - title: Bazarr
+                    url: https://bazarr.rafaribe.com
+                    icon: di:bazarr
+                  - title: slskd
+                    url: https://slskd.rafaribe.com
+                    icon: di:slskd
+                  - title: Autobrr
+                    url: https://autobrr.rafaribe.com
+                    icon: di:autobrr
+      - size: full
+        widgets:
+          - type: extension
+            url: http://glance-k8s-extension.services:8080/extension/apps
+            title: Media & Downloads
+            allow-potentially-dangerous-html: true
+            cache: 30s
+            parameters:
+              show-if: |
+                namespace == "media" or namespace == "downloads"
+      - size: small
+        widgets:
+          - type: monitor
+            title: Media Health
+            cache: 1m
+            sites:
+              - title: Plex
+                url: https://plex.rafaribe.com
+                icon: di:plex
+              - title: Navidrome
+                url: https://music.rafaribe.com
+                icon: di:navidrome
+              - title: qBittorrent
+                url: https://qb.rafaribe.com
+                icon: di:qbittorrent
+              - title: Prowlarr
+                url: https://prowlarr.rafaribe.com
+                icon: di:prowlarr
+              - title: SABnzbd
+                url: https://sab.rafaribe.com
+                icon: di:sabnzbd
+
+  - name: Home & Photos
+    columns:
+      - size: small
+        widgets:
+          - type: bookmarks
+            groups:
+              - title: Home
+                links:
+                  - title: Home Assistant
+                    url: https://hass.rafaribe.com
+                    icon: di:home-assistant
+                  - title: Zigbee2MQTT
+                    url: https://zigbee2mqtt.rafaribe.com
+                    icon: di:zigbee2mqtt
+                  - title: Immich
+                    url: https://photos.rafaribe.com
+                    icon: di:immich
+              - title: Life
+                links:
+                  - title: Paperless
+                    url: https://paperless.rafaribe.com
+                    icon: di:paperless-ngx
+                  - title: Littlelink
+                    url: https://link.rafaribe.com
+                    icon: mdi:link-variant
+                  - title: Mealie
+                    url: https://mealie.rafaribe.com
+                    icon: di:mealie
+                  - title: KitchenOwl
+                    url: https://kitchenowl.rafaribe.com
+                    icon: mdi:owl
+                  - title: Tandoor
+                    url: https://tandoor.rafaribe.com
+                    icon: di:tandoor-recipes
+                  - title: Homebox
+                    url: https://homebox.rafaribe.com
+                    icon: di:homebox
+                  - title: LubeLog
+                    url: https://lubelog.rafaribe.com
+                    icon: mdi:car
+                  - title: AirTrail
+                    url: https://airtrail.rafaribe.com
+                    icon: mdi:airplane
+      - size: full
+        widgets:
+          - type: extension
+            url: http://glance-k8s-extension.services:8080/extension/apps
+            title: Home & Services
+            allow-potentially-dangerous-html: true
+            cache: 30s
+            parameters:
+              show-if: |
+                namespace == "home"
+      - size: small
+        widgets:
+          - type: monitor
+            title: Health
+            cache: 1m
+            sites:
+              - title: Home Assistant
+                url: https://hass.rafaribe.com
+                icon: di:home-assistant
+              - title: Immich
+                url: https://photos.rafaribe.com
+                icon: di:immich
+              - title: Paperless
+                url: https://paperless.rafaribe.com
+                icon: di:paperless-ngx
+              - title: Mealie
+                url: https://mealie.rafaribe.com
+                icon: di:mealie
+
+  - name: Misc
+    columns:
+      - size: small
+        widgets:
+          - type: bookmarks
+            groups:
+              - title: Productivity
+                links:
+                  - title: Affine
+                    url: https://affine.rafaribe.com
+                    icon: di:affine
+                  - title: Docmost
+                    url: https://docmost.rafaribe.com
+                    icon: mdi:book-open-page-variant
+                  - title: Poznote
+                    url: https://poznote.rafaribe.com
+                    icon: mdi:note-text
+                  - title: LeafWiki
+                    url: https://leafwiki.rafaribe.com
+                    icon: mdi:leaf
+                  - title: Linkding
+                    url: https://links.rafaribe.com
+                    icon: di:linkding
+              - title: Communication
+                links:
+                  - title: The Lounge
+                    url: https://tl.rafaribe.com
+                    icon: di:thelounge
+                  - title: N8N
+                    url: https://n8n.rafaribe.com
+                    icon: di:n8n
+              - title: Finance & Storage
+                links:
+                  - title: Actual Budget
+                    url: https://actual.rafaribe.com
+                    icon: di:actual-budget
+                  - title: Syncthing
+                    url: https://syncthing.rafaribe.com
+                    icon: di:syncthing
+                  - title: PicoShare
+                    url: https://picoshare.rafaribe.com
+                    icon: mdi:share-variant
+                  - title: Slink
+                    url: https://slink.rafaribe.com
+                    icon: mdi:link
+      - size: full
+        widgets:
+          - type: extension
+            url: http://glance-k8s-extension.services:8080/extension/apps
+            title: Services
+            allow-potentially-dangerous-html: true
+            cache: 30s
+            parameters:
+              show-if: |
+                namespace == "services" and
+                ("glance/hide" not in annotations || annotations["glance/hide"] != "true")
+      - size: small
+        widgets:
+          - type: monitor
+            title: Misc Health
+            cache: 1m
+            sites:
+              - title: Miniflux
+                url: https://miniflux.rafaribe.com
+                icon: di:miniflux
+              - title: Karakeep
+                url: https://karakeep.rafaribe.com
+                icon: di:karakeep
+              - title: Linkding
+                url: https://links.rafaribe.com
+                icon: di:linkding
+              - title: Syncthing
+                url: https://syncthing.rafaribe.com
+                icon: di:syncthing
+
   - name: Homelab
     columns:
       - size: small
