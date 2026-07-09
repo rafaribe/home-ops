@@ -64,6 +64,10 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /opt/explo/config
+      crontabs:
+        type: emptyDir
+        globalMounts:
+          - path: /etc/crontabs
       data:
         type: nfs
         server: truenas.rafaribe.com
