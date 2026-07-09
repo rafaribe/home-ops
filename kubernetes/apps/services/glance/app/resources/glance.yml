@@ -10,12 +10,13 @@ theme:
 
 pages:
   - name: Home
+    head-widgets:
+      - type: search
+        search-engine: google
+        autofocus: true
     columns:
       - size: small
         widgets:
-          - type: search
-            search-engine: duckduckgo
-            autofocus: true
           - type: calendar
           - type: weather
             location: Viseu, Portugal
