@@ -22,45 +22,7 @@ spec:
     controllers:
       slskd:
         annotations:
-          configmap.reloader.stakater.com/reload: slskd-dnsdist
-          secret.reloader.stakater.com/reload: slskd
-        pod:
-          terminationGracePeriodSeconds: 120
-        initContainers:
-          dnsdist:
-            image:
-              repository: docker.io/powerdns/dnsdist-19
-              tag: 1.9.15
-            restartPolicy: Always
-          gluetun:
-            dependsOn:
-              - dnsdist
-            image:
-              repository: ghcr.io/qdm12/gluetun
-              tag: v3.41.1
-            env:
-              DNS_ADDRESS: "127.0.0.2"
-              DOT: "off"
-              FIREWALL_INPUT_PORTS: 80
-              FIREWALL_OUTBOUND_SUBNETS: 10.42.0.0/16,10.43.0.0/16
-              PORT_FORWARD_ONLY: "on"
-              VPN_PORT_FORWARDING: "on"
-              VPN_SERVICE_PROVIDER: protonvpn
-              VPN_TYPE: wireguard
-            envFrom:
-              - secretRef:
-                  name: slskd
-            resources:
-              limits:
-                squat.ai/tun: "1"
-            restartPolicy: Always
-            securityContext:
-              capabilities:
-                add:
-                  - NET_ADMIN
-              runAsUser: 0
-              runAsGroup: 0
-              runAsNonRoot: false
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
@@ -74,10 +36,7 @@ spec:
               SLSKD_NO_HTTPS: true
               SLSKD_NO_VERSION_CHECK: true
               SLSKD_REMOTE_CONFIGURATION: true
-              SLSKD_SLSK_LISTEN_PORT: 50300
-              SLSKD_VPN: "true"
-              SLSKD_VPN_GLUETUN_URL: http://localhost:8000
-              SLSKD_VPN_PORT_FORWARDING: "true"
+              SLSKD_SLSK_LISTEN_PORT: &soulseekPort 50300
               TZ: Europe/Lisbon
             envFrom:
               - secretRef:
@@ -130,15 +89,6 @@ spec:
         globalMounts:
           - path: /config/slskd.yml
             subPath: slskd.yml
-      dnsdist:
-        type: configMap
-        name: slskd-dnsdist
-        advancedMounts:
-          slskd:
-            dnsdist:
-              - path: /etc/dnsdist/dnsdist.conf
-                subPath: dnsdist.conf
-                readOnly: true
       media:
         type: nfs
         server: truenas.rafaribe.com
@@ -166,3 +116,13 @@ spec:
         ports:
           http:
             port: *port
+      soulseek:
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.0.1.32
+        controller: slskd
+        externalTrafficPolicy: Local
+        ports:
+          soulseek-tcp:
+            port: *soulseekPort
+            protocol: TCP

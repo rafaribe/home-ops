@@ -5,9 +5,3 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-configMapGenerator:
-  - name: slskd-dnsdist
-    files:
-      - ./config/dnsdist.conf
-generatorOptions:
-  disableNameSuffixHash: true
