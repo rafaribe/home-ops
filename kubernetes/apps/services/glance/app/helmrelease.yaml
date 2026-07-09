@@ -164,7 +164,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: glance-app
                 port: *port
     serviceAccount:
       glance:
