@@ -83,6 +83,14 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
+    persistence:
+      config:
+        type: configMap
+        name: glance-config
+        globalMounts:
+          - path: /app/config/glance.yml
+            readOnly: true
+            subPath: glance.yml
     rbac:
       bindings:
         list:
@@ -135,6 +143,32 @@ spec:
               verbs:
                 - list
           type: ClusterRole
+    route:
+      app:
+        hostnames:
+          - "glance.rafaribe.com"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: glance-app
+                port: *port
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 8081
+      k8s-extension:
+        controller: *app
+        ports:
+          http:
+            port: 8080
+    serviceAccount:
+      glance:
+        enabled: true
     configMaps:
       config:
         data:
@@ -189,37 +223,3 @@ spec:
                             title: Hacker News
                           - url: https://www.techmeme.com/feed.xml
                             title: Techmeme
-    persistence:
-      config:
-        type: configMap
-        name: glance-config
-        globalMounts:
-          - path: /app/config/glance.yml
-            readOnly: true
-            subPath: glance.yml
-    service:
-      app:
-        controller: *app
-        ports:
-          http:
-            port: &port 8081
-      k8s-extension:
-        controller: *app
-        ports:
-          http:
-            port: 8080
-    route:
-      app:
-        hostnames:
-          - "glance.rafaribe.com"
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: glance-app
-                port: *port
-    serviceAccount:
-      glance:
-        enabled: true
