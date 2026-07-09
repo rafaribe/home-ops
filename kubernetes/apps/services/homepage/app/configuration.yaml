@@ -114,6 +114,10 @@ data:
           href: https://slskd-files.rafaribe.com
           icon: filebrowser.png
           description: slskd File Browser
+      - Aurral:
+          href: https://aurral.rafaribe.com
+          icon: https://raw.githubusercontent.com/lklynet/aurral/main/frontend/public/arralogo.svg
+          description: Music Discovery for Lidarr
     - Services:
       - Syncthing:
           href: https://syncthing.rafaribe.com
