@@ -18,15 +18,6 @@ spec:
       retries: 3
       strategy: rollback
   values:
-    defaultPodOptions:
-      securityContext:
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
-        seccompProfile:
-          type: RuntimeDefault
     controllers:
       lidarr:
         labels:
@@ -36,18 +27,13 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-operations/lidarr
-              tag: 3.1.3.4968@sha256:eb3db00c3219b93a433036e393e49d4233cdd992cfe42a7c02e6114a22491b1b
+              repository: ghcr.io/hotio/lidarr
+              tag: nightly@sha256:b9456f23d8aea47f86d36482a71ad217dd3718ab98955cc23d9864be60f7a411
             env:
-              LIDARR__APP__INSTANCENAME: Lidarr
-              LIDARR__APP__THEME: dark
-              LIDARR__AUTH__METHOD: External
-              LIDARR__AUTH__REQUIRED: DisabledForLocalAddresses
-              LIDARR__LOG__DBENABLED: "False"
-              LIDARR__LOG__LEVEL: info
-              LIDARR__SERVER__PORT: &port 80
-              LIDARR__UPDATE__BRANCH: develop
+              PUID: "1000"
+              PGID: "1000"
               TZ: Europe/Lisbon
+              UMASK: "002"
             envFrom:
               - secretRef:
                   name: *app
@@ -58,8 +44,8 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: *port
-                  initialDelaySeconds: 0
+                    port: &port 8686
+                  initialDelaySeconds: 30
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
@@ -75,7 +61,16 @@ spec:
               capabilities:
                 drop:
                   - ALL
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 1000
+        runAsNonRoot: false
+        runAsUser: 0
+        seccompProfile:
+          type: RuntimeDefault
     persistence:
       config:
         existingClaim: lidarr
