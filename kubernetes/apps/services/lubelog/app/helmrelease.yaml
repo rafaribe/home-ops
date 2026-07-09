@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/hargata/lubelogger
-              tag: v1.6.8
+              tag: v1.6.9
             env:
               TZ: Europe/Lisbon
             envFrom: &envFrom
