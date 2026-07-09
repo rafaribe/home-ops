@@ -58,6 +58,47 @@ spec:
               capabilities:
                 drop:
                   - ALL
+          filebrowser:
+            image:
+              repository: docker.io/gtstef/filebrowser
+              tag: 1.4.0-stable-slim@sha256:c998b094205179f74dd9c4740af289fa4b2d4f7b0e6fb378eefe677eb14fa9e4
+            env:
+              FILEBROWSER_CONFIG: /config/config.yaml
+            probes:
+              liveness: &fb-probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &fb-port 80
+                  periodSeconds: 10
+              readiness: *fb-probes
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+              readOnlyRootFilesystem: false
+
+    configMaps:
+      filebrowser-config:
+        data:
+          config.yaml: |
+            auth:
+              methods:
+                noauth: true
+            server:
+              cacheDir: /home/filebrowser/data/cache
+              sources:
+                - path: /media/downloads
+                  config:
+                    defaultEnabled: true
 
     service:
       app:
@@ -65,11 +106,16 @@ spec:
         ports:
           http:
             port: *port
+      filebrowser:
+        controller: qbittorrent
+        ports:
+          http:
+            port: *fb-port
 
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: &target internal.rafaribe.com
+          external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
         hostnames: ["qb.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
@@ -77,8 +123,19 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: qbittorrent
-                port: 8080
+              - identifier: app
+                port: http
+      filebrowser:
+        hostnames: ["qb-files.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: filebrowser
+                port: http
+
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -107,6 +164,7 @@ spec:
                       operator: In
                       values: ["sabnzbd"]
                 topologyKey: kubernetes.io/hostname
+
     persistence:
       config:
         enabled: true
@@ -115,6 +173,21 @@ spec:
           qbittorrent:
             app:
               - path: /config
+      filebrowser-config:
+        type: configMap
+        identifier: filebrowser-config
+        advancedMounts:
+          qbittorrent:
+            filebrowser:
+              - path: /config/config.yaml
+                subPath: config.yaml
+                readOnly: true
+      filebrowser-data:
+        type: emptyDir
+        advancedMounts:
+          qbittorrent:
+            filebrowser:
+              - path: /home/filebrowser/data
       media:
         type: nfs
         server: truenas.rafaribe.com
@@ -122,6 +195,8 @@ spec:
         advancedMounts:
           qbittorrent:
             app:
+              - path: /media
+            filebrowser:
               - path: /media
       scripts:
         type: configMap
