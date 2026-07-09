@@ -58,12 +58,6 @@ spec:
                 memory: 1Gi
             securityContext:
               allowPrivilegeEscalation: true
-              capabilities:
-                add:
-                  - SETGID
-                  - SETUID
-                drop:
-                  - ALL
               readOnlyRootFilesystem: false
     defaultPodOptions:
       securityContext:
