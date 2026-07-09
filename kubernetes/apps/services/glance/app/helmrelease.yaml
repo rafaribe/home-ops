@@ -136,6 +136,14 @@ spec:
               verbs:
                 - list
           type: ClusterRole
+    persistence:
+      config:
+        type: configMap
+        name: glance-config
+        globalMounts:
+          - path: /app/config/glance.yml
+            readOnly: true
+            subPath: glance.yml
     service:
       app:
         controller: *app
