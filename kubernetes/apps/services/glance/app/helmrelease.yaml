@@ -135,6 +135,60 @@ spec:
               verbs:
                 - list
           type: ClusterRole
+    configMaps:
+      config:
+        data:
+          glance.yml: |
+            server:
+              port: 8081
+
+            pages:
+              - name: Home
+                columns:
+                  - size: small
+                    widgets:
+                      - type: calendar
+                      - type: weather
+                        location: Viseu, Portugal
+                  - size: full
+                    widgets:
+                      - type: extension
+                        url: http://glance-k8s-extension.services:8080/extension/apps
+                        title: Kubernetes Apps
+                        allow-potentially-dangerous-html: true
+                        cache: 30s
+                        parameters:
+                          show-if: |
+                            namespace != "kube-system" and
+                            namespace != "flux-system" and
+                            namespace != "network" and
+                            namespace != "external-secrets" and
+                            ("glance/hide" not in annotations || annotations["glance/hide"] != "true")
+                      - type: extension
+                        url: http://glance-k8s-extension.services:8080/extension/nodes
+                        title: Cluster Nodes
+                        allow-potentially-dangerous-html: true
+                        cache: 30s
+                  - size: small
+                    widgets:
+                      - type: monitor
+                        title: Services
+                        cache: 1m
+                        sites:
+                          - title: Kanidm
+                            url: https://idm.rafaribe.com
+                          - title: Homepage
+                            url: https://homepage.rafaribe.com
+                          - title: Ceph
+                            url: https://rook.rafaribe.com
+                      - type: rss
+                        title: Tech News
+                        cache: 30m
+                        feeds:
+                          - url: https://news.ycombinator.com/rss
+                            title: Hacker News
+                          - url: https://www.techmeme.com/feed.xml
+                            title: Techmeme
     persistence:
       config:
         type: configMap
