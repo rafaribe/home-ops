@@ -1,39 +1,141 @@
 server:
   port: 8081
 
-theme:
-  background-color: 240 21 15
-  contrast-multiplier: 1.2
-  primary-color: 217 92 83
-  positive-color: 115 54 76
-  negative-color: 347 70 65
 pages:
   - name: Home
     columns:
       - size: small
         widgets:
+          - type: search
+            search-engine: duckduckgo
+            autofocus: true
           - type: calendar
           - type: weather
             location: Viseu, Portugal
-            units: metric
-            hour-format: 24h
+          - type: bookmarks
+            groups:
+              - title: Tools
+                links:
+                  - title: CyberChef
+                    url: https://cyberchef.rafaribe.com
+                    icon: mdi:chef-hat
+                  - title: IT-Tools
+                    url: https://it-tools.rafaribe.com
+                    icon: di:it-tools
+                  - title: Omni Tools
+                    url: https://omni-tools.rafaribe.com
+                    icon: mdi:toolbox
+                  - title: Stirling PDF
+                    url: https://stirling-pdf.rafaribe.com
+                    icon: mdi:file-pdf-box
+              - title: Productivity
+                links:
+                  - title: Docmost
+                    url: https://docmost.rafaribe.com
+                    icon: mdi:book-open-page-variant
+                  - title: Miniflux
+                    url: https://miniflux.rafaribe.com
+                    icon: di:miniflux
+                  - title: Karakeep
+                    url: https://karakeep.rafaribe.com
+                    icon: di:karakeep
+                  - title: Paperless
+                    url: https://paperless.rafaribe.com
+                    icon: di:paperless-ngx
       - size: full
         widgets:
+          - type: hacker-news
+            limit: 10
+            collapse-after: 5
+          - type: reddit
+            subreddit: selfhosted
+            collapse-after: 5
           - type: rss
             title: News
+            collapse-after: 5
             feeds:
               - url: https://www.techmeme.com/feed.xml
                 title: Techmeme
               - url: https://news.ycombinator.com/rss
                 title: Hacker News
-          - type: reddit
-            subreddit: selfhosted
       - size: small
         widgets:
           - type: monitor
             title: Services
+            cache: 1m
             sites:
+              - title: Home Assistant
+                url: https://hass.rafaribe.com
+                icon: di:home-assistant
+              - title: Immich
+                url: https://photos.rafaribe.com
+                icon: di:immich
               - title: Kanidm
                 url: https://idm.rafaribe.com
+                icon: di:kanidm
+              - title: Paperless
+                url: https://paperless.rafaribe.com
+                icon: di:paperless-ngx
+              - title: Miniflux
+                url: https://miniflux.rafaribe.com
+                icon: di:miniflux
+              - title: Karakeep
+                url: https://karakeep.rafaribe.com
+                icon: di:karakeep
+              - title: Docmost
+                url: https://docmost.rafaribe.com
+                icon: mdi:book-open-page-variant
+          - type: releases
+            title: Releases
+            show-source-icon: true
+            repositories:
+              - glanceapp/glance
+              - immich-app/immich
+              - gethomepage/homepage
+              - paperless-ngx/paperless-ngx
+
+  - name: Homelab
+    columns:
+      - size: small
+        widgets:
+          - type: monitor
+            title: Infrastructure
+            cache: 1m
+            sites:
+              - title: Ceph
+                url: https://rook.rafaribe.com
+                icon: mdi:chess-rook
+              - title: Minio
+                url: https://minio.rafaribe.com
+                icon: di:minio
+              - title: Flux UI
+                url: https://konflate.rafaribe.com
+                icon: di:flux-cd
               - title: Grafana
                 url: https://grafana.rafaribe.com
+                icon: di:grafana
+      - size: full
+        widgets:
+          - type: extension
+            url: http://glance-k8s-extension.services:8080/extension/apps
+            title: Kubernetes Apps
+            allow-potentially-dangerous-html: true
+            cache: 30s
+            parameters:
+              show-if: |
+                namespace != "kube-system" and
+                namespace != "flux-system" and
+                namespace != "network" and
+                namespace != "external-secrets" and
+                ("glance/hide" not in annotations || annotations["glance/hide"] != "true")
+          - type: extension
+            url: http://glance-k8s-extension.services:8080/extension/nodes
+            title: Cluster Nodes
+            allow-potentially-dangerous-html: true
+            cache: 30s
+      - size: small
+        widgets:
+          - type: repository
+            repository: rafaribe/home-ops
+            pull-requests-limit: 5
+            issues-limit: 3
