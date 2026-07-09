@@ -68,31 +68,6 @@ pages:
                 title: Hacker News
       - size: small
         widgets:
-          - type: monitor
-            title: Services
-            cache: 1m
-            sites:
-              - title: Home Assistant
-                url: https://hass.rafaribe.com
-                icon: di:home-assistant
-              - title: Immich
-                url: https://photos.rafaribe.com
-                icon: di:immich
-              - title: Kanidm
-                url: https://idm.rafaribe.com
-                icon: di:kanidm
-              - title: Paperless
-                url: https://paperless.rafaribe.com
-                icon: di:paperless-ngx
-              - title: Miniflux
-                url: https://miniflux.rafaribe.com
-                icon: di:miniflux
-              - title: Karakeep
-                url: https://karakeep.rafaribe.com
-                icon: di:karakeep
-              - title: Docmost
-                url: https://docmost.rafaribe.com
-                icon: mdi:book-open-page-variant
           - type: releases
             title: Releases
             show-source-icon: true
