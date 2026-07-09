@@ -36,7 +36,7 @@ spec:
               ND_PORT: &port 4533
               ND_SCANSCHEDULE: 30m
               ND_BASEURL: https://navidrome.rafaribe.com
-
+              ND_SCANNER_PURGEMISSING: always
             probes:
               liveness:
                 enabled: true
