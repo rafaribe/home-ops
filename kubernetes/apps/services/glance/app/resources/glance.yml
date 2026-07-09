@@ -8,7 +8,7 @@ pages:
         widgets:
           - type: calendar
           - type: weather
-            location: Lisbon, Portugal
+            location: Viseu, Portugal
       - size: full
         widgets:
           - type: rss
