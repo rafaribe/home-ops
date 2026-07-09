@@ -136,6 +136,17 @@ spec:
               verbs:
                 - list
           type: ClusterRole
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 8081
+      k8s-extension:
+        controller: *app
+        ports:
+          http:
+            port: 8080
     route:
       app:
         hostnames:
@@ -148,17 +159,6 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-    service:
-      app:
-        controller: *app
-        ports:
-          http:
-            port: &port 8081
-      k8s-extension:
-        controller: *app
-        ports:
-          http:
-            port: 8080
     serviceAccount:
       glance:
         enabled: true
