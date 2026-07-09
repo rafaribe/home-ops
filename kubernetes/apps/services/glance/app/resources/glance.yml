@@ -24,18 +24,6 @@ pages:
       - size: full
         widgets:
           - type: extension
-            url: http://glance-k8s-extension.services:8080/extension/apps
-            title: Kubernetes Apps
-            allow-potentially-dangerous-html: true
-            cache: 30s
-            parameters:
-              show-if: |
-                namespace != "kube-system" and
-                namespace != "flux-system" and
-                namespace != "network" and
-                namespace != "external-secrets" and
-                ("glance/hide" not in annotations || annotations["glance/hide"] != "true")
-          - type: extension
             url: http://glance-k8s-extension.services:8080/extension/nodes
             title: Cluster Nodes
             allow-potentially-dangerous-html: true
