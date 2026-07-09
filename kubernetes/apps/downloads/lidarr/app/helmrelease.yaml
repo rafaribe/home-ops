@@ -27,13 +27,18 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/hotio/lidarr
-              tag: nightly@sha256:b9456f23d8aea47f86d36482a71ad217dd3718ab98955cc23d9864be60f7a411
+              repository: ghcr.io/rafaribe/lidarr-develop
+              tag: 3.1.3.4968@sha256:3215bdf307a0b200bf7a1a902feae323514dbeaa60b8a28feb3577bdfee605c8
             env:
-              PUID: "1000"
-              PGID: "1000"
+              LIDARR__APP__INSTANCENAME: Lidarr
+              LIDARR__APP__THEME: dark
+              LIDARR__AUTH__METHOD: External
+              LIDARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              LIDARR__LOG__DBENABLED: "False"
+              LIDARR__LOG__LEVEL: info
+              LIDARR__SERVER__PORT: 8686
+              LIDARR__UPDATE__BRANCH: develop
               TZ: Europe/Lisbon
-              UMASK: "002"
             envFrom:
               - secretRef:
                   name: *app
@@ -57,15 +62,18 @@ spec:
               limits:
                 memory: 1Gi
             securityContext:
-              allowPrivilegeEscalation: true
-              readOnlyRootFilesystem: false
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         runAsGroup: 1000
-        runAsNonRoot: false
-        runAsUser: 0
+        runAsNonRoot: true
+        runAsUser: 1000
         seccompProfile:
           type: RuntimeDefault
     persistence:
