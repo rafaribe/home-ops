@@ -117,7 +117,7 @@ spec:
       registry: code.forgejo.org
       repository: forgejo/forgejo
       rootless: true
-      tag: 15.0.3-rootless
+      tag: 15.0.4-rootless
     persistence:
       claimName: forgejo-data
       create: false
