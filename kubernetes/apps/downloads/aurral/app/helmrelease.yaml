@@ -67,7 +67,7 @@ spec:
       downloads:
         type: nfs
         server: truenas.rafaribe.com
-        path: /mnt/tank/media/downloads/aurral
+        path: /mnt/tank/media/downloads/
         globalMounts:
           - path: /downloads
       media:
@@ -79,6 +79,12 @@ spec:
             readOnly: true
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Aurral
+          gethomepage.dev/description: "Music Discovery for Lidarr"
+          gethomepage.dev/icon: https://raw.githubusercontent.com/lklynet/aurral/main/frontend/public/arralogo.svg
         hostnames: ["aurral.rafaribe.com"]
         parentRefs:
           - name: envoy-internal

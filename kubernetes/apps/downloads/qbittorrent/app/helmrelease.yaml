@@ -116,6 +116,13 @@ spec:
       app:
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.rafaribe.com
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: qBittorrent
+          gethomepage.dev/description: "Torrent Client"
+          gethomepage.dev/icon: qbittorrent
+          gethomepage.dev/widget.type: qbittorrent
+          gethomepage.dev/widget.url: "http://qbittorrent.downloads.svc.cluster.local:8080"
         hostnames: ["qb.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
@@ -126,6 +133,12 @@ spec:
               - identifier: app
                 port: http
       filebrowser:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: qBittorrent Files
+          gethomepage.dev/description: "qBittorrent File Browser"
+          gethomepage.dev/icon: filebrowser
         hostnames: ["qb-files.rafaribe.com"]
         parentRefs:
           - name: envoy-internal

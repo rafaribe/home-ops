@@ -156,6 +156,15 @@ spec:
           - path: /tmp
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: slskd
+          gethomepage.dev/description: "Soulseek Client"
+          gethomepage.dev/icon: slskd
+          gethomepage.dev/widget.type: slskd
+          gethomepage.dev/widget.url: "http://slskd-app.downloads.svc.cluster.local"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SLSKD_API_KEY}}` }}"
         hostnames: ["slskd.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
@@ -166,6 +175,12 @@ spec:
               - identifier: app
                 port: http
       filebrowser:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: slskd Files
+          gethomepage.dev/description: "slskd File Browser"
+          gethomepage.dev/icon: filebrowser
         hostnames: ["slskd-files.rafaribe.com"]
         parentRefs:
           - name: envoy-internal

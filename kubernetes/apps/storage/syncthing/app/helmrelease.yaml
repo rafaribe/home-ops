@@ -110,6 +110,12 @@ spec:
             port: *fb-port
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: Syncthing
+          gethomepage.dev/description: "File Sync"
+          gethomepage.dev/icon: syncthing
         hostnames: ["{{ .Release.Name }}.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
@@ -120,6 +126,12 @@ spec:
               - identifier: app
                 port: 8384
       filebrowser:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: Syncthing Files
+          gethomepage.dev/description: "Syncthing File Browser"
+          gethomepage.dev/icon: filebrowser
         hostnames: ["sync.rafaribe.com"]
         parentRefs:
           - name: envoy-internal
