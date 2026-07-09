@@ -11,9 +11,5 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./authentik/ks.yaml
-  - ./glauth/ks.yaml
   - ./kanidm/ks.yaml
   - ./kaniop/ks.yaml
-  #- ./kguardian/ks.yaml
-#  - ./trivy-operator/ks.yaml

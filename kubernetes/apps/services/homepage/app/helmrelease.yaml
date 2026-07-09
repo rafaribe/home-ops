@@ -23,7 +23,7 @@ spec:
               tag: v1.13.2@sha256:a0b71c8e757298d02560186bab9fbe3fc2d375c523a62cc1019177b37e48aa28
             env:
               TZ: Europe/Lisbon
-              HOMEPAGE_ALLOWED_HOSTS: homepage.rafaribe.com,home.rafaribe.com
+              HOMEPAGE_ALLOWED_HOSTS: glance.rafaribe.com,homepage.rafaribe.com,home.rafaribe.com
             envFrom:
               - secretRef:
                   name: *app
@@ -46,6 +46,7 @@ spec:
     route:
       app:
         hostnames:
+          - "glance.rafaribe.com"
           - "homepage.rafaribe.com"
           - "home.rafaribe.com"
         parentRefs:

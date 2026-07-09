@@ -12,6 +12,7 @@ resources:
   - ./atuin/ks.yaml
   - ./cyberchef/ks.yaml
   - ./docmost/ks.yaml
+  - ./glance/ks.yaml
   - ./homebox/ks.yaml
   - ./homepage/ks.yaml
   #- ./hush/ks.yaml

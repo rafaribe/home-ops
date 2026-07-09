@@ -1,0 +1,164 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app glance
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 30m
+  values:
+    controllers:
+      glance:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+        serviceAccount:
+          identifier: *app
+        containers:
+          app:
+            image:
+              repository: glanceapp/glance
+              tag: v0.8.5@sha256:32ab73d80f2b8b5fb0735b0431deb36b93fbb6b2fb43592449b0178c8b83e350
+            env:
+              GLANCE_PORT: "8081"
+              TZ: Europe/Lisbon
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+          k8s-extension:
+            image:
+              repository: ghcr.io/lukasdietrich/glance-k8s/glance-k8s
+              tag: v0.5.3@sha256:5c9a5f537935f7579de30b544e3f63919f8b1e7e74ba660ecb9fc9fd84b7dd83
+            probes:
+              liveness:
+                custom: true
+                enabled: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: 8080
+              readiness:
+                custom: true
+                enabled: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: 8080
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 64Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      automountServiceAccountToken: true
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+    rbac:
+      bindings:
+        list:
+          forceRename: *app
+          roleRef:
+            kind: ClusterRole
+            name: *app
+          subjects:
+            - kind: ServiceAccount
+              name: *app
+              namespace: "{{ .Release.Namespace }}"
+          type: ClusterRoleBinding
+      roles:
+        list:
+          forceRename: *app
+          rules:
+            - apiGroups:
+                - ""
+                - metrics.k8s.io
+              resources:
+                - nodes
+              verbs:
+                - list
+            - apiGroups:
+                - ""
+              resources:
+                - services
+              verbs:
+                - list
+            - apiGroups:
+                - networking.k8s.io
+              resources:
+                - ingresses
+                - ingressclasses
+              verbs:
+                - list
+            - apiGroups:
+                - gateway.networking.k8s.io
+              resources:
+                - gateways
+                - httproutes
+              verbs:
+                - list
+            - apiGroups:
+                - apps
+              resources:
+                - daemonsets
+                - deployments
+                - statefulsets
+              verbs:
+                - list
+          type: ClusterRole
+    route:
+      app:
+        hostnames:
+          - "glance.rafaribe.com"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 8081
+      k8s-extension:
+        controller: *app
+        ports:
+          http:
+            port: 8080
+    serviceAccount:
+      glance:
+        enabled: true
