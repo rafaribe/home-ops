@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: kanidm-secrets
-  namespace: flux-system
 spec:
   targetNamespace: security
   commonMetadata:
@@ -28,7 +27,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app kanidm
-  namespace: flux-system
 spec:
   targetNamespace: security
   commonMetadata:
