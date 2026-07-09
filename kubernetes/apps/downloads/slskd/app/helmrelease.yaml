@@ -204,7 +204,7 @@ spec:
       soulseek:
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.0.1.32
+          lbipam.cilium.io/ips: 10.0.1.34
         controller: slskd
         externalTrafficPolicy: Local
         ports:
