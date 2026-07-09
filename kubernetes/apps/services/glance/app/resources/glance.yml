@@ -7,7 +7,6 @@ theme:
   primary-color: 217 92 83
   positive-color: 115 54 76
   negative-color: 347 70 65
-  
 pages:
   - name: Home
     columns:
@@ -16,6 +15,8 @@ pages:
           - type: calendar
           - type: weather
             location: Viseu, Portugal
+            units: metric
+            hour-format: 24h
       - size: full
         widgets:
           - type: rss
@@ -34,5 +35,5 @@ pages:
             sites:
               - title: Kanidm
                 url: https://idm.rafaribe.com
-              - title: Homepage
-                url: https://homepage.rafaribe.com
+              - title: Grafana
+                url: https://grafana.rafaribe.com
