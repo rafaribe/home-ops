@@ -46,7 +46,6 @@ spec:
     route:
       app:
         hostnames:
-          - "glance.rafaribe.com"
           - "homepage.rafaribe.com"
           - "home.rafaribe.com"
         parentRefs:
