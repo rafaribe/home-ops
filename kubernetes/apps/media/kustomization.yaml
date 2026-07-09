@@ -7,14 +7,10 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./namespace.yaml
-  - ./acestream-scraper/ks.yaml
   - ./audiobookshelf/ks.yaml
   - ./beets/ks.yaml
   - ./bookboss/ks.yaml
-  #- ./calibre-web-automated/ks.yaml
   - ./dispatcharr/ks.yaml
-  - ./ersatztv/ks.yaml
-  - ./ersatztv-next/ks.yaml
   - ./jellyfin/ks.yaml
   - ./jellyseerr/ks.yaml
   - ./kavita/ks.yaml
@@ -28,6 +24,5 @@ resources:
   - ./plex/ks.yaml
   - ./stash/ks.yaml
   - ./tautulli/ks.yaml
-  - ./tvheadend/ks.yaml
   - ./wizarr/ks.yaml
   - ./your-spotify/ks.yaml
