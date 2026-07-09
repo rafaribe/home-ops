@@ -44,7 +44,6 @@ spec:
               FIREWALL_INPUT_PORTS: 80
               FIREWALL_OUTBOUND_SUBNETS: 10.42.0.0/16,10.43.0.0/16
               PORT_FORWARD_ONLY: "on"
-              SERVER_COUNTRIES: Romania
               VPN_PORT_FORWARDING: "on"
               VPN_SERVICE_PROVIDER: protonvpn
               VPN_TYPE: wireguard
