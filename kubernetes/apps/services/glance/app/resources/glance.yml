@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 pages:
   - name: Home
     columns:
