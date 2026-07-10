@@ -87,33 +87,43 @@ pages:
             sites:
               - title: Plex
                 url: https://plex.rafaribe.com
+                check-url: http://plex.media.svc.cluster.local:32400/web
                 icon: di:plex
               - title: Jellyfin
                 url: https://jellyfin.rafaribe.com
+                check-url: http://jellyfin.media.svc.cluster.local:8096
                 icon: di:jellyfin
               - title: Navidrome
                 url: https://music.rafaribe.com
+                check-url: http://navidrome.media.svc.cluster.local:4533
                 icon: di:navidrome
               - title: Audiobookshelf
                 url: https://audiobookshelf.rafaribe.com
+                check-url: http://audiobookshelf.media.svc.cluster.local:80
                 icon: di:audiobookshelf
               - title: Kavita
                 url: https://comics.rafaribe.com
+                check-url: http://kavita.media.svc.cluster.local:5000
                 icon: di:kavita
               - title: Komga
                 url: https://komga.rafaribe.com
+                check-url: http://komga.media.svc.cluster.local:8080
                 icon: di:komga
               - title: Tautulli
                 url: https://tautulli.rafaribe.com
+                check-url: http://tautulli.media.svc.cluster.local:80
                 icon: di:tautulli
               - title: Jellyseerr
                 url: https://requests.rafaribe.com
+                check-url: http://jellyseerr.media.svc.cluster.local:80
                 icon: di:jellyseerr
               - title: Dispatcharr
                 url: https://dispatcharr.rafaribe.com
+                check-url: http://dispatcharr.media.svc.cluster.local:9191
                 icon: mdi:television-play
               - title: Maintainerr
                 url: https://maintainerr.rafaribe.com
+                check-url: http://maintainerr.media.svc.cluster.local:6246
                 icon: di:maintainerr
           - type: monitor
             title: Downloads
@@ -121,33 +131,43 @@ pages:
             sites:
               - title: qBittorrent
                 url: https://qb.rafaribe.com
+                check-url: http://qbittorrent-app.downloads.svc.cluster.local:8080
                 icon: di:qbittorrent
               - title: SABnzbd
                 url: https://sab.rafaribe.com
+                check-url: http://sabnzbd.downloads.svc.cluster.local:80
                 icon: di:sabnzbd
               - title: Prowlarr
                 url: https://prowlarr.rafaribe.com
+                check-url: http://prowlarr.downloads.svc.cluster.local:80
                 icon: di:prowlarr
               - title: Radarr
                 url: https://radarr.rafaribe.com
+                check-url: http://radarr.downloads.svc.cluster.local:80
                 icon: di:radarr
               - title: Sonarr
                 url: https://sonarr.rafaribe.com
+                check-url: http://sonarr.downloads.svc.cluster.local:80
                 icon: di:sonarr
               - title: Lidarr
                 url: https://lidarr.rafaribe.com
+                check-url: http://lidarr.downloads.svc.cluster.local:8686
                 icon: di:lidarr
               - title: Readarr
                 url: https://readarr.rafaribe.com
+                check-url: http://readarr.downloads.svc.cluster.local:80
                 icon: di:readarr
               - title: Bazarr
                 url: https://bazarr.rafaribe.com
+                check-url: http://bazarr.downloads.svc.cluster.local:6767
                 icon: di:bazarr
               - title: slskd
                 url: https://slskd.rafaribe.com
+                check-url: http://slskd-app.downloads.svc.cluster.local:80
                 icon: di:slskd
               - title: Autobrr
                 url: https://autobrr.rafaribe.com
+                check-url: http://autobrr.downloads.svc.cluster.local:7474
                 icon: di:autobrr
 
   - name: Home & Photos
