@@ -29,9 +29,7 @@ spec:
               repository: docker.io/mrusse08/soularr
               tag: v1.2.2@sha256:c4f97924fabfce4e0de539d821ea7d20519b95c4815a707bacfc9d7212597f20
             env:
-              LIDARR_URL: http://lidarr.downloads.svc.cluster.local:80
               SCRIPT_INTERVAL: "300"
-              SLSKD_URL: http://slskd.downloads.svc.cluster.local:80
               TZ: Europe/Lisbon
               WEBUI_ENABLED: "true"
               WEBUI_PORT: &port 8265
@@ -60,17 +58,80 @@ spec:
                 drop:
                   - ALL
               readOnlyRootFilesystem: true
+    configMaps:
+      config:
+        data:
+          config.ini: |
+            [Lidarr]
+            api_key = ${LIDARR_API_KEY}
+            host_url = http://lidarr.downloads.svc.cluster.local:8686
+            download_dir = /media/downloads/slskd/complete
+            disable_sync = False
+
+            [Slskd]
+            api_key = ${SLSKD_API_KEY}
+            host_url = http://slskd.downloads.svc.cluster.local
+            url_base = /
+            download_dir = /media/downloads/slskd/complete
+            delete_searches = False
+            stalled_timeout = 3600
+            remote_queue_timeout = 300
+
+            [Release Settings]
+            use_selected_lidarr_release = False
+            use_most_common_tracknum = True
+            allow_multi_disc = True
+            accepted_countries = Europe,Japan,United Kingdom,United States,[Worldwide],Australia,Canada,Portugal
+            skip_region_check = False
+            accepted_formats = CD,Digital Media,Vinyl
+
+            [Search Settings]
+            search_timeout = 5000
+            maximum_peer_queue = 50
+            minimum_peer_upload_speed = 0
+            minimum_filename_match_ratio = 0.8
+            minimum_search_interval = 5
+            allowed_filetypes = flac,mp3 320,mp3
+            ignored_users =
+            album_prepend_artist = False
+            search_type = incrementing_page
+            number_of_albums_to_grab = 10
+            title_blacklist =
+            search_blacklist =
+            search_source = missing
+            failed_import_denylist = True
+
+            [Download Settings]
+            download_filtering = True
+            use_extension_whitelist = False
+            extensions_whitelist = lrc,nfo,txt
+
+            [Logging]
+            level = INFO
+            format = [%(levelname)s|%(module)s|L%(lineno)d] %(asctime)s: %(message)s
+            datefmt = %Y-%m-%dT%H:%M:%S%z
+            log_to_file = True
+            log_file = soularr.log
+            max_bytes = 1048576
+            backup_count = 3
     persistence:
       config:
+        type: configMap
+        identifier: config
+        globalMounts:
+          - path: /data/config.ini
+            subPath: config.ini
+      data:
         type: emptyDir
         globalMounts:
           - path: /data
-      downloads:
+            subPath: var
+      media:
         type: nfs
         server: truenas.rafaribe.com
-        path: /mnt/tank/media/downloads/slskd/complete
+        path: /mnt/tank/media
         globalMounts:
-          - path: /downloads
+          - path: /media
       tmp:
         type: emptyDir
     route:
