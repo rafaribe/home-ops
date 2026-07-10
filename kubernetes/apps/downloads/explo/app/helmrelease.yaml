@@ -14,9 +14,6 @@ spec:
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
         seccompProfile:
           type: RuntimeDefault
     controllers:
@@ -25,9 +22,6 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
-            image:
-              repository: ghcr.io/lumepart/explo
-              tag: v1.1.2@sha256:9e136d99536e03595d055645908d166b527706db3c15d75b70bc14e4dd93f95b
             env:
               DOWNLOAD_SERVICES: slskd
               EXPLO_SYSTEM: subsonic
@@ -37,6 +31,9 @@ spec:
             envFrom:
               - secretRef:
                   name: *app
+            image:
+              repository: ghcr.io/lumepart/explo
+              tag: v1.1.2@sha256:9e136d99536e03595d055645908d166b527706db3c15d75b70bc14e4dd93f95b
             probes:
               liveness:
                 enabled: true
@@ -48,16 +45,15 @@ spec:
                   failureThreshold: 30
                   periodSeconds: 5
             resources:
-              limits:
-                memory: 512Mi
               requests:
                 cpu: 10m
                 memory: 128Mi
+              limits:
+                memory: 512Mi
             securityContext:
-              allowPrivilegeEscalation: false
+              allowPrivilegeEscalation: true
               capabilities:
-                drop:
-                  - ALL
+                drop: ["ALL"]
               readOnlyRootFilesystem: false
     persistence:
       config:
