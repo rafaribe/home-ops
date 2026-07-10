@@ -22,7 +22,6 @@ resources:
   - ./navidrome/ks.yaml
   - ./nodecast-tv/ks.yaml
   - ./plex/ks.yaml
-  - ./sonarr/ks.yaml
   - ./soulsync/ks.yaml
   - ./stash/ks.yaml
   - ./tautulli/ks.yaml
