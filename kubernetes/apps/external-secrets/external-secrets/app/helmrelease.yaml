@@ -10,26 +10,33 @@ spec:
     name: external-secrets
   interval: 1h
   values:
-    installCRDs: true
-    leaderElect: true
-    image:
-      repository: ghcr.io/external-secrets/external-secrets
-    webhook:
-      image:
-        repository: ghcr.io/external-secrets/external-secrets
-      serviceMonitor:
-        enabled: true
-        interval: 1m
+    bitwarden-sdk-server:
+      enabled: false
     certController:
       image:
         repository: ghcr.io/external-secrets/external-secrets
       serviceMonitor:
         enabled: true
         interval: 1m
+    generator:
+      enabled: true
+      image:
+        repository: ghcr.io/external-secrets/external-secrets
+      serviceMonitor:
+        enabled: true
+        interval: 1m
+    grafanaDashboard:
+      enabled: true
+    image:
+      repository: ghcr.io/external-secrets/external-secrets
+    installCRDs: true
+    leaderElect: true
     serviceMonitor:
       enabled: true
       interval: 1m
-    grafanaDashboard:
-      enabled: true
-    bitwarden-sdk-server:
-      enabled: false
+    webhook:
+      image:
+        repository: ghcr.io/external-secrets/external-secrets
+      serviceMonitor:
+        enabled: true
+        interval: 1m
