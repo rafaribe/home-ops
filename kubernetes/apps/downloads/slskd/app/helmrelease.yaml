@@ -84,8 +84,8 @@ spec:
               readOnlyRootFilesystem: true
           filebrowser:
             image:
-              repository: docker.io/gtstef/filebrowser
-              tag: 1.4.0-stable-slim@sha256:c998b094205179f74dd9c4740af289fa4b2d4f7b0e6fb378eefe677eb14fa9e4
+              repository: ghcr.io/gtsteffaniak/filebrowser
+              tag: 1.4.0-stable-slim@sha256:436bb660ae4bd84e7bffd70b14aa4a11c3438bc593d3c207213c4e383d0ba255
             env:
               FILEBROWSER_CONFIG: /config/config.yaml
             probes:
