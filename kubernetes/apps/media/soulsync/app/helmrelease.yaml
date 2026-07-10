@@ -1,0 +1,112 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app soulsync
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: soulsync
+  interval: 30m
+  values:
+    controllers:
+      soulsync:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: docker.io/boulderbadgedad/soulsync
+              tag: latest@sha256:307c4d0578ac42862f0ef8d1e71debd6ff8d59c1e7987f0c8572d7062ac34c55
+            env:
+              PGID: "1000"
+              PUID: "1000"
+              PYTHONPATH: /app
+              SOULSYNC_CONFIG_PATH: /app/config/config.json
+              TZ: Europe/Lisbon
+              UMASK: "022"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 8008
+                  initialDelaySeconds: 60
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 50m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: false
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        globalMounts:
+          - path: /app/config
+      data:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        globalMounts:
+          - path: /app/data
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/logs
+      media:
+        type: nfs
+        server: truenas.rafaribe.com
+        path: /mnt/tank/media
+        globalMounts:
+          - path: /media
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+    route:
+      app:
+        annotations:
+          gethomepage.dev/description: Music Discovery & Automation
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/icon: mdi-music-box-multiple
+          gethomepage.dev/name: SoulSync
+        hostnames: ["soulsync.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
