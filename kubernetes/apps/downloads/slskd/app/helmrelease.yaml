@@ -28,6 +28,20 @@ spec:
           glance/name: slskd
           glance/url: https://slskd.rafaribe.com
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-dirs:
+            image:
+              repository: docker.io/library/busybox
+              tag: 1.37.0
+            command:
+              - sh
+              - -c
+              - mkdir -p /media/downloads/slskd/complete /media/downloads/slskd/incomplete
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
         containers:
           app:
             image:
