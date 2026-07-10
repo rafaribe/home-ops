@@ -63,13 +63,13 @@ spec:
         data:
           config.ini: |
             [Lidarr]
-            api_key = ${LIDARR_API_KEY}
+            api_key = $${LIDARR_API_KEY}
             host_url = http://lidarr.downloads.svc.cluster.local:8686
             download_dir = /media/downloads/slskd/complete
             disable_sync = False
 
             [Slskd]
-            api_key = ${SLSKD_API_KEY}
+            api_key = $${SLSKD_API_KEY}
             host_url = http://slskd.downloads.svc.cluster.local
             url_base = /
             download_dir = /media/downloads/slskd/complete
