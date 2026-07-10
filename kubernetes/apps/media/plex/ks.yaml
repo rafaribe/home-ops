@@ -29,6 +29,7 @@ spec:
       APP: *app
       CLAIM: plex-data
       GATUS_PATH: /web/index.html
+      LB_PLEX: 10.0.1.31
       VOLSYNC_CAPACITY: 100Gi
       VOLSYNC_CRON_EXPRESSION: "30 3 * * *"
   components:
