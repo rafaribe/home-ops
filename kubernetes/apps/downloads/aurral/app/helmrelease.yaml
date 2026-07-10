@@ -36,7 +36,7 @@ spec:
             env:
               PUID: "1000"
               PGID: "1000"
-              DOWNLOAD_FOLDER: /downloads
+              DOWNLOAD_FOLDER: /media/downloads
               TRUST_PROXY: "true"
               TZ: Europe/Lisbon
             probes:
@@ -69,19 +69,12 @@ spec:
         existingClaim: aurral
         globalMounts:
           - path: /app/backend/data
-      downloads:
-        type: nfs
-        server: truenas.rafaribe.com
-        path: /mnt/tank/media/downloads/
-        globalMounts:
-          - path: /downloads
       media:
         type: nfs
         server: truenas.rafaribe.com
         path: /mnt/tank/media
         globalMounts:
           - path: /media
-            readOnly: true
     route:
       app:
         annotations:
