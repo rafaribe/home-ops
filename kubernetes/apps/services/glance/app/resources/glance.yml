@@ -10,7 +10,46 @@ theme:
 
 pages:
   - name: Home
+    head-widgets:
+      - type: search
+        search-engine: google
+        autofocus: true
     columns:
+      - size: small
+        widgets:
+          - type: calendar
+          - type: weather
+            location: Viseu, Portugal
+          - type: bookmarks
+            groups:
+              - title: Tools
+                links:
+                  - title: CyberChef
+                    url: https://cyberchef.rafaribe.com
+                    icon: mdi:chef-hat
+                  - title: IT-Tools
+                    url: https://it-tools.rafaribe.com
+                    icon: di:it-tools
+                  - title: Omni Tools
+                    url: https://omni-tools.rafaribe.com
+                    icon: mdi:toolbox
+                  - title: Stirling PDF
+                    url: https://stirling-pdf.rafaribe.com
+                    icon: mdi:file-pdf-box
+              - title: Productivity
+                links:
+                  - title: Docmost
+                    url: https://docmost.rafaribe.com
+                    icon: mdi:book-open-page-variant
+                  - title: Miniflux
+                    url: https://miniflux.rafaribe.com
+                    icon: di:miniflux
+                  - title: Karakeep
+                    url: https://karakeep.rafaribe.com
+                    icon: di:karakeep
+                  - title: Paperless
+                    url: https://paperless.rafaribe.com
+                    icon: di:paperless-ngx
       - size: full
         widgets:
           - type: monitor
@@ -213,46 +252,7 @@ pages:
                 icon: mdi:link
 
   - name: News
-    head-widgets:
-      - type: search
-        search-engine: google
-        autofocus: true
     columns:
-      - size: small
-        widgets:
-          - type: calendar
-          - type: weather
-            location: Viseu, Portugal
-          - type: bookmarks
-            groups:
-              - title: Tools
-                links:
-                  - title: CyberChef
-                    url: https://cyberchef.rafaribe.com
-                    icon: mdi:chef-hat
-                  - title: IT-Tools
-                    url: https://it-tools.rafaribe.com
-                    icon: di:it-tools
-                  - title: Omni Tools
-                    url: https://omni-tools.rafaribe.com
-                    icon: mdi:toolbox
-                  - title: Stirling PDF
-                    url: https://stirling-pdf.rafaribe.com
-                    icon: mdi:file-pdf-box
-              - title: Productivity
-                links:
-                  - title: Docmost
-                    url: https://docmost.rafaribe.com
-                    icon: mdi:book-open-page-variant
-                  - title: Miniflux
-                    url: https://miniflux.rafaribe.com
-                    icon: di:miniflux
-                  - title: Karakeep
-                    url: https://karakeep.rafaribe.com
-                    icon: di:karakeep
-                  - title: Paperless
-                    url: https://paperless.rafaribe.com
-                    icon: di:paperless-ngx
       - size: full
         widgets:
           - type: hacker-news
