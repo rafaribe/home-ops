@@ -151,7 +151,6 @@ pages:
                 icon: mdi:car
               - title: AirTrail
                 url: https://airtrail.rafaribe.com
-                check-url: http://airtrail.services.svc.cluster.local:3000
                 icon: mdi:airplane
           - type: monitor
             title: Productivity
@@ -203,7 +202,6 @@ pages:
                 icon: di:actual-budget
               - title: Syncthing
                 url: https://syncthing.rafaribe.com
-                check-url: http://syncthing-app.storage.svc.cluster.local:8384
                 icon: di:syncthing
               - title: PicoShare
                 url: https://picoshare.rafaribe.com
@@ -292,15 +290,23 @@ pages:
             sites:
               - title: Ceph
                 url: https://rook.rafaribe.com
+                check-url: http://rook-ceph-mgr-dashboard.rook-ceph.svc.cluster.local:7000
                 icon: mdi:chess-rook
               - title: Minio
                 url: https://minio.rafaribe.com
+                check-url: http://minio.storage.svc.cluster.local:9001
                 icon: di:minio
-              - title: Flux UI
+              - title: Konflate
                 url: https://konflate.rafaribe.com
+                check-url: http://konflate.development.svc.cluster.local:8080
+                icon: di:flux-cd
+              - title: Flux Operator UI
+                url: https://flux.rafaribe.com
+                check-url: http://flux-operator.flux-system.svc.cluster.local:9080
                 icon: di:flux-cd
               - title: Grafana
                 url: https://grafana.rafaribe.com
+                check-url: http://grafana-service.observability.svc.cluster.local:3000
                 icon: di:grafana
       - size: full
         widgets:
