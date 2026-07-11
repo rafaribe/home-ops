@@ -293,38 +293,25 @@ pages:
                 url: https://rook.rafaribe.com
                 check-url: http://rook-ceph-mgr-dashboard.rook-ceph.svc.cluster.local:7000
                 icon: mdi:chess-rook
-          - type: monitor
-            cache: 1m
-            style: "row"
-            sites:
               - title: Garage
                 url: https://garage.rafaribe.com
                 check-url: http://garage-webui.storage.svc.cluster.local:3909
                 icon: mdi:garage
-          - type: monitor
-            cache: 1m
-            style: "row"
-            sites:
               - title: Konflate
                 url: https://konflate.rafaribe.com
                 check-url: http://konflate.development.svc.cluster.local:8080
                 icon: di:flux-cd
-          - type: monitor
-            cache: 1m
-            style: "row"
-            sites:
               - title: Flux Operator UI
                 url: https://flux.rafaribe.com
                 check-url: http://flux-operator.flux-system.svc.cluster.local:9080
                 icon: di:flux-cd
-          - type: monitor
-            cache: 1m
-            style: "row"
-            sites:
               - title: Grafana
                 url: https://grafana.rafaribe.com
                 check-url: http://grafana-service.observability.svc.cluster.local:3000
                 icon: di:grafana
+              - title: Gatus
+                url: https://gatus.rafaribe.com
+                icon: mdi:check-network
       - size: full
         widgets:
           - type: extension
