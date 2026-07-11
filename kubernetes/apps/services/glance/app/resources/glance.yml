@@ -107,7 +107,7 @@ pages:
             sites:
               - title: Home Assistant
                 url: https://hass.rafaribe.com
-                check-url: http://home-assistant.home.svc.cluster.local:8123
+                check-url: http://home-assistant-app.home.svc.cluster.local:8123
                 icon: di:home-assistant
               - title: Zigbee2MQTT
                 url: https://zigbee2mqtt.rafaribe.com
@@ -183,7 +183,7 @@ pages:
                 icon: di:miniflux
               - title: Karakeep
                 url: https://karakeep.rafaribe.com
-                check-url: http://karakeep.services.svc.cluster.local:3000
+                check-url: http://karakeep-app.services.svc.cluster.local:3000
                 icon: di:karakeep
           - type: monitor
             title: Communication & Misc
@@ -203,7 +203,7 @@ pages:
                 icon: di:actual-budget
               - title: Syncthing
                 url: https://syncthing.rafaribe.com
-                check-url: http://syncthing.storage.svc.cluster.local:8384
+                check-url: http://syncthing-app.storage.svc.cluster.local:8384
                 icon: di:syncthing
               - title: PicoShare
                 url: https://picoshare.rafaribe.com
