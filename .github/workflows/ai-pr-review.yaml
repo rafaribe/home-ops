@@ -1,0 +1,89 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: AI PR Review
+
+on:
+  pull_request:
+    branches: ["main"]
+    # `labeled` enables one-click re-review: add the `ai-review` label to
+    # force a fresh review (only write/triage can label — self-authorizing).
+    types: [opened, reopened, synchronize, ready_for_review, labeled]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number to (re-)review
+        required: true
+
+concurrency:
+  # `labeled` events get their own group so auto-applied labels (e.g. Renovate)
+  # don't cancel the in-flight opened review.
+  group: >-
+    ${{ github.workflow }}-${{ github.event.pull_request.number || inputs.pr_number || github.ref }}${{
+      github.event.action == 'labeled' && format('-label-{0}', github.run_id) || ''
+    }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review-pr:
+    name: AI PR Review
+    if: >-
+      ${{ (github.event_name == 'pull_request' && !github.event.pull_request.draft) ||
+          github.event_name == 'workflow_dispatch' }}
+    runs-on: self-hosted
+    timeout-minutes: 30
+    steps:
+      - name: Resolve PR head for re-review
+        id: prctx
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ inputs.pr_number }}
+        run: |
+          sha="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" --jq '.head.sha')"
+          echo "head_sha=$sha" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || steps.prctx.outputs.head_sha }}
+
+      - name: Generate bot token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.BOT_CLIENT_ID }}
+          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+
+      - name: Analyze PR with AI reviewer
+        id: analyze
+        uses: misospace/pr-reviewer-action@a177c3478b52a6f8402ebbe9a0ba59c61cf028ed # v2.1.2
+        with:
+          github_token: ${{ steps.app-token.outputs.token }}
+          pr_number: ${{ github.event.pull_request.number || inputs.pr_number }}
+          force_review: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          # --- AI model config (Autonomous Grid) ---
+          ai_base_url: https://grid.rafaribe.com/v1
+          ai_api_format: openai
+          ai_model: qwen3:8b
+          ai_max_tokens: "16000"
+          ai_primary_retries: "3"
+          ai_primary_retry_delay_sec: "15"
+          # --- Fallback model (smaller/faster) ---
+          ai_fallback_base_url: https://grid.rafaribe.com/v1
+          ai_fallback_api_format: openai
+          ai_fallback_model: qwen3:4b
+          # --- Review settings ---
+          context_limit_mode: normal
+          ci_status_check: "true"
+          ci_timeout_sec: "600"
+          system_prompt_file: .github/pr-review-instructions.md
+          system_prompt_mode: append
+          standards_file_candidates: "AGENTS.md"
+          on_model_failure: notice
+          inline_findings: "true"
+          publish_mode: review_comment

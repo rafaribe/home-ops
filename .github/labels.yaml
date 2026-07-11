@@ -39,6 +39,10 @@
   color: "ff9800"
 - name: type/major
   color: "f6412d"
+# AI Review
+- name: ai-review
+  color: "7057ff"
+  description: "Trigger AI PR review"
 # Uncategorized
 - name: hold
   color: "ee0701"
