@@ -71,6 +71,12 @@ spec:
               PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://127.0.0.1:3000
               # Configure redis integration
               PAPERLESS_REDIS: redis://paperless-dragonfly.services.svc.cluster.local:6379
+              # OIDC Configuration
+              PAPERLESS_SOCIALACCOUNT_PROVIDERS:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-oidc-providers
+                    key: PAPERLESS_SOCIALACCOUNT_PROVIDERS
               # Configure user permissions
               USERMAP_UID: "1000"
               USERMAP_GID: "1000"

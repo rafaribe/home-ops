@@ -13,7 +13,6 @@ resources:
   - ./democratic-csi/ks.yaml
   - ./garage/ks.yaml
   - ./kopia/ks.yaml
-  - ./minio/ks.yaml
   - ./openebs/ks.yaml
   - ./syncthing/ks.yaml
   - ./volsync/ks.yaml
