@@ -292,10 +292,10 @@ pages:
                 url: https://rook.rafaribe.com
                 check-url: http://rook-ceph-mgr-dashboard.rook-ceph.svc.cluster.local:7000
                 icon: mdi:chess-rook
-              - title: Minio
-                url: https://minio.rafaribe.com
-                check-url: http://minio.storage.svc.cluster.local:9001
-                icon: di:minio
+              - title: Garage
+                url: https://garage.rafaribe.com
+                check-url: http://garage-webui.storage.svc.cluster.local:3909
+                icon: mdi:garage
               - title: Konflate
                 url: https://konflate.rafaribe.com
                 check-url: http://konflate.development.svc.cluster.local:8080
