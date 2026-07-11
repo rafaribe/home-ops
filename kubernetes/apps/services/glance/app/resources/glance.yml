@@ -250,6 +250,33 @@ pages:
                 url: https://slink.rafaribe.com
                 check-url: http://slink.services.svc.cluster.local:3000
                 icon: mdi:link
+          - type: monitor
+            title: Infrastructure
+            cache: 1m
+            sites:
+              - title: Ceph
+                url: https://rook.rafaribe.com
+                check-url: http://rook-ceph-mgr-dashboard.rook-ceph.svc.cluster.local:7000
+                icon: mdi:chess-rook
+              - title: Garage
+                url: https://garage.rafaribe.com
+                check-url: http://garage-webui.storage.svc.cluster.local:3909
+                icon: mdi:garage
+              - title: Konflate
+                url: https://konflate.rafaribe.com
+                check-url: http://konflate.development.svc.cluster.local:8080
+                icon: di:flux-cd
+              - title: Flux Operator UI
+                url: https://flux.rafaribe.com
+                check-url: http://flux-operator.flux-system.svc.cluster.local:9080
+                icon: di:flux-cd
+              - title: Grafana
+                url: https://grafana.rafaribe.com
+                check-url: http://grafana-service.observability.svc.cluster.local:3000
+                icon: di:grafana
+              - title: Gatus
+                url: https://gatus.rafaribe.com
+                icon: mdi:check-network
 
   - name: News
     columns:
@@ -282,36 +309,6 @@ pages:
 
   - name: Homelab
     columns:
-      - size: small
-        widgets:
-          - type: monitor
-            title: Infrastructure
-            cache: 1m
-            style: "row"
-            sites:
-              - title: Ceph
-                url: https://rook.rafaribe.com
-                check-url: http://rook-ceph-mgr-dashboard.rook-ceph.svc.cluster.local:7000
-                icon: mdi:chess-rook
-              - title: Garage
-                url: https://garage.rafaribe.com
-                check-url: http://garage-webui.storage.svc.cluster.local:3909
-                icon: mdi:garage
-              - title: Konflate
-                url: https://konflate.rafaribe.com
-                check-url: http://konflate.development.svc.cluster.local:8080
-                icon: di:flux-cd
-              - title: Flux Operator UI
-                url: https://flux.rafaribe.com
-                check-url: http://flux-operator.flux-system.svc.cluster.local:9080
-                icon: di:flux-cd
-              - title: Grafana
-                url: https://grafana.rafaribe.com
-                check-url: http://grafana-service.observability.svc.cluster.local:3000
-                icon: di:grafana
-              - title: Gatus
-                url: https://gatus.rafaribe.com
-                icon: mdi:check-network
       - size: full
         widgets:
           - type: extension
