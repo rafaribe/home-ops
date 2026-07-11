@@ -10,74 +10,6 @@ theme:
 
 pages:
   - name: Home
-    head-widgets:
-      - type: search
-        search-engine: google
-        autofocus: true
-    columns:
-      - size: small
-        widgets:
-          - type: calendar
-          - type: weather
-            location: Viseu, Portugal
-          - type: bookmarks
-            groups:
-              - title: Tools
-                links:
-                  - title: CyberChef
-                    url: https://cyberchef.rafaribe.com
-                    icon: mdi:chef-hat
-                  - title: IT-Tools
-                    url: https://it-tools.rafaribe.com
-                    icon: di:it-tools
-                  - title: Omni Tools
-                    url: https://omni-tools.rafaribe.com
-                    icon: mdi:toolbox
-                  - title: Stirling PDF
-                    url: https://stirling-pdf.rafaribe.com
-                    icon: mdi:file-pdf-box
-              - title: Productivity
-                links:
-                  - title: Docmost
-                    url: https://docmost.rafaribe.com
-                    icon: mdi:book-open-page-variant
-                  - title: Miniflux
-                    url: https://miniflux.rafaribe.com
-                    icon: di:miniflux
-                  - title: Karakeep
-                    url: https://karakeep.rafaribe.com
-                    icon: di:karakeep
-                  - title: Paperless
-                    url: https://paperless.rafaribe.com
-                    icon: di:paperless-ngx
-      - size: full
-        widgets:
-          - type: hacker-news
-            limit: 10
-            collapse-after: 5
-          - type: reddit
-            subreddit: selfhosted
-            collapse-after: 5
-          - type: rss
-            title: News
-            collapse-after: 5
-            feeds:
-              - url: https://www.techmeme.com/feed.xml
-                title: Techmeme
-              - url: https://news.ycombinator.com/rss
-                title: Hacker News
-      - size: small
-        widgets:
-          - type: releases
-            title: Releases
-            show-source-icon: true
-            repositories:
-              - glanceapp/glance
-              - immich-app/immich
-              - gethomepage/homepage
-              - paperless-ngx/paperless-ngx
-
-  - name: Media
     columns:
       - size: full
         widgets:
@@ -169,23 +101,21 @@ pages:
                 url: https://autobrr.rafaribe.com
                 check-url: http://autobrr.downloads.svc.cluster.local:7474
                 icon: di:autobrr
-
-  - name: Home & Photos
-    columns:
-      - size: full
-        widgets:
           - type: monitor
             title: Home Automation
             cache: 1m
             sites:
               - title: Home Assistant
                 url: https://hass.rafaribe.com
+                check-url: http://home-assistant.home.svc.cluster.local:8123
                 icon: di:home-assistant
               - title: Zigbee2MQTT
                 url: https://zigbee2mqtt.rafaribe.com
+                check-url: http://zigbee2mqtt.home.svc.cluster.local:8080
                 icon: di:zigbee2mqtt
               - title: Immich
                 url: https://photos.rafaribe.com
+                check-url: http://immich-server.home.svc.cluster.local:2283
                 icon: di:immich
           - type: monitor
             title: Life & Household
@@ -193,57 +123,67 @@ pages:
             sites:
               - title: Paperless
                 url: https://paperless.rafaribe.com
+                check-url: http://paperless.services.svc.cluster.local:8000
                 icon: di:paperless-ngx
               - title: Littlelink
                 url: https://link.rafaribe.com
+                check-url: http://littlelink.services.svc.cluster.local:3000
                 icon: mdi:link-variant
               - title: Mealie
                 url: https://mealie.rafaribe.com
+                check-url: http://mealie.services.svc.cluster.local:9000
                 icon: di:mealie
               - title: KitchenOwl
                 url: https://kitchenowl.rafaribe.com
+                check-url: http://kitchenowl.services.svc.cluster.local:8080
                 icon: mdi:owl
               - title: Tandoor
                 url: https://tandoor.rafaribe.com
+                check-url: http://tandoor.services.svc.cluster.local:8080
                 icon: di:tandoor-recipes
               - title: Homebox
                 url: https://homebox.rafaribe.com
+                check-url: http://homebox.services.svc.cluster.local:7745
                 icon: di:homebox
               - title: LubeLog
                 url: https://lubelog.rafaribe.com
+                check-url: http://lubelog.services.svc.cluster.local:8080
                 icon: mdi:car
               - title: AirTrail
                 url: https://airtrail.rafaribe.com
+                check-url: http://airtrail.services.svc.cluster.local:3000
                 icon: mdi:airplane
-
-  - name: Misc
-    columns:
-      - size: full
-        widgets:
           - type: monitor
             title: Productivity
             cache: 1m
             sites:
               - title: Affine
                 url: https://affine.rafaribe.com
+                check-url: http://affine.services.svc.cluster.local:3010
                 icon: di:affine
               - title: Docmost
                 url: https://docmost.rafaribe.com
+                check-url: http://docmost.services.svc.cluster.local:3000
                 icon: mdi:book-open-page-variant
               - title: Poznote
                 url: https://poznote.rafaribe.com
+                check-url: http://poznote.services.svc.cluster.local:80
                 icon: mdi:note-text
               - title: LeafWiki
                 url: https://leafwiki.rafaribe.com
+                check-url: http://leafwiki.services.svc.cluster.local:8080
                 icon: mdi:leaf
               - title: Linkding
                 url: https://links.rafaribe.com
+                check-url: http://linkding.services.svc.cluster.local:9090
                 icon: di:linkding
               - title: Miniflux
                 url: https://miniflux.rafaribe.com
+                check-url: http://miniflux.services.svc.cluster.local:80
                 icon: di:miniflux
               - title: Karakeep
                 url: https://karakeep.rafaribe.com
+                check-url: http://karakeep.services.svc.cluster.local:3000
                 icon: di:karakeep
           - type: monitor
             title: Communication & Misc
@@ -251,22 +191,96 @@ pages:
             sites:
               - title: The Lounge
                 url: https://tl.rafaribe.com
+                check-url: http://thelounge.services.svc.cluster.local:9000
                 icon: di:thelounge
               - title: N8N
                 url: https://n8n.rafaribe.com
+                check-url: http://n8n.services.svc.cluster.local:80
                 icon: di:n8n
               - title: Actual Budget
                 url: https://actual.rafaribe.com
+                check-url: http://actual.services.svc.cluster.local:5006
                 icon: di:actual-budget
               - title: Syncthing
                 url: https://syncthing.rafaribe.com
+                check-url: http://syncthing.storage.svc.cluster.local:8384
                 icon: di:syncthing
               - title: PicoShare
                 url: https://picoshare.rafaribe.com
+                check-url: http://picoshare.services.svc.cluster.local:4001
                 icon: mdi:share-variant
               - title: Slink
                 url: https://slink.rafaribe.com
+                check-url: http://slink.services.svc.cluster.local:3000
                 icon: mdi:link
+
+  - name: News
+    head-widgets:
+      - type: search
+        search-engine: google
+        autofocus: true
+    columns:
+      - size: small
+        widgets:
+          - type: calendar
+          - type: weather
+            location: Viseu, Portugal
+          - type: bookmarks
+            groups:
+              - title: Tools
+                links:
+                  - title: CyberChef
+                    url: https://cyberchef.rafaribe.com
+                    icon: mdi:chef-hat
+                  - title: IT-Tools
+                    url: https://it-tools.rafaribe.com
+                    icon: di:it-tools
+                  - title: Omni Tools
+                    url: https://omni-tools.rafaribe.com
+                    icon: mdi:toolbox
+                  - title: Stirling PDF
+                    url: https://stirling-pdf.rafaribe.com
+                    icon: mdi:file-pdf-box
+              - title: Productivity
+                links:
+                  - title: Docmost
+                    url: https://docmost.rafaribe.com
+                    icon: mdi:book-open-page-variant
+                  - title: Miniflux
+                    url: https://miniflux.rafaribe.com
+                    icon: di:miniflux
+                  - title: Karakeep
+                    url: https://karakeep.rafaribe.com
+                    icon: di:karakeep
+                  - title: Paperless
+                    url: https://paperless.rafaribe.com
+                    icon: di:paperless-ngx
+      - size: full
+        widgets:
+          - type: hacker-news
+            limit: 10
+            collapse-after: 5
+          - type: reddit
+            subreddit: selfhosted
+            collapse-after: 5
+          - type: rss
+            title: News
+            collapse-after: 5
+            feeds:
+              - url: https://www.techmeme.com/feed.xml
+                title: Techmeme
+              - url: https://news.ycombinator.com/rss
+                title: Hacker News
+      - size: small
+        widgets:
+          - type: releases
+            title: Releases
+            show-source-icon: true
+            repositories:
+              - glanceapp/glance
+              - immich-app/immich
+              - gethomepage/homepage
+              - paperless-ngx/paperless-ngx
 
   - name: Homelab
     columns:
