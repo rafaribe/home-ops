@@ -9,6 +9,7 @@ components:
 resources:
   - ./namespace.yaml
   - ./autonomous-grid/ks.yaml
+  - ./lattice/ks.yaml
   - ./mcp-servers
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
