@@ -35,7 +35,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/lattice-server
-              tag: 0.2.0@sha256:1bfb38999495235b84f3a06778e013b606ca066990f6d4e2bcfe6f7d8c15d6ab
+              tag: 0.3.0@sha256:48811654306e67a45ef2dd4e0208e16560d1c9b2841577058edf4027e2282b0d
             args:
               - --port=8090
               - --name=home
