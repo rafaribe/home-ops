@@ -16,6 +16,11 @@ spec:
     controllers:
       zigbee2mqtt:
         annotations:
+          glance/description: Zigbee Bridge
+          glance/icon: di:zigbee2mqtt
+          glance/id: zigbee2mqtt
+          glance/name: Zigbee2MQTT
+          glance/url: https://zigbee2mqtt.rafaribe.com
           reloader.stakater.com/auto: "true"
 
         pod:

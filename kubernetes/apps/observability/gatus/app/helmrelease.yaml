@@ -28,6 +28,11 @@ spec:
         replicas: 1
         strategy: RollingUpdate
         annotations:
+          glance/description: Status Monitoring
+          glance/icon: mdi:check-network
+          glance/id: gatus
+          glance/name: Gatus
+          glance/url: https://gatus.rafaribe.com
           reloader.stakater.com/auto: "true"
         initContainers:
           init-config:

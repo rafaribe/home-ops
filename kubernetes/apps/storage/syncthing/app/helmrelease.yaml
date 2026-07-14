@@ -25,6 +25,7 @@ spec:
           glance/id: syncthing
           glance/name: Syncthing
           glance/url: https://syncthing.rafaribe.com
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:

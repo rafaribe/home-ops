@@ -13,6 +13,11 @@ spec:
     controllers:
       airtrail:
         annotations:
+          glance/description: Flight Tracker
+          glance/icon: mdi:airplane
+          glance/id: airtrail
+          glance/name: AirTrail
+          glance/url: https://airtrail.rafaribe.com
           reloader.stakater.com/auto: "true"
         containers:
           app:

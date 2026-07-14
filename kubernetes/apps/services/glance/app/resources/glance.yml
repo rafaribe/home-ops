@@ -322,3 +322,11 @@ pages:
             repository: rafaribe/home-ops
             pull-requests-limit: 5
             issues-limit: 3
+          - type: repository
+            repository: rafaribe/containers
+            pull-requests-limit: 5
+            issues-limit: 3
+          - type: repository
+            repository: rafaribe/lattice
+            pull-requests-limit: 5
+            issues-limit: 3
