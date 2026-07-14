@@ -75,7 +75,7 @@ spec:
               PAPERLESS_SOCIALACCOUNT_PROVIDERS:
                 valueFrom:
                   secretKeyRef:
-                    name: paperless-oidc-providers
+                    name: paperless
                     key: PAPERLESS_SOCIALACCOUNT_PROVIDERS
               # Configure user permissions
               USERMAP_UID: "1000"
