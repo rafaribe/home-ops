@@ -14,7 +14,7 @@ spec:
       lubelog:
         annotations:
           glance/description: Car Service Tracking
-          glance/icon: mdi:car
+          glance/icon: di:lubelogger
           glance/id: lubelog
           glance/name: LubeLog
           glance/url: https://lubelog.rafaribe.com
