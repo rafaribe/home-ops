@@ -13,6 +13,14 @@ kind: MutatingAdmissionPolicy
 metadata:
   name: volsync-mover-jitter
 spec:
+  failurePolicy: Fail
+  matchConditions:
+    - name: has-volsync-job-name-prefix
+      expression: >-
+        object.metadata.name.startsWith("volsync-src-")
+    - name: has-volsync-created-by-labels
+      expression: >-
+        object.metadata.?labels["app.kubernetes.io/created-by"].orValue("") == "volsync"
   matchConstraints:
     resourceRules:
       - apiGroups:
@@ -24,14 +32,6 @@ spec:
           - UPDATE
         resources:
           - jobs
-  matchConditions:
-    - name: has-volsync-job-name-prefix
-      expression: >-
-        object.metadata.name.startsWith("volsync-src-")
-    - name: has-volsync-created-by-labels
-      expression: >-
-        object.metadata.?labels["app.kubernetes.io/created-by"].orValue("") == "volsync"
-  failurePolicy: Fail
   reinvocationPolicy: IfNeeded
   mutations:
     - patchType: JSONPatch
@@ -48,7 +48,74 @@ spec:
                 name: "jitter",
                 image: "ghcr.io/home-operations/busybox:1.38.0@sha256:7e2c04dd50ede647bf4a7a4c8dbd629dd4971cd139b9b88fb22bfc3c7a6c13df",
                 imagePullPolicy: "IfNotPresent",
-                command: ["sh", "-c", "sleep $(shuf -i 0-30 -n 1)"]
+                command: ["sh", "-c", "sleep $(shuf -i 0-30 -n 1)"],
+                securityContext: Object.spec.template.spec.initContainers.securityContext{
+                  allowPrivilegeEscalation: false,
+                  capabilities: Object.spec.template.spec.initContainers.securityContext.capabilities{
+                    drop: ["ALL"]
+                  },
+                  readOnlyRootFilesystem: true,
+                  runAsNonRoot: true,
+                  seccompProfile: Object.spec.template.spec.initContainers.securityContext.seccompProfile{
+                    type: "RuntimeDefault"
+                  }
+                }
+              }
+            }
+          ]
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicybinding-admissionregistration-v1beta1.json
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingAdmissionPolicyBinding
+metadata:
+  name: volsync-mover-security
+spec:
+  policyName: volsync-mover-security
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicy-admissionregistration-v1beta1.json
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingAdmissionPolicy
+metadata:
+  name: volsync-mover-security
+spec:
+  failurePolicy: Fail
+  matchConditions:
+    - name: has-volsync-job-name-prefix
+      expression: >-
+        object.metadata.name.startsWith("volsync-")
+    - name: has-volsync-created-by-labels
+      expression: >-
+        object.metadata.?labels["app.kubernetes.io/created-by"].orValue("") == "volsync"
+    - name: missing-run-as-non-root
+      expression: >-
+        !has(object.spec.template.spec.securityContext) ||
+        !has(object.spec.template.spec.securityContext.runAsNonRoot) ||
+        object.spec.template.spec.securityContext.runAsNonRoot == false
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - batch
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - jobs
+  reinvocationPolicy: IfNeeded
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: >-
+          [
+            JSONPatch{
+              op: "add", path: "/spec/template/spec/securityContext/runAsNonRoot",
+              value: true
+            },
+            JSONPatch{
+              op: "add", path: "/spec/template/spec/securityContext/seccompProfile",
+              value: Object.spec.template.spec.securityContext.seccompProfile{
+                type: "RuntimeDefault"
               }
             }
           ]
@@ -67,6 +134,19 @@ kind: MutatingAdmissionPolicy
 metadata:
   name: volsync-mover-nfs
 spec:
+  failurePolicy: Fail
+  matchConditions:
+    - name: has-volsync-job-name-prefix
+      expression: >-
+        object.metadata.name.startsWith("volsync-")
+    - name: has-volsync-created-by-labels
+      expression: >-
+        object.metadata.?labels["app.kubernetes.io/created-by"].orValue("") == "volsync"
+    - name: repository-volume-does-not-exist
+      expression: >-
+        !has(object.spec.template.spec.volumes) ||
+        !object.spec.template.spec.volumes.exists(item, item.name == "repository") ||
+        !object.spec.template.spec.volumes.exists(item, item.name == "repository-restic")
   matchConstraints:
     resourceRules:
       - apiGroups:
@@ -78,19 +158,6 @@ spec:
           - UPDATE
         resources:
           - jobs
-  matchConditions:
-    - name: has-volsync-job-name-prefix
-      expression: >-
-        object.metadata.name.startsWith("volsync-")
-    - name: has-volsync-created-by-labels
-      expression: >-
-        object.metadata.?labels["app.kubernetes.io/created-by"].orValue("") == "volsync"
-    - name: repository-volume-does-not-exist
-      expression: >-
-        !has(object.spec.template.spec.volumes) ||
-        !object.spec.template.spec.volumes.exists(item, item.name == "repository") || 
-        !object.spec.template.spec.volumes.exists(item, item.name == "repository-restic")
-  failurePolicy: Fail
   reinvocationPolicy: IfNeeded
   mutations:
     - patchType: JSONPatch
