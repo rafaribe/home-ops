@@ -11,6 +11,6 @@ resources:
   - ./autonomous-grid/ks.yaml
   - ./lattice/ks.yaml
   - ./mcp-servers
-  - ./ollama/ks.yaml
+  #- ./ollama/ks.yaml
   - ./open-webui/ks.yaml
   - ./toolhive/ks.yaml
