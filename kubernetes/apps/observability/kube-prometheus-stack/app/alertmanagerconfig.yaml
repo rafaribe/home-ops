@@ -5,44 +5,40 @@ kind: AlertmanagerConfig
 metadata:
   name: alertmanager
 spec:
-  route:
-    groupBy:
-      - alertname
-      - job
-    groupInterval: 5m
-    groupWait: 1m
-    receiver: pushover
-    repeatInterval: 12h
-    routes:
-      - receiver: "null"
-        matchers:
-          - name: alertname
-            value: InfoInhibitor
-            matchType: =
-      - receiver: "null"
-        matchers:
-          - name: alertname
-            value: Watchdog
-            matchType: =
-      - receiver: pushover
-        matchers:
-          - name: severity
-            value: critical
-            matchType: =
   inhibitRules:
     - equal:
         - alertname
         - namespace
       sourceMatch:
-        - name: severity
+        - matchType: "="
+          name: severity
           value: critical
-          matchType: =
       targetMatch:
-        - name: severity
+        - matchType: "="
+          name: severity
           value: warning
-          matchType: =
   receivers:
     - name: "null"
+    - discordConfigs:
+        - apiURL:
+            key: DISCORD_WEBHOOK_URL
+            name: alertmanager-secret
+          sendResolved: true
+          title: >-
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+          message: |-
+            {{- range .Alerts }}
+              {{- if ne .Annotations.description "" }}
+                {{ .Annotations.description }}
+              {{- else if ne .Annotations.summary "" }}
+                {{ .Annotations.summary }}
+              {{- else if ne .Annotations.message "" }}
+                {{ .Annotations.message }}
+              {{- else }}
+                Alert description not available
+              {{- end }}
+            {{- end }}
+      name: discord
     - name: pushover
       pushoverConfigs:
         - html: true
@@ -71,11 +67,36 @@ spec:
           sound: gamelan
           title: >-
             [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
-          ttl: 86400s
           token:
-            name: alertmanager-secret
             key: ALERTMANAGER_PUSHOVER_TOKEN
-          userKey:
             name: alertmanager-secret
-            key: PUSHOVER_USER_KEY
+          ttl: 86400s
           urlTitle: View in Alertmanager
+          userKey:
+            key: PUSHOVER_USER_KEY
+            name: alertmanager-secret
+  route:
+    groupBy:
+      - alertname
+      - job
+    groupInterval: 5m
+    groupWait: 1m
+    receiver: discord
+    repeatInterval: 12h
+    routes:
+      - matchers:
+          - matchType: "="
+            name: alertname
+            value: InfoInhibitor
+        receiver: "null"
+      - matchers:
+          - matchType: "="
+            name: alertname
+            value: Watchdog
+        receiver: "null"
+      - continue: true
+        matchers:
+          - matchType: "="
+            name: severity
+            value: critical
+        receiver: pushover

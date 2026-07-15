@@ -1,20 +1,29 @@
 receivers:
   - name: "null"
   - name: "discord"
-    webhook_configs:
-      - url: "http://alertmanager-discord.observability.svc.cluster.local:9094"
+    discord_configs:
+      - webhook_url_file: /etc/secrets/DISCORD_WEBHOOK_URL
+        send_resolved: true
+        title: |-
+          [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+        message: |-
+          {{- range .Alerts }}
+            {{- if ne .Labels.severity "" }}
+              **Severity:** {{ .Labels.severity }}
+            {{- end }}
+            {{- if ne .Annotations.description "" }}
+              **Description:** {{ .Annotations.description }}
+            {{- else if ne .Annotations.summary "" }}
+              **Summary:** {{ .Annotations.summary }}
+            {{- else if ne .Annotations.message "" }}
+              **Message:** {{ .Annotations.message }}
+            {{- else }}
+              **Description:** N/A
+            {{- end }}
+          {{- end }}
   - name: "pushover"
     pushover_configs:
       - html: true
-        # Not sure why but the secrets just are mounted uppercase. Weird, I know...
-        token_file: /etc/secrets/PUSHOVER_API_TOKEN
-        user_key_file: /etc/secrets/PUSHOVER_API_USERKEY
-        send_resolved: true
-        priority: |-
-          {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
-        url_title: View in Alert Manager
-        title: |-
-          [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
         message: |-
           {{- range .Alerts }}
             {{- if ne .Labels.severity "" }}
@@ -38,25 +47,33 @@ receivers:
               {{- end }}
             {{- end }}
           {{- end }}
+        priority: |-
+          {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
+        send_resolved: true
+        title: |-
+          [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+        token_file: /etc/secrets/PUSHOVER_API_TOKEN
+        url_title: View in Alert Manager
+        user_key_file: /etc/secrets/PUSHOVER_API_USERKEY
 
 route:
   group_by: ["alertname", "job"]
-  group_wait: 30s
   group_interval: 5m
-  repeat_interval: 6h
+  group_wait: 30s
   receiver: "discord"
+  repeat_interval: 6h
   routes:
-    - receiver: "null"
-      matchers:
+    - matchers:
         - alertname =~ "InfoInhibitor|Watchdog"
-    - receiver: "discord"
+      receiver: "null"
+    - continue: true
       matchers:
         - severity = critical
-      continue: true
+      receiver: "pushover"
 
 inhibit_rules:
-  - source_matchers:
+  - equal: ["alertname", "namespace"]
+    source_matchers:
       - severity = "critical"
     target_matchers:
       - severity = "warning"
-    equal: ["alertname", "namespace"]
