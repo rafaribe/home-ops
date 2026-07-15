@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicybinding-admissionregistration-v1beta1.json
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingAdmissionPolicyBinding
@@ -57,3 +56,56 @@ spec:
               }
             }
           ]
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicybinding-admissionregistration-v1beta1.json
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingAdmissionPolicyBinding
+metadata:
+  name: kopia-maintenance-cache
+spec:
+  policyName: kopia-maintenance-cache
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicy-admissionregistration-v1beta1.json
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingAdmissionPolicy
+metadata:
+  name: kopia-maintenance-cache
+spec:
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - batch
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - jobs
+  matchConditions:
+    - name: has-kopia-maint-job-name-prefix
+      expression: >
+        object.metadata.name.startsWith("kopia-maint-")
+    - name: has-emptydir-cache
+      expression: >
+        has(object.spec.template.spec.volumes) &&
+        object.spec.template.spec.volumes.exists(item, item.name == "kopia-cache" && has(item.emptyDir))
+  failurePolicy: Fail
+  reinvocationPolicy: IfNeeded
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: >-
+          [JSONPatch{
+            op: "test", path: "/spec/template/spec/volumes/1/name",
+            value: "kopia-cache"
+          },
+          JSONPatch{
+            op: "remove", path: "/spec/template/spec/volumes/1/emptyDir"
+          },
+          JSONPatch{
+            op: "add", path: "/spec/template/spec/volumes/1/persistentVolumeClaim",
+            value: Object.spec.template.spec.volumes.persistentVolumeClaim{
+              claimName: "kopia-maintenance-cache"
+            }
+          }]
