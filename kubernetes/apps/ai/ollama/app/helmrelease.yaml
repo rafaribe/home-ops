@@ -21,14 +21,13 @@ spec:
     defaultPodOptions:
       affinity:
         nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - preference:
-                matchExpressions:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
                   - key: workload-type
-                    operator: In
+                    operator: NotIn
                     values:
                       - memory
-              weight: 100
       securityContext:
         runAsNonRoot: true
         runAsUser: 568

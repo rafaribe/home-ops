@@ -188,9 +188,7 @@ pages:
                 url: https://lubelog.rafaribe.com
                 check-url: http://lubelog.services.svc.cluster.local:8080
                 icon: mdi:car
-              - title: AirTrail
-                url: https://airtrail.rafaribe.com
-                icon: mdi:airplane
+
           - type: monitor
             title: Productivity
             cache: 1m
