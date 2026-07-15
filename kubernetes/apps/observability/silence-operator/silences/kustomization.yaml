@@ -7,4 +7,5 @@ resources:
   - ./etcd.yaml
   - ./generic-device-plugin.yaml
   - ./jobs.yaml
+  - ./stale-alerts.yaml
   - ./truenas-memory-usage.yaml

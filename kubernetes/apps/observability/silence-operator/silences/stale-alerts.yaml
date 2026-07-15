@@ -1,0 +1,112 @@
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: dragonfly-targets-down
+  namespace: observability
+spec:
+  matchers:
+    - name: alertname
+      value: TargetDown
+      isRegex: false
+      isEqual: true
+    - name: job
+      value: ".*dragonfly.*"
+      isRegex: true
+      isEqual: true
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: pve-exporter-target-down
+  namespace: observability
+spec:
+  matchers:
+    - name: alertname
+      value: TargetDown
+      isRegex: false
+      isEqual: true
+    - name: job
+      value: pve-exporter
+      isRegex: false
+      isEqual: true
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: smartctl-exporter-target-down
+  namespace: observability
+spec:
+  matchers:
+    - name: alertname
+      value: TargetDown
+      isRegex: false
+      isEqual: true
+    - name: job
+      value: smartctl-exporter
+      isRegex: false
+      isEqual: true
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: node-exporter-target-down
+  namespace: observability
+spec:
+  matchers:
+    - name: alertname
+      value: TargetDown
+      isRegex: false
+      isEqual: true
+    - name: job
+      value: node-exporter
+      isRegex: false
+      isEqual: true
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: gatus-plex-app
+  namespace: observability
+spec:
+  matchers:
+    - name: alertname
+      value: GatusEndpointDown
+      isRegex: false
+      isEqual: true
+    - name: name
+      value: plex-app
+      isRegex: false
+      isEqual: true
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: gatus-obsidian-couchdb
+  namespace: observability
+spec:
+  matchers:
+    - name: alertname
+      value: GatusEndpointDown
+      isRegex: false
+      isEqual: true
+    - name: name
+      value: obsidian-couchdb
+      isRegex: false
+      isEqual: true
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: gatus-github-webhook
+  namespace: observability
+spec:
+  matchers:
+    - name: alertname
+      value: GatusEndpointDown
+      isRegex: false
+      isEqual: true
+    - name: name
+      value: github-webhook
+      isRegex: false
+      isEqual: true
