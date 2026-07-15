@@ -40,8 +40,6 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
-      namespace: storage
   interval: 1h
   path: ./kubernetes/apps/observability/grafana/instance
   prune: true
@@ -54,7 +52,3 @@ spec:
   postBuild:
     substitute:
       APP: grafana
-      CLAIM: grafana-pvc
-      VOLSYNC_CAPACITY: 10Gi
-  components:
-    - ../../../../components/volsync
