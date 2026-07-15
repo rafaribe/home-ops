@@ -48,7 +48,7 @@ spec:
                 name: "jitter",
                 image: "ghcr.io/home-operations/busybox:1.38.0@sha256:7e2c04dd50ede647bf4a7a4c8dbd629dd4971cd139b9b88fb22bfc3c7a6c13df",
                 imagePullPolicy: "IfNotPresent",
-                command: ["sh", "-c", "sleep $(shuf -i 0-30 -n 1)"],
+                command: ["sh", "-c", "sleep $(shuf -i 0-15 -n 1)"],
                 securityContext: Object.spec.template.spec.initContainers.securityContext{
                   allowPrivilegeEscalation: false,
                   capabilities: Object.spec.template.spec.initContainers.securityContext.capabilities{
