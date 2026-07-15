@@ -1,4 +1,12 @@
 ---
+alerting:
+  discord:
+    webhook-url: ${DISCORD_WEBHOOK_URL}
+    default-alert:
+      enabled: true
+      failure-threshold: 3
+      send-on-resolved: true
+      description: "health check failed"
 connectivity:
   checker:
     target: 1.1.1.1:53
@@ -10,18 +18,24 @@ endpoints:
     interval: 1m
     conditions:
       - "[CONNECTED] == true"
+    alerts:
+      - type: discord
   - name: Google
     group: connectivity
     url: icmp://8.8.8.8
     interval: 1m
     conditions:
       - "[CONNECTED] == true"
+    alerts:
+      - type: discord
   - name: Quad9
     group: connectivity
     url: icmp://9.9.9.9
     interval: 1m
     conditions:
       - "[CONNECTED] == true"
+    alerts:
+      - type: discord
 metrics: true
 storage:
   type: sqlite

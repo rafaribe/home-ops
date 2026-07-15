@@ -5,53 +5,59 @@ receivers:
       - webhook_url_file: /etc/secrets/DISCORD_WEBHOOK_URL
         send_resolved: true
         title: |-
-          [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+          {{ if eq .Status "firing" }}🔥{{ else }}✅{{ end }} [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
         message: |-
           {{- range .Alerts }}
-            {{- if ne .Labels.severity "" }}
-              **Severity:** {{ .Labels.severity }}
-            {{- end }}
-            {{- if ne .Annotations.description "" }}
-              **Description:** {{ .Annotations.description }}
-            {{- else if ne .Annotations.summary "" }}
-              **Summary:** {{ .Annotations.summary }}
-            {{- else if ne .Annotations.message "" }}
-              **Message:** {{ .Annotations.message }}
-            {{- else }}
-              **Description:** N/A
-            {{- end }}
+          **Alert:** {{ .Labels.alertname }}
+          **Severity:** {{ if eq .Labels.severity "critical" }}🚨 Critical{{ else if eq .Labels.severity "warning" }}⚠️ Warning{{ else }}ℹ️ {{ .Labels.severity }}{{ end }}
+          **Namespace:** `{{ .Labels.namespace }}`
+          {{- if ne .Annotations.description "" }}
+          **Description:** {{ .Annotations.description }}
+          {{- else if ne .Annotations.summary "" }}
+          **Summary:** {{ .Annotations.summary }}
+          {{- else if ne .Annotations.message "" }}
+          **Message:** {{ .Annotations.message }}
+          {{- end }}
+          {{- if ne .Labels.pod "" }}
+          **Pod:** `{{ .Labels.pod }}`
+          {{- end }}
+          {{- if ne .Labels.node "" }}
+          **Node:** `{{ .Labels.node }}`
+          {{- end }}
+          ---
           {{- end }}
   - name: "pushover"
     pushover_configs:
       - html: true
         message: |-
           {{- range .Alerts }}
-            {{- if ne .Labels.severity "" }}
-              <b>Severity:</b> <i>{{ .Labels.severity }}</i>
-            {{- else }}
-              <b>Severity:</b> <i>N/A</i>
-            {{- end }}
-            {{- if ne .Annotations.description "" }}
-              <b>Description:</b> <i>{{ .Annotations.description }}</i>
-            {{- else if ne .Annotations.summary "" }}
-              <b>Summary:</b> <i>{{ .Annotations.summary }}</i>
-            {{- else if ne .Annotations.message "" }}
-              <b>Message:</b> <i>{{ .Annotations.message }}</i>
-            {{- else }}
-              <b>Description:</b> <i>N/A</i>
-            {{- end }}
-            {{- if gt (len .Labels.SortedPairs) 0 }}
-              <b>Details:</b>
-              {{- range .Labels.SortedPairs }}
-                • <b>{{ .Name }}:</b> <i>{{ .Value }}</i>
-              {{- end }}
-            {{- end }}
+          {{- if eq .Labels.severity "critical" }}
+          <b>🚨 Severity:</b> Critical
+          {{- else if eq .Labels.severity "warning" }}
+          <b>⚠️ Severity:</b> Warning
+          {{- else }}
+          <b>ℹ️ Severity:</b> {{ .Labels.severity }}
+          {{- end }}
+          <b>Namespace:</b> {{ .Labels.namespace }}
+          {{- if ne .Annotations.description "" }}
+          <b>Description:</b> {{ .Annotations.description }}
+          {{- else if ne .Annotations.summary "" }}
+          <b>Summary:</b> {{ .Annotations.summary }}
+          {{- else if ne .Annotations.message "" }}
+          <b>Message:</b> {{ .Annotations.message }}
+          {{- end }}
+          {{- if ne .Labels.pod "" }}
+          <b>Pod:</b> {{ .Labels.pod }}
+          {{- end }}
+          {{- if ne .Labels.node "" }}
+          <b>Node:</b> {{ .Labels.node }}
+          {{- end }}
           {{- end }}
         priority: |-
           {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
         send_resolved: true
         title: |-
-          [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+          {{ if eq .Status "firing" }}🔥{{ else }}✅{{ end }} [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
         token_file: /etc/secrets/PUSHOVER_API_TOKEN
         url_title: View in Alert Manager
         user_key_file: /etc/secrets/PUSHOVER_API_USERKEY

@@ -23,50 +23,63 @@ spec:
         - apiURL:
             key: DISCORD_WEBHOOK_URL
             name: alertmanager-secret
-          sendResolved: true
-          title: >-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
           message: |-
             {{- range .Alerts }}
-              {{- if ne .Annotations.description "" }}
-                {{ .Annotations.description }}
-              {{- else if ne .Annotations.summary "" }}
-                {{ .Annotations.summary }}
-              {{- else if ne .Annotations.message "" }}
-                {{ .Annotations.message }}
-              {{- else }}
-                Alert description not available
-              {{- end }}
+            **Alert:** {{ .Labels.alertname }}
+            **Severity:** {{ if eq .Labels.severity "critical" }}🚨 Critical{{ else if eq .Labels.severity "warning" }}⚠️ Warning{{ else }}ℹ️ {{ .Labels.severity }}{{ end }}
+            **Namespace:** `{{ .Labels.namespace }}`
+            {{- if ne .Annotations.description "" }}
+            **Description:** {{ .Annotations.description }}
+            {{- else if ne .Annotations.summary "" }}
+            **Summary:** {{ .Annotations.summary }}
+            {{- else if ne .Annotations.message "" }}
+            **Message:** {{ .Annotations.message }}
             {{- end }}
+            {{- if ne .Labels.pod "" }}
+            **Pod:** `{{ .Labels.pod }}`
+            {{- end }}
+            {{- if ne .Labels.node "" }}
+            **Node:** `{{ .Labels.node }}`
+            {{- end }}
+            ---
+            {{- end }}
+          sendResolved: true
+          title: >-
+            {{ if eq .Status "firing" }}🔥{{ else }}✅{{ end }} [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
       name: discord
     - name: pushover
       pushoverConfigs:
         - html: true
           message: |-
             {{- range .Alerts }}
-              {{- if ne .Annotations.description "" }}
-                {{ .Annotations.description }}
-              {{- else if ne .Annotations.summary "" }}
-                {{ .Annotations.summary }}
-              {{- else if ne .Annotations.message "" }}
-                {{ .Annotations.message }}
-              {{- else }}
-                Alert description not available
-              {{- end }}
-              {{- if gt (len .Labels.SortedPairs) 0 }}
-                <small>
-                  {{- range .Labels.SortedPairs }}
-                    <b>{{ .Name }}:</b> {{ .Value }}
-                  {{- end }}
-                </small>
-              {{- end }}
+            {{- if eq .Labels.severity "critical" }}
+            <b>🚨 Severity:</b> Critical
+            {{- else if eq .Labels.severity "warning" }}
+            <b>⚠️ Severity:</b> Warning
+            {{- else }}
+            <b>ℹ️ Severity:</b> {{ .Labels.severity }}
+            {{- end }}
+            <b>Namespace:</b> {{ .Labels.namespace }}
+            {{- if ne .Annotations.description "" }}
+            <b>Description:</b> {{ .Annotations.description }}
+            {{- else if ne .Annotations.summary "" }}
+            <b>Summary:</b> {{ .Annotations.summary }}
+            {{- else if ne .Annotations.message "" }}
+            <b>Message:</b> {{ .Annotations.message }}
+            {{- end }}
+            {{- if ne .Labels.pod "" }}
+            <b>Pod:</b> {{ .Labels.pod }}
+            {{- end }}
+            {{- if ne .Labels.node "" }}
+            <b>Node:</b> {{ .Labels.node }}
+            {{- end }}
             {{- end }}
           priority: |-
             {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
           sendResolved: true
           sound: gamelan
           title: >-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+            {{ if eq .Status "firing" }}🔥{{ else }}✅{{ end }} [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
           token:
             key: ALERTMANAGER_PUSHOVER_TOKEN
             name: alertmanager-secret
