@@ -29,31 +29,10 @@ spec:
               repository: ghcr.io/siderolabs/talosctl
               tag: v1.13.5
             command:
-              - /bin/sh
-              - -c
+              - talosctl
             args:
-              - |
-                set -e
-                echo "Starting etcd defragmentation on local controlplane node..."
-                echo "Timestamp: $(date)"
-                echo "Node: $NODE_NAME"
-                echo "Node IP: $NODE_IP"
-
-                if [ -z "$NODE_IP" ]; then
-                  echo "ERROR: NODE_IP environment variable not set"
-                  exit 1
-                fi
-
-                echo "Running: talosctl -n $NODE_IP etcd defrag"
-
-                if timeout 300 talosctl -n "$NODE_IP" etcd defrag; then
-                  echo "✅ Successfully defragmented etcd on $NODE_NAME ($NODE_IP)"
-                  echo "Defragmentation completed at: $(date)"
-                else
-                  echo "❌ Failed to defragment etcd on $NODE_NAME ($NODE_IP)"
-                  echo "Defragmentation failed at: $(date)"
-                  exit 1
-                fi
+              - etcd
+              - defrag
             env:
               TZ: *timeZone
               NODE_NAME:
@@ -64,6 +43,7 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: status.hostIP
+              TALOSCONFIG: /var/run/secrets/talos.dev/config
             resources:
               requests:
                 cpu: 10m
