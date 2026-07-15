@@ -23,18 +23,21 @@ spec:
           failedJobsHistory: 3
           parallelism: 3
         replicas: 3
-        hostNetwork: true
         containers:
           app:
             image:
               repository: ghcr.io/siderolabs/talosctl
               tag: v1.13.5
             args:
-              - --nodes=127.0.0.1
+              - --nodes=$(NODE_IP)
               - etcd
               - defrag
             env:
               TZ: *timeZone
+              NODE_IP:
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.hostIP
               TALOSCONFIG: /var/run/secrets/talos.dev/config
             resources:
               requests:
