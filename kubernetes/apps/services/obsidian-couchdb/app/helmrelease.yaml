@@ -73,11 +73,13 @@ spec:
     route:
       app:
         annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 401"]
+          gethomepage.dev/description: CouchDB backend for Obsidian LiveSync
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Services
-          gethomepage.dev/name: Obsidian CouchDB
           gethomepage.dev/icon: couchdb.png
-          gethomepage.dev/description: CouchDB backend for Obsidian LiveSync
+          gethomepage.dev/name: Obsidian CouchDB
         hostnames:
           - "couchdb.rafaribe.com"
         parentRefs:
