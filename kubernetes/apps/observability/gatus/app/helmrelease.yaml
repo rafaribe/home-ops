@@ -39,7 +39,7 @@ spec:
       hostnames:
         - status.rafaribe.com
       parentRefs:
-        - name: envoy-external
+        - name: envoy-internal
           namespace: network
           sectionName: https
     monitoring:
