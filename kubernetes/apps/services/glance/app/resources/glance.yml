@@ -159,6 +159,7 @@ pages:
           - type: monitor
             title: Life & Household
             cache: 1m
+            timeout: 10s
             sites:
               - title: Paperless
                 url: https://paperless.rafaribe.com
@@ -192,6 +193,7 @@ pages:
           - type: monitor
             title: Productivity
             cache: 1m
+            timeout: 10s
             sites:
               - title: Affine
                 url: https://affine.rafaribe.com
@@ -224,6 +226,7 @@ pages:
           - type: monitor
             title: Communication & Misc
             cache: 1m
+            timeout: 10s
             sites:
               - title: The Lounge
                 url: https://tl.rafaribe.com
@@ -239,6 +242,7 @@ pages:
                 icon: di:actual-budget
               - title: Syncthing
                 url: https://syncthing.rafaribe.com
+                check-url: http://syncthing-app.storage.svc.cluster.local:8384
                 icon: di:syncthing
               - title: PicoShare
                 url: https://picoshare.rafaribe.com
@@ -251,6 +255,7 @@ pages:
           - type: monitor
             title: Infrastructure
             cache: 1m
+            timeout: 10s
             sites:
               - title: Ceph
                 url: https://rook.rafaribe.com
@@ -274,7 +279,8 @@ pages:
                 icon: di:grafana
               - title: Gatus
                 url: https://gatus.rafaribe.com
-                icon: mdi:check-network
+                check-url: http://gatus-gatus-sidecar.observability.svc.cluster.local:8080
+                icon: di:gatus
 
   - name: News
     columns:
