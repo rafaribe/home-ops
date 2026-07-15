@@ -26,13 +26,14 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/siderolabs/talosctl
+              repository: ghcr.io/budimanjojo/talosctl
               tag: v1.13.5
             command:
-              - talosctl
+              - /bin/sh
+              - -c
             args:
-              - etcd
-              - defrag
+              - |
+                talosctl -n "$NODE_IP" etcd defrag
             env:
               TZ: *timeZone
               NODE_NAME:
