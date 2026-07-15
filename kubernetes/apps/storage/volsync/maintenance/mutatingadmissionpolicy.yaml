@@ -1,3 +1,4 @@
+---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicybinding-admissionregistration-v1beta1.json
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingAdmissionPolicyBinding
@@ -12,6 +13,15 @@ kind: MutatingAdmissionPolicy
 metadata:
   name: kopia-maintenance-nfs
 spec:
+  failurePolicy: Fail
+  matchConditions:
+    - name: has-kopia-maint-job-name-prefix
+      expression: >-
+        object.metadata.name.startsWith("kopia-maint-")
+    - name: repository-volume-does-not-exist
+      expression: >-
+        !has(object.spec.template.spec.volumes) ||
+        !object.spec.template.spec.volumes.exists(item, item.name == "repository")
   matchConstraints:
     resourceRules:
       - apiGroups:
@@ -23,15 +33,6 @@ spec:
           - UPDATE
         resources:
           - jobs
-  matchConditions:
-    - name: has-kopia-maint-job-name-prefix
-      expression: >
-        object.metadata.name.startsWith("kopia-maint-")
-    - name: repository-volume-does-not-exist
-      expression: >
-        !has(object.spec.template.spec.volumes) ||
-        !object.spec.template.spec.volumes.exists(item, item.name == "repository")
-  failurePolicy: Fail
   reinvocationPolicy: IfNeeded
   mutations:
     - patchType: JSONPatch
@@ -61,16 +62,26 @@ spec:
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingAdmissionPolicyBinding
 metadata:
-  name: kopia-maintenance-cache
+  name: kopia-maintenance-security
 spec:
-  policyName: kopia-maintenance-cache
+  policyName: kopia-maintenance-security
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicy-admissionregistration-v1beta1.json
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingAdmissionPolicy
 metadata:
-  name: kopia-maintenance-cache
+  name: kopia-maintenance-security
 spec:
+  failurePolicy: Fail
+  matchConditions:
+    - name: has-kopia-maint-job-name-prefix
+      expression: >-
+        object.metadata.name.startsWith("kopia-maint-")
+    - name: missing-run-as-non-root
+      expression: >-
+        !has(object.spec.template.spec.securityContext) ||
+        !has(object.spec.template.spec.securityContext.runAsNonRoot) ||
+        object.spec.template.spec.securityContext.runAsNonRoot == false
   matchConstraints:
     resourceRules:
       - apiGroups:
@@ -82,30 +93,20 @@ spec:
           - UPDATE
         resources:
           - jobs
-  matchConditions:
-    - name: has-kopia-maint-job-name-prefix
-      expression: >
-        object.metadata.name.startsWith("kopia-maint-")
-    - name: has-emptydir-cache
-      expression: >
-        has(object.spec.template.spec.volumes) &&
-        object.spec.template.spec.volumes.exists(item, item.name == "kopia-cache" && has(item.emptyDir))
-  failurePolicy: Fail
   reinvocationPolicy: IfNeeded
   mutations:
     - patchType: JSONPatch
       jsonPatch:
         expression: >-
-          [JSONPatch{
-            op: "test", path: "/spec/template/spec/volumes/1/name",
-            value: "kopia-cache"
-          },
-          JSONPatch{
-            op: "remove", path: "/spec/template/spec/volumes/1/emptyDir"
-          },
-          JSONPatch{
-            op: "add", path: "/spec/template/spec/volumes/1/persistentVolumeClaim",
-            value: Object.spec.template.spec.volumes.persistentVolumeClaim{
-              claimName: "kopia-maintenance-cache"
+          [
+            JSONPatch{
+              op: "add", path: "/spec/template/spec/securityContext/runAsNonRoot",
+              value: true
+            },
+            JSONPatch{
+              op: "add", path: "/spec/template/spec/securityContext/seccompProfile",
+              value: Object.spec.template.spec.securityContext.seccompProfile{
+                type: "RuntimeDefault"
+              }
             }
-          }]
+          ]

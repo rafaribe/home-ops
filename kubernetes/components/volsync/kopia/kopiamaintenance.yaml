@@ -3,14 +3,13 @@
 apiVersion: volsync.backube/v1alpha1
 kind: KopiaMaintenance
 metadata:
-  name: daily
-  namespace: volsync
+  name: ${APP}
 spec:
-  activeDeadlineSeconds: 28800
+  activeDeadlineSeconds: 3600
   enabled: true
   failedJobsHistoryLimit: 1
   repository:
-    repository: volsync-maintenance-secret
+    repository: ${APP}-volsync-secret
   successfulJobsHistoryLimit: 0
   trigger:
-    schedule: 0 3 * * *
+    schedule: 0 4 * * *
