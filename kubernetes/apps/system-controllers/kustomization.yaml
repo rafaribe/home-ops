@@ -11,4 +11,5 @@ resources:
 #  - ./homelab-assistant/ks.yaml
   - ./nvidia/ks.yaml
   - ./reloader/ks.yaml
+  - ./talos-etcd-defrag/ks.yaml
   - ./tuppr/ks.yaml
