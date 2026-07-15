@@ -1,0 +1,32 @@
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: certmanager-bitwarden-tls-certs
+  namespace: observability
+spec:
+  matchers:
+    - name: alertname
+      value: CertManagerCertExpirySoon
+      isRegex: false
+      isEqual: true
+    - name: name
+      value: bitwarden-tls-certs
+      isRegex: false
+      isEqual: true
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: certmanager-barman-cloud-server
+  namespace: observability
+spec:
+  matchers:
+    - name: alertname
+      value: CertManagerCertExpirySoon
+      isRegex: false
+      isEqual: true
+    - name: name
+      value: barman-cloud-server
+      isRegex: false
+      isEqual: true
