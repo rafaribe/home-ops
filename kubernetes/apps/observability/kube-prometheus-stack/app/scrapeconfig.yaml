@@ -8,8 +8,6 @@ spec:
   staticConfigs:
     - targets:
         - truenas.rafaribe.com:9100
-        - opnsense.rafaribe.com:9100
-        - pve.rafaribe.com:9100
   metricsPath: /metrics
   relabelings:
     - action: replace
@@ -25,22 +23,6 @@ spec:
   staticConfigs:
     - targets:
         - truenas.rafaribe.com:9633
-        - pve.rafaribe.com:9633
-  metricsPath: /metrics
-  relabelings:
-    - action: replace
-      targetLabel: job
-      replacement: *name
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: ScrapeConfig
-metadata:
-  name: &name pve-exporter
-spec:
-  staticConfigs:
-    - targets:
-        - pve.rafaribe.com:9221
   metricsPath: /metrics
   relabelings:
     - action: replace

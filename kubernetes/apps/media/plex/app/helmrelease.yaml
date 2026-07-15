@@ -91,7 +91,8 @@ spec:
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PLEX_TOKEN}}` }}"
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/name in (plex)
-
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] < 500"]
         hostnames: ["plex.rafaribe.com"]
         parentRefs:
           - name: envoy-external

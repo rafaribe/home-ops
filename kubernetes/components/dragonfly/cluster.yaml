@@ -19,6 +19,7 @@ spec:
     - --cluster_mode=${DRAGONFLY_CLUSTER_MODE:=emulated}
     - --default_lua_flags=allow-undeclared-keys
     - --force_epoll
+    - --expose_http_api
   resources:
     requests:
       cpu: 100m

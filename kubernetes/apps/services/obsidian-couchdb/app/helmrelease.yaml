@@ -79,7 +79,7 @@ spec:
           gethomepage.dev/icon: couchdb.png
           gethomepage.dev/description: CouchDB backend for Obsidian LiveSync
         hostnames:
-          - "obsidian.rafaribe.com"
+          - "couchdb.rafaribe.com"
         parentRefs:
           - name: envoy-external
             namespace: network
