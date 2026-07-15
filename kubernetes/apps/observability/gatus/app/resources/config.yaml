@@ -44,7 +44,7 @@ storage:
 ui:
   title: Status | Gatus
   header: Status
-  logo: https://avatars.githubusercontent.com/u/66985630
+  logo: https://www.iconarchive.com/download/i139556/microsoft/fluentui-emoji-flat/Horizontal-Traffic-Light-Flat.256.png
   link: https://github.com/rafaribe
 web:
   port: ${GATUS_WEB_PORT}
