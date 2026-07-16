@@ -19,7 +19,6 @@ spec:
           hostPID: true
           nodeSelector:
             kubernetes.io/arch: arm64
-            node.kubernetes.io/instance-type: rpi4
           tolerations:
             - operator: Exists
               effect: NoSchedule
