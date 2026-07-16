@@ -34,7 +34,10 @@ spec:
                 memory: 4Gi
                 squat.ai/rockchip-npu: 1
             securityContext:
-              privileged: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             probes:
               liveness:
                 enabled: true
@@ -97,8 +100,3 @@ spec:
         storageClass: ceph-block
         globalMounts:
           - path: /models
-      dev-accel:
-        type: hostPath
-        hostPath: /dev/accel
-        globalMounts:
-          - path: /dev/accel
