@@ -103,10 +103,10 @@ spec:
                   periodSeconds: 5
             resources:
               requests:
-                cpu: 100m
-                memory: 512Mi
+                cpu: 500m
+                memory: 2Gi
               limits:
-                memory: 5Gi
+                memory: 8Gi
           tika:
             image:
               repository: docker.io/apache/tika
@@ -126,15 +126,20 @@ spec:
               - "--chromium-disable-javascript=true"
               - "--chromium-allow-list=file:///tmp/.*"
     defaultPodOptions:
+      tolerations:
+        - key: node-role.kubernetes.io/memory
+          operator: Exists
+          effect: NoSchedule
       affinity:
         nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/arch
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: workload-type
                     operator: In
                     values:
-                      - amd64
+                      - memory
     service:
       app:
         controller: *app
