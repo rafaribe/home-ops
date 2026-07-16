@@ -14,15 +14,6 @@ spec:
 
   values:
     defaultPodOptions:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: workload-type
-                    operator: NotIn
-                    values:
-                      - memory
       priorityClassName: system-node-critical
       tolerations:
         - key: node-role.kubernetes.io/memory
@@ -91,3 +82,8 @@ spec:
                 - count: 1000
                   paths:
                     - path: /dev/net/tun
+            - name: rockchip-npu
+              groups:
+                - count: 1
+                  paths:
+                    - path: /dev/accel/accel0
