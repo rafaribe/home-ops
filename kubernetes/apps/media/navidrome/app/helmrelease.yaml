@@ -61,21 +61,6 @@ spec:
               limits:
                 memory: 799M
 
-    defaultPodOptions:
-      tolerations:
-        - key: node-role.kubernetes.io/memory
-          operator: Exists
-          effect: NoSchedule
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
-                  - key: workload-type
-                    operator: In
-                    values:
-                      - memory
     service:
       app:
         controller: navidrome

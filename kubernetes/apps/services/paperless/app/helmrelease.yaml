@@ -126,20 +126,15 @@ spec:
               - "--chromium-disable-javascript=true"
               - "--chromium-allow-list=file:///tmp/.*"
     defaultPodOptions:
-      tolerations:
-        - key: node-role.kubernetes.io/memory
-          operator: Exists
-          effect: NoSchedule
       affinity:
         nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
-                  - key: workload-type
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
                     operator: In
                     values:
-                      - memory
+                      - amd64
     service:
       app:
         controller: *app

@@ -64,20 +64,6 @@ spec:
               limits:
                 memory: 4Gi
     defaultPodOptions:
-      tolerations:
-        - key: node-role.kubernetes.io/memory
-          operator: Exists
-          effect: NoSchedule
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
-                  - key: workload-type
-                    operator: In
-                    values:
-                      - memory
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
