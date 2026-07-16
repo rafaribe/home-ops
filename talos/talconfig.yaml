@@ -177,6 +177,7 @@ nodes:
         systemExtensions:
           officialExtensions:
             - siderolabs/binfmt-misc
+            - siderolabs/rockchip-rknn
             - siderolabs/util-linux-tools
             - siderolabs/nfsrahead
     patches:
