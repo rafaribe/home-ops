@@ -15,6 +15,11 @@ spec:
         enabled: true
         name: rook-ceph.cephfs.csi.ceph.com
         snapshotPolicy: volumeGroupSnapshot
+        nodePlugin:
+          tolerations:
+            - key: node-role.kubernetes.io/memory
+              operator: Exists
+              effect: NoSchedule
       nfs:
         enabled: false
       nvmeof:
@@ -23,6 +28,11 @@ spec:
         enabled: true
         name: rook-ceph.rbd.csi.ceph.com
         snapshotPolicy: volumeSnapshot
+        nodePlugin:
+          tolerations:
+            - key: node-role.kubernetes.io/memory
+              operator: Exists
+              effect: NoSchedule
     operatorConfig:
       driverSpecDefaults:
         clusterName: rook-ceph
