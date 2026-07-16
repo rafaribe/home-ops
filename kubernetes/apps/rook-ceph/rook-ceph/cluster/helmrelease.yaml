@@ -100,7 +100,7 @@ spec:
             memory: 512Mi
           limits:
             cpu: 2
-            memory: 4Gi # increased from 1Gi for better performance
+            memory: 4Gi
         modules:
           - name: "rook"
             enabled: true
