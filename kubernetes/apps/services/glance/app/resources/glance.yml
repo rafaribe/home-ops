@@ -165,6 +165,7 @@ pages:
                 url: https://paperless.rafaribe.com
                 check-url: http://paperless.services.svc.cluster.local:8000
                 icon: di:paperless-ngx
+                timeout: 15s
               - title: Littlelink
                 url: https://link.rafaribe.com
                 check-url: http://littlelink.services.svc.cluster.local:3000
