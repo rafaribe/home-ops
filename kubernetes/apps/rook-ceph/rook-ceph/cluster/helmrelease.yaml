@@ -99,8 +99,8 @@ spec:
             cpu: 500m
             memory: 512Mi
           limits:
-            cpu: 1000m # added CPU limit for better resource management
-            memory: 2Gi # increased from 1Gi for better performance
+            cpu: 2
+            memory: 4Gi # increased from 1Gi for better performance
         modules:
           - name: "rook"
             enabled: true
