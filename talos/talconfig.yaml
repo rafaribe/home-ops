@@ -210,6 +210,9 @@ nodes:
       customization:
         extraKernelArgs:
           - net.ifnames=0
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/rockchip-rknn
     nodeTaints:
       node-role.kubernetes.io/memory: "NoSchedule"
     nodeLabels:
