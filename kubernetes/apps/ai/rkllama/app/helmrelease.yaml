@@ -1,0 +1,104 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app rkllama
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 30m
+  values:
+    controllers:
+      rkllama:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/notpunchnox/rkllama
+              tag: main
+            args:
+              - rkllama_server
+              - --models
+              - /models
+            env:
+              TZ: Europe/Lisbon
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+                squat.ai/rockchip-npu: 1
+              limits:
+                memory: 4Gi
+                squat.ai/rockchip-npu: 1
+            securityContext:
+              privileged: true
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/version
+                    port: &port 8080
+                  initialDelaySeconds: 30
+                  periodSeconds: 30
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/version
+                    port: *port
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+
+    defaultPodOptions:
+      tolerations:
+        - key: node-role.kubernetes.io/memory
+          operator: Exists
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workload-type
+                    operator: In
+                    values:
+                      - memory
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+
+    route:
+      app:
+        hostnames: ["rkllama.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
+    persistence:
+      models:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 20Gi
+        storageClass: ceph-block
+        globalMounts:
+          - path: /models
+      dev-accel:
+        type: hostPath
+        hostPath: /dev/accel
+        globalMounts:
+          - path: /dev/accel
