@@ -20,8 +20,8 @@ spec:
       key: KOPIA_PASSWORD
       name: kopiur-repository-secret
       namespace: kopiur-system
-  mover:
-    securityContext:
+  moverDefaults:
+    podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
       fsGroup: 1000
