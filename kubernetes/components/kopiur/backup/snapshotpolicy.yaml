@@ -6,8 +6,8 @@ metadata:
 spec:
   mover:
     securityContext:
-      runAsGroup: ${KOPIUR_PGID:=568}
-      runAsUser: ${KOPIUR_PUID:=568}
+      runAsGroup: ${KOPIUR_PGID:=1000}
+      runAsUser: ${KOPIUR_PUID:=1000}
   repository:
     kind: ClusterRepository
     name: truenas
