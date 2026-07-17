@@ -28,7 +28,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/reaplet
-              tag: 0.1.1@sha256:474c2e0aae5400baba99be9889feb700fabb319e80d0abc54177508802a15491
+              tag: 0.2.1@sha256:e96a126672ab785500c3a340a13ea355a850f8b5cbd96c2440518e9fe738b09b
             env:
               CRI_SOCKET: unix:///run/containerd/containerd.sock
               NODE_NAME:
