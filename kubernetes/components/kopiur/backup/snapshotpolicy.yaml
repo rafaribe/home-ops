@@ -19,4 +19,4 @@ spec:
     keepWeekly: 4
   sources:
     - pvc:
-        name: ${APP}
+        name: ${CLAIM:=${APP}}
