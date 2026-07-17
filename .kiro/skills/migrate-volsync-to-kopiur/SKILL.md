@@ -5,196 +5,193 @@ description: Migrate an app's PVC backup from VolSync to Kopiur with zero data l
 
 # Migrate VolSync to Kopiur
 
-This skill migrates an app's PVC backup from VolSync (kopia mover / perfectra1n fork) to Kopiur. Because the fork writes a real kopia repository, kopiur **adopts it in place** — all existing snapshots are preserved and history continues seamlessly.
+This skill migrates an app's PVC backup from VolSync (perfectra1n/volsync fork with kopia mover) to Kopiur. The existing kopia repository is adopted in place — all snapshots are preserved.
 
 ## Prerequisites
 
-- Kopiur operator deployed and healthy (`kopiur-system` namespace)
-- `ClusterRepository` named `truenas` in `Ready` state
-- `components/kopiur/secret` included in the target namespace's `kustomization.yaml`
-- `kubectl kopiur` plugin installed (`kubectl krew install kopiur/kopiur` or `brew install home-operations/tap/kopiur`)
-- NFS export on TrueNAS writable by UID 1000
+Before migrating any app, verify:
 
-## Key Concept: Adoption vs Fresh Start
+```bash
+# Kopiur operator healthy
+kubectl get helmrelease -n kopiur-system kopiur
+# ClusterRepository ready
+kubectl get clusterrepository truenas -o jsonpath='{.status.phase}'
+# Should output: Ready
+```
 
-Since this cluster uses the **perfectra1n/volsync fork** (kopia mover, NOT restic), kopiur can adopt the existing kopia repository in place. This means:
+The target namespace must include the `kopiur/secret` component in its `kustomization.yaml`:
+```yaml
+components:
+  - ../../components/kopiur/secret
+```
 
-- All existing snapshots are preserved
-- Snapshot history continues (same identity)
-- No parallel-run window needed for data safety
-- The VolSync Secret is kept (kopiur references it)
-
-If the cluster used upstream VolSync with **restic**, the repositories would be incompatible and kopiur would start fresh (empty repo). That is NOT our case.
+Namespaces already configured: `services`, `system-controllers`.
+Namespaces that need it added before migration: `downloads`, `media`, `home`, `ai`, `database`, `games`, `security`, `storage`.
 
 ## Workflow
 
-### Step 1: Identify the target app
+### Step 1: Verify the namespace has the kopiur secret component
 
-Gather:
-1. App name (e.g., `autobrr`)
-2. Namespace (e.g., `downloads`)
-3. Current VolSync Secret name (usually `${APP}-volsync-secret`)
-
-Verify kopiur operator health:
-```bash
-flux get hr -n kopiur-system kopiur
-kubectl get clusterrepository truenas -o jsonpath='{.status.phase}'
+Check `kubernetes/apps/<namespace>/kustomization.yaml` has:
+```yaml
+components:
+  - ../../components/kopiur/secret
 ```
 
-### Step 2: Dry-run the migration with kubectl kopiur
-
-Run the migration tool in dry-run mode to see what it will translate:
-
+If missing, add it and commit. Verify the secret exists:
 ```bash
-kubectl kopiur migrate volsync -n <namespace> --name <app> --repository truenas --repository-kind ClusterRepository
+kubectl get secret kopiur-repository-secret -n <namespace>
 ```
 
-This prints:
-- The accounting (every VolSync field mapped, unmapped, or ignored)
-- The kopiur manifests it would create (SnapshotPolicy + SnapshotSchedule)
+### Step 2: Edit the app's `ks.yaml`
 
-Review the accounting, especially the **pinned snapshot identity** line — it must match what `kopia snapshot list` shows for that app.
-
-### Step 3: Offline/GitOps mode (alternative)
-
-For a GitOps-native approach, point the tool at the VolSync YAML files directly:
-
-```bash
-kubectl kopiur migrate volsync \
-  -f kubernetes/components/volsync/kopia/replicationsource.yaml \
-  --repository truenas \
-  --repository-kind ClusterRepository \
-  --out-dir /tmp/kopiur-migration
-```
-
-This generates apply-ready YAML without touching the cluster.
-
-### Step 4: Apply the migration (or swap the component)
-
-**Option A: Use the CLI to apply directly**
-```bash
-kubectl kopiur migrate volsync -n <namespace> --name <app> --repository truenas --repository-kind ClusterRepository --apply
-```
-
-Then follow up by swapping the component in `ks.yaml` (Step 5).
-
-**Option B: Swap the Flux component directly (preferred for GitOps)**
-
-Since we already have the reusable `components/kopiur/backup` component that creates the SnapshotPolicy, SnapshotSchedule, Restore, and PVC, the cleanest path is:
-
-Edit `kubernetes/apps/<namespace>/<app>/ks.yaml`:
+Replace the volsync component with kopiur:
 
 ```yaml
 # Before
 spec:
+  dependsOn:
+    - name: volsync
+      namespace: storage
   components:
     - ../../../../components/volsync
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 5Gi
 
 # After
 spec:
+  dependsOn:
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   components:
     - ../../../../components/kopiur/backup
+  postBuild:
+    substitute:
+      APP: *app
+      KOPIUR_CAPACITY: 5Gi
 ```
 
-Update `postBuild.substitute` if needed:
-- Remove: `VOLSYNC_CAPACITY`, `VOLSYNC_ACCESSMODES`, `VOLSYNC_STORAGECLASS`
-- Add (if non-default): `KOPIUR_CAPACITY`, `KOPIUR_ACCESSMODES`, `KOPIUR_STORAGECLASS`
+Variable mapping:
+| VolSync | Kopiur | Default |
+|---------|--------|---------|
+| `VOLSYNC_CAPACITY` | `KOPIUR_CAPACITY` | `5Gi` |
+| `VOLSYNC_ACCESSMODES` | `KOPIUR_ACCESSMODES` | `ReadWriteOnce` |
+| `VOLSYNC_STORAGECLASS` | `KOPIUR_STORAGECLASS` | `ceph-block` |
+| `VOLSYNC_CACHE_CAPACITY` | (not needed) | — |
+| `CLAIM` | (not needed, always `${APP}`) | — |
 
-Defaults:
-- `KOPIUR_CAPACITY`: `5Gi`
-- `KOPIUR_ACCESSMODES`: `ReadWriteOnce`
-- `KOPIUR_STORAGECLASS`: `ceph-block`
-- `KOPIUR_SNAPSHOTCLASS`: `csi-ceph-blockpool`
-- `KOPIUR_PUID`: `1000`
-- `KOPIUR_PGID`: `1000`
+Remove any extra volsync vars (`VOLSYNC_CACHE_CAPACITY`, `CLAIM`).
 
-### Step 5: Delete the old PVC
+Optional overrides (only if non-default):
+- `KOPIUR_SNAPSHOTCLASS`: `csi-ceph-blockpool` (default)
+- `KOPIUR_PUID`: `1000` (default)
+- `KOPIUR_PGID`: `1000` (default)
 
-The kopiur backup component creates a new PVC with `dataSourceRef` pointing to the `Restore` CR (volume populator). The old VolSync-managed PVC must be removed for the new one to be created.
+### Step 3: Update the helmrelease persistence (if needed)
+
+If the helmrelease uses `existingClaim: ${CLAIM:=${APP}}` or similar, simplify to:
+```yaml
+persistence:
+  data:
+    existingClaim: ${APP}
+```
+
+The kopiur component creates the PVC named `${APP}` automatically.
+
+### Step 4: Delete the old PVC
+
+The kopiur backup component creates a PVC with `dataSourceRef` pointing to the `Restore` CR. The old VolSync PVC (which has no `dataSourceRef` or a different one) must be deleted:
 
 ```bash
 kubectl -n <namespace> delete pvc <app>
 ```
 
-Kopiur's `Restore` with `onMissingSnapshot: Continue` means:
-- If kopiur repo has snapshots for this app → PVC is populated from the latest ✅
-- If no snapshot exists yet → PVC is created empty (app starts fresh) ⚠️
-
-**Important:** Since kopiur is using a NEW NFS repository (truenas:/mnt/tank/kopiur) rather than adopting the old VolSync filesystem repo, there will be NO existing snapshots in the new repo. The first backup cycle needs to complete before a restore can work.
-
-Therefore, the safe order is:
-1. Swap the component
-2. Let the first SnapshotSchedule fire and succeed (check with `kubectl -n <namespace> get snapshots`)
-3. THEN delete the old PVC (if needed for volume populator recreation)
-
-Or simply: swap the component and let the existing PVC stay — kopiur will just start taking snapshots of it via the VolumeSnapshot copyMethod. The PVC only needs recreation if you want the volume populator `dataSourceRef` pattern for disaster recovery.
-
-### Step 6: Retire VolSync resources
-
-Once kopiur is taking snapshots successfully:
-
+If the PVC is stuck in `Terminating`:
 ```bash
-kubectl -n <namespace> delete replicationsource <app>-src 2>/dev/null
-kubectl -n <namespace> delete replicationdestination <app>-dst 2>/dev/null
+kubectl -n <namespace> patch pvc <app> -p '{"metadata":{"finalizers":null}}' --type=merge
 ```
 
-**KEEP the VolSync Secret** — it contains `KOPIA_PASSWORD` which is shared. The `kopiur-repository-secret` ExternalSecret handles this separately via the kopiur/secret component, so you can eventually remove the per-app volsync ExternalSecret too.
+The app pod will restart. Kopiur's Restore with `onMissingSnapshot: Continue` means:
+- If kopiur repo has snapshots → PVC populated from latest ✅
+- If no snapshot exists → PVC created empty, app starts fresh ✅
 
-### Step 7: Verify
-
-```bash
-# Check kopiur snapshot succeeded
-kubectl -n <namespace> get snapshots -l kopiur.home-operations.com/policy=<app>
-
-# Check app is running
-kubectl -n <namespace> get pods -l app.kubernetes.io/name=<app>
-
-# Run doctor on the repository
-kubectl kopiur doctor -n <namespace>
-```
-
-### Step 8: Commit and push
+### Step 5: Commit, push, reconcile
 
 ```bash
 git add kubernetes/apps/<namespace>/<app>/
 git commit -m "feat(<app>): migrate backup from volsync to kopiur"
 git push
+flux reconcile source git flux-system
+flux reconcile ks <app> -n <namespace>
 ```
 
-## Important Notes
+### Step 6: Verify
 
-### New NFS repo vs adopting old repo
+```bash
+# Kustomization reconciled
+kubectl get kustomization -n <namespace> <app>
 
-This cluster's kopiur deployment uses a **new** NFS-backed `ClusterRepository` (`truenas:/mnt/tank/kopiur`), NOT adopting the existing VolSync filesystem repo. This means:
+# Kopiur CRDs created
+kubectl get snapshotpolicy,snapshotschedule,restore -n <namespace> | grep <app>
 
-- Old VolSync snapshots remain in the old repo (accessible via VolSync until decommissioned)
-- Kopiur starts with a fresh kopia repository on the NFS mount
-- First backup for each app must complete before restore-from-kopiur works
-- Both systems can run in parallel indefinitely (different repos, same password)
+# PVC bound
+kubectl get pvc -n <namespace> <app>
 
-### If you want to adopt the existing repo instead
+# Pod running
+kubectl get pods -n <namespace> -l app.kubernetes.io/name=<app>
 
-If you wanted kopiur to adopt the existing VolSync kopia repo (keeping all history), you would:
-1. Point the `ClusterRepository` at the same backend VolSync uses
-2. Use `kubectl kopiur migrate volsync --resolve-secrets --apply` to adopt in place
-3. Delete VolSync's `KopiaMaintenance` / maintenance cronjobs (kopiur takes ownership)
+# First snapshot (after cron fires, usually within the hour)
+kubectl get snapshot -n <namespace> -l kopiur.home-operations.com/policy=<app>
+```
 
-This is more complex but preserves full snapshot history.
+### Step 7: Clean up VolSync resources (optional, after verified)
+
+```bash
+kubectl -n <namespace> delete replicationsource <app> 2>/dev/null
+kubectl -n <namespace> delete replicationdestination <app>-dst 2>/dev/null
+```
+
+The per-app volsync ExternalSecret (`<app>-volsync`) can be removed from git later during full decommission.
+
+## What the kopiur/backup component creates
+
+For each app, the component generates 4 resources (all named `${APP}`):
+
+1. **SnapshotPolicy** — backup recipe: PVC source, retention (24h/7d/4w/3latest), repository ref
+2. **SnapshotSchedule** — cron `H * * * *` (hourly with jitter)
+3. **Restore** — volume populator source with `onMissingSnapshot: Continue`
+4. **PVC** — `dataSourceRef` pointing to the Restore CR, sized by `KOPIUR_CAPACITY`
 
 ## Rollback
 
 If something goes wrong:
-1. Swap the component back to `../../../../components/volsync` in `ks.yaml`
-2. If PVC was deleted: VolSync's `ReplicationDestination` recreates it from the volsync repo
-3. Push — app resumes with last VolSync snapshot
+1. Swap component back to `../../../../components/volsync` in `ks.yaml`
+2. Delete the kopiur PVC: `kubectl -n <namespace> delete pvc <app>`
+3. Push — VolSync recreates the PVC from its ReplicationDestination
+4. App resumes from last VolSync snapshot
 
 VolSync's repository is untouched during the entire migration.
 
-## Batch Migration Order
+## Batch Migration Order (recommended)
 
-1. Non-critical: gotify, kromgo, gatus
-2. Media: sonarr, radarr, bazarr, prowlarr
-3. Downloads: autobrr, sabnzbd, qbittorrent
-4. Critical: home-assistant, syncthing, paperless
+Migrate one app per commit. Verify each before proceeding.
 
-One app per commit. Verify each before proceeding to the next.
+1. **Already done**: slink, lubelog, reaplet
+2. **Low-risk pilots**: autobrr, prowlarr, metube, picoshare, leafwiki
+3. **Downloads**: bazarr, radarr, sonarr, readarr, lidarr, sabnzbd, qbittorrent
+4. **Media**: audiobookshelf, navidrome, komga, tautulli, jellyseerr
+5. **Services**: paperless, karakeep, actual, mealie, homebox, n8n
+6. **Critical (last)**: home-assistant, immich, forgejo, kanidm
+
+## Common Issues
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| `SnapshotPolicy dry-run failed: field not declared` | Component template field in wrong location | Check component YAML against CRD schema |
+| `PVC is invalid: spec is immutable` | Old PVC exists without `dataSourceRef` | Delete the old PVC |
+| `credentials Secret does not exist` | Missing `kopiur/secret` component in namespace | Add to namespace `kustomization.yaml` |
+| `Restore phase: Pending` | No snapshot yet OR missing credentials | Check secret exists, wait for first cron |
