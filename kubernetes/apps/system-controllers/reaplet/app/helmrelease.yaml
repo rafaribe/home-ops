@@ -75,6 +75,10 @@ spec:
         globalMounts:
           - path: /var/run/secrets/talos.dev
             readOnly: true
+      data:
+        type: emptyDir
+        globalMounts:
+          - path: /data
 
     route:
       app:
