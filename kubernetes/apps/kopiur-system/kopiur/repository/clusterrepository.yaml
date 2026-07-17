@@ -20,5 +20,10 @@ spec:
       key: KOPIA_PASSWORD
       name: kopiur-repository-secret
       namespace: kopiur-system
+  mover:
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
   scheduleDefaults:
     timezone: Europe/Lisbon
