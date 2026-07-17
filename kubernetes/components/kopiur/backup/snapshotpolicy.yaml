@@ -4,6 +4,7 @@ kind: SnapshotPolicy
 metadata:
   name: ${APP}
 spec:
+  volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=csi-ceph-blockpool}
   mover:
     securityContext:
       runAsGroup: ${KOPIUR_PGID:=1000}
@@ -19,4 +20,3 @@ spec:
   sources:
     - pvc:
         name: ${APP}
-        volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=csi-ceph-blockpool}
