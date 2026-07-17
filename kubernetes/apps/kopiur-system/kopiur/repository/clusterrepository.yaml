@@ -11,7 +11,7 @@ spec:
       path: /repo
       volume:
         nfs:
-          path: /mnt/tank/kopiur
+          path: /mnt/tank/volsync-kopia
           server: truenas.rafaribe.com
   create:
     enabled: true
