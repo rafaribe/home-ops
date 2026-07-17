@@ -1,0 +1,24 @@
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: ClusterRepository
+metadata:
+  name: truenas
+spec:
+  allowedNamespaces:
+    all: true
+  backend:
+    filesystem:
+      path: /repo
+      volume:
+        nfs:
+          path: /mnt/tank/kopiur
+          server: truenas.rafaribe.com
+  create:
+    enabled: true
+  encryption:
+    passwordSecretRef:
+      key: KOPIA_PASSWORD
+      name: kopiur-repository-secret
+      namespace: kopiur-system
+  scheduleDefaults:
+    timezone: Europe/Lisbon

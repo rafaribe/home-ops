@@ -13,6 +13,7 @@ resources:
   - ./games
   - ./home
   - ./kube-system
+  - ./kopiur-system
   - ./media
   - ./network
   - ./observability

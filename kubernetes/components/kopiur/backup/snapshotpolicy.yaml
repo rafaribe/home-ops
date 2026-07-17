@@ -1,0 +1,22 @@
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  name: ${APP}
+spec:
+  mover:
+    securityContext:
+      runAsGroup: ${KOPIUR_PGID:=568}
+      runAsUser: ${KOPIUR_PUID:=568}
+  repository:
+    kind: ClusterRepository
+    name: truenas
+  retention:
+    keepDaily: 7
+    keepHourly: 24
+    keepLatest: 3
+    keepWeekly: 4
+  sources:
+    - pvc:
+        name: ${APP}
+        volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=csi-ceph-blockpool}
