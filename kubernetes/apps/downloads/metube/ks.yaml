@@ -10,19 +10,22 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: volsync
-      namespace: storage
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   path: ./kubernetes/apps/downloads/metube/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   timeout: 5m
   postBuild:
     substitute:
       APP: *app
+      KOPIUR_CAPACITY: 5Gi
   components:
-    - ../../../../components/volsync
+    - ../../../../components/kopiur/backup

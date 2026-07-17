@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: downloads
 components:
   - ../../components/alerts
+  - ../../components/kopiur/secret
   - ../../components/repos/app-template
 resources:
   - ./namespace.yaml
