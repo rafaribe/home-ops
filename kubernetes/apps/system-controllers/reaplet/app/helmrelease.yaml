@@ -76,7 +76,7 @@ spec:
           - path: /var/run/secrets/talos.dev
             readOnly: true
       data:
-        type: emptyDir
+        existingClaim: reaplet
         globalMounts:
           - path: /data
 
