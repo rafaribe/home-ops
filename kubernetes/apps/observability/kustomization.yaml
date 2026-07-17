@@ -5,6 +5,7 @@ namespace: observability
 
 components:
   - ../../components/alerts
+  - ../../components/kopiur/secret
   - ../../components/repos/app-template
 
 resources:
