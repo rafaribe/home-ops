@@ -12,16 +12,10 @@ spec:
   values:
     controllers:
       reaplet:
-        type: daemonset
+        type: deployment
+        replicas: 1
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          hostPID: true
-          nodeSelector:
-            kubernetes.io/arch: arm64
-          tolerations:
-            - operator: Exists
-              effect: NoSchedule
         serviceAccount:
           identifier: *app
         containers:
@@ -30,19 +24,15 @@ spec:
               repository: ghcr.io/rafaribe/reaplet
               tag: 0.2.1@sha256:e96a126672ab785500c3a340a13ea355a850f8b5cbd96c2440518e9fe738b09b
             env:
-              CRI_SOCKET: unix:///run/containerd/containerd.sock
-              NODE_NAME:
-                valueFrom:
-                  fieldRef:
-                    fieldPath: spec.nodeName
               PORT: "8080"
+              TALOSCONFIG: /var/run/secrets/talos.dev/config
             probes:
               liveness:
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /api/nodes
+                    path: /api/health
                     port: &port 8080
                   initialDelaySeconds: 5
                   periodSeconds: 30
@@ -51,7 +41,7 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /api/nodes
+                    path: /api/health
                     port: *port
                   initialDelaySeconds: 3
                   periodSeconds: 10
@@ -62,25 +52,29 @@ spec:
               limits:
                 memory: 128Mi
             securityContext:
-              privileged: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              runAsUser: 65534
 
     defaultPodOptions:
       automountServiceAccountToken: true
       securityContext:
-        fsGroup: 1000
+        fsGroup: 65534
         fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 0
-        runAsNonRoot: false
-        runAsUser: 0
+        runAsGroup: 65534
+        runAsNonRoot: true
+        runAsUser: 65534
 
     persistence:
-      containerd-socket:
-        type: hostPath
-        hostPath: /run/containerd/containerd.sock
-        hostPathType: Socket
+      talosconfig:
+        type: secret
+        name: reaplet-talosconfig
         globalMounts:
-          - path: /run/containerd/containerd.sock
-            readOnly: false
+          - path: /var/run/secrets/talos.dev
+            readOnly: true
 
     route:
       app:
