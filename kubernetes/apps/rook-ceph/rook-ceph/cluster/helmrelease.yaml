@@ -231,6 +231,13 @@ spec:
             priorityClassName: system-node-critical
 
       resources:
+        mgr:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+          limits:
+            cpu: 2
+            memory: 4Gi
         logcollector:
           requests:
             cpu: 10m
