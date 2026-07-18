@@ -22,10 +22,11 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/reaplet
-              tag: 0.5.0@sha256:816acf9bbc275d7aa3d307904129ce8d007193f0c8b404456088295fd87001d4
+              tag: 0.6.1@sha256:3f8309af5fd100ae3dc78a599512741a8f0473258f73a97ea954db8e1bc4c149
             env:
               PORT: "8080"
               TALOSCONFIG: /var/run/secrets/talos.dev/config
+              DB_PATH: /data/reaplet.db
             probes:
               liveness:
                 enabled: true
