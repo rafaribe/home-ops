@@ -1,0 +1,15 @@
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  name: ${APP}
+spec:
+  repository:
+    kind: ClusterRepository
+    name: garage-s3
+  sources:
+    - pvc:
+        name: "${CLAIM:=${APP}}"
+  retention:
+    keepHourly: 24
+    keepDaily: 7
+    keepWeekly: 4

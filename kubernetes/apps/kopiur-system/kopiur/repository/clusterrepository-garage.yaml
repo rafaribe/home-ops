@@ -1,0 +1,36 @@
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: ClusterRepository
+metadata:
+  name: garage-s3
+spec:
+  allowedNamespaces:
+    all: true
+  backend:
+    s3:
+      bucket: volsync-kopia
+      endpoint: garage.storage.svc.cluster.local:3900
+      region: us-east-1
+      insecureTLS: true
+  auth:
+    secretRef:
+      name: kopiur-garage-creds
+      namespace: kopiur-system
+  encryption:
+    passwordSecretRef:
+      name: kopiur-garage-creds
+      namespace: kopiur-system
+      key: KOPIA_PASSWORD
+  create:
+    enabled: true
+  maintenance:
+    enabled: true
+    schedule:
+      quick: { cron: "0 */6 * * *", jitter: 30m }
+      full: { cron: "0 4 * * *", jitter: 1h }
+  moverDefaults:
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+  scheduleDefaults:
+    timezone: Europe/Lisbon
