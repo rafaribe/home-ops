@@ -11,7 +11,7 @@ spec:
       endpoint: garage.storage.svc.cluster.local:3900
       region: us-east-1
       tls:
-        insecure: true
+        disableTls: true
       auth:
         secretRef:
           name: kopiur-garage-creds
