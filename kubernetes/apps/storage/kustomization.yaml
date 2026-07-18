@@ -15,4 +15,5 @@ resources:
   - ./kopia/ks.yaml
   - ./openebs/ks.yaml
   - ./syncthing/ks.yaml
+  - ./kopiur/ks.yaml
   - ./volsync/ks.yaml
