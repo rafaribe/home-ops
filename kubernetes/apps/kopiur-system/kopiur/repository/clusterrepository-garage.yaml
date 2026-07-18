@@ -8,7 +8,7 @@ spec:
   backend:
     s3:
       bucket: kopiur-backups
-      endpoint: truenas.rafaribe.com:3900
+      endpoint: 10.0.0.6:3900
       region: us-east-1
       tls:
         disableTls: true
