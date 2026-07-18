@@ -11,7 +11,7 @@ spec:
       runAsUser: ${KOPIUR_PUID:=1000}
   repository:
     kind: ClusterRepository
-    name: truenas
+    name: garage-s3
   retention:
     keepDaily: 7
     keepHourly: 24

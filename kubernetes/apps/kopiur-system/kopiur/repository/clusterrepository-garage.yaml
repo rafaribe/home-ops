@@ -7,9 +7,9 @@ spec:
     all: true
   backend:
     s3:
-      bucket: volsync-kopia
-      endpoint: garage.storage.svc.cluster.local:3900
-      region: us-east-1
+      bucket: kopiur-backups
+      endpoint: truenas.rafaribe.com:3900
+      region: garage
       tls:
         disableTls: true
       auth:
