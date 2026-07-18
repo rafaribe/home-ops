@@ -10,18 +10,19 @@ spec:
       bucket: volsync-kopia
       endpoint: garage.storage.svc.cluster.local:3900
       region: us-east-1
-      insecureTLS: true
-  auth:
-    secretRef:
-      name: kopiur-garage-creds
-      namespace: kopiur-system
+      tls:
+        insecure: true
+      auth:
+        secretRef:
+          name: kopiur-garage-creds
+          namespace: kopiur-system
+  create:
+    enabled: true
   encryption:
     passwordSecretRef:
       name: kopiur-garage-creds
       namespace: kopiur-system
       key: KOPIA_PASSWORD
-  create:
-    enabled: true
   maintenance:
     enabled: true
     schedule:
