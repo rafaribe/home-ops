@@ -6,7 +6,7 @@ metadata:
   name: daily
   namespace: volsync
 spec:
-  activeDeadlineSeconds: 10800
+  activeDeadlineSeconds: 21600
   enabled: true
   failedJobsHistoryLimit: 1
   repository:
