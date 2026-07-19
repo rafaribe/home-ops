@@ -27,7 +27,12 @@ spec:
       VOLSYNC_STORAGECLASS: ceph-filesystem
   components:
     - ../../../../components/volsync
-
+    - ../../../../components/kopiur/snapshot-only
+  dependsOn:
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -56,3 +61,9 @@ spec:
       VOLSYNC_ACCESSMODES: ReadWriteOnce
   components:
     - ../../../../components/volsync
+    - ../../../../components/kopiur/snapshot-only
+  dependsOn:
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph

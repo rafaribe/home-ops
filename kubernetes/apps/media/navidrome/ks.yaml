@@ -31,4 +31,3 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
-      KOPIUR_IDENTITY_HOSTNAME: media

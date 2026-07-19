@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
+    - ../../../../components/kopiur/snapshot-only
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: database
@@ -18,6 +19,10 @@ spec:
       namespace: external-secrets
     - name: volsync
       namespace: storage
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   interval: 30m
   path: ./kubernetes/apps/services/airtrail/app
   postBuild:

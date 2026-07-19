@@ -12,6 +12,10 @@ spec:
   dependsOn:
     - name: volsync
       namespace: storage
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   path: ./kubernetes/apps/media/maintainerr/app
   prune: true
   sourceRef:
@@ -26,3 +30,4 @@ spec:
       APP: *app
   components:
     - ../../../../components/volsync
+    - ../../../../components/kopiur/snapshot-only

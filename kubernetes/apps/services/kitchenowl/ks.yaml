@@ -20,6 +20,10 @@ spec:
       namespace: storage
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   interval: 30m
   path: ./kubernetes/apps/services/kitchenowl/app
   postBuild:
@@ -45,3 +49,4 @@ spec:
   components:
     - ../../../../components/kanidm
     - ../../../../components/volsync
+    - ../../../../components/kopiur/snapshot-only

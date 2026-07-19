@@ -27,9 +27,14 @@ spec:
       namespace: storage
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   components:
     - ../../../../components/kanidm
     - ../../../../components/volsync
+    - ../../../../components/kopiur/snapshot-only
   postBuild:
     substitute:
       APP: *app

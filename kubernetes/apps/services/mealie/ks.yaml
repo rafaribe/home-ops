@@ -13,6 +13,10 @@ spec:
   dependsOn:
     - name: kanidm
       namespace: security
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   interval: 10m
   path: "./kubernetes/apps/services/mealie/app"
   postBuild:
@@ -35,3 +39,4 @@ spec:
   components:
     - ../../../../components/kanidm
     - ../../../../components/volsync
+    - ../../../../components/kopiur/snapshot-only

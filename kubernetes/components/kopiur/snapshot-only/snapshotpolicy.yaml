@@ -4,18 +4,11 @@ kind: SnapshotPolicy
 metadata:
   name: ${APP}
 spec:
-  volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=csi-ceph-blockpool}
-  identity:
-    username: ${APP}
-    hostname: ${KOPIUR_IDENTITY_HOSTNAME}
-    sourcePath: /data
-  mover:
-    securityContext:
-      runAsGroup: ${KOPIUR_PGID:=1000}
-      runAsUser: ${KOPIUR_PUID:=1000}
+  credentialProjection:
+    enabled: true
   repository:
     kind: ClusterRepository
-    name: truenas
+    name: garage-s3
   retention:
     keepDaily: 7
     keepHourly: 24
@@ -24,4 +17,4 @@ spec:
   sources:
     - pvc:
         name: ${CLAIM:=${APP}}
-      sourcePathOverride: /data
+  volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=csi-ceph-blockpool}

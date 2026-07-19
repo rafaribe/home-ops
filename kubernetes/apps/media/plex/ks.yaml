@@ -15,6 +15,10 @@ spec:
       namespace: external-secrets
     - name: volsync
       namespace: storage
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   path: ./kubernetes/apps/media/plex/app
   prune: true
   sourceRef:
@@ -34,6 +38,7 @@ spec:
       VOLSYNC_CRON_EXPRESSION: "30 3 * * *"
   components:
     - ../../../../components/volsync
+    - ../../../../components/kopiur/snapshot-only
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -59,6 +64,10 @@ spec:
       namespace: external-secrets
     - name: volsync
       namespace: storage
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   path: ./kubernetes/apps/media/plex/kometa
   prune: true
   sourceRef:
@@ -74,7 +83,7 @@ spec:
       VOLSYNC_CAPACITY: 10Gi
   components:
     - ../../../../components/volsync
-
+    - ../../../../components/kopiur/snapshot-only
 # ---
 # # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 # apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -115,6 +124,10 @@ spec:
   dependsOn:
     - name: plex
       namespace: media
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   path: ./kubernetes/apps/media/plex/plex-auto-languages
   prune: true
   sourceRef:
@@ -124,6 +137,8 @@ spec:
   wait: false # no flux ks dependents
   interval: 30m
   timeout: 5m
+  components:
+    - ../../../../components/kopiur/snapshot-only
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -141,6 +156,10 @@ spec:
       namespace: media
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   path: ./kubernetes/apps/media/plex/plex-image-cleanup
   prune: true
   sourceRef:
@@ -153,3 +172,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
+  components:
+    - ../../../../components/kopiur/snapshot-only

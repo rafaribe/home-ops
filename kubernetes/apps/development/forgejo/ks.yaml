@@ -12,11 +12,16 @@ spec:
     - ../../../../components/dragonfly
     - ../../../../components/kanidm
     - ../../../../components/volsync
+    - ../../../../components/kopiur/snapshot-only
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
     - name: kanidm
       namespace: security
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   healthCheckExprs:
     - apiVersion: dragonflydb.io/v1alpha1
       current: status.phase == 'ready'
@@ -56,6 +61,10 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: forgejo
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   interval: 30m
   path: ./kubernetes/apps/development/forgejo/runner
   postBuild:
@@ -70,3 +79,5 @@ spec:
   targetNamespace: development
   timeout: 5m
   wait: false
+  components:
+    - ../../../../components/kopiur/snapshot-only

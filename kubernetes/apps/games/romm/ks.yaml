@@ -14,6 +14,10 @@ spec:
   dependsOn:
     - name: kanidm
       namespace: security
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   interval: 30m
   path: ./kubernetes/apps/games/romm/app
   postBuild:
@@ -38,3 +42,4 @@ spec:
     - ../../../../components/kanidm
     - ../../../../components/volsync
     - ../../../../components/dragonfly
+    - ../../../../components/kopiur/snapshot-only

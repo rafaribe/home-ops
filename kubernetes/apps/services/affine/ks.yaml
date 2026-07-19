@@ -35,3 +35,9 @@ spec:
   components:
     - ../../../../components/volsync
     - ../../../../components/dragonfly
+    - ../../../../components/kopiur/snapshot-only
+  dependsOn:
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph

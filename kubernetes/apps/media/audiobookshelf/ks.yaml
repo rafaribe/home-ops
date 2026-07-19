@@ -19,6 +19,10 @@ spec:
   dependsOn:
     - name: kanidm
       namespace: security
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -36,3 +40,4 @@ spec:
   components:
     - ../../../../components/volsync
     - ../../../../components/kanidm
+    - ../../../../components/kopiur/snapshot-only

@@ -20,9 +20,14 @@ spec:
   dependsOn:
     - name: kanidm
       namespace: security
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   components:
     - ../../../../components/kanidm
     - ../../../../components/volsync
+    - ../../../../components/kopiur/snapshot-only
   postBuild:
     substitute:
       APP: *app

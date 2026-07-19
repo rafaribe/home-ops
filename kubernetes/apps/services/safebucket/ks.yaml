@@ -12,11 +12,16 @@ spec:
   components:
     - ../../../../components/dragonfly
     - ../../../../components/volsync
+    - ../../../../components/kopiur/snapshot-only
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
     - name: volsync
       namespace: storage
+    - name: kopiur
+      namespace: kopiur-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   interval: 30m
   path: ./kubernetes/apps/services/safebucket/app
   postBuild:
