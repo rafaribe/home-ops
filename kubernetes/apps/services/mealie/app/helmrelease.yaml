@@ -17,6 +17,10 @@ spec:
     remediation:
       retries: 3
   values:
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       mealie:
         strategy: Recreate
@@ -35,6 +39,9 @@ spec:
               repository: ghcr.io/mealie-recipes/mealie
               tag: v3.20.1
               pullPolicy: IfNotPresent
+            env:
+              PGID: "1000"
+              PUID: "1000"
             envFrom:
               - secretRef:
                   name: *app
@@ -42,11 +49,18 @@ spec:
                   name: mealie-kanidm-oauth2-credentials
                   optional: true
             securityContext:
-              allowPrivilegeEscalation: false
+              allowPrivilegeEscalation: true
               capabilities:
+                add:
+                  - CHOWN
+                  - SETUID
+                  - SETGID
+                  - FOWNER
                 drop:
                   - ALL
               readOnlyRootFilesystem: false
+              runAsNonRoot: false
+              runAsUser: 0
 
     service:
       app:

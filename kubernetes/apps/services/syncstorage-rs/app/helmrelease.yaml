@@ -11,6 +11,15 @@ spec:
   interval: 30m
   values:
     defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: NotIn
+                    values:
+                      - srv-07
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
