@@ -5,6 +5,8 @@ metadata:
   name: garage-s3
   annotations:
     kopiur.home-operations.com/allow-identity-change: "intentional"
+  annotations:
+    kopiur.home-operations.com/allow-identity-change: "intentional"
 spec:
   allowedNamespaces:
     all: true
