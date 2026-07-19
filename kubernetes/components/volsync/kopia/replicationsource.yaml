@@ -13,10 +13,17 @@ spec:
       - ${VOLSYNC_SNAP_ACCESSMODES:=ReadWriteOnce}
     cacheAccessModes:
       - ${VOLSYNC_CACHE_ACCESSMODES:=ReadWriteOnce}
-    cacheCapacity: ${VOLSYNC_CACHE_CAPACITY:=8Gi}
+    cacheCapacity: ${VOLSYNC_CACHE_CAPACITY:=2Gi}
     cacheStorageClassName: ${VOLSYNC_CACHE_SNAPSHOTCLASS:=ceph-block}
     compression: zstd-fastest
+    contentCacheSizeLimitMB: 256
     copyMethod: Snapshot
+    metadataCacheSizeLimitMB: 128
+    moverResources:
+      requests:
+        memory: 128Mi
+      limits:
+        memory: 512Mi
     moverSecurityContext:
       runAsUser: ${VOLSYNC_PUID:=1000}
       runAsGroup: ${VOLSYNC_PGID:=1000}
