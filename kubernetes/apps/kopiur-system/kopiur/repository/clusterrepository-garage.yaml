@@ -1,3 +1,4 @@
+---
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: ClusterRepository
 metadata:
@@ -18,20 +19,32 @@ spec:
           namespace: kopiur-system
   create:
     enabled: true
+  credentialProjection:
+    allowed: true
+  deletionProtection:
+    threshold: 25
   encryption:
     passwordSecretRef:
       name: kopiur-garage-creds
       namespace: kopiur-system
       key: KOPIA_PASSWORD
+  identityDefaults:
+    hostnameExpr: "namespace"
+    usernameExpr: "policyName"
   maintenance:
     enabled: true
     schedule:
+      full: { cron: "0 3 * * *", jitter: 1h }
       quick: { cron: "0 */6 * * *", jitter: 30m }
-      full: { cron: "0 4 * * *", jitter: 1h }
   moverDefaults:
     podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
       fsGroup: 1000
+      runAsGroup: 1000
+      runAsUser: 1000
+    sourceColocation:
+      mode: Auto
+  parameters:
+    epoch:
+      minDuration: 6h
   scheduleDefaults:
     timezone: Europe/Lisbon
