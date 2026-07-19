@@ -18,6 +18,9 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    features:
+      credentialProjection:
+        enabled: true
     monitoring:
       prometheusRule:
         enabled: true
