@@ -41,6 +41,12 @@ spec:
               - secretRef:
                   name: mealie-kanidm-oauth2-credentials
                   optional: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: false
 
     service:
       app:

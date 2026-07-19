@@ -28,3 +28,10 @@ spec:
                   operator: In
                   values:
                     - amd64
+                - key: kubernetes.io/hostname
+                  operator: NotIn
+                  values:
+                    - tpi-1
+                    - tpi-2
+                    - tpi-3
+                    - tpi-4
