@@ -14,11 +14,11 @@ spec:
       shelfmark:
         pod:
           securityContext:
-            fsGroup: 2000
-            fsGroupChangePolicy: OnRootMismatch
-            runAsGroup: 2000
+            fsGroup: 1000
+            fsGroupChangePolicy: Always
+            runAsGroup: 1000
             runAsNonRoot: true
-            runAsUser: 2000
+            runAsUser: 1000
         containers:
           shelfmark:
             image:
