@@ -137,6 +137,9 @@ spec:
   wait: false # no flux ks dependents
   interval: 30m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
   components:
     - ../../../../components/kopiur/snapshot-only
 ---

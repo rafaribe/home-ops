@@ -45,6 +45,6 @@ spec:
   wait: false
   dependsOn:
     - name: renovate-operator
-      namespace: flux-system
+      namespace: services
     - name: external-secrets-stores
       namespace: external-secrets
