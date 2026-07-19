@@ -1,0 +1,20 @@
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Maintenance
+metadata:
+  name: truenas
+spec:
+  repository:
+    kind: ClusterRepository
+    name: truenas
+  schedule:
+    quick:
+      cron: "0 */6 * * *"
+      jitter: 30m
+    full:
+      cron: "0 3 * * *"
+      jitter: 1h
+    timezone: Europe/Lisbon
+  ownership:
+    owner: "kopiur/truenas"
+    takeoverPolicy: Force

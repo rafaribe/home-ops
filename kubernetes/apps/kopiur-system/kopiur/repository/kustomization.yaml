@@ -5,3 +5,4 @@ resources:
   - ./externalsecret.yaml
   - ./clusterrepository.yaml
   - ./clusterrepository-garage.yaml
+  - ./maintenance-truenas.yaml

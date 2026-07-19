@@ -14,12 +14,20 @@ spec:
           path: /mnt/tank/volsync-kopia
           server: truenas.rafaribe.com
   create:
-    enabled: true
+    enabled: false
+  catalog:
+    periodicRefresh: true
+    refreshInterval: 1h
+    retain:
+      perIdentity: 100
+      maxAgeDays: 90
   encryption:
     passwordSecretRef:
       key: KOPIA_PASSWORD
       name: kopiur-repository-secret
       namespace: kopiur-system
+  maintenance:
+    enabled: false
   moverDefaults:
     podSecurityContext:
       runAsUser: 1000
