@@ -6,3 +6,4 @@ resources:
   - ./clusterrepository-garage.yaml
   - ./clusterrepository.yaml
   - ./externalsecret.yaml
+  - ./repositoryreplication.yaml

@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kopiur.home-operations.com/repositoryreplication_v1alpha1.json
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: RepositoryReplication
+metadata:
+  name: truenas-to-garage
+  namespace: kopiur-system
+spec:
+  destination:
+    s3:
+      auth:
+        secretRef:
+          name: kopiur-garage-creds
+      bucket: kopiur-backups
+      endpoint: 10.0.0.6:3900
+      region: us-east-1
+      tls:
+        disableTls: true
+  mover:
+    podSecurityContext:
+      fsGroup: 1000
+      runAsGroup: 1000
+      runAsUser: 1000
+  schedule:
+    cron: "0 */4 * * *"
+    jitter: 30m
+    timezone: Europe/Lisbon
+  sourceRef:
+    kind: ClusterRepository
+    name: truenas
