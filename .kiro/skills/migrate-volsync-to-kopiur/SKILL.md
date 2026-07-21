@@ -5,7 +5,18 @@ description: Migrate an app's PVC backup from VolSync to Kopiur with zero data l
 
 # Migrate VolSync to Kopiur
 
-This skill migrates an app's PVC backup from VolSync (perfectra1n/volsync fork with kopia mover) to Kopiur. The existing kopia repository is adopted in place — all snapshots are preserved.
+This skill migrates an app's PVC backup from VolSync (kopia mover) to Kopiur. The existing NFS-based kopia repository is adopted in place — all snapshots are preserved with zero data loss.
+
+## Architecture
+
+Kopiur's `truenas` ClusterRepository points to the same NFS Kopia repo that VolSync used (`/mnt/tank/volsync-kopia`). Key settings that enable seamless adoption:
+
+- `identityDefaults.hostnameExpr: namespace` — matches VolSync's hostname pattern
+- `identityDefaults.usernameExpr: policyName` — matches VolSync's username (app name)
+- `credentialProjection.allowed: true` — allows per-namespace credential access
+- `allow-identity-change: "true"` annotation on SnapshotPolicy — lets kopiur adopt snapshots under the existing identity
+
+Because kopiur writes to the **same repository** with the **same identity**, the Restore CR can find existing VolSync snapshots directly.
 
 ## Prerequisites
 
@@ -14,9 +25,13 @@ Before migrating any app, verify:
 ```bash
 # Kopiur operator healthy
 kubectl get helmrelease -n kopiur-system kopiur
-# ClusterRepository ready
+
+# truenas ClusterRepository ready
 kubectl get clusterrepository truenas -o jsonpath='{.status.phase}'
 # Should output: Ready
+
+# Verify snapshot count shows existing VolSync data
+kubectl get clusterrepository truenas -o jsonpath='{.status.storageStats.snapshotCount}'
 ```
 
 The target namespace must include the `kopiur/secret` component in its `kustomization.yaml`:
@@ -25,27 +40,48 @@ components:
   - ../../components/kopiur/secret
 ```
 
-Namespaces already configured: `services`, `system-controllers`.
-Namespaces that need it added before migration: `downloads`, `media`, `home`, `ai`, `database`, `games`, `security`, `storage`.
-
-## Workflow
-
-### Step 1: Verify the namespace has the kopiur secret component
-
-Check `kubernetes/apps/<namespace>/kustomization.yaml` has:
-```yaml
-components:
-  - ../../components/kopiur/secret
-```
-
-If missing, add it and commit. Verify the secret exists:
+Namespaces already configured: `services`, `system-controllers`, `downloads`.
+Check before migration:
 ```bash
 kubectl get secret kopiur-repository-secret -n <namespace>
 ```
 
+## Migration Strategy (from joryirving's pattern)
+
+### Key Principles
+
+1. **Same repository** — Kopiur writes to the same NFS Kopia repo VolSync used
+2. **Same identity** — `hostname=namespace`, `username=appname` matches VolSync's pattern
+3. **Identity adoption** — `allow-identity-change` annotation lets kopiur take over existing snapshots
+4. **Credential projection** — per-namespace secrets allow Restore/Snapshot pods to authenticate
+5. **Fail-safe restore** — backup component uses `onMissingSnapshot: Continue` (app starts if no snapshot); the separate `restore` component uses `onMissingSnapshot: Fail` for explicit recovery
+
+### Components Available
+
+| Component | Purpose |
+|-----------|---------|
+| `kopiur/backup` | Full migration: PVC + Restore + SnapshotPolicy + SnapshotSchedule |
+| `kopiur/backup-nopvc` | Same as backup but without PVC creation (app manages its own PVC) |
+| `kopiur/snapshot-only` | Parallel phase: SnapshotPolicy + SnapshotSchedule only (keeps VolSync PVC) |
+| `kopiur/restore` | One-shot recovery: creates a separate PVC from old identity snapshots |
+
+## Workflow
+
+### Step 1: Verify existing snapshots exist in truenas repo
+
+```bash
+# Spawn a helper pod (see kopiur-restore skill for full pod spec)
+kubectl exec -n kopiur-system kopia-restore-helper -- env \
+  KOPIA_CACHE_DIRECTORY=/tmp/kopia-cache HOME=/tmp \
+  kopia --config-file=/tmp/kopia.config --log-dir=/tmp/kopia-logs \
+  snapshot list --all 2>&1 | grep "<app>@<namespace>"
+```
+
+Verify the snapshot has real data (non-zero size, files > 0).
+
 ### Step 2: Edit the app's `ks.yaml`
 
-Replace the volsync component with kopiur:
+Replace the volsync component with kopiur/backup:
 
 ```yaml
 # Before
@@ -100,11 +136,11 @@ persistence:
     existingClaim: ${APP}
 ```
 
-The kopiur component creates the PVC named `${APP}` automatically.
+The kopiur backup component creates the PVC named `${APP}` automatically.
 
 ### Step 4: Delete the old PVC
 
-The kopiur backup component creates a PVC with `dataSourceRef` pointing to the `Restore` CR. The old VolSync PVC (which has no `dataSourceRef` or a different one) must be deleted:
+The kopiur backup component creates a PVC with `dataSourceRef` pointing to the `Restore` CR. The old VolSync PVC must be deleted:
 
 ```bash
 kubectl -n <namespace> delete pvc <app>
@@ -115,9 +151,7 @@ If the PVC is stuck in `Terminating`:
 kubectl -n <namespace> patch pvc <app> -p '{"metadata":{"finalizers":null}}' --type=merge
 ```
 
-The app pod will restart. Kopiur's Restore with `onMissingSnapshot: Continue` means:
-- If kopiur repo has snapshots → PVC populated from latest ✅
-- If no snapshot exists → PVC created empty, app starts fresh ✅
+The Restore CR finds existing snapshots via the SnapshotPolicy (same identity as VolSync used) and populates the new PVC.
 
 ### Step 5: Commit, push, reconcile
 
@@ -126,17 +160,15 @@ git add kubernetes/apps/<namespace>/<app>/
 git commit -m "feat(<app>): migrate backup from volsync to kopiur"
 git push
 flux reconcile source git flux-system
-flux reconcile ks <app> -n <namespace>
+flux reconcile ks <app> -n flux-system
 ```
 
 ### Step 6: Verify
 
 ```bash
-# Kustomization reconciled
-kubectl get kustomization -n <namespace> <app>
-
-# Kopiur CRDs created
-kubectl get snapshotpolicy,snapshotschedule,restore -n <namespace> | grep <app>
+# Restore found snapshot (not NoSnapshot)
+kubectl get restore -n <namespace> <app> -o jsonpath='{.status.resolved.resolution}'
+# Should be: Snapshot (not NoSnapshot)
 
 # PVC bound
 kubectl get pvc -n <namespace> <app>
@@ -144,27 +176,32 @@ kubectl get pvc -n <namespace> <app>
 # Pod running
 kubectl get pods -n <namespace> -l app.kubernetes.io/name=<app>
 
-# First snapshot (after cron fires, usually within the hour)
-kubectl get snapshot -n <namespace> -l kopiur.home-operations.com/policy=<app>
+# Data present (app-specific)
+kubectl exec -n <namespace> deploy/<app> -- ls /data/
+
+# First kopiur snapshot succeeds
+kubectl get snapshot -n <namespace> -l kopiur.home-operations.com/schedule=<app> --sort-by=.metadata.creationTimestamp | tail -3
 ```
 
-### Step 7: Clean up VolSync resources (optional, after verified)
+## One-Shot Recovery (restore component)
 
-```bash
-kubectl -n <namespace> delete replicationsource <app> 2>/dev/null
-kubectl -n <namespace> delete replicationdestination <app>-dst 2>/dev/null
+If a migration already happened and data was lost, use the `restore` component to recover from old VolSync snapshots:
+
+Add to the app's `ks.yaml` temporarily:
+```yaml
+components:
+  - ../../../../components/kopiur/backup
+  - ../../../../components/kopiur/restore
+postBuild:
+  substitute:
+    APP: *app
+    KOPIUR_CAPACITY: 5Gi
+    KOPIUR_HOSTNAME: <namespace>    # VolSync hostname identity
+    KOPIUR_USERNAME: <app>          # VolSync username identity
+    KOPIUR_SOURCE_PATH: /data       # VolSync source path
 ```
 
-The per-app volsync ExternalSecret (`<app>-volsync`) can be removed from git later during full decommission.
-
-## What the kopiur/backup component creates
-
-For each app, the component generates 4 resources (all named `${APP}`):
-
-1. **SnapshotPolicy** — backup recipe: PVC source, retention (24h/7d/4w/3latest), repository ref
-2. **SnapshotSchedule** — cron `H * * * *` (hourly with jitter)
-3. **Restore** — volume populator source with `onMissingSnapshot: Continue`
-4. **PVC** — `dataSourceRef` pointing to the Restore CR, sized by `KOPIUR_CAPACITY`
+This creates a separate PVC `${APP}-kopiur-restore` populated from the old snapshot. Copy data from it to the main PVC, then remove the restore component.
 
 ## Rollback
 
@@ -180,18 +217,28 @@ VolSync's repository is untouched during the entire migration.
 
 Migrate one app per commit. Verify each before proceeding.
 
-1. **Already done**: slink, lubelog, reaplet
-2. **Low-risk pilots**: autobrr, prowlarr, metube, picoshare, leafwiki
+1. **Already done**: slink, lubelog, reaplet, autobrr, prowlarr, metube, picoshare, leafwiki
+2. **Low-risk next**: thelounge, radicale, atuin, poznote, stirling-pdf
 3. **Downloads**: bazarr, radarr, sonarr, readarr, lidarr, sabnzbd, qbittorrent
-4. **Media**: audiobookshelf, navidrome, komga, tautulli, jellyseerr
-5. **Services**: paperless, karakeep, actual, mealie, homebox, n8n
-6. **Critical (last)**: home-assistant, immich, forgejo, kanidm
+4. **Media**: audiobookshelf, navidrome, komga, tautulli, jellyseerr, plex
+5. **Services**: paperless, karakeep, actual, mealie, homebox, n8n, docmost
+6. **Critical (last)**: home-assistant, forgejo, kanidm
+
+## What the kopiur/backup component creates
+
+For each app, the component generates 4 resources (all named `${APP}`):
+
+1. **SnapshotPolicy** — backup recipe: PVC source, retention (24h/7d/4w/3latest), truenas repo ref, zstd compression, identity adoption annotation
+2. **SnapshotSchedule** — cron `H * * * *` (hourly with jitter)
+3. **Restore** — volume populator source with `onMissingSnapshot: Continue`, credentialProjection
+4. **PVC** — `dataSourceRef` pointing to the Restore CR, sized by `KOPIUR_CAPACITY`
 
 ## Common Issues
 
 | Issue | Cause | Fix |
 |-------|-------|-----|
-| `SnapshotPolicy dry-run failed: field not declared` | Component template field in wrong location | Check component YAML against CRD schema |
+| Restore resolves `NoSnapshot` | Identity mismatch or snapshot not in truenas repo | Check `allow-identity-change` annotation on SnapshotPolicy; verify snapshot exists with matching hostname/username |
 | `PVC is invalid: spec is immutable` | Old PVC exists without `dataSourceRef` | Delete the old PVC |
 | `credentials Secret does not exist` | Missing `kopiur/secret` component in namespace | Add to namespace `kustomization.yaml` |
-| `Restore phase: Pending` | No snapshot yet OR missing credentials | Check secret exists, wait for first cron |
+| `Restore phase: Pending` | No claiming PVC with `dataSourceRef` | Check PVC spec references the Restore |
+| Data loss after migration | Snapshots were in wrong repo or wrong identity | Use `kopiur/restore` component or manual kopia restore (see kopiur-restore skill) |

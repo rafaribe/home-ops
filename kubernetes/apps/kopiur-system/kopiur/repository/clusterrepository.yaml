@@ -9,7 +9,7 @@ spec:
     all: true
   backend:
     filesystem:
-      path: /repo
+      path: /repository
       volume:
         nfs:
           path: /mnt/tank/volsync-kopia
