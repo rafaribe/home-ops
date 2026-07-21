@@ -183,6 +183,100 @@ kubectl exec -n <namespace> deploy/<app> -- ls /data/
 kubectl get snapshot -n <namespace> -l kopiur.home-operations.com/schedule=<app> --sort-by=.metadata.creationTimestamp | tail -3
 ```
 
+### Step 7: Fallback — Manual Restore if Resolution is NoSnapshot
+
+The Restore CR may resolve `NoSnapshot` even though data exists in the truenas repo. This happens when:
+- The `snapshot-only` phase wrote snapshots to `garage-s3` (old config) not `truenas`
+- The SnapshotPolicy identity hasn't been adopted yet (first snapshot hasn't fired under new identity)
+- The old VolSync snapshots used a slightly different identity format
+
+**If the Restore resolves `NoSnapshot` and the app starts with empty data, perform a manual restore:**
+
+```bash
+# 1. Scale down the app
+kubectl scale -n <namespace> deployment/<app> --replicas=0
+kubectl wait --for=delete pod -l app.kubernetes.io/name=<app> -n <namespace> --timeout=60s
+
+# 2. Create a restore pod
+cat <<'EOF' | kubectl apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: <app>-restore
+  namespace: <namespace>
+spec:
+  restartPolicy: Never
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+  - name: kopia
+    image: kopia/kopia:0.19
+    command: ["sleep", "3600"]
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+    env:
+    - name: KOPIA_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: kopiur-repository-secret
+          key: KOPIA_PASSWORD
+    volumeMounts:
+    - name: repo
+      mountPath: /repo
+    - name: data
+      mountPath: /restore
+  volumes:
+  - name: repo
+    nfs:
+      server: truenas.rafaribe.com
+      path: /mnt/tank/volsync-kopia
+  - name: data
+    persistentVolumeClaim:
+      claimName: <app>
+EOF
+
+# 3. Wait for pod, connect to repo with the correct identity
+kubectl wait --for=condition=Ready pod/<app>-restore -n <namespace> --timeout=120s
+
+kubectl exec -n <namespace> <app>-restore -- env \
+  KOPIA_CACHE_DIRECTORY=/tmp/kopia-cache HOME=/tmp \
+  kopia --config-file=/tmp/kopia.config --log-dir=/tmp/kopia-logs \
+  repository connect filesystem --path=/repo \
+  --override-hostname=<namespace> --override-username=<app>
+
+# 4. List snapshots and pick the latest with real data
+kubectl exec -n <namespace> <app>-restore -- env \
+  KOPIA_CACHE_DIRECTORY=/tmp/kopia-cache HOME=/tmp \
+  kopia --config-file=/tmp/kopia.config --log-dir=/tmp/kopia-logs \
+  snapshot list
+
+# 5. Restore from the chosen snapshot
+kubectl exec -n <namespace> <app>-restore -- env \
+  KOPIA_CACHE_DIRECTORY=/tmp/kopia-cache HOME=/tmp \
+  kopia --config-file=/tmp/kopia.config --log-dir=/tmp/kopia-logs \
+  restore <snapshot-id> /restore/ --overwrite-files --overwrite-directories
+
+# 6. Clean up and scale back up
+kubectl delete pod <app>-restore -n <namespace> --force
+kubectl scale -n <namespace> deployment/<app> --replicas=1
+```
+
+**After manual restore:** The next hourly SnapshotSchedule will take a snapshot of the restored data under the correct kopiur identity. Future Restores will find it automatically. This manual step is only needed once per app during the migration window.
+
+**Also clean up stale VolSync resources:**
+```bash
+kubectl -n <namespace> delete replicationsource <app> 2>/dev/null
+kubectl -n <namespace> delete replicationdestination <app>-dst 2>/dev/null
+kubectl -n <namespace> delete pvc volsync-src-<app>-cache 2>/dev/null
+```
+
 ## One-Shot Recovery (restore component)
 
 If a migration already happened and data was lost, use the `restore` component to recover from old VolSync snapshots:
