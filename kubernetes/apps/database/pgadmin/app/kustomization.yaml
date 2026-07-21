@@ -5,3 +5,15 @@ resources:
   # App
   - ./helmrelease.yaml
   - ./externalsecret.yaml
+patches:
+  - target:
+      group: kopiur.home-operations.com
+      version: v1alpha1
+      kind: SnapshotPolicy
+      name: pgadmin
+    patch: |
+      - op: add
+        path: /spec/mover
+        value:
+          securityContext:
+            runAsUser: 5050
