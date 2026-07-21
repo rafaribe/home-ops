@@ -1,15 +1,20 @@
+---
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: SnapshotPolicy
 metadata:
   name: ${APP}
 spec:
+  credentialProjection:
+    enabled: true
   repository:
     kind: ClusterRepository
-    name: garage-s3
+    name: truenas
+  retention:
+    keepDaily: 7
+    keepHourly: 24
+    keepLatest: 3
+    keepWeekly: 4
   sources:
     - pvc:
-        name: "${CLAIM:=${APP}}"
-  retention:
-    keepHourly: 24
-    keepDaily: 7
-    keepWeekly: 4
+        name: ${CLAIM:=${APP}}
+  volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=csi-ceph-blockpool}

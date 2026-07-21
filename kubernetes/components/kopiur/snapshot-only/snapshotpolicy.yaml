@@ -8,7 +8,7 @@ spec:
     enabled: true
   repository:
     kind: ClusterRepository
-    name: garage-s3
+    name: truenas
   retention:
     keepDaily: 7
     keepHourly: 24

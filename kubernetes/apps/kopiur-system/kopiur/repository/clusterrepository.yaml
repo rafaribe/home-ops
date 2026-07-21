@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kopiur.home-operations.com/clusterrepository_v1alpha1.json
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: ClusterRepository
 metadata:
@@ -13,28 +14,43 @@ spec:
         nfs:
           path: /mnt/tank/volsync-kopia
           server: truenas.rafaribe.com
-  bootstrap:
-    failurePolicy:
-      activeDeadlineSeconds: 600
-  create:
-    enabled: false
   catalog:
+    fallbackNamespace: kopiur-system
     periodicRefresh: true
     refreshInterval: 1h
     retain:
-      perIdentity: 100
       maxAgeDays: 90
+      perIdentity: 100
+  create:
+    enabled: false
+  credentialProjection:
+    allowed: true
   encryption:
     passwordSecretRef:
       key: KOPIA_PASSWORD
       name: kopiur-repository-secret
       namespace: kopiur-system
+  identityDefaults:
+    hostnameExpr: namespace
+    usernameExpr: policyName
   maintenance:
-    enabled: false
+    enabled: true
+    namespace: kopiur-system
+    schedule:
+      full:
+        cron: "0 3 * * *"
+        jitter: 1h
+      quick:
+        cron: "0 */6 * * *"
+        jitter: 30m
+    takeoverPolicy: Force
+  mode: ReadWrite
   moverDefaults:
     podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
       fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+      runAsGroup: 1000
+      runAsUser: 1000
+  onNamespaceDelete: Orphan
   scheduleDefaults:
     timezone: Europe/Lisbon
