@@ -9,32 +9,20 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 30m
-  timeout: 5m
-  path: "./kubernetes/apps/services/karakeep/app"
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false
+  components:
+    - ../../../../components/kanidm
+    - ../../../../components/kopiur/backup
   dependsOn:
-    - name: kanidm
-      namespace: security
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: storage
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: kanidm
+      namespace: security
     - name: kopiur
       namespace: kopiur-system
     - name: rook-ceph-cluster
       namespace: rook-ceph
-  components:
-    - ../../../../components/kanidm
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+  interval: 30m
+  path: "./kubernetes/apps/services/karakeep/app"
   postBuild:
     substitute:
       APP: *app
@@ -44,3 +32,11 @@ spec:
       KANIDM_GROUP: household
       KANIDM_ORIGIN_HOST: karakeep.rafaribe.com
       KANIDM_REDIRECT_PATH: api/auth/callback/custom
+      KOPIUR_CAPACITY: 5Gi
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  timeout: 5m
+  wait: false
