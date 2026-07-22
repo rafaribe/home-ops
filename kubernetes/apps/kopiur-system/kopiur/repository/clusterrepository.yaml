@@ -18,7 +18,7 @@ spec:
           server: truenas.rafaribe.com
   bootstrap:
     failurePolicy:
-      activeDeadlineSeconds: 600
+      activeDeadlineSeconds: 900
   catalog:
     fallbackNamespace: kopiur-system
     periodicRefresh: true
