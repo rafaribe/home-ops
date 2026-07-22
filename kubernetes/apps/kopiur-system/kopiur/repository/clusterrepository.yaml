@@ -16,6 +16,9 @@ spec:
         nfs:
           path: /mnt/tank/volsync-kopia
           server: truenas.rafaribe.com
+  bootstrap:
+    failurePolicy:
+      activeDeadlineSeconds: 600
   catalog:
     fallbackNamespace: kopiur-system
     periodicRefresh: true
