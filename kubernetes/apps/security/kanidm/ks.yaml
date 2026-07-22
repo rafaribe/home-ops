@@ -32,17 +32,20 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/kopiur/snapshot-only
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
     - name: kanidm-secrets
-    - name: volsync
-      namespace: storage
+    - name: kopiur
+      namespace: kopiur-system
   interval: 30m
   path: ./kubernetes/apps/security/kanidm/app
   postBuild:
     substitute:
       APP: *app
+      CLAIM: kanidm-data-kanidm-default-0
     substituteFrom:
       - kind: Secret
         name: kanidm-persons-secret
