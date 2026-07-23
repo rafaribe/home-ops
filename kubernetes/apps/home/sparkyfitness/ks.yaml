@@ -32,6 +32,7 @@ spec:
       KOPIUR_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: sparkyfitness
   components:
+    - ../../../../components/kopiur/backup-nopvc
   dependsOn:
     - name: kopiur
       namespace: kopiur-system
