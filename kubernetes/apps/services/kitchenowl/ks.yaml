@@ -46,4 +46,4 @@ spec:
   wait: true
   components:
     - ../../../../components/kanidm
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc

@@ -31,4 +31,4 @@ spec:
   targetNamespace: services
   timeout: 3m
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc

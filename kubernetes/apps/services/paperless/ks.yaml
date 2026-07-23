@@ -46,6 +46,6 @@ spec:
       KANIDM_ORIGIN_HOST: paperless.rafaribe.com
       KANIDM_REDIRECT_PATH: accounts/oidc/kanidm/login/callback/
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc
     - ../../../../components/dragonfly
     - ../../../../components/kanidm

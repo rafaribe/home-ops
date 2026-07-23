@@ -33,7 +33,7 @@ spec:
       CLAIM: affine
       KOPIUR_CAPACITY: 15Gi
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc
     - ../../../../components/dragonfly
   dependsOn:
     - name: kopiur

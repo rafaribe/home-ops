@@ -31,4 +31,4 @@ spec:
       GATUS_SUBDOMAIN: trek
       KOPIUR_CAPACITY: 5Gi
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc

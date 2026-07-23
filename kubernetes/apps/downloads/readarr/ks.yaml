@@ -20,7 +20,7 @@ spec:
     substitute:
       APP: *app
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

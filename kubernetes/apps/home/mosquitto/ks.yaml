@@ -33,4 +33,4 @@ spec:
       APP_GID: "1000"
       CLAIM: mosquitto
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc

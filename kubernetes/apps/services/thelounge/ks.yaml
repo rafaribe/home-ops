@@ -31,7 +31,7 @@ spec:
       KOPIUR_CAPACITY: 1Gi
       GATUS_SUBDOMAIN: tl
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

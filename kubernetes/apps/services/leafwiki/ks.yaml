@@ -29,4 +29,4 @@ spec:
       APP: *app
       KOPIUR_CAPACITY: 2Gi
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc

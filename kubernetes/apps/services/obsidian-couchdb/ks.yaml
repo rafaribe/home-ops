@@ -24,7 +24,7 @@ spec:
       APP: *app
       KOPIUR_CAPACITY: 20Gi
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

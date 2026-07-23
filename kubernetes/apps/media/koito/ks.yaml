@@ -6,7 +6,7 @@ metadata:
   name: &app koito
 spec:
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app

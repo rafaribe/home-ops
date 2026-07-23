@@ -33,5 +33,5 @@ spec:
       APP: *appname
       CLAIM: actual-data
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc
     - ../../../../components/dragonfly

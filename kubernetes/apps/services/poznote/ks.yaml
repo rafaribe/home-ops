@@ -25,7 +25,7 @@ spec:
       GATUS_SUBDOMAIN: poznote
       KOPIUR_CAPACITY: 2Gi
   components:
-    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup-nopvc
   dependsOn:
     - name: kopiur
       namespace: kopiur-system
