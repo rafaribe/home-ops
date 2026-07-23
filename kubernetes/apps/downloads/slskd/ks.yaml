@@ -27,8 +27,7 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   postBuild:
     substitute:
       APP: *app

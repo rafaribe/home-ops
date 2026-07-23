@@ -11,8 +11,7 @@ spec:
   components:
     - ../../../../components/dragonfly
     - ../../../../components/kanidm
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
@@ -39,7 +38,7 @@ spec:
       KANIDM_GROUP: household
       KANIDM_ORIGIN_HOST: git.rafaribe.com
       KANIDM_REDIRECT_PATH: user/oauth2/kanidm/callback
-      VOLSYNC_CAPACITY: 50Gi
+      KOPIUR_CAPACITY: 50Gi
   prune: true
   retryInterval: 1m
   sourceRef:
@@ -80,4 +79,3 @@ spec:
   timeout: 5m
   wait: false
   components:
-    - ../../../../components/kopiur/snapshot-only

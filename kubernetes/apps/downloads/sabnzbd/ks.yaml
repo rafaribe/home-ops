@@ -19,10 +19,9 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
+      KOPIUR_CAPACITY: 10Gi
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

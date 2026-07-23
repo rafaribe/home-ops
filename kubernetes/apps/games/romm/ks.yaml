@@ -30,7 +30,7 @@ spec:
       KANIDM_GROUP: household
       KANIDM_ORIGIN_HOST: romm.rafaribe.com
       KANIDM_REDIRECT_PATH: api/oauth/openid
-      VOLSYNC_CAPACITY: 50Gi
+      KOPIUR_CAPACITY: 50Gi
   prune: true
   retryInterval: 1m
   sourceRef:
@@ -40,6 +40,5 @@ spec:
   timeout: 3m
   components:
     - ../../../../components/kanidm
-    - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
     - ../../../../components/dragonfly
-    - ../../../../components/kopiur/snapshot-only

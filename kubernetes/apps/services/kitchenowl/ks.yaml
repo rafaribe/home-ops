@@ -16,8 +16,6 @@ spec:
       namespace: security
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
-      namespace: storage
     - name: external-secrets-stores
       namespace: external-secrets
     - name: kopiur
@@ -38,7 +36,7 @@ spec:
       KANIDM_GROUP: household
       KANIDM_ORIGIN_HOST: kitchenowl.rafaribe.com
       KANIDM_REDIRECT_PATH: signin/redirect
-      VOLSYNC_CAPACITY: 2Gi
+      KOPIUR_CAPACITY: 2Gi
   prune: true
   sourceRef:
     kind: GitRepository
@@ -48,5 +46,4 @@ spec:
   wait: true
   components:
     - ../../../../components/kanidm
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup

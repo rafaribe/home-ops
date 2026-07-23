@@ -11,13 +11,10 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/dragonfly
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-    - name: volsync
-      namespace: storage
     - name: kopiur
       namespace: kopiur-system
     - name: rook-ceph-cluster
@@ -27,7 +24,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 5Gi
+      KOPIUR_CAPACITY: 5Gi
   prune: true
   retryInterval: 1m
   sourceRef:

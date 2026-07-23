@@ -13,8 +13,6 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-    - name: volsync
-      namespace: storage
     - name: kopiur
       namespace: kopiur-system
     - name: rook-ceph-cluster
@@ -34,11 +32,9 @@ spec:
       CLAIM: plex-data
       GATUS_PATH: /web/index.html
       LB_PLEX: 10.0.1.31
-      VOLSYNC_CAPACITY: 100Gi
-      VOLSYNC_CRON_EXPRESSION: "30 3 * * *"
+      KOPIUR_CAPACITY: 100Gi
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -62,8 +58,6 @@ spec:
       namespace: downloads
     - name: external-secrets-stores
       namespace: external-secrets
-    - name: volsync
-      namespace: storage
     - name: kopiur
       namespace: kopiur-system
     - name: rook-ceph-cluster
@@ -80,10 +74,9 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
+      KOPIUR_CAPACITY: 10Gi
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
 # ---
 # # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 # apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -141,7 +134,6 @@ spec:
     substitute:
       APP: *app
   components:
-    - ../../../../components/kopiur/snapshot-only
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -176,4 +168,3 @@ spec:
     substitute:
       APP: *app
   components:
-    - ../../../../components/kopiur/snapshot-only

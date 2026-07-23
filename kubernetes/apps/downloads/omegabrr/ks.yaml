@@ -24,8 +24,7 @@ spec:
       APP: *app
       CLAIM: omegabrr
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

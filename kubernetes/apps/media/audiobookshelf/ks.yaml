@@ -29,7 +29,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 2Gi
+      KOPIUR_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: audiobookshelf
       KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/audiobookshelf.png
       KANIDM_CLIENT_ID_KEY: AUDIOBOOKSHELF_OAUTH_CLIENT_ID
@@ -38,6 +38,5 @@ spec:
       KANIDM_ORIGIN_HOST: audiobookshelf.rafaribe.com
       KANIDM_REDIRECT_PATH: auth/openid/callback
   components:
-    - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
     - ../../../../components/kanidm
-    - ../../../../components/kopiur/snapshot-only

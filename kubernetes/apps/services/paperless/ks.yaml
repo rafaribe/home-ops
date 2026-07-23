@@ -38,7 +38,7 @@ spec:
       APP_UID: "1000"
       APP_GID: "1000"
       CLAIM: paperless
-      VOLSYNC_CAPACITY: 15Gi
+      KOPIUR_CAPACITY: 15Gi
       KANIDM_APP_ICON: https://cdn.jsdelivr.net/gh/selfhst/icons/png/paperless-ngx.png
       KANIDM_CLIENT_ID_KEY: PAPERLESS_OIDC_CLIENT_ID
       KANIDM_CLIENT_SECRET_KEY: PAPERLESS_OIDC_CLIENT_SECRET
@@ -46,7 +46,6 @@ spec:
       KANIDM_ORIGIN_HOST: paperless.rafaribe.com
       KANIDM_REDIRECT_PATH: accounts/oidc/kanidm/login/callback/
   components:
-    - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
     - ../../../../components/dragonfly
     - ../../../../components/kanidm
-    - ../../../../components/kopiur/snapshot-only

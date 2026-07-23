@@ -29,7 +29,7 @@ spec:
       KANIDM_GROUP: household
       KANIDM_ORIGIN_HOST: mealie.rafaribe.com
       KANIDM_REDIRECT_PATH: login
-      VOLSYNC_CAPACITY: 2Gi
+      KOPIUR_CAPACITY: 2Gi
   prune: true
   sourceRef:
     kind: GitRepository
@@ -38,5 +38,4 @@ spec:
   wait: false
   components:
     - ../../../../components/kanidm
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup

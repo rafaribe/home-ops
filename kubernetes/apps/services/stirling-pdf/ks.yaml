@@ -19,11 +19,10 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 2Gi
+      KOPIUR_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: pdf
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

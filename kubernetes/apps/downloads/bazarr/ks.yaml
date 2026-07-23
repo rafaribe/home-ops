@@ -21,8 +21,6 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
-      namespace: storage
     - name: external-secrets-stores
       namespace: external-secrets
     - name: whisper
@@ -36,8 +34,7 @@ spec:
       APP: *appname
       CLAIM: bazarr
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -62,7 +59,6 @@ spec:
     substitute:
       APP: *app
   components:
-    - ../../../../components/kopiur/snapshot-only
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

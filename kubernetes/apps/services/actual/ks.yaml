@@ -22,8 +22,6 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
-      namespace: storage
     - name: external-secrets-stores
       namespace: external-secrets
     - name: kopiur
@@ -35,6 +33,5 @@ spec:
       APP: *appname
       CLAIM: actual-data
   components:
-    - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
     - ../../../../components/dragonfly
-    - ../../../../components/kopiur/snapshot-only

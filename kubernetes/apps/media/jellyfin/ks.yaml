@@ -24,11 +24,10 @@ spec:
     substitute:
       APP: *app
       CLAIM: jellyfin-v2
-      VOLSYNC_CAPACITY: 10Gi
+      KOPIUR_CAPACITY: 10Gi
       GATUS_SUBDOMAIN: jellyfin
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

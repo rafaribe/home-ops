@@ -21,13 +21,10 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: qb
       CLAIM: qbittorrent
-      VOLSYNC_ACCESSMODES: ReadWriteMany
-      VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
-      VOLSYNC_STORAGECLASS: ceph-filesystem
+      KOPIUR_CAPACITY: 2Gi
+      KOPIUR_SNAPSHOTCLASS: csi-ceph-filesystem
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system
@@ -57,11 +54,9 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: qbp
       CLAIM: qbittorrent-private
-      VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_ACCESSMODES: ReadWriteOnce
+      KOPIUR_CAPACITY: 2Gi
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

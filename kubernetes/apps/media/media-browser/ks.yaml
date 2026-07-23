@@ -25,8 +25,7 @@ spec:
       CLAIM: media-browser
       GATUS_SUBDOMAIN: media
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

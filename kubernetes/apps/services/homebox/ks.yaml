@@ -24,8 +24,7 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: homebox
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

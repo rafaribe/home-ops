@@ -23,8 +23,7 @@ spec:
       KANIDM_GROUP: household
       KANIDM_ORIGIN_HOST: photos.rafaribe.com
       KANIDM_REDIRECT_PATH: auth/login
-      VOLSYNC_CAPACITY: 1Ti
-      VOLSYNC_CRON_EXPRESSION: 0 3 * * *
+      KOPIUR_CAPACITY: 1Ti
   prune: true
   retryInterval: 1m
   sourceRef:

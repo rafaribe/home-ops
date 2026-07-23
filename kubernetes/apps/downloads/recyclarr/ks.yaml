@@ -21,8 +21,6 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
-      namespace: storage
     - name: external-secrets-stores
       namespace: external-secrets
     - name: kopiur
@@ -34,5 +32,4 @@ spec:
       APP: *appname
       CLAIM: recyclarr
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup

@@ -10,21 +10,21 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: memory-mcp
+  components:
+    - ../../../../components/kopiur/backup
   dependsOn:
+    - name: kopiur
+      namespace: kopiur-system
     - name: toolhive-operator-crds
-    - name: volsync
-      namespace: storage
+  interval: 1h
   path: ./kubernetes/apps/ai/mcp-servers/memory
+  postBuild:
+    substitute:
+      APP: memory-mcp
+      KOPIUR_CAPACITY: 1Gi
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  interval: 1h
   timeout: 5m
-  postBuild:
-    substitute:
-      APP: memory-mcp
-      VOLSYNC_CAPACITY: 1Gi
-  components:
-    - ../../../../components/volsync

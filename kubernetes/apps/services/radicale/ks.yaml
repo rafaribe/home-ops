@@ -24,8 +24,7 @@ spec:
       APP_UID: "1000"
       APP_GID: "1000"
   components:
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

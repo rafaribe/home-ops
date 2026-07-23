@@ -31,11 +31,10 @@ spec:
       APP_UID: "1000"
       APP_GID: "1000"
       CLAIM: affine
-      VOLSYNC_CAPACITY: 15Gi
+      KOPIUR_CAPACITY: 15Gi
   components:
-    - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
     - ../../../../components/dragonfly
-    - ../../../../components/kopiur/snapshot-only
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

@@ -14,8 +14,6 @@ spec:
       namespace: security
     - name: external-secrets-stores
       namespace: external-secrets
-    - name: volsync
-      namespace: storage
     - name: kopiur
       namespace: kopiur-system
     - name: rook-ceph-cluster
@@ -33,7 +31,7 @@ spec:
       KANIDM_GROUP: household
       KANIDM_ORIGIN_HOST: pg.rafaribe.com
       KANIDM_REDIRECT_PATH: oauth2/authorize
-      VOLSYNC_CAPACITY: 2Gi
+      KOPIUR_CAPACITY: 2Gi
   prune: true
   retryInterval: 1m
   sourceRef:
@@ -44,5 +42,4 @@ spec:
   wait: true
   components:
     - ../../../../components/kanidm
-    - ../../../../components/volsync
-    - ../../../../components/kopiur/snapshot-only
+    - ../../../../components/kopiur/backup
