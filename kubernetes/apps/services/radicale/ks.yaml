@@ -24,7 +24,7 @@ spec:
       APP_UID: "1000"
       APP_GID: "1000"
   components:
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

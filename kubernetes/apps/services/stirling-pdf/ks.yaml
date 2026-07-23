@@ -22,7 +22,7 @@ spec:
       KOPIUR_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: pdf
   components:
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

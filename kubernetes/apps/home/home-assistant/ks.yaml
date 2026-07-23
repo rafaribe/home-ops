@@ -36,7 +36,7 @@ spec:
       GATUS_SUBDOMAIN: hass
       KOPIUR_CAPACITY: 20Gi
   components:
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

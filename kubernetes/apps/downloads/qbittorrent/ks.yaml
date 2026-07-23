@@ -24,7 +24,7 @@ spec:
       KOPIUR_CAPACITY: 2Gi
       KOPIUR_SNAPSHOTCLASS: csi-ceph-filesystem
   components:
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system
@@ -56,7 +56,7 @@ spec:
       CLAIM: qbittorrent-private
       KOPIUR_CAPACITY: 2Gi
   components:
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

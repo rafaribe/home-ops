@@ -27,7 +27,7 @@ spec:
       KOPIUR_CAPACITY: 10Gi
       GATUS_SUBDOMAIN: jellyfin
   components:
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: kopiur
       namespace: kopiur-system

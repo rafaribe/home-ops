@@ -32,4 +32,4 @@ spec:
       APP: *appname
       CLAIM: recyclarr
   components:
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup

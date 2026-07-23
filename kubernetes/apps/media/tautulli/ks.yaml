@@ -28,4 +28,4 @@ spec:
     substitute:
       APP: *app
   components:
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup

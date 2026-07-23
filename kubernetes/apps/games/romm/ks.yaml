@@ -40,5 +40,5 @@ spec:
   timeout: 3m
   components:
     - ../../../../components/kanidm
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup
     - ../../../../components/dragonfly

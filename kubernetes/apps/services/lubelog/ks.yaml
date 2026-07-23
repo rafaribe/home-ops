@@ -26,4 +26,4 @@ spec:
       KOPIUR_CAPACITY: 1Gi
       CLAIM: lubelog-v2
   components:
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup

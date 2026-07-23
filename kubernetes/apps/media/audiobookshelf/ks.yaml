@@ -38,5 +38,5 @@ spec:
       KANIDM_ORIGIN_HOST: audiobookshelf.rafaribe.com
       KANIDM_REDIRECT_PATH: auth/openid/callback
   components:
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup
     - ../../../../components/kanidm

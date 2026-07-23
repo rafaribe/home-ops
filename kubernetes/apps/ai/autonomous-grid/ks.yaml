@@ -32,4 +32,4 @@ spec:
       GATUS_SUBDOMAIN: grid
       KOPIUR_CAPACITY: 1Gi
   components:
-    - ../../../../components/kopiur/backup-nopvc
+    - ../../../../components/kopiur/backup
