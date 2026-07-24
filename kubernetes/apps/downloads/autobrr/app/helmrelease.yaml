@@ -17,9 +17,11 @@ spec:
           configmap.reloader.stakater.com/reload: autobrr-configmap
         pod:
           securityContext:
-            runAsUser: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
             runAsGroup: 1000
             runAsNonRoot: true
+            runAsUser: 1000
         # initContainers:
         #   init-db:
         #     image:
