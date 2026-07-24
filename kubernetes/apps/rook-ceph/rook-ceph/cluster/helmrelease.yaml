@@ -100,7 +100,7 @@ spec:
             memory: 512Mi
           limits:
             cpu: 2
-            memory: 4Gi
+            memory: 6Gi
         modules:
           - name: "rook"
             enabled: true
@@ -239,7 +239,7 @@ spec:
             memory: 512Mi
           limits:
             cpu: 2
-            memory: 4Gi
+            memory: 6Gi
         logcollector:
           requests:
             cpu: 10m

@@ -36,6 +36,7 @@ spec:
                   poll_timeout: 10m
             runner:
               capacity: 4
+              fetch_timeout: 60s
               labels:
                 - ubuntu-latest:k8s:/config/podspec-default.yaml
                 - ubuntu-24.04:k8s:/config/podspec-default.yaml
