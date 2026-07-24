@@ -17,6 +17,19 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: ClusterRole
+              name: kopiur-mover
+            patch: |
+              - op: add
+                path: /rules/-
+                value:
+                  apiGroups: ["kopiur.home-operations.com"]
+                  resources: ["restores", "snapshotpolicies", "snapshots", "repositories", "clusterrepositories"]
+                  verbs: ["get", "list"]
   values:
     features:
       credentialProjection:
