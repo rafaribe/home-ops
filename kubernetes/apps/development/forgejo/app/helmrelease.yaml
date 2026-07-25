@@ -78,6 +78,7 @@ spec:
         server:
           APP_DATA_PATH: /data/gitea
           DOMAIN: git.rafaribe.com
+          MAX_UPLOAD_SIZE: 4096
           ROOT_URL: https://git.rafaribe.com
           SSH_DOMAIN: git.rafaribe.com
           SSH_LISTEN_PORT: &sshPort 2222
