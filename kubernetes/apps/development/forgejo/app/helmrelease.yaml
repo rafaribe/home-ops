@@ -24,6 +24,8 @@ spec:
     deployment:
       annotations:
         reloader.stakater.com/auto: "true"
+    nodeSelector:
+      kubernetes.io/arch: amd64
     gitea:
       admin:
         existingSecret: forgejo-admin-secret
