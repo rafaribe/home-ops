@@ -25,5 +25,7 @@ spec:
     substitute:
       APP: *app
       KOPIUR_CAPACITY: 1Gi
+      KOPIUR_PUID: "999"
+      KOPIUR_PGID: "999"
   components:
     - ../../../../components/kopiur/backup
