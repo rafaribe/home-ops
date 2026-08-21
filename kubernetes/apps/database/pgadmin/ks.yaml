@@ -32,6 +32,8 @@ spec:
       KANIDM_ORIGIN_HOST: pg.rafaribe.com
       KANIDM_REDIRECT_PATH: oauth2/authorize
       KOPIUR_CAPACITY: 2Gi
+      KOPIUR_PUID: "5050"
+      KOPIUR_PGID: "5050"
   prune: true
   retryInterval: 1m
   sourceRef:
