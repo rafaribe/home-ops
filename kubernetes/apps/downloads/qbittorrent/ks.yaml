@@ -22,7 +22,6 @@ spec:
       GATUS_SUBDOMAIN: qb
       CLAIM: qbittorrent
       KOPIUR_CAPACITY: 2Gi
-      KOPIUR_SNAPSHOTCLASS: csi-ceph-filesystem
   components:
     - ../../../../components/kopiur/backup
   dependsOn:
