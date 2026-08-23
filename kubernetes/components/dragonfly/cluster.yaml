@@ -41,3 +41,7 @@ spec:
                 operator: In
                 values:
                   - amd64
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                  - srv-05
