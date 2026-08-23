@@ -17,6 +17,7 @@ spec:
           namespace: kopiur-system
       bucket: kopiur-backups
       endpoint: 10.0.0.6:3900
+      prefix: kopia/
       region: us-east-1
       tls:
         disableTls: true
