@@ -127,7 +127,7 @@ spec:
           gethomepage.dev/description: "Torrent Client"
           gethomepage.dev/icon: qbittorrent
           gethomepage.dev/widget.type: qbittorrent
-          gethomepage.dev/widget.url: "http://qbittorrent.downloads.svc.cluster.local:8080"
+          gethomepage.dev/widget.url: "http://qbittorrent-app.downloads.svc.cluster.local:8080"
         hostnames: ["qb.rafaribe.com"]
         parentRefs:
           - name: envoy-internal

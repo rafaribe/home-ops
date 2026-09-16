@@ -30,7 +30,7 @@ spec:
               N8N_PORT: &port 80
               N8N_HOST: &host "n8n.rafaribe.com"
               WEBHOOK_URL: "https://n8n.rafaribe.com"
-              N8N_LOG_LEVEL: verbose
+              N8N_LOG_LEVEL: info
               N8N_LOG_OUTPUT: console, file
               N8N_PERSONALIZATION_ENABLED: false
               N8N_VERSION_NOTIFICATIONS_ENABLED: true
