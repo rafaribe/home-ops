@@ -7,7 +7,7 @@ metadata:
 spec:
   groupRef:
     name: mcp-tools
-  image: ghcr.io/bjw-s-labs/mcp-memory:2026.7.4@sha256:78487a16681b91102197e9b7915f950a148e94ff1ce6356707d3ff6ef6516ae7
+  image: ghcr.io/bjw-s-labs/mcp-memory:2026.8.31@sha256:81f1ec66d6c771a516f47705a827b6ac7400e197b4f48b487c3488ee68f2f72d
   podTemplateSpec:
     spec:
       volumes:
