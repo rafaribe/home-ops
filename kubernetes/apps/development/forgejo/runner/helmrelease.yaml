@@ -91,7 +91,7 @@ spec:
           k8s-plugin:
             image:
               repository: registry.erwanleboucher.dev/erwanleboucher.dev/eleboucher/runner-k8s-plugin
-              tag: 12.10.6@sha256:b0ffe279448c70fb3327485163da8da2ce12fa9cc39a29231edd676c9025c036
+              tag: 13.1.0@sha256:9ae8a21340cde415b828adc95bc4f1345bed67c21a0e3be26032d367a64b20db
             args:
               - --listen
               - unix:///plugin/forgejo-runner-k8s.sock
