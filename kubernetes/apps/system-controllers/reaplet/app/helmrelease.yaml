@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rafaribe/reaplet
-              tag: 0.9.0@sha256:c7359bc623f462e125ae598b8a987d3fe40cdadb87df733b5b9b48ddd3e8d676
+              tag: 0.9.1@sha256:328817a5921064840f16346c0a1e58faae88706d36cd78da1f1b01406affa0ef
             env:
               PORT: "8080"
               TALOSCONFIG: /var/run/secrets/talos.dev/config
