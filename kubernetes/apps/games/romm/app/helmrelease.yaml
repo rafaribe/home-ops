@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rommapp/romm
-              tag: 4.9.2@sha256:c81778afcafe7c865bdf156d1c62349aec3dfca3aca5ec0d6c2c2e8bfa9fb071
+              tag: 5.2.0@sha256:3512f2ca455782f90247271bed23116e6bc675bc74e379be2c41696e607ab11e
             env:
               DISABLE_DOWNLOAD_ENDPOINT_AUTH: true
               DISABLE_USERPASS_LOGIN: false
