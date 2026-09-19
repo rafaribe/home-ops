@@ -33,7 +33,7 @@ spec:
                   name: *app
             image:
               repository: ghcr.io/lumepart/explo
-              tag: v1.1.2@sha256:f22b9131501c68e68a2598b2e6ddceeda7ac547ab6ea1bb701b49f93f54b7f9d
+              tag: v1.2.0@sha256:680eac0592d013aac8768e2c3bae02345f74083f3a4585337420446764eb66fc
             probes:
               liveness:
                 enabled: true
