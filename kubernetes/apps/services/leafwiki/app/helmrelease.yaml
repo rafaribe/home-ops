@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/perber/leafwiki
-              tag: v0.11.4@sha256:bad641aeb37ff79e14c5051bf53d8590b4afe7c4c8b6f6a69a52a099703f3347
+              tag: v0.13.0@sha256:a348e488c25841d1796a52ba4d148211c6379378a8b42097a3ccc068f0ab8e80
             env:
               TZ: Europe/Lisbon
               LEAFWIKI_PORT: &port 8080
