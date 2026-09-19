@@ -120,7 +120,7 @@ spec:
       registry: code.forgejo.org
       repository: forgejo/forgejo
       rootless: true
-      tag: 15.0.4-rootless
+      tag: 15.0.9-rootless
     persistence:
       claimName: forgejo-data
       create: false
