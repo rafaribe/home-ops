@@ -31,7 +31,7 @@ spec:
             image:
               # https://hub.docker.com/r/mpepping/cyberchef
               repository: docker.io/mpepping/cyberchef
-              tag: v11.2.0@sha256:40de0167deab2637706ded13626c30739bc7ae526bfecaf42841e0e1293d7179
+              tag: v11.5.0@sha256:d75426ccf924157f4ade18d319b6eb0963559ac228d5e4a59b4c8fefcad9b420
             env:
               TZ: Europe/Lisbon
               PORT: &port 8000
