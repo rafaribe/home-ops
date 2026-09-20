@@ -27,7 +27,10 @@ spec:
             image:
               repository: docker.io/library/busybox
               tag: 1.37.0@sha256:37f7b378a29ceb4c551b1b5582e27747b855bbfaa73fa11914fe0df028dc581f
-            command: ["/bin/sh", "-c", "rm -rf /app/obsidian-app/* /app/obsidian-app/.* 2>/dev/null || true"]
+            command:
+              - /bin/sh
+              - -c
+              - "rm -rf /app/obsidian-app/* /app/obsidian-app/.* 2>/dev/null; chown 1000:1000 /app/obsidian-app; chmod 755 /app/obsidian-app; true"
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
