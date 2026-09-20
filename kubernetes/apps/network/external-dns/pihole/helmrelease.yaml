@@ -39,7 +39,6 @@ spec:
     extraArgs:
       - --pihole-server=http://10.0.0.254
       - --gateway-name=envoy-internal
-      - --pihole-api-version=6  
     registry: noop
     policy: upsert-only
     sources: ["gateway-httproute"]
