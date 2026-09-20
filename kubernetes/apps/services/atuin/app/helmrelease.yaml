@@ -9,6 +9,13 @@ spec:
   chartRef:
     kind: OCIRepository
     name: atuin
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
     controllers:
       atuin:
