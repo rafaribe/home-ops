@@ -30,7 +30,7 @@ spec:
             command:
               - /bin/sh
               - -c
-              - "rm -rf /app/obsidian-app/* /app/obsidian-app/.* 2>/dev/null; chown 1000:1000 /app/obsidian-app; chmod 755 /app/obsidian-app; true"
+              - "rm -rf /app/obsidian-app/* /app/obsidian-app/.* 2>/dev/null; chmod -R 777 /app/obsidian-app; true"
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
@@ -79,8 +79,6 @@ spec:
               runAsUser: 0
     defaultPodOptions:
       securityContext:
-        fsGroup: 0
-        fsGroupChangePolicy: Always
         runAsNonRoot: false
         seccompProfile:
           type: RuntimeDefault
