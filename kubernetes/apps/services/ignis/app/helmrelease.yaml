@@ -67,10 +67,10 @@ spec:
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
+        fsGroupChangePolicy: Always
         runAsNonRoot: false
         seccompProfile:
-          type: RuntimeDefault
+          type: Unconfined
     service:
       app:
         controller: *app

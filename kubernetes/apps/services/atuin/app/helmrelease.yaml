@@ -12,7 +12,7 @@ spec:
   values:
     controllers:
       atuin:
-        strategy: RollingUpdate
+        strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
 

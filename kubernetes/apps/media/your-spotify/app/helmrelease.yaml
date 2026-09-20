@@ -61,7 +61,6 @@ spec:
             securityContext: *securityContext
       mongodb: #mongo still sucks
         type: statefulset
-        rollingUpdate: *rollingUpdate
         statefulset:
           podManagementPolicy: OrderedReady
         containers:

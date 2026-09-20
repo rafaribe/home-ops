@@ -12,6 +12,7 @@ spec:
   values:
     controllers:
       audiobookshelf:
+        strategy: Recreate
         annotations:
           glance/description: Audiobook Library
           glance/icon: di:audiobookshelf
