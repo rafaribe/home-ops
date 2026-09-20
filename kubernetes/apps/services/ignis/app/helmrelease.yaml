@@ -66,11 +66,11 @@ spec:
               runAsUser: 0
     defaultPodOptions:
       securityContext:
-        fsGroup: 1000
+        fsGroup: 0
         fsGroupChangePolicy: Always
         runAsNonRoot: false
         seccompProfile:
-          type: Unconfined
+          type: RuntimeDefault
     service:
       app:
         controller: *app
