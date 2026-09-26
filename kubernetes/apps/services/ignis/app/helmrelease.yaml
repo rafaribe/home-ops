@@ -26,7 +26,7 @@ spec:
           clear-obsidian-app:
             image:
               repository: docker.io/library/busybox
-              tag: 1.37.0@sha256:37f7b378a29ceb4c551b1b5582e27747b855bbfaa73fa11914fe0df028dc581f
+              tag: 1.37.0@sha256:bdf57e528e45e4433820e045b29b4597825a1c9e38353532d90a01445013f82e
             command:
               - /bin/sh
               - -c
