@@ -47,7 +47,7 @@ spec:
       value: debug
     - name: RENOVATE_PLATFORM_COMMIT_ENABLED
       value: "true"
-  image: ghcr.io/renovatebot/renovate:43.288.0
+  image: ghcr.io/renovatebot/renovate:44.115.10
   parallelism: 5
   provider:
     name: github
