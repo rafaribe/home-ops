@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sahara101/movie-roulette
-              tag: v5.5.5@sha256:fdd44cbecd5b17defab8400ccae2715ff00e500fa8f14b1c7bd31bd5a5bae20e
+              tag: v5.5.6@sha256:f28576ce2044bd4579428bf1f3467f56f6f0c31046eaa4cc1ae39eb6dab3f513
             env:
               #Homepage ENV
               HOMEPAGE_MODE: "FALSE"
