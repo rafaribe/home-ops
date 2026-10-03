@@ -58,7 +58,7 @@ jobs:
   pull:
     needs: extract
     name: Image Pull - Pull Images
-    runs-on: ${{ format('{0}-runner', github.event.repository.name) }}
+    runs-on: arc-runner-set-home-ops
     timeout-minutes: 30
     env:
       TALOSCONFIG: /var/run/secrets/talos.dev/config

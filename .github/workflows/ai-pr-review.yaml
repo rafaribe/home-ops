@@ -33,7 +33,7 @@ jobs:
     if: >-
       ${{ (github.event_name == 'pull_request' && !github.event.pull_request.draft) ||
           github.event_name == 'workflow_dispatch' }}
-    runs-on: self-hosted
+    runs-on: arc-runner-set-home-ops
     timeout-minutes: 30
     steps:
       - name: Resolve PR head for re-review
