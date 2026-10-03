@@ -44,7 +44,7 @@ spec:
       name: barman-cloud.cloudnative-pg.io
       parameters:
         barmanObjectName: garage-immich
-        serverName: immich-v4
+        serverName: immich-v5
   bootstrap:
     recovery:
       database: app
@@ -58,4 +58,4 @@ spec:
         name: barman-cloud.cloudnative-pg.io
         parameters:
           barmanObjectName: garage-immich
-          serverName: immich-v3
+          serverName: immich-v4
