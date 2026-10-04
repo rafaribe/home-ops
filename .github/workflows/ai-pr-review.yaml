@@ -66,17 +66,17 @@ jobs:
           github_token: ${{ steps.app-token.outputs.token }}
           pr_number: ${{ github.event.pull_request.number || inputs.pr_number }}
           force_review: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
-          # --- AI model config (Autonomous Grid) ---
-          ai_base_url: https://grid.rafaribe.com/v1
+          # --- AI model config (Lattice - internal cluster DNS) ---
+          ai_base_url: http://lattice.ai.svc.cluster.local:8090/v1
           ai_api_format: openai
-          ai_model: qwen3:8b
+          ai_model: qwen2.5-coder:7b
           ai_max_tokens: "16000"
           ai_primary_retries: "3"
           ai_primary_retry_delay_sec: "15"
           # --- Fallback model (smaller/faster) ---
-          ai_fallback_base_url: https://grid.rafaribe.com/v1
+          ai_fallback_base_url: http://lattice.ai.svc.cluster.local:8090/v1
           ai_fallback_api_format: openai
-          ai_fallback_model: qwen3:4b
+          ai_fallback_model: deepseek-r1:7b
           # --- Review settings ---
           context_limit_mode: normal
           ci_status_check: "true"
