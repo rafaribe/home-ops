@@ -20,7 +20,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v1.13.2@sha256:a0b71c8e757298d02560186bab9fbe3fc2d375c523a62cc1019177b37e48aa28
+              tag: v2.4.0@sha256:643bd0be730d40f69d58028a55d1a896739333e8815786df42bc97f109ecbe61
             env:
               TZ: Europe/Lisbon
               HOMEPAGE_ALLOWED_HOSTS: glance.rafaribe.com,homepage.rafaribe.com,home.rafaribe.com
