@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: anirdev/slink
-              tag: v1.13.1@sha256:5b6c29592f63edccbef613fbbd3b106f322bf21290d0bb6451d105ca14802b90
+              tag: v1.14.0@sha256:fff70ce3cee309377424466565810d500ae4df0d1b918ee47b5126807621841d
             env:
               ORIGIN: https://slink.rafaribe.com
               STORAGE_PROVIDER: local
