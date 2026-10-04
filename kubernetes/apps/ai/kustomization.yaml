@@ -8,7 +8,6 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./namespace.yaml
-  - ./autonomous-grid/ks.yaml
   - ./lattice/ks.yaml
   - ./mcp-servers
   #- ./ollama/ks.yaml
