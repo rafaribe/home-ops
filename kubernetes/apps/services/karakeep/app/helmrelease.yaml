@@ -38,7 +38,7 @@ spec:
                 fi
             env:
               # Must match meilisearch container tag below
-              MEILI_VERSION: v1.48.2
+              MEILI_VERSION: v1.53.2
         containers:
           app:
             image:
