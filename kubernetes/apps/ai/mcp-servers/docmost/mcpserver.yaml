@@ -24,6 +24,10 @@ spec:
         - name: tmpfs
           emptyDir:
             medium: Memory
+  resourceOverrides:
+    proxyService:
+      annotations:
+        lbipam.cilium.io/ips: 10.0.1.36
   secrets:
     - name: docmost-mcp-secret
       key: DOCMOST_EMAIL
