@@ -133,6 +133,44 @@ spec:
                 cpu: 10m
               limits:
                 memory: 2Gi
+          meili-repair:
+            image:
+              repository: docker.io/library/busybox
+              tag: 1.38.0
+            command:
+              - /bin/sh
+              - -c
+              - |
+                set -eu
+                FAIL=0
+                while true; do
+                  if wget -qO- http://localhost:7700/health 2>/dev/null | grep -q '"status":"available"'; then
+                    FAIL=0
+                  else
+                    FAIL=$((FAIL + 1))
+                    echo "[meili-repair] meilisearch unhealthy (consecutive failures: $FAIL)"
+                    if [ "$FAIL" -ge 3 ]; then
+                      echo "[meili-repair] 3 consecutive failures — wiping /meili_data and signalling restart"
+                      find /meili_data -mindepth 1 -delete
+                      echo "[meili-repair] wipe complete — terminating pod so Kubernetes restarts all containers"
+                      # Kill the meilisearch process so the pod restarts
+                      kill "$(pgrep -x meilisearch)" 2>/dev/null || true
+                      FAIL=0
+                    fi
+                  fi
+                  sleep 60
+                done
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+              readOnlyRootFilesystem: true
+            resources:
+              requests:
+                cpu: 5m
+                memory: 16Mi
+              limits:
+                memory: 32Mi
     defaultPodOptions:
       securityContext:
         runAsUser: 1000
@@ -196,5 +234,8 @@ spec:
               - path: /meili_data
                 subPath: meilisearch
             meilisearch:
+              - path: /meili_data
+                subPath: meilisearch
+            meili-repair:
               - path: /meili_data
                 subPath: meilisearch
