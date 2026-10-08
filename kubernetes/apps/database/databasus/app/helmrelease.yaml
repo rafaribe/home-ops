@@ -21,7 +21,7 @@ spec:
           app:
             image:
               repository: docker.io/databasus/databasus
-              tag: v3.58.0@sha256:65feffb5b56015d38d07719207852c10793d2a1e82e7ce962e27b91e39198312
+              tag: v3.60.0@sha256:2e9aec567de7ed3f0c8f360ea72abe6a8425704d9272232dae4325ad920b9204
             env:
               TZ: "Europe/Lisbon"
             probes:
