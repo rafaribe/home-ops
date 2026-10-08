@@ -23,6 +23,7 @@ spec:
                 evictFailedBarePods: true
                 evictLocalStoragePods: true
                 evictSystemCriticalPods: true
+                ignorePvcPods: true
             - name: LowNodeUtilization
               args:
                 metricsUtilization:
