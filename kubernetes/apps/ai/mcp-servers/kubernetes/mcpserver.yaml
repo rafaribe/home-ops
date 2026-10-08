@@ -6,9 +6,7 @@ metadata:
   name: kubernetes-mcp
 spec:
   args:
-    - --port=8080
-    - --read-only
-    - --stateless
+    - --config=/etc/kubernetes-mcp/config.toml
   groupRef:
     name: mcp-tools
   image: ghcr.io/containers/kubernetes-mcp-server:latest
@@ -19,9 +17,24 @@ spec:
           volumeMounts:
             - mountPath: /tmp
               name: tmpfs
+            - mountPath: /etc/kubernetes-mcp
+              name: config
       volumes:
         - name: tmpfs
           emptyDir:
             medium: Memory
+        - name: config
+          configMap:
+            name: kubernetes-mcp-config
   proxyPort: 8080
   transport: streamable-http
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubernetes-mcp-config
+data:
+  config.toml: |
+    port = "8080"
+    read_only = true
+    stateless = true
