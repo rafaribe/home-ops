@@ -59,6 +59,37 @@ jobs:
           client-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
 
+      # Lattice routes to the Mac's Ollama (10.0.1.248:11434) which flaps when
+      # the Mac is asleep or rebooting. Poll until at least one model is available
+      # before handing off to the reviewer action. Gives the node up to 5 minutes
+      # to come back online before giving up.
+      - name: Wait for Lattice models to be available
+        run: |
+          LATTICE_URL="http://lattice.ai.svc.cluster.local:8090/v1/models"
+          TIMEOUT=300   # 5 minutes
+          INTERVAL=15
+          ELAPSED=0
+
+          echo "Polling ${LATTICE_URL} for available models..."
+          while true; do
+            MODEL_COUNT=$(curl -sf --max-time 5 "${LATTICE_URL}" \
+              | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d.get('data', [])))" 2>/dev/null || echo "0")
+
+            if [ "${MODEL_COUNT}" -gt 0 ] 2>/dev/null; then
+              echo "Lattice is ready — ${MODEL_COUNT} model(s) available."
+              break
+            fi
+
+            if [ "${ELAPSED}" -ge "${TIMEOUT}" ]; then
+              echo "::warning::Lattice has no models available after ${TIMEOUT}s; proceeding anyway (reviewer will use on_model_failure=notice)."
+              break
+            fi
+
+            echo "No models yet (${ELAPSED}s elapsed), retrying in ${INTERVAL}s..."
+            sleep "${INTERVAL}"
+            ELAPSED=$((ELAPSED + INTERVAL))
+          done
+
       - name: Analyze PR with AI reviewer
         id: analyze
         uses: misospace/pr-reviewer-action@a962cdfc21c378a3b8cf2d8b194c787408e60e6b # v2.5.0
@@ -71,12 +102,12 @@ jobs:
           ai_api_format: openai
           ai_model: qwen2.5-coder:7b
           ai_max_tokens: "16000"
-          ai_primary_retries: "3"
-          ai_primary_retry_delay_sec: "15"
-          # --- Fallback model (smaller/faster) ---
+          ai_primary_retries: "5"
+          ai_primary_retry_delay_sec: "30"
+          # --- Fallback model (smaller/faster, same Lattice endpoint) ---
           ai_fallback_base_url: http://lattice.ai.svc.cluster.local:8090/v1
           ai_fallback_api_format: openai
-          ai_fallback_model: deepseek-r1:7b
+          ai_fallback_model: deepseek-r1:1.5b
           # --- Review settings ---
           context_limit_mode: normal
           ci_status_check: "true"
