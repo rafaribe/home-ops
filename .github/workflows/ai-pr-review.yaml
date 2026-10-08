@@ -98,16 +98,19 @@ jobs:
           pr_number: ${{ github.event.pull_request.number || inputs.pr_number }}
           force_review: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
           # --- AI model config (Lattice - internal cluster DNS) ---
+          # qwen2.5-coder:7b has a 32k context window.
+          # json_object enforces structured output so smaller models don't emit prose.
           ai_base_url: http://lattice.ai.svc.cluster.local:8090/v1
           ai_api_format: openai
           ai_model: qwen2.5-coder:7b
           ai_max_tokens: "16000"
+          ai_response_format: json_object
           ai_primary_retries: "5"
           ai_primary_retry_delay_sec: "30"
-          # --- Fallback model (smaller/faster, same Lattice endpoint) ---
+          # --- Fallback model (deepseek-r1:14b has 131k context window) ---
           ai_fallback_base_url: http://lattice.ai.svc.cluster.local:8090/v1
           ai_fallback_api_format: openai
-          ai_fallback_model: deepseek-r1:1.5b
+          ai_fallback_model: deepseek-r1:14b
           # --- Review settings ---
           context_limit_mode: normal
           ci_status_check: "true"
