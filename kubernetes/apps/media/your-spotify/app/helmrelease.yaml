@@ -63,6 +63,16 @@ spec:
         type: statefulset
         statefulset:
           podManagementPolicy: OrderedReady
+        pod:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: kubernetes.io/hostname
+                        operator: NotIn
+                        values:
+                          - srv-05 # no AVX support, MongoDB 5+ requires AVX
         containers:
           app:
             image:
