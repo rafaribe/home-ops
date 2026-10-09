@@ -180,14 +180,21 @@ nodes:
             - siderolabs/rockchip-rknn
             - siderolabs/util-linux-tools
             - siderolabs/nfsrahead
+    nodeTaints:
+      node-role.kubernetes.io/memory: "NoSchedule"
+    nodeLabels:
+      local-storage: "false"
     patches:
-      - &kubelet-gc |-
+      - &tpi-aggressive-gc |-
         machine:
           kubelet:
             extraArgs:
               rotate-server-certificates: true
-              image-gc-high-threshold: 65
-              image-gc-low-threshold: 50
+              image-gc-high-threshold: 50
+              image-gc-low-threshold: 30
+            extraConfig:
+              imageMaximumGCAge: 12h0m0s
+              imageMinimumGCAge: 2m0s
 
   - hostname: tpi-2.${clusterDNSSuffix}
     ipAddress: 10.0.1.9
@@ -220,16 +227,7 @@ nodes:
       workload-type: memory
       local-storage: "false"
     patches:
-      - &tpi-aggressive-gc |-
-        machine:
-          kubelet:
-            extraArgs:
-              rotate-server-certificates: true
-              image-gc-high-threshold: 50
-              image-gc-low-threshold: 30
-            extraConfig:
-              imageMaximumGCAge: 12h0m0s
-              imageMinimumGCAge: 2m0s
+      - *tpi-aggressive-gc
 
   - hostname: tpi-3.${clusterDNSSuffix}
     ipAddress: 10.0.1.10
