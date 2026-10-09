@@ -180,8 +180,6 @@ nodes:
             - siderolabs/rockchip-rknn
             - siderolabs/util-linux-tools
             - siderolabs/nfsrahead
-    nodeTaints:
-      node-role.kubernetes.io/memory: "NoSchedule"
     nodeLabels:
       local-storage: "false"
     patches:
@@ -221,10 +219,7 @@ nodes:
         systemExtensions:
           officialExtensions:
             - siderolabs/rockchip-rknn
-    nodeTaints:
-      node-role.kubernetes.io/memory: "NoSchedule"
     nodeLabels:
-      workload-type: memory
       local-storage: "false"
     patches:
       - *tpi-aggressive-gc
@@ -245,10 +240,7 @@ nodes:
       mode: metal
       arch: arm64
     schematic: *schematic-tpi-no-ext
-    nodeTaints:
-      node-role.kubernetes.io/memory: "NoSchedule"
     nodeLabels:
-      workload-type: memory
       local-storage: "false"
     patches:
       - *tpi-aggressive-gc
@@ -269,10 +261,7 @@ nodes:
       mode: metal
       arch: arm64
     schematic: *schematic-tpi-no-ext
-    nodeTaints:
-      node-role.kubernetes.io/memory: "NoSchedule"
     nodeLabels:
-      workload-type: memory
       local-storage: "false"
     patches:
       - *tpi-aggressive-gc

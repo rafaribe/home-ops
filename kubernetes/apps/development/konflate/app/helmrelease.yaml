@@ -35,6 +35,3 @@ spec:
     secret:
       existingSecret: konflate-secret
     tolerations:
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/memory
-        operator: Exists

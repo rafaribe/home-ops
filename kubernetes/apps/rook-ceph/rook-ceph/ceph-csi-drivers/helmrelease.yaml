@@ -17,9 +17,6 @@ spec:
         snapshotPolicy: volumeGroupSnapshot
         nodePlugin:
           tolerations:
-            - key: node-role.kubernetes.io/memory
-              operator: Exists
-              effect: NoSchedule
       nfs:
         enabled: false
       nvmeof:
@@ -30,9 +27,6 @@ spec:
         snapshotPolicy: volumeSnapshot
         nodePlugin:
           tolerations:
-            - key: node-role.kubernetes.io/memory
-              operator: Exists
-              effect: NoSchedule
     operatorConfig:
       driverSpecDefaults:
         clusterName: rook-ceph
@@ -46,9 +40,6 @@ spec:
           kubeletDirPath: /var/lib/kubelet
           priorityClassName: system-node-critical
           tolerations:
-            - key: node-role.kubernetes.io/memory
-              operator: Exists
-              effect: NoSchedule
             - key: node-role.kubernetes.io/control-plane
               operator: Exists
               effect: NoSchedule

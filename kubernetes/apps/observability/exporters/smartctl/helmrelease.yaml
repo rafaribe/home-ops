@@ -34,5 +34,3 @@ spec:
     prometheusRules:
       enabled: false
     tolerations:
-      - key: node-role.kubernetes.io/memory
-        operator: Exists

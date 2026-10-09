@@ -92,8 +92,6 @@ spec:
     serviceMonitor:
       enabled: true
     tolerations:
-      - key: node-role.kubernetes.io/memory
-        operator: Exists
     image:
       repository: ghcr.io/fluent/fluent-bit
       tag: 5.1.3

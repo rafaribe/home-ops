@@ -24,11 +24,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: workload-type
-                    operator: NotIn
-                    values:
-                      - memory
-      securityContext:
+          securityContext:
         runAsNonRoot: true
         runAsUser: 568
         runAsGroup: 568
@@ -36,8 +32,6 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
       tolerations:
-        - key: node-role.kubernetes.io/memory
-          operator: Exists
     controllers:
       ollama:
         annotations:

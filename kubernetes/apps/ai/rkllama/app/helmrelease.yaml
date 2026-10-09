@@ -60,9 +60,6 @@ spec:
 
     defaultPodOptions:
       tolerations:
-        - key: node-role.kubernetes.io/memory
-          operator: Exists
-          effect: NoSchedule
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
