@@ -66,6 +66,11 @@ spec:
             sectionName: https
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
     cephClusterSpec:
+      # Temporary: allow upgrade to proceed past HEALTH_ERR caused by insecure CephX key types.
+      # The error is a warning about legacy auth keys (CVE-2025-30156 advisory), not data-at-risk.
+      # Remove skipUpgradeChecks once Ceph health is HEALTH_OK after upgrade and key rotation.
+      skipUpgradeChecks: true
+      continueUpgradeAfterChecksEvenIfNotHealthy: true
       cephConfig:
         global:
           bdev_enable_discard: "true"
