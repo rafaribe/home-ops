@@ -87,7 +87,7 @@ spec:
                 memory: 4096Mi
 
       machine-learning:
-        strategy: RollingUpdate
+        strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
