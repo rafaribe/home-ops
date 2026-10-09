@@ -85,7 +85,7 @@ spec:
               storageClassName: ceph-block
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: 100Gi
         image:
           registry: docker.io
           repository: prompp/prompp
