@@ -24,6 +24,8 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: poznote
       KOPIUR_CAPACITY: 2Gi
+      KOPIUR_PUID: "82"
+      KOPIUR_PGID: "82"
   components:
     - ../../../../components/kopiur/backup
   dependsOn:
