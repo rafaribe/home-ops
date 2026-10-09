@@ -62,7 +62,7 @@ pages:
                 icon: di:plex
               - title: Jellyfin
                 url: https://jellyfin.rafaribe.com
-                check-url: http://jellyfin.media.svc.cluster.local:8096
+                check-url: http://jellyfin.media.svc.cluster.local:8096/health
                 icon: di:jellyfin
               - title: Navidrome
                 url: https://music.rafaribe.com
