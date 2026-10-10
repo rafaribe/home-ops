@@ -59,16 +59,8 @@ spec:
                   periodSeconds: 10
 
     defaultPodOptions:
-      tolerations:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: workload-type
-                    operator: In
-                    values:
-                      - memory
+      nodeSelector:
+        kubernetes.io/hostname: tpi-3
 
     service:
       app:
