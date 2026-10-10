@@ -60,7 +60,7 @@ spec:
 
     defaultPodOptions:
       nodeSelector:
-        kubernetes.io/hostname: tpi-3
+        kubernetes.io/arch: arm64
 
     service:
       app:
