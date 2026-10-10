@@ -48,6 +48,8 @@ spec:
                 drop: ["ALL"]
               readOnlyRootFilesystem: false
     defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
