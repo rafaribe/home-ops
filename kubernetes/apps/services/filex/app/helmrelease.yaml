@@ -1,0 +1,113 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app filex
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: filex
+  interval: 30m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+
+    controllers:
+      filex:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/brf-tech/filex
+              tag: v0.13.0@sha256:6bf6c0f6a70c1326a08094f3ec9789bbf710040279075bf765dc8abe0b354d91
+            env:
+              FILEX_DATA_DIR: /data
+              FILEX_DEFAULT_STORAGE_DRIVER: local
+              FILEX_DEFAULT_STORAGE_PATH: /files
+              FILEX_LISTEN: "0.0.0.0:5212"
+              FILEX_PUBLIC_URL: "https://filex.rafaribe.com"
+              FILEX_TRUSTED_PROXIES: "auto"
+              PUID: "568"
+              PGID: "568"
+              TZ: Europe/Lisbon
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: &port 5212
+                  failureThreshold: 3
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+
+    route:
+      app:
+        hostnames: ["filex.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
+    persistence:
+      data:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: ceph-block
+        globalMounts:
+          - path: /data
+      files:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 50Gi
+        storageClass: ceph-block
+        globalMounts:
+          - path: /files
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
