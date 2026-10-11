@@ -28,6 +28,22 @@ spec:
           glance/name: Aurral
           glance/url: https://aurral.rafaribe.com
           reloader.stakater.com/auto: "true"
+        initContainers:
+          fix-permissions:
+            image:
+              repository: docker.io/library/busybox
+              tag: 1.38.0
+            command:
+              - sh
+              - -c
+              - chown -R 1000:1000 /app/backend/data
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              runAsNonRoot: false
+              runAsUser: 0
         containers:
           app:
             image:
