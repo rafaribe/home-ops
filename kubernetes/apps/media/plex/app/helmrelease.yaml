@@ -58,6 +58,8 @@ spec:
               requests:
                 cpu: 100m
                 memory: 4Gi
+              limits:
+                memory: 16Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -67,8 +69,10 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [44, 568, 2000]
         seccompProfile: { type: RuntimeDefault }
-      nodeSelector:
-        intel.feature.node.kubernetes.io/gpu: "true"
+      tolerations:
+        - key: node-role.kubernetes.io/memory
+          operator: Exists
+          effect: NoSchedule
     service:
       app:
         controller: plex
