@@ -27,6 +27,8 @@ spec:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
+      nodeSelector:
+        kubernetes.io/arch: amd64
       tolerations:
     controllers:
       open-webui:
