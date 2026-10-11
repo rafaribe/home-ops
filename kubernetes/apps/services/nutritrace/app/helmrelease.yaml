@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/traceapps/nutritrace
-              tag: 1.4.0
+              tag: latest
             env:
               TZ: Europe/Lisbon
               DB_PATH: /data/db/nutritrace.db
