@@ -36,13 +36,7 @@ spec:
               limits:
                 memory: 1Gi
     defaultPodOptions:
-      tolerations:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
+
     service:
       app:
         controller: *app

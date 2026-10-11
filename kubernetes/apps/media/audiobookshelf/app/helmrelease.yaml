@@ -53,13 +53,7 @@ spec:
               limits:
                 memory: 500Mi
     defaultPodOptions:
-      tolerations:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
+
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000

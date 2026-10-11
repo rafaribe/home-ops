@@ -11,13 +11,7 @@ spec:
   values:
     defaultPodOptions:
       enableServiceLinks: false
-      tolerations:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
+
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

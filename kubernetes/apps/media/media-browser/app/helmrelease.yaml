@@ -53,7 +53,6 @@ spec:
         data:
           config.yaml: |
             server:
-              port: 80
               sources:
                 - path: /media
                   config:

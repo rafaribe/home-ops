@@ -62,13 +62,7 @@ spec:
                 memory: 799M
 
     defaultPodOptions:
-      tolerations:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
+
     service:
       app:
         controller: navidrome

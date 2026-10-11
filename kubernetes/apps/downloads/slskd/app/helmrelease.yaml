@@ -135,8 +135,9 @@ spec:
             auth:
               methods:
                 noauth: true
-            server:
+            http:
               port: 8080
+            server:
               cacheDir: /home/filebrowser/data/cache
               sources:
                 - path: /media/downloads/slskd

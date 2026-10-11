@@ -37,13 +37,6 @@ spec:
               limits:
                 memory: 3Gi
     defaultPodOptions:
-      tolerations:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
     service:
       app:
         controller: whisper

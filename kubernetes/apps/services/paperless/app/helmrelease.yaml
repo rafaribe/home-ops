@@ -126,13 +126,6 @@ spec:
               - "--chromium-disable-javascript=true"
               - "--chromium-allow-list=file:///tmp/.*"
     defaultPodOptions:
-      tolerations:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
     service:
       app:
         controller: *app

@@ -64,13 +64,7 @@ spec:
               limits:
                 memory: 4Gi
     defaultPodOptions:
-      tolerations:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
+
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
