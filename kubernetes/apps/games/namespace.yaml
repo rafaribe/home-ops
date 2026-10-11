@@ -1,7 +1,10 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kubernetes-namespace.json
 apiVersion: v1
 kind: Namespace
 metadata:
   name: _
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
