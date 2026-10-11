@@ -10,4 +10,5 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
 #  - ./minecraft/ks.yaml
+  - ./fgc/ks.yaml
   - ./romm/ks.yaml

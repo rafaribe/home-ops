@@ -1,0 +1,102 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app nutritrace
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: nutritrace
+  values:
+    controllers:
+      nutritrace:
+        annotations:
+          glance/description: Nutrition Tracker
+          glance/icon: si:nutrition
+          glance/id: nutritrace
+          glance/name: NutriTrace
+          glance/url: https://nutritrace.rafaribe.com
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/traceapps/nutritrace
+              tag: 1.4.0
+            env:
+              TZ: Europe/Lisbon
+              DB_PATH: /data/db/nutritrace.db
+              UPLOADS_PATH: /data/uploads
+              PORT: &port 3001
+              PUBLIC_URL: https://nutritrace.rafaribe.com
+            envFrom:
+              - secretRef:
+                  name: *app
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: *port
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 3
+                  failureThreshold: 3
+            resources:
+              requests:
+                cpu: 15m
+                memory: 128M
+              limits:
+                memory: 512M
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: false
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: NutriTrace
+          gethomepage.dev/icon: https://raw.githubusercontent.com/TraceApps/nutritrace/main/public/icons/logo-transparent.png
+          gethomepage.dev/group: Home
+          gethomepage.dev/href: https://nutritrace.rafaribe.com
+          gethomepage.dev/description: Personal Nutrition Tracker
+
+        hostnames: ["nutritrace.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /data

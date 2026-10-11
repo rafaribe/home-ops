@@ -1,0 +1,108 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app bingfox
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: bingfox
+  values:
+    controllers:
+      bingfox:
+        annotations:
+          glance/description: Network Monitor
+          glance/icon: mdi:lan-check
+          glance/id: bingfox
+          glance/name: Bingfox
+          glance/url: https://bingfox.rafaribe.com
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/rafaribe/bingfox
+              tag: b149ba3@sha256:455a94312c1eaffcbc76d744c36b13f2ec8ecf3b661eebdc875b6f136a413c38
+            env:
+              TZ: Europe/Lisbon
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 3001
+                  initialDelaySeconds: 10
+                  periodSeconds: 30
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 3001
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 3
+            resources:
+              requests:
+                cpu: 15m
+                memory: 64M
+              limits:
+                memory: 256M
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              runAsUser: 1000
+              runAsGroup: 1000
+              runAsNonRoot: true
+              capabilities:
+                drop:
+                  - ALL
+                add:
+                  # Required for ICMP ping scanning
+                  - NET_RAW
+                  # Required for ARP scanning (MAC address discovery)
+                  - NET_ADMIN
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 3001
+
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: Bingfox
+          gethomepage.dev/icon: mdi-lan-check
+          gethomepage.dev/group: Network
+          gethomepage.dev/href: https://bingfox.rafaribe.com
+          gethomepage.dev/description: Network Monitor
+
+        hostnames: ["bingfox.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /app/data

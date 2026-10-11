@@ -16,6 +16,7 @@ resources:
   - ./filex/ks.yaml
   - ./glance/ks.yaml
   - ./homebox/ks.yaml
+  - ./homelable/ks.yaml
   - ./homepage/ks.yaml
   #- ./hush/ks.yaml
  # - ./hush/livekit/ks.yaml
@@ -30,6 +31,7 @@ resources:
   - ./mealie/ks.yaml
   - ./miniflux/ks.yaml
   - ./n8n/ks.yaml
+  - ./nutritrace/ks.yaml
   - ./obsidian-couchdb/ks.yaml
   - ./omni-tools/ks.yaml
   - ./paperless/ks.yaml

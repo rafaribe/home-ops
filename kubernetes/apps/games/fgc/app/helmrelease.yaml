@@ -1,0 +1,83 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app fgc
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: fgc
+  values:
+    controllers:
+      fgc:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        # Runs as root — Chrome and TurboVNC require it.
+        # Use PUID/PGID to drop file-ownership to your user after launch.
+        pod:
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/p-adamiec/free-games-claimer-remaster
+              tag: latest
+            env:
+              TZ: Europe/Lisbon
+              SCHEDULER_TIMEZONE: Europe/Lisbon
+              # Run every 12 hours; also fires once on startup
+              SCHEDULER_HOURS: "12"
+              RUN_ON_STARTUP: "true"
+              SHOW: "1"
+              VNC_URL: https://fgc.rafaribe.com
+              NOVNC_PORT: &port 7080
+            envFrom:
+              - secretRef:
+                  name: *app
+            securityContext:
+              allowPrivilegeEscalation: true
+              runAsNonRoot: false
+              runAsUser: 0
+              capabilities:
+                add:
+                  - CHOWN
+                  - SETUID
+                  - SETGID
+                drop:
+                  - NET_RAW
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512M
+              limits:
+                memory: 2Gi
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+
+    route:
+      app:
+        hostnames: ["fgc.rafaribe.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /fgc/data
