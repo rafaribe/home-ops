@@ -66,6 +66,25 @@ spec:
             sectionName: https
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
     cephClusterSpec:
+      security:
+        cephx:
+          # CVE-2025-30156: Rotate daemon keys to aes256k via Rook's native API.
+          # Rook v1.20.5+ / Ceph v20.2.4+ required.
+          # Increment keyGeneration to trigger a new rotation cycle.
+          daemon:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
+          csi:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
+            keepPriorKeyCountMax: 1
+            # Keep aes until all nodes run kernel 7.0+ (aes256k requires kernel 7.0)
+            keyType: aes
+          rbdMirrorPeer:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
+            # Keep aes — peer clusters may not support aes256k
+            keyType: aes
       cephConfig:
         global:
           bdev_enable_discard: "true"
