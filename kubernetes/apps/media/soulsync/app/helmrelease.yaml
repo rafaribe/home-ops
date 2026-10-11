@@ -52,6 +52,8 @@ spec:
                   - ALL
               readOnlyRootFilesystem: false
     defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
