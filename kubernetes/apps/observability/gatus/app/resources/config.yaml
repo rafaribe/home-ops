@@ -36,6 +36,14 @@ endpoints:
       - "[CONNECTED] == true"
     alerts:
       - type: discord
+  - name: TrueNAS NFS
+    group: storage
+    url: tcp://truenas.rafaribe.com:2049
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+    alerts:
+      - type: discord
 metrics: true
 storage:
   type: sqlite
