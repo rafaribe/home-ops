@@ -11,6 +11,8 @@ spec:
   interval: 30m
   values:
     defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
