@@ -71,6 +71,11 @@ spec:
           # CVE-2025-30156: Rotate daemon keys to aes256k via Rook's native API.
           # Rook v1.20.5+ / Ceph v20.2.4+ required.
           # Increment keyGeneration to trigger a new rotation cycle.
+          # Allow both AES and AES256K — kernels are 6.18, aes256k requires 7.0+.
+          # Remove allowedCiphers restriction once all nodes reach kernel 7.0+.
+          allowedCiphers:
+            - aes
+            - aes256k
           daemon:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
