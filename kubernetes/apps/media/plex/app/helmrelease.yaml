@@ -156,5 +156,4 @@ spec:
         path: /mnt/tank/media
         globalMounts:
           - path: /media
-      
             readOnly: true
