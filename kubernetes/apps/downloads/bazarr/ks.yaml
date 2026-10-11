@@ -58,8 +58,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      KOPIUR_PUID: "0"
-      KOPIUR_PGID: "0"
   components:
     - ../../../../components/kopiur/backup
   dependsOn:

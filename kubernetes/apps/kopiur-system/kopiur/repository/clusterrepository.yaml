@@ -6,6 +6,7 @@ metadata:
   name: truenas
   annotations:
     kopiur.home-operations.com/allow-identity-change: "intentional"
+    kopiur.home-operations.com/allow-mass-deletion: "2026-09-19T18:39:30+00:00"
 spec:
   allowedNamespaces:
     all: true
