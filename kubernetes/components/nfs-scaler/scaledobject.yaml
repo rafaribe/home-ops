@@ -8,6 +8,9 @@ spec:
   advanced:
     restoreToOriginalReplicaCount: true
   cooldownPeriod: 0
+  fallback:
+    failureThreshold: 3
+    replicas: 1
   minReplicaCount: 0
   maxReplicaCount: 1
   scaleTargetRef:
