@@ -58,5 +58,13 @@ spec:
       runAsGroup: 1000
       runAsUser: 1000
   onNamespaceDelete: Orphan
+  parameters:
+    epoch:
+      # Lower from 24h default so maintenance compacts blobs more frequently.
+      # With ~85 hourly snapshot schedules, 24h produces thousands of index blobs.
+      # 6h keeps the count manageable while still batching compaction.
+      minDuration: 6h
+      # Trigger a new epoch after 5 new blobs instead of 20, preventing accumulation.
+      advanceOnCount: 5
   scheduleDefaults:
     timezone: Europe/Lisbon
