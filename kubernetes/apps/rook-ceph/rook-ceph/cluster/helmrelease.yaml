@@ -66,6 +66,12 @@ spec:
             sectionName: https
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
     cephClusterSpec:
+      # TEMPORARY: OSD upgrade deadlock — lvs hangs in D-state due to udev overload
+      # when multiple Ceph block devices are offline simultaneously. These flags allow
+      # the operator to proceed past the ok-to-stop check without waiting for full PG
+      # health. Revert both to false once all 7 OSDs are Running and PGs are clean.
+      skipUpgradeChecks: true
+      continueUpgradeAfterChecksEvenIfNotHealthy: true
       security:
         cephx:
           # CVE-2025-30156: Rotate daemon keys to aes256k via Rook's native API.
