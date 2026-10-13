@@ -29,6 +29,7 @@ spec:
 
         containers:
           # nginx SPA — the only port exposed to the route
+          # nginx listens on port 80 inside the container (docker-compose maps 3000:80)
           frontend:
             image:
               repository: ghcr.io/pouzor/homelable-frontend
@@ -43,7 +44,7 @@ spec:
                 spec:
                   httpGet:
                     path: /
-                    port: 3000
+                    port: 80
                   initialDelaySeconds: 10
                   periodSeconds: 30
                   failureThreshold: 3
@@ -53,7 +54,7 @@ spec:
                 spec:
                   httpGet:
                     path: /
-                    port: 3000
+                    port: 80
                   initialDelaySeconds: 5
                   periodSeconds: 10
                   failureThreshold: 3
@@ -129,7 +130,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: &port 3000
+            port: &port 80
 
     route:
       app:
