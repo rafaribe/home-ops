@@ -87,7 +87,7 @@ spec:
           filebrowser:
             image:
               repository: ghcr.io/gtsteffaniak/filebrowser
-              tag: 2.0.0-stable-slim@sha256:0a7245e7a1c86ade5608fa4e94385524aa4d066c7d57d905e00474adb379cc17
+              tag: 2.0.1-stable-slim@sha256:4842a29395a852f88a7df8dce3a99f64699445f5361a97da6c49dc729579fa24
             env:
               FILEBROWSER_CONFIG: /config/config.yaml
             probes:
