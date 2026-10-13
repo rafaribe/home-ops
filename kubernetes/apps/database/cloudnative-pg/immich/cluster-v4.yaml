@@ -15,6 +15,9 @@ spec:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
 
+  podSecurityContext:
+    fsGroupChangePolicy: OnRootMismatch
+
   postgresql:
     shared_preload_libraries:
       - "vchord.so"
