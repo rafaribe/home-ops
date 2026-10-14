@@ -17,6 +17,7 @@ resources:
   - ./media
   - ./network
   - ./observability
+  - ./renovate
   - ./rook-ceph
   - ./security
   - ./services

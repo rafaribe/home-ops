@@ -6,13 +6,13 @@ metadata:
   name: &app renovate-operator
   namespace: flux-system
 spec:
-  targetNamespace: services
+  targetNamespace: renovate
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/apps/services/renovate/operator"
+  path: "./kubernetes/apps/renovate/renovate/operator"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -30,13 +30,13 @@ metadata:
   name: &app renovate-jobs
   namespace: flux-system
 spec:
-  targetNamespace: services
+  targetNamespace: renovate
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/apps/services/renovate/jobs"
+  path: "./kubernetes/apps/renovate/renovate/jobs"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -45,6 +45,6 @@ spec:
   wait: false
   dependsOn:
     - name: renovate-operator
-      namespace: services
+      namespace: flux-system
     - name: external-secrets-stores
       namespace: external-secrets
