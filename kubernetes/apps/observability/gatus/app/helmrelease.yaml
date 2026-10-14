@@ -26,12 +26,18 @@ spec:
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
     gatus:
-      delayStartSeconds: "5"
+      delayStartSeconds: "30"
       env:
         TZ: Europe/Lisbon
       envFrom:
         - secretRef:
             name: gatus-secret
+      startupProbe:
+        httpGet:
+          path: /health
+          port: http
+        periodSeconds: 5
+        failureThreshold: 60
     httpRoute:
       enabled: true
       annotations:
@@ -62,4 +68,5 @@ spec:
           auto: true
           enable: true
         service:
+          auto: false
           enable: true
