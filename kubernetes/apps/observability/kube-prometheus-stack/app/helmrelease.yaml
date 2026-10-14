@@ -23,6 +23,15 @@ spec:
               namespace: network
               sectionName: https
       alertmanagerSpec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64
         alertmanagerConfiguration:
           name: alertmanager
           global:
@@ -64,6 +73,15 @@ spec:
               namespace: network
               sectionName: https
       prometheusSpec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64
         scrapeInterval: 1m # Must match interval in Grafana Helm chart
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false

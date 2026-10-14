@@ -221,6 +221,8 @@ nodes:
             - siderolabs/rockchip-rknn
     nodeLabels:
       local-storage: "false"
+    nodeTaints:
+      kubernetes.io/arch: arm64:NoSchedule
     patches:
       - *tpi-aggressive-gc
 
@@ -242,6 +244,8 @@ nodes:
     schematic: *schematic-tpi-no-ext
     nodeLabels:
       local-storage: "false"
+    nodeTaints:
+      kubernetes.io/arch: arm64:NoSchedule
     patches:
       - *tpi-aggressive-gc
 
@@ -263,6 +267,8 @@ nodes:
     schematic: *schematic-tpi-no-ext
     nodeLabels:
       local-storage: "false"
+    nodeTaints:
+      kubernetes.io/arch: arm64:NoSchedule
     patches:
       - *tpi-aggressive-gc
 
