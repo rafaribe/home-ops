@@ -64,7 +64,8 @@ spec:
       # With ~85 hourly snapshot schedules, 24h produces thousands of index blobs.
       # 6h keeps the count manageable while still batching compaction.
       minDuration: 6h
-      # Trigger a new epoch after 5 new blobs instead of 20, preventing accumulation.
-      advanceOnCount: 5
+      # Trigger a new epoch after 10 new blobs instead of 20, preventing accumulation.
+      # Minimum allowed by kopiur webhook is 10.
+      advanceOnCount: 10
   scheduleDefaults:
     timezone: Europe/Lisbon

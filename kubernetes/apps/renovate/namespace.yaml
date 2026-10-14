@@ -1,0 +1,8 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.30.0/namespace.json
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: renovate
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
