@@ -22,7 +22,7 @@ _... managed with Flux, Renovate and GitHub Actions_ :robot:
 [![Discord](https://img.shields.io/discord/673534664354430999?style=for-the-badge&label&logo=discord&logoColor=white&color=blue)](https://discord.gg/home-operations)&nbsp;&nbsp;
 [![Talos](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.rafaribe.com%2Ftalos_version&style=for-the-badge&logo=talos&logoColor=white&color=blue&label=%20)](https://talos.dev)&nbsp;&nbsp;
 [![Kubernetes](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.rafaribe.com%2Fkubernetes_version&style=for-the-badge&logo=kubernetes&logoColor=white&color=blue&label=%20)](https://kubernetes.io)&nbsp;&nbsp;
-[![Renovate](https://img.shields.io/github/actions/workflow/status/onedr0p/home-ops/renovate.yaml?branch=main&label=&logo=renovatebot&style=for-the-badge&color=blue)](https://github.com/rafaribe/home-ops/actions/workflows/renovate.yaml)
+[![Renovate](https://img.shields.io/github/actions/workflow/status/rafaribe/home-ops/renovate.yaml?branch=main&label=&logo=renovatebot&style=for-the-badge&color=blue)](https://github.com/rafaribe/home-ops/actions/workflows/renovate.yaml)
 
 </div>
 
@@ -95,4 +95,3 @@ And to the projects that I use every day to help make my cluster better:
 
 [![Star History Chart](https://api.star-history.com/svg?repos=rafaribe/home-ops&type=Date)](https://star-history.com/#rafaribe/home-ops&Date)
 
-Test
