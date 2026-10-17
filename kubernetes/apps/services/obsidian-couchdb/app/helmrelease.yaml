@@ -46,7 +46,7 @@ spec:
           app:
             image:
               repository: docker.io/library/couchdb
-              tag: 3.5.2@sha256:5fc596110eac7f412173a7d9de14f70aa5d3e816790fb6e70642755d4a4cf464
+              tag: 3.5.3@sha256:3611ce43bd32fe2368997fd41ec6e7270ec8d84aa5fc13c9828e5b15fd6bafe8
             env:
               COUCHDB_USER:
                 valueFrom:
