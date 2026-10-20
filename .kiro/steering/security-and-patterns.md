@@ -39,6 +39,7 @@ Never use `latest` or mutable tags.
 - **NEVER run `kubectl apply/create/patch/delete`** for persistent changes — all changes go through Git
 - **NEVER commit unencrypted secrets** — use ExternalSecrets or SOPS
 - Treat local file edits as the source of truth; Flux reconciles them to the cluster
+- Ad-hoc `kubectl` is acceptable for read-only exploration, debugging, and throwaway testing — but any change that is meant to last MUST be reconciled back into code in Git. If a quick `kubectl` test proves out a fix, treat that as a prototype: capture the equivalent change in the manifests and let Flux apply it. Nothing persistent lives only in the cluster.
 
 ## Anti-Patterns — Do NOT Do These
 

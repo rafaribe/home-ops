@@ -55,6 +55,7 @@ terraform/garage.sh
 docs/volsync-fix.md
 
 .claude/
+.ai/
 docs/
 terraform/authentik/import.fish
 terraform/authentik/import.sh

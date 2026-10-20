@@ -1,0 +1,7 @@
+{
+  "name": "home-ops",
+  "description": "Repo-local agent for home-ops: presets model and auto-trusts tools",
+  "model": "sonnet-4.6",
+  "tools": ["*"],
+  "allowedTools": ["@builtin", "@*"]
+}

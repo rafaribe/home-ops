@@ -113,6 +113,7 @@ spec:
 - The primary app chart is `app-template` from bjw-s
 - All YAML files start with `---` and include `# yaml-language-server: $schema=...`
 - Task runner: `task` (Taskfile.yml at repo root)
+- Never block on a single task for more than 30s — background long-running work and return to it asynchronously, polling for completion rather than waiting synchronously.
 
 ### Flux suspend / disable workflow
 
