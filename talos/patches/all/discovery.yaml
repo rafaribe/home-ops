@@ -1,0 +1,7 @@
+# Talos 1.14 DiscoveryServiceConfig
+# Replaces deprecated v1alpha1 cluster.discovery.registries
+---
+apiVersion: v1alpha1
+kind: DiscoveryServiceConfig
+name: default
+endpoint: https://discovery.talos.dev/

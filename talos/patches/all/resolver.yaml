@@ -1,0 +1,9 @@
+# Talos 1.14 ResolverConfig
+# Replaces deprecated v1alpha1 machine.features.hostDNS
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+hostDNS:
+  enabled: true
+  resolveMemberNames: true
+  forwardKubeDNSToHost: false

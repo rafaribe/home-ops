@@ -8,7 +8,7 @@ clusterSvcNets:
   - 10.43.0.0/16
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
-talosVersion: v1.13.11
+talosVersion: v1.14.2
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
 kubernetesVersion: v1.36.3
 
@@ -199,7 +199,7 @@ nodes:
     nameservers: *nameservers
     controlPlane: false
     installDiskSelector:
-      type: sd
+      type: nvme
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "1e:66:39:1d:77:c0"
@@ -209,16 +209,7 @@ nodes:
     machineSpec:
       mode: metal
       arch: arm64
-    schematic: &schematic-tpi-no-ext
-      overlay:
-        name: turingrk1
-        image: siderolabs/sbc-rockchip
-      customization:
-        extraKernelArgs:
-          - net.ifnames=0
-        systemExtensions:
-          officialExtensions:
-            - siderolabs/rockchip-rknn
+    schematic: *schematic-tpi
     nodeLabels:
       local-storage: "false"
     nodeTaints:
@@ -231,7 +222,7 @@ nodes:
     nameservers: *nameservers
     controlPlane: false
     installDiskSelector:
-      type: sd
+      type: nvme
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "8e:56:66:61:bf:36"
@@ -241,7 +232,7 @@ nodes:
     machineSpec:
       mode: metal
       arch: arm64
-    schematic: *schematic-tpi-no-ext
+    schematic: *schematic-tpi
     nodeLabels:
       local-storage: "false"
     nodeTaints:
@@ -254,7 +245,7 @@ nodes:
     nameservers: *nameservers
     controlPlane: false
     installDiskSelector:
-      type: sd
+      type: nvme
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "8e:a1:08:d0:12:5c"
@@ -264,7 +255,7 @@ nodes:
     machineSpec:
       mode: metal
       arch: arm64
-    schematic: *schematic-tpi-no-ext
+    schematic: *schematic-tpi
     nodeLabels:
       local-storage: "false"
     nodeTaints:
@@ -328,15 +319,8 @@ controlPlane:
               [plugins."io.containerd.cri.v1.runtime"]
                 cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
                 device_ownership_from_security_context = true
-    # Disable cluster discovery
-    - &discoveryPatch |-
-      cluster:
-        discovery:
-          registries:
-            kubernetes:
-              disabled: true
-            service:
-              disabled: false
+    # Cluster discovery (external patch file - talhelper passes through without decoding)
+    - &discoveryPatch "@./patches/all/discovery.yaml"
 
     # Configure kubelet
     - &kubeletPatch |-
@@ -422,20 +406,13 @@ controlPlane:
           user.max_user_namespaces: 11255        # User Namespaces
           vm.nr_hugepages: 1024                  # PostgreSQL
 
-    # Cluster configuration
+    # Cluster configuration (allowSchedulingOnControlPlanes and coreDNS stay in v1alpha1 -
+    # talhelper 3.1.17 doesn't auto-inject these, so no conflict)
     - &clusterConfig |-
       cluster:
         allowSchedulingOnControlPlanes: true
-        controllerManager:
-          extraArgs:
-            bind-address: 0.0.0.0
         coreDNS:
           disabled: true
-        proxy:
-          disabled: true
-        scheduler:
-          extraArgs:
-            bind-address: 0.0.0.0
 
     # ETCD configuration
     - &etcdConfig |-
@@ -446,11 +423,9 @@ controlPlane:
           advertisedSubnets:
             - 10.0.0.0/22
 
-    # Disable default API server admission plugins.
-    - &admissionControlPatch |-
-      cluster:
-        apiServer:
-          admissionControl: null
+    # Kubernetes component config (external patch file - Talos 1.14 multi-doc types not
+    # registered in talhelper 3.1.17 machinery; file reference bypasses inline decoder)
+    - &kubernetesPatch "@./patches/controlplane/kubernetes.yaml"
 
     # Enable K8s Talos API Access
     - &kubernetesTalosAPIAccess |-
@@ -466,6 +441,7 @@ controlPlane:
               - system-upgrade
               - actions-runner-system
               - system-controllers
+
     # Mount openebs-hostpath in kubelet
     - &openebs-hostpath |-
       machine:
@@ -475,7 +451,11 @@ controlPlane:
               type: bind
               source: /var/openebs/local
               options: ["bind", "rshared", "rw"]
-    # Mount openebs-hostpath in kubelet
+
+    # hostDNS via ResolverConfig (external patch file - Talos 1.14+)
+    - &hostdns "@./patches/all/resolver.yaml"
+
+    # Mount csi-local-hostpath in kubelet
     - &csi-local-hostpath |-
       machine:
         kubelet:
@@ -484,35 +464,7 @@ controlPlane:
               type: bind
               source: /var/csi-local-hostpath
               options: ["bind", "rshared", "rw"]
-    # Enable hostDNS:
-    - &hostdns |-
-      machine:
-        features:
-          hostDNS:
-            enabled: true
-            resolveMemberNames: true
-            forwardKubeDNSToHost: false
-    # Enable MutatingAdmissionPolicy
-    - &mutatingAdmissionPolicy |-
-      cluster:
-        apiServer:
-          extraArgs:
-            enable-aggregator-routing: true
-            feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true,ResourceHealthStatus=true
-            runtime-config: admissionregistration.k8s.io/v1beta1=true
-    # Spegel/Scheduler configuration
-    - &schedulerConfig |-
-      cluster:
-        scheduler:
-          config:
-            apiVersion: kubescheduler.config.k8s.io/v1
-            kind: KubeSchedulerConfiguration
-            profiles:
-              - schedulerName: default-scheduler
-                plugins:
-                  score:
-                    disabled:
-                      - name: ImageLocality
+
   # extensionServices:
   #   - name: tailscale
   #     environment:

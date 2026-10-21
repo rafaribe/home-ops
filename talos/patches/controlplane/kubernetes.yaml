@@ -1,0 +1,44 @@
+# Talos 1.14 multi-document Kubernetes component config.
+# talhelper 3.1.17 (machinery 1.14.0-alpha.2) auto-injects these documents, so the
+# matching v1alpha1 fields (cluster.apiServer, controllerManager, scheduler, proxy)
+# would be rejected as "already set" if used inline. Using a patch file bypasses
+# talhelper's decoder and lets talosctl merge these on apply.
+---
+apiVersion: v1alpha1
+kind: KubeAPIServerConfig
+extraArgs:
+  enable-aggregator-routing: "true"
+  feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true,ResourceHealthStatus=true
+  runtime-config: admissionregistration.k8s.io/v1beta1=true
+---
+# Drop the default PodSecurity admission config (was cluster.apiServer.admissionControl: null)
+apiVersion: v1alpha1
+kind: KubeAdmissionControlConfig
+name: PodSecurity
+$$patch: delete
+---
+apiVersion: v1alpha1
+kind: KubeControllerManagerConfig
+extraArgs:
+  bind-address: 0.0.0.0
+---
+apiVersion: v1alpha1
+kind: KubeSchedulerConfig
+extraArgs:
+  bind-address: 0.0.0.0
+config:
+  profiles:
+    - schedulerName: default-scheduler
+      plugins:
+        score:
+          disabled:
+            - name: ImageLocality
+---
+# Cilium replaces kube-proxy
+apiVersion: v1alpha1
+kind: KubeProxyConfig
+enabled: false
+# NOTE: CoreDNS is disabled via v1alpha1 cluster.coreDNS.disabled: true in talconfig.yaml
+# KubeCoreDNSConfig is not registered in talhelper 3.1.17 machinery so it cannot be used
+# in patch files either. The v1alpha1 field doesn't conflict (talhelper doesn't auto-inject
+# KubeCoreDNSConfig), so it stays in clusterConfig patch.
