@@ -156,8 +156,7 @@ nodes:
     ipAddress: 10.0.1.8
     nameservers: *nameservers
     controlPlane: false
-    installDiskSelector:
-      type: nvme
+    installDisk: /dev/mmcblk0
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "ca:d1:4d:b4:f9:bd"
@@ -197,8 +196,7 @@ nodes:
     ipAddress: 10.0.1.9
     nameservers: *nameservers
     controlPlane: false
-    installDiskSelector:
-      type: nvme
+    installDisk: /dev/mmcblk0
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "1e:66:39:1d:77:c0"
@@ -220,8 +218,7 @@ nodes:
     ipAddress: 10.0.1.10
     nameservers: *nameservers
     controlPlane: false
-    installDiskSelector:
-      type: nvme
+    installDisk: /dev/mmcblk0
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "8e:56:66:61:bf:36"
@@ -243,8 +240,7 @@ nodes:
     ipAddress: 10.0.1.14
     nameservers: *nameservers
     controlPlane: false
-    installDiskSelector:
-      type: nvme
+    installDisk: /dev/mmcblk0
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "8e:a1:08:d0:12:5c"
