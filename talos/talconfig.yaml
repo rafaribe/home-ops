@@ -241,7 +241,7 @@ nodes:
       - *tpi-aggressive-gc
 
   - hostname: tpi-4.${clusterDNSSuffix}
-    ipAddress: 10.0.1.11
+    ipAddress: 10.0.1.14
     nameservers: *nameservers
     controlPlane: false
     installDiskSelector:
