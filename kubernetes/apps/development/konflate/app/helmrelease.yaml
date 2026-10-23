@@ -25,7 +25,7 @@ spec:
           namespace: network
           sectionName: https
     nodeSelector:
-      kubernetes.io/hostname: tpi-3
+      kubernetes.io/arch: amd64
     resources:
       limits:
         memory: 2Gi
