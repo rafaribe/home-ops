@@ -12,5 +12,5 @@ resources:
   - ./mcp-servers
   #- ./ollama/ks.yaml
   - ./open-webui/ks.yaml
-  - ./rkllama/ks.yaml
+#  - ./rkllama/ks.yaml
   - ./toolhive/ks.yaml

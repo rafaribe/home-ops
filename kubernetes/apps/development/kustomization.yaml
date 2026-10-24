@@ -5,5 +5,5 @@ namespace: development
 resources:
   - ./namespace.yaml
 #  - ./forgejo/gickup/ks.yaml
-  - ./forgejo/ks.yaml
+ # - ./forgejo/ks.yaml
   - ./konflate/ks.yaml
