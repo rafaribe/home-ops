@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - ./actual/ks.yaml
   - ./docmost/ks.yaml
-  - ./forgejo/ks.yaml
   - ./grafana/ks.yaml
   - ./ha/ks.yaml
   - ./kubernetes/ks.yaml
