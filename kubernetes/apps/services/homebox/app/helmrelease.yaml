@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: docker.io/sysadminsmedia/homebox
-              tag: 0.26.2-rootless
+              tag: 0.27.1-rootless
             env:
               TZ: Europe/Lisbon
               HBOX_LOG_LEVEL: info
