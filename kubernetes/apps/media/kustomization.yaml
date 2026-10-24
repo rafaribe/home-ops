@@ -9,7 +9,6 @@ components:
 resources:
   - ./namespace.yaml
   - ./audiobookshelf/ks.yaml
-  - ./beets/ks.yaml
   - ./bookboss/ks.yaml
   - ./jellyfin/ks.yaml
   - ./jellyseerr/ks.yaml
