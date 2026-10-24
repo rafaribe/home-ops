@@ -90,7 +90,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v3.3.1
+              tag: v3.3.5
             envFrom: *envFrom
             env:
               IMMICH_MEDIA_LOCATION: *mediaLocation
