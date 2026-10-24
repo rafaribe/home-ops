@@ -20,5 +20,9 @@ spec:
       enabled: false
     recommender:
       enabled: true
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
     updater:
       enabled: false
