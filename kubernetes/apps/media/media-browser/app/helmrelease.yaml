@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gtsteffaniak/filebrowser
-              tag: 2.0.0-stable-slim@sha256:0a7245e7a1c86ade5608fa4e94385524aa4d066c7d57d905e00474adb379cc17
+              tag: 2.0.2-stable-slim@sha256:acab24557ffbf1e3bc5025cafd90ae0c697b53a275d2760ab4402bec3aabf207
             probes:
               liveness: &probes
                 enabled: true
