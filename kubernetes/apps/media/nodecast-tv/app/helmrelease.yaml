@@ -38,7 +38,7 @@ spec:
           app:
             image:
               repository: ghcr.io/technomancer702/nodecast-tv
-              tag: 2.1.1@sha256:9937173524774d718c998a768d27bb3b7bf9d2575277715c7230307d6e99904a
+              tag: 2.2.1@sha256:32428cf3d29001d979a54a5cb6871f8860691b407746eb8735c3f97009f034c4
             env:
               NODE_ENV: production
               PORT: &httpPort 3000
