@@ -45,7 +45,7 @@ spec:
           app:
             image:
               repository: docker.io/iib0011/omni-tools
-              tag: 0.6@sha256:ceb5acc317daf387634f7f212cefe4722fd1243ad1cba74203f25254195b6c69
+              tag: 0.7@sha256:85f0e052a97326396c753e39de0ef74631c0783999ccca81ebc36262903ec9fa
             env:
               TZ: Europe/Lisbon
             resources:
