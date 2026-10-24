@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: docker.io/mrusse08/soularr
-              tag: v1.2.2@sha256:c4f97924fabfce4e0de539d821ea7d20519b95c4815a707bacfc9d7212597f20
+              tag: v1.2.3@sha256:e448d49d0ca6091a35653ff9198ebb4a3acf42abfc2f2056490a9a0f0cffd210
             env:
               SCRIPT_INTERVAL: "300"
               TZ: Europe/Lisbon
