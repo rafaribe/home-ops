@@ -23,11 +23,26 @@ additionalApiServerCertSans: &sans
 
 additionalMachineCertSans: *sans
 nodes:
-  - hostname: srv-02.${clusterDNSSuffix}
-    ipAddress: 10.0.1.2
+  - hostname: srv-01.${clusterDNSSuffix}
+    ipAddress: 10.0.1.1
     nameservers: &nameservers
       - "10.0.0.254"
       - "1.1.1.1"
+    controlPlane: false
+    installDiskSelector:
+      wwid: naa.5002538d7025e8be
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "10:c3:7b:1d:d6:f4"
+        dhcp: true
+        mtu: 1500
+        routes: &defaultRoutes
+          - network: 0.0.0.0/0
+            gateway: 10.0.0.1
+
+  - hostname: srv-02.${clusterDNSSuffix}
+    ipAddress: 10.0.1.2
+    nameservers: *nameservers
     controlPlane: true
     installDiskSelector:
       wwid: naa.502b2a201d1c1b1a
@@ -36,9 +51,7 @@ nodes:
           hardwareAddr: "18:66:da:29:9f:9d"
         dhcp: true
         mtu: 1500
-        routes: &defaultRoutes
-          - network: 0.0.0.0/0
-            gateway: 10.0.0.1
+        routes: *defaultRoutes
         vip: &vip
           ip: ${clusterEndpointIP}
 
