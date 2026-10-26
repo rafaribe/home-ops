@@ -57,6 +57,13 @@ spec:
                 drop:
                   - ALL
     defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      tolerations:
+        - key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+          effect: NoSchedule
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

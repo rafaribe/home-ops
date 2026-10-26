@@ -2,7 +2,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/helmfile
 
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubeVersion: v1.37.0
+kubeVersion: v1.37.1
 
 helmDefaults:
   force: true
@@ -25,14 +25,14 @@ releases:
   - name: cilium
     namespace: kube-system
     chart: cilium/cilium
-    version: 1.20.2
+    version: 1.20.4
     values:
       - ./templates/values.yaml.gotmpl
 
   - name: coredns
     namespace: kube-system
     chart: coredns/coredns
-    version: 1.48.2
+    version: 1.49.0
     values:
       - ./templates/values.yaml.gotmpl
     needs: ["kube-system/cilium"]
