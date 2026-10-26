@@ -12,7 +12,6 @@ resources:
   - ./bazarr/ks.yaml
   - ./explo/ks.yaml
   - ./lidarr/ks.yaml
-  - ./metube/ks.yaml
   - ./omegabrr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
