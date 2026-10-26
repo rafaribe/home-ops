@@ -29,7 +29,7 @@ spec:
           chown-data:
             image:
               repository: ghcr.io/home-operations/busybox
-              tag: 1.38@sha256:7e2c04dd50ede647bf4a7a4c8dbd629dd4971cd139b9b88fb22bfc3c7a6c13df
+              tag: 1.38@sha256:ff88728f0d5fe50a9984f6cc04d7d1185590b628f29ef4e6a3ec8cae7169e0c8
             command: ["sh", "-c", "chown -R 1000:1000 /data"]
             securityContext:
               runAsUser: 0

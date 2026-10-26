@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/stash
-              tag: 0.31.1@sha256:869f910b26e7605676531e8823fa8c8ea66a329dd1b737e342a1a77ba7b77f22
+              tag: 0.31.1@sha256:02b392ddaffccd6f7bcafb01b1810248c5a5a019f3dc8ac1aeed6d5c22ab7210
             env:
               STASH_CACHE: /data/cache/
               STASH_GENERATED: /data/generated/
