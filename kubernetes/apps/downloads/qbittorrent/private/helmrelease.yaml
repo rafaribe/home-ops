@@ -55,22 +55,6 @@ spec:
               capabilities:
                 drop:
                   - ALL
-          vuetorrent:
-            dependsOn: app
-            image:
-              repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.8.0
-            args:
-              - --repo=https://github.com/WDaan/VueTorrent
-              - --ref=latest-release
-              - --period=86400s
-              - --root=/add-ons
-            resources:
-              requests:
-                cpu: 10m
-                memory: 25Mi
-              limits:
-                memory: 50Mi
 
     service:
       app:
@@ -142,7 +126,7 @@ spec:
             app:
               - path: /media
       add-ons:
-        enabled: true
+        enabled: false
         type: emptyDir
         globalMounts:
           - path: /add-ons
