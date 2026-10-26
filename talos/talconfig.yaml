@@ -180,6 +180,8 @@ nodes:
             - siderolabs/nfsrahead
     nodeLabels:
       local-storage: "false"
+    nodeTaints:
+      kubernetes.io/arch: arm64:NoSchedule
     patches:
       - &tpi-aggressive-gc |-
         machine:
