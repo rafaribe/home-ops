@@ -33,7 +33,7 @@ spec:
           migrations:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 2.7.1
+              tag: 2.7.2
             env: &env
               ALLOWED_HOSTS: "*"
               AI_MODEL_NAME: openai/gpt-4o
@@ -62,7 +62,7 @@ spec:
           app:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 2.7.1
+              tag: 2.7.2
             env: *env
             envFrom: *envFrom
             command:
