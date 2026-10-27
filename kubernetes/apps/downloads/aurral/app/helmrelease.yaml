@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/lklynet/aurral
-              tag: 2.11.0
+              tag: 2.12.0
             env:
               PUID: "1000"
               PGID: "1000"
