@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: ghcr.io/brf-tech/filex
-              tag: v0.57.5@sha256:f29ecc446e9fe340bce520125efefeea2c47d360a6dcbc4b27a5c8b215800e29
+              tag: v0.57.7@sha256:67969e8f0f532185281d84002d47c2c1c0882c7842c3b824085d2171a7419d77
             env:
               FILEX_DATA_DIR: /data
               FILEX_DEFAULT_STORAGE_DRIVER: local
