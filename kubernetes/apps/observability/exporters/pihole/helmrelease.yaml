@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: docker.io/ekofr/pihole-exporter
-              tag: v1.2.0
+              tag: v1.3.1
             command: ["/root/pihole-exporter"]
             env:
               PIHOLE_HOSTNAME: 10.0.0.254
