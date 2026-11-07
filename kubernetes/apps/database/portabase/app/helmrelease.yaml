@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: docker.io/portabase/portabase
-              tag: 1.34.1@sha256:8df7c123e09a12b93c215d5f85347a341c96c4ca8f772f8ef967a9a309289a13
+              tag: 1.36.0@sha256:1a365c8add687947d72db5013c0537346a3eed6da0fea80c44f0ded8265b55ce
             env:
               NODE_ENV: production
               PROJECT_URL: "https://portabase.rafaribe.com"
