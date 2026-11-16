@@ -19,7 +19,7 @@ spec:
           app:
             image:
               repository: docker.io/safebucket/safebucket
-              tag: 0.8.0@sha256:5bc4d214f790bf6a3ef9df34f74d94d364585e184b2bf796dc234555885f0164
+              tag: 0.8.1@sha256:c49b69bddddb4ef8b3e3681b62ee257235ca09c35fc309329c8adecd2707b66a
             env:
               ACTIVITY__FILESYSTEM__INDEX_DIR: /app/data/activity-index
               ACTIVITY__FILESYSTEM__DIRECTORY: /app/data/activity
