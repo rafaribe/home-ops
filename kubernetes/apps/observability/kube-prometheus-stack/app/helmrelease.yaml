@@ -114,7 +114,7 @@ spec:
         image:
           registry: docker.io
           repository: prompp/prompp
-          tag: 0.8.17@sha256:b461ff6c23138fae518c19bfc40d1b38397695c566f5ebe700f0f4651193221a
+          tag: 0.8.19@sha256:b164358afd060ce3bd8a115acac121abd2b1e5f7c296cf657f433d967770ccfa
         version: v2.54.1
     prometheus-node-exporter:
       fullnameOverride: node-exporter
