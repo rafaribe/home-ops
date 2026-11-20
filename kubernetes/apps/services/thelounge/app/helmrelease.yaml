@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/thelounge/thelounge
-              tag: 4.5.2@sha256:345af9c9d48d789f71a09d172fbc1bd3f250d47059c5a317497b67bd315989b7
+              tag: 4.5.2@sha256:5c3776545c24c8e04ce9520d8aab7320209043aad246ac710dc3339bfda4c772
             env:
               THELOUNGE_HOME: /config
             securityContext:
