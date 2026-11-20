@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/unpoller/unpoller
-              tag: v5.8.1@sha256:097cef1a5fba73a47185d1a2648ddef055938f449d46ac75272afd2d45bd3a2f
+              tag: v5.9.6@sha256:96c2c7645bce1ed6f43934b11584dfa378a170e262aba78972c18aec6cbc0e16
             env:
               UP_UNIFI_DEFAULT_ROLE: "homelab-controller"
               UP_UNIFI_DEFAULT_URL: https://10.0.0.254:8443
