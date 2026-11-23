@@ -51,7 +51,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v3.3.5@sha256:485d546a2e31d6a8b4db8423fcba5c109de8c218d93410af115fd1ccfc4352a6
+              tag: v3.4.2@sha256:fc880c1bf665b4aab1e74c15e56ab871225989cd546536e6b77e771869af06bd
             env:
               IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
               IMMICH_WORKERS_INCLUDE: api
@@ -90,7 +90,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v3.3.5
+              tag: v3.4.2
             envFrom: *envFrom
             env:
               IMMICH_MEDIA_LOCATION: *mediaLocation
