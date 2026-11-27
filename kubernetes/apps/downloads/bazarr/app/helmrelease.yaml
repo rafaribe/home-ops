@@ -79,7 +79,7 @@ spec:
           subcleaner:
             image:
               repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.7.1@sha256:c5e1976da735bf0b53979f079a07475d77174c51863cd084e928ff6074480717
+              tag: v4.8.1@sha256:6eabb33faf08810811756f364a8e2ec9a3a2622363352e469f7bef78cc2294f5
             env:
               GITSYNC_REPO: https://github.com/KBlixt/subcleaner
               GITSYNC_REF: master
